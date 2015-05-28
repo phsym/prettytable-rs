@@ -1,0 +1,9 @@
+[package]
+
+name = "tabprint"
+version = "0.0.1"
+authors = [ "Pierre-Henri Symoneaux" ]
+
+[[bin]]
+
+name = "tabprint"
