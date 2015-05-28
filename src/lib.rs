@@ -5,7 +5,10 @@ use std::io::{stdout, Write, Error};
 pub struct Table {
 	num_cols: usize,
 	titles: Vec<String>,
-	rows: Vec<Vec<String>>
+	rows: Vec<Vec<String>>,
+	col_sep: char,
+	line_sep: char,
+	sep_cross: char
 }
 
 impl Table {
@@ -15,8 +18,31 @@ impl Table {
 		return Table {
 			num_cols: n,
 			titles: titles, 
-			rows: Vec::new()
+			rows: Vec::new(),
+			col_sep: '|',
+			line_sep: '-',
+			sep_cross: '+'
 		};
+	}
+	
+	/// Change separators
+	/// `col` is the column separator
+	/// `line` is the line separator
+	/// `cross` is a special separator used when line and collumn separators meet
+	/// Default separators used are '|', '-' and '+' so a table looks like this :
+	/// ```text
+	/// +---------+------+
+	/// | ABC     | DEFG |
+	/// +---------+------+
+	/// | foobar  | bar  |
+	/// +---------+------+
+	/// | foobar2 | bar2 |
+	/// +---------+------+
+	/// ```
+	pub fn separators(&mut self, col: char, line: char, cross: char) {
+		self.col_sep = col;
+		self.line_sep = line;
+		self.sep_cross = cross;
 	}
 	
 	/// Get the number of column
@@ -25,7 +51,7 @@ impl Table {
 	}
 	
 	/// Get the number of rows
-	pub fn get_rows_number(&self) -> usize {
+	pub fn len(&self) -> usize {
 		return self.rows.len();
 	}
 	
@@ -92,24 +118,24 @@ impl Table {
 	}
 	
 	fn print_line_separator(&self, out: &mut Write, col_width: &[usize]) -> Result<(), Error> {
-		try!(write!(out, "+"));
+		try!(write!(out, "{}", self.sep_cross));
 		for i in 0..self.num_cols {
 			for _ in 0..(col_width[i] + 2) {
-				try!(write!(out, "-"));
+				try!(write!(out, "{}", self.line_sep));
 			}
-			try!(write!(out, "+"));
+			try!(write!(out, "{}", self.sep_cross));
 		}
 		return writeln!(out, "");
 	}
 	
 	fn print_line(&self, out: &mut Write, line: &[String], col_width: &[usize]) -> Result<(), Error> {
-		try!(write!(out, "|"));
+		try!(write!(out, "{}", self.col_sep));
 		for i in 0..self.num_cols {
 			try!(write!(out, " {} ", line[i]));
 			for _ in 0..(col_width[i] - line[i].len()) {
 				try!(write!(out, " "));
 			}
-			try!(write!(out, "|"));
+			try!(write!(out, "{}", self.col_sep));
 		}
 		return writeln!(out, "");
 	}

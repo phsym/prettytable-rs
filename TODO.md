@@ -3,6 +3,9 @@
 ## Features :
 * Select a range of rows to print
 * Capability to store object implementing the "std::string::ToString" trait
+* Capability to not use line separators 
+* Capability to hide titles
+* Dynamic column number
 
 ## General :
 * Learn how to do unit testing in Rust, and add some
