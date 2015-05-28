@@ -1,3 +1,4 @@
+//! A formatted and aligned table printer written in rust
 use std::io::{stdout, Write, Error};
 
 /// A Struct representing a printable table
