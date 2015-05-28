@@ -32,7 +32,7 @@ git = "https://github.com/phsym/tabprint.git"
 Then you can start using it the following way :
 
 ```rust
-#[macro_use] extern crate tabprint;
+extern crate tabprint;
 use tabprint::Table;
 
 fn main() {
@@ -54,5 +54,20 @@ This code will produce the following output :
 | foobar2 | bar2 | foo2    |
 +---------+------+---------+
 ```
+
+To make the code simpler, the `table!` macro is there for you. The following code would produce the exact same output :
+```rust
+#[macro_use] extern crate tabprint;
+
+fn main() {
+	let table = table!(["ABC", "DEFG", "HIJKLMN"],
+    				   ["foobar", "bar", "foo"],
+    				   ["foobar2", "bar2", "foo2"]
+    				  );
+    table.printstd();
+}
+```
+
+Using the `ptable!` macro would even print it on stdout for you.
 
 Additional examples are provided in documentation and in [examples](./examples/) directory
