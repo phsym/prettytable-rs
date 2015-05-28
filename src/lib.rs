@@ -1,3 +1,4 @@
+use std::io::{stdout, Write, Error};
 
 /// A Struct representing a printable table
 pub struct Table {
@@ -89,41 +90,51 @@ impl Table {
 		return Ok(width);
 	}
 	
-	fn print_line_separator(&self, col_width: &[usize]) {
-		print!("+");
+	fn print_line_separator(&self, out: &mut Write, col_width: &[usize]) -> Result<(), Error> {
+		try!(write!(out, "+"));
 		for i in 0..self.num_cols {
 			for _ in 0..(col_width[i] + 2) {
-				print!("-");
+				try!(write!(out, "-"));
 			}
-			print!("+");
+			try!(write!(out, "+"));
 		}
-		println!("");
+		return writeln!(out, "");
 	}
 	
-	fn print_line(&self, line: &[String], col_width: &[usize]) {
-		print!("|");
+	fn print_line(&self, out: &mut Write, line: &[String], col_width: &[usize]) -> Result<(), Error> {
+		try!(write!(out, "|"));
 		for i in 0..self.num_cols {
-			print!(" {} ", line[i]);
+			try!(write!(out, " {} ", line[i]));
 			for _ in 0..(col_width[i] - line[i].len()) {
-				print!(" ");
+				try!(write!(out, " "));
 			}
-			print!("|");
+			try!(write!(out, "|"));
 		}
-		println!("");
+		return writeln!(out, "");
 	}
 	
-	/// Print the table to `stdout`
-	pub fn print(&self) {
+	/// Print the table to `out`
+	pub fn print(&self, out: &mut Write) -> Result<(), Error> {
 		let mut col_width = vec![0usize; self.num_cols];
 		for i in 0..self.num_cols {
 			col_width[i] = self.get_col_width(i).unwrap();
 		}
-		self.print_line_separator(&col_width);
-		self.print_line(&self.titles, &col_width);
-		self.print_line_separator(&col_width);
+		try!(self.print_line_separator(out, &col_width));
+		try!(self.print_line(out, &self.titles, &col_width));
+		try!(self.print_line_separator(out, &col_width));
 		for r in &self.rows {
-			self.print_line(r, &col_width);
-			self.print_line_separator(&col_width);
+			try!(self.print_line(out, r, &col_width));
+			try!(self.print_line_separator(out, &col_width));
 		}
+		return out.flush();
+	}
+	
+	/// Print the table to standard output
+	/// # Panic
+	/// Panic if writing to standard output fails
+	pub fn printstd(&self) {
+		self.print(&mut stdout())
+			.ok()
+			.expect("Cannot print table to standard output");
 	}
 }
