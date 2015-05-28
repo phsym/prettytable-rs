@@ -2,6 +2,7 @@
 use std::io::{stdout, Write, Error};
 
 /// A Struct representing a printable table
+#[derive(Clone, Debug)]
 pub struct Table {
 	num_cols: usize,
 	titles: Vec<String>,

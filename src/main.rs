@@ -14,4 +14,5 @@ fn main() {
     
     let table = table!(["A", "B", "C"], [1, 2, 3]);
     table.printstd();
+//    println!("{:?}", table);
 }

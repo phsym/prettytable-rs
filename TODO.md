@@ -11,8 +11,7 @@
 ## Improvements :
 * Improve checkings in table! macro. Prevent it from panicking
 * Implement "std::string::ToString" trait for Table
-* Implement Disaply trait for Table
-* Implement Debug trait or Table
+* Implement Display trait for Table
 
 ## General :
 * Learn how to do unit testing in Rust, and add some
