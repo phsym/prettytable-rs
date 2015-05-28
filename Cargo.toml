@@ -2,7 +2,12 @@
 
 name = "tabprint"
 version = "0.0.1"
+description = "A small rust library that print aligned and formatted tables"
+repository = "https://github.com/phsym/tabprint"
+readme = "README.md"
 authors = [ "Pierre-Henri Symoneaux" ]
+keywords = ["tab", "table", "format", "pretty", "aligned"]
+license = "BSD-3-Clause"
 
 [[bin]]
 

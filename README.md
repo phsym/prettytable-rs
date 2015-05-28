@@ -33,7 +33,7 @@ Then you can start using it the following way :
 
 ```rust
 #[macro_use] extern crate tabprint;
-use tabprint::Table
+use tabprint::Table;
 
 fn main() {
 	let mut table = Table::new(vec!["ABC".to_string(), "DEFG".to_string(), "HIJKLMN".to_string()]);
@@ -41,6 +41,18 @@ fn main() {
     table.add_row(vec!["foobar2".to_string(), "bar2".to_string(), "foo2".to_string()]).unwrap();
     table.print();
 }
+```
+
+This code will produce the following output :
+
+```text
++---------+------+---------+
+| ABC     | DEFG | HIJKLMN |
++---------+------+---------+
+| foobar  | bar  | foo     |
++---------+------+---------+
+| foobar2 | bar2 | foo2    |
++---------+------+---------+
 ```
 
 Additional examples are provided in documentation and in [examples](./examples/) directory
