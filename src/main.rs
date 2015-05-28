@@ -1,4 +1,4 @@
-extern crate tabprint;
+#[macro_use] extern crate tabprint;
 use tabprint::Table;
 
 #[allow(dead_code)]
@@ -10,5 +10,8 @@ fn main() {
     println!("Modified : ");
     table.separators('*', '*', '*');
     table.set_element("new_foo".to_string(), 2, 1).unwrap();
+    table.printstd();
+    
+    let mut table = table!(["A", "B", "C"], [1, 2, 3]);
     table.printstd();
 }

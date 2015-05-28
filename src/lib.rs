@@ -165,3 +165,41 @@ impl Table {
 			.expect("Cannot print table to standard output");
 	}
 }
+
+/// Create a table with column's titles from arguments.
+/// The table can also be initialized with some values.
+/// All the arguments used for titles and elements must implement the `std::string::ToString` trait
+/// # Syntax
+/// table!([Title1, Title2, ...], [Element1_ row1, Element2_ row1, ...], [Element1_row2, ...], ...);
+/// # Panic
+/// May panic if some rows could not be inserted
+/// # Example
+/// ```
+/// # #[macro_use] extern crate tabprint;
+/// # fn main() {
+/// // Create an empty table with titles :
+/// let tab = table!(["Title1", "Title2", "Title3"]);
+/// // Create a table initialized with some rows :
+/// let tab = table!(["Title1", "Title2", "Title3"],
+/// 				 ["Element1", "Element2", "Element3"],
+/// 				 [1, 2, 3]
+/// 				 );
+/// # drop(tab);
+/// # }
+///```
+#[macro_export]
+macro_rules! table {
+	([$($title: expr), *]) => ($crate::Table::new(vec![$($title.to_string()), *]));
+	(
+		[$($title: expr), *], $([$($key:expr), *]), *
+	) => (
+		{
+			let mut tab = table!([$($title), *]);
+			$(
+				let row = vec![$($key.to_string()), *];
+				tab.add_row(row).ok().expect("Cannot create table from macro");
+			)*
+			tab
+		}
+	)
+}

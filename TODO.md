@@ -7,6 +7,9 @@
 * Capability to hide titles
 * Dynamic column number
 
+## Improvements :
+* Improve checkings in table! macro. Prevent it from panicking
+
 ## General :
 * Learn how to do unit testing in Rust, and add some
 
