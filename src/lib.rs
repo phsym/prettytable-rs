@@ -26,19 +26,11 @@ impl Table {
 	}
 	
 	/// Change separators
+	/// 
 	/// `col` is the column separator
 	/// `line` is the line separator
 	/// `cross` is a special separator used when line and collumn separators meet
-	/// Default separators used are '|', '-' and '+' so a table looks like this :
-	/// ```text
-	/// +---------+------+
-	/// | ABC     | DEFG |
-	/// +---------+------+
-	/// | foobar  | bar  |
-	/// +---------+------+
-	/// | foobar2 | bar2 |
-	/// +---------+------+
-	/// ```
+	/// Default separators used are '|', '-' and '+'
 	pub fn separators(&mut self, col: char, line: char, cross: char) {
 		self.col_sep = col;
 		self.line_sep = line;
@@ -167,6 +159,7 @@ impl Table {
 }
 
 /// Create a table with column's titles from arguments.
+///
 /// The table can also be initialized with some values.
 /// All the arguments used for titles and elements must implement the `std::string::ToString` trait
 /// # Syntax
@@ -186,7 +179,7 @@ impl Table {
 /// 				 );
 /// # drop(tab);
 /// # }
-///```
+/// ```
 #[macro_export]
 macro_rules! table {
 	([$($title: expr), *]) => ($crate::Table::new(vec![$($title.to_string()), *]));
@@ -197,8 +190,35 @@ macro_rules! table {
 			let mut tab = table!([$($title), *]);
 			$(
 				let row = vec![$($key.to_string()), *];
-				tab.add_row(row).ok().expect("Cannot create table from macro");
+				if let Err(e) = tab.add_row(row) {
+					panic!("Cannot create table from : {}", e);
+				}
 			)*
+			tab
+		}
+	)
+}
+
+/// Create a table with `table!` macro, print it to standard output, then return this table for future usage.
+/// 
+/// The syntax is the same that the one for the `table!` macro
+/// # Panic
+/// May panic if some rows could not be inserted
+#[macro_export]
+macro_rules! ptable {
+	([$($title: expr), *]) => (
+		{
+			let tab = table!([$($title), *]);
+			tab.printstd();
+			tab
+		}
+	);
+	(
+		[$($title: expr), *], $([$($key:expr), *]), *
+	) => (
+		{
+			let tab = table!([$($title), *], $([$($key), *]), *);
+			tab.printstd();
 			tab
 		}
 	)

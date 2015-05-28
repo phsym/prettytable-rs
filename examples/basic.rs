@@ -1,4 +1,4 @@
-extern crate tabprint;
+#[macro_use] extern crate tabprint;
 use tabprint::Table;
 
 /*
@@ -27,4 +27,10 @@ fn main() {
     println!("Modified : ");
     table.set_element("new_foo".to_string(), 2, 1).unwrap();
     table.printstd();
+    
+    // The same table can be built the following way :
+    let _table = table!(["ABC", "DEFG", "HIJKLMN"],
+    				   ["foobar", "bar", "foo"],
+    				   ["foobar2", "bar2", "foo2"]
+    				  );
 }

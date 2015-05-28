@@ -11,4 +11,4 @@ license = "BSD-3-Clause"
 
 [[bin]]
 
-name = "tabprint"
+name = "main"

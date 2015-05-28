@@ -6,9 +6,13 @@
 * Capability to not use line separators 
 * Capability to hide titles
 * Dynamic column number
+* Capability to store tables into tables (Yo dawg ;))
 
 ## Improvements :
 * Improve checkings in table! macro. Prevent it from panicking
+* Implement "std::string::ToString" trait for Table
+* Implement Disaply trait for Table
+* Implement Debug trait or Table
 
 ## General :
 * Learn how to do unit testing in Rust, and add some
