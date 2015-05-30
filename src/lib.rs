@@ -1,5 +1,8 @@
 //! A formatted and aligned table printer written in rust
-use std::io::{stdout, Write, Error};
+use std::io::{stdout, Write, Error, ErrorKind};
+use std::fmt;
+use std::str;
+use std::string::ToString;
 
 /// A Struct representing a printable table
 #[derive(Clone, Debug)]
@@ -156,6 +159,48 @@ impl Table {
 		self.print(&mut stdout())
 			.ok()
 			.expect("Cannot print table to standard output");
+	}
+}
+
+impl fmt::Display for Table {
+	fn fmt(&self, fmt: &mut fmt::Formatter) -> Result<(), fmt::Error> {
+		let mut writer =  StringWriter::new();
+		if let Err(_) = self.print(&mut writer) {
+			return Err(fmt::Error)
+		}
+		return write!(fmt, "{}", writer.as_string());
+	}
+}
+
+/// Internal utility for writing data into a string
+struct StringWriter {
+	string: String
+}
+
+impl StringWriter {
+	/// Create a new `StringWriter`
+	fn new() -> StringWriter {
+		return StringWriter{string: String::new()};
+	}
+	
+	/// Return a reference to the internal written `String`
+	fn as_string(&self) -> &String {
+		return &self.string;
+	}
+}
+
+impl Write for StringWriter {
+	fn write(&mut self, data: &[u8]) -> Result<usize, Error> {
+		let string = match str::from_utf8(data) {
+			Ok(s) => s,
+			Err(e) => return Err(Error::new(ErrorKind::Other, format!("Cannot decode utf8 string : {}", e)))
+		};
+		self.string.push_str(string);
+		return Ok(data.len());
+	}
+	
+	fn flush(&mut self) -> Result<(), Error> {
+		return Ok(());
 	}
 }
 
