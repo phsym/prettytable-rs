@@ -4,6 +4,11 @@ use std::fmt;
 use std::str;
 use std::string::ToString;
 
+#[cfg(any(unix, macos))]
+static LINEFEED: &'static [u8] = b"\n";
+#[cfg(windows)]
+static LINEFEED: &'static [u8] = b"\r\n";
+
 /// A Struct representing a printable table
 #[derive(Clone, Debug)]
 pub struct Table {
@@ -118,7 +123,7 @@ impl Table {
 			}
 			try!(out.write_all(self.sep_cross.to_string().as_bytes()));
 		}
-		return out.write_all(b"\n");
+		return out.write_all(LINEFEED);
 	}
 	
 	fn print_line<T: Write>(&self, out: &mut T, line: &[String], col_width: &[usize]) -> Result<(), Error> {
@@ -132,7 +137,7 @@ impl Table {
 			}
 			try!(out.write_all(self.col_sep.to_string().as_bytes()));
 		}
-		return out.write_all(b"\n");
+		return out.write_all(LINEFEED);
 	}
 	
 	/// Print the table to `out`
