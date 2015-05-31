@@ -83,13 +83,10 @@ impl Table {
 		if column >= self.num_cols {
 			return Err("Column index is higher than expected");
 		}
-		let rowline: &mut Vec<String>;
 		if row > self.rows.len() {
-			rowline = try!(self.add_empty_row());
+			return Err("Row index is higher than contained number of rows");
 		}
-		else {
-			rowline = self.get_mut_row(row);
-		}
+		let rowline = self.get_mut_row(row);
 		rowline[column] = element.to_string();
 		return Ok(());
 	}
@@ -114,26 +111,28 @@ impl Table {
 	}
 	
 	fn print_line_separator<T: Write>(&self, out: &mut T, col_width: &[usize]) -> Result<(), Error> {
-		try!(write!(out, "{}", self.sep_cross));
+		try!(out.write_all(self.sep_cross.to_string().as_bytes()));
 		for i in 0..self.num_cols {
 			for _ in 0..(col_width[i] + 2) {
-				try!(write!(out, "{}", self.line_sep));
+				try!(out.write_all(self.line_sep.to_string().as_bytes()));
 			}
-			try!(write!(out, "{}", self.sep_cross));
+			try!(out.write_all(self.sep_cross.to_string().as_bytes()));
 		}
-		return writeln!(out, "");
+		return out.write_all(b"\n");
 	}
 	
 	fn print_line<T: Write>(&self, out: &mut T, line: &[String], col_width: &[usize]) -> Result<(), Error> {
-		try!(write!(out, "{}", self.col_sep));
+		try!(out.write_all(self.col_sep.to_string().as_bytes()));
 		for i in 0..self.num_cols {
-			try!(write!(out, " {} ", line[i]));
+			try!(out.write_all(b" "));
+			try!(out.write_all(line[i].as_bytes()));
+			try!(out.write_all(b" "));
 			for _ in 0..(col_width[i] - line[i].len()) {
-				try!(write!(out, " "));
+				try!(out.write_all(b" "));
 			}
-			try!(write!(out, "{}", self.col_sep));
+			try!(out.write_all(self.col_sep.to_string().as_bytes()));
 		}
-		return writeln!(out, "");
+		return out.write_all(b"\n");
 	}
 	
 	/// Print the table to `out`
