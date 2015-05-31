@@ -79,4 +79,36 @@ fn main() {
 
 Using the `ptable!` macro would even print it on stdout for you.
 
+Tables also support multiline cells content. As a consequence, you can print a table into another table (yo dawg ;).
+For example, the following code
+```rust
+let table1 = table!(["ABC", "DEFG", "HIJKLMN"],
+				   ["foobar", "bar", "foo"],
+				   ["foobar2", "bar2", "foo2"]
+				  );
+let table2 = table!(["Title 1", "Title 2"],
+					["This is\na multiline\ncell", "foo"],
+					["You dawg ;) You can even\nprint tables\ninto tables", table1]
+					);
+table2.printstd();
+```
+Would print the following text :
+```text
++--------------------------+------------------------------+
+| Title 1                  | Title 2                      |
++--------------------------+------------------------------+
+| This is                  | foo                          |
+| a multiline              |                              |
+| cell                     |                              |
++--------------------------+------------------------------+
+| You dawg ;) You can even | +---------+------+---------+ |
+| print tables             | | ABC     | DEFG | HIJKLMN | |
+| into tables              | +---------+------+---------+ |
+|                          | | foobar  | bar  | foo     | |
+|                          | +---------+------+---------+ |
+|                          | | foobar2 | bar2 | foo2    | |
+|                          | +---------+------+---------+ |
++--------------------------+------------------------------+
+```
+
 Additional examples are provided in documentation and in [examples](./examples/) directory
