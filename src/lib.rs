@@ -9,12 +9,15 @@ static LINEFEED: &'static [u8] = b"\n";
 #[cfg(windows)]
 static LINEFEED: &'static [u8] = b"\r\n";
 
+/// A type representing a row in a table
+pub type Row = Vec<String>;
+
 /// A Struct representing a printable table
 #[derive(Clone, Debug)]
 pub struct Table {
 	num_cols: usize,
 	titles: Vec<String>,
-	rows: Vec<Vec<String>>,
+	rows: Vec<Row>,
 	col_sep: char,
 	line_sep: char,
 	sep_cross: char
@@ -57,18 +60,18 @@ impl Table {
 	}
 	
 	/// Get a mutable reference to a row
-	pub fn get_mut_row(&mut self, row: usize) -> &mut Vec<String> {
+	pub fn get_mut_row(&mut self, row: usize) -> &mut Row {
 		return &mut self.rows[row];
 	}
 	
 	/// Get an immutable reference to a row
-	pub fn get_row(&self, row: usize) -> &Vec<String> {
+	pub fn get_row(&self, row: usize) -> &Row {
 		return &self.rows[row];
 	}
 	
 	/// Append a row in the table, transferring ownership of this row to the table
 	/// and returning a mutable reference to the row
-	pub fn add_row(&mut self, row: Vec<String>) -> Result<&mut Vec<String>, &str> {
+	pub fn add_row(&mut self, row: Row) -> Result<&mut Row, &str> {
 		if row.len() != self.num_cols {
 			return Err("Row does not have the proper number of column");
 		}
@@ -78,7 +81,7 @@ impl Table {
 	}
 	
 	/// Append an empty row in the table. Return a mutable reference to this new row.
-	pub fn add_empty_row(&mut self) -> Result<&mut Vec<String>, &str> {
+	pub fn add_empty_row(&mut self) -> Result<&mut Row, &str> {
 		let n = self.num_cols;
 		return Ok(try!(self.add_row(vec!["".to_string(); n])));	
 	}
@@ -96,9 +99,11 @@ impl Table {
 		return Ok(());
 	}
 	
-	/// Remove a row
+	/// Remove a row. Silently skip if row with index `row` does not exist
 	pub fn remove_row(&mut self, row: usize) {
-		self.rows.remove(row);
+		if row < self.rows.len() {
+			self.rows.remove(row);
+		}
 	}
 	
 	fn get_col_width(&self, col_idx: usize) -> Result<usize, &str> {
@@ -142,13 +147,16 @@ impl Table {
 	
 	/// Print the table to `out`
 	pub fn print<T: Write>(&self, out: &mut T) -> Result<(), Error> {
+		// Compute columns width
 		let mut col_width = vec![0usize; self.num_cols];
 		for i in 0..self.num_cols {
 			col_width[i] = self.get_col_width(i).unwrap();
 		}
+		// Print titles line
 		try!(self.print_line_separator(out, &col_width));
 		try!(self.print_line(out, &self.titles, &col_width));
 		try!(self.print_line_separator(out, &col_width));
+		// Print rows
 		for r in &self.rows {
 			try!(self.print_line(out, r, &col_width));
 			try!(self.print_line_separator(out, &col_width));

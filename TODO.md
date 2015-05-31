@@ -7,6 +7,8 @@
 * Capability to hide titles
 * Dynamic column number
 * Capability to store tables into tables (Yo dawg ;))
+* Manage multi line rows
+* Manage formatting with "term" library
 
 ## Improvements :
 * Improve checkings in table! macro. Prevent it from panicking
