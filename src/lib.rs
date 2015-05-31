@@ -79,7 +79,7 @@ impl Table {
 	}
 	
 	/// Modify a single element in the table
-	pub fn set_element(&mut self, element: String, column: usize, row: usize) -> Result<(), &str> {
+	pub fn set_element<T: ToString>(&mut self, element: T, column: usize, row: usize) -> Result<(), &str> {
 		if column >= self.num_cols {
 			return Err("Column index is higher than expected");
 		}
@@ -90,7 +90,7 @@ impl Table {
 		else {
 			rowline = self.get_mut_row(row);
 		}
-		rowline[column] = element;
+		rowline[column] = element.to_string();
 		return Ok(());
 	}
 	
@@ -113,7 +113,7 @@ impl Table {
 		return Ok(width);
 	}
 	
-	fn print_line_separator(&self, out: &mut Write, col_width: &[usize]) -> Result<(), Error> {
+	fn print_line_separator<T: Write>(&self, out: &mut T, col_width: &[usize]) -> Result<(), Error> {
 		try!(write!(out, "{}", self.sep_cross));
 		for i in 0..self.num_cols {
 			for _ in 0..(col_width[i] + 2) {
@@ -124,7 +124,7 @@ impl Table {
 		return writeln!(out, "");
 	}
 	
-	fn print_line(&self, out: &mut Write, line: &[String], col_width: &[usize]) -> Result<(), Error> {
+	fn print_line<T: Write>(&self, out: &mut T, line: &[String], col_width: &[usize]) -> Result<(), Error> {
 		try!(write!(out, "{}", self.col_sep));
 		for i in 0..self.num_cols {
 			try!(write!(out, " {} ", line[i]));
@@ -137,7 +137,7 @@ impl Table {
 	}
 	
 	/// Print the table to `out`
-	pub fn print(&self, out: &mut Write) -> Result<(), Error> {
+	pub fn print<T: Write>(&self, out: &mut T) -> Result<(), Error> {
 		let mut col_width = vec![0usize; self.num_cols];
 		for i in 0..self.num_cols {
 			col_width[i] = self.get_col_width(i).unwrap();
@@ -168,7 +168,7 @@ impl fmt::Display for Table {
 		if let Err(_) = self.print(&mut writer) {
 			return Err(fmt::Error)
 		}
-		return write!(fmt, "{}", writer.as_string());
+		return fmt.write_str(writer.as_string());
 	}
 }
 
@@ -183,7 +183,7 @@ impl StringWriter {
 		return StringWriter{string: String::new()};
 	}
 	
-	/// Return a reference to the internal written `String`
+	/// Return a reference to the internally written `String`
 	fn as_string(&self) -> &String {
 		return &self.string;
 	}
