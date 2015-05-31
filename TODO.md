@@ -7,6 +7,8 @@
 * Capability to hide titles
 * Dynamic column number
 * Manage formatting with "term" library
+* Limit cell width and split content if needed
+* Limit table width and auto adjust cell width as needed
 
 ## Improvements :
 * Improve checkings in table! macro. Prevent it from panicking
