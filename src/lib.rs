@@ -4,19 +4,22 @@ use std::fmt;
 use std::str;
 use std::string::ToString;
 
+pub mod cell;
+pub mod row;
+
+use row::Row;
+use cell::Cell;
+
 #[cfg(any(unix, macos))]
 static LINEFEED: &'static [u8] = b"\n";
 #[cfg(windows)]
 static LINEFEED: &'static [u8] = b"\r\n";
 
-/// A type representing a row in a table
-pub type Row = Vec<String>;
-
 /// A Struct representing a printable table
 #[derive(Clone, Debug)]
 pub struct Table {
 	num_cols: usize,
-	titles: Vec<String>,
+	titles: Row,
 	rows: Vec<Row>,
 	col_sep: char,
 	line_sep: char,
@@ -25,7 +28,7 @@ pub struct Table {
 
 impl Table {
 	/// Create a new table with the number of columns equals to the length of `titles`
-	pub fn new(titles: Vec<String>) -> Table {
+	pub fn new(titles: Row) -> Table {
 		let n = titles.len();
 		return Table {
 			num_cols: n,
@@ -83,11 +86,11 @@ impl Table {
 	/// Append an empty row in the table. Return a mutable reference to this new row.
 	pub fn add_empty_row(&mut self) -> Result<&mut Row, &str> {
 		let n = self.num_cols;
-		return Ok(try!(self.add_row(vec!["".to_string(); n])));	
+		return Ok(try!(self.add_row(Row::empty(n))));	
 	}
 	
 	/// Modify a single element in the table
-	pub fn set_element<T: ToString>(&mut self, element: T, column: usize, row: usize) -> Result<(), &str> {
+	pub fn set_element(&mut self, element: &String, column: usize, row: usize) -> Result<(), &str> {
 		if column >= self.num_cols {
 			return Err("Column index is higher than expected");
 		}
@@ -95,7 +98,7 @@ impl Table {
 			return Err("Row index is higher than contained number of rows");
 		}
 		let rowline = self.get_mut_row(row);
-		rowline[column] = element.to_string();
+		rowline.set_cell(Cell::new(element), column);
 		return Ok(());
 	}
 	
@@ -110,9 +113,9 @@ impl Table {
 		if col_idx >= self.num_cols {
 			return Err("Column index is too high");
 		}
-		let mut width = self.titles[col_idx].len();
+		let mut width = self.titles.get_cell_width(col_idx);
 		for r in &self.rows {
-			let l = r[col_idx].len();
+			let l = r.get_cell_width(col_idx);
 			if l > width {
 				width = l;
 			}
@@ -131,20 +134,6 @@ impl Table {
 		return out.write_all(LINEFEED);
 	}
 	
-	fn print_line<T: Write>(&self, out: &mut T, line: &[String], col_width: &[usize]) -> Result<(), Error> {
-		try!(out.write_all(self.col_sep.to_string().as_bytes()));
-		for i in 0..self.num_cols {
-			try!(out.write_all(b" "));
-			try!(out.write_all(line[i].as_bytes()));
-			try!(out.write_all(b" "));
-			for _ in 0..(col_width[i] - line[i].len()) {
-				try!(out.write_all(b" "));
-			}
-			try!(out.write_all(self.col_sep.to_string().as_bytes()));
-		}
-		return out.write_all(LINEFEED);
-	}
-	
 	/// Print the table to `out`
 	pub fn print<T: Write>(&self, out: &mut T) -> Result<(), Error> {
 		// Compute columns width
@@ -154,11 +143,11 @@ impl Table {
 		}
 		// Print titles line
 		try!(self.print_line_separator(out, &col_width));
-		try!(self.print_line(out, &self.titles, &col_width));
+		try!(self.titles.print(out, self.col_sep, &col_width));
 		try!(self.print_line_separator(out, &col_width));
 		// Print rows
 		for r in &self.rows {
-			try!(self.print_line(out, r, &col_width));
+			try!(r.print(out, self.col_sep, &col_width));
 			try!(self.print_line_separator(out, &col_width));
 		}
 		return out.flush();
@@ -212,6 +201,7 @@ impl Write for StringWriter {
 	}
 	
 	fn flush(&mut self) -> Result<(), Error> {
+		// Nothing to do here
 		return Ok(());
 	}
 }
@@ -240,15 +230,14 @@ impl Write for StringWriter {
 /// ```
 #[macro_export]
 macro_rules! table {
-	([$($title: expr), *]) => ($crate::Table::new(vec![$($title.to_string()), *]));
+	([$($title: expr), *]) => ($crate::Table::new(row![$($title), *]));
 	(
 		[$($title: expr), *], $([$($key:expr), *]), *
 	) => (
 		{
 			let mut tab = table!([$($title), *]);
 			$(
-				let row = vec![$($key.to_string()), *];
-				if let Err(e) = tab.add_row(row) {
+				if let Err(e) = tab.add_row(row![$($key), *]) {
 					panic!("Cannot create table from : {}", e);
 				}
 			)*

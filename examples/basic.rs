@@ -1,5 +1,7 @@
 #[macro_use] extern crate tabprint;
 use tabprint::Table;
+use tabprint::row::Row;
+use tabprint::cell::Cell;
 
 /*
 	Following main function will print :
@@ -20,12 +22,16 @@ use tabprint::Table;
 	+---------+------+---------+
 */
 fn main() {
-    let mut table = Table::new(vec!["ABC".to_string(), "DEFG".to_string(), "HIJKLMN".to_string()]);
-    table.add_row(vec!["foobar".to_string(), "bar".to_string(), "foo".to_string()]).unwrap();
-    table.add_row(vec!["foobar2".to_string(), "bar2".to_string(), "foo2".to_string()]).unwrap();
+    let mut table = Table::new(row!["ABC", "DEFG", "HIJKLMN"]);
+    table.add_row(row!["foobar", "bar", "foo"]).unwrap();
+    table.add_row(Row::new(vec![
+    		Cell::new(&"foobar2".to_string()),
+    		Cell::new(&"bar2".to_string()),
+    		Cell::new(&"foo2".to_string())])
+    	).unwrap();
     table.printstd();
     println!("Modified : ");
-    table.set_element("new_foo".to_string(), 2, 1).unwrap();
+    table.set_element(&"new_foo".to_string(), 2, 1).unwrap();
     table.printstd();
     
     // The same table can be built the following way :

@@ -8,7 +8,7 @@
 > THIS SOFTWARE IS DISTRIBUTED WITHOUT ANY WARRANTY <br>
 > Check LICENSE.txt file for more information. <br>
 
-A formatted and aligned table printer written in rust
+A formatted and aligned table printer written in rust. **This is a work in progress for now**.
 
 # How to build
 
@@ -34,11 +34,20 @@ Then you can start using it the following way :
 ```rust
 extern crate tabprint;
 use tabprint::Table;
+use tabprint::row::Row;
+use tabprint::cell::Cell;
 
 fn main() {
-	let mut table = Table::new(vec!["ABC".to_string(), "DEFG".to_string(), "HIJKLMN".to_string()]);
-    table.add_row(vec!["foobar".to_string(), "bar".to_string(), "foo".to_string()]).unwrap();
-    table.add_row(vec!["foobar2".to_string(), "bar2".to_string(), "foo2".to_string()]).unwrap();
+	// Create the table
+	let mut table = Table::new(row!["ABC", "DEFG", "HIJKLMN"]);
+	// Add a row
+    table.add_row(row!["foobar", "bar", "foo"]).unwrap();
+    // Or the more complicated way :
+    table.add_row(Row::new(vec![
+    		Cell::new(&"foobar2".to_string()),
+    		Cell::new(&"bar2".to_string()),
+    		Cell::new(&"foo2".to_string())])
+    	).unwrap();
     table.printstd();
 }
 ```
