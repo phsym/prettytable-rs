@@ -1,19 +1,15 @@
 //! A formatted and aligned table printer written in rust
-use std::io::{stdout, Write, Error, ErrorKind};
+use std::io::{stdout, Write, Error};
 use std::fmt;
-use std::str;
 use std::string::ToString;
 
 pub mod cell;
 pub mod row;
+mod utils;
 
 use row::Row;
 use cell::Cell;
-
-#[cfg(any(unix, macos))]
-static LINEFEED: &'static [u8] = b"\n";
-#[cfg(windows)]
-static LINEFEED: &'static [u8] = b"\r\n";
+use utils::{StringWriter, LINEFEED};
 
 /// A Struct representing a printable table
 #[derive(Clone, Debug)]
@@ -165,45 +161,12 @@ impl fmt::Display for Table {
 	}
 }
 
-/// Internal utility for writing data into a string
-struct StringWriter {
-	string: String
-}
-
-impl StringWriter {
-	/// Create a new `StringWriter`
-	fn new() -> StringWriter {
-		return StringWriter{string: String::new()};
-	}
-	
-	/// Return a reference to the internally written `String`
-	fn as_string(&self) -> &String {
-		return &self.string;
-	}
-}
-
-impl Write for StringWriter {
-	fn write(&mut self, data: &[u8]) -> Result<usize, Error> {
-		let string = match str::from_utf8(data) {
-			Ok(s) => s,
-			Err(e) => return Err(Error::new(ErrorKind::Other, format!("Cannot decode utf8 string : {}", e)))
-		};
-		self.string.push_str(string);
-		return Ok(data.len());
-	}
-	
-	fn flush(&mut self) -> Result<(), Error> {
-		// Nothing to do here
-		return Ok(());
-	}
-}
-
-/// Create a table filled with some values.
-///
+/// Create a table filled with some values
+/// 
 /// All the arguments used for elements must implement the `std::string::ToString` trait
 /// # Syntax
 /// table!([Element1_ row1, Element2_ row1, ...], [Element1_row2, ...], ...);
-/// 
+///
 /// # Example
 /// ```
 /// # #[macro_use] extern crate tabprint;
@@ -211,7 +174,7 @@ impl Write for StringWriter {
 /// // Create a table initialized with some rows :
 /// let tab = table!(["Element1", "Element2", "Element3"],
 /// 				 [1, 2, 3],
-///					 ["A", "B", "C"]
+/// 				 ["A", "B", "C"]
 /// 				 );
 /// # drop(tab);
 /// # }

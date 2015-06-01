@@ -12,7 +12,6 @@
 * Capability to insert a row in table 
 
 ## Improvements :
-* Fix doc test of table! macro example
 
 ## General :
 * Learn how to do unit testing in Rust, and add some

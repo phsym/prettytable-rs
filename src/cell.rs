@@ -21,7 +21,7 @@ impl Cell {
 			if l > width {
 				width = l;
 			}
-		};
+		}
 		return Cell {
 			content: content,
 			width: width

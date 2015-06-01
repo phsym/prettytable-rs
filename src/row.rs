@@ -1,7 +1,7 @@
 //! This module contains definition of table rows stuff
 use std::io::{Write, Error};
 
-use super::LINEFEED;
+use super::utils::LINEFEED;
 use super::cell::Cell;
 
 /// Represent a table row made of cells
