@@ -8,8 +8,11 @@
 * Limit cell width and split content if needed
 * Limit table width and auto adjust cell width as needed
 * Create a table format struct, and provide some default format
+* Capability to update row (append, insert, remove cells)
+* Capability to insert a row in table 
 
 ## Improvements :
+* Fix doc test of table! macro example
 
 ## General :
 * Learn how to do unit testing in Rust, and add some
