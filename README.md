@@ -1,5 +1,6 @@
 ![License](http://img.shields.io/badge/license-BSD-lightgrey.svg)
 [![Build Status](https://travis-ci.org/phsym/tabprint.svg)](https://travis-ci.org/phsymtabprint)
+[![Build status](https://ci.appveyor.com/api/projects/status/wdh9klb35fed6ik9?svg=true)](https://ci.appveyor.com/project/phsym/tabprint)
 
 # tabprint
 

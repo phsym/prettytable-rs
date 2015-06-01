@@ -7,7 +7,6 @@ use tabprint::cell::Cell;
 fn main() {
     let mut table = Table::new(row!["ABC", "DEFG", "HIJKLMN"]);
     table.add_row(row!["foobar", "bar", "foo"]).unwrap();
-    table.add_row(row!["foobar2", "bar2", "foo2"]).unwrap();
     table.add_row(Row::new(vec![
     		Cell::new(&"foobar2".to_string()),
     		Cell::new(&"bar2".to_string()),
