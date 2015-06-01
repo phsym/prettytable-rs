@@ -5,7 +5,7 @@ install:
   - rustc -V
   - cargo -V
 
-build:
+build_script:
   - cargo build --verbose
 
 test_script:
