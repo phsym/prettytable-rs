@@ -1,6 +1,10 @@
+//! This module contains definition of table/row cells stuff
 use std::io::{Write, Error};
 
-/// Represent a cell in a table
+/// Represent a table cell containing a string.
+/// 
+/// Once created, a cell's content cannot be modified.
+/// The cell would have to be replaced by another one
 #[derive(Clone, Debug)]
 pub struct Cell {
 	content: Vec<String>,
@@ -34,6 +38,11 @@ impl Cell {
 		return self.width;
 	}
 	
+	/// Return a copy of the full string contained in the cell
+	pub fn get_content(&self) -> String {
+		return self.content.iter().fold("".to_string(), (|acc, ref item| format!("{}\n{}", acc, item)));
+	}
+	
 	/// Print a partial cell to `out`. Since the cell may be multi-lined,
 	/// `idx` is the line index to print. `col_width` is the column width used to
 	/// fill the cells with blanks so it fits in the table.
@@ -41,9 +50,9 @@ impl Cell {
 	pub fn print<T: Write>(&self, out: &mut T, idx: usize, col_width: usize) -> Result<(), Error> {
 		try!(out.write_all(b" "));
 		let mut len = 0;
-		if idx < self.get_height() {
-			try!(out.write_all(self.content[idx].as_bytes()));
-			len = self.content[idx].len();
+		if let Some(content) = self.content.get(idx) {
+			try!(out.write_all(content.as_bytes()));
+			len = content.len();
 		}
 		try!(out.write_all(b" "));
 		for _ in 0..(col_width - len) {

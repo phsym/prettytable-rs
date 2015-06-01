@@ -65,13 +65,13 @@ impl Table {
 	}
 	
 	/// Get a mutable reference to a row
-	pub fn get_mut_row(&mut self, row: usize) -> &mut Row {
-		return &mut self.rows[row];
+	pub fn get_mut_row(&mut self, row: usize) -> Option<&mut Row> {
+		return self.rows.get_mut(row);
 	}
 	
 	/// Get an immutable reference to a row
-	pub fn get_row(&self, row: usize) -> &Row {
-		return &self.rows[row];
+	pub fn get_row(&self, row: usize) -> Option<&Row> {
+		return self.rows.get(row);
 	}
 	
 	/// Append a row in the table, transferring ownership of this row to the table
@@ -79,7 +79,7 @@ impl Table {
 	pub fn add_row(&mut self, row: Row) -> &mut Row {
 		self.rows.push(row);
 		let l = self.rows.len()-1;
-		return self.get_mut_row(l);
+		return self.get_mut_row(l).expect("FATAL : Cannot get reference to last inserted row");
 	}
 	
 	/// Append an empty row in the table. Return a mutable reference to this new row.
@@ -90,10 +90,7 @@ impl Table {
 	
 	/// Modify a single element in the table
 	pub fn set_element(&mut self, element: &String, column: usize, row: usize) -> Result<(), &str> {
-		if row > self.rows.len() {
-			return Err("Row index is higher than contained number of rows");
-		}
-		let rowline = self.get_mut_row(row);
+		let rowline = try!(self.get_mut_row(row).ok_or("Cannot find row"));
 		return rowline.set_cell(Cell::new(element), column);
 	}
 	
@@ -126,8 +123,8 @@ impl Table {
 	
 	fn print_line_separator<T: Write>(&self, out: &mut T, col_width: &[usize]) -> Result<(), Error> {
 		try!(out.write_all(self.sep_cross.to_string().as_bytes()));
-		for i in 0..col_width.len() {
-			for _ in 0..(col_width[i] + 2) {
+		for width in col_width {
+			for _ in 0..(width + 2) {
 				try!(out.write_all(self.line_sep.to_string().as_bytes()));
 			}
 			try!(out.write_all(self.sep_cross.to_string().as_bytes()));

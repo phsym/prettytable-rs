@@ -1,3 +1,4 @@
+//! This module contains definition of table rows stuff
 use std::io::{Write, Error};
 
 use super::LINEFEED;
@@ -39,12 +40,18 @@ impl Row {
 		return height;
 	}
 	
-	/// Get the minimum width required by the cell in the column `column`
+	/// Get the minimum width required by the cell in the column `column`.
+	/// Return 0 if the cell does not exist in this row
 	pub fn get_cell_width(&self, column: usize) -> usize {
-		if column >= self.cells.len() {
-			return 0;
+		return match self.cells.get(column) {
+			Some(cell) => cell.get_width(),
+			None => 0
 		}
-		return self.cells[column].get_width();
+	}
+	
+	/// Get the cell at index `idx`
+	pub fn get_cell(&self, idx: usize) -> Option<&Cell> {
+		return self.cells.get(idx);
 	}
 	
 	/// Set the `cell` in the row at the given `column`
@@ -62,11 +69,10 @@ impl Row {
 		for i in 0..self.get_height() {
 			try!(out.write_all(separator.to_string().as_bytes()));
 			for j in 0..col_width.len() {
-				if j < self.cells.len() {
-					try!(self.cells[j].print(out, i, col_width[j]));
-				} else {
-					try!(Cell::default().print(out, i, col_width[j]));
-				}
+				match self.get_cell(j) {
+					Some(ref c) => try!(c.print(out, i, col_width[j])),
+					None => try!(Cell::default().print(out, i, col_width[j]))
+				};
 				try!(out.write_all(separator.to_string().as_bytes()));
 			}
 			try!(out.write_all(LINEFEED));

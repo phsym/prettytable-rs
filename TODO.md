@@ -7,6 +7,7 @@
 * Manage formatting with "term" library
 * Limit cell width and split content if needed
 * Limit table width and auto adjust cell width as needed
+* Create a table format struct, and provide some default format
 
 ## Improvements :
 
