@@ -18,7 +18,6 @@ static LINEFEED: &'static [u8] = b"\r\n";
 /// A Struct representing a printable table
 #[derive(Clone, Debug)]
 pub struct Table {
-	titles: Row,
 	rows: Vec<Row>,
 	col_sep: char,
 	line_sep: char,
@@ -26,10 +25,9 @@ pub struct Table {
 }
 
 impl Table {
-	/// Create a new table with the number of columns equals to the length of `titles`
-	pub fn new(titles: Row) -> Table {
+	/// Create an empty table
+	pub fn new() -> Table {
 		return Table {
-			titles: titles, 
 			rows: Vec::new(),
 			col_sep: '|',
 			line_sep: '-',
@@ -49,7 +47,7 @@ impl Table {
 		self.sep_cross = cross;
 	}
 	
-	/// Get the number of column
+	/// Compute and return the number of column
 	pub fn get_column_num(&self) -> usize {
 		let mut cnum = 0;
 		for r in &self.rows {
@@ -106,8 +104,8 @@ impl Table {
 		}
 	}
 	
-	fn get_col_width(&self, col_idx: usize) -> usize {
-		let mut width = self.titles.get_cell_width(col_idx);
+	fn get_column_width(&self, col_idx: usize) -> usize {
+		let mut width = 0;
 		for r in &self.rows {
 			let l = r.get_cell_width(col_idx);
 			if l > width {
@@ -115,6 +113,15 @@ impl Table {
 			}
 		}
 		return width;
+	}
+	
+	fn get_all_column_width(&self) -> Vec<usize> {
+		let colnum = self.get_column_num();
+		let mut col_width = vec![0usize; colnum];
+		for i in 0..colnum {
+			col_width[i] = self.get_column_width(i);
+		}
+		return col_width;
 	}
 	
 	fn print_line_separator<T: Write>(&self, out: &mut T, col_width: &[usize]) -> Result<(), Error> {
@@ -131,14 +138,7 @@ impl Table {
 	/// Print the table to `out`
 	pub fn print<T: Write>(&self, out: &mut T) -> Result<(), Error> {
 		// Compute columns width
-		let colnum = self.get_column_num();
-		let mut col_width = vec![0usize; colnum];
-		for i in 0..colnum {
-			col_width[i] = self.get_col_width(i);
-		}
-		// Print titles line
-		try!(self.print_line_separator(out, &col_width));
-		try!(self.titles.print(out, self.col_sep, &col_width));
+		let col_width = self.get_all_column_width();
 		try!(self.print_line_separator(out, &col_width));
 		// Print rows
 		for r in &self.rows {
@@ -201,36 +201,31 @@ impl Write for StringWriter {
 	}
 }
 
-/// Create a table with column's titles from arguments.
+/// Create a table filled with some values.
 ///
-/// The table can also be initialized with some values.
-/// All the arguments used for titles and elements must implement the `std::string::ToString` trait
+/// All the arguments used for elements must implement the `std::string::ToString` trait
 /// # Syntax
-/// table!([Title1, Title2, ...], [Element1_ row1, Element2_ row1, ...], [Element1_row2, ...], ...);
+/// table!([Element1_ row1, Element2_ row1, ...], [Element1_row2, ...], ...);
+/// 
 /// # Example
 /// ```
 /// # #[macro_use] extern crate tabprint;
 /// # fn main() {
-/// // Create an empty table with titles :
-/// let tab = table!(["Title1", "Title2", "Title3"]);
 /// // Create a table initialized with some rows :
-/// let tab = table!(["Title1", "Title2", "Title3"],
-/// 				 ["Element1", "Element2", "Element3"],
-/// 				 [1, 2, 3]
+/// let tab = table!(["Element1", "Element2", "Element3"],
+/// 				 [1, 2, 3],
+///					 ["A", "B", "C"]
 /// 				 );
 /// # drop(tab);
 /// # }
 /// ```
 #[macro_export]
 macro_rules! table {
-	([$($title: expr), *]) => ($crate::Table::new(row![$($title), *]));
-	(
-		[$($title: expr), *], $([$($key:expr), *]), *
-	) => (
+	($([$($value:expr), *]), *) => (
 		{
-			let mut tab = table!([$($title), *]);
+			let mut tab = $crate::Table::new();
 			$(
-				tab.add_row(row![$($key), *]);
+				tab.add_row(row![$($value), *]);
 			)*
 			tab
 		}
@@ -242,18 +237,9 @@ macro_rules! table {
 /// The syntax is the same that the one for the `table!` macro
 #[macro_export]
 macro_rules! ptable {
-	([$($title: expr), *]) => (
+	([$($value: expr), *]) => (
 		{
-			let tab = table!([$($title), *]);
-			tab.printstd();
-			tab
-		}
-	);
-	(
-		[$($title: expr), *], $([$($key:expr), *]), *
-	) => (
-		{
-			let tab = table!([$($title), *], $([$($key), *]), *);
+			let tab = table!([$($value), *]);
 			tab.printstd();
 			tab
 		}

@@ -40,8 +40,9 @@ use tabprint::cell::Cell;
 
 fn main() {
 	// Create the table
-	let mut table = Table::new(row!["ABC", "DEFG", "HIJKLMN"]);
+	let mut table = Table::new();
 	// Add a row
+	table.add_row(row!["ABC", "DEFG", "HIJKLMN"]);
     table.add_row(row!["foobar", "bar", "foo"]);
     // Or the more complicated way :
     table.add_row(Row::new(vec![

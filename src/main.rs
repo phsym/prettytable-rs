@@ -5,7 +5,8 @@ use tabprint::cell::Cell;
 
 #[allow(dead_code)]
 fn main() {
-    let mut table = Table::new(row!["ABC", "DEFG", "HIJKLMN"]);
+    let mut table = Table::new();
+    table.add_row(row!["ABC", "DEFG", "HIJKLMN"]);
     table.add_row(row!["foobar", "bar", "foo"]);
     table.add_row(Row::new(vec![
     		Cell::new(&"foobar2".to_string()),
