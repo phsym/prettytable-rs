@@ -238,7 +238,7 @@ macro_rules! table {
 			let mut tab = table!([$($title), *]);
 			$(
 				if let Err(e) = tab.add_row(row![$($key), *]) {
-					panic!("Cannot create table from : {}", e);
+					panic!("Cannot create table : {}", e);
 				}
 			)*
 			tab
