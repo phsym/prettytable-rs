@@ -5,7 +5,6 @@
 * Capability to store object implementing the "std::string::ToString" trait
 * Capability to not use line separators 
 * Capability to hide titles
-* Dynamic column number
 * Manage formatting with "term" library
 * Limit cell width and split content if needed
 * Limit table width and auto adjust cell width as needed

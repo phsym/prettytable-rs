@@ -18,7 +18,6 @@ static LINEFEED: &'static [u8] = b"\r\n";
 /// A Struct representing a printable table
 #[derive(Clone, Debug)]
 pub struct Table {
-	num_cols: usize,
 	titles: Row,
 	rows: Vec<Row>,
 	col_sep: char,
@@ -29,9 +28,7 @@ pub struct Table {
 impl Table {
 	/// Create a new table with the number of columns equals to the length of `titles`
 	pub fn new(titles: Row) -> Table {
-		let n = titles.len();
 		return Table {
-			num_cols: n,
 			titles: titles, 
 			rows: Vec::new(),
 			col_sep: '|',
@@ -54,7 +51,14 @@ impl Table {
 	
 	/// Get the number of column
 	pub fn get_column_num(&self) -> usize {
-		return self.num_cols;
+		let mut cnum = 0;
+		for r in &self.rows {
+			let l = r.len();
+			if l > cnum {
+				cnum = l;
+			}
+		}
+		return cnum;
 	}
 	
 	/// Get the number of rows
@@ -74,32 +78,25 @@ impl Table {
 	
 	/// Append a row in the table, transferring ownership of this row to the table
 	/// and returning a mutable reference to the row
-	pub fn add_row(&mut self, row: Row) -> Result<&mut Row, &str> {
-		if row.len() != self.num_cols {
-			return Err("Row does not have the proper number of column");
-		}
+	pub fn add_row(&mut self, row: Row) -> &mut Row {
 		self.rows.push(row);
 		let l = self.rows.len()-1;
-		return Ok(self.get_mut_row(l));
+		return self.get_mut_row(l);
 	}
 	
 	/// Append an empty row in the table. Return a mutable reference to this new row.
-	pub fn add_empty_row(&mut self) -> Result<&mut Row, &str> {
-		let n = self.num_cols;
-		return Ok(try!(self.add_row(Row::empty(n))));	
+	pub fn add_empty_row(&mut self) -> &mut Row {
+		let n = self.get_column_num();
+		return self.add_row(Row::empty(n));	
 	}
 	
 	/// Modify a single element in the table
 	pub fn set_element(&mut self, element: &String, column: usize, row: usize) -> Result<(), &str> {
-		if column >= self.num_cols {
-			return Err("Column index is higher than expected");
-		}
 		if row > self.rows.len() {
 			return Err("Row index is higher than contained number of rows");
 		}
 		let rowline = self.get_mut_row(row);
-		rowline.set_cell(Cell::new(element), column);
-		return Ok(());
+		return rowline.set_cell(Cell::new(element), column);
 	}
 	
 	/// Remove a row. Silently skip if row with index `row` does not exist
@@ -109,10 +106,7 @@ impl Table {
 		}
 	}
 	
-	fn get_col_width(&self, col_idx: usize) -> Result<usize, &str> {
-		if col_idx >= self.num_cols {
-			return Err("Column index is too high");
-		}
+	fn get_col_width(&self, col_idx: usize) -> usize {
 		let mut width = self.titles.get_cell_width(col_idx);
 		for r in &self.rows {
 			let l = r.get_cell_width(col_idx);
@@ -120,12 +114,12 @@ impl Table {
 				width = l;
 			}
 		}
-		return Ok(width);
+		return width;
 	}
 	
 	fn print_line_separator<T: Write>(&self, out: &mut T, col_width: &[usize]) -> Result<(), Error> {
 		try!(out.write_all(self.sep_cross.to_string().as_bytes()));
-		for i in 0..self.num_cols {
+		for i in 0..col_width.len() {
 			for _ in 0..(col_width[i] + 2) {
 				try!(out.write_all(self.line_sep.to_string().as_bytes()));
 			}
@@ -137,9 +131,10 @@ impl Table {
 	/// Print the table to `out`
 	pub fn print<T: Write>(&self, out: &mut T) -> Result<(), Error> {
 		// Compute columns width
-		let mut col_width = vec![0usize; self.num_cols];
-		for i in 0..self.num_cols {
-			col_width[i] = self.get_col_width(i).unwrap();
+		let colnum = self.get_column_num();
+		let mut col_width = vec![0usize; colnum];
+		for i in 0..colnum {
+			col_width[i] = self.get_col_width(i);
 		}
 		// Print titles line
 		try!(self.print_line_separator(out, &col_width));
@@ -212,8 +207,6 @@ impl Write for StringWriter {
 /// All the arguments used for titles and elements must implement the `std::string::ToString` trait
 /// # Syntax
 /// table!([Title1, Title2, ...], [Element1_ row1, Element2_ row1, ...], [Element1_row2, ...], ...);
-/// # Panic
-/// May panic if some rows could not be inserted
 /// # Example
 /// ```
 /// # #[macro_use] extern crate tabprint;
@@ -237,9 +230,7 @@ macro_rules! table {
 		{
 			let mut tab = table!([$($title), *]);
 			$(
-				if let Err(e) = tab.add_row(row![$($key), *]) {
-					panic!("Cannot create table : {}", e);
-				}
+				tab.add_row(row![$($key), *]);
 			)*
 			tab
 		}
@@ -249,8 +240,6 @@ macro_rules! table {
 /// Create a table with `table!` macro, print it to standard output, then return this table for future usage.
 /// 
 /// The syntax is the same that the one for the `table!` macro
-/// # Panic
-/// May panic if some rows could not be inserted
 #[macro_export]
 macro_rules! ptable {
 	([$($title: expr), *]) => (

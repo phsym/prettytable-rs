@@ -42,13 +42,13 @@ fn main() {
 	// Create the table
 	let mut table = Table::new(row!["ABC", "DEFG", "HIJKLMN"]);
 	// Add a row
-    table.add_row(row!["foobar", "bar", "foo"]).unwrap();
+    table.add_row(row!["foobar", "bar", "foo"]);
     // Or the more complicated way :
     table.add_row(Row::new(vec![
     		Cell::new(&"foobar2".to_string()),
     		Cell::new(&"bar2".to_string()),
     		Cell::new(&"foo2".to_string())])
-    	).unwrap();
+    	);
     table.printstd();
 }
 ```

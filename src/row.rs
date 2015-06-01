@@ -41,12 +41,19 @@ impl Row {
 	
 	/// Get the minimum width required by the cell in the column `column`
 	pub fn get_cell_width(&self, column: usize) -> usize {
+		if column >= self.cells.len() {
+			return 0;
+		}
 		return self.cells[column].get_width();
 	}
 	
 	/// Set the `cell` in the row at the given `column`
-	pub fn set_cell(&mut self, cell: Cell, column: usize) {
+	pub fn set_cell(&mut self, cell: Cell, column: usize) -> Result<(), &str> {
+		if column >= self.len() {
+			return Err("Column index is higher than expected");
+		}
 		self.cells[column] = cell;
+		return Ok(());
 	}
 	
 	/// Print the row to `out`, with `separator` as column separator, and `col_width`
@@ -54,8 +61,12 @@ impl Row {
 	pub fn print<T: Write>(&self, out: &mut T, separator: char, col_width: &[usize]) -> Result<(), Error> {
 		for i in 0..self.get_height() {
 			try!(out.write_all(separator.to_string().as_bytes()));
-			for j in 0..self.cells.len() {
-				try!(self.cells[j].print(out, i, col_width[j]));
+			for j in 0..col_width.len() {
+				if j < self.cells.len() {
+					try!(self.cells[j].print(out, i, col_width[j]));
+				} else {
+					try!(Cell::default().print(out, i, col_width[j]));
+				}
 				try!(out.write_all(separator.to_string().as_bytes()));
 			}
 			try!(out.write_all(LINEFEED));
