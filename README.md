@@ -113,6 +113,6 @@ Would print the following text :
 +-------------------------+------------------------------+
 ```
 
-Rows may have different numbers of cells. The table will automatically adapt to the largest row by adding empty cells to smaller rows.
+Rows may have different numbers of cells. The table will automatically adapt to the largest row by printing additional empty cells in smaller rows.
 
 Additional examples are provided in documentation and in [examples](./examples/) directory
