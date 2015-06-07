@@ -64,7 +64,7 @@ impl Row {
 	}
 	
 	/// Print the row to `out`, with `separator` as column separator, and `col_width`
-	/// specifyin g the width of each columns
+	/// specifying the width of each columns
 	pub fn print<T: Write>(&self, out: &mut T, separator: char, col_width: &[usize]) -> Result<(), Error> {
 		for i in 0..self.get_height() {
 			try!(out.write_all(separator.to_string().as_bytes()));
