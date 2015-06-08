@@ -1,4 +1,4 @@
-#[macro_use] extern crate tabprint;
+#[macro_use] extern crate prettytable;
 
 /*
 	Following main function will print :

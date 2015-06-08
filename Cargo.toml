@@ -1,6 +1,6 @@
 [package]
 
-name = "tabprint"
+name = "prettytable-rs"
 version = "0.1.0"
 description = "A small rust library that print aligned and formatted tables"
 repository = "https://github.com/phsym/tabprint"
@@ -12,3 +12,6 @@ license = "BSD-3-Clause"
 [[bin]]
 
 name = "main"
+
+[lib]
+name = "prettytable"

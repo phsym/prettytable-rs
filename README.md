@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/phsym/tabprint.svg)](https://travis-ci.org/phsym/tabprint)
 [![Build status](https://ci.appveyor.com/api/projects/status/wdh9klb35fed6ik9?svg=true)](https://ci.appveyor.com/project/phsym/tabprint)
 
-# tabprint
+# prettytable-rs
 
 *Copyright &copy; 2015 Pierre-Henri Symoneaux*
 
@@ -25,18 +25,18 @@ And to build html documentation, run
 More often, you will include the library as a dependency to your project. In order to do this, add the following lines to your **Cargo.toml** file :
 
 ```toml
-[dependencies.tabprint]
-git = "https://github.com/phsym/tabprint.git"
+[dependencies.prettytable-rs]
+git = "https://github.com/phsym/prettytable-rs.git"
 
 ```
 
 Then you can start using it the following way :
 
 ```rust
-extern crate tabprint;
-use tabprint::Table;
-use tabprint::row::Row;
-use tabprint::cell::Cell;
+extern crate prettytable;
+use prettytable::Table;
+use prettytable::row::Row;
+use prettytable::cell::Cell;
 
 fn main() {
 	// Create the table
@@ -68,7 +68,7 @@ This code will produce the following output :
 
 To make the code simpler, the `table!` macro is there for you. The following code would produce the exact same output :
 ```rust
-#[macro_use] extern crate tabprint;
+#[macro_use] extern crate prettytable;
 
 fn main() {
 	let table = table!(["ABC", "DEFG", "HIJKLMN"],

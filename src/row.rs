@@ -85,7 +85,7 @@ impl Row {
 /// 
 /// # Example
 /// ```
-/// # #[macro_use] extern crate tabprint;
+/// # #[macro_use] extern crate prettytable;
 /// # fn main() {
 /// let row = row!["Element 1", "Element 2", "Element 3"];
 /// // Do something with row

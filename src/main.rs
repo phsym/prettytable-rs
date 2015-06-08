@@ -1,7 +1,7 @@
-#[macro_use] extern crate tabprint;
-use tabprint::Table;
-use tabprint::row::Row;
-use tabprint::cell::Cell;
+#[macro_use] extern crate prettytable;
+use prettytable::Table;
+use prettytable::row::Row;
+use prettytable::cell::Cell;
 
 #[allow(dead_code)]
 fn main() {

@@ -169,7 +169,7 @@ impl fmt::Display for Table {
 ///
 /// # Example
 /// ```
-/// # #[macro_use] extern crate tabprint;
+/// # #[macro_use] extern crate prettytable;
 /// # fn main() {
 /// // Create a table initialized with some rows :
 /// let tab = table!(["Element1", "Element2", "Element3"],

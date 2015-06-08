@@ -16,7 +16,6 @@
 
 ## General :
 * Learn how to do unit testing in Rust, and add some
-* Rename project to prettytable-rs
 
 ## Travis-CI :
 * Publish doc in github pages
