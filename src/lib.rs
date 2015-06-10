@@ -85,11 +85,11 @@ impl Table {
 	
 	/// Append an empty row in the table. Return a mutable reference to this new row.
 	pub fn add_empty_row(&mut self) -> &mut Row {
-		let n = self.get_column_num();
-		return self.add_row(Row::empty(n));	
+		return self.add_row(Row::default());	
 	}
 	
-	/// Insert `row` at the position `index`, and return a mutable reference to this row
+	/// Insert `row` at the position `index`, and return a mutable reference to this row.
+	/// If index is higher than current numbers of rows, `row` is appended at the end of the table
 	pub fn insert_row(&mut self, index: usize, row: Row) -> &mut Row {
 		if index < self.rows.len() {
 			self.rows.insert(index, row);
@@ -105,10 +105,10 @@ impl Table {
 		return rowline.set_cell(Cell::new(element), column);
 	}
 	
-	/// Remove a row. Silently skip if row with index `row` does not exist
-	pub fn remove_row(&mut self, row: usize) {
-		if row < self.rows.len() {
-			self.rows.remove(row);
+	/// Remove the row at position `index`. Silently skip if the row does not exist
+	pub fn remove_row(&mut self, index: usize) {
+		if index < self.rows.len() {
+			self.rows.remove(index);
 		}
 	}
 	

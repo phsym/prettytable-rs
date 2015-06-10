@@ -20,8 +20,8 @@ impl Row {
 	}
 	
 	/// Create an row of length `size`, with empty strings stored
-	pub fn empty(size: usize) -> Row {
-		return Self::new(vec![Cell::default(); size]);
+	pub fn empty() -> Row {
+		return Self::new(vec![Cell::default(); 0]);
 	}
 	
 	/// Get the number of cells in this row
@@ -58,10 +58,32 @@ impl Row {
 	/// Set the `cell` in the row at the given `column`
 	pub fn set_cell(&mut self, cell: Cell, column: usize) -> Result<(), &str> {
 		if column >= self.len() {
-			return Err("Column index is higher than expected");
+			return Err("Cannot find cell");
 		}
 		self.cells[column] = cell;
 		return Ok(());
+	}
+	
+	/// Append a `cell` at the end of the row
+	pub fn add_cell(&mut self, cell: Cell) {
+		self.cells.push(cell);
+	}
+	
+	/// Insert `cell` at position `index`. If `index` is higher than the row lenght,
+	/// the cell will be appended at the end
+	pub fn insert_cell(&mut self, index: usize, cell: Cell) {
+		if index < self.cells.len() {
+			self.cells.insert(index, cell);
+		} else {
+			self.add_cell(cell);
+		}
+	}
+	
+	/// Remove the cell at position `index`. Silently skip if this cell does not exist
+	pub fn remove_cell(&mut self, index: usize) {
+		if index < self.cells.len() {
+			self.cells.remove(index);
+		}
 	}
 	
 	/// Print the row to `out`, with `separator` as column separator, and `col_width`
@@ -79,6 +101,12 @@ impl Row {
 			try!(out.write_all(LINEFEED));
 		}
 		return Ok(());
+	}
+}
+
+impl Default for Row {
+	fn default() -> Row {
+		return Row::empty();
 	}
 }
 

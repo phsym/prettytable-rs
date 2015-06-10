@@ -2,14 +2,12 @@
 
 ## Features :
 * Select a range of rows to print
-* Capability to store object implementing the "std::string::ToString" trait
-* Capability to not use line separators 
+* Capability to not use/print line separators 
 * Manage formatting with "term" library
 * Limit cell width and split content if needed
 * Limit table width and auto adjust cell width as needed
 * Create a table format struct, and provide some default format
-* Capability to update row (append, insert, remove cells)
-* Add capability to print a special line separator after first line (for titles for example), or just empty lines, so 2 spearators would be printed
+* Add capability to print a special line separator after first line (for titles for example)
 
 ## Improvements :
 

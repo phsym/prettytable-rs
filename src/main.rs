@@ -15,7 +15,7 @@ fn main() {
     	);
     table.printstd();
     println!("Modified : ");
-    table.separators('*', '*', '*');
+    table.separators('|', '=', '+');
     table.set_element(&"new_foo".to_string(), 2, 1).unwrap();
     table.printstd();
     
