@@ -80,13 +80,23 @@ impl Table {
 	pub fn add_row(&mut self, row: Row) -> &mut Row {
 		self.rows.push(row);
 		let l = self.rows.len()-1;
-		return self.get_mut_row(l).expect("FATAL : Cannot get reference to last inserted row");
+		return &mut self.rows[l];
 	}
 	
 	/// Append an empty row in the table. Return a mutable reference to this new row.
 	pub fn add_empty_row(&mut self) -> &mut Row {
 		let n = self.get_column_num();
 		return self.add_row(Row::empty(n));	
+	}
+	
+	/// Insert `row` at the position `index`, and return a mutable reference to this row
+	pub fn insert_row(&mut self, index: usize, row: Row) -> &mut Row {
+		if index < self.rows.len() {
+			self.rows.insert(index, row);
+			return &mut self.rows[index];
+		} else {
+			return self.add_row(row);
+		}
 	}
 	
 	/// Modify a single element in the table

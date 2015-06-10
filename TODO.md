@@ -9,7 +9,6 @@
 * Limit table width and auto adjust cell width as needed
 * Create a table format struct, and provide some default format
 * Capability to update row (append, insert, remove cells)
-* Capability to insert a row in table in a given position
 * Add capability to print a special line separator after first line (for titles for example), or just empty lines, so 2 spearators would be printed
 
 ## Improvements :
