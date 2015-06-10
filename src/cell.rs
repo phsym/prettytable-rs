@@ -1,5 +1,6 @@
 //! This module contains definition of table/row cells stuff
 use std::io::{Write, Error};
+use std::string::ToString;
 
 /// Represent a table cell containing a string.
 /// 
@@ -60,6 +61,18 @@ impl Cell {
 		}
 		return Ok(());
 	} 
+}
+
+impl <'a, T: ToString> From<&'a T> for Cell {
+	fn from(f: &T) -> Cell {
+		return Cell::new(&f.to_string());
+	}
+}
+
+impl ToString for Cell {
+	fn to_string(&self) -> String {
+		return self.get_content();
+	}
 }
 
 impl Default for Cell {

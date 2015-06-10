@@ -1,7 +1,7 @@
 //! A formatted and aligned table printer written in rust
 use std::io::{stdout, Write, Error};
 use std::fmt;
-use std::string::ToString;
+use std::iter::{FromIterator, IntoIterator};
 
 pub mod cell;
 pub mod row;
@@ -23,8 +23,13 @@ pub struct Table {
 impl Table {
 	/// Create an empty table
 	pub fn new() -> Table {
+		return Self::init(Vec::new());
+	}
+	
+	/// Create a table initialized with ``rows`
+	pub fn init(rows: Vec<Row>) -> Table {
 		return Table {
-			rows: Vec::new(),
+			rows: rows,
 			col_sep: '|',
 			line_sep: '-',
 			sep_cross: '+'
@@ -161,6 +166,18 @@ impl fmt::Display for Table {
 	}
 }
 
+impl <B: ToString, A: IntoIterator<Item=B>> FromIterator<A> for Table {
+	fn from_iter<T>(iterator: T) -> Table where T: IntoIterator<Item=A> {
+		return Self::init(iterator.into_iter().map(|r| Row::from(r)).collect());
+	}
+}
+
+impl <T, A, B> From<T> for Table where B: ToString, A: IntoIterator<Item=B>, T : IntoIterator<Item=A> {
+	fn from(it: T) -> Table {
+		return Self::from_iter(it);
+	}
+}
+
 /// Create a table filled with some values
 /// 
 /// All the arguments used for elements must implement the `std::string::ToString` trait
@@ -182,13 +199,7 @@ impl fmt::Display for Table {
 #[macro_export]
 macro_rules! table {
 	($([$($value:expr), *]), *) => (
-		{
-			let mut tab = $crate::Table::new();
-			$(
-				tab.add_row(row![$($value), *]);
-			)*
-			tab
-		}
+		$crate::Table::init(vec![$(row![$($value), *]), *])
 	)
 }
 

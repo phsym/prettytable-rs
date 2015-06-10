@@ -1,5 +1,6 @@
 //! This module contains definition of table rows stuff
 use std::io::{Write, Error};
+use std::iter::FromIterator;
 
 use super::utils::LINEFEED;
 use super::cell::Cell;
@@ -78,6 +79,18 @@ impl Row {
 			try!(out.write_all(LINEFEED));
 		}
 		return Ok(());
+	}
+}
+
+impl <A: ToString> FromIterator<A> for Row {
+	fn from_iter<T>(iterator: T) -> Row where T: IntoIterator<Item=A> {
+		return Self::new(iterator.into_iter().map(|ref e| Cell::from(e)).collect());
+	}
+}
+
+impl <T, A> From<T> for Row where A: ToString, T : IntoIterator<Item=A> {
+	fn from(it: T) -> Row {
+		return Self::from_iter(it);
 	}
 }
 
