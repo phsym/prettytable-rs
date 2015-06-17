@@ -2,12 +2,9 @@
 
 ## Features :
 * Select a range of rows to print
-* Capability to not use/print line separators 
 * Manage formatting with "term" library
 * Limit cell width and split content if needed
 * Limit table width and auto adjust cell width as needed
-* Create a table format struct, and provide some default format
-* Add capability to print a special line separator after first line (for titles for example)
 
 ## Improvements :
 

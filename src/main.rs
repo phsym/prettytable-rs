@@ -2,6 +2,7 @@
 use prettytable::Table;
 use prettytable::row::Row;
 use prettytable::cell::Cell;
+use prettytable::format::*;
 
 #[allow(dead_code)]
 fn main() {
@@ -15,11 +16,12 @@ fn main() {
     	);
     table.printstd();
     println!("Modified : ");
-    table.separators('|', '=', '+');
     table.set_element(&"new_foo".to_string(), 2, 1).unwrap();
     table.printstd();
     
-    let table = table!(["A", "B", "C"], [1, 2, 3, 4], ["A\nBCCZZZ\nDDD", 2, table]);
+    let mut table = table!(["A", "B", "C"], [1, 2, 3, 4], ["A\nBCCZZZ\nDDD", 2, table]);
+    table.set_titles(row!["Title 1", "Title 2"]);
+    table.set_format(FORMAT_DEFAULT);
     table.printstd();
     println!("{:?}", table);
 }

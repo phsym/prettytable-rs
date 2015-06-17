@@ -5,19 +5,20 @@ use std::iter::{FromIterator, IntoIterator};
 
 pub mod cell;
 pub mod row;
+pub mod format;
 mod utils;
 
 use row::Row;
 use cell::Cell;
-use utils::{StringWriter, LINEFEED};
+use format::{TableFormat, FORMAT_DEFAULT};
+use utils::StringWriter;
 
 /// A Struct representing a printable table
 #[derive(Clone, Debug)]
 pub struct Table {
-	rows: Vec<Row>,
-	col_sep: char,
-	line_sep: char,
-	sep_cross: char
+	format: TableFormat,
+	titles: Option<Row>,
+	rows: Vec<Row>
 }
 
 impl Table {
@@ -30,22 +31,14 @@ impl Table {
 	pub fn init(rows: Vec<Row>) -> Table {
 		return Table {
 			rows: rows,
-			col_sep: '|',
-			line_sep: '-',
-			sep_cross: '+'
+			titles: None,
+			format: FORMAT_DEFAULT
 		};
 	}
 	
-	/// Change separators
-	/// 
-	/// `col` is the column separator
-	/// `line` is the line separator
-	/// `cross` is a special separator used when line and collumn separators meet
-	/// Default separators used are '|', '-' and '+'
-	pub fn separators(&mut self, col: char, line: char, cross: char) {
-		self.col_sep = col;
-		self.line_sep = line;
-		self.sep_cross = cross;
+	/// Change separators the table format
+	pub fn set_format(&mut self, format: TableFormat) {
+		self.format = format;
 	}
 	
 	/// Compute and return the number of column
@@ -63,6 +56,16 @@ impl Table {
 	/// Get the number of rows
 	pub fn len(&self) -> usize {
 		return self.rows.len();
+	}
+	
+	/// Set the optional title lines
+	pub fn set_titles(&mut self, titles: Row) {
+		self.titles = Some(titles);
+	}
+	
+	/// Unset the title line
+	pub fn unset_titles(&mut self) {
+		self.titles = None;
 	}
 	
 	/// Get a mutable reference to a row
@@ -112,8 +115,13 @@ impl Table {
 		}
 	}
 	
-	fn get_column_width(&self, col_idx: usize) -> usize {
-		let mut width = 0;
+	/// Get the width of the column at position `col_idx`.
+	/// Return 0 if the column does not exists;
+	pub fn get_column_width(&self, col_idx: usize) -> usize {
+		let mut width = match self.titles {
+			Some(ref t) => t.get_cell_width(col_idx),
+			None => 0
+		};
 		for r in &self.rows {
 			let l = r.get_cell_width(col_idx);
 			if l > width {
@@ -123,7 +131,9 @@ impl Table {
 		return width;
 	}
 	
-	fn get_all_column_width(&self) -> Vec<usize> {
+	/// Get the width of all columns, and return a slice 
+	/// with the result for each column
+	pub fn get_all_column_width(&self) -> Vec<usize> {
 		let colnum = self.get_column_num();
 		let mut col_width = vec![0usize; colnum];
 		for i in 0..colnum {
@@ -132,26 +142,19 @@ impl Table {
 		return col_width;
 	}
 	
-	fn print_line_separator<T: Write>(&self, out: &mut T, col_width: &[usize]) -> Result<(), Error> {
-		try!(out.write_all(self.sep_cross.to_string().as_bytes()));
-		for width in col_width {
-			for _ in 0..(width + 2) {
-				try!(out.write_all(self.line_sep.to_string().as_bytes()));
-			}
-			try!(out.write_all(self.sep_cross.to_string().as_bytes()));
-		}
-		return out.write_all(LINEFEED);
-	}
-	
 	/// Print the table to `out`
 	pub fn print<T: Write>(&self, out: &mut T) -> Result<(), Error> {
 		// Compute columns width
 		let col_width = self.get_all_column_width();
-		try!(self.print_line_separator(out, &col_width));
+		try!(self.format.print_line_separator(out, &col_width));
+		if let Some(ref t) = self.titles {
+			try!(t.print(out, &self.format, &col_width));
+			try!(self.format.print_title_separator(out, &col_width));
+		}
 		// Print rows
 		for r in &self.rows {
-			try!(r.print(out, self.col_sep, &col_width));
-			try!(self.print_line_separator(out, &col_width));
+			try!(r.print(out, &self.format, &col_width));
+			try!(self.format.print_line_separator(out, &col_width));
 		}
 		return out.flush();
 	}
@@ -168,7 +171,7 @@ impl Table {
 
 impl fmt::Display for Table {
 	fn fmt(&self, fmt: &mut fmt::Formatter) -> Result<(), fmt::Error> {
-		let mut writer =  StringWriter::new();
+		let mut writer = StringWriter::new();
 		if let Err(_) = self.print(&mut writer) {
 			return Err(fmt::Error)
 		}

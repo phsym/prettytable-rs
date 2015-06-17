@@ -4,6 +4,7 @@ use std::iter::FromIterator;
 
 use super::utils::LINEFEED;
 use super::cell::Cell;
+use super::format::TableFormat;
 
 /// Represent a table row made of cells
 #[derive(Clone, Debug)]
@@ -88,15 +89,15 @@ impl Row {
 	
 	/// Print the row to `out`, with `separator` as column separator, and `col_width`
 	/// specifying the width of each columns
-	pub fn print<T: Write>(&self, out: &mut T, separator: char, col_width: &[usize]) -> Result<(), Error> {
+	pub fn print<T: Write>(&self, out: &mut T, format: &TableFormat, col_width: &[usize]) -> Result<(), Error> {
 		for i in 0..self.get_height() {
-			try!(out.write_all(separator.to_string().as_bytes()));
+			try!(format.print_column_separator(out));
 			for j in 0..col_width.len() {
 				match self.get_cell(j) {
 					Some(ref c) => try!(c.print(out, i, col_width[j])),
 					None => try!(Cell::default().print(out, i, col_width[j]))
 				};
-				try!(out.write_all(separator.to_string().as_bytes()));
+				try!(format.print_column_separator(out));
 			}
 			try!(out.write_all(LINEFEED));
 		}
