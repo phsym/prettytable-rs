@@ -4,6 +4,7 @@ name = "prettytable-rs"
 version = "0.1.0"
 description = "A small rust library that print aligned and formatted tables"
 repository = "https://github.com/phsym/prettytable-rs"
+documentation = "http://phsym.github.io/prettytable-rs"
 readme = "README.md"
 authors = [ "Pierre-Henri Symoneaux" ]
 keywords = ["tab", "table", "format", "pretty", "aligned"]

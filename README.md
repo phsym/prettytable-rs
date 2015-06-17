@@ -4,6 +4,8 @@
 
 # prettytable-rs
 
+[Documentation](http://phsym.github.io/prettytable-rs)
+
 *Copyright &copy; 2015 Pierre-Henri Symoneaux*
 
 > THIS SOFTWARE IS DISTRIBUTED WITHOUT ANY WARRANTY <br>
