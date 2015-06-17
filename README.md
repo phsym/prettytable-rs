@@ -1,7 +1,7 @@
 ![License](http://img.shields.io/badge/license-BSD-lightgrey.svg)
 [![Build Status](https://travis-ci.org/phsym/prettytable-rs.svg)](https://travis-ci.org/phsym/prettytable-rs)
 [![Build status](https://ci.appveyor.com/api/projects/status/wdh9klb35fed6ik9?svg=true)](https://ci.appveyor.com/project/phsym/tabprint)
-[![Crates.io](https://img.shields.io/crates/v/rustc-serialize.svg)](https://crates.io/crates/prettytable-rs)
+[![Crates.io](https://img.shields.io/crates/v/prettytable-rs.svg)](https://crates.io/crates/prettytable-rs)
 
 # prettytable-rs
 
