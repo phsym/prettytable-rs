@@ -19,9 +19,12 @@ fn main() {
     table.set_element(&"new_foo".to_string(), 2, 1).unwrap();
     table.printstd();
     
+ 	ptable!(["A", "B", "C"], [1, 2, 3, 4]);
+ 	   
     let mut table = table!(["A", "B", "C"], [1, 2, 3, 4], ["A\nBCCZZZ\nDDD", 2, table]);
     table.set_titles(row!["Title 1", "Title 2"]);
     table.set_format(FORMAT_DEFAULT);
     table.printstd();
     println!("{:?}", table);
+    
 }

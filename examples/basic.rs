@@ -40,4 +40,10 @@ fn main() {
     				   ["foobar", "bar", "foo"],
     				   ["foobar2", "bar2", "foo2"]
     				  );
+    
+    // Or directly print it like this
+    let _table = table!(["ABC", "DEFG", "HIJKLMN"],
+    				   ["foobar", "bar", "foo"],
+    				   ["foobar2", "bar2", "foo2"]
+    				  );
 }

@@ -221,9 +221,9 @@ macro_rules! table {
 /// The syntax is the same that the one for the `table!` macro
 #[macro_export]
 macro_rules! ptable {
-	([$($value: expr), *]) => (
+	($([$($value: expr), *]), *) => (
 		{
-			let tab = table!([$($value), *]);
+			let tab = table!($([$($value), *]), *);
 			tab.printstd();
 			tab
 		}

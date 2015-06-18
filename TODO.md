@@ -12,5 +12,4 @@
 * Learn how to do unit testing in Rust, and add some
 
 ## Travis-CI :
-* Publish doc in github pages
 * Automatically publish API documentation with travis after each successfull build
