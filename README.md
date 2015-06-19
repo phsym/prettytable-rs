@@ -12,7 +12,7 @@
 > THIS SOFTWARE IS DISTRIBUTED WITHOUT ANY WARRANTY <br>
 > Check LICENSE.txt file for more information. <br>
 
-A formatted and aligned table printer written in rust. **This is a work in progress for now**.
+A formatted and aligned table printer written in rust.
 
 # How to build
 

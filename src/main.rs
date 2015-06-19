@@ -26,5 +26,4 @@ fn main() {
     table.set_format(FORMAT_DEFAULT);
     table.printstd();
     println!("{:?}", table);
-    
 }

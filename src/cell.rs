@@ -55,10 +55,7 @@ impl Cell {
 			try!(out.write_all(content.as_bytes()));
 			len = content.len();
 		}
-		try!(out.write_all(b" "));
-		for _ in 0..(col_width - len) {
-			try!(out.write_all(b" "));
-		}
+		try!(out.write_all(&vec![' ' as u8; col_width - len + 1]));
 		return Ok(());
 	} 
 }

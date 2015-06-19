@@ -23,9 +23,7 @@ impl LineSeparator {
 	pub fn print<T: Write>(&self, out: &mut T, col_width: &[usize]) -> Result<(), Error> {
 		try!(out.write_all(&self.cross));
 		for width in col_width {
-			for _ in 0..(width + 2) {
-				try!(out.write_all(&self.line));
-			}
+			try!(out.write_all(&vec![self.line[0]; width+2]));
 			try!(out.write_all(&self.cross));
 		}
 		return out.write_all(LINEFEED);
