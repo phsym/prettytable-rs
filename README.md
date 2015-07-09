@@ -28,8 +28,8 @@ And to build html documentation, run
 More often, you will include the library as a dependency to your project. In order to do this, add the following lines to your **Cargo.toml** file :
 
 ```toml
-[dependencies.prettytable-rs]
-git = "0.1.2"
+[dependencies]
+prettytable-rs = "0.1.2"
 
 ```
 
