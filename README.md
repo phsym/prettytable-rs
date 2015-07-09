@@ -29,7 +29,7 @@ More often, you will include the library as a dependency to your project. In ord
 
 ```toml
 [dependencies.prettytable-rs]
-git = "https://github.com/phsym/prettytable-rs.git"
+git = "0.1.2"
 
 ```
 
