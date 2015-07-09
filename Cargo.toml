@@ -16,3 +16,6 @@ name = "main"
 
 [lib]
 name = "prettytable"
+
+[dependencies]
+unicode-width = "*"
