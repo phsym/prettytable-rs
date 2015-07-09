@@ -1,4 +1,6 @@
 //! A formatted and aligned table printer written in rust
+extern crate unicode_width;
+
 use std::io::{stdout, Write, Error};
 use std::fmt;
 use std::iter::{FromIterator, IntoIterator};

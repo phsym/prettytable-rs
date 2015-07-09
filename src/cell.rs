@@ -1,9 +1,11 @@
 //! This module contains definition of table/row cells stuff
+
 use std::io::{Write, Error};
 use std::string::ToString;
+use unicode_width::UnicodeWidthStr;
 
 /// Represent a table cell containing a string.
-/// 
+///
 /// Once created, a cell's content cannot be modified.
 /// The cell would have to be replaced by another one
 #[derive(Clone, Debug)]
@@ -18,7 +20,7 @@ impl Cell {
 		let content: Vec<String> = string.lines_any().map(|ref x| x.to_string()).collect();
 		let mut width = 0;
 		for cont in &content {
-			let l = cont.len();
+			let l = UnicodeWidthStr::width(&cont[..]);
 			if l > width {
 				width = l;
 			}
@@ -53,11 +55,11 @@ impl Cell {
 		let mut len = 0;
 		if let Some(content) = self.content.get(idx) {
 			try!(out.write_all(content.as_bytes()));
-			len = content.len();
+			len = UnicodeWidthStr::width(&content[..]);
 		}
 		try!(out.write_all(&vec![' ' as u8; col_width - len + 1]));
 		return Ok(());
-	} 
+	}
 }
 
 impl <'a, T: ToString> From<&'a T> for Cell {
@@ -81,3 +83,30 @@ impl Default for Cell {
 		};
 	}
 }
+
+#[cfg(test)]
+mod tests {
+	use cell::Cell;
+	use utils::StringWriter;
+
+	#[test]
+	fn ascii() {
+		let ascii_cell = Cell::new(&String::from("hello"));
+		assert_eq!(ascii_cell.get_width(), 5);
+
+		let mut out = StringWriter::new();
+		let _ = ascii_cell.print(&mut out, 0, 10);
+		assert_eq!(out.as_string(), " hello      ");
+	}
+
+	#[test]
+	fn unicode() {
+		let unicode_cell = Cell::new(&String::from("привет"));
+		assert_eq!(unicode_cell.get_width(), 6);
+
+		let mut out = StringWriter::new();
+		let _ = unicode_cell.print(&mut out, 0, 10);
+		assert_eq!(out.as_string(), " привет     ");
+	}
+}
+
