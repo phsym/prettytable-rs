@@ -2,7 +2,6 @@
 
 use std::io::{Write, Error};
 use std::string::ToString;
-use std::str::FromStr;
 use unicode_width::UnicodeWidthStr;
 use super::format::Align;
 
@@ -82,13 +81,6 @@ impl Cell {
 impl <'a, T: ToString> From<&'a T> for Cell {
 	fn from(f: &T) -> Cell {
 		return Cell::new(&f.to_string());
-	}
-}
-
-impl FromStr for Cell {
-	type Err = ();
-	fn from_str(s: &str) -> Result<Cell, Self::Err> {
-		return Ok(Cell::new(s));
 	}
 }
 

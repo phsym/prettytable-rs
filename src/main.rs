@@ -31,5 +31,5 @@ fn main() {
     table.set_titles(row!["Title 1", "Title 2"]);
     table.set_format(FORMAT_DEFAULT);
     table.printstd();
-    println!("{:?}", table);
+//    println!("{:#?}", table);
 }
