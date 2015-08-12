@@ -3,9 +3,9 @@ use std::io::{Error, ErrorKind, Write};
 use std::str;
 
 #[cfg(any(unix, macos))]
-pub static LINEFEED: &'static [u8] = b"\n";
+pub static NEWLINE: &'static [u8] = b"\n";
 #[cfg(windows)]
-pub static LINEFEED: &'static [u8] = b"\r\n";
+pub static NEWLINE: &'static [u8] = b"\r\n";
 
 /// Internal utility for writing data into a string
 pub struct StringWriter {
@@ -19,7 +19,7 @@ impl StringWriter {
 	}
 	
 	/// Return a reference to the internally written `String`
-	pub fn as_string(&self) -> &String {
+	pub fn as_string(&self) -> &str {
 		return &self.string;
 	}
 }

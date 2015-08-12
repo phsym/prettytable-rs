@@ -10,13 +10,19 @@ fn main() {
     table.add_row(row!["ABC", "DEFG", "HIJKLMN"]);
     table.add_row(row!["foobar", "bar", "foo"]);
     table.add_row(Row::new(vec![
-    		Cell::new(&"foobar2".to_string()),
-    		Cell::new(&"bar2".to_string()),
-    		Cell::new(&"foo2".to_string())])
+    		Cell::new("foobar2"),
+    		Cell::new("bar2"),
+    		Cell::new("foo2")])
     	);
+    for cell in table.column_iter_mut(2) {
+    	cell.align(Align::RIGHT);
+    }
+    for cell in table.column_iter_mut(1) {
+    	cell.align(Align::CENTER);
+    }
     table.printstd();
     println!("Modified : ");
-    table.set_element(&"new_foo".to_string(), 2, 1).unwrap();
+    table.set_element("new_foo", 2, 1).unwrap();
     table.printstd();
     
  	ptable!(["A", "B", "C"], [1, 2, 3, 4]);

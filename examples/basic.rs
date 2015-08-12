@@ -26,13 +26,13 @@ fn main() {
     table.add_row(row!["ABC", "DEFG", "HIJKLMN"]);
     table.add_row(row!["foobar", "bar", "foo"]);
     table.add_row(Row::new(vec![
-    		Cell::new(&"foobar2".to_string()),
-    		Cell::new(&"bar2".to_string()),
-    		Cell::new(&"foo2".to_string())])
+    		Cell::new("foobar2"),
+    		Cell::new("bar2"),
+    		Cell::new("foo2")])
     	);
     table.printstd();
     println!("Modified : ");
-    table.set_element(&"new_foo".to_string(), 2, 1).unwrap();
+    table.set_element("new_foo", 2, 1).unwrap();
     table.printstd();
     
     // The same table can be built the following way :

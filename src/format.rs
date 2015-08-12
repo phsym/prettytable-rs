@@ -2,7 +2,15 @@
 
 use std::io::{Write, Error};
 
-use super::utils::LINEFEED;
+use super::utils::NEWLINE;
+
+/// Alignment for cell's content
+#[derive(Clone, Debug)]
+pub enum Align  {
+	LEFT,
+	CENTER,
+	RIGHT
+}
 
 /// Contains the character used for printing a line separator
 #[derive(Clone, Debug)]
@@ -26,7 +34,7 @@ impl LineSeparator {
 			try!(out.write_all(&vec![self.line[0]; width+2]));
 			try!(out.write_all(&self.cross));
 		}
-		return out.write_all(LINEFEED);
+		return out.write_all(NEWLINE);
 	}
 }
 

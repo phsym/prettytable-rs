@@ -2,7 +2,7 @@
 use std::io::{Write, Error};
 use std::iter::FromIterator;
 
-use super::utils::LINEFEED;
+use super::utils::NEWLINE;
 use super::cell::Cell;
 use super::format::TableFormat;
 
@@ -56,6 +56,11 @@ impl Row {
 		return self.cells.get(idx);
 	}
 	
+	/// Get the mutable cell at index `idx`
+	pub fn get_mut_cell(&mut self, idx: usize) -> Option<&mut Cell> {
+		return self.cells.get_mut(idx);
+	}
+	
 	/// Set the `cell` in the row at the given `column`
 	pub fn set_cell(&mut self, cell: Cell, column: usize) -> Result<(), &str> {
 		if column >= self.len() {
@@ -99,7 +104,7 @@ impl Row {
 				};
 				try!(format.print_column_separator(out));
 			}
-			try!(out.write_all(LINEFEED));
+			try!(out.write_all(NEWLINE));
 		}
 		return Ok(());
 	}

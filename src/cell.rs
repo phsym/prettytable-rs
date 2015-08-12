@@ -2,7 +2,9 @@
 
 use std::io::{Write, Error};
 use std::string::ToString;
+use std::str::FromStr;
 use unicode_width::UnicodeWidthStr;
+use super::format::Align;
 
 /// Represent a table cell containing a string.
 ///
@@ -11,12 +13,14 @@ use unicode_width::UnicodeWidthStr;
 #[derive(Clone, Debug)]
 pub struct Cell {
 	content: Vec<String>,
-	width: usize
+	width: usize,
+	align: Align
 }
 
 impl Cell {
-	/// Create a new `Cell` initialized with content from `string`
-	pub fn new(string: &String) -> Cell {
+	/// Create a new `Cell` initialized with content from `string`.
+	/// Text alignment in cell is configurable with the `align` argument
+	pub fn new_align(string: &str, align: Align) -> Cell {
 		let content: Vec<String> = string.lines_any().map(|ref x| x.to_string()).collect();
 		let mut width = 0;
 		for cont in &content {
@@ -27,8 +31,20 @@ impl Cell {
 		}
 		return Cell {
 			content: content,
-			width: width
+			width: width,
+			align: align
 		};
+	}
+	
+	/// Create a new `Cell` initialized with content from `string`.
+	/// By default, content is align to `LEFT`
+	pub fn new(string: &str) -> Cell {
+		return Cell::new_align(string, Align::LEFT);
+	}
+	
+	/// Set text alignment in the cell
+	pub fn align(&mut self, align: Align) {
+		self.align = align;
 	}
 	
 	/// Return the height of the cell
@@ -51,20 +67,28 @@ impl Cell {
 	/// fill the cells with blanks so it fits in the table.
 	/// If `ìdx` is higher than this cell's height, it will print empty content
 	pub fn print<T: Write>(&self, out: &mut T, idx: usize, col_width: usize) -> Result<(), Error> {
-		try!(out.write_all(b" "));
-		let mut len = 0;
-		if let Some(content) = self.content.get(idx) {
-			try!(out.write_all(content.as_bytes()));
-			len = UnicodeWidthStr::width(&content[..]);
+		let c = match self.content.get(idx) {
+			Some(s) => s.as_ref(),
+			None => ""
+		};
+		return match self.align {
+			Align::LEFT   => write!(out, " {: <1$} ", c, col_width),
+			Align::CENTER => write!(out, " {: ^1$} ", c, col_width),
+			Align::RIGHT  => write!(out, " {: >1$} ", c, col_width),
 		}
-		try!(out.write_all(&vec![' ' as u8; col_width - len + 1]));
-		return Ok(());
 	}
 }
 
 impl <'a, T: ToString> From<&'a T> for Cell {
 	fn from(f: &T) -> Cell {
 		return Cell::new(&f.to_string());
+	}
+}
+
+impl FromStr for Cell {
+	type Err = ();
+	fn from_str(s: &str) -> Result<Cell, Self::Err> {
+		return Ok(Cell::new(s));
 	}
 }
 
@@ -75,11 +99,12 @@ impl ToString for Cell {
 }
 
 impl Default for Cell {
-	/// Return a cell initialized with a single empty `String`
+	/// Return a cell initialized with a single empty `String`, with LEFT alignment
 	fn default() -> Cell {
 		return Cell {
 			content: vec!["".to_string(); 1],
-			width: 0
+			width: 0,
+			align: Align::LEFT
 		};
 	}
 }
@@ -88,10 +113,11 @@ impl Default for Cell {
 mod tests {
 	use cell::Cell;
 	use utils::StringWriter;
+	use format::Align;
 
 	#[test]
 	fn ascii() {
-		let ascii_cell = Cell::new(&String::from("hello"));
+		let ascii_cell = Cell::new("hello");
 		assert_eq!(ascii_cell.get_width(), 5);
 
 		let mut out = StringWriter::new();
@@ -101,12 +127,36 @@ mod tests {
 
 	#[test]
 	fn unicode() {
-		let unicode_cell = Cell::new(&String::from("привет"));
+		let unicode_cell = Cell::new("привет");
 		assert_eq!(unicode_cell.get_width(), 6);
 
 		let mut out = StringWriter::new();
 		let _ = unicode_cell.print(&mut out, 0, 10);
 		assert_eq!(out.as_string(), " привет     ");
+	}
+	
+	#[test]
+	fn align_left() {
+		let cell = Cell::new_align("test", Align::LEFT);
+		let mut out = StringWriter::new();
+		let _ = cell.print(&mut out, 0, 10);
+		assert_eq!(out.as_string(), " test       ");
+	}
+	
+	#[test]
+	fn align_center() {
+		let cell = Cell::new_align("test", Align::CENTER);
+		let mut out = StringWriter::new();
+		let _ = cell.print(&mut out, 0, 10);
+		assert_eq!(out.as_string(), "    test    ");
+	}
+	
+	#[test]
+	fn align_right() {
+		let cell = Cell::new_align("test", Align::RIGHT);
+		let mut out = StringWriter::new();
+		let _ = cell.print(&mut out, 0, 10);
+		assert_eq!(out.as_string(), "       test ");
 	}
 }
 

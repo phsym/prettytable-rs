@@ -105,8 +105,9 @@ impl Table {
 	}
 	
 	/// Modify a single element in the table
-	pub fn set_element(&mut self, element: &String, column: usize, row: usize) -> Result<(), &str> {
+	pub fn set_element(&mut self, element: &str, column: usize, row: usize) -> Result<(), &str> {
 		let rowline = try!(self.get_mut_row(row).ok_or("Cannot find row"));
+		// TODO : If a cell already exist, copy it's alignment parameter
 		return rowline.set_cell(Cell::new(element), column);
 	}
 	
@@ -142,6 +143,16 @@ impl Table {
 			col_width[i] = self.get_column_width(i);
 		}
 		return col_width;
+	}
+	
+	/// Return an iterator over the immutable cells of the column specified by `column`
+	pub fn column_iter(&self, column: usize) -> ColumnIter {
+		return ColumnIter(self.rows.iter(), column);
+	}
+	
+	/// Return an iterator over the mutable cells of the column specified by `column`
+	pub fn column_iter_mut(&mut self, column: usize) -> ColumnIterMut {
+		return ColumnIterMut(self.rows.iter_mut(), column);
 	}
 	
 	/// Print the table to `out`
@@ -190,6 +201,34 @@ impl <B: ToString, A: IntoIterator<Item=B>> FromIterator<A> for Table {
 impl <T, A, B> From<T> for Table where B: ToString, A: IntoIterator<Item=B>, T : IntoIterator<Item=A> {
 	fn from(it: T) -> Table {
 		return Self::from_iter(it);
+	}
+}
+
+/// Iterator over immutable cells in a column
+pub struct ColumnIter<'a>(std::slice::Iter<'a, Row>, usize);
+
+impl <'a> std::iter::Iterator for ColumnIter<'a> {
+	type Item = &'a Cell;
+	
+	fn next(&mut self) -> Option<&'a Cell> {
+		return match self.0.next() {
+			None => None,
+			Some(row) => row.get_cell(self.1)
+		}
+	}
+}
+
+/// Iterator over mutable cells in a column
+pub struct ColumnIterMut<'a>(std::slice::IterMut<'a, Row>, usize);
+
+impl <'a> std::iter::Iterator for ColumnIterMut<'a> {
+	type Item = &'a mut Cell;
+	
+	fn next(&mut self) -> Option<&'a mut Cell> {
+		return match self.0.next() {
+			None => None,
+			Some(row) => row.get_mut_cell(self.1)
+		}
 	}
 }
 
