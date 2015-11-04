@@ -20,7 +20,7 @@ impl Cell {
 	/// Create a new `Cell` initialized with content from `string`.
 	/// Text alignment in cell is configurable with the `align` argument
 	pub fn new_align(string: &str, align: Align) -> Cell {
-		let content: Vec<String> = string.lines_any().map(|ref x| x.to_string()).collect();
+		let content: Vec<String> = string.lines().map(|ref x| x.to_string()).collect();
 		let mut width = 0;
 		for cont in &content {
 			let l = UnicodeWidthStr::width(&cont[..]);
