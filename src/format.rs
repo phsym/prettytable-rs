@@ -28,7 +28,7 @@ impl LineSeparator {
 	}
 	
 	/// Print a full line separator to `out`. `col_width` is a slice containing the width of each column
-	pub fn print<T: Write>(&self, out: &mut T, col_width: &[usize]) -> Result<(), Error> {
+	pub fn print<T: Write+?Sized>(&self, out: &mut T, col_width: &[usize]) -> Result<(), Error> {
 		try!(out.write_all(&self.cross));
 		for width in col_width {
 			try!(out.write_all(&vec![self.line[0]; width+2]));
@@ -59,7 +59,7 @@ impl TableFormat {
 	}
 	
 	/// Print a full line separator to `out`. `col_width` is a slice containing the width of each column
-	pub fn print_line_separator<T: Write>(&self, out: &mut T, col_width: &[usize]) -> Result<(), Error> {
+	pub fn print_line_separator<T: Write+?Sized>(&self, out: &mut T, col_width: &[usize]) -> Result<(), Error> {
 		if let Some(ref l) = self.line_sep {
 			return l.print(out, col_width);
 		}
@@ -67,7 +67,7 @@ impl TableFormat {
 	}
 	
 	/// Print a full title separator to `out`. `col_width` is a slice containing the width of each column
-	pub fn print_title_separator<T: Write>(&self, out: &mut T, col_width: &[usize]) -> Result<(), Error> {
+	pub fn print_title_separator<T: Write+?Sized>(&self, out: &mut T, col_width: &[usize]) -> Result<(), Error> {
 		if let Some(ref l) = self.title_sep {
 			return l.print(out, col_width);
 		}
@@ -75,7 +75,7 @@ impl TableFormat {
 	}
 	
 	/// Print a column separator to `out`
-	pub fn print_column_separator<T: Write>(&self, out: &mut T) -> Result<(), Error> {
+	pub fn print_column_separator<T: Write+?Sized>(&self, out: &mut T) -> Result<(), Error> {
 		return out.write_all(&self.col_sep);
 	}
 }

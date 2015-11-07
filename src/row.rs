@@ -2,6 +2,8 @@
 use std::io::{Write, Error};
 use std::iter::FromIterator;
 
+use term::Terminal;
+
 use super::utils::NEWLINE;
 use super::cell::Cell;
 use super::format::TableFormat;
@@ -101,6 +103,21 @@ impl Row {
 				match self.get_cell(j) {
 					Some(ref c) => try!(c.print(out, i, col_width[j])),
 					None => try!(Cell::default().print(out, i, col_width[j]))
+				};
+				try!(format.print_column_separator(out));
+			}
+			try!(out.write_all(NEWLINE));
+		}
+		return Ok(());
+	}
+	
+	pub fn print_term<T: Terminal+?Sized>(&self, out: &mut T, format: &TableFormat, col_width: &[usize]) -> Result<(), Error> {
+		for i in 0..self.get_height() {
+			try!(format.print_column_separator(out));
+			for j in 0..col_width.len() {
+				match self.get_cell(j) {
+					Some(ref c) => try!(c.print_term(out, i, col_width[j])),
+					None => try!(Cell::default().print_term(out, i, col_width[j]))
 				};
 				try!(format.print_column_separator(out));
 			}

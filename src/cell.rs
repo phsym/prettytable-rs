@@ -3,6 +3,7 @@
 use std::io::{Write, Error};
 use std::string::ToString;
 use unicode_width::UnicodeWidthStr;
+use term::{Attr, Terminal};
 use super::format::Align;
 
 /// Represent a table cell containing a string.
@@ -13,7 +14,8 @@ use super::format::Align;
 pub struct Cell {
 	content: Vec<String>,
 	width: usize,
-	align: Align
+	align: Align,
+	style: Vec<Attr>
 }
 
 impl Cell {
@@ -31,7 +33,8 @@ impl Cell {
 		return Cell {
 			content: content,
 			width: width,
-			align: align
+			align: align,
+			style: Vec::new()
 		};
 	}
 	
@@ -44,6 +47,15 @@ impl Cell {
 	/// Set text alignment in the cell
 	pub fn align(&mut self, align: Align) {
 		self.align = align;
+	}
+	
+	pub fn style(&mut self, attr: Attr) {
+		self.style.push(attr);
+	}
+	
+	pub fn with_style(mut self, attr: Attr) -> Cell {
+		self.style(attr);
+		return self;
 	}
 	
 	/// Return the height of the cell
@@ -65,7 +77,7 @@ impl Cell {
 	/// `idx` is the line index to print. `col_width` is the column width used to
 	/// fill the cells with blanks so it fits in the table.
 	/// If `ìdx` is higher than this cell's height, it will print empty content
-	pub fn print<T: Write>(&self, out: &mut T, idx: usize, col_width: usize) -> Result<(), Error> {
+	pub fn print<T: Write+?Sized>(&self, out: &mut T, idx: usize, col_width: usize) -> Result<(), Error> {
 		let c = match self.content.get(idx) {
 			Some(s) => s.as_ref(),
 			None => ""
@@ -75,6 +87,15 @@ impl Cell {
 			Align::CENTER => write!(out, " {: ^1$} ", c, col_width),
 			Align::RIGHT  => write!(out, " {: >1$} ", c, col_width),
 		}
+	}
+	
+	pub fn print_term<T: Terminal+?Sized>(&self, out: &mut T, idx: usize, col_width: usize) -> Result<(), Error> {
+		for a in &self.style {
+			try!(out.attr(a.clone()));
+		}
+		try!(self.print(out, idx, col_width));
+		try!(out.reset());
+		return Ok(());
 	}
 }
 
@@ -96,7 +117,8 @@ impl Default for Cell {
 		return Cell {
 			content: vec!["".to_string(); 1],
 			width: 0,
-			align: Align::LEFT
+			align: Align::LEFT,
+			style: Vec::new()
 		};
 	}
 }

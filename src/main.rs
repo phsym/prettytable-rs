@@ -4,6 +4,9 @@ use prettytable::row::Row;
 use prettytable::cell::Cell;
 use prettytable::format::*;
 
+extern crate term;
+use term::{Attr, color};
+
 #[allow(dead_code)]
 fn main() {
     let mut table = Table::new();
@@ -11,7 +14,7 @@ fn main() {
     table.add_row(row!["foobar", "bar", "foo"]);
     table.add_row(Row::new(vec![
     		Cell::new("foobar2"),
-    		Cell::new("bar2"),
+    		Cell::new("bar2").with_style(Attr::BackgroundColor(color::GREEN)).with_style(Attr::ForegroundColor(color::RED)),
     		Cell::new("foo2")])
     	);
     for cell in table.column_iter_mut(2) {

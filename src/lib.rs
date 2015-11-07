@@ -1,9 +1,12 @@
 //! A formatted and aligned table printer written in rust
 extern crate unicode_width;
+extern crate term;
 
-use std::io::{stdout, Write, Error};
+use std::io::{Write, Error};
 use std::fmt;
 use std::iter::{FromIterator, IntoIterator};
+
+use term::{Terminal, stdout};
 
 pub mod cell;
 pub mod row;
@@ -172,11 +175,27 @@ impl Table {
 		return out.flush();
 	}
 	
+	pub fn print_term<T: Terminal+?Sized>(&self, out: &mut T) -> Result<(), Error> {
+		// Compute columns width
+		let col_width = self.get_all_column_width();
+		try!(self.format.print_line_separator(out, &col_width));
+		if let Some(ref t) = self.titles {
+			try!(t.print_term(out, &self.format, &col_width));
+			try!(self.format.print_title_separator(out, &col_width));
+		}
+		// Print rows
+		for r in &self.rows {
+			try!(r.print_term(out, &self.format, &col_width));
+			try!(self.format.print_line_separator(out, &col_width));
+		}
+		return out.flush();
+	}
+	
 	/// Print the table to standard output
 	/// # Panic
 	/// Panic if writing to standard output fails
 	pub fn printstd(&self) {
-		self.print(&mut stdout())
+		self.print_term(&mut *stdout().unwrap())
 			.ok()
 			.expect("Cannot print table to standard output");
 	}

@@ -19,3 +19,4 @@ name = "prettytable"
 
 [dependencies]
 unicode-width = "*"
+term = "*"
