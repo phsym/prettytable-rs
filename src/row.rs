@@ -94,15 +94,16 @@ impl Row {
 		}
 	}
 	
-	/// Print the row to `out`, with `separator` as column separator, and `col_width`
-	/// specifying the width of each columns
-	pub fn print<T: Write>(&self, out: &mut T, format: &TableFormat, col_width: &[usize]) -> Result<(), Error> {
+	/// Internal only
+	fn __print<T:Write+?Sized, F>(&self, out: &mut T, format: &TableFormat, col_width: &[usize], f: F) -> Result<(), Error> 
+		where F: Fn(&Cell, &mut T, usize, usize) -> Result<(), Error> 
+	{
 		for i in 0..self.get_height() {
 			try!(format.print_column_separator(out));
 			for j in 0..col_width.len() {
 				match self.get_cell(j) {
-					Some(ref c) => try!(c.print(out, i, col_width[j])),
-					None => try!(Cell::default().print(out, i, col_width[j]))
+					Some(ref c) => try!(f(c, out, i, col_width[j])),
+					None => try!(f(&Cell::default(), out, i, col_width[j]))
 				};
 				try!(format.print_column_separator(out));
 			}
@@ -111,19 +112,16 @@ impl Row {
 		return Ok(());
 	}
 	
+	/// Print the row to `out`, with `separator` as column separator, and `col_width`
+	/// specifying the width of each columns
+	pub fn print<T: Write+?Sized>(&self, out: &mut T, format: &TableFormat, col_width: &[usize]) -> Result<(), Error> {
+		return self.__print(out, format, col_width, Cell::print);
+	}
+	
+	/// Print the row to terminal `out`, with `separator` as column separator, and `col_width`
+	/// specifying the width of each columns. Apply style when needed
 	pub fn print_term<T: Terminal+?Sized>(&self, out: &mut T, format: &TableFormat, col_width: &[usize]) -> Result<(), Error> {
-		for i in 0..self.get_height() {
-			try!(format.print_column_separator(out));
-			for j in 0..col_width.len() {
-				match self.get_cell(j) {
-					Some(ref c) => try!(c.print_term(out, i, col_width[j])),
-					None => try!(Cell::default().print_term(out, i, col_width[j]))
-				};
-				try!(format.print_column_separator(out));
-			}
-			try!(out.write_all(NEWLINE));
-		}
-		return Ok(());
+		return self.__print(out, format, col_width, Cell::print_term);
 	}
 }
 

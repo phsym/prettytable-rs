@@ -2,7 +2,6 @@
 
 ## Features :
 * Select a range of rows to print
-* Manage formatting with "term" library
 * Limit cell width and split content if needed
 * Limit table width and auto adjust cell width as needed
 * Add capability to prevent new lines in cell, by replacing them with spaces

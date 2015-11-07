@@ -158,37 +158,31 @@ impl Table {
 		return ColumnIterMut(self.rows.iter_mut(), column);
 	}
 	
-	/// Print the table to `out`
-	pub fn print<T: Write>(&self, out: &mut T) -> Result<(), Error> {
+	/// Internal only
+	fn __print<T: Write+?Sized, F>(&self, out: &mut T, f: F) -> Result<(), Error> where F: Fn(&Row, &mut T, &TableFormat, &[usize]) -> Result<(), Error> {
 		// Compute columns width
 		let col_width = self.get_all_column_width();
 		try!(self.format.print_line_separator(out, &col_width));
 		if let Some(ref t) = self.titles {
-			try!(t.print(out, &self.format, &col_width));
+			try!(f(t, out, &self.format, &col_width));
 			try!(self.format.print_title_separator(out, &col_width));
 		}
 		// Print rows
 		for r in &self.rows {
-			try!(r.print(out, &self.format, &col_width));
+			try!(f(r, out, &self.format, &col_width));
 			try!(self.format.print_line_separator(out, &col_width));
 		}
 		return out.flush();
 	}
 	
+	/// Print the table to `out`
+	pub fn print<T: Write+?Sized>(&self, out: &mut T) -> Result<(), Error> {
+		return self.__print(out, Row::print);
+	}
+	
+	/// Print the table to terminal `out`, applying styles when needed
 	pub fn print_term<T: Terminal+?Sized>(&self, out: &mut T) -> Result<(), Error> {
-		// Compute columns width
-		let col_width = self.get_all_column_width();
-		try!(self.format.print_line_separator(out, &col_width));
-		if let Some(ref t) = self.titles {
-			try!(t.print_term(out, &self.format, &col_width));
-			try!(self.format.print_title_separator(out, &col_width));
-		}
-		// Print rows
-		for r in &self.rows {
-			try!(r.print_term(out, &self.format, &col_width));
-			try!(self.format.print_line_separator(out, &col_width));
-		}
-		return out.flush();
+		return self.__print(out, Row::print_term);
 	}
 	
 	/// Print the table to standard output

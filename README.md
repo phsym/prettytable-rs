@@ -29,7 +29,7 @@ More often, you will include the library as a dependency to your project. In ord
 
 ```toml
 [dependencies]
-prettytable-rs = "0.2.0"
+prettytable-rs = "0.4.0"
 
 ```
 

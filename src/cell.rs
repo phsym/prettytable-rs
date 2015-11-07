@@ -49,10 +49,12 @@ impl Cell {
 		self.align = align;
 	}
 	
+	/// Add a style attribute to the cell
 	pub fn style(&mut self, attr: Attr) {
 		self.style.push(attr);
 	}
 	
+	/// Add a style attribute to the cell. Can be chained
 	pub fn with_style(mut self, attr: Attr) -> Cell {
 		self.style(attr);
 		return self;
@@ -89,6 +91,7 @@ impl Cell {
 		}
 	}
 	
+	/// Apply style then call `print` to print the cell into a terminal
 	pub fn print_term<T: Terminal+?Sized>(&self, out: &mut T, idx: usize, col_width: usize) -> Result<(), Error> {
 		for a in &self.style {
 			try!(out.attr(a.clone()));
