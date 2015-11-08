@@ -60,6 +60,12 @@ impl Cell {
 		return self;
 	}
 	
+	/// Remove all style attributes and reset alignment to default (LEFT)
+	pub fn reset_style(&mut self) {
+		self.style.clear();
+		self.align(Align::LEFT);
+	}
+	
 	pub fn style_spec(mut self, spec: &str) -> Cell {
 		let mut foreground = false;
 		let mut background = false;
