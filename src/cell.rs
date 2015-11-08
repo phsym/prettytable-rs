@@ -3,7 +3,7 @@
 use std::io::{Write, Error};
 use std::string::ToString;
 use unicode_width::UnicodeWidthStr;
-use term::{Attr, Terminal};
+use term::{Attr, Terminal, color};
 use super::format::Align;
 
 /// Represent a table cell containing a string.
@@ -57,6 +57,53 @@ impl Cell {
 	/// Add a style attribute to the cell. Can be chained
 	pub fn with_style(mut self, attr: Attr) -> Cell {
 		self.style(attr);
+		return self;
+	}
+	
+	pub fn style_spec(mut self, spec: &str) -> Cell {
+		let mut foreground = false;
+		let mut background = false;
+		for c in spec.chars() {
+			if foreground || background {
+				let color = match c {
+					'r' => color::RED,
+					'R' => color::BRIGHT_RED,
+					'b' => color::BLUE,
+					'B' => color::BRIGHT_BLUE,
+					'g' => color::GREEN,
+					'G' => color::BRIGHT_GREEN,
+					'y' => color::YELLOW,
+					'Y' => color::BRIGHT_YELLOW,
+					'c' => color::CYAN,
+					'C' => color::BRIGHT_CYAN,
+					'm' => color::MAGENTA,
+					'M' => color::BRIGHT_MAGENTA,
+					'w' => color::WHITE,
+					'W' => color::BRIGHT_WHITE,
+					'd' => color::BLACK,
+					'D' => color::BRIGHT_BLACK,
+					_ => panic!("Unsupported color specifier {}", c)
+				};
+				if foreground { self.style(Attr::ForegroundColor(color)); }
+				else if background { self.style(Attr::BackgroundColor(color)); }
+				foreground = false;
+				background = false;
+			}
+			else {
+				match c {
+					'F' => foreground = true,
+					'B' => background = true,
+					'b' => self.style(Attr::Bold),
+					'i' => self.style(Attr::Italic(true)),
+					'u' => self.style(Attr::Underline(true)),
+					'c' => self.align(Align::CENTER),
+					'l' => self.align(Align::LEFT),
+					'r' => self.align(Align::RIGHT),
+					'd' => {/*Default : do nothing*/}
+					_ => panic!("Unsupported style specifier {}", c)
+				}
+			}
+		}
 		return self;
 	}
 	

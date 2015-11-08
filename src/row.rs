@@ -159,4 +159,10 @@ macro_rules! row {
 	($($value: expr), *) => (
 		$crate::row::Row::new(vec![$($crate::cell::Cell::new(&$value.to_string())), *]);
 	);
+	($($style: tt : $value: expr), *) => (
+		$crate::row::Row::new(vec![$($crate::cell::Cell::new(&$value.to_string()).style_spec(stringify!($style))), *]);
+	);
+	($style: tt : $($value: expr), *) => (
+		$crate::row::Row::new(vec![$($crate::cell::Cell::new(&$value.to_string()).style_spec(stringify!($style))), *]);
+	);
 }

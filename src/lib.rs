@@ -267,7 +267,13 @@ impl <'a> std::iter::Iterator for ColumnIterMut<'a> {
 macro_rules! table {
 	($([$($value:expr), *]), *) => (
 		$crate::Table::init(vec![$(row![$($value), *]), *])
-	)
+	);
+	($([$($style: tt : $value:expr), *]), *) => (
+		$crate::Table::init(vec![$(row![$($style : $value), *]), *])
+	);
+	($($style: tt : [$($value:expr), *]), *) => (
+		$crate::Table::init(vec![$(row![$style : $($value), *]), *])
+	);
 }
 
 /// Create a table with `table!` macro, print it to standard output, then return this table for future usage.
@@ -281,5 +287,19 @@ macro_rules! ptable {
 			tab.printstd();
 			tab
 		}
-	)
+	);
+	($([$($style: tt : $value: expr), *]), *) => (
+		{
+			let tab = table!($([$($style : $value), *]), *);
+			tab.printstd();
+			tab
+		}
+	);
+	($($style: tt : [$($value: expr), *]), *) => (
+		{
+			let tab = table!($($style : [$($value), *]), *);
+			tab.printstd();
+			tab
+		}
+	);
 }
