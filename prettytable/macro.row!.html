@@ -24,17 +24,17 @@
 
     
 
-    <section class="sidebar">
+    <nav class="sidebar">
         
         <p class='location'><a href='index.html'>prettytable</a></p><script>window.sidebarCurrent = {name: 'row!', ty: 'macro', relpath: ''};</script><script defer src="sidebar-items.js"></script>
-    </section>
+    </nav>
 
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
                 <input class="search-input" name="search"
                        autocomplete="off"
-                       placeholder="Click or press 'S' to search, '?' for more options..."
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
                        type="search">
             </div>
         </form>
@@ -45,60 +45,82 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-2864' class='srclink' href='../src/prettytable/row.rs.html#143-147' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-3486' class='srclink' href='../src/prettytable/row.rs.html#169-178' title='goto source code'>[src]</a></span></h1>
 <pre class='rust macro'>
 <span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>row</span> {
-	($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>value</span>: <span class='ident'>expr</span>), <span class='op'>*</span>) <span class='op'>=&gt;</span> (
-		<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>crate</span>::<span class='ident'>row</span>::<span class='ident'>Row</span>::<span class='ident'>new</span>(<span class='macro'>vec</span><span class='macro'>!</span>[$(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>crate</span>::<span class='ident'>cell</span>::<span class='ident'>Cell</span>::<span class='ident'>new</span>(<span class='kw-2'>&amp;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>value</span>.<span class='ident'>to_string</span>())), <span class='op'>*</span>]);
-	);
-}
-</pre>
+	(($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>out</span>:<span class='ident'>tt</span>)<span class='op'>*</span>); <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>value</span>:<span class='ident'>expr</span>) <span class='op'>=&gt;</span> (<span class='macro'>vec</span><span class='macro'>!</span>[$(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>out</span>)<span class='op'>*</span> <span class='macro'>cell</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>value</span>),]);
+	(($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>out</span>:<span class='ident'>tt</span>)<span class='op'>*</span>); <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>value</span>:<span class='ident'>expr</span>, $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>n</span>:<span class='ident'>tt</span>)<span class='op'>*</span>) <span class='op'>=&gt;</span> (<span class='macro'>row</span><span class='macro'>!</span>(($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>out</span>)<span class='op'>*</span> <span class='macro'>cell</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>value</span>),); $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>n</span>)<span class='op'>*</span>));
+	(($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>out</span>:<span class='ident'>tt</span>)<span class='op'>*</span>); <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>style</span>:<span class='ident'>ident</span> : <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>value</span>:<span class='ident'>expr</span>) <span class='op'>=&gt;</span> (<span class='macro'>vec</span><span class='macro'>!</span>[$(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>out</span>)<span class='op'>*</span> <span class='macro'>cell</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>style</span> : <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>value</span>),]);
+	(($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>out</span>:<span class='ident'>tt</span>)<span class='op'>*</span>); <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>style</span>:<span class='ident'>ident</span> : <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>value</span>:<span class='ident'>expr</span>, $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>n</span>: <span class='ident'>tt</span>)<span class='op'>*</span>) <span class='op'>=&gt;</span> (<span class='macro'>row</span><span class='macro'>!</span>(($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>out</span>)<span class='op'>*</span> <span class='macro'>cell</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>style</span> : <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>value</span>),); $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>n</span>)<span class='op'>*</span>));
+	
+	($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>content</span>:<span class='ident'>expr</span>), <span class='op'>*</span>) <span class='op'>=&gt;</span> (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>crate</span>::<span class='ident'>row</span>::<span class='ident'>Row</span>::<span class='ident'>new</span>(<span class='macro'>vec</span><span class='macro'>!</span>[$(<span class='macro'>cell</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>content</span>)), <span class='op'>*</span>]));
+	(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>style</span>:<span class='ident'>ident</span> <span class='op'>-&gt;</span> $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>content</span>:<span class='ident'>expr</span>), <span class='op'>*</span>) <span class='op'>=&gt;</span> (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>crate</span>::<span class='ident'>row</span>::<span class='ident'>Row</span>::<span class='ident'>new</span>(<span class='macro'>vec</span><span class='macro'>!</span>[$(<span class='macro'>cell</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>style</span> : <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>content</span>)), <span class='op'>*</span>]));
+	($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>content</span>:<span class='ident'>tt</span>)<span class='op'>*</span>) <span class='op'>=&gt;</span> (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>crate</span>::<span class='ident'>row</span>::<span class='ident'>Row</span>::<span class='ident'>new</span>(<span class='macro'>row</span><span class='macro'>!</span>((); $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>content</span>)<span class='op'>*</span>)));
+}</pre>
 <div class='docblock'><p>This macro simplifies <code>Row</code> creation</p>
+
+<p>The syntax support style spec</p>
 
 <h1 id="example" class='section-header'><a
                            href="#example">Example</a></h1><pre class='rust rust-example-rendered'>
-<span class='kw'>let</span> <span class='ident'>row</span> <span class='op'>=</span> <span class='macro'>row</span><span class='macro'>!</span>[<span class='string'>&quot;Element 1&quot;</span>, <span class='string'>&quot;Element 2&quot;</span>, <span class='string'>&quot;Element 3&quot;</span>];
-<span class='comment'>// Do something with row</span>
-</pre>
+<span class='comment'>// Create a normal row</span>
+<span class='kw'>let</span> <span class='ident'>row1</span> <span class='op'>=</span> <span class='macro'>row</span><span class='macro'>!</span>[<span class='string'>&quot;Element 1&quot;</span>, <span class='string'>&quot;Element 2&quot;</span>, <span class='string'>&quot;Element 3&quot;</span>];
+<span class='comment'>// Create a row with all cells formatted with red foreground color, yellow background color</span>
+<span class='comment'>// bold, italic, align in the center of the cell</span>
+<span class='kw'>let</span> <span class='ident'>row2</span> <span class='op'>=</span> <span class='macro'>row</span><span class='macro'>!</span>[<span class='ident'>FrBybic</span> <span class='op'>-&gt;</span> <span class='string'>&quot;Element 1&quot;</span>, <span class='string'>&quot;Element 2&quot;</span>, <span class='string'>&quot;Element 3&quot;</span>];
+<span class='comment'>// Create a row with first cell in blue, second one in red, and last one with default style</span>
+<span class='kw'>let</span> <span class='ident'>row3</span> <span class='op'>=</span> <span class='macro'>row</span><span class='macro'>!</span>[<span class='ident'>Fb</span>:<span class='string'>&quot;blue&quot;</span>, <span class='ident'>Fr</span>:<span class='string'>&quot;red&quot;</span>, <span class='string'>&quot;normal&quot;</span>];
+<span class='comment'>// Do something with rows</span></pre>
+
+<p>For details about style specifier syntax, check doc for <a href="cell/struct.Cell.html#method.style_spec">Cell::style_spec</a> method</p>
 </div></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>
 
-    <div id="help" class="hidden">
-        <div class="shortcuts">
-            <h1>Keyboard shortcuts</h1>
-            <dl>
-                <dt>?</dt>
-                <dd>Show this help dialog</dd>
-                <dt>S</dt>
-                <dd>Focus the search field</dd>
-                <dt>&larrb;</dt>
-                <dd>Move up in search results</dd>
-                <dt>&rarrb;</dt>
-                <dd>Move down in search results</dd>
-                <dt>&#9166;</dt>
-                <dd>Go to active search result</dd>
-            </dl>
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code>)
+                </p>
+            </div>
         </div>
-        <div class="infos">
-            <h1>Search tricks</h1>
-            <p>
-                Prefix searches with a type followed by a colon (e.g.
-                <code>fn:</code>) to restrict the search to a given type.
-            </p>
-            <p>
-                Accepted types are: <code>fn</code>, <code>mod</code>,
-                <code>struct</code>, <code>enum</code>,
-                <code>trait</code>, <code>typedef</code> (or
-                <code>tdef</code>).
-            </p>
-            <p>
-                Search functions by type signature (e.g.
-                <code>vec -> usize</code>)
-            </p>
-        </div>
-    </div>
+    </aside>
 
     
 
