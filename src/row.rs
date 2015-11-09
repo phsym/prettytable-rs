@@ -2,6 +2,8 @@
 use std::io::{Write, Error};
 use std::iter::FromIterator;
 
+use term::Terminal;
+
 use super::utils::NEWLINE;
 use super::cell::Cell;
 use super::format::TableFormat;
@@ -92,21 +94,34 @@ impl Row {
 		}
 	}
 	
-	/// Print the row to `out`, with `separator` as column separator, and `col_width`
-	/// specifying the width of each columns
-	pub fn print<T: Write>(&self, out: &mut T, format: &TableFormat, col_width: &[usize]) -> Result<(), Error> {
+	/// Internal only
+	fn __print<T:Write+?Sized, F>(&self, out: &mut T, format: &TableFormat, col_width: &[usize], f: F) -> Result<(), Error> 
+		where F: Fn(&Cell, &mut T, usize, usize) -> Result<(), Error> 
+	{
 		for i in 0..self.get_height() {
 			try!(format.print_column_separator(out));
 			for j in 0..col_width.len() {
 				match self.get_cell(j) {
-					Some(ref c) => try!(c.print(out, i, col_width[j])),
-					None => try!(Cell::default().print(out, i, col_width[j]))
+					Some(ref c) => try!(f(c, out, i, col_width[j])),
+					None => try!(f(&Cell::default(), out, i, col_width[j]))
 				};
 				try!(format.print_column_separator(out));
 			}
 			try!(out.write_all(NEWLINE));
 		}
 		return Ok(());
+	}
+	
+	/// Print the row to `out`, with `separator` as column separator, and `col_width`
+	/// specifying the width of each columns
+	pub fn print<T: Write+?Sized>(&self, out: &mut T, format: &TableFormat, col_width: &[usize]) -> Result<(), Error> {
+		return self.__print(out, format, col_width, Cell::print);
+	}
+	
+	/// Print the row to terminal `out`, with `separator` as column separator, and `col_width`
+	/// specifying the width of each columns. Apply style when needed
+	pub fn print_term<T: Terminal+?Sized>(&self, out: &mut T, format: &TableFormat, col_width: &[usize]) -> Result<(), Error> {
+		return self.__print(out, format, col_width, Cell::print_term);
 	}
 }
 
@@ -130,18 +145,34 @@ impl <T, A> From<T> for Row where A: ToString, T : IntoIterator<Item=A> {
 
 /// This macro simplifies `Row` creation
 /// 
+/// The syntax support style spec
 /// # Example
 /// ```
 /// # #[macro_use] extern crate prettytable;
 /// # fn main() {
-/// let row = row!["Element 1", "Element 2", "Element 3"];
-/// // Do something with row
-/// # drop(row);
+/// // Create a normal row
+/// let row1 = row!["Element 1", "Element 2", "Element 3"];
+/// // Create a row with all cells formatted with red foreground color, yellow background color
+/// // bold, italic, align in the center of the cell
+/// let row2 = row![FrBybic -> "Element 1", "Element 2", "Element 3"];
+/// // Create a row with first cell in blue, second one in red, and last one with default style
+/// let row3 = row![Fb:"blue", Fr:"red", "normal"];
+/// // Do something with rows
+/// # drop(row1);
+/// # drop(row2);
+/// # drop(row3);
 /// # }
 /// ```
+///
+/// For details about style specifier syntax, check doc for [Cell::style_spec](cell/struct.Cell.html#method.style_spec) method
 #[macro_export]
 macro_rules! row {
-	($($value: expr), *) => (
-		$crate::row::Row::new(vec![$($crate::cell::Cell::new(&$value.to_string())), *]);
-	);
+	(($($out:tt)*); $value:expr) => (vec![$($out)* cell!($value),]);
+	(($($out:tt)*); $value:expr, $($n:tt)*) => (row!(($($out)* cell!($value),); $($n)*));
+	(($($out:tt)*); $style:ident : $value:expr) => (vec![$($out)* cell!($style : $value),]);
+	(($($out:tt)*); $style:ident : $value:expr, $($n: tt)*) => (row!(($($out)* cell!($style : $value),); $($n)*));
+	
+	($($content:expr), *) => ($crate::row::Row::new(vec![$(cell!($content)), *]));
+	($style:ident -> $($content:expr), *) => ($crate::row::Row::new(vec![$(cell!($style : $content)), *]));
+	($($content:tt)*) => ($crate::row::Row::new(row!((); $($content)*)));
 }

@@ -3,6 +3,7 @@
 use std::io::{Write, Error};
 use std::string::ToString;
 use unicode_width::UnicodeWidthStr;
+use term::{Attr, Terminal, color};
 use super::format::Align;
 
 /// Represent a table cell containing a string.
@@ -13,7 +14,8 @@ use super::format::Align;
 pub struct Cell {
 	content: Vec<String>,
 	width: usize,
-	align: Align
+	align: Align,
+	style: Vec<Attr>
 }
 
 impl Cell {
@@ -31,7 +33,8 @@ impl Cell {
 		return Cell {
 			content: content,
 			width: width,
-			align: align
+			align: align,
+			style: Vec::new()
 		};
 	}
 	
@@ -44,6 +47,109 @@ impl Cell {
 	/// Set text alignment in the cell
 	pub fn align(&mut self, align: Align) {
 		self.align = align;
+	}
+	
+	/// Add a style attribute to the cell
+	pub fn style(&mut self, attr: Attr) {
+		self.style.push(attr);
+	}
+	
+	/// Add a style attribute to the cell. Can be chained
+	pub fn with_style(mut self, attr: Attr) -> Cell {
+		self.style(attr);
+		return self;
+	}
+	
+	/// Remove all style attributes and reset alignment to default (LEFT)
+	pub fn reset_style(&mut self) {
+		self.style.clear();
+		self.align(Align::LEFT);
+	}
+	
+	/// Set the cell's style by applying the given specifier string
+	///
+	/// # Style spec syntax
+	///
+	/// The syntax for the style specifier looks like this :
+	/// **FrBybl** which means **F**oreground **r**ed **B**ackground **y**ellow **b**old **l**eft
+	///
+	/// ### List of supported specifiers :
+	///
+	/// * **F** : **F**oreground (must be followed by a color specifier)
+	/// * **B** : **B**ackground (must be followed by a color specifier)
+	/// * **b** : **b**old
+	/// * **i** : **i**talic
+	/// * **u** : **u**nderline
+	/// * **c** : Align **c**enter
+	/// * **l** : Align **l**eft
+	/// * **r** : Align **r**ight
+	/// * **d** : **d**efault style
+	/// 
+	/// ### List of color specifiers :
+	///
+	/// * **r** : Red
+	/// * **b** : Blue
+	/// * **g** : Green
+	/// * **y** : Yellow
+	/// * **c** : Cyan
+	/// * **m** : Magenta
+	/// * **w** : White
+	/// * **d** : Black
+	/// 
+	/// And capital letters are for **bright** colors.
+	/// Eg :
+	///
+	/// * **R** : Bright Red
+	/// * **B** : Bright Blue
+	/// * ... and so on ...
+	///
+	/// # Panic
+	/// If the spec string is wrong
+	pub fn style_spec(mut self, spec: &str) -> Cell {
+		let mut foreground = false;
+		let mut background = false;
+		for c in spec.chars() {
+			if foreground || background {
+				let color = match c {
+					'r' => color::RED,
+					'R' => color::BRIGHT_RED,
+					'b' => color::BLUE,
+					'B' => color::BRIGHT_BLUE,
+					'g' => color::GREEN,
+					'G' => color::BRIGHT_GREEN,
+					'y' => color::YELLOW,
+					'Y' => color::BRIGHT_YELLOW,
+					'c' => color::CYAN,
+					'C' => color::BRIGHT_CYAN,
+					'm' => color::MAGENTA,
+					'M' => color::BRIGHT_MAGENTA,
+					'w' => color::WHITE,
+					'W' => color::BRIGHT_WHITE,
+					'd' => color::BLACK,
+					'D' => color::BRIGHT_BLACK,
+					_ => panic!("Unsupported color specifier {}", c)
+				};
+				if foreground { self.style(Attr::ForegroundColor(color)); }
+				else if background { self.style(Attr::BackgroundColor(color)); }
+				foreground = false;
+				background = false;
+			}
+			else {
+				match c {
+					'F' => foreground = true,
+					'B' => background = true,
+					'b' => self.style(Attr::Bold),
+					'i' => self.style(Attr::Italic(true)),
+					'u' => self.style(Attr::Underline(true)),
+					'c' => self.align(Align::CENTER),
+					'l' => self.align(Align::LEFT),
+					'r' => self.align(Align::RIGHT),
+					'd' => {/*Default : do nothing*/}
+					_ => panic!("Unsupported style specifier {}", c)
+				}
+			}
+		}
+		return self;
 	}
 	
 	/// Return the height of the cell
@@ -65,7 +171,7 @@ impl Cell {
 	/// `idx` is the line index to print. `col_width` is the column width used to
 	/// fill the cells with blanks so it fits in the table.
 	/// If `ìdx` is higher than this cell's height, it will print empty content
-	pub fn print<T: Write>(&self, out: &mut T, idx: usize, col_width: usize) -> Result<(), Error> {
+	pub fn print<T: Write+?Sized>(&self, out: &mut T, idx: usize, col_width: usize) -> Result<(), Error> {
 		let c = match self.content.get(idx) {
 			Some(s) => s.as_ref(),
 			None => ""
@@ -75,6 +181,16 @@ impl Cell {
 			Align::CENTER => write!(out, " {: ^1$} ", c, col_width),
 			Align::RIGHT  => write!(out, " {: >1$} ", c, col_width),
 		}
+	}
+	
+	/// Apply style then call `print` to print the cell into a terminal
+	pub fn print_term<T: Terminal+?Sized>(&self, out: &mut T, idx: usize, col_width: usize) -> Result<(), Error> {
+		for a in &self.style {
+			try!(out.attr(a.clone()));
+		}
+		try!(self.print(out, idx, col_width));
+		try!(out.reset());
+		return Ok(());
 	}
 }
 
@@ -96,9 +212,44 @@ impl Default for Cell {
 		return Cell {
 			content: vec!["".to_string(); 1],
 			width: 0,
-			align: Align::LEFT
+			align: Align::LEFT,
+			style: Vec::new()
 		};
 	}
+}
+
+/// This macro simplifies `Cell` creation
+/// 
+/// Support 2 syntax : With and without style specification.
+/// # Syntax
+/// ```text
+/// cell!(value);
+/// ```
+/// or
+/// 
+/// ```text
+/// cell!(spec:value);
+/// ```
+/// Value must implement the `std::string::ToString` trait
+///
+/// For details about style specifier syntax, check doc for [Cell::style_spec](cell/struct.Cell.html#method.style_spec) method
+/// # Example
+/// ```
+/// # #[macro_use] extern crate prettytable;
+/// # fn main() {
+/// let cell = cell!("value");
+/// // Do something with the cell
+/// # drop(cell);
+/// // Create a cell with style (Red foreground, Bold, aligned to left);
+/// let styled = cell!(Frbl:"value");
+/// # drop(styled);
+/// # }
+/// ```
+#[macro_export]
+macro_rules! cell {
+	() => ($crate::cell::Cell::default());
+	($value:expr) => ($crate::cell::Cell::new(&$value.to_string()));
+	($style:ident : $value:expr) => (cell!($value).style_spec(stringify!($style)));
 }
 
 #[cfg(test)]

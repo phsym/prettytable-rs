@@ -1,9 +1,12 @@
 //! A formatted and aligned table printer written in rust
 extern crate unicode_width;
+extern crate term;
 
-use std::io::{stdout, Write, Error};
+use std::io::{Write, Error};
 use std::fmt;
 use std::iter::{FromIterator, IntoIterator};
+
+use term::{Terminal, stdout};
 
 pub mod cell;
 pub mod row;
@@ -155,28 +158,38 @@ impl Table {
 		return ColumnIterMut(self.rows.iter_mut(), column);
 	}
 	
-	/// Print the table to `out`
-	pub fn print<T: Write>(&self, out: &mut T) -> Result<(), Error> {
+	/// Internal only
+	fn __print<T: Write+?Sized, F>(&self, out: &mut T, f: F) -> Result<(), Error> where F: Fn(&Row, &mut T, &TableFormat, &[usize]) -> Result<(), Error> {
 		// Compute columns width
 		let col_width = self.get_all_column_width();
 		try!(self.format.print_line_separator(out, &col_width));
 		if let Some(ref t) = self.titles {
-			try!(t.print(out, &self.format, &col_width));
+			try!(f(t, out, &self.format, &col_width));
 			try!(self.format.print_title_separator(out, &col_width));
 		}
 		// Print rows
 		for r in &self.rows {
-			try!(r.print(out, &self.format, &col_width));
+			try!(f(r, out, &self.format, &col_width));
 			try!(self.format.print_line_separator(out, &col_width));
 		}
 		return out.flush();
+	}
+	
+	/// Print the table to `out`
+	pub fn print<T: Write+?Sized>(&self, out: &mut T) -> Result<(), Error> {
+		return self.__print(out, Row::print);
+	}
+	
+	/// Print the table to terminal `out`, applying styles when needed
+	pub fn print_term<T: Terminal+?Sized>(&self, out: &mut T) -> Result<(), Error> {
+		return self.__print(out, Row::print_term);
 	}
 	
 	/// Print the table to standard output
 	/// # Panic
 	/// Panic if writing to standard output fails
 	pub fn printstd(&self) {
-		self.print(&mut stdout())
+		self.print_term(&mut *stdout().unwrap())
 			.ok()
 			.expect("Cannot print table to standard output");
 	}
@@ -236,7 +249,9 @@ impl <'a> std::iter::Iterator for ColumnIterMut<'a> {
 /// 
 /// All the arguments used for elements must implement the `std::string::ToString` trait
 /// # Syntax
+/// ```text
 /// table!([Element1_ row1, Element2_ row1, ...], [Element1_row2, ...], ...);
+/// ```
 ///
 /// # Example
 /// ```
@@ -250,11 +265,26 @@ impl <'a> std::iter::Iterator for ColumnIterMut<'a> {
 /// # drop(tab);
 /// # }
 /// ```
+/// 
+/// Some style can also be given in table creation
+/// 
+/// ```
+/// # #[macro_use] extern crate prettytable;
+/// # fn main() {
+/// let tab = table!([FrByl:"Element1", Fgc:"Element2", "Element3"],
+/// 				 [FrBy -> 1, 2, 3],
+/// 				 ["A", "B", "C"]
+/// 				 );
+/// # drop(tab);
+/// # }
+/// ```
+///
+/// For details about style specifier syntax, check doc for [Cell::style_spec](cell/struct.Cell.html#method.style_spec) method
 #[macro_export]
 macro_rules! table {
-	($([$($value:expr), *]), *) => (
-		$crate::Table::init(vec![$(row![$($value), *]), *])
-	)
+	($([$($content:tt)*]), *) => (
+		$crate::Table::init(vec![$(row![$($content)*]), *])
+	);
 }
 
 /// Create a table with `table!` macro, print it to standard output, then return this table for future usage.
@@ -262,11 +292,11 @@ macro_rules! table {
 /// The syntax is the same that the one for the `table!` macro
 #[macro_export]
 macro_rules! ptable {
-	($([$($value: expr), *]), *) => (
+	($($content:tt)*) => (
 		{
-			let tab = table!($([$($value), *]), *);
+			let tab = table!($($content)*);
 			tab.printstd();
 			tab
 		}
-	)
+	);
 }

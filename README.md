@@ -25,15 +25,20 @@ And to build html documentation, run
 > cargo doc
 
 # How to use
+
+## Including
+
 More often, you will include the library as a dependency to your project. In order to do this, add the following lines to your **Cargo.toml** file :
 
 ```toml
 [dependencies]
-prettytable-rs = "0.2.0"
+prettytable-rs = "0.4.0"
 
 ```
 
-Then you can start using it the following way :
+## Basic usage
+
+You can start using it the following way :
 
 ```rust
 #[macro_use] extern crate prettytable;
@@ -68,6 +73,8 @@ This code will produce the following output :
 | foobar2 | bar2 | foo2    |
 +---------+------+---------+
 ```
+
+## Using macros
 
 To make the code simpler, the `table!` macro is there for you. The following code would produce the exact same output :
 ```rust
@@ -117,5 +124,80 @@ Would print the following text :
 ```
 
 Rows may have different numbers of cells. The table will automatically adapt to the largest row by printing additional empty cells in smaller rows.
+
+## Do it with style
+
+Tables can be added some style like colors (background / foreground), bold, and italic, thanks to the `term` crate.
+
+You can add `term` style attributes to cells programmatically :
+```rust
+extern crate term;
+use term::{Attr, color};
+
+(...)
+
+table.add_row(Row::new(vec![
+    	Cell::new("foobar2")
+                .with_style(Attr::ForegroundColor(color::GREEN))
+                .with_style(Attr::Bold),
+        Cell::new("bar2")
+                .with_style(Attr::ForegroundColor(color::RED)),
+        Cell::new("foo2")])
+);
+```
+
+Or you can use the style string :
+```rust
+Cell::new("foo2").style_spec("FrByc")
+```
+
+Where **FrBybc** means **F**oreground: **r**ed, **B**ackground: **y**ellow, **b**old, **c**enter
+
+With macros it's even simpler :
+
+In rows, for each cells :
+```rust
+row![FrByb:"ABC", FrByb:"DEFG", "HIJKLMN"];
+```
+Or for the whole row :
+```rust
+row![FY -> "styled", "bar", "foo"];
+```
+In tables, for each cells :
+```rust
+table!([FrBybl:"A", FrBybc:"B", FrBybr:"C"], [123, 234, 345, 456]);
+```
+Or for each rows :
+```rust
+table!([Frb -> "A", "B", "C"], [Frb -> 1, 2, 3, 4], [1, 2, 3]);
+```
+
+### List of style specifiers :
+
+* **F** : **F**oreground (must be followed by a color specifier)
+* **B** : **B**ackground (must be followed by a color specifier)
+* **b** : **b**old
+* **i** : **i**talic
+* **u** : **u**nderline
+* **c** : Align **c**enter
+* **l** : Align **l**eft
+* **r** : Align **r**ight
+* **d** : **d**efault style
+
+### List of color specifiers :
+
+* **r** : Red
+* **b** : Blue
+* **g** : Green
+* **y** : Yellow
+* **c** : Cyan
+* **m** : Magenta
+* **w** : White
+* **d** : Black
+
+Capital letters are for **bright** colors. Eg :
+* **R** : Bright Red
+* **B** : Bright Blue
+* ... and so on ...
 
 Additional examples are provided in documentation and in [examples](./examples/) directory
