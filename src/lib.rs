@@ -249,7 +249,9 @@ impl <'a> std::iter::Iterator for ColumnIterMut<'a> {
 /// 
 /// All the arguments used for elements must implement the `std::string::ToString` trait
 /// # Syntax
+/// ```text
 /// table!([Element1_ row1, Element2_ row1, ...], [Element1_row2, ...], ...);
+/// ```
 ///
 /// # Example
 /// ```
@@ -265,14 +267,8 @@ impl <'a> std::iter::Iterator for ColumnIterMut<'a> {
 /// ```
 #[macro_export]
 macro_rules! table {
-	($([$($value:expr), *]), *) => (
-		$crate::Table::init(vec![$(row![$($value), *]), *])
-	);
-	($([$($style: tt : $value:expr), *]), *) => (
-		$crate::Table::init(vec![$(row![$($style : $value), *]), *])
-	);
-	($($style: tt : [$($value:expr), *]), *) => (
-		$crate::Table::init(vec![$(row![$style : $($value), *]), *])
+	($([$($content:tt)*]), *) => (
+		$crate::Table::init(vec![$(row![$($content)*]), *])
 	);
 }
 
@@ -281,23 +277,9 @@ macro_rules! table {
 /// The syntax is the same that the one for the `table!` macro
 #[macro_export]
 macro_rules! ptable {
-	($([$($value: expr), *]), *) => (
+	($($content:tt)*) => (
 		{
-			let tab = table!($([$($value), *]), *);
-			tab.printstd();
-			tab
-		}
-	);
-	($([$($style: tt : $value: expr), *]), *) => (
-		{
-			let tab = table!($([$($style : $value), *]), *);
-			tab.printstd();
-			tab
-		}
-	);
-	($($style: tt : [$($value: expr), *]), *) => (
-		{
-			let tab = table!($($style : [$($value), *]), *);
+			let tab = table!($($content)*);
 			tab.printstd();
 			tab
 		}

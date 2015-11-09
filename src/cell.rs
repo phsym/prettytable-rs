@@ -66,6 +66,45 @@ impl Cell {
 		self.align(Align::LEFT);
 	}
 	
+	/// Set the cell's style by applying the given specifier string
+	///
+	/// # Style spec syntax
+	///
+	/// The syntax for the style specifier looks like this :
+	/// **FrBybl** which means **F**oreground **r**ed **B**ackground **y**ellow **b**old **l**eft
+	///
+	/// ### List of supported specifiers :
+	///
+	/// * **F** : **F**oreground (must be followed by a color specifier)
+	/// * **B** : **B**ackground (must be followed by a color specifier)
+	/// * **b** : **b**old
+	/// * **i** : **i**talic
+	/// * **u** : **u**nderline
+	/// * **c** : Align **c**enter
+	/// * **l** : Align **l**eft
+	/// * **r** : Align **r**ight
+	/// * **d** : **d**efault style
+	/// 
+	/// ### List of color specifiers :
+	///
+	/// * **r** : Red
+	/// * **b** : Blue
+	/// * **g** : Green
+	/// * **y** : Yellow
+	/// * **c** : Cyan
+	/// * **m** : Magenta
+	/// * **w** : White
+	/// * **d** : Black
+	/// 
+	/// And capital letters are for **bright** colors.
+	/// Eg :
+	///
+	/// * **R** : Bright Red
+	/// * **B** : Bright Blue
+	/// * ... and so on ...
+	///
+	/// # Panic
+	/// If the spec string is wrong
 	pub fn style_spec(mut self, spec: &str) -> Cell {
 		let mut foreground = false;
 		let mut background = false;
@@ -177,6 +216,40 @@ impl Default for Cell {
 			style: Vec::new()
 		};
 	}
+}
+
+/// This macro simplifies `Cell` creation
+/// 
+/// Support 2 syntax : With and without style specification.
+/// # Syntax
+/// ```text
+/// cell!(value);
+/// ```
+/// or
+/// 
+/// ```text
+/// cell!(spec:value);
+/// ```
+/// Value must implement the `std::string::ToString` trait
+///
+/// For details about style specifier syntax, check doc for [Cell::style_spec](cell/struct.Cell.html#method.style_spec) method
+/// # Example
+/// ```
+/// # #[macro_use] extern crate prettytable;
+/// # fn main() {
+/// let cell = cell!("value");
+/// // Do something with the cell
+/// # drop(cell);
+/// // Create a cell with style (Red foreground, Bold, aligned to left);
+/// let styled = cell!(Frbl:"value");
+/// # drop(styled);
+/// # }
+/// ```
+#[macro_export]
+macro_rules! cell {
+	() => ($crate::cell::Cell::default());
+	($value:expr) => ($crate::cell::Cell::new(&$value.to_string()));
+	($style:ident : $value:expr) => (cell!($value).style_spec(stringify!($style)));
 }
 
 #[cfg(test)]
