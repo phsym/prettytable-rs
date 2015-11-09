@@ -163,6 +163,8 @@ impl <T, A> From<T> for Row where A: ToString, T : IntoIterator<Item=A> {
 /// # drop(row3);
 /// # }
 /// ```
+///
+/// For details about style specifier syntax, check doc for [Cell::style_spec](cell/struct.Cell.html#method.style_spec) method
 #[macro_export]
 macro_rules! row {
 	(($($out:tt)*); $value:expr) => (vec![$($out)* cell!($value),]);

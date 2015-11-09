@@ -265,6 +265,21 @@ impl <'a> std::iter::Iterator for ColumnIterMut<'a> {
 /// # drop(tab);
 /// # }
 /// ```
+/// 
+/// Some style can also be given in table creation
+/// 
+/// ```
+/// # #[macro_use] extern crate prettytable;
+/// # fn main() {
+/// let tab = table!([FrByl:"Element1", Fgc:"Element2", "Element3"],
+/// 				 [FrBy -> 1, 2, 3],
+/// 				 ["A", "B", "C"]
+/// 				 );
+/// # drop(tab);
+/// # }
+/// ```
+///
+/// For details about style specifier syntax, check doc for [Cell::style_spec](cell/struct.Cell.html#method.style_spec) method
 #[macro_export]
 macro_rules! table {
 	($([$($content:tt)*]), *) => (
