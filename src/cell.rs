@@ -102,9 +102,6 @@ impl Cell {
 	/// * **R** : Bright Red
 	/// * **B** : Bright Blue
 	/// * ... and so on ...
-	///
-	/// # Panic
-	/// If the spec string is wrong
 	pub fn style_spec(mut self, spec: &str) -> Cell {
 		let mut foreground = false;
 		let mut background = false;
@@ -127,7 +124,11 @@ impl Cell {
 					'W' => color::BRIGHT_WHITE,
 					'd' => color::BLACK,
 					'D' => color::BRIGHT_BLACK,
-					_ => panic!("Unsupported color specifier {}", c)
+					_ => { // Silently ignore unknown tags
+							foreground = false;
+							background = false;
+							continue;
+						 }
 				};
 				if foreground { self.style(Attr::ForegroundColor(color)); }
 				else if background { self.style(Attr::BackgroundColor(color)); }
@@ -144,8 +145,8 @@ impl Cell {
 					'c' => self.align(Align::CENTER),
 					'l' => self.align(Align::LEFT),
 					'r' => self.align(Align::RIGHT),
-					'd' => {/*Default : do nothing*/}
-					_ => panic!("Unsupported style specifier {}", c)
+					'd' => {/* Default : do nothing */}
+					_ => {/* Silently ignore unknown tags */}
 				}
 			}
 		}

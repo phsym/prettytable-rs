@@ -2,7 +2,7 @@
 use std::io::{Error, ErrorKind, Write};
 use std::str;
 
-#[cfg(any(unix, macos))]
+#[cfg(not(windows))]
 pub static NEWLINE: &'static [u8] = b"\n";
 #[cfg(windows)]
 pub static NEWLINE: &'static [u8] = b"\r\n";

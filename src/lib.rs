@@ -5,6 +5,7 @@ extern crate term;
 use std::io::{Write, Error};
 use std::fmt;
 use std::iter::{FromIterator, IntoIterator};
+use std::ops::{Index, IndexMut};
 
 use term::{Terminal, stdout};
 
@@ -32,7 +33,7 @@ impl Table {
 		return Self::init(Vec::new());
 	}
 	
-	/// Create a table initialized with ``rows`
+	/// Create a table initialized with `rows`
 	pub fn init(rows: Vec<Row>) -> Table {
 		return Table {
 			rows: rows,
@@ -192,6 +193,19 @@ impl Table {
 		self.print_term(&mut *stdout().unwrap())
 			.ok()
 			.expect("Cannot print table to standard output");
+	}
+}
+
+impl Index<usize> for Table {
+	type Output = Row;
+	fn index(&self, idx: usize) -> &Self::Output {
+		return &self.rows[idx];
+	}
+}
+
+impl IndexMut<usize> for Table {
+	fn index_mut(&mut self, idx: usize) -> &mut Self::Output {
+		return &mut self.rows[idx];
 	}
 }
 

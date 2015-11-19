@@ -14,16 +14,6 @@
 
 A formatted and aligned table printer written in rust.
 
-# How to build
-
-As usual with Cargo project, simply run
-
-> cargo build
-
-And to build html documentation, run
-
-> cargo doc
-
 # How to use
 
 ## Including
@@ -76,7 +66,7 @@ This code will produce the following output :
 
 ## Using macros
 
-To make the code simpler, the `table!` macro is there for you. The following code would produce the exact same output :
+To make the code simpler, the `table!` macro is there for you. The following code would produce the same output :
 ```rust
 #[macro_use] extern crate prettytable;
 
@@ -170,6 +160,10 @@ table!([FrBybl:"A", FrBybc:"B", FrBybr:"C"], [123, 234, 345, 456]);
 Or for each rows :
 ```rust
 table!([Frb -> "A", "B", "C"], [Frb -> 1, 2, 3, 4], [1, 2, 3]);
+```
+Or a mix :
+```rust
+table!([Frb -> "A", "B", "C"], [Frb:1, Fgi:2, 3, 4], [1, 2, 3]);
 ```
 
 ### List of style specifiers :

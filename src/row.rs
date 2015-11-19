@@ -1,6 +1,7 @@
 //! This module contains definition of table rows stuff
 use std::io::{Write, Error};
 use std::iter::FromIterator;
+use std::ops::{Index, IndexMut};
 
 use term::Terminal;
 
@@ -34,7 +35,7 @@ impl Row {
 	
 	/// Get the height of this row
 	pub fn get_height(&self) -> usize {
-		let mut height = 0;
+		let mut height = 1; // Minimum height must be 1 to print empty rows
 		for cell in &self.cells {
 			let h = cell.get_height();
 			if h > height {
@@ -131,6 +132,19 @@ impl Default for Row {
 	}
 }
 
+impl Index<usize> for Row {
+	type Output = Cell;
+	fn index(&self, idx: usize) -> &Self::Output {
+		return &self.cells[idx];
+	}
+}
+
+impl IndexMut<usize> for Row {
+	fn index_mut(&mut self, idx: usize) -> &mut Self::Output {
+		return &mut self.cells[idx];
+	}
+}
+
 impl <A: ToString> FromIterator<A> for Row {
 	fn from_iter<T>(iterator: T) -> Row where T: IntoIterator<Item=A> {
 		return Self::new(iterator.into_iter().map(|ref e| Cell::from(e)).collect());
@@ -167,9 +181,9 @@ impl <T, A> From<T> for Row where A: ToString, T : IntoIterator<Item=A> {
 /// For details about style specifier syntax, check doc for [Cell::style_spec](cell/struct.Cell.html#method.style_spec) method
 #[macro_export]
 macro_rules! row {
-	(($($out:tt)*); $value:expr) => (vec![$($out)* cell!($value),]);
+	(($($out:tt)*); $value:expr) => (vec![$($out)* cell!($value)]);
 	(($($out:tt)*); $value:expr, $($n:tt)*) => (row!(($($out)* cell!($value),); $($n)*));
-	(($($out:tt)*); $style:ident : $value:expr) => (vec![$($out)* cell!($style : $value),]);
+	(($($out:tt)*); $style:ident : $value:expr) => (vec![$($out)* cell!($style : $value)]);
 	(($($out:tt)*); $style:ident : $value:expr, $($n: tt)*) => (row!(($($out)* cell!($style : $value),); $($n)*));
 	
 	($($content:expr), *) => ($crate::row::Row::new(vec![$(cell!($content)), *]));
