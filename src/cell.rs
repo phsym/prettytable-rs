@@ -165,7 +165,7 @@ impl Cell {
 	
 	/// Return a copy of the full string contained in the cell
 	pub fn get_content(&self) -> String {
-		return self.content.iter().fold("".to_string(), (|acc, ref item| format!("{}\n{}", acc, item)));
+		return self.content.join("\n");
 	}
 	
 	/// Print a partial cell to `out`. Since the cell may be multi-lined,
@@ -259,6 +259,12 @@ mod tests {
 	use utils::StringWriter;
 	use format::Align;
 	use term::{Attr, color};
+	
+	#[test]
+	fn get_content() {
+		let cell = Cell::new("test");
+		assert_eq!(cell.get_content(), "test");
+	}
 
 	#[test]
 	fn ascii() {

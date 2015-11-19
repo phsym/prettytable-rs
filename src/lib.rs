@@ -339,4 +339,27 @@ mod tests {
 ";
 		assert_eq!(table.to_string().replace("\r\n", "\n"), out);
 	}
+	
+	#[test]
+	fn index() {
+		let mut table = Table::new();
+		table.add_row(Row::new(vec![Cell::new("a"), Cell::new("bc"), Cell::new("def")]));
+		table.add_row(Row::new(vec![Cell::new("def"), Cell::new("bc"), Cell::new("a")]));
+		table.set_titles(Row::new(vec![Cell::new("t1"), Cell::new("t2"), Cell::new("t3")]));
+		assert_eq!(table[1][1].get_content(), "bc");
+		
+		table[1][1] = Cell::new("newval");
+		assert_eq!(table[1][1].get_content(), "newval");
+		
+		let out = "\
++-----+--------+-----+
+| t1  | t2     | t3  |
++=====+========+=====+
+| a   | bc     | def |
++-----+--------+-----+
+| def | newval | a   |
++-----+--------+-----+
+";
+		assert_eq!(table.to_string().replace("\r\n", "\n"), out);
+	}
 }
