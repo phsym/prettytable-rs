@@ -258,6 +258,7 @@ mod tests {
 	use cell::Cell;
 	use utils::StringWriter;
 	use format::Align;
+	use term::{Attr, color};
 
 	#[test]
 	fn ascii() {
@@ -301,6 +302,17 @@ mod tests {
 		let mut out = StringWriter::new();
 		let _ = cell.print(&mut out, 0, 10);
 		assert_eq!(out.as_string(), "       test ");
+	}
+	
+	#[test]
+	fn style_spec() {
+		let cell = Cell::new("test").style_spec("FrBBbuic");
+		assert!(cell.style.contains(&Attr::Underline(true)));
+		assert!(cell.style.contains(&Attr::Italic(true)));
+		assert!(cell.style.contains(&Attr::Bold));
+		assert!(cell.style.contains(&Attr::ForegroundColor(color::RED)));
+		assert!(cell.style.contains(&Attr::BackgroundColor(color::BRIGHT_BLUE)));
+		assert_eq!(cell.align, Align::CENTER);
 	}
 }
 
