@@ -314,3 +314,29 @@ macro_rules! ptable {
 		}
 	);
 }
+
+#[cfg(test)]
+mod tests {
+	
+	use Table;
+	use row::Row;
+	use cell::Cell;
+	
+	#[test]
+	fn table() {
+		let mut table = Table::new();
+		table.add_row(Row::new(vec![Cell::new("a"), Cell::new("bc"), Cell::new("def")]));
+		table.add_row(Row::new(vec![Cell::new("def"), Cell::new("bc"), Cell::new("a")]));
+		table.set_titles(Row::new(vec![Cell::new("t1"), Cell::new("t2"), Cell::new("t3")]));
+		let out = "\
++-----+----+-----+
+| t1  | t2 | t3  |
++=====+====+=====+
+| a   | bc | def |
++-----+----+-----+
+| def | bc | a   |
++-----+----+-----+
+";
+		assert_eq!(table.to_string().replace("\r\n", "\n"), out);
+	}
+}
