@@ -9,7 +9,6 @@
 ## Improvements :
 
 ## General :
-* Learn how to do unit testing in Rust, and add some
 
 ## Travis-CI :
 * Automatically publish API documentation with travis after each successfull build

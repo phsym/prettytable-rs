@@ -103,6 +103,7 @@ impl Cell {
 	/// * **B** : Bright Blue
 	/// * ... and so on ...
 	pub fn style_spec(mut self, spec: &str) -> Cell {
+		self.reset_style();
 		let mut foreground = false;
 		let mut background = false;
 		for c in spec.chars() {
@@ -267,7 +268,7 @@ mod tests {
 	}
 
 	#[test]
-	fn ascii() {
+	fn print_ascii() {
 		let ascii_cell = Cell::new("hello");
 		assert_eq!(ascii_cell.get_width(), 5);
 
@@ -277,7 +278,7 @@ mod tests {
 	}
 
 	#[test]
-	fn unicode() {
+	fn print_unicode() {
 		let unicode_cell = Cell::new("привет");
 		assert_eq!(unicode_cell.get_width(), 6);
 
@@ -312,13 +313,29 @@ mod tests {
 	
 	#[test]
 	fn style_spec() {
-		let cell = Cell::new("test").style_spec("FrBBbuic");
+		let mut cell = Cell::new("test").style_spec("FrBBbuic");
+		assert_eq!(cell.style.len(), 5);
 		assert!(cell.style.contains(&Attr::Underline(true)));
 		assert!(cell.style.contains(&Attr::Italic(true)));
 		assert!(cell.style.contains(&Attr::Bold));
 		assert!(cell.style.contains(&Attr::ForegroundColor(color::RED)));
 		assert!(cell.style.contains(&Attr::BackgroundColor(color::BRIGHT_BLUE)));
 		assert_eq!(cell.align, Align::CENTER);
+		
+		cell = cell.style_spec("FDBwr");
+		assert_eq!(cell.style.len(), 2);
+		assert!(cell.style.contains(&Attr::ForegroundColor(color::BRIGHT_BLACK)));
+		assert!(cell.style.contains(&Attr::BackgroundColor(color::WHITE)));
+		assert_eq!(cell.align, Align::RIGHT)
+	}
+	
+	#[test]
+	fn reset_style() {
+		let mut cell = Cell::new("test").style_spec("FDBwr");
+		assert_eq!(cell.style.len(), 2);
+		cell.reset_style();
+		assert_eq!(cell.style.len(), 0);
+		assert_eq!(cell.align, Align::LEFT);
 	}
 }
 
