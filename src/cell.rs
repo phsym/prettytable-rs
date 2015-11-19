@@ -165,7 +165,7 @@ impl Cell {
 	
 	/// Return a copy of the full string contained in the cell
 	pub fn get_content(&self) -> String {
-		return self.content.iter().fold("".to_string(), (|acc, ref item| format!("{}\n{}", acc, item)));
+		return self.content.join("\n");
 	}
 	
 	/// Print a partial cell to `out`. Since the cell may be multi-lined,
@@ -258,6 +258,13 @@ mod tests {
 	use cell::Cell;
 	use utils::StringWriter;
 	use format::Align;
+	use term::{Attr, color};
+	
+	#[test]
+	fn get_content() {
+		let cell = Cell::new("test");
+		assert_eq!(cell.get_content(), "test");
+	}
 
 	#[test]
 	fn ascii() {
@@ -301,6 +308,17 @@ mod tests {
 		let mut out = StringWriter::new();
 		let _ = cell.print(&mut out, 0, 10);
 		assert_eq!(out.as_string(), "       test ");
+	}
+	
+	#[test]
+	fn style_spec() {
+		let cell = Cell::new("test").style_spec("FrBBbuic");
+		assert!(cell.style.contains(&Attr::Underline(true)));
+		assert!(cell.style.contains(&Attr::Italic(true)));
+		assert!(cell.style.contains(&Attr::Bold));
+		assert!(cell.style.contains(&Attr::ForegroundColor(color::RED)));
+		assert!(cell.style.contains(&Attr::BackgroundColor(color::BRIGHT_BLUE)));
+		assert_eq!(cell.align, Align::CENTER);
 	}
 }
 

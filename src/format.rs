@@ -5,7 +5,7 @@ use std::io::{Write, Error};
 use super::utils::NEWLINE;
 
 /// Alignment for cell's content
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, PartialEq)]
 pub enum Align  {
 	LEFT,
 	CENTER,
