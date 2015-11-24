@@ -41,7 +41,7 @@ impl LineSeparator {
 /// Contains the table formatting rules
 #[derive(Clone, Debug)]
 pub struct TableFormat {
-	col_sep: [u8; 1],
+	col_sep: &'static str,
 	line_sep: Option<LineSeparator>,
 	title_sep: Option<LineSeparator>
 }
@@ -54,8 +54,8 @@ impl TableFormat {
 	/// `line_sep` is an optional `LineSeparator` defining how to separate lines.
 	/// `title_sep` is an optional `LineSeparator` defining the format of the separator after the title line (if set).
 	/// If `title_sep` is set to `None`, then `line_sep` will be used, f it's set.
-	pub fn new(col_sep: char, line_sep: Option<LineSeparator>, title_sep: Option<LineSeparator>) -> TableFormat {
-		return TableFormat{col_sep: [col_sep as u8], line_sep: line_sep, title_sep: title_sep};
+	pub fn new(col_sep: &'static str, line_sep: Option<LineSeparator>, title_sep: Option<LineSeparator>) -> TableFormat {
+		return TableFormat{col_sep: col_sep, line_sep: line_sep, title_sep: title_sep};
 	}
 	
 	/// Print a full line separator to `out`. `col_width` is a slice containing the width of each column
@@ -76,7 +76,7 @@ impl TableFormat {
 	
 	/// Print a column separator to `out`
 	pub fn print_column_separator<T: Write+?Sized>(&self, out: &mut T) -> Result<(), Error> {
-		return out.write_all(&self.col_sep);
+		return out.write_all(&self.col_sep.as_bytes());
 	}
 }
 
@@ -96,10 +96,10 @@ pub const EQU_PLUS_SEP: LineSeparator = LineSeparator{line: ['=' as u8], cross: 
 /// |    |    |
 /// +----+----+
 /// ```
-pub const FORMAT_DEFAULT: TableFormat = TableFormat{col_sep: ['|' as u8], line_sep: Some(MINUS_PLUS_SEP), title_sep: Some(EQU_PLUS_SEP)};
+pub const FORMAT_DEFAULT: TableFormat = TableFormat{col_sep: "|", line_sep: Some(MINUS_PLUS_SEP), title_sep: Some(EQU_PLUS_SEP)};
 
 /// Similar to `FORMAT_DEFAULT` but without special separator after title line
-pub const FORMAT_NO_LINESEP: TableFormat = TableFormat{col_sep: ['|' as u8], line_sep: None, title_sep: Some(MINUS_PLUS_SEP)};
+pub const FORMAT_NO_LINESEP: TableFormat = TableFormat{col_sep: "|", line_sep: None, title_sep: Some(MINUS_PLUS_SEP)};
 
 /// Format for printing a table without any separators (only alignment)
-pub const FORMAT_BLANK: TableFormat = TableFormat{col_sep: [' ' as u8], line_sep: None, title_sep: None};
+pub const FORMAT_BLANK: TableFormat = TableFormat{col_sep: " ", line_sep: None, title_sep: None};
