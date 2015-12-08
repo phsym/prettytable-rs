@@ -8,7 +8,7 @@ repository = "https://github.com/phsym/prettytable-rs"
 documentation = "http://phsym.github.io/prettytable-rs"
 readme = "README.md"
 authors = [ "Pierre-Henri Symoneaux" ]
-keywords = ["tab", "table", "format", "pretty", "aligned", "terminal"]
+keywords = ["tab", "table", "format", "pretty", "aligned", "terminal", "print"]
 license = "BSD-3-Clause"
 
 [[bin]]

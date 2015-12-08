@@ -2,6 +2,7 @@
 extern crate unicode_width;
 extern crate term;
 
+use std::io;
 use std::io::{Write, Error};
 use std::fmt;
 use std::iter::{FromIterator, IntoIterator};
@@ -190,9 +191,10 @@ impl Table {
 	/// # Panic
 	/// Panic if writing to standard output fails
 	pub fn printstd(&self) {
-		self.print_term(&mut *stdout().unwrap())
-			.ok()
-			.expect("Cannot print table to standard output");
+		match stdout() {
+			Some(mut o) => self.print_term(&mut *o),
+			None => self.print(&mut io::stdout()),
+		}.ok().expect("Cannot print table to standard output");
 	}
 }
 
