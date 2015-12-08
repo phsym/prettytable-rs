@@ -323,7 +323,7 @@ mod tests {
 	use Table;
 	use row::Row;
 	use cell::Cell;
-     use format::TableFormat;
+    use format::{FORMAT_NO_LINESEP, FORMAT_NO_COLSEP, FORMAT_NO_BORDER};
 
 	#[test]
 	fn table() {
@@ -369,7 +369,7 @@ mod tests {
 	#[test]
 	fn no_linesep() {
 		let mut table = Table::new();
-          table.set_format(TableFormat::new("|", None, None));
+        table.set_format(FORMAT_NO_LINESEP);
 		table.add_row(Row::new(vec![Cell::new("a"), Cell::new("bc"), Cell::new("def")]));
 		table.add_row(Row::new(vec![Cell::new("def"), Cell::new("bc"), Cell::new("a")]));
 		table.set_titles(Row::new(vec![Cell::new("t1"), Cell::new("t2"), Cell::new("t3")]));
@@ -385,11 +385,38 @@ mod tests {
 ";
 		assert_eq!(table.to_string().replace("\r\n", "\n"), out);
 	}
+	
+		#[test]
+	fn no_colsep() {
+		let mut table = Table::new();
+        table.set_format(FORMAT_NO_COLSEP);
+		table.add_row(Row::new(vec![Cell::new("a"), Cell::new("bc"), Cell::new("def")]));
+		table.add_row(Row::new(vec![Cell::new("def"), Cell::new("bc"), Cell::new("a")]));
+		table.set_titles(Row::new(vec![Cell::new("t1"), Cell::new("t2"), Cell::new("t3")]));
+		assert_eq!(table[1][1].get_content(), "bc");
+
+		table[1][1] = Cell::new("newval");
+		assert_eq!(table[1][1].get_content(), "newval");
+
+		let out = "\
+------------------
+ t1   t2      t3  
+==================
+ a    bc      def 
+------------------
+ def  newval  a   
+------------------
+";
+		println!("{}", out);
+		println!("____");
+		println!("{}", table.to_string().replace("\r\n", "\n"));
+		assert_eq!(table.to_string().replace("\r\n", "\n"), out);
+	}
 
 	#[test]
 	fn no_borders() {
 		let mut table = Table::new();
-          table.set_format(TableFormat::new("", None, None));
+        table.set_format(FORMAT_NO_BORDER);
 		table.add_row(Row::new(vec![Cell::new("a"), Cell::new("bc"), Cell::new("def")]));
 		table.add_row(Row::new(vec![Cell::new("def"), Cell::new("bc"), Cell::new("a")]));
 		table.set_titles(Row::new(vec![Cell::new("t1"), Cell::new("t2"), Cell::new("t3")]));
@@ -403,9 +430,9 @@ mod tests {
  a    bc      def 
  def  newval  a   
 ";
-          println!("{}", out);
-          println!("____");
-          println!("{}", table.to_string().replace("\r\n", "\n"));
+		println!("{}", out);
+		println!("____");
+		println!("{}", table.to_string().replace("\r\n", "\n"));
 		assert_eq!(out, String::from("\n") + &table.to_string().replace("\r\n", "\n"));
 	}
 }
