@@ -1,1 +1,0 @@
-initSidebarItems({"constant":[["BLACK",""],["BLUE",""],["BRIGHT_BLACK",""],["BRIGHT_BLUE",""],["BRIGHT_CYAN",""],["BRIGHT_GREEN",""],["BRIGHT_MAGENTA",""],["BRIGHT_RED",""],["BRIGHT_WHITE",""],["BRIGHT_YELLOW",""],["CYAN",""],["GREEN",""],["MAGENTA",""],["RED",""],["WHITE",""],["YELLOW",""]],"type":[["Color","Number for a terminal color"]]});

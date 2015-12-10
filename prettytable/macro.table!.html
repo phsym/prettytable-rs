@@ -45,7 +45,7 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-3487' class='srclink' href='../src/prettytable/lib.rs.html#284-288' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-555' class='srclink' href='../src/prettytable/lib.rs.html#300-304' title='goto source code'>[src]</a></span></h1>
 <pre class='rust macro'>
 <span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>table</span> {
 	($([$(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>content</span>:<span class='ident'>tt</span>)<span class='op'>*</span>]), <span class='op'>*</span>) <span class='op'>=&gt;</span> (
@@ -56,13 +56,11 @@
 
 <p>All the arguments used for elements must implement the <code>std::string::ToString</code> trait</p>
 
-<h1 id="syntax" class='section-header'><a
-                           href="#syntax">Syntax</a></h1>
+<h1 id='syntax' class='section-header'><a href='#syntax'>Syntax</a></h1>
 <pre><code class="language-text">table!([Element1_ row1, Element2_ row1, ...], [Element1_row2, ...], ...);
 </code></pre>
 
-<h1 id="example" class='section-header'><a
-                           href="#example">Example</a></h1><pre class='rust rust-example-rendered'>
+<h1 id='example' class='section-header'><a href='#example'>Example</a></h1><pre class='rust rust-example-rendered'>
 <span class='comment'>// Create a table initialized with some rows :</span>
 <span class='kw'>let</span> <span class='ident'>tab</span> <span class='op'>=</span> <span class='macro'>table</span><span class='macro'>!</span>([<span class='string'>&quot;Element1&quot;</span>, <span class='string'>&quot;Element2&quot;</span>, <span class='string'>&quot;Element3&quot;</span>],
                  [<span class='number'>1</span>, <span class='number'>2</span>, <span class='number'>3</span>],

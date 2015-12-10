@@ -9,6 +9,8 @@
  * option. This file may not be copied, modified, or distributed
  * except according to those terms.
  */
+
+/* See FiraSans-LICENSE.txt for the Fira Sans license. */
 @font-face {
     font-family: 'Fira Sans';
     font-style: normal;
@@ -21,6 +23,9 @@
     font-weight: 500;
     src: local('Fira Sans Medium'), url("FiraSans-Medium.woff") format('woff');
 }
+
+/* See SourceSerifPro-LICENSE.txt for the Source Serif Pro license and
+ * Heuristica-LICENSE.txt for the Heuristica license. */
 @font-face {
     font-family: 'Source Serif Pro';
     font-style: normal;
@@ -39,6 +44,8 @@
     font-weight: 700;
     src: local('Source Serif Pro Bold'), url("SourceSerifPro-Bold.woff") format('woff');
 }
+
+/* See SourceCodePro-LICENSE.txt for the Source Code Pro license. */
 @font-face {
     font-family: 'Source Code Pro';
     font-style: normal;
@@ -552,14 +559,17 @@ pre.rust .lifetime { color: #B76514; }
 
 .rusttest { display: none; }
 pre.rust { position: relative; }
-.test-arrow {
+a.test-arrow {
     display: inline-block;
     position: absolute;
-    top: 0;
-    right: 10px;
-    font-size: 150%;
-    -webkit-transform: scaleX(-1);
-    transform: scaleX(-1);
+
+    background-color: #4e8bca;
+    color: #f5f5f5;
+    padding: 5px 10px 5px 10px;
+    border-radius: 5px;
+    font-size: 130%;
+    top: 5px;
+    right: 5px;
 }
 
 .methods .section-header {

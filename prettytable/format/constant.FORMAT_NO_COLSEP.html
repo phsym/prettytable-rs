@@ -4,10 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="API documentation for the Rust `FORMAT_NO_LINESEP` constant in crate `prettytable`.">
-    <meta name="keywords" content="rust, rustlang, rust-lang, FORMAT_NO_LINESEP">
+    <meta name="description" content="API documentation for the Rust `FORMAT_NO_COLSEP` constant in crate `prettytable`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, FORMAT_NO_COLSEP">
 
-    <title>prettytable::format::FORMAT_NO_LINESEP - Rust</title>
+    <title>prettytable::format::FORMAT_NO_COLSEP - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../main.css">
 
@@ -26,7 +26,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'><a href='../index.html'>prettytable</a>::<wbr><a href='index.html'>format</a></p><script>window.sidebarCurrent = {name: 'FORMAT_NO_LINESEP', ty: 'constant', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'><a href='../index.html'>prettytable</a>::<wbr><a href='index.html'>format</a></p><script>window.sidebarCurrent = {name: 'FORMAT_NO_COLSEP', ty: 'constant', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -41,12 +41,12 @@
     </nav>
 
     <section id='main' class="content constant">
-<h1 class='fqn'><span class='in-band'><a href='../index.html'>prettytable</a>::<wbr><a href='index.html'>format</a>::<wbr><a class='constant' href=''>FORMAT_NO_LINESEP</a></span><span class='out-of-band'><span id='render-detail'>
+<h1 class='fqn'><span class='in-band'><a href='../index.html'>prettytable</a>::<wbr><a href='index.html'>format</a>::<wbr><a class='constant' href=''>FORMAT_NO_COLSEP</a></span><span class='out-of-band'><span id='render-detail'>
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-351' class='srclink' href='../../src/prettytable/format.rs.html#119' title='goto source code'>[src]</a></span></h1>
-<pre class='rust const'>pub const FORMAT_NO_LINESEP: <a class='struct' href='../../prettytable/format/struct.TableFormat.html' title='prettytable::format::TableFormat'>TableFormat</a><code> = </code><code>TableFormat{col_sep: Some(['|' as u8]), line_sep: None, title_sep: None}</code></pre><div class='docblock'><p>With no line or title separator</p>
+        </span><a id='src-352' class='srclink' href='../../src/prettytable/format.rs.html#122' title='goto source code'>[src]</a></span></h1>
+<pre class='rust const'>pub const FORMAT_NO_COLSEP: <a class='struct' href='../../prettytable/format/struct.TableFormat.html' title='prettytable::format::TableFormat'>TableFormat</a><code> = </code><code>TableFormat{col_sep: None, line_sep: Some(MINUS_PLUS_SEP), title_sep: Some(EQU_PLUS_SEP)}</code></pre><div class='docblock'><p>No column seprarator</p>
 </div></section>
     <section id='search' class="content hidden"></section>
 

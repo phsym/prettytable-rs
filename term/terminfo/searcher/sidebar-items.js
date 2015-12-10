@@ -1,1 +1,0 @@
-initSidebarItems({"fn":[["get_dbpath_for_term","Return path to database entry for `term`"]]});
