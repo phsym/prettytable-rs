@@ -19,5 +19,5 @@ name = "main"
 name = "prettytable"
 
 [dependencies]
-unicode-width = "*"
-term = "*"
+unicode-width = "^0.1"
+term = "^0.2"
