@@ -28,12 +28,113 @@ pub struct Table {
 	rows: Vec<Row>
 }
 
+/// A borrowed immutable `Table` slice
+#[derive(Clone, Debug)]
+pub struct TableSlice<'a> {
+	format: &'a TableFormat,
+	titles: &'a Option<Row>,
+	rows: &'a [Row]
+}
+
+impl <'a> TableSlice<'a> {
+	/// Compute and return the number of column
+	pub fn get_column_num(&self) -> usize {
+		let mut cnum = 0;
+		for r in self.rows {
+			let l = r.len();
+			if l > cnum {
+				cnum = l;
+			}
+		}
+		return cnum;
+	}
+
+	/// Get the number of rows
+	pub fn len(&self) -> usize {
+		return self.rows.len();
+	}
+
+	/// Get an immutable reference to a row
+	pub fn get_row(&self, row: usize) -> Option<&Row> {
+		return self.rows.get(row);
+	}
+
+	/// Get the width of the column at position `col_idx`.
+	/// Return 0 if the column does not exists;
+	fn get_column_width(&self, col_idx: usize) -> usize {
+		let mut width = match *self.titles {
+			Some(ref t) => t.get_cell_width(col_idx),
+			None => 0
+		};
+		for r in self.rows {
+			let l = r.get_cell_width(col_idx);
+			if l > width {
+				width = l;
+			}
+		}
+		return width;
+	}
+
+	/// Get the width of all columns, and return a slice
+	/// with the result for each column
+	fn get_all_column_width(&self) -> Vec<usize> {
+		let colnum = self.get_column_num();
+		let mut col_width = vec![0usize; colnum];
+		for i in 0..colnum {
+			col_width[i] = self.get_column_width(i);
+		}
+		return col_width;
+	}
+
+	/// Return an iterator over the immutable cells of the column specified by `column`
+	pub fn column_iter(&self, column: usize) -> ColumnIter {
+		return ColumnIter(self.rows.iter(), column);
+	}
+
+	/// Internal only
+	fn __print<T: Write+?Sized, F>(&self, out: &mut T, f: F) -> Result<(), Error> where F: Fn(&Row, &mut T, &TableFormat, &[usize]) -> Result<(), Error> {
+		// Compute columns width
+		let col_width = self.get_all_column_width();
+		try!(self.format.print_line_separator(out, &col_width));
+		if let Some(ref t) = *self.titles {
+			try!(f(t, out, &self.format, &col_width));
+			try!(self.format.print_title_separator(out, &col_width));
+		}
+		// Print rows
+		for r in self.rows {
+			try!(f(r, out, &self.format, &col_width));
+			try!(self.format.print_line_separator(out, &col_width));
+		}
+		return out.flush();
+	}
+
+	/// Print the table to `out`
+	pub fn print<T: Write+?Sized>(&self, out: &mut T) -> Result<(), Error> {
+		return self.__print(out, Row::print);
+	}
+
+	/// Print the table to terminal `out`, applying styles when needed
+	pub fn print_term<T: Terminal+?Sized>(&self, out: &mut T) -> Result<(), Error> {
+		return self.__print(out, Row::print_term);
+	}
+
+	/// Print the table to standard output
+	/// # Panic
+	/// Panic if writing to standard output fails
+	pub fn printstd(&self) {
+		match stdout() {
+			Some(mut o) => self.print_term(&mut *o),
+			None => self.print(&mut io::stdout()),
+		}.ok().expect("Cannot print table to standard output");
+	}
+}
+
 impl Table {
 	/// Create an empty table
 	pub fn new() -> Table {
 		return Self::init(Vec::new());
 	}
-	
+
 	/// Create a table initialized with `rows`
 	pub fn init(rows: Vec<Row>) -> Table {
 		return Table {
@@ -42,49 +143,42 @@ impl Table {
 			format: FORMAT_DEFAULT
 		};
 	}
-	
-	/// Change separators the table format
+
+	/// Change the table format. Eg : Separators
 	pub fn set_format(&mut self, format: TableFormat) {
 		self.format = format;
 	}
-	
+
 	/// Compute and return the number of column
 	pub fn get_column_num(&self) -> usize {
-		let mut cnum = 0;
-		for r in &self.rows {
-			let l = r.len();
-			if l > cnum {
-				cnum = l;
-			}
-		}
-		return cnum;
+		return self.slice(..).get_column_num();
 	}
-	
+
 	/// Get the number of rows
 	pub fn len(&self) -> usize {
 		return self.rows.len();
 	}
-	
+
 	/// Set the optional title lines
 	pub fn set_titles(&mut self, titles: Row) {
 		self.titles = Some(titles);
 	}
-	
+
 	/// Unset the title line
 	pub fn unset_titles(&mut self) {
 		self.titles = None;
 	}
-	
+
 	/// Get a mutable reference to a row
 	pub fn get_mut_row(&mut self, row: usize) -> Option<&mut Row> {
 		return self.rows.get_mut(row);
 	}
-	
+
 	/// Get an immutable reference to a row
 	pub fn get_row(&self, row: usize) -> Option<&Row> {
 		return self.rows.get(row);
 	}
-	
+
 	/// Append a row in the table, transferring ownership of this row to the table
 	/// and returning a mutable reference to the row
 	pub fn add_row(&mut self, row: Row) -> &mut Row {
@@ -92,12 +186,12 @@ impl Table {
 		let l = self.rows.len()-1;
 		return &mut self.rows[l];
 	}
-	
+
 	/// Append an empty row in the table. Return a mutable reference to this new row.
 	pub fn add_empty_row(&mut self) -> &mut Row {
-		return self.add_row(Row::default());	
+		return self.add_row(Row::default());
 	}
-	
+
 	/// Insert `row` at the position `index`, and return a mutable reference to this row.
 	/// If index is higher than current numbers of rows, `row` is appended at the end of the table
 	pub fn insert_row(&mut self, index: usize, row: Row) -> &mut Row {
@@ -108,93 +202,58 @@ impl Table {
 			return self.add_row(row);
 		}
 	}
-	
+
 	/// Modify a single element in the table
 	pub fn set_element(&mut self, element: &str, column: usize, row: usize) -> Result<(), &str> {
 		let rowline = try!(self.get_mut_row(row).ok_or("Cannot find row"));
-		// TODO : If a cell already exist, copy it's alignment parameter
+		// TODO: If a cell already exist, copy it's alignment parameter
 		return rowline.set_cell(Cell::new(element), column);
 	}
-	
+
 	/// Remove the row at position `index`. Silently skip if the row does not exist
 	pub fn remove_row(&mut self, index: usize) {
 		if index < self.rows.len() {
 			self.rows.remove(index);
 		}
 	}
-	
-	/// Get the width of the column at position `col_idx`.
+
+	/// **[DEPRECATED]** Get the width of the column at position `col_idx`.
 	/// Return 0 if the column does not exists;
 	pub fn get_column_width(&self, col_idx: usize) -> usize {
-		let mut width = match self.titles {
-			Some(ref t) => t.get_cell_width(col_idx),
-			None => 0
-		};
-		for r in &self.rows {
-			let l = r.get_cell_width(col_idx);
-			if l > width {
-				width = l;
-			}
-		}
-		return width;
+		return self.slice(..).get_column_width(col_idx);
 	}
-	
-	/// Get the width of all columns, and return a slice 
+
+	/// **[DEPRECATED]** Get the width of all columns, and return a slice
 	/// with the result for each column
 	pub fn get_all_column_width(&self) -> Vec<usize> {
-		let colnum = self.get_column_num();
-		let mut col_width = vec![0usize; colnum];
-		for i in 0..colnum {
-			col_width[i] = self.get_column_width(i);
-		}
-		return col_width;
+		return self.slice(..).get_all_column_width();
 	}
-	
+
 	/// Return an iterator over the immutable cells of the column specified by `column`
 	pub fn column_iter(&self, column: usize) -> ColumnIter {
 		return ColumnIter(self.rows.iter(), column);
 	}
-	
+
 	/// Return an iterator over the mutable cells of the column specified by `column`
 	pub fn column_iter_mut(&mut self, column: usize) -> ColumnIterMut {
 		return ColumnIterMut(self.rows.iter_mut(), column);
 	}
-	
-	/// Internal only
-	fn __print<T: Write+?Sized, F>(&self, out: &mut T, f: F) -> Result<(), Error> where F: Fn(&Row, &mut T, &TableFormat, &[usize]) -> Result<(), Error> {
-		// Compute columns width
-		let col_width = self.get_all_column_width();
-		try!(self.format.print_line_separator(out, &col_width));
-		if let Some(ref t) = self.titles {
-			try!(f(t, out, &self.format, &col_width));
-			try!(self.format.print_title_separator(out, &col_width));
-		}
-		// Print rows
-		for r in &self.rows {
-			try!(f(r, out, &self.format, &col_width));
-			try!(self.format.print_line_separator(out, &col_width));
-		}
-		return out.flush();
-	}
-	
+
 	/// Print the table to `out`
 	pub fn print<T: Write+?Sized>(&self, out: &mut T) -> Result<(), Error> {
-		return self.__print(out, Row::print);
+		return self.slice(..).print(out);
 	}
-	
+
 	/// Print the table to terminal `out`, applying styles when needed
 	pub fn print_term<T: Terminal+?Sized>(&self, out: &mut T) -> Result<(), Error> {
-		return self.__print(out, Row::print_term);
+		return self.slice(..).print_term(out);
 	}
-	
+
 	/// Print the table to standard output
 	/// # Panic
 	/// Panic if writing to standard output fails
 	pub fn printstd(&self) {
-		match stdout() {
-			Some(mut o) => self.print_term(&mut *o),
-			None => self.print(&mut io::stdout()),
-		}.ok().expect("Cannot print table to standard output");
+		self.slice(..).printstd();
 	}
 }
 
@@ -212,6 +271,12 @@ impl IndexMut<usize> for Table {
 }
 
 impl fmt::Display for Table {
+	fn fmt(&self, fmt: &mut fmt::Formatter) -> Result<(), fmt::Error> {
+		return self.slice(..).fmt(fmt);
+	}
+}
+
+impl <'a> fmt::Display for TableSlice<'a> {
 	fn fmt(&self, fmt: &mut fmt::Formatter) -> Result<(), fmt::Error> {
 		let mut writer = StringWriter::new();
 		if let Err(_) = self.print(&mut writer) {
@@ -238,7 +303,6 @@ pub struct ColumnIter<'a>(std::slice::Iter<'a, Row>, usize);
 
 impl <'a> std::iter::Iterator for ColumnIter<'a> {
 	type Item = &'a Cell;
-	
 	fn next(&mut self) -> Option<&'a Cell> {
 		return match self.0.next() {
 			None => None,
@@ -252,7 +316,6 @@ pub struct ColumnIterMut<'a>(std::slice::IterMut<'a, Row>, usize);
 
 impl <'a> std::iter::Iterator for ColumnIterMut<'a> {
 	type Item = &'a mut Cell;
-	
 	fn next(&mut self) -> Option<&'a mut Cell> {
 		return match self.0.next() {
 			None => None,
@@ -261,8 +324,38 @@ impl <'a> std::iter::Iterator for ColumnIterMut<'a> {
 	}
 }
 
+/// Trait implemented by types which can be sliced
+pub trait Slice<'a, E> {
+	/// Type output after slicing
+	type Output: 'a;
+	/// Get a slice from self
+	fn slice(&'a self, arg: E) -> Self::Output;
+}
+
+impl <'a, E> Slice<'a, E> for Table where Vec<Row>: Index<E, Output=[Row]> {
+	type Output = TableSlice<'a>;
+	fn slice(&'a self, arg: E) -> Self::Output {
+		return TableSlice {
+			format: &self.format,
+			titles: &self.titles,
+			rows: &self.rows[arg]
+		}
+	}
+}
+
+impl <'a, E> Slice<'a, E> for TableSlice<'a> where [Row]: Index<E, Output=[Row]> {
+	type Output = TableSlice<'a>;
+	fn slice(&'a self, arg: E) -> Self::Output {
+		return TableSlice {
+			format: &self.format,
+			titles: &self.titles,
+			rows: &self.rows[arg]
+		}
+	}
+}
+
 /// Create a table filled with some values
-/// 
+///
 /// All the arguments used for elements must implement the `std::string::ToString` trait
 /// # Syntax
 /// ```text
@@ -281,9 +374,9 @@ impl <'a> std::iter::Iterator for ColumnIterMut<'a> {
 /// # drop(tab);
 /// # }
 /// ```
-/// 
+///
 /// Some style can also be given in table creation
-/// 
+///
 /// ```
 /// # #[macro_use] extern crate prettytable;
 /// # fn main() {
@@ -304,7 +397,7 @@ macro_rules! table {
 }
 
 /// Create a table with `table!` macro, print it to standard output, then return this table for future usage.
-/// 
+///
 /// The syntax is the same that the one for the `table!` macro
 #[macro_export]
 macro_rules! ptable {
@@ -319,8 +412,8 @@ macro_rules! ptable {
 
 #[cfg(test)]
 mod tests {
-	
 	use Table;
+	use Slice;
 	use row::Row;
 	use cell::Cell;
     use format::{FORMAT_NO_LINESEP, FORMAT_NO_COLSEP, FORMAT_NO_BORDER};
@@ -342,7 +435,7 @@ mod tests {
 ";
 		assert_eq!(table.to_string().replace("\r\n", "\n"), out);
 	}
-	
+
 	#[test]
 	fn index() {
 		let mut table = Table::new();
@@ -350,10 +443,10 @@ mod tests {
 		table.add_row(Row::new(vec![Cell::new("def"), Cell::new("bc"), Cell::new("a")]));
 		table.set_titles(Row::new(vec![Cell::new("t1"), Cell::new("t2"), Cell::new("t3")]));
 		assert_eq!(table[1][1].get_content(), "bc");
-		
+
 		table[1][1] = Cell::new("newval");
 		assert_eq!(table[1][1].get_content(), "newval");
-		
+
 		let out = "\
 +-----+--------+-----+
 | t1  | t2     | t3  |
@@ -385,8 +478,8 @@ mod tests {
 ";
 		assert_eq!(table.to_string().replace("\r\n", "\n"), out);
 	}
-	
-		#[test]
+
+	#[test]
 	fn no_colsep() {
 		let mut table = Table::new();
         table.set_format(FORMAT_NO_COLSEP);
@@ -400,11 +493,11 @@ mod tests {
 
 		let out = "\
 ------------------
- t1   t2      t3  
+ t1   t2      t3  \n\
 ==================
- a    bc      def 
+ a    bc      def \n\
 ------------------
- def  newval  a   
+ def  newval  a   \n\
 ------------------
 ";
 		println!("{}", out);
@@ -425,14 +518,42 @@ mod tests {
 		table[1][1] = Cell::new("newval");
 		assert_eq!(table[1][1].get_content(), "newval");
 
-		let out = "
- t1   t2      t3  
- a    bc      def 
- def  newval  a   
+		let out = "\
+\u{0020}t1   t2      t3  \n\
+\u{0020}a    bc      def \n\
+\u{0020}def  newval  a   \n\
 ";
 		println!("{}", out);
 		println!("____");
 		println!("{}", table.to_string().replace("\r\n", "\n"));
-		assert_eq!(out, String::from("\n") + &table.to_string().replace("\r\n", "\n"));
+		assert_eq!(out, table.to_string().replace("\r\n", "\n"));
+	}
+
+	#[test]
+	fn slices() {
+		let mut table = Table::new();
+		table.set_titles(Row::new(vec![Cell::new("t1"), Cell::new("t2"), Cell::new("t3")]));
+		table.add_row(Row::new(vec![Cell::new("0"), Cell::new("0"), Cell::new("0")]));
+		table.add_row(Row::new(vec![Cell::new("1"), Cell::new("1"), Cell::new("1")]));
+		table.add_row(Row::new(vec![Cell::new("2"), Cell::new("2"), Cell::new("2")]));
+		table.add_row(Row::new(vec![Cell::new("3"), Cell::new("3"), Cell::new("3")]));
+		table.add_row(Row::new(vec![Cell::new("4"), Cell::new("4"), Cell::new("4")]));
+		table.add_row(Row::new(vec![Cell::new("5"), Cell::new("5"), Cell::new("5")]));
+		let out = "\
++----+----+----+
+| t1 | t2 | t3 |
++====+====+====+
+| 1  | 1  | 1  |
++----+----+----+
+| 2  | 2  | 2  |
++----+----+----+
+| 3  | 3  | 3  |
++----+----+----+
+";
+		let slice = table.slice(..);
+		let slice = slice.slice(1..);
+		let slice = slice.slice(..3);
+		assert_eq!(out, slice.to_string().replace("\r\n", "\n"));
+		assert_eq!(out, table.slice(1..4).to_string().replace("\r\n", "\n"));
 	}
 }
