@@ -4,7 +4,7 @@ rust:
   - beta
   - nightly
 matrix:
-  allow_failure:
+  allow_failures:
     - rust: nightly
 after_success: |
   sudo apt-get install libcurl4-openssl-dev libelf-dev libdw-dev &&
