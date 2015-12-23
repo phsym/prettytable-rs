@@ -145,6 +145,7 @@ Cell::new("foo2").style_spec("FrByc")
 Where **FrBybc** means **F**oreground: **r**ed, **B**ackground: **y**ellow, **b**old, **c**enter
 
 With macros it's even simpler :
+> **Currenly style in macros don't work on nightly rust because of _Type Ascription_. See issue [#11](https://github.com/phsym/prettytable-rs/issues/11) for details**
 
 In rows, for each cells :
 ```rust
