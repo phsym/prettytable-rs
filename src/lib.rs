@@ -7,6 +7,7 @@ use std::io::{Write, Error};
 use std::fmt;
 use std::iter::{FromIterator, IntoIterator};
 use std::ops::{Index, IndexMut};
+use std::mem::transmute;
 
 use term::{Terminal, stdout};
 
@@ -23,8 +24,8 @@ use utils::StringWriter;
 /// A Struct representing a printable table
 #[derive(Clone, Debug)]
 pub struct Table {
-	format: TableFormat,
-	titles: Option<Row>,
+	format: Box<TableFormat>,
+	titles: Box<Option<Row>>,
 	rows: Vec<Row>
 }
 
@@ -139,19 +140,27 @@ impl Table {
 	pub fn init(rows: Vec<Row>) -> Table {
 		return Table {
 			rows: rows,
-			titles: None,
-			format: FORMAT_DEFAULT
+			titles: Box::new(None),
+			format: Box::new(FORMAT_DEFAULT)
 		};
+	}
+
+	pub fn as_slice<'a>(&'a self) -> &'a TableSlice<'a> {
+		unsafe {
+			let s: &mut Table = &mut *((self as *const Table) as *mut Table);
+			s.rows.shrink_to_fit();
+			return transmute(self);
+		}
 	}
 
 	/// Change the table format. Eg : Separators
 	pub fn set_format(&mut self, format: TableFormat) {
-		self.format = format;
+		*self.format = format;
 	}
 
 	/// Compute and return the number of column
 	pub fn get_column_num(&self) -> usize {
-		return self.slice(..).get_column_num();
+		return self.as_slice().get_column_num();
 	}
 
 	/// Get the number of rows
@@ -161,12 +170,12 @@ impl Table {
 
 	/// Set the optional title lines
 	pub fn set_titles(&mut self, titles: Row) {
-		self.titles = Some(titles);
+		*self.titles = Some(titles);
 	}
 
 	/// Unset the title line
 	pub fn unset_titles(&mut self) {
-		self.titles = None;
+		*self.titles = None;
 	}
 
 	/// Get a mutable reference to a row
@@ -220,13 +229,13 @@ impl Table {
 	/// **[DEPRECATED]** Get the width of the column at position `col_idx`.
 	/// Return 0 if the column does not exists;
 	pub fn get_column_width(&self, col_idx: usize) -> usize {
-		return self.slice(..).get_column_width(col_idx);
+		return self.as_slice().get_column_width(col_idx);
 	}
 
 	/// **[DEPRECATED]** Get the width of all columns, and return a slice
 	/// with the result for each column
 	pub fn get_all_column_width(&self) -> Vec<usize> {
-		return self.slice(..).get_all_column_width();
+		return self.as_slice().get_all_column_width();
 	}
 
 	/// Return an iterator over the immutable cells of the column specified by `column`
@@ -241,19 +250,19 @@ impl Table {
 
 	/// Print the table to `out`
 	pub fn print<T: Write+?Sized>(&self, out: &mut T) -> Result<(), Error> {
-		return self.slice(..).print(out);
+		return self.as_slice().print(out);
 	}
 
 	/// Print the table to terminal `out`, applying styles when needed
 	pub fn print_term<T: Terminal+?Sized>(&self, out: &mut T) -> Result<(), Error> {
-		return self.slice(..).print_term(out);
+		return self.as_slice().print_term(out);
 	}
 
 	/// Print the table to standard output
 	/// # Panic
 	/// Panic if writing to standard output fails
 	pub fn printstd(&self) {
-		self.slice(..).printstd();
+		self.as_slice().printstd();
 	}
 }
 
@@ -332,14 +341,10 @@ pub trait Slice<'a, E> {
 	fn slice(&'a self, arg: E) -> Self::Output;
 }
 
-impl <'a, E> Slice<'a, E> for Table where Vec<Row>: Index<E, Output=[Row]> {
+impl <'a, E> Slice<'a, E> for Table where [Row]: Index<E, Output=[Row]> {
 	type Output = TableSlice<'a>;
 	fn slice(&'a self, arg: E) -> Self::Output {
-		return TableSlice {
-			format: &self.format,
-			titles: &self.titles,
-			rows: &self.rows[arg]
-		}
+		return self.as_slice().slice(arg);
 	}
 }
 
