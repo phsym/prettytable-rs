@@ -36,12 +36,12 @@ fn main() {
     println!("Modified : ");
     table.set_element("new_foo", 2, 1).unwrap();
     table.printstd();
-    
+
     // Print a table with some styles on it :
     // FrBybl means : Foregound red, Background yellow, bold, left align
     // d means : Default, do nothing
  	ptable!([FrBybl:"A", "B", FrBybr:"C"], [d:123, 234, 345, 456]);
- 	
+
  	// You can also apply style to full rows :
     let mut table = table!([Frb -> "A", "B", "C"], [1, 2, 3, 4], ["A\nBCCZZZ\nDDD", 2, table]);
     table.set_titles(row!["Title 1", "Title 2"]);

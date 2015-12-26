@@ -93,7 +93,8 @@ impl <'a> TableSlice<'a> {
 	}
 
 	/// Internal only
-	fn __print<T: Write+?Sized, F>(&self, out: &mut T, f: F) -> Result<(), Error> where F: Fn(&Row, &mut T, &TableFormat, &[usize]) -> Result<(), Error> {
+	fn __print<T: Write+?Sized, F>(&self, out: &mut T, f: F) -> Result<(), Error>
+		where F: Fn(&Row, &mut T, &TableFormat, &[usize]) -> Result<(), Error> {
 		// Compute columns width
 		let col_width = self.get_all_column_width();
 		try!(self.format.print_line_separator(out, &col_width));
@@ -145,14 +146,6 @@ impl Table {
 		};
 	}
 
-	pub fn as_slice<'a>(&'a self) -> &'a TableSlice<'a> {
-		unsafe {
-			let s: &mut Table = &mut *((self as *const Table) as *mut Table);
-			s.rows.shrink_to_fit();
-			return transmute(self);
-		}
-	}
-
 	/// Change the table format. Eg : Separators
 	pub fn set_format(&mut self, format: TableFormat) {
 		*self.format = format;
@@ -160,7 +153,7 @@ impl Table {
 
 	/// Compute and return the number of column
 	pub fn get_column_num(&self) -> usize {
-		return self.as_slice().get_column_num();
+		return self.as_ref().get_column_num();
 	}
 
 	/// Get the number of rows
@@ -229,13 +222,13 @@ impl Table {
 	/// **[DEPRECATED]** Get the width of the column at position `col_idx`.
 	/// Return 0 if the column does not exists;
 	pub fn get_column_width(&self, col_idx: usize) -> usize {
-		return self.as_slice().get_column_width(col_idx);
+		return self.as_ref().get_column_width(col_idx);
 	}
 
 	/// **[DEPRECATED]** Get the width of all columns, and return a slice
 	/// with the result for each column
 	pub fn get_all_column_width(&self) -> Vec<usize> {
-		return self.as_slice().get_all_column_width();
+		return self.as_ref().get_all_column_width();
 	}
 
 	/// Return an iterator over the immutable cells of the column specified by `column`
@@ -250,19 +243,19 @@ impl Table {
 
 	/// Print the table to `out`
 	pub fn print<T: Write+?Sized>(&self, out: &mut T) -> Result<(), Error> {
-		return self.as_slice().print(out);
+		return self.as_ref().print(out);
 	}
 
 	/// Print the table to terminal `out`, applying styles when needed
 	pub fn print_term<T: Terminal+?Sized>(&self, out: &mut T) -> Result<(), Error> {
-		return self.as_slice().print_term(out);
+		return self.as_ref().print_term(out);
 	}
 
 	/// Print the table to standard output
 	/// # Panic
 	/// Panic if writing to standard output fails
 	pub fn printstd(&self) {
-		self.as_slice().printstd();
+		self.as_ref().printstd();
 	}
 }
 
@@ -281,7 +274,7 @@ impl IndexMut<usize> for Table {
 
 impl fmt::Display for Table {
 	fn fmt(&self, fmt: &mut fmt::Formatter) -> Result<(), fmt::Error> {
-		return self.slice(..).fmt(fmt);
+		return self.as_ref().fmt(fmt);
 	}
 }
 
@@ -333,6 +326,23 @@ impl <'a> std::iter::Iterator for ColumnIterMut<'a> {
 	}
 }
 
+impl <'a> AsRef<TableSlice<'a>> for TableSlice<'a> {
+	fn as_ref(&self) -> &TableSlice<'a> {
+		return self;
+	}
+}
+
+impl <'a> AsRef<TableSlice<'a>> for Table {
+	fn as_ref(&self) -> &TableSlice<'a> {
+		return unsafe {
+			// All this is a bit hacky. Let's try to find something else
+			let s = &mut *((self as *const Table) as *mut Table);
+			s.rows.shrink_to_fit();
+			return transmute(self);
+		};
+	}
+}
+
 /// Trait implemented by types which can be sliced
 pub trait Slice<'a, E> {
 	/// Type output after slicing
@@ -341,20 +351,14 @@ pub trait Slice<'a, E> {
 	fn slice(&'a self, arg: E) -> Self::Output;
 }
 
-impl <'a, E> Slice<'a, E> for Table where [Row]: Index<E, Output=[Row]> {
+impl <'a, T, E> Slice<'a, E> for T where T: AsRef<TableSlice<'a>>, [Row]: Index<E, Output=[Row]> {
 	type Output = TableSlice<'a>;
 	fn slice(&'a self, arg: E) -> Self::Output {
-		return self.as_slice().slice(arg);
-	}
-}
-
-impl <'a, E> Slice<'a, E> for TableSlice<'a> where [Row]: Index<E, Output=[Row]> {
-	type Output = TableSlice<'a>;
-	fn slice(&'a self, arg: E) -> Self::Output {
+		let sl = self.as_ref();
 		return TableSlice {
-			format: &self.format,
-			titles: &self.titles,
-			rows: &self.rows[arg]
+			format: sl.format,
+			titles: sl.titles,
+			rows: sl.rows.index(arg)
 		}
 	}
 }
