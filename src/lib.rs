@@ -21,7 +21,7 @@ use cell::Cell;
 use format::{TableFormat, FORMAT_DEFAULT};
 use utils::StringWriter;
 
-/// A Struct representing a printable table
+/// An owned printable table
 #[derive(Clone, Debug)]
 pub struct Table {
 	format: Box<TableFormat>,
@@ -260,6 +260,13 @@ impl Table {
 }
 
 impl Index<usize> for Table {
+	type Output = Row;
+	fn index(&self, idx: usize) -> &Self::Output {
+		return &self.rows[idx];
+	}
+}
+
+impl <'a> Index<usize> for TableSlice<'a> {
 	type Output = Row;
 	fn index(&self, idx: usize) -> &Self::Output {
 		return &self.rows[idx];
