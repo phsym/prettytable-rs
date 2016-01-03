@@ -48,13 +48,19 @@ impl Write for StringWriter {
 pub fn print_align<T: Write+?Sized>(out: &mut T, align: Align, text: &str, fill: char, size: usize) -> Result<(), Error> {
 	let text_len = UnicodeWidthStr::width(text);
 	let mut nfill = if text_len < size { size - text_len } else { 0 };
-	match align {
-		Align::LEFT => {},
-		Align:: RIGHT => {try!(out.write(&vec![fill as u8; nfill])); nfill = 0;},
-		Align:: CENTER => {try!(out.write(&vec![fill as u8; nfill/2])); nfill -= nfill/2;}
+	let n = match align {
+		Align::LEFT => 0,
+		Align:: RIGHT => nfill,
+		Align:: CENTER => nfill/2
+	};
+	if n > 0 {
+		try!(out.write(&vec![fill as u8; n]));
+		nfill -= n;
 	}
 	try!(out.write(text.as_bytes()));
-	try!(out.write(&vec![fill as u8; nfill]));
+	if nfill > 0 {
+		try!(out.write(&vec![fill as u8; nfill]));
+	}
 	return Ok(());
 }
 
