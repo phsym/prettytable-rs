@@ -5,7 +5,7 @@ use std::io::{Write, Error};
 use super::utils::NEWLINE;
 
 /// Alignment for cell's content
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq, Copy)]
 pub enum Align  {
 	LEFT,
 	CENTER,
@@ -20,13 +20,13 @@ pub struct LineSeparator {
 }
 
 impl LineSeparator {
-	
+
 	/// Create a new line separator instance where `line` is the character used to separate 2 lines
 	/// and `cross` is the one used when column separaors and line separators cross
 	pub fn new(line: char, cross: char) -> LineSeparator {
 		return LineSeparator{line: [line as u8], cross: [cross as u8]};
 	}
-	
+
 	/// Print a full line separator to `out`. `col_width` is a slice containing the width of each column
 	pub fn print<T: Write+?Sized>(&self, out: &mut T, col_width: &[usize], with_colsep: bool) -> Result<(), Error> {
 		if with_colsep {
@@ -51,7 +51,7 @@ pub struct TableFormat {
 }
 
 impl TableFormat {
-	
+
 	/// Create a new TableFormat.
 	///
 	/// `col_sep` is the character used for separating columns.
@@ -65,7 +65,7 @@ impl TableFormat {
 		 };
 		 return TableFormat{col_sep: csep, line_sep: line_sep, title_sep: title_sep};
 	}
-	
+
 	/// Print a full line separator to `out`. `col_width` is a slice containing the width of each column
 	pub fn print_line_separator<T: Write+?Sized>(&self, out: &mut T, col_width: &[usize]) -> Result<(), Error> {
 		if let Some(ref l) = self.line_sep {
@@ -73,7 +73,7 @@ impl TableFormat {
 		}
 		return Ok(());
 	}
-	
+
 	/// Print a full title separator to `out`. `col_width` is a slice containing the width of each column
 	pub fn print_title_separator<T: Write+?Sized>(&self, out: &mut T, col_width: &[usize]) -> Result<(), Error> {
 		if let Some(ref l) = self.title_sep {
@@ -81,7 +81,7 @@ impl TableFormat {
 		}
 		return self.print_line_separator(out, col_width);
 	}
-	
+
 	/// Print a column separator to `out`
 	pub fn print_column_separator<T: Write+?Sized>(&self, out: &mut T) -> Result<(), Error> {
 		return match self.col_sep {

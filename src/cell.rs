@@ -5,6 +5,7 @@ use std::string::ToString;
 use unicode_width::UnicodeWidthStr;
 use term::{Attr, Terminal, color};
 use super::format::Align;
+use super::utils::print_align;
 
 /// Represent a table cell containing a string.
 ///
@@ -37,35 +38,35 @@ impl Cell {
 			style: Vec::new()
 		};
 	}
-	
+
 	/// Create a new `Cell` initialized with content from `string`.
 	/// By default, content is align to `LEFT`
 	pub fn new(string: &str) -> Cell {
 		return Cell::new_align(string, Align::LEFT);
 	}
-	
+
 	/// Set text alignment in the cell
 	pub fn align(&mut self, align: Align) {
 		self.align = align;
 	}
-	
+
 	/// Add a style attribute to the cell
 	pub fn style(&mut self, attr: Attr) {
 		self.style.push(attr);
 	}
-	
+
 	/// Add a style attribute to the cell. Can be chained
 	pub fn with_style(mut self, attr: Attr) -> Cell {
 		self.style(attr);
 		return self;
 	}
-	
+
 	/// Remove all style attributes and reset alignment to default (LEFT)
 	pub fn reset_style(&mut self) {
 		self.style.clear();
 		self.align(Align::LEFT);
 	}
-	
+
 	/// Set the cell's style by applying the given specifier string
 	///
 	/// # Style spec syntax
@@ -84,7 +85,7 @@ impl Cell {
 	/// * **l** : Align **l**eft
 	/// * **r** : Align **r**ight
 	/// * **d** : **d**efault style
-	/// 
+	///
 	/// ### List of color specifiers :
 	///
 	/// * **r** : Red
@@ -95,7 +96,7 @@ impl Cell {
 	/// * **m** : Magenta
 	/// * **w** : White
 	/// * **d** : Black
-	/// 
+	///
 	/// And capital letters are for **bright** colors.
 	/// Eg :
 	///
@@ -153,22 +154,22 @@ impl Cell {
 		}
 		return self;
 	}
-	
+
 	/// Return the height of the cell
 	pub fn get_height(&self) -> usize {
 		return self.content.len();
 	}
-	
+
 	/// Return the width of the cell
 	pub fn get_width(&self) -> usize {
 		return self.width;
 	}
-	
+
 	/// Return a copy of the full string contained in the cell
 	pub fn get_content(&self) -> String {
 		return self.content.join("\n");
 	}
-	
+
 	/// Print a partial cell to `out`. Since the cell may be multi-lined,
 	/// `idx` is the line index to print. `col_width` is the column width used to
 	/// fill the cells with blanks so it fits in the table.
@@ -178,13 +179,16 @@ impl Cell {
 			Some(s) => s.as_ref(),
 			None => ""
 		};
-		return match self.align {
-			Align::LEFT   => write!(out, " {: <1$} ", c, col_width),
-			Align::CENTER => write!(out, " {: ^1$} ", c, col_width),
-			Align::RIGHT  => write!(out, " {: >1$} ", c, col_width),
-		}
+		try!(write!(out, " "));
+		try!(print_align(out, self.align, c, ' ', col_width));
+		return write!(out, " ");
+		// return match self.align {
+		// 	Align::LEFT   => write!(out, " {: <1$} ", c, col_width),
+		// 	Align::CENTER => write!(out, " {: ^1$} ", c, col_width),
+		// 	Align::RIGHT  => write!(out, " {: >1$} ", c, col_width),
+		// }
 	}
-	
+
 	/// Apply style then call `print` to print the cell into a terminal
 	pub fn print_term<T: Terminal+?Sized>(&self, out: &mut T, idx: usize, col_width: usize) -> Result<(), Error> {
 		for a in &self.style {
@@ -221,14 +225,14 @@ impl Default for Cell {
 }
 
 /// This macro simplifies `Cell` creation
-/// 
+///
 /// Support 2 syntax : With and without style specification.
 /// # Syntax
 /// ```text
 /// cell!(value);
 /// ```
 /// or
-/// 
+///
 /// ```text
 /// cell!(spec:value);
 /// ```
@@ -260,7 +264,7 @@ mod tests {
 	use utils::StringWriter;
 	use format::Align;
 	use term::{Attr, color};
-	
+
 	#[test]
 	fn get_content() {
 		let cell = Cell::new("test");
@@ -286,7 +290,16 @@ mod tests {
 		let _ = unicode_cell.print(&mut out, 0, 10);
 		assert_eq!(out.as_string(), " привет     ");
 	}
-	
+
+	#[test]
+	fn print_cjk() {
+		let unicode_cell = Cell::new("由系统自动更新");
+		assert_eq!(unicode_cell.get_width(), 14);
+		let mut out = StringWriter::new();
+		let _ = unicode_cell.print(&mut out, 0, 20);
+		assert_eq!(out.as_string(), " 由系统自动更新       ");
+	}
+
 	#[test]
 	fn align_left() {
 		let cell = Cell::new_align("test", Align::LEFT);
@@ -294,7 +307,7 @@ mod tests {
 		let _ = cell.print(&mut out, 0, 10);
 		assert_eq!(out.as_string(), " test       ");
 	}
-	
+
 	#[test]
 	fn align_center() {
 		let cell = Cell::new_align("test", Align::CENTER);
@@ -302,7 +315,7 @@ mod tests {
 		let _ = cell.print(&mut out, 0, 10);
 		assert_eq!(out.as_string(), "    test    ");
 	}
-	
+
 	#[test]
 	fn align_right() {
 		let cell = Cell::new_align("test", Align::RIGHT);
@@ -310,7 +323,7 @@ mod tests {
 		let _ = cell.print(&mut out, 0, 10);
 		assert_eq!(out.as_string(), "       test ");
 	}
-	
+
 	#[test]
 	fn style_spec() {
 		let mut cell = Cell::new("test").style_spec("FrBBbuic");
@@ -321,14 +334,14 @@ mod tests {
 		assert!(cell.style.contains(&Attr::ForegroundColor(color::RED)));
 		assert!(cell.style.contains(&Attr::BackgroundColor(color::BRIGHT_BLUE)));
 		assert_eq!(cell.align, Align::CENTER);
-		
+
 		cell = cell.style_spec("FDBwr");
 		assert_eq!(cell.style.len(), 2);
 		assert!(cell.style.contains(&Attr::ForegroundColor(color::BRIGHT_BLACK)));
 		assert!(cell.style.contains(&Attr::BackgroundColor(color::WHITE)));
 		assert_eq!(cell.align, Align::RIGHT)
 	}
-	
+
 	#[test]
 	fn reset_style() {
 		let mut cell = Cell::new("test").style_spec("FDBwr");
@@ -338,4 +351,3 @@ mod tests {
 		assert_eq!(cell.align, Align::LEFT);
 	}
 }
-
