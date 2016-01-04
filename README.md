@@ -195,4 +195,25 @@ Capital letters are for **bright** colors. Eg :
 * **B** : Bright Blue
 * ... and so on ...
 
+## Slicing
+
+Tables can be sliced into immutable borrowed subtables.
+Slices are of type `prettytable::TableSlice<'a>`.
+
+For example
+```rust
+use prettytable::Slice;
+(...)
+let slice = table.slice(2..5);
+table.printstd();
+```
+Would print a table with only lines 2, 3 and 4 from `table`.
+
+Other `Range` syntax are supported. For example :
+```rust
+table.slice(..); // Returns a borrowed immutable table with all rows
+table.slice(2..); // Returns a table with rows starting at index 2
+table.slice(..3); // Returns a table with rows until the one at index 3
+```
+
 Additional examples are provided in documentation and in [examples](./examples/) directory

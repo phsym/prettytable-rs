@@ -182,11 +182,6 @@ impl Cell {
 		try!(write!(out, " "));
 		try!(print_align(out, self.align, c, ' ', col_width));
 		return write!(out, " ");
-		// return match self.align {
-		// 	Align::LEFT   => write!(out, " {: <1$} ", c, col_width),
-		// 	Align::CENTER => write!(out, " {: ^1$} ", c, col_width),
-		// 	Align::RIGHT  => write!(out, " {: >1$} ", c, col_width),
-		// }
 	}
 
 	/// Apply style then call `print` to print the cell into a terminal
