@@ -30,6 +30,24 @@ pub struct Table {
 }
 
 /// A borrowed immutable `Table` slice
+/// A `TableSlice` is obtained by slicing a `Table` with the `Slice::slice` method.
+///
+/// # Examples
+/// ```rust
+/// # #[macro_use] extern crate prettytable;
+/// use prettytable::{Table, Slice};
+/// # fn main() {
+/// let table = table![[1, 2, 3], [4, 5, 6], [7, 8, 9]];
+/// let slice = table.slice(1..);
+/// slice.printstd(); // Prints only rows 1 and 2
+///
+/// //Also supports other syntax :
+/// table.slice(..);
+/// table.slice(..2);
+/// table.slice(1..3);
+/// # }
+/// ```
+///
 #[derive(Clone, Debug)]
 pub struct TableSlice<'a> {
 	format: &'a TableFormat,
