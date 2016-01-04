@@ -1,5 +1,5 @@
 (function() {var implementors = {};
-implementors['prettytable'] = ["impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html' title='core::cmp::PartialEq'>PartialEq</a> for <a class='enum' href='prettytable/format/enum.Align.html' title='prettytable::format::Align'>Align</a>",];
+implementors['term'] = ["impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html' title='core::cmp::PartialEq'>PartialEq</a> for <a class='enum' href='term/enum.Attr.html' title='term::Attr'>Attr</a>",];implementors['prettytable'] = ["impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html' title='core::cmp::PartialEq'>PartialEq</a> for <a class='enum' href='prettytable/format/enum.Align.html' title='prettytable::format::Align'>Align</a>",];
 
             if (window.register_implementors) {
                 window.register_implementors(implementors);
