@@ -190,14 +190,20 @@ impl Cell {
 			match out.attr(a.clone()) {
 				Ok(ok) => ok,
 				Err(::term::Error::NotSupported) => (), // Ignore unsupported atrributes
-				Err(::term::Error::Io(why)) => return Err(why),
-				Err(e) => return Err(Error::new(::std::io::ErrorKind::Other, e))
+				Err(e) => return Err(term_error_to_io_error(e))
 			};
 		}
 		try!(self.print(out, idx, col_width));
 		try!(out.reset().map_err(term_error_to_io_error));
 		return Ok(());
 	}
+}
+
+fn term_error_to_io_error(te: ::term::Error) -> Error {
+    match te {
+        ::term::Error::Io(why) => why,
+        _ => Error::new(::std::io::ErrorKind::Other, te),
+    }
 }
 
 impl <'a, T: ToString> From<&'a T> for Cell {
