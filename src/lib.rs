@@ -142,10 +142,13 @@ impl <'a> TableSlice<'a> {
 	/// # Panic
 	/// Panic if writing to standard output fails
 	pub fn printstd(&self) {
-		match stdout() {
+		let r = match stdout() {
 			Some(mut o) => self.print_term(&mut *o),
 			None => self.print(&mut io::stdout()),
-		}.ok().expect("Cannot print table to standard output");
+		};
+		if let Err(e) = r {
+			panic!("Cannot print table to standard output : {}", e);
+		}
 	}
 }
 
