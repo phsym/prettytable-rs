@@ -187,12 +187,19 @@ impl Cell {
 	/// Apply style then call `print` to print the cell into a terminal
 	pub fn print_term<T: Terminal+?Sized>(&self, out: &mut T, idx: usize, col_width: usize) -> Result<(), Error> {
 		for a in &self.style {
-			try!(out.attr(a.clone()));
+			try!(out.attr(a.clone()).map_err(term_error_to_io_error));
 		}
 		try!(self.print(out, idx, col_width));
-		try!(out.reset());
+		try!(out.reset().map_err(term_error_to_io_error));
 		return Ok(());
 	}
+}
+
+fn term_error_to_io_error(te: ::term::Error) -> Error {
+    match te {
+        ::term::Error::Io(why) => why,
+        _ => Error::new(::std::io::ErrorKind::Other, te),
+    }
 }
 
 impl <'a, T: ToString> From<&'a T> for Cell {

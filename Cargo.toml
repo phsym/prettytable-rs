@@ -20,4 +20,4 @@ name = "prettytable"
 
 [dependencies]
 unicode-width = "^0.1"
-term = "^0.2"
+term = "^0.4"
