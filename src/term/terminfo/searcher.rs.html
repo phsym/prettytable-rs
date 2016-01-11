@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/phsym/.cargo/registry/src/github.com-0a35038f75765ae4/term-0.2.14/src/terminfo/searcher.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/phsym/.cargo/registry/src/github.com-0a35038f75765ae4/term-0.4.0/src/terminfo/searcher.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>searcher.rs.html -- source</title>
@@ -118,6 +118,8 @@
 <span id="76">76</span>
 <span id="77">77</span>
 <span id="78">78</span>
+<span id="79">79</span>
+<span id="80">80</span>
 </pre><pre class='rust '>
 <span class='comment'>// Copyright 2012 The Rust Project Developers. See the COPYRIGHT</span>
 <span class='comment'>// file at the top-level directory of this distribution and at</span>
@@ -142,7 +144,7 @@
     <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>dirs_to_search</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
     <span class='kw'>let</span> <span class='ident'>first_char</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='ident'>term</span>.<span class='ident'>chars</span>().<span class='ident'>next</span>() {
         <span class='prelude-val'>Some</span>(<span class='ident'>c</span>) <span class='op'>=&gt;</span> <span class='ident'>c</span>,
-        <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='prelude-val'>None</span>
+        <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='prelude-val'>None</span>,
     };
 
     <span class='comment'>// Find search directory</span>
@@ -155,13 +157,15 @@
                 <span class='ident'>dirs_to_search</span>.<span class='ident'>push</span>(<span class='ident'>homedir</span>)
             }
             <span class='kw'>match</span> <span class='ident'>env</span>::<span class='ident'>var</span>(<span class='string'>&quot;TERMINFO_DIRS&quot;</span>) {
-                <span class='prelude-val'>Ok</span>(<span class='ident'>dirs</span>) <span class='op'>=&gt;</span> <span class='kw'>for</span> <span class='ident'>i</span> <span class='kw'>in</span> <span class='ident'>dirs</span>.<span class='ident'>split</span>(<span class='string'>&#39;:&#39;</span>) {
-                    <span class='kw'>if</span> <span class='ident'>i</span> <span class='op'>==</span> <span class='string'>&quot;&quot;</span> {
-                        <span class='ident'>dirs_to_search</span>.<span class='ident'>push</span>(<span class='ident'>PathBuf</span>::<span class='ident'>from</span>(<span class='string'>&quot;/usr/share/terminfo&quot;</span>));
-                    } <span class='kw'>else</span> {
-                        <span class='ident'>dirs_to_search</span>.<span class='ident'>push</span>(<span class='ident'>PathBuf</span>::<span class='ident'>from</span>(<span class='ident'>i</span>));
+                <span class='prelude-val'>Ok</span>(<span class='ident'>dirs</span>) <span class='op'>=&gt;</span> {
+                    <span class='kw'>for</span> <span class='ident'>i</span> <span class='kw'>in</span> <span class='ident'>dirs</span>.<span class='ident'>split</span>(<span class='string'>&#39;:&#39;</span>) {
+                        <span class='kw'>if</span> <span class='ident'>i</span> <span class='op'>==</span> <span class='string'>&quot;&quot;</span> {
+                            <span class='ident'>dirs_to_search</span>.<span class='ident'>push</span>(<span class='ident'>PathBuf</span>::<span class='ident'>from</span>(<span class='string'>&quot;/usr/share/terminfo&quot;</span>));
+                        } <span class='kw'>else</span> {
+                            <span class='ident'>dirs_to_search</span>.<span class='ident'>push</span>(<span class='ident'>PathBuf</span>::<span class='ident'>from</span>(<span class='ident'>i</span>));
+                        }
                     }
-                },
+                }
                 <span class='comment'>// Found nothing in TERMINFO_DIRS, use the default paths:</span>
                 <span class='comment'>// According to  /etc/terminfo/README, after looking at</span>
                 <span class='comment'>// ~/.terminfo, ncurses will search /etc/terminfo, then</span>
