@@ -10,4 +10,3 @@
 ## General :
 
 ## Travis-CI :
-* Automatically publish API documentation with travis after each successfull build
