@@ -18,7 +18,7 @@ fn main() {
     table.add_row(row!["foobar", "bar", "foo"]);
     table.add_row(row![]);
     // Add style to a full row
-    table.add_row(row![FY -> "styled", "bar", "foo"]);
+    table.add_row(row![FY => "styled", "bar", "foo"]);
     table.add_row(Row::new(vec![
     		Cell::new("foobar2"),
     		// Create a cell with a red foreground color
@@ -43,7 +43,7 @@ fn main() {
  	ptable!([FrBybl:"A", "B", FrBybr:"C"], [d:123, 234, 345, 456]);
 
  	// You can also apply style to full rows :
-    let mut table = table!([Frb -> "A", "B", "C"], [1, 2, 3, 4], ["A\nBCCZZZ\nDDD", 2, table]);
+    let mut table = table!([Frb => "A", "B", "C"], [1, 2, 3, 4], ["A\nBCCZZZ\nDDD", 2, table]);
     table.set_titles(row!["Title 1", "Title 2"]);
     table.set_format(FORMAT_DEFAULT);
     table.printstd();

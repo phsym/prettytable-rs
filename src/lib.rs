@@ -418,7 +418,7 @@ impl <'a, T, E> Slice<'a, E> for T where T: AsRef<TableSlice<'a>>, [Row]: Index<
 /// # #[macro_use] extern crate prettytable;
 /// # fn main() {
 /// let tab = table!([FrByl:"Element1", Fgc:"Element2", "Element3"],
-/// 				 [FrBy -> 1, 2, 3],
+/// 				 [FrBy => 1, 2, 3],
 /// 				 ["A", "B", "C"]
 /// 				 );
 /// # drop(tab);

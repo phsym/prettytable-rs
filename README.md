@@ -152,7 +152,7 @@ row![FrByb:"ABC", FrByb:"DEFG", "HIJKLMN"];
 ```
 Or for the whole row :
 ```rust
-row![FY -> "styled", "bar", "foo"];
+row![FY => "styled", "bar", "foo"];
 ```
 In tables, for each cells :
 ```rust
@@ -160,11 +160,11 @@ table!([FrBybl:"A", FrBybc:"B", FrBybr:"C"], [123, 234, 345, 456]);
 ```
 Or for each rows :
 ```rust
-table!([Frb -> "A", "B", "C"], [Frb -> 1, 2, 3, 4], [1, 2, 3]);
+table!([Frb => "A", "B", "C"], [Frb => 1, 2, 3, 4], [1, 2, 3]);
 ```
 Or a mix :
 ```rust
-table!([Frb -> "A", "B", "C"], [Frb:1, Fgi:2, 3, 4], [1, 2, 3]);
+table!([Frb => "A", "B", "C"], [Frb:1, Fgi:2, 3, 4], [1, 2, 3]);
 ```
 
 ### List of style specifiers :
