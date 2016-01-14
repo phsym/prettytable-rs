@@ -253,7 +253,7 @@ impl Default for Cell {
 /// // Do something with the cell
 /// # drop(cell);
 /// // Create a cell with style (Red foreground, Bold, aligned to left);
-/// let styled = cell!(Frbl:"value");
+/// let styled = cell!(Frbl->"value");
 /// # drop(styled);
 /// # }
 /// ```
@@ -261,7 +261,7 @@ impl Default for Cell {
 macro_rules! cell {
 	() => ($crate::cell::Cell::default());
 	($value:expr) => ($crate::cell::Cell::new(&$value.to_string()));
-	($style:ident : $value:expr) => (cell!($value).style_spec(stringify!($style)));
+	($style:ident -> $value:expr) => (cell!($value).style_spec(stringify!($style)));
 }
 
 #[cfg(test)]

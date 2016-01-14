@@ -170,7 +170,7 @@ impl <T, A> From<T> for Row where A: ToString, T : IntoIterator<Item=A> {
 /// // bold, italic, align in the center of the cell
 /// let row2 = row![FrBybic => "Element 1", "Element 2", "Element 3"];
 /// // Create a row with first cell in blue, second one in red, and last one with default style
-/// let row3 = row![Fb:"blue", Fr:"red", "normal"];
+/// let row3 = row![Fb->"blue", Fr->"red", "normal"];
 /// // Do something with rows
 /// # drop(row1);
 /// # drop(row2);
@@ -183,10 +183,10 @@ impl <T, A> From<T> for Row where A: ToString, T : IntoIterator<Item=A> {
 macro_rules! row {
 	(($($out:tt)*); $value:expr) => (vec![$($out)* cell!($value)]);
 	(($($out:tt)*); $value:expr, $($n:tt)*) => (row!(($($out)* cell!($value),); $($n)*));
-	(($($out:tt)*); $style:ident : $value:expr) => (vec![$($out)* cell!($style : $value)]);
-	(($($out:tt)*); $style:ident : $value:expr, $($n: tt)*) => (row!(($($out)* cell!($style : $value),); $($n)*));
+	(($($out:tt)*); $style:ident -> $value:expr) => (vec![$($out)* cell!($style -> $value)]);
+	(($($out:tt)*); $style:ident -> $value:expr, $($n: tt)*) => (row!(($($out)* cell!($style -> $value),); $($n)*));
 
 	($($content:expr), *) => ($crate::row::Row::new(vec![$(cell!($content)), *]));
-	($style:ident => $($content:expr), *) => ($crate::row::Row::new(vec![$(cell!($style : $content)), *]));
+	($style:ident => $($content:expr), *) => ($crate::row::Row::new(vec![$(cell!($style -> $content)), *]));
 	($($content:tt)*) => ($crate::row::Row::new(row!((); $($content)*)));
 }
