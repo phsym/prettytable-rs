@@ -69,6 +69,12 @@ impl LineSeparator {
 	}
 }
 
+impl Default for LineSeparator {
+	fn default() -> Self {
+		return LineSeparator::new('-', '+', '+', '+');
+	}
+}
+
 /// Contains the table formatting rules
 #[derive(Clone, Debug)]
 pub struct TableFormat {
@@ -86,6 +92,12 @@ pub struct TableFormat {
 	top_sep: Option<LineSeparator>,
 	/// Optional bottom line separator
 	bottom_sep: Option<LineSeparator>
+}
+
+impl Default for TableFormat {
+	fn default() -> Self {
+		return TableFormat::new(None, None, None);
+	}
 }
 
 impl TableFormat {
