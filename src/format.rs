@@ -91,7 +91,11 @@ pub struct TableFormat {
 	/// Optional top line separator
 	top_sep: Option<LineSeparator>,
 	/// Optional bottom line separator
-	bottom_sep: Option<LineSeparator>
+	bottom_sep: Option<LineSeparator>,
+	/// Left padding
+	pad_left: usize,
+	/// Right padding
+	pad_right: usize
 }
 
 impl Default for TableFormat {
@@ -116,8 +120,14 @@ impl TableFormat {
 			 lsep: lsep,
 			 tsep: tsep,
 			 top_sep: None,
-			 bottom_sep: None
+			 bottom_sep: None,
+			 pad_left: 0,
+			 pad_right: 0
 		 };
+	}
+
+	pub fn get_padding(&self) -> (usize, usize) {
+		return (self.pad_left, self.pad_right);
 	}
 
 	fn get_sep_for_line(&self, pos: LinePosition) -> &Option<LineSeparator> {
@@ -173,19 +183,19 @@ pub const EQU_PLUS_SEP: LineSeparator = LineSeparator{line: '=', junc: '+', ljun
 /// |    |    |
 /// +----+----+
 /// ```
-pub const FORMAT_DEFAULT: TableFormat = TableFormat{csep: Some('|'), lborder: Some('|'), rborder: Some('|'), lsep: Some(MINUS_PLUS_SEP), tsep: Some(EQU_PLUS_SEP), top_sep: Some(MINUS_PLUS_SEP), bottom_sep: Some(MINUS_PLUS_SEP)};
+pub const FORMAT_DEFAULT: TableFormat = TableFormat{csep: Some('|'), lborder: Some('|'), rborder: Some('|'), lsep: Some(MINUS_PLUS_SEP), tsep: Some(EQU_PLUS_SEP), top_sep: Some(MINUS_PLUS_SEP), bottom_sep: Some(MINUS_PLUS_SEP), pad_left: 1, pad_right: 1};
 
 /// Similar to `FORMAT_DEFAULT` but without special separator after title line
-pub const FORMAT_NO_TITLE: TableFormat = TableFormat{csep: Some('|'), lborder: Some('|'), rborder: Some('|'), lsep: Some(MINUS_PLUS_SEP), tsep: Some(MINUS_PLUS_SEP), top_sep: Some(MINUS_PLUS_SEP), bottom_sep: Some(MINUS_PLUS_SEP)};
+pub const FORMAT_NO_TITLE: TableFormat = TableFormat{csep: Some('|'), lborder: Some('|'), rborder: Some('|'), lsep: Some(MINUS_PLUS_SEP), tsep: Some(MINUS_PLUS_SEP), top_sep: Some(MINUS_PLUS_SEP), bottom_sep: Some(MINUS_PLUS_SEP), pad_left: 1, pad_right: 1};
 
 /// With no line separator, but with title separator
-pub const FORMAT_NO_LINESEP_WITH_TITLE: TableFormat = TableFormat{csep: Some('|'), lborder: Some('|'), rborder: Some('|'), lsep: None, tsep: Some(MINUS_PLUS_SEP), top_sep: Some(MINUS_PLUS_SEP), bottom_sep: Some(MINUS_PLUS_SEP)};
+pub const FORMAT_NO_LINESEP_WITH_TITLE: TableFormat = TableFormat{csep: Some('|'), lborder: Some('|'), rborder: Some('|'), lsep: None, tsep: Some(MINUS_PLUS_SEP), top_sep: Some(MINUS_PLUS_SEP), bottom_sep: Some(MINUS_PLUS_SEP), pad_left: 1, pad_right: 1};
 
 /// With no line or title separator
-pub const FORMAT_NO_LINESEP: TableFormat = TableFormat{csep: Some('|'), lborder: Some('|'), rborder: Some('|'), lsep: None, tsep: None, top_sep: None, bottom_sep: None};
+pub const FORMAT_NO_LINESEP: TableFormat = TableFormat{csep: Some('|'), lborder: Some('|'), rborder: Some('|'), lsep: None, tsep: None, top_sep: None, bottom_sep: None, pad_left: 1, pad_right: 1};
 
 /// No column seprarator
-pub const FORMAT_NO_COLSEP: TableFormat = TableFormat{csep: None, lborder: None, rborder: None, lsep: Some(MINUS_PLUS_SEP), tsep: Some(EQU_PLUS_SEP), top_sep: Some(MINUS_PLUS_SEP), bottom_sep: Some(MINUS_PLUS_SEP)};
+pub const FORMAT_NO_COLSEP: TableFormat = TableFormat{csep: None, lborder: None, rborder: None, lsep: Some(MINUS_PLUS_SEP), tsep: Some(EQU_PLUS_SEP), top_sep: Some(MINUS_PLUS_SEP), bottom_sep: Some(MINUS_PLUS_SEP), pad_left: 1, pad_right: 1};
 
 /// Format for printing a table without any separators (only alignment)
-pub const FORMAT_NO_BORDER: TableFormat = TableFormat{csep: None, lborder: None, rborder: None, lsep: None, tsep: None, top_sep: None, bottom_sep: None};
+pub const FORMAT_NO_BORDER: TableFormat = TableFormat{csep: None, lborder: None, rborder: None, lsep: None, tsep: None, top_sep: None, bottom_sep: None, pad_left: 1, pad_right: 1};

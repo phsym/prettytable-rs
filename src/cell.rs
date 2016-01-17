@@ -179,9 +179,7 @@ impl Cell {
 			Some(s) => s.as_ref(),
 			None => ""
 		};
-		try!(write!(out, " "));
-		try!(print_align(out, self.align, c, ' ', col_width));
-		return write!(out, " ");
+		return print_align(out, self.align, c, ' ', col_width)
 	}
 
 	/// Apply style then call `print` to print the cell into a terminal
@@ -284,7 +282,7 @@ mod tests {
 
 		let mut out = StringWriter::new();
 		let _ = ascii_cell.print(&mut out, 0, 10);
-		assert_eq!(out.as_string(), " hello      ");
+		assert_eq!(out.as_string(), "hello     ");
 	}
 
 	#[test]
@@ -294,7 +292,7 @@ mod tests {
 
 		let mut out = StringWriter::new();
 		let _ = unicode_cell.print(&mut out, 0, 10);
-		assert_eq!(out.as_string(), " привет     ");
+		assert_eq!(out.as_string(), "привет    ");
 	}
 
 	#[test]
@@ -303,7 +301,7 @@ mod tests {
 		assert_eq!(unicode_cell.get_width(), 14);
 		let mut out = StringWriter::new();
 		let _ = unicode_cell.print(&mut out, 0, 20);
-		assert_eq!(out.as_string(), " 由系统自动更新       ");
+		assert_eq!(out.as_string(), "由系统自动更新      ");
 	}
 
 	#[test]
@@ -311,7 +309,7 @@ mod tests {
 		let cell = Cell::new_align("test", Alignment::LEFT);
 		let mut out = StringWriter::new();
 		let _ = cell.print(&mut out, 0, 10);
-		assert_eq!(out.as_string(), " test       ");
+		assert_eq!(out.as_string(), "test      ");
 	}
 
 	#[test]
@@ -319,7 +317,7 @@ mod tests {
 		let cell = Cell::new_align("test", Alignment::CENTER);
 		let mut out = StringWriter::new();
 		let _ = cell.print(&mut out, 0, 10);
-		assert_eq!(out.as_string(), "    test    ");
+		assert_eq!(out.as_string(), "   test   ");
 	}
 
 	#[test]
@@ -327,7 +325,7 @@ mod tests {
 		let cell = Cell::new_align("test", Alignment::RIGHT);
 		let mut out = StringWriter::new();
 		let _ = cell.print(&mut out, 0, 10);
-		assert_eq!(out.as_string(), "       test ");
+		assert_eq!(out.as_string(), "      test");
 	}
 
 	#[test]
