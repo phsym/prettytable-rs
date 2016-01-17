@@ -240,18 +240,6 @@ impl Table {
 		}
 	}
 
-	/// **[DEPRECATED]** Get the width of the column at position `col_idx`.
-	/// Return 0 if the column does not exists;
-	pub fn get_column_width(&self, col_idx: usize) -> usize {
-		return self.as_ref().get_column_width(col_idx);
-	}
-
-	/// **[DEPRECATED]** Get the width of all columns, and return a slice
-	/// with the result for each column
-	pub fn get_all_column_width(&self) -> Vec<usize> {
-		return self.as_ref().get_all_column_width();
-	}
-
 	/// Return an iterator over the immutable cells of the column specified by `column`
 	pub fn column_iter(&self, column: usize) -> ColumnIter {
 		return ColumnIter(self.rows.iter(), column);
