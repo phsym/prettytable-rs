@@ -30,7 +30,7 @@ pub enum ColumnPosition {
 }
 
 /// Contains the character used for printing a line separator
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Copy)]
 pub struct LineSeparator {
 	/// Line separator
 	line: char,
@@ -76,7 +76,7 @@ impl Default for LineSeparator {
 }
 
 /// Contains the table formatting rules
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Copy)]
 pub struct TableFormat {
 	/// Optional column separator character
 	csep: Option<char>,
@@ -96,12 +96,6 @@ pub struct TableFormat {
 	pad_left: usize,
 	/// Right padding
 	pad_right: usize
-}
-
-impl Default for TableFormat {
-	fn default() -> Self {
-		return TableFormat::new(None, None, None);
-	}
 }
 
 impl TableFormat {
@@ -126,8 +120,35 @@ impl TableFormat {
 		 };
 	}
 
+	/// Return a tuple with left and right padding
 	pub fn get_padding(&self) -> (usize, usize) {
 		return (self.pad_left, self.pad_right);
+	}
+
+	/// Set left and right padding
+	pub fn padding(&mut self, left: usize, right: usize) {
+		self.pad_left = left;
+		self.pad_right = right;
+	}
+
+	/// Set the character used for internal column separation
+	pub fn column_separator(&mut self, separator: char) {
+		self.csep = Some(separator);
+	}
+
+	/// Set the character used for table borders
+	pub fn borders(&mut self, border: char) {
+		self.lborder = Some(border);
+		self.rborder = Some(border);
+	}
+
+	pub fn separator(&mut self, what: LinePosition, separator: LineSeparator) {
+		*match what {
+			LinePosition::Top => &mut self.top_sep,
+			LinePosition::Bottom => &mut self.bottom_sep,
+			LinePosition::Title => &mut self.tsep,
+			LinePosition::Intern => &mut self.lsep
+		} = Some(separator);
 	}
 
 	fn get_sep_for_line(&self, pos: LinePosition) -> &Option<LineSeparator> {
@@ -167,35 +188,126 @@ impl TableFormat {
 	}
 }
 
-/// A line separator mad of `-` and `+`
-pub const MINUS_PLUS_SEP: LineSeparator = LineSeparator{line: '-', junc: '+', ljunc: '+', rjunc: '+'};
-/// A line separator mad of `=` and `+`
-pub const EQU_PLUS_SEP: LineSeparator = LineSeparator{line: '=', junc: '+', ljunc: '+', rjunc: '+'};
+impl Default for TableFormat {
+	fn default() -> Self {
+		return TableFormat::new(None, None, None);
+	}
+}
 
-/// Default table format, printing a table like this :
-///
-/// ```text
-/// +----+----+
-/// | T1 | T2 |
-/// +====+====+
-/// |    |    |
-/// +----+----+
-/// |    |    |
-/// +----+----+
-/// ```
-pub const FORMAT_DEFAULT: TableFormat = TableFormat{csep: Some('|'), lborder: Some('|'), rborder: Some('|'), lsep: Some(MINUS_PLUS_SEP), tsep: Some(EQU_PLUS_SEP), top_sep: Some(MINUS_PLUS_SEP), bottom_sep: Some(MINUS_PLUS_SEP), pad_left: 1, pad_right: 1};
+/// A builder to create a `Table Format`
+pub struct FormatBuilder {
+	format: Box<TableFormat>
+}
 
-/// Similar to `FORMAT_DEFAULT` but without special separator after title line
-pub const FORMAT_NO_TITLE: TableFormat = TableFormat{csep: Some('|'), lborder: Some('|'), rborder: Some('|'), lsep: Some(MINUS_PLUS_SEP), tsep: Some(MINUS_PLUS_SEP), top_sep: Some(MINUS_PLUS_SEP), bottom_sep: Some(MINUS_PLUS_SEP), pad_left: 1, pad_right: 1};
+impl FormatBuilder {
+	pub fn new() -> FormatBuilder {
+		return FormatBuilder {
+			format: Box::new(TableFormat::new(None, None, None))
+		};
+	}
 
-/// With no line separator, but with title separator
-pub const FORMAT_NO_LINESEP_WITH_TITLE: TableFormat = TableFormat{csep: Some('|'), lborder: Some('|'), rborder: Some('|'), lsep: None, tsep: Some(MINUS_PLUS_SEP), top_sep: Some(MINUS_PLUS_SEP), bottom_sep: Some(MINUS_PLUS_SEP), pad_left: 1, pad_right: 1};
+	/// Set left and right padding
+	pub fn padding(mut self, left: usize, right: usize) -> Self {
+		self.format.padding(left, right);
+		return self;
+	}
 
-/// With no line or title separator
-pub const FORMAT_NO_LINESEP: TableFormat = TableFormat{csep: Some('|'), lborder: Some('|'), rborder: Some('|'), lsep: None, tsep: None, top_sep: None, bottom_sep: None, pad_left: 1, pad_right: 1};
+	/// Set the character used for internal column separation
+	pub fn column_separator(mut self, separator: char) -> Self {
+		self.format.column_separator(separator);
+		return self;
+	}
 
-/// No column seprarator
-pub const FORMAT_NO_COLSEP: TableFormat = TableFormat{csep: None, lborder: None, rborder: None, lsep: Some(MINUS_PLUS_SEP), tsep: Some(EQU_PLUS_SEP), top_sep: Some(MINUS_PLUS_SEP), bottom_sep: Some(MINUS_PLUS_SEP), pad_left: 1, pad_right: 1};
+	/// Set the character used for table borders
+	pub fn borders(mut self, border: char) -> Self {
+		self.format.borders(border);
+		return self;
+	}
 
-/// Format for printing a table without any separators (only alignment)
-pub const FORMAT_NO_BORDER: TableFormat = TableFormat{csep: None, lborder: None, rborder: None, lsep: None, tsep: None, top_sep: None, bottom_sep: None, pad_left: 1, pad_right: 1};
+	/// Set a line separator format
+	pub fn separator(mut self, what: LinePosition, separator: LineSeparator) -> Self {
+		self.format.separator(what, separator);
+		return self;
+	}
+
+	/// Consume this builder and return the generated `TableFormat`
+	pub fn build(self) -> TableFormat {
+		return *self.format;
+	}
+}
+
+/// Predifined formats. Those constants are lazily evaluated when
+/// the corresponding struct is dereferenced
+pub mod consts {
+	use super::{TableFormat, LineSeparator, FormatBuilder, LinePosition};
+
+	lazy_static! {
+		/// A line separator made of `-` and `+`
+		pub static ref MINUS_PLUS_SEP: LineSeparator = LineSeparator::new('-', '+', '+', '+');
+		/// A line separator made of `=` and `+`
+		pub static ref EQU_PLUS_SEP: LineSeparator = LineSeparator::new('=', '+', '+', '+');
+
+		/// Default table format, printing a table like this :
+		///
+		/// ```text
+		/// +----+----+
+		/// | T1 | T2 |
+		/// +====+====+
+		/// |    |    |
+		/// +----+----+
+		/// |    |    |
+		/// +----+----+
+		/// ```
+		pub static ref FORMAT_DEFAULT: TableFormat = FormatBuilder::new()
+																	.column_separator('|')
+																	.borders('|')
+																	.separator(LinePosition::Intern, *MINUS_PLUS_SEP)
+																	.separator(LinePosition::Title, *EQU_PLUS_SEP)
+																	.separator(LinePosition::Bottom, *MINUS_PLUS_SEP)
+																	.separator(LinePosition::Top, *MINUS_PLUS_SEP)
+																	.padding(1, 1)
+																	.build();
+
+		/// Similar to `FORMAT_DEFAULT` but without special separator after title line
+		pub static ref FORMAT_NO_TITLE: TableFormat = FormatBuilder::new()
+																	.column_separator('|')
+																	.borders('|')
+																	.separator(LinePosition::Intern, *MINUS_PLUS_SEP)
+																	.separator(LinePosition::Title, *MINUS_PLUS_SEP)
+																	.separator(LinePosition::Bottom, *MINUS_PLUS_SEP)
+																	.separator(LinePosition::Top, *MINUS_PLUS_SEP)
+																	.padding(1, 1)
+																	.build();
+
+		/// With no line separator, but with title separator
+		pub static ref FORMAT_NO_LINESEP_WITH_TITLE: TableFormat = FormatBuilder::new()
+																	.column_separator('|')
+																	.borders('|')
+																	.separator(LinePosition::Title, *MINUS_PLUS_SEP)
+																	.separator(LinePosition::Bottom, *MINUS_PLUS_SEP)
+																	.separator(LinePosition::Top, *MINUS_PLUS_SEP)
+																	.padding(1, 1)
+																	.build();
+
+		/// With no line or title separator
+		pub static ref FORMAT_NO_LINESEP: TableFormat = FormatBuilder::new()
+																	.column_separator('|')
+																	.borders('|')
+																	.padding(1, 1)
+																	.build();
+
+		/// No column separator
+		pub static ref FORMAT_NO_COLSEP: TableFormat = FormatBuilder::new()
+																	.separator(LinePosition::Intern, *MINUS_PLUS_SEP)
+																	.separator(LinePosition::Title, *EQU_PLUS_SEP)
+																	.separator(LinePosition::Bottom, *MINUS_PLUS_SEP)
+																	.separator(LinePosition::Top, *MINUS_PLUS_SEP)
+																	.padding(1, 1)
+																	.build();
+
+		/// Format for printing a table without any separators (only alignment)
+		pub static ref FORMAT_NO_BORDER: TableFormat = FormatBuilder::new()
+																	.padding(1, 1)
+																	.build();
+	}
+}

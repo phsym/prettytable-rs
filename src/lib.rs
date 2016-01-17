@@ -1,6 +1,7 @@
 //! A formatted and aligned table printer written in rust
 extern crate unicode_width;
 extern crate term;
+#[macro_use] extern crate lazy_static;
 
 use std::io;
 use std::io::{Write, Error};
@@ -18,7 +19,7 @@ mod utils;
 
 use row::Row;
 use cell::Cell;
-use format::{TableFormat, LinePosition, FORMAT_DEFAULT};
+use format::{TableFormat, LinePosition, consts};
 use utils::StringWriter;
 
 /// An owned printable table
@@ -167,7 +168,7 @@ impl Table {
 		return Table {
 			rows: rows,
 			titles: Box::new(None),
-			format: Box::new(FORMAT_DEFAULT)
+			format: Box::new(*consts::FORMAT_DEFAULT)
 		};
 	}
 
@@ -457,7 +458,7 @@ mod tests {
 	use Slice;
 	use row::Row;
 	use cell::Cell;
-    use format::{FORMAT_NO_LINESEP, FORMAT_NO_COLSEP, FORMAT_NO_BORDER};
+    use format::consts::{FORMAT_NO_LINESEP, FORMAT_NO_COLSEP, FORMAT_NO_BORDER};
 
 	#[test]
 	fn table() {
@@ -503,7 +504,7 @@ mod tests {
 	#[test]
 	fn no_linesep() {
 		let mut table = Table::new();
-        table.set_format(FORMAT_NO_LINESEP);
+        table.set_format(*FORMAT_NO_LINESEP);
 		table.add_row(Row::new(vec![Cell::new("a"), Cell::new("bc"), Cell::new("def")]));
 		table.add_row(Row::new(vec![Cell::new("def"), Cell::new("bc"), Cell::new("a")]));
 		table.set_titles(Row::new(vec![Cell::new("t1"), Cell::new("t2"), Cell::new("t3")]));
@@ -523,7 +524,7 @@ mod tests {
 	#[test]
 	fn no_colsep() {
 		let mut table = Table::new();
-        table.set_format(FORMAT_NO_COLSEP);
+        table.set_format(*FORMAT_NO_COLSEP);
 		table.add_row(Row::new(vec![Cell::new("a"), Cell::new("bc"), Cell::new("def")]));
 		table.add_row(Row::new(vec![Cell::new("def"), Cell::new("bc"), Cell::new("a")]));
 		table.set_titles(Row::new(vec![Cell::new("t1"), Cell::new("t2"), Cell::new("t3")]));
@@ -550,7 +551,7 @@ mod tests {
 	#[test]
 	fn no_borders() {
 		let mut table = Table::new();
-        table.set_format(FORMAT_NO_BORDER);
+        table.set_format(*FORMAT_NO_BORDER);
 		table.add_row(Row::new(vec![Cell::new("a"), Cell::new("bc"), Cell::new("def")]));
 		table.add_row(Row::new(vec![Cell::new("def"), Cell::new("bc"), Cell::new("a")]));
 		table.set_titles(Row::new(vec![Cell::new("t1"), Cell::new("t2"), Cell::new("t3")]));

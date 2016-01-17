@@ -45,7 +45,7 @@ fn main() {
  	// You can also apply style to full rows :
     let mut table = table!([Frb -> "A", "B", "C"], [1, 2, 3, 4], ["A\nBCCZZZ\nDDD", 2, table]);
     table.set_titles(row!["Title 1", "Title 2"]);
-    table.set_format(FORMAT_DEFAULT);
+    table.set_format(*consts::FORMAT_DEFAULT);
     table.printstd();
 //    println!("{:#?}", table);
 }
