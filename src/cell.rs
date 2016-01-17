@@ -4,7 +4,7 @@ use std::io::{Write, Error};
 use std::string::ToString;
 use unicode_width::UnicodeWidthStr;
 use term::{Attr, Terminal, color};
-use super::format::Align;
+use super::format::Alignment;
 use super::utils::print_align;
 
 /// Represent a table cell containing a string.
@@ -15,14 +15,14 @@ use super::utils::print_align;
 pub struct Cell {
 	content: Vec<String>,
 	width: usize,
-	align: Align,
+	align: Alignment,
 	style: Vec<Attr>
 }
 
 impl Cell {
 	/// Create a new `Cell` initialized with content from `string`.
 	/// Text alignment in cell is configurable with the `align` argument
-	pub fn new_align(string: &str, align: Align) -> Cell {
+	pub fn new_align(string: &str, align: Alignment) -> Cell {
 		let content: Vec<String> = string.lines().map(|ref x| x.to_string()).collect();
 		let mut width = 0;
 		for cont in &content {
@@ -42,11 +42,11 @@ impl Cell {
 	/// Create a new `Cell` initialized with content from `string`.
 	/// By default, content is align to `LEFT`
 	pub fn new(string: &str) -> Cell {
-		return Cell::new_align(string, Align::LEFT);
+		return Cell::new_align(string, Alignment::LEFT);
 	}
 
 	/// Set text alignment in the cell
-	pub fn align(&mut self, align: Align) {
+	pub fn align(&mut self, align: Alignment) {
 		self.align = align;
 	}
 
@@ -64,7 +64,7 @@ impl Cell {
 	/// Remove all style attributes and reset alignment to default (LEFT)
 	pub fn reset_style(&mut self) {
 		self.style.clear();
-		self.align(Align::LEFT);
+		self.align(Alignment::LEFT);
 	}
 
 	/// Set the cell's style by applying the given specifier string
@@ -144,9 +144,9 @@ impl Cell {
 					'b' => self.style(Attr::Bold),
 					'i' => self.style(Attr::Italic(true)),
 					'u' => self.style(Attr::Underline(true)),
-					'c' => self.align(Align::CENTER),
-					'l' => self.align(Align::LEFT),
-					'r' => self.align(Align::RIGHT),
+					'c' => self.align(Alignment::CENTER),
+					'l' => self.align(Alignment::LEFT),
+					'r' => self.align(Alignment::RIGHT),
 					'd' => {/* Default : do nothing */}
 					_ => {/* Silently ignore unknown tags */}
 				}
@@ -224,7 +224,7 @@ impl Default for Cell {
 		return Cell {
 			content: vec!["".to_string(); 1],
 			width: 0,
-			align: Align::LEFT,
+			align: Alignment::LEFT,
 			style: Vec::new()
 		};
 	}
@@ -268,7 +268,7 @@ macro_rules! cell {
 mod tests {
 	use cell::Cell;
 	use utils::StringWriter;
-	use format::Align;
+	use format::Alignment;
 	use term::{Attr, color};
 
 	#[test]
@@ -308,7 +308,7 @@ mod tests {
 
 	#[test]
 	fn align_left() {
-		let cell = Cell::new_align("test", Align::LEFT);
+		let cell = Cell::new_align("test", Alignment::LEFT);
 		let mut out = StringWriter::new();
 		let _ = cell.print(&mut out, 0, 10);
 		assert_eq!(out.as_string(), " test       ");
@@ -316,7 +316,7 @@ mod tests {
 
 	#[test]
 	fn align_center() {
-		let cell = Cell::new_align("test", Align::CENTER);
+		let cell = Cell::new_align("test", Alignment::CENTER);
 		let mut out = StringWriter::new();
 		let _ = cell.print(&mut out, 0, 10);
 		assert_eq!(out.as_string(), "    test    ");
@@ -324,7 +324,7 @@ mod tests {
 
 	#[test]
 	fn align_right() {
-		let cell = Cell::new_align("test", Align::RIGHT);
+		let cell = Cell::new_align("test", Alignment::RIGHT);
 		let mut out = StringWriter::new();
 		let _ = cell.print(&mut out, 0, 10);
 		assert_eq!(out.as_string(), "       test ");
@@ -339,13 +339,13 @@ mod tests {
 		assert!(cell.style.contains(&Attr::Bold));
 		assert!(cell.style.contains(&Attr::ForegroundColor(color::RED)));
 		assert!(cell.style.contains(&Attr::BackgroundColor(color::BRIGHT_BLUE)));
-		assert_eq!(cell.align, Align::CENTER);
+		assert_eq!(cell.align, Alignment::CENTER);
 
 		cell = cell.style_spec("FDBwr");
 		assert_eq!(cell.style.len(), 2);
 		assert!(cell.style.contains(&Attr::ForegroundColor(color::BRIGHT_BLACK)));
 		assert!(cell.style.contains(&Attr::BackgroundColor(color::WHITE)));
-		assert_eq!(cell.align, Align::RIGHT)
+		assert_eq!(cell.align, Alignment::RIGHT)
 	}
 
 	#[test]
@@ -354,6 +354,6 @@ mod tests {
 		assert_eq!(cell.style.len(), 2);
 		cell.reset_style();
 		assert_eq!(cell.style.len(), 0);
-		assert_eq!(cell.align, Align::LEFT);
+		assert_eq!(cell.align, Alignment::LEFT);
 	}
 }

@@ -18,7 +18,7 @@ mod utils;
 
 use row::Row;
 use cell::Cell;
-use format::{TableFormat, FORMAT_DEFAULT};
+use format::{TableFormat, LinePosition, FORMAT_DEFAULT};
 use utils::StringWriter;
 
 /// An owned printable table
@@ -115,16 +115,20 @@ impl <'a> TableSlice<'a> {
 		where F: Fn(&Row, &mut T, &TableFormat, &[usize]) -> Result<(), Error> {
 		// Compute columns width
 		let col_width = self.get_all_column_width();
-		try!(self.format.print_line_separator(out, &col_width));
+		try!(self.format.print_line_separator(out, &col_width, LinePosition::Top));
 		if let Some(ref t) = *self.titles {
 			try!(f(t, out, &self.format, &col_width));
-			try!(self.format.print_title_separator(out, &col_width));
+			try!(self.format.print_line_separator(out, &col_width, LinePosition::Title));
 		}
 		// Print rows
-		for r in self.rows {
+		let mut iter = self.rows.into_iter().peekable();
+		while let Some(r) = iter.next() {
 			try!(f(r, out, &self.format, &col_width));
-			try!(self.format.print_line_separator(out, &col_width));
+			if iter.peek().is_some() {
+				try!(self.format.print_line_separator(out, &col_width, LinePosition::Intern));
+			}
 		}
+		try!(self.format.print_line_separator(out, &col_width, LinePosition::Bottom));
 		return out.flush();
 	}
 

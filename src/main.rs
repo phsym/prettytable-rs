@@ -27,10 +27,10 @@ fn main() {
     		Cell::new("foo2").style_spec("FrByb")])
     	);
     for cell in table.column_iter_mut(2) {
-    	cell.align(Align::RIGHT);
+    	cell.align(Alignment::RIGHT);
     }
     for cell in table.column_iter_mut(1) {
-    	cell.align(Align::CENTER);
+    	cell.align(Alignment::CENTER);
     }
     table.printstd();
     println!("Modified : ");
