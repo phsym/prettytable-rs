@@ -79,12 +79,6 @@ If index is higher than current numbers of rows, <code>row</code> is appended at
 <div class='docblock'><p>Modify a single element in the table</p>
 </div><h4 id='method.remove_row' class='method'><code>fn <a href='#method.remove_row' class='fnname'>remove_row</a>(&amp;mut self, index: <a href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>)</code></h4>
 <div class='docblock'><p>Remove the row at position <code>index</code>. Silently skip if the row does not exist</p>
-</div><h4 id='method.get_column_width' class='method'><code>fn <a href='#method.get_column_width' class='fnname'>get_column_width</a>(&amp;self, col_idx: <a href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>) -&gt; <a href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a></code></h4>
-<div class='docblock'><p><strong>[DEPRECATED]</strong> Get the width of the column at position <code>col_idx</code>.
-Return 0 if the column does not exists;</p>
-</div><h4 id='method.get_all_column_width' class='method'><code>fn <a href='#method.get_all_column_width' class='fnname'>get_all_column_width</a>(&amp;self) -&gt; <a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>&gt;</code></h4>
-<div class='docblock'><p><strong>[DEPRECATED]</strong> Get the width of all columns, and return a slice
-with the result for each column</p>
 </div><h4 id='method.column_iter' class='method'><code>fn <a href='#method.column_iter' class='fnname'>column_iter</a>(&amp;self, column: <a href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>) -&gt; <a class='struct' href='../prettytable/struct.ColumnIter.html' title='prettytable::ColumnIter'>ColumnIter</a></code></h4>
 <div class='docblock'><p>Return an iterator over the immutable cells of the column specified by <code>column</code></p>
 </div><h4 id='method.column_iter_mut' class='method'><code>fn <a href='#method.column_iter_mut' class='fnname'>column_iter_mut</a>(&amp;mut self, column: <a href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>) -&gt; <a class='struct' href='../prettytable/struct.ColumnIterMut.html' title='prettytable::ColumnIterMut'>ColumnIterMut</a></code></h4>
