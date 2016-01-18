@@ -142,6 +142,7 @@ impl TableFormat {
 		self.rborder = Some(border);
 	}
 
+	/// Set a line separator
 	pub fn separator(&mut self, what: LinePosition, separator: LineSeparator) {
 		*match what {
 			LinePosition::Top => &mut self.top_sep,
@@ -149,6 +150,13 @@ impl TableFormat {
 			LinePosition::Title => &mut self.tsep,
 			LinePosition::Intern => &mut self.lsep
 		} = Some(separator);
+	}
+
+	/// Set format for multiple kind of line separator
+	pub fn separators(&mut self, what: &[LinePosition], separator: LineSeparator) {
+		for pos in what {
+			self.separator(*pos, separator);
+		}
 	}
 
 	fn get_sep_for_line(&self, pos: LinePosition) -> &Option<LineSeparator> {
@@ -171,7 +179,6 @@ impl TableFormat {
 		};
 	}
 
-	/// Print a column separator
 	fn get_column_separator(&self, pos: ColumnPosition) -> Option<char> {
 		return match pos {
 			ColumnPosition::Left => self.lborder,
@@ -180,6 +187,7 @@ impl TableFormat {
 		};
 	}
 
+	/// Print a column separator or a table border
 	pub fn print_column_separator<T: Write+?Sized>(&self, out: &mut T, pos: ColumnPosition) -> Result<(), Error> {
 		return match self.get_column_separator(pos) {
 			Some(s) => out.write_all(&[s as u8]),
@@ -230,6 +238,12 @@ impl FormatBuilder {
 		return self;
 	}
 
+	/// Set separator format for multiple kind of line separators
+	pub fn separators(mut self, what: &[LinePosition], separator: LineSeparator) -> Self {
+		self.format.separators(what, separator);
+		return self;
+	}
+
 	/// Consume this builder and return the generated `TableFormat`
 	pub fn build(self) -> TableFormat {
 		return *self.format;
@@ -243,19 +257,20 @@ pub mod consts {
 
 	lazy_static! {
 		/// A line separator made of `-` and `+`
-		pub static ref MINUS_PLUS_SEP: LineSeparator = LineSeparator::new('-', '+', '+', '+');
+		static ref MINUS_PLUS_SEP: LineSeparator = LineSeparator::new('-', '+', '+', '+');
 		/// A line separator made of `=` and `+`
-		pub static ref EQU_PLUS_SEP: LineSeparator = LineSeparator::new('=', '+', '+', '+');
+		static ref EQU_PLUS_SEP: LineSeparator = LineSeparator::new('=', '+', '+', '+');
 
-		/// Default table format, printing a table like this :
+		/// Default table format
 		///
+		/// # Example
 		/// ```text
 		/// +----+----+
 		/// | T1 | T2 |
 		/// +====+====+
-		/// |    |    |
+		/// | a  | b  |
 		/// +----+----+
-		/// |    |    |
+		/// | d  | c  |
 		/// +----+----+
 		/// ```
 		pub static ref FORMAT_DEFAULT: TableFormat = FormatBuilder::new()
@@ -269,6 +284,17 @@ pub mod consts {
 																	.build();
 
 		/// Similar to `FORMAT_DEFAULT` but without special separator after title line
+		///
+		/// # Example
+		/// ```text
+		/// +----+----+
+		/// | T1 | T2 |
+		/// +----+----+
+		/// | a  | b  |
+		/// +----+----+
+		/// | c  | d  |
+		/// +----+----+
+		/// ```
 		pub static ref FORMAT_NO_TITLE: TableFormat = FormatBuilder::new()
 																	.column_separator('|')
 																	.borders('|')
@@ -280,6 +306,16 @@ pub mod consts {
 																	.build();
 
 		/// With no line separator, but with title separator
+		///
+		/// # Example
+		/// ```text
+		/// +----+----+
+		/// | T1 | T2 |
+		/// +====+====+
+		/// | a  | b  |
+		/// | c  | d  |
+		/// +----+----+
+		/// ```
 		pub static ref FORMAT_NO_LINESEP_WITH_TITLE: TableFormat = FormatBuilder::new()
 																	.column_separator('|')
 																	.borders('|')
@@ -290,6 +326,15 @@ pub mod consts {
 																	.build();
 
 		/// With no line or title separator
+		///
+		/// # Example
+		/// ```text
+		/// +----+----+
+		/// | T1 | T2 |
+		/// | a  | b  |
+		/// | c  | d  |
+		/// +----+----+
+		/// ```
 		pub static ref FORMAT_NO_LINESEP: TableFormat = FormatBuilder::new()
 																	.column_separator('|')
 																	.borders('|')
@@ -297,6 +342,17 @@ pub mod consts {
 																	.build();
 
 		/// No column separator
+		///
+		/// # Example
+		/// ```text
+		/// --------
+		///  T1  T2
+		/// ========
+		///  a   b
+		/// --------
+		///  d   c
+		/// --------
+		/// ```
 		pub static ref FORMAT_NO_COLSEP: TableFormat = FormatBuilder::new()
 																	.separator(LinePosition::Intern, *MINUS_PLUS_SEP)
 																	.separator(LinePosition::Title, *EQU_PLUS_SEP)
@@ -306,8 +362,35 @@ pub mod consts {
 																	.build();
 
 		/// Format for printing a table without any separators (only alignment)
+		///
+		/// # Example
+		/// ```text
+		///  T1  T2
+		///  a   b
+		///  d   c
+		/// ```
 		pub static ref FORMAT_NO_BORDER: TableFormat = FormatBuilder::new()
 																	.padding(1, 1)
+																	.build();
+
+		/// Format for a table with only external borders and title separator
+		///
+		/// # Example
+		/// ```text
+		/// +--------+
+		/// | T1  T2 |
+		/// +========+
+		/// | a   b  |
+		/// | c   d  |
+		/// +--------+
+		/// ```
+		pub static ref FORMAT_BORDERS_ONLY: TableFormat = FormatBuilder::new()
+																	.padding(1, 1)
+																	.separator(LinePosition::Intern, *MINUS_PLUS_SEP)
+																	.separator(LinePosition::Title, *EQU_PLUS_SEP)
+																	.separator(LinePosition::Bottom, *MINUS_PLUS_SEP)
+																	.separator(LinePosition::Top, *MINUS_PLUS_SEP)
+																	.borders('|')
 																	.build();
 	}
 }
