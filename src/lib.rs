@@ -458,7 +458,7 @@ mod tests {
 	use Slice;
 	use row::Row;
 	use cell::Cell;
-    use format::consts::{FORMAT_NO_LINESEP, FORMAT_NO_COLSEP, FORMAT_NO_BORDER};
+    use format::consts::{FORMAT_NO_LINESEP, FORMAT_NO_COLSEP, FORMAT_CLEAN};
 
 	#[test]
 	fn table() {
@@ -549,9 +549,9 @@ mod tests {
 	}
 
 	#[test]
-	fn no_borders() {
+	fn clean() {
 		let mut table = Table::new();
-        table.set_format(*FORMAT_NO_BORDER);
+        table.set_format(*FORMAT_CLEAN);
 		table.add_row(Row::new(vec![Cell::new("a"), Cell::new("bc"), Cell::new("def")]));
 		table.add_row(Row::new(vec![Cell::new("def"), Cell::new("bc"), Cell::new("a")]));
 		table.set_titles(Row::new(vec![Cell::new("t1"), Cell::new("t2"), Cell::new("t3")]));

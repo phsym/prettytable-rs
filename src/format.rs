@@ -100,19 +100,14 @@ pub struct TableFormat {
 
 impl TableFormat {
 
-	/// Create a new TableFormat.
-	///
-	/// `csep` is the character used for separating columns.
-	/// `lsep` is an optional `LineSeparator` defining how to separate lines.
-	/// `tsep` is an optional `LineSeparator` defining the format of the separator after the title line (if set).
-	/// If `tsep` is set to `None`, then `lsep` will be used, f it's set.
-	pub fn new(csep: Option<char>, lsep: Option<LineSeparator>, tsep: Option<LineSeparator>) -> TableFormat {
+	/// Create a new empty TableFormat.
+	pub fn new() -> TableFormat {
 		 return TableFormat{
-			 csep: csep,
+			 csep: None,
 			 lborder: None,
 			 rborder: None,
-			 lsep: lsep,
-			 tsep: tsep,
+			 lsep: None,
+			 tsep: None,
 			 top_sep: None,
 			 bottom_sep: None,
 			 pad_left: 0,
@@ -198,7 +193,7 @@ impl TableFormat {
 
 impl Default for TableFormat {
 	fn default() -> Self {
-		return TableFormat::new(None, None, None);
+		return TableFormat::new();
 	}
 }
 
@@ -210,7 +205,7 @@ pub struct FormatBuilder {
 impl FormatBuilder {
 	pub fn new() -> FormatBuilder {
 		return FormatBuilder {
-			format: Box::new(TableFormat::new(None, None, None))
+			format: Box::new(TableFormat::new())
 		};
 	}
 
@@ -369,7 +364,7 @@ pub mod consts {
 		///  a   b
 		///  d   c
 		/// ```
-		pub static ref FORMAT_NO_BORDER: TableFormat = FormatBuilder::new()
+		pub static ref FORMAT_CLEAN: TableFormat = FormatBuilder::new()
 																	.padding(1, 1)
 																	.build();
 
@@ -391,6 +386,38 @@ pub mod consts {
 																	.separator(LinePosition::Bottom, *MINUS_PLUS_SEP)
 																	.separator(LinePosition::Top, *MINUS_PLUS_SEP)
 																	.borders('|')
+																	.build();
+
+		/// A table with no external border
+		///
+		/// # Example
+		/// ```text
+		///  T1 | T2
+		/// ====+====
+		///  a  | b
+		/// ----+----
+		///  c  | d
+		/// ```
+		pub static ref FORMAT_NO_BORDER: TableFormat = FormatBuilder::new()
+																	.padding(1, 1)
+																	.separator(LinePosition::Intern, *MINUS_PLUS_SEP)
+																	.separator(LinePosition::Title, *EQU_PLUS_SEP)
+																	.column_separator('|')
+																	.build();
+
+		/// A table with no external border and no line separation
+		///
+		/// # Example
+		/// ```text
+		///  T1 | T2
+		/// ----+----
+		///  a  | b
+		///  c  | d
+		/// ```
+		pub static ref FORMAT_NO_BORDER_LINE_SEPARATOR: TableFormat = FormatBuilder::new()
+																	.padding(1, 1)
+																	.separator(LinePosition::Title, *MINUS_PLUS_SEP)
+																	.column_separator('|')
 																	.build();
 	}
 }
