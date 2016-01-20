@@ -7,7 +7,7 @@ use term::Terminal;
 
 use super::utils::NEWLINE;
 use super::cell::Cell;
-use super::format::TableFormat;
+use super::format::{TableFormat, ColumnPosition};
 
 /// Represent a table row made of cells
 #[derive(Clone, Debug)]
@@ -22,17 +22,17 @@ impl Row {
 			cells: cells
 		};
 	}
-	
+
 	/// Create an row of length `size`, with empty strings stored
 	pub fn empty() -> Row {
 		return Self::new(vec![Cell::default(); 0]);
 	}
-	
+
 	/// Get the number of cells in this row
 	pub fn len(&self) -> usize {
 		return self.cells.len();
 	}
-	
+
 	/// Get the height of this row
 	pub fn get_height(&self) -> usize {
 		let mut height = 1; // Minimum height must be 1 to print empty rows
@@ -44,7 +44,7 @@ impl Row {
 		}
 		return height;
 	}
-	
+
 	/// Get the minimum width required by the cell in the column `column`.
 	/// Return 0 if the cell does not exist in this row
 	pub fn get_cell_width(&self, column: usize) -> usize {
@@ -53,17 +53,17 @@ impl Row {
 			None => 0
 		}
 	}
-	
+
 	/// Get the cell at index `idx`
 	pub fn get_cell(&self, idx: usize) -> Option<&Cell> {
 		return self.cells.get(idx);
 	}
-	
+
 	/// Get the mutable cell at index `idx`
 	pub fn get_mut_cell(&mut self, idx: usize) -> Option<&mut Cell> {
 		return self.cells.get_mut(idx);
 	}
-	
+
 	/// Set the `cell` in the row at the given `column`
 	pub fn set_cell(&mut self, cell: Cell, column: usize) -> Result<(), &str> {
 		if column >= self.len() {
@@ -72,12 +72,12 @@ impl Row {
 		self.cells[column] = cell;
 		return Ok(());
 	}
-	
+
 	/// Append a `cell` at the end of the row
 	pub fn add_cell(&mut self, cell: Cell) {
 		self.cells.push(cell);
 	}
-	
+
 	/// Insert `cell` at position `index`. If `index` is higher than the row lenght,
 	/// the cell will be appended at the end
 	pub fn insert_cell(&mut self, index: usize, cell: Cell) {
@@ -87,38 +87,44 @@ impl Row {
 			self.add_cell(cell);
 		}
 	}
-	
+
 	/// Remove the cell at position `index`. Silently skip if this cell does not exist
 	pub fn remove_cell(&mut self, index: usize) {
 		if index < self.cells.len() {
 			self.cells.remove(index);
 		}
 	}
-	
+
 	/// Internal only
-	fn __print<T:Write+?Sized, F>(&self, out: &mut T, format: &TableFormat, col_width: &[usize], f: F) -> Result<(), Error> 
-		where F: Fn(&Cell, &mut T, usize, usize) -> Result<(), Error> 
+	fn __print<T:Write+?Sized, F>(&self, out: &mut T, format: &TableFormat, col_width: &[usize], f: F) -> Result<(), Error>
+		where F: Fn(&Cell, &mut T, usize, usize) -> Result<(), Error>
 	{
 		for i in 0..self.get_height() {
-			try!(format.print_column_separator(out));
+			try!(format.print_column_separator(out, ColumnPosition::Left));
+			let (lp, rp) = format.get_padding();
 			for j in 0..col_width.len() {
+				try!(out.write(&vec![' ' as u8; lp]));
 				match self.get_cell(j) {
 					Some(ref c) => try!(f(c, out, i, col_width[j])),
 					None => try!(f(&Cell::default(), out, i, col_width[j]))
 				};
-				try!(format.print_column_separator(out));
+				try!(out.write(&vec![' ' as u8; rp]));
+				if j < col_width.len() - 1 {
+					try!(format.print_column_separator(out, ColumnPosition::Intern));
+				}
 			}
+			try!(format.print_column_separator(out, ColumnPosition::Right));
 			try!(out.write_all(NEWLINE));
 		}
 		return Ok(());
 	}
-	
+
 	/// Print the row to `out`, with `separator` as column separator, and `col_width`
 	/// specifying the width of each columns
 	pub fn print<T: Write+?Sized>(&self, out: &mut T, format: &TableFormat, col_width: &[usize]) -> Result<(), Error> {
 		return self.__print(out, format, col_width, Cell::print);
 	}
-	
+
 	/// Print the row to terminal `out`, with `separator` as column separator, and `col_width`
 	/// specifying the width of each columns. Apply style when needed
 	pub fn print_term<T: Terminal+?Sized>(&self, out: &mut T, format: &TableFormat, col_width: &[usize]) -> Result<(), Error> {
@@ -158,7 +164,7 @@ impl <T, A> From<T> for Row where A: ToString, T : IntoIterator<Item=A> {
 }
 
 /// This macro simplifies `Row` creation
-/// 
+///
 /// The syntax support style spec
 /// # Example
 /// ```
@@ -185,7 +191,7 @@ macro_rules! row {
 	(($($out:tt)*); $value:expr, $($n:tt)*) => (row!(($($out)* cell!($value),); $($n)*));
 	(($($out:tt)*); $style:ident : $value:expr) => (vec![$($out)* cell!($style : $value)]);
 	(($($out:tt)*); $style:ident : $value:expr, $($n: tt)*) => (row!(($($out)* cell!($style : $value),); $($n)*));
-	
+
 	($($content:expr), *) => ($crate::row::Row::new(vec![$(cell!($content)), *]));
 	($style:ident -> $($content:expr), *) => ($crate::row::Row::new(vec![$(cell!($style : $content)), *]));
 	($($content:tt)*) => ($crate::row::Row::new(row!((); $($content)*)));

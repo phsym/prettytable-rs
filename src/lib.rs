@@ -1,6 +1,7 @@
 //! A formatted and aligned table printer written in rust
 extern crate unicode_width;
 extern crate term;
+#[macro_use] extern crate lazy_static;
 
 use std::io;
 use std::io::{Write, Error};
@@ -18,7 +19,7 @@ mod utils;
 
 use row::Row;
 use cell::Cell;
-use format::{TableFormat, FORMAT_DEFAULT};
+use format::{TableFormat, LinePosition, consts};
 use utils::StringWriter;
 
 /// An owned printable table
@@ -115,16 +116,20 @@ impl <'a> TableSlice<'a> {
 		where F: Fn(&Row, &mut T, &TableFormat, &[usize]) -> Result<(), Error> {
 		// Compute columns width
 		let col_width = self.get_all_column_width();
-		try!(self.format.print_line_separator(out, &col_width));
+		try!(self.format.print_line_separator(out, &col_width, LinePosition::Top));
 		if let Some(ref t) = *self.titles {
 			try!(f(t, out, &self.format, &col_width));
-			try!(self.format.print_title_separator(out, &col_width));
+			try!(self.format.print_line_separator(out, &col_width, LinePosition::Title));
 		}
 		// Print rows
-		for r in self.rows {
+		let mut iter = self.rows.into_iter().peekable();
+		while let Some(r) = iter.next() {
 			try!(f(r, out, &self.format, &col_width));
-			try!(self.format.print_line_separator(out, &col_width));
+			if iter.peek().is_some() {
+				try!(self.format.print_line_separator(out, &col_width, LinePosition::Intern));
+			}
 		}
+		try!(self.format.print_line_separator(out, &col_width, LinePosition::Bottom));
 		return out.flush();
 	}
 
@@ -163,7 +168,7 @@ impl Table {
 		return Table {
 			rows: rows,
 			titles: Box::new(None),
-			format: Box::new(FORMAT_DEFAULT)
+			format: Box::new(*consts::FORMAT_DEFAULT)
 		};
 	}
 
@@ -441,7 +446,7 @@ mod tests {
 	use Slice;
 	use row::Row;
 	use cell::Cell;
-    use format::{FORMAT_NO_LINESEP, FORMAT_NO_COLSEP, FORMAT_NO_BORDER};
+    use format::consts::{FORMAT_NO_LINESEP, FORMAT_NO_COLSEP, FORMAT_CLEAN};
 
 	#[test]
 	fn table() {
@@ -487,7 +492,7 @@ mod tests {
 	#[test]
 	fn no_linesep() {
 		let mut table = Table::new();
-        table.set_format(FORMAT_NO_LINESEP);
+        table.set_format(*FORMAT_NO_LINESEP);
 		table.add_row(Row::new(vec![Cell::new("a"), Cell::new("bc"), Cell::new("def")]));
 		table.add_row(Row::new(vec![Cell::new("def"), Cell::new("bc"), Cell::new("a")]));
 		table.set_titles(Row::new(vec![Cell::new("t1"), Cell::new("t2"), Cell::new("t3")]));
@@ -507,7 +512,7 @@ mod tests {
 	#[test]
 	fn no_colsep() {
 		let mut table = Table::new();
-        table.set_format(FORMAT_NO_COLSEP);
+        table.set_format(*FORMAT_NO_COLSEP);
 		table.add_row(Row::new(vec![Cell::new("a"), Cell::new("bc"), Cell::new("def")]));
 		table.add_row(Row::new(vec![Cell::new("def"), Cell::new("bc"), Cell::new("a")]));
 		table.set_titles(Row::new(vec![Cell::new("t1"), Cell::new("t2"), Cell::new("t3")]));
@@ -532,9 +537,9 @@ mod tests {
 	}
 
 	#[test]
-	fn no_borders() {
+	fn clean() {
 		let mut table = Table::new();
-        table.set_format(FORMAT_NO_BORDER);
+        table.set_format(*FORMAT_CLEAN);
 		table.add_row(Row::new(vec![Cell::new("a"), Cell::new("bc"), Cell::new("def")]));
 		table.add_row(Row::new(vec![Cell::new("def"), Cell::new("bc"), Cell::new("a")]));
 		table.set_titles(Row::new(vec![Cell::new("t1"), Cell::new("t2"), Cell::new("t3")]));

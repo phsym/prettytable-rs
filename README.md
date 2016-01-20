@@ -216,4 +216,62 @@ table.slice(2..); // Returns a table with rows starting at index 2
 table.slice(..3); // Returns a table with rows until the one at index 3
 ```
 
+## Customize your table look and feel
+
+You can customize the look and feel of a table by providing it a `prettytable::format::TableFormat`.
+For example you can change the characters used for borders, junctions, column separations or line separations.
+To proceed, you can create a new `TableFormat` object and call the setter methods to configure it,
+or you can use the more convenient `prettytable::format::FormatBuilder` structure.
+
+For example :
+```rust
+let mut table = /* Initialize table */;
+let format = format::FormatBuilder::new()
+				.column_separator('|')
+				.borders('|')
+				.separators(
+						&[format::LinePosition::Top, format::LinePosition::Bottom],
+						format::LineSeparator::new('-', '+', '+', '+')
+				)
+				.padding(1, 1)
+				.build();
+table.set_format(format);
+```
+Would give a table like the following
+```
++-------------+------------+
+| Title 1     | Title 2    |
+| Value 1     | Value 2    |
+| Value three | Value four |
++-------------+------------+
+```
+
+For convenience, some predefined formats are provided in the module `prettytable::format::consts`.
+For example :
+```rust
+table.set_format(*format::consts::FORMAT_NO_LINESEP_WITH_TITLE);
+```
+Would give a table like the following
+```
++-------------+------------+
+| Title 1     | Title 2    |
++-------------+------------+
+| Value 1     | Value 2    |
+| Value three | Value four |
++-------------+------------+
+```
+or
+```rust
+table.set_format(*format::consts::FORMAT_NO_BORDER_LINE_SEPARATOR);
+```
+Would give
+```
+Title 1     | Title 2    
+------------+------------
+Value 1     | Value 2    
+Value three | Value four
+```
+
+Check API documentation for the full list of available predefined formats
+
 Additional examples are provided in documentation and in [examples](./examples/) directory
