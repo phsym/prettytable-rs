@@ -4,7 +4,7 @@ use std::str;
 
 use unicode_width::UnicodeWidthStr;
 
-use super::format::Align;
+use super::format::Alignment;
 
 #[cfg(not(windows))]
 pub static NEWLINE: &'static [u8] = b"\n";
@@ -45,13 +45,13 @@ impl Write for StringWriter {
 }
 
 /// Align/fill a string and print it to `out`
-pub fn print_align<T: Write+?Sized>(out: &mut T, align: Align, text: &str, fill: char, size: usize) -> Result<(), Error> {
+pub fn print_align<T: Write+?Sized>(out: &mut T, align: Alignment, text: &str, fill: char, size: usize) -> Result<(), Error> {
 	let text_len = UnicodeWidthStr::width(text);
 	let mut nfill = if text_len < size { size - text_len } else { 0 };
 	let n = match align {
-		Align::LEFT => 0,
-		Align:: RIGHT => nfill,
-		Align:: CENTER => nfill/2
+		Alignment::LEFT => 0,
+		Alignment:: RIGHT => nfill,
+		Alignment:: CENTER => nfill/2
 	};
 	if n > 0 {
 		try!(out.write(&vec![fill as u8; n]));
@@ -67,7 +67,7 @@ pub fn print_align<T: Write+?Sized>(out: &mut T, align: Align, text: &str, fill:
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use format::Align;
+	use format::Alignment;
 	use std::io::Write;
 
 	#[test]
@@ -83,19 +83,19 @@ mod tests {
 	#[test]
 	fn fill_align() {
 		let mut out = StringWriter::new();
-		print_align(&mut out, Align::RIGHT, "foo", '*', 10).unwrap();
+		print_align(&mut out, Alignment::RIGHT, "foo", '*', 10).unwrap();
 		assert_eq!(out.as_string(), "*******foo");
 
 		let mut out = StringWriter::new();
-		print_align(&mut out, Align::LEFT, "foo", '*', 10).unwrap();
+		print_align(&mut out, Alignment::LEFT, "foo", '*', 10).unwrap();
 		assert_eq!(out.as_string(), "foo*******");
 
 		let mut out = StringWriter::new();
-		print_align(&mut out, Align::CENTER, "foo", '*', 10).unwrap();
+		print_align(&mut out, Alignment::CENTER, "foo", '*', 10).unwrap();
 		assert_eq!(out.as_string(), "***foo****");
 
 		let mut out = StringWriter::new();
-		print_align(&mut out, Align::CENTER, "foo", '*', 1).unwrap();
+		print_align(&mut out, Alignment::CENTER, "foo", '*', 1).unwrap();
 		assert_eq!(out.as_string(), "foo");
 	}
 }

@@ -7,7 +7,7 @@ use term::Terminal;
 
 use super::utils::NEWLINE;
 use super::cell::Cell;
-use super::format::TableFormat;
+use super::format::{TableFormat, ColumnPosition};
 
 /// Represent a table row made of cells
 #[derive(Clone, Debug)]
@@ -100,14 +100,20 @@ impl Row {
 		where F: Fn(&Cell, &mut T, usize, usize) -> Result<(), Error>
 	{
 		for i in 0..self.get_height() {
-			try!(format.print_column_separator(out));
+			try!(format.print_column_separator(out, ColumnPosition::Left));
+			let (lp, rp) = format.get_padding();
 			for j in 0..col_width.len() {
+				try!(out.write(&vec![' ' as u8; lp]));
 				match self.get_cell(j) {
 					Some(ref c) => try!(f(c, out, i, col_width[j])),
 					None => try!(f(&Cell::default(), out, i, col_width[j]))
 				};
-				try!(format.print_column_separator(out));
+				try!(out.write(&vec![' ' as u8; rp]));
+				if j < col_width.len() - 1 {
+					try!(format.print_column_separator(out, ColumnPosition::Intern));
+				}
 			}
+			try!(format.print_column_separator(out, ColumnPosition::Right));
 			try!(out.write_all(NEWLINE));
 		}
 		return Ok(());
