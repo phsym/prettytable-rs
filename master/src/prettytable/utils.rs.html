@@ -148,7 +148,7 @@
 
 <span class='kw'>use</span> <span class='ident'>unicode_width</span>::<span class='ident'>UnicodeWidthStr</span>;
 
-<span class='kw'>use</span> <span class='ident'>super</span>::<span class='ident'>format</span>::<span class='ident'>Align</span>;
+<span class='kw'>use</span> <span class='ident'>super</span>::<span class='ident'>format</span>::<span class='ident'>Alignment</span>;
 
 <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>not</span>(<span class='ident'>windows</span>))]</span>
 <span class='kw'>pub</span> <span class='kw'>static</span> <span class='ident'>NEWLINE</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;static</span> [<span class='ident'>u8</span>] <span class='op'>=</span> <span class='string'>b&quot;\n&quot;</span>;
@@ -189,13 +189,13 @@
 }
 
 <span class='doccomment'>/// Align/fill a string and print it to `out`</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>print_align</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Write</span><span class='op'>+</span>?<span class='ident'>Sized</span><span class='op'>&gt;</span>(<span class='ident'>out</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>T</span>, <span class='ident'>align</span>: <span class='ident'>Align</span>, <span class='ident'>text</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>, <span class='ident'>fill</span>: <span class='ident'>char</span>, <span class='ident'>size</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>Error</span><span class='op'>&gt;</span> {
+<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>print_align</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Write</span><span class='op'>+</span>?<span class='ident'>Sized</span><span class='op'>&gt;</span>(<span class='ident'>out</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>T</span>, <span class='ident'>align</span>: <span class='ident'>Alignment</span>, <span class='ident'>text</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>, <span class='ident'>fill</span>: <span class='ident'>char</span>, <span class='ident'>size</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>Error</span><span class='op'>&gt;</span> {
 	<span class='kw'>let</span> <span class='ident'>text_len</span> <span class='op'>=</span> <span class='ident'>UnicodeWidthStr</span>::<span class='ident'>width</span>(<span class='ident'>text</span>);
 	<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>nfill</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='ident'>text_len</span> <span class='op'>&lt;</span> <span class='ident'>size</span> { <span class='ident'>size</span> <span class='op'>-</span> <span class='ident'>text_len</span> } <span class='kw'>else</span> { <span class='number'>0</span> };
 	<span class='kw'>let</span> <span class='ident'>n</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='ident'>align</span> {
-		<span class='ident'>Align</span>::<span class='ident'>LEFT</span> <span class='op'>=&gt;</span> <span class='number'>0</span>,
-		<span class='ident'>Align</span>:: <span class='ident'>RIGHT</span> <span class='op'>=&gt;</span> <span class='ident'>nfill</span>,
-		<span class='ident'>Align</span>:: <span class='ident'>CENTER</span> <span class='op'>=&gt;</span> <span class='ident'>nfill</span><span class='op'>/</span><span class='number'>2</span>
+		<span class='ident'>Alignment</span>::<span class='ident'>LEFT</span> <span class='op'>=&gt;</span> <span class='number'>0</span>,
+		<span class='ident'>Alignment</span>:: <span class='ident'>RIGHT</span> <span class='op'>=&gt;</span> <span class='ident'>nfill</span>,
+		<span class='ident'>Alignment</span>:: <span class='ident'>CENTER</span> <span class='op'>=&gt;</span> <span class='ident'>nfill</span><span class='op'>/</span><span class='number'>2</span>
 	};
 	<span class='kw'>if</span> <span class='ident'>n</span> <span class='op'>&gt;</span> <span class='number'>0</span> {
 		<span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>out</span>.<span class='ident'>write</span>(<span class='kw-2'>&amp;</span><span class='macro'>vec</span><span class='macro'>!</span>[<span class='ident'>fill</span> <span class='kw'>as</span> <span class='ident'>u8</span>; <span class='ident'>n</span>]));
@@ -211,7 +211,7 @@
 <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>test</span>)]</span>
 <span class='kw'>mod</span> <span class='ident'>tests</span> {
 	<span class='kw'>use</span> <span class='ident'>super</span>::<span class='op'>*</span>;
-	<span class='kw'>use</span> <span class='ident'>format</span>::<span class='ident'>Align</span>;
+	<span class='kw'>use</span> <span class='ident'>format</span>::<span class='ident'>Alignment</span>;
 	<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>io</span>::<span class='ident'>Write</span>;
 
 	<span class='attribute'>#[<span class='ident'>test</span>]</span>
@@ -227,19 +227,19 @@
 	<span class='attribute'>#[<span class='ident'>test</span>]</span>
 	<span class='kw'>fn</span> <span class='ident'>fill_align</span>() {
 		<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>out</span> <span class='op'>=</span> <span class='ident'>StringWriter</span>::<span class='ident'>new</span>();
-		<span class='ident'>print_align</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>out</span>, <span class='ident'>Align</span>::<span class='ident'>RIGHT</span>, <span class='string'>&quot;foo&quot;</span>, <span class='string'>&#39;*&#39;</span>, <span class='number'>10</span>).<span class='ident'>unwrap</span>();
+		<span class='ident'>print_align</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>out</span>, <span class='ident'>Alignment</span>::<span class='ident'>RIGHT</span>, <span class='string'>&quot;foo&quot;</span>, <span class='string'>&#39;*&#39;</span>, <span class='number'>10</span>).<span class='ident'>unwrap</span>();
 		<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>out</span>.<span class='ident'>as_string</span>(), <span class='string'>&quot;*******foo&quot;</span>);
 
 		<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>out</span> <span class='op'>=</span> <span class='ident'>StringWriter</span>::<span class='ident'>new</span>();
-		<span class='ident'>print_align</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>out</span>, <span class='ident'>Align</span>::<span class='ident'>LEFT</span>, <span class='string'>&quot;foo&quot;</span>, <span class='string'>&#39;*&#39;</span>, <span class='number'>10</span>).<span class='ident'>unwrap</span>();
+		<span class='ident'>print_align</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>out</span>, <span class='ident'>Alignment</span>::<span class='ident'>LEFT</span>, <span class='string'>&quot;foo&quot;</span>, <span class='string'>&#39;*&#39;</span>, <span class='number'>10</span>).<span class='ident'>unwrap</span>();
 		<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>out</span>.<span class='ident'>as_string</span>(), <span class='string'>&quot;foo*******&quot;</span>);
 
 		<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>out</span> <span class='op'>=</span> <span class='ident'>StringWriter</span>::<span class='ident'>new</span>();
-		<span class='ident'>print_align</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>out</span>, <span class='ident'>Align</span>::<span class='ident'>CENTER</span>, <span class='string'>&quot;foo&quot;</span>, <span class='string'>&#39;*&#39;</span>, <span class='number'>10</span>).<span class='ident'>unwrap</span>();
+		<span class='ident'>print_align</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>out</span>, <span class='ident'>Alignment</span>::<span class='ident'>CENTER</span>, <span class='string'>&quot;foo&quot;</span>, <span class='string'>&#39;*&#39;</span>, <span class='number'>10</span>).<span class='ident'>unwrap</span>();
 		<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>out</span>.<span class='ident'>as_string</span>(), <span class='string'>&quot;***foo****&quot;</span>);
 
 		<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>out</span> <span class='op'>=</span> <span class='ident'>StringWriter</span>::<span class='ident'>new</span>();
-		<span class='ident'>print_align</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>out</span>, <span class='ident'>Align</span>::<span class='ident'>CENTER</span>, <span class='string'>&quot;foo&quot;</span>, <span class='string'>&#39;*&#39;</span>, <span class='number'>1</span>).<span class='ident'>unwrap</span>();
+		<span class='ident'>print_align</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>out</span>, <span class='ident'>Alignment</span>::<span class='ident'>CENTER</span>, <span class='string'>&quot;foo&quot;</span>, <span class='string'>&#39;*&#39;</span>, <span class='number'>1</span>).<span class='ident'>unwrap</span>();
 		<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>out</span>.<span class='ident'>as_string</span>(), <span class='string'>&quot;foo&quot;</span>);
 	}
 }

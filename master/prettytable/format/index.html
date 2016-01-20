@@ -45,10 +45,30 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-243' class='srclink' href='../../src/prettytable/format.rs.html#1-125' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-246' class='srclink' href='../../src/prettytable/format.rs.html#1-423' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>Define table formatting utilities</p>
-</div><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
+</div><h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
 <table>
+                    <tr class=' module-item'>
+                        <td><a class='mod' href='consts/index.html'
+                               title='prettytable::format::consts'>consts</a></td>
+                        <td class='docblock short'>
+                             <p>Predifined formats. Those constants are lazily evaluated when
+the corresponding struct is dereferenced</p>
+
+                        </td>
+                    </tr>
+                </table><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
+<table>
+                    <tr class=' module-item'>
+                        <td><a class='struct' href='struct.FormatBuilder.html'
+                               title='prettytable::format::FormatBuilder'>FormatBuilder</a></td>
+                        <td class='docblock short'>
+                             <p>A builder to create a <code>Table Format</code></p>
+
+                        </td>
+                    </tr>
+                
                     <tr class=' module-item'>
                         <td><a class='struct' href='struct.LineSeparator.html'
                                title='prettytable::format::LineSeparator'>LineSeparator</a></td>
@@ -69,83 +89,28 @@
                 </table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
 <table>
                     <tr class=' module-item'>
-                        <td><a class='enum' href='enum.Align.html'
-                               title='prettytable::format::Align'>Align</a></td>
+                        <td><a class='enum' href='enum.Alignment.html'
+                               title='prettytable::format::Alignment'>Alignment</a></td>
                         <td class='docblock short'>
                              <p>Alignment for cell&#39;s content</p>
 
                         </td>
                     </tr>
-                </table><h2 id='constants' class='section-header'><a href="#constants">Constants</a></h2>
-<table>
+                
                     <tr class=' module-item'>
-                        <td><a class='constant' href='constant.EQU_PLUS_SEP.html'
-                               title='prettytable::format::EQU_PLUS_SEP'>EQU_PLUS_SEP</a></td>
+                        <td><a class='enum' href='enum.ColumnPosition.html'
+                               title='prettytable::format::ColumnPosition'>ColumnPosition</a></td>
                         <td class='docblock short'>
-                             <p>A line separator mad of <code>=</code> and <code>+</code></p>
+                             <p>Position of a column separator in a row</p>
 
                         </td>
                     </tr>
                 
                     <tr class=' module-item'>
-                        <td><a class='constant' href='constant.FORMAT_DEFAULT.html'
-                               title='prettytable::format::FORMAT_DEFAULT'>FORMAT_DEFAULT</a></td>
+                        <td><a class='enum' href='enum.LinePosition.html'
+                               title='prettytable::format::LinePosition'>LinePosition</a></td>
                         <td class='docblock short'>
-                             <p>Default table format, printing a table like this :</p>
-
-                        </td>
-                    </tr>
-                
-                    <tr class=' module-item'>
-                        <td><a class='constant' href='constant.FORMAT_NO_BORDER.html'
-                               title='prettytable::format::FORMAT_NO_BORDER'>FORMAT_NO_BORDER</a></td>
-                        <td class='docblock short'>
-                             <p>Format for printing a table without any separators (only alignment)</p>
-
-                        </td>
-                    </tr>
-                
-                    <tr class=' module-item'>
-                        <td><a class='constant' href='constant.FORMAT_NO_COLSEP.html'
-                               title='prettytable::format::FORMAT_NO_COLSEP'>FORMAT_NO_COLSEP</a></td>
-                        <td class='docblock short'>
-                             <p>No column seprarator</p>
-
-                        </td>
-                    </tr>
-                
-                    <tr class=' module-item'>
-                        <td><a class='constant' href='constant.FORMAT_NO_LINESEP.html'
-                               title='prettytable::format::FORMAT_NO_LINESEP'>FORMAT_NO_LINESEP</a></td>
-                        <td class='docblock short'>
-                             <p>With no line or title separator</p>
-
-                        </td>
-                    </tr>
-                
-                    <tr class=' module-item'>
-                        <td><a class='constant' href='constant.FORMAT_NO_LINESEP_WITH_TITLE.html'
-                               title='prettytable::format::FORMAT_NO_LINESEP_WITH_TITLE'>FORMAT_NO_LINESEP_WITH_TITLE</a></td>
-                        <td class='docblock short'>
-                             <p>With no line separator, but with title separator</p>
-
-                        </td>
-                    </tr>
-                
-                    <tr class=' module-item'>
-                        <td><a class='constant' href='constant.FORMAT_NO_TITLE.html'
-                               title='prettytable::format::FORMAT_NO_TITLE'>FORMAT_NO_TITLE</a></td>
-                        <td class='docblock short'>
-                             <p>Similar to <code>FORMAT_DEFAULT</code> but without special separator after title line</p>
-
-                        </td>
-                    </tr>
-                
-                    <tr class=' module-item'>
-                        <td><a class='constant' href='constant.MINUS_PLUS_SEP.html'
-                               title='prettytable::format::MINUS_PLUS_SEP'>MINUS_PLUS_SEP</a></td>
-                        <td class='docblock short'>
-                             <p>A line separator mad of <code>-</code> and <code>+</code></p>
+                             <p>Position of a line separator in a table</p>
 
                         </td>
                     </tr>

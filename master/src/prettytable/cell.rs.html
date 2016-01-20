@@ -397,8 +397,6 @@
 <span id="355">355</span>
 <span id="356">356</span>
 <span id="357">357</span>
-<span id="358">358</span>
-<span id="359">359</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! This module contains definition of table/row cells stuff</span>
 
@@ -406,7 +404,7 @@
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>string</span>::<span class='ident'>ToString</span>;
 <span class='kw'>use</span> <span class='ident'>unicode_width</span>::<span class='ident'>UnicodeWidthStr</span>;
 <span class='kw'>use</span> <span class='ident'>term</span>::{<span class='ident'>Attr</span>, <span class='ident'>Terminal</span>, <span class='ident'>color</span>};
-<span class='kw'>use</span> <span class='ident'>super</span>::<span class='ident'>format</span>::<span class='ident'>Align</span>;
+<span class='kw'>use</span> <span class='ident'>super</span>::<span class='ident'>format</span>::<span class='ident'>Alignment</span>;
 <span class='kw'>use</span> <span class='ident'>super</span>::<span class='ident'>utils</span>::<span class='ident'>print_align</span>;
 
 <span class='doccomment'>/// Represent a table cell containing a string.</span>
@@ -417,14 +415,14 @@
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Cell</span> {
 	<span class='ident'>content</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span>,
 	<span class='ident'>width</span>: <span class='ident'>usize</span>,
-	<span class='ident'>align</span>: <span class='ident'>Align</span>,
+	<span class='ident'>align</span>: <span class='ident'>Alignment</span>,
 	<span class='ident'>style</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Attr</span><span class='op'>&gt;</span>
 }
 
 <span class='kw'>impl</span> <span class='ident'>Cell</span> {
 	<span class='doccomment'>/// Create a new `Cell` initialized with content from `string`.</span>
 	<span class='doccomment'>/// Text alignment in cell is configurable with the `align` argument</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new_align</span>(<span class='ident'>string</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>, <span class='ident'>align</span>: <span class='ident'>Align</span>) <span class='op'>-&gt;</span> <span class='ident'>Cell</span> {
+	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new_align</span>(<span class='ident'>string</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>, <span class='ident'>align</span>: <span class='ident'>Alignment</span>) <span class='op'>-&gt;</span> <span class='ident'>Cell</span> {
 		<span class='kw'>let</span> <span class='ident'>content</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>string</span>.<span class='ident'>lines</span>().<span class='ident'>map</span>(<span class='op'>|</span><span class='kw-2'>ref</span> <span class='ident'>x</span><span class='op'>|</span> <span class='ident'>x</span>.<span class='ident'>to_string</span>()).<span class='ident'>collect</span>();
 		<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>width</span> <span class='op'>=</span> <span class='number'>0</span>;
 		<span class='kw'>for</span> <span class='ident'>cont</span> <span class='kw'>in</span> <span class='kw-2'>&amp;</span><span class='ident'>content</span> {
@@ -444,11 +442,11 @@
 	<span class='doccomment'>/// Create a new `Cell` initialized with content from `string`.</span>
 	<span class='doccomment'>/// By default, content is align to `LEFT`</span>
 	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>string</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>) <span class='op'>-&gt;</span> <span class='ident'>Cell</span> {
-		<span class='kw'>return</span> <span class='ident'>Cell</span>::<span class='ident'>new_align</span>(<span class='ident'>string</span>, <span class='ident'>Align</span>::<span class='ident'>LEFT</span>);
+		<span class='kw'>return</span> <span class='ident'>Cell</span>::<span class='ident'>new_align</span>(<span class='ident'>string</span>, <span class='ident'>Alignment</span>::<span class='ident'>LEFT</span>);
 	}
 
 	<span class='doccomment'>/// Set text alignment in the cell</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>align</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>align</span>: <span class='ident'>Align</span>) {
+	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>align</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>align</span>: <span class='ident'>Alignment</span>) {
 		<span class='self'>self</span>.<span class='ident'>align</span> <span class='op'>=</span> <span class='ident'>align</span>;
 	}
 
@@ -466,7 +464,7 @@
 	<span class='doccomment'>/// Remove all style attributes and reset alignment to default (LEFT)</span>
 	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>reset_style</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
 		<span class='self'>self</span>.<span class='ident'>style</span>.<span class='ident'>clear</span>();
-		<span class='self'>self</span>.<span class='ident'>align</span>(<span class='ident'>Align</span>::<span class='ident'>LEFT</span>);
+		<span class='self'>self</span>.<span class='ident'>align</span>(<span class='ident'>Alignment</span>::<span class='ident'>LEFT</span>);
 	}
 
 	<span class='doccomment'>/// Set the cell&#39;s style by applying the given specifier string</span>
@@ -546,9 +544,9 @@
 					<span class='string'>&#39;b&#39;</span> <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>style</span>(<span class='ident'>Attr</span>::<span class='ident'>Bold</span>),
 					<span class='string'>&#39;i&#39;</span> <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>style</span>(<span class='ident'>Attr</span>::<span class='ident'>Italic</span>(<span class='boolval'>true</span>)),
 					<span class='string'>&#39;u&#39;</span> <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>style</span>(<span class='ident'>Attr</span>::<span class='ident'>Underline</span>(<span class='boolval'>true</span>)),
-					<span class='string'>&#39;c&#39;</span> <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>align</span>(<span class='ident'>Align</span>::<span class='ident'>CENTER</span>),
-					<span class='string'>&#39;l&#39;</span> <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>align</span>(<span class='ident'>Align</span>::<span class='ident'>LEFT</span>),
-					<span class='string'>&#39;r&#39;</span> <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>align</span>(<span class='ident'>Align</span>::<span class='ident'>RIGHT</span>),
+					<span class='string'>&#39;c&#39;</span> <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>align</span>(<span class='ident'>Alignment</span>::<span class='ident'>CENTER</span>),
+					<span class='string'>&#39;l&#39;</span> <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>align</span>(<span class='ident'>Alignment</span>::<span class='ident'>LEFT</span>),
+					<span class='string'>&#39;r&#39;</span> <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>align</span>(<span class='ident'>Alignment</span>::<span class='ident'>RIGHT</span>),
 					<span class='string'>&#39;d&#39;</span> <span class='op'>=&gt;</span> {<span class='comment'>/* Default : do nothing */</span>}
 					_ <span class='op'>=&gt;</span> {<span class='comment'>/* Silently ignore unknown tags */</span>}
 				}
@@ -581,9 +579,7 @@
 			<span class='prelude-val'>Some</span>(<span class='ident'>s</span>) <span class='op'>=&gt;</span> <span class='ident'>s</span>.<span class='ident'>as_ref</span>(),
 			<span class='prelude-val'>None</span> <span class='op'>=&gt;</span> <span class='string'>&quot;&quot;</span>
 		};
-		<span class='macro'>try</span><span class='macro'>!</span>(<span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>out</span>, <span class='string'>&quot; &quot;</span>));
-		<span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>print_align</span>(<span class='ident'>out</span>, <span class='self'>self</span>.<span class='ident'>align</span>, <span class='ident'>c</span>, <span class='string'>&#39; &#39;</span>, <span class='ident'>col_width</span>));
-		<span class='kw'>return</span> <span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>out</span>, <span class='string'>&quot; &quot;</span>);
+		<span class='kw'>return</span> <span class='ident'>print_align</span>(<span class='ident'>out</span>, <span class='self'>self</span>.<span class='ident'>align</span>, <span class='ident'>c</span>, <span class='string'>&#39; &#39;</span>, <span class='ident'>col_width</span>)
 	}
 
 	<span class='doccomment'>/// Apply style then call `print` to print the cell into a terminal</span>
@@ -626,7 +622,7 @@
 		<span class='kw'>return</span> <span class='ident'>Cell</span> {
 			<span class='ident'>content</span>: <span class='macro'>vec</span><span class='macro'>!</span>[<span class='string'>&quot;&quot;</span>.<span class='ident'>to_string</span>(); <span class='number'>1</span>],
 			<span class='ident'>width</span>: <span class='number'>0</span>,
-			<span class='ident'>align</span>: <span class='ident'>Align</span>::<span class='ident'>LEFT</span>,
+			<span class='ident'>align</span>: <span class='ident'>Alignment</span>::<span class='ident'>LEFT</span>,
 			<span class='ident'>style</span>: <span class='ident'>Vec</span>::<span class='ident'>new</span>()
 		};
 	}
@@ -670,7 +666,7 @@
 <span class='kw'>mod</span> <span class='ident'>tests</span> {
 	<span class='kw'>use</span> <span class='ident'>cell</span>::<span class='ident'>Cell</span>;
 	<span class='kw'>use</span> <span class='ident'>utils</span>::<span class='ident'>StringWriter</span>;
-	<span class='kw'>use</span> <span class='ident'>format</span>::<span class='ident'>Align</span>;
+	<span class='kw'>use</span> <span class='ident'>format</span>::<span class='ident'>Alignment</span>;
 	<span class='kw'>use</span> <span class='ident'>term</span>::{<span class='ident'>Attr</span>, <span class='ident'>color</span>};
 
 	<span class='attribute'>#[<span class='ident'>test</span>]</span>
@@ -686,7 +682,7 @@
 
 		<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>out</span> <span class='op'>=</span> <span class='ident'>StringWriter</span>::<span class='ident'>new</span>();
 		<span class='kw'>let</span> _ <span class='op'>=</span> <span class='ident'>ascii_cell</span>.<span class='ident'>print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>out</span>, <span class='number'>0</span>, <span class='number'>10</span>);
-		<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>out</span>.<span class='ident'>as_string</span>(), <span class='string'>&quot; hello      &quot;</span>);
+		<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>out</span>.<span class='ident'>as_string</span>(), <span class='string'>&quot;hello     &quot;</span>);
 	}
 
 	<span class='attribute'>#[<span class='ident'>test</span>]</span>
@@ -696,7 +692,7 @@
 
 		<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>out</span> <span class='op'>=</span> <span class='ident'>StringWriter</span>::<span class='ident'>new</span>();
 		<span class='kw'>let</span> _ <span class='op'>=</span> <span class='ident'>unicode_cell</span>.<span class='ident'>print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>out</span>, <span class='number'>0</span>, <span class='number'>10</span>);
-		<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>out</span>.<span class='ident'>as_string</span>(), <span class='string'>&quot; привет     &quot;</span>);
+		<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>out</span>.<span class='ident'>as_string</span>(), <span class='string'>&quot;привет    &quot;</span>);
 	}
 
 	<span class='attribute'>#[<span class='ident'>test</span>]</span>
@@ -705,31 +701,31 @@
 		<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>unicode_cell</span>.<span class='ident'>get_width</span>(), <span class='number'>14</span>);
 		<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>out</span> <span class='op'>=</span> <span class='ident'>StringWriter</span>::<span class='ident'>new</span>();
 		<span class='kw'>let</span> _ <span class='op'>=</span> <span class='ident'>unicode_cell</span>.<span class='ident'>print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>out</span>, <span class='number'>0</span>, <span class='number'>20</span>);
-		<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>out</span>.<span class='ident'>as_string</span>(), <span class='string'>&quot; 由系统自动更新       &quot;</span>);
+		<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>out</span>.<span class='ident'>as_string</span>(), <span class='string'>&quot;由系统自动更新      &quot;</span>);
 	}
 
 	<span class='attribute'>#[<span class='ident'>test</span>]</span>
 	<span class='kw'>fn</span> <span class='ident'>align_left</span>() {
-		<span class='kw'>let</span> <span class='ident'>cell</span> <span class='op'>=</span> <span class='ident'>Cell</span>::<span class='ident'>new_align</span>(<span class='string'>&quot;test&quot;</span>, <span class='ident'>Align</span>::<span class='ident'>LEFT</span>);
+		<span class='kw'>let</span> <span class='ident'>cell</span> <span class='op'>=</span> <span class='ident'>Cell</span>::<span class='ident'>new_align</span>(<span class='string'>&quot;test&quot;</span>, <span class='ident'>Alignment</span>::<span class='ident'>LEFT</span>);
 		<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>out</span> <span class='op'>=</span> <span class='ident'>StringWriter</span>::<span class='ident'>new</span>();
 		<span class='kw'>let</span> _ <span class='op'>=</span> <span class='ident'>cell</span>.<span class='ident'>print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>out</span>, <span class='number'>0</span>, <span class='number'>10</span>);
-		<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>out</span>.<span class='ident'>as_string</span>(), <span class='string'>&quot; test       &quot;</span>);
+		<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>out</span>.<span class='ident'>as_string</span>(), <span class='string'>&quot;test      &quot;</span>);
 	}
 
 	<span class='attribute'>#[<span class='ident'>test</span>]</span>
 	<span class='kw'>fn</span> <span class='ident'>align_center</span>() {
-		<span class='kw'>let</span> <span class='ident'>cell</span> <span class='op'>=</span> <span class='ident'>Cell</span>::<span class='ident'>new_align</span>(<span class='string'>&quot;test&quot;</span>, <span class='ident'>Align</span>::<span class='ident'>CENTER</span>);
+		<span class='kw'>let</span> <span class='ident'>cell</span> <span class='op'>=</span> <span class='ident'>Cell</span>::<span class='ident'>new_align</span>(<span class='string'>&quot;test&quot;</span>, <span class='ident'>Alignment</span>::<span class='ident'>CENTER</span>);
 		<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>out</span> <span class='op'>=</span> <span class='ident'>StringWriter</span>::<span class='ident'>new</span>();
 		<span class='kw'>let</span> _ <span class='op'>=</span> <span class='ident'>cell</span>.<span class='ident'>print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>out</span>, <span class='number'>0</span>, <span class='number'>10</span>);
-		<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>out</span>.<span class='ident'>as_string</span>(), <span class='string'>&quot;    test    &quot;</span>);
+		<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>out</span>.<span class='ident'>as_string</span>(), <span class='string'>&quot;   test   &quot;</span>);
 	}
 
 	<span class='attribute'>#[<span class='ident'>test</span>]</span>
 	<span class='kw'>fn</span> <span class='ident'>align_right</span>() {
-		<span class='kw'>let</span> <span class='ident'>cell</span> <span class='op'>=</span> <span class='ident'>Cell</span>::<span class='ident'>new_align</span>(<span class='string'>&quot;test&quot;</span>, <span class='ident'>Align</span>::<span class='ident'>RIGHT</span>);
+		<span class='kw'>let</span> <span class='ident'>cell</span> <span class='op'>=</span> <span class='ident'>Cell</span>::<span class='ident'>new_align</span>(<span class='string'>&quot;test&quot;</span>, <span class='ident'>Alignment</span>::<span class='ident'>RIGHT</span>);
 		<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>out</span> <span class='op'>=</span> <span class='ident'>StringWriter</span>::<span class='ident'>new</span>();
 		<span class='kw'>let</span> _ <span class='op'>=</span> <span class='ident'>cell</span>.<span class='ident'>print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>out</span>, <span class='number'>0</span>, <span class='number'>10</span>);
-		<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>out</span>.<span class='ident'>as_string</span>(), <span class='string'>&quot;       test &quot;</span>);
+		<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>out</span>.<span class='ident'>as_string</span>(), <span class='string'>&quot;      test&quot;</span>);
 	}
 
 	<span class='attribute'>#[<span class='ident'>test</span>]</span>
@@ -741,13 +737,13 @@
 		<span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>cell</span>.<span class='ident'>style</span>.<span class='ident'>contains</span>(<span class='kw-2'>&amp;</span><span class='ident'>Attr</span>::<span class='ident'>Bold</span>));
 		<span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>cell</span>.<span class='ident'>style</span>.<span class='ident'>contains</span>(<span class='kw-2'>&amp;</span><span class='ident'>Attr</span>::<span class='ident'>ForegroundColor</span>(<span class='ident'>color</span>::<span class='ident'>RED</span>)));
 		<span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>cell</span>.<span class='ident'>style</span>.<span class='ident'>contains</span>(<span class='kw-2'>&amp;</span><span class='ident'>Attr</span>::<span class='ident'>BackgroundColor</span>(<span class='ident'>color</span>::<span class='ident'>BRIGHT_BLUE</span>)));
-		<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>cell</span>.<span class='ident'>align</span>, <span class='ident'>Align</span>::<span class='ident'>CENTER</span>);
+		<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>cell</span>.<span class='ident'>align</span>, <span class='ident'>Alignment</span>::<span class='ident'>CENTER</span>);
 
 		<span class='ident'>cell</span> <span class='op'>=</span> <span class='ident'>cell</span>.<span class='ident'>style_spec</span>(<span class='string'>&quot;FDBwr&quot;</span>);
 		<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>cell</span>.<span class='ident'>style</span>.<span class='ident'>len</span>(), <span class='number'>2</span>);
 		<span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>cell</span>.<span class='ident'>style</span>.<span class='ident'>contains</span>(<span class='kw-2'>&amp;</span><span class='ident'>Attr</span>::<span class='ident'>ForegroundColor</span>(<span class='ident'>color</span>::<span class='ident'>BRIGHT_BLACK</span>)));
 		<span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>cell</span>.<span class='ident'>style</span>.<span class='ident'>contains</span>(<span class='kw-2'>&amp;</span><span class='ident'>Attr</span>::<span class='ident'>BackgroundColor</span>(<span class='ident'>color</span>::<span class='ident'>WHITE</span>)));
-		<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>cell</span>.<span class='ident'>align</span>, <span class='ident'>Align</span>::<span class='ident'>RIGHT</span>)
+		<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>cell</span>.<span class='ident'>align</span>, <span class='ident'>Alignment</span>::<span class='ident'>RIGHT</span>)
 	}
 
 	<span class='attribute'>#[<span class='ident'>test</span>]</span>
@@ -756,7 +752,7 @@
 		<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>cell</span>.<span class='ident'>style</span>.<span class='ident'>len</span>(), <span class='number'>2</span>);
 		<span class='ident'>cell</span>.<span class='ident'>reset_style</span>();
 		<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>cell</span>.<span class='ident'>style</span>.<span class='ident'>len</span>(), <span class='number'>0</span>);
-		<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>cell</span>.<span class='ident'>align</span>, <span class='ident'>Align</span>::<span class='ident'>LEFT</span>);
+		<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>cell</span>.<span class='ident'>align</span>, <span class='ident'>Alignment</span>::<span class='ident'>LEFT</span>);
 	}
 }
 </pre>
