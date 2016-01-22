@@ -9,6 +9,7 @@
 
     <title>prettytable::ptable! - Rust</title>
 
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../main.css">
 
     
@@ -45,16 +46,10 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-982' class='srclink' href='../src/prettytable/lib.rs.html#433-441' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-998' class='srclink' href='../src/prettytable/lib.rs.html#433-441' title='goto source code'>[src]</a></span></h1>
 <pre class='rust macro'>
 <span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>ptable</span> {
-	($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>content</span>:<span class='ident'>tt</span>)<span class='op'>*</span>) <span class='op'>=&gt;</span> (
-		{
-			<span class='kw'>let</span> <span class='ident'>tab</span> <span class='op'>=</span> <span class='macro'>table</span><span class='macro'>!</span>($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>content</span>)<span class='op'>*</span>);
-			<span class='ident'>tab</span>.<span class='ident'>printstd</span>();
-			<span class='ident'>tab</span>
-		}
-	);
+    ($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>content</span>:<span class='ident'>tt</span>)<span class='op'>*</span>) <span class='op'>=&gt;</span> { ... };
 }</pre>
 <div class='docblock'><p>Create a table with <code>table!</code> macro, print it to standard output, then return this table for future usage.</p>
 
@@ -118,6 +113,6 @@
     <script src="../jquery.js"></script>
     <script src="../main.js"></script>
     
-    <script async src="../search-index.js"></script>
+    <script defer src="../search-index.js"></script>
 </body>
 </html>
