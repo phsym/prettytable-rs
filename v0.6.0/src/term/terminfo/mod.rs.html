@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-88ac128001ac3a9a/term-0.4.1/src/terminfo/mod.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-88ac128001ac3a9a/term-0.4.2/src/terminfo/mod.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>mod.rs.html -- source</title>
@@ -370,6 +370,8 @@
 <span id="327">327</span>
 <span id="328">328</span>
 <span id="329">329</span>
+<span id="330">330</span>
+<span id="331">331</span>
 </pre><pre class='rust '>
 <span class='comment'>// Copyright 2012-2014 The Rust Project Developers. See the COPYRIGHT</span>
 <span class='comment'>// file at the top-level directory of this distribution and at</span>
@@ -597,14 +599,16 @@
     }
 
     <span class='kw'>fn</span> <span class='ident'>reset</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>()<span class='op'>&gt;</span> {
-        <span class='comment'>// are there any terminals that have color/attrs and not sg0?</span>
+        <span class='comment'>// are there any terminals that have color/attrs and not sgr0?</span>
         <span class='comment'>// Try falling back to sgr, then op</span>
-        <span class='kw'>let</span> <span class='ident'>cmd</span> <span class='op'>=</span> <span class='kw'>match</span> [<span class='string'>&quot;sg0&quot;</span>, <span class='string'>&quot;sgr&quot;</span>, <span class='string'>&quot;op&quot;</span>]
+        <span class='kw'>let</span> <span class='ident'>cmd</span> <span class='op'>=</span> <span class='kw'>match</span> [(<span class='string'>&quot;sgr0&quot;</span>, <span class='kw-2'>&amp;</span>[] <span class='kw'>as</span> <span class='kw-2'>&amp;</span>[<span class='ident'>Param</span>]),
+                         (<span class='string'>&quot;sgr&quot;</span>, <span class='kw-2'>&amp;</span>[<span class='ident'>Param</span>::<span class='ident'>Number</span>(<span class='number'>0</span>)]),
+                         (<span class='string'>&quot;op&quot;</span>, <span class='kw-2'>&amp;</span>[])]
                             .<span class='ident'>iter</span>()
-                            .<span class='ident'>filter_map</span>(<span class='op'>|</span><span class='ident'>cap</span><span class='op'>|</span> <span class='self'>self</span>.<span class='ident'>ti</span>.<span class='ident'>strings</span>.<span class='ident'>get</span>(<span class='op'>*</span><span class='ident'>cap</span>))
+                            .<span class='ident'>filter_map</span>(<span class='op'>|</span><span class='kw-2'>&amp;</span>(<span class='ident'>cap</span>, <span class='ident'>params</span>)<span class='op'>|</span> <span class='self'>self</span>.<span class='ident'>ti</span>.<span class='ident'>strings</span>.<span class='ident'>get</span>(<span class='ident'>cap</span>).<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>c</span><span class='op'>|</span> (<span class='ident'>c</span>, <span class='ident'>params</span>)))
                             .<span class='ident'>next</span>() {
-            <span class='prelude-val'>Some</span>(<span class='ident'>op</span>) <span class='op'>=&gt;</span> {
-                <span class='kw'>match</span> <span class='ident'>expand</span>(<span class='kw-2'>&amp;</span><span class='ident'>op</span>, <span class='kw-2'>&amp;</span>[], <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Variables</span>::<span class='ident'>new</span>()) {
+            <span class='prelude-val'>Some</span>((<span class='ident'>op</span>, <span class='ident'>params</span>)) <span class='op'>=&gt;</span> {
+                <span class='kw'>match</span> <span class='ident'>expand</span>(<span class='ident'>op</span>, <span class='ident'>params</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Variables</span>::<span class='ident'>new</span>()) {
                     <span class='prelude-val'>Ok</span>(<span class='ident'>cmd</span>) <span class='op'>=&gt;</span> <span class='ident'>cmd</span>,
                     <span class='prelude-val'>Err</span>(<span class='ident'>e</span>) <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='ident'>e</span>.<span class='ident'>into</span>()),
                 }
