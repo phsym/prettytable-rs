@@ -164,7 +164,7 @@ impl <'a> TableSlice<'a> {
 
 	/// Print the table to standard output. Colors won't be displayed unless
 	/// stdout is a tty terminal. This means that if stdout is redirected to a file, or piped
-	/// to another program, nor color will be displayed.
+	/// to another program, no color will be displayed.
 	/// To force colors rendering, use `print_tty()` method.
 	/// Calling `printstd()` is equivalent to calling `print_tty(false)`
 	/// # Panic
@@ -296,7 +296,7 @@ impl Table {
 
 	/// Print the table to standard output. Colors won't be displayed unless
 	/// stdout is a tty terminal. This means that if stdout is redirected to a file, or piped
-	/// to another program, nor color will be displayed.
+	/// to another program, no color will be displayed.
 	/// To force colors rendering, use `print_tty()` method.
 	/// Calling `printstd()` is equivalent to calling `print_tty(false)`
 	/// # Panic
