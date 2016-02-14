@@ -97,16 +97,17 @@ impl Row {
 
 	/// Internal only
 	fn __print<T:Write+?Sized, F>(&self, out: &mut T, format: &TableFormat, col_width: &[usize], f: F) -> Result<(), Error>
-		where F: Fn(&Cell, &mut T, usize, usize) -> Result<(), Error>
+		where F: Fn(&Cell, &mut T, usize, usize, bool) -> Result<(), Error>
 	{
 		for i in 0..self.get_height() {
 			try!(format.print_column_separator(out, ColumnPosition::Left));
 			let (lp, rp) = format.get_padding();
 			for j in 0..col_width.len() {
 				try!(out.write(&vec![' ' as u8; lp]));
+				let skip_r_fill = (j == col_width.len() - 1) && format.get_column_separator(ColumnPosition::Right).is_none();
 				match self.get_cell(j) {
-					Some(ref c) => try!(f(c, out, i, col_width[j])),
-					None => try!(f(&Cell::default(), out, i, col_width[j]))
+					Some(ref c) => try!(f(c, out, i, col_width[j], skip_r_fill)),
+					None => try!(f(&Cell::default(), out, i, col_width[j], skip_r_fill))
 				};
 				try!(out.write(&vec![' ' as u8; rp]));
 				if j < col_width.len() - 1 {

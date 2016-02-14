@@ -174,16 +174,16 @@ impl Cell {
 	/// `idx` is the line index to print. `col_width` is the column width used to
 	/// fill the cells with blanks so it fits in the table.
 	/// If `ìdx` is higher than this cell's height, it will print empty content
-	pub fn print<T: Write+?Sized>(&self, out: &mut T, idx: usize, col_width: usize) -> Result<(), Error> {
+	pub fn print<T: Write+?Sized>(&self, out: &mut T, idx: usize, col_width: usize, skip_right_fill: bool) -> Result<(), Error> {
 		let c = match self.content.get(idx) {
 			Some(s) => s.as_ref(),
 			None => ""
 		};
-		return print_align(out, self.align, c, ' ', col_width)
+		return print_align(out, self.align, c, ' ', col_width, skip_right_fill)
 	}
 
 	/// Apply style then call `print` to print the cell into a terminal
-	pub fn print_term<T: Terminal+?Sized>(&self, out: &mut T, idx: usize, col_width: usize) -> Result<(), Error> {
+	pub fn print_term<T: Terminal+?Sized>(&self, out: &mut T, idx: usize, col_width: usize, skip_right_fill: bool) -> Result<(), Error> {
 		for a in &self.style {
 			match out.attr(a.clone()) {
 				Ok(ok) => ok,
@@ -191,7 +191,7 @@ impl Cell {
 				Err(e) => return Err(term_error_to_io_error(e))
 			};
 		}
-		try!(self.print(out, idx, col_width));
+		try!(self.print(out, idx, col_width, skip_right_fill));
 		try!(out.reset().map_err(term_error_to_io_error));
 		return Ok(());
 	}
@@ -281,7 +281,7 @@ mod tests {
 		assert_eq!(ascii_cell.get_width(), 5);
 
 		let mut out = StringWriter::new();
-		let _ = ascii_cell.print(&mut out, 0, 10);
+		let _ = ascii_cell.print(&mut out, 0, 10, false);
 		assert_eq!(out.as_string(), "hello     ");
 	}
 
@@ -291,7 +291,7 @@ mod tests {
 		assert_eq!(unicode_cell.get_width(), 6);
 
 		let mut out = StringWriter::new();
-		let _ = unicode_cell.print(&mut out, 0, 10);
+		let _ = unicode_cell.print(&mut out, 0, 10, false);
 		assert_eq!(out.as_string(), "привет    ");
 	}
 
@@ -300,7 +300,7 @@ mod tests {
 		let unicode_cell = Cell::new("由系统自动更新");
 		assert_eq!(unicode_cell.get_width(), 14);
 		let mut out = StringWriter::new();
-		let _ = unicode_cell.print(&mut out, 0, 20);
+		let _ = unicode_cell.print(&mut out, 0, 20, false);
 		assert_eq!(out.as_string(), "由系统自动更新      ");
 	}
 
@@ -308,7 +308,7 @@ mod tests {
 	fn align_left() {
 		let cell = Cell::new_align("test", Alignment::LEFT);
 		let mut out = StringWriter::new();
-		let _ = cell.print(&mut out, 0, 10);
+		let _ = cell.print(&mut out, 0, 10, false);
 		assert_eq!(out.as_string(), "test      ");
 	}
 
@@ -316,7 +316,7 @@ mod tests {
 	fn align_center() {
 		let cell = Cell::new_align("test", Alignment::CENTER);
 		let mut out = StringWriter::new();
-		let _ = cell.print(&mut out, 0, 10);
+		let _ = cell.print(&mut out, 0, 10, false);
 		assert_eq!(out.as_string(), "   test   ");
 	}
 
@@ -324,7 +324,7 @@ mod tests {
 	fn align_right() {
 		let cell = Cell::new_align("test", Alignment::RIGHT);
 		let mut out = StringWriter::new();
-		let _ = cell.print(&mut out, 0, 10);
+		let _ = cell.print(&mut out, 0, 10, false);
 		assert_eq!(out.as_string(), "      test");
 	}
 

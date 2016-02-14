@@ -174,7 +174,7 @@ impl TableFormat {
 		};
 	}
 
-	fn get_column_separator(&self, pos: ColumnPosition) -> Option<char> {
+	pub fn get_column_separator(&self, pos: ColumnPosition) -> Option<char> {
 		return match pos {
 			ColumnPosition::Left => self.lborder,
 			ColumnPosition::Intern => self.csep,
