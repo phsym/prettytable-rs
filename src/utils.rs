@@ -45,6 +45,8 @@ impl Write for StringWriter {
 }
 
 /// Align/fill a string and print it to `out`
+/// If `skip_right_fill` is set to `true`, then no spce will be added after the string
+/// to complete alignment
 pub fn print_align<T: Write+?Sized>(out: &mut T, align: Alignment, text: &str, fill: char, size: usize, skip_right_fill: bool) -> Result<(), Error> {
 	let text_len = UnicodeWidthStr::width(text);
 	let mut nfill = if text_len < size { size - text_len } else { 0 };
