@@ -1,6 +1,7 @@
 //! A formatted and aligned table printer written in rust
 extern crate unicode_width;
 extern crate term;
+extern crate atty;
 #[macro_use] extern crate lazy_static;
 
 use std::io;
@@ -147,9 +148,9 @@ impl <'a> TableSlice<'a> {
 	/// # Panic
 	/// Panic if writing to standard output fails
 	pub fn printstd(&self) {
-		let r = match stdout() {
-			Some(mut o) => self.print_term(&mut *o),
-			None => self.print(&mut io::stdout()),
+		let r = match (stdout(), atty::is()) {
+			(Some(mut o), true) => self.print_term(&mut *o),
+			_ => self.print(&mut io::stdout()),
 		};
 		if let Err(e) = r {
 			panic!("Cannot print table to standard output : {}", e);

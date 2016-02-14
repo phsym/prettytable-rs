@@ -197,7 +197,7 @@ impl Default for TableFormat {
 	}
 }
 
-/// A builder to create a `Table Format`
+/// A builder to create a `TableFormat`
 pub struct FormatBuilder {
 	format: Box<TableFormat>
 }
