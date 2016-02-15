@@ -9,6 +9,7 @@
 
     <title>unicode_width::UnicodeWidthStr - Rust</title>
 
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../main.css">
 
     <link rel="shortcut icon" href="https://unicode-rs.github.io/unicode-rs_sm.png">
@@ -47,13 +48,13 @@
             </a>
         </span><a id='src-41' class='srclink' href='../src/unicode_width/lib.rs.html#104-124' title='goto source code'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait UnicodeWidthStr {
-    fn <a href='#tymethod.width' class='fnname'>width</a>&lt;'a&gt;(&amp;'a self) -&gt; <a href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>;
-    fn <a href='#tymethod.width_cjk' class='fnname'>width_cjk</a>&lt;'a&gt;(&amp;'a self) -&gt; <a href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>;
+    fn <a href='#tymethod.width' class='fnname'>width</a>&lt;'a&gt;(&amp;'a self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>;
+    fn <a href='#tymethod.width_cjk' class='fnname'>width_cjk</a>&lt;'a&gt;(&amp;'a self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>;
 }</pre><div class='docblock'><p>Methods for determining displayed width of Unicode strings.</p>
 </div>
             <h2 id='required-methods'>Required Methods</h2>
             <div class='methods'>
-        <h3 id='tymethod.width' class='method stab '><code>fn <a href='#tymethod.width' class='fnname'>width</a>&lt;'a&gt;(&amp;'a self) -&gt; <a href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a></code></h3><div class='docblock'><p>Returns the string&#39;s displayed width in columns.</p>
+        <h3 id='tymethod.width' class='method stab '><code>fn <a href='#tymethod.width' class='fnname'>width</a>&lt;'a&gt;(&amp;'a self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a></code></h3><div class='docblock'><p>Returns the string&#39;s displayed width in columns.</p>
 
 <p>Control characters are treated as having zero width.</p>
 
@@ -61,7 +62,7 @@
 to <a href="http://www.unicode.org/reports/tr11/">Unicode Standard Annex #11</a>
 as 1 column wide. This is consistent with the recommendations for
 non-CJK contexts, or when the context cannot be reliably determined.</p>
-</div><h3 id='tymethod.width_cjk' class='method stab '><code>fn <a href='#tymethod.width_cjk' class='fnname'>width_cjk</a>&lt;'a&gt;(&amp;'a self) -&gt; <a href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a></code></h3><div class='docblock'><p>Returns the string&#39;s displayed width in columns.</p>
+</div><h3 id='tymethod.width_cjk' class='method stab '><code>fn <a href='#tymethod.width_cjk' class='fnname'>width_cjk</a>&lt;'a&gt;(&amp;'a self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a></code></h3><div class='docblock'><p>Returns the string&#39;s displayed width in columns.</p>
 
 <p>Control characters are treated as having zero width.</p>
 
@@ -72,7 +73,7 @@ CJK contexts.</p>
 </div></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
-    <li><code>impl <a class='trait' href='../unicode_width/trait.UnicodeWidthStr.html' title='unicode_width::UnicodeWidthStr'>UnicodeWidthStr</a> for <a href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a></code></li>
+    <li><code>impl <a class='trait' href='../unicode_width/trait.UnicodeWidthStr.html' title='unicode_width::UnicodeWidthStr'>UnicodeWidthStr</a> for <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a></code></li>
 </ul><script type="text/javascript" async
                               src="../implementors/unicode_width/trait.UnicodeWidthStr.js">
                       </script></section>
@@ -134,6 +135,6 @@ CJK contexts.</p>
     <script src="../jquery.js"></script>
     <script src="../main.js"></script>
     
-    <script async src="../search-index.js"></script>
+    <script defer src="../search-index.js"></script>
 </body>
 </html>

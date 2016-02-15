@@ -9,6 +9,7 @@
 
     <title>prettytable::cell::Cell - Rust</title>
 
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../main.css">
 
     
@@ -52,10 +53,10 @@
 
 <p>Once created, a cell&#39;s content cannot be modified.
 The cell would have to be replaced by another one</p>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl <a class='struct' href='../../prettytable/cell/struct.Cell.html' title='prettytable::cell::Cell'>Cell</a></code></h3><div class='impl-items'><h4 id='method.new_align' class='method'><code>fn <a href='#method.new_align' class='fnname'>new_align</a>(string: &amp;<a href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>, align: <a class='enum' href='../../prettytable/format/enum.Alignment.html' title='prettytable::format::Alignment'>Alignment</a>) -&gt; <a class='struct' href='../../prettytable/cell/struct.Cell.html' title='prettytable::cell::Cell'>Cell</a></code></h4>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl <a class='struct' href='../../prettytable/cell/struct.Cell.html' title='prettytable::cell::Cell'>Cell</a></code></h3><div class='impl-items'><h4 id='method.new_align' class='method'><code>fn <a href='#method.new_align' class='fnname'>new_align</a>(string: &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>, align: <a class='enum' href='../../prettytable/format/enum.Alignment.html' title='prettytable::format::Alignment'>Alignment</a>) -&gt; <a class='struct' href='../../prettytable/cell/struct.Cell.html' title='prettytable::cell::Cell'>Cell</a></code></h4>
 <div class='docblock'><p>Create a new <code>Cell</code> initialized with content from <code>string</code>.
 Text alignment in cell is configurable with the <code>align</code> argument</p>
-</div><h4 id='method.new' class='method'><code>fn <a href='#method.new' class='fnname'>new</a>(string: &amp;<a href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; <a class='struct' href='../../prettytable/cell/struct.Cell.html' title='prettytable::cell::Cell'>Cell</a></code></h4>
+</div><h4 id='method.new' class='method'><code>fn <a href='#method.new' class='fnname'>new</a>(string: &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; <a class='struct' href='../../prettytable/cell/struct.Cell.html' title='prettytable::cell::Cell'>Cell</a></code></h4>
 <div class='docblock'><p>Create a new <code>Cell</code> initialized with content from <code>string</code>.
 By default, content is align to <code>LEFT</code></p>
 </div><h4 id='method.align' class='method'><code>fn <a href='#method.align' class='fnname'>align</a>(&amp;mut self, align: <a class='enum' href='../../prettytable/format/enum.Alignment.html' title='prettytable::format::Alignment'>Alignment</a>)</code></h4>
@@ -66,7 +67,7 @@ By default, content is align to <code>LEFT</code></p>
 <div class='docblock'><p>Add a style attribute to the cell. Can be chained</p>
 </div><h4 id='method.reset_style' class='method'><code>fn <a href='#method.reset_style' class='fnname'>reset_style</a>(&amp;mut self)</code></h4>
 <div class='docblock'><p>Remove all style attributes and reset alignment to default (LEFT)</p>
-</div><h4 id='method.style_spec' class='method'><code>fn <a href='#method.style_spec' class='fnname'>style_spec</a>(self, spec: &amp;<a href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; <a class='struct' href='../../prettytable/cell/struct.Cell.html' title='prettytable::cell::Cell'>Cell</a></code></h4>
+</div><h4 id='method.style_spec' class='method'><code>fn <a href='#method.style_spec' class='fnname'>style_spec</a>(self, spec: &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; <a class='struct' href='../../prettytable/cell/struct.Cell.html' title='prettytable::cell::Cell'>Cell</a></code></h4>
 <div class='docblock'><p>Set the cell&#39;s style by applying the given specifier string</p>
 
 <h1 id='style-spec-syntax' class='section-header'><a href='#style-spec-syntax'>Style spec syntax</a></h1>
@@ -106,18 +107,18 @@ Eg :</p>
 <li><strong>B</strong> : Bright Blue</li>
 <li>... and so on ...</li>
 </ul>
-</div><h4 id='method.get_height' class='method'><code>fn <a href='#method.get_height' class='fnname'>get_height</a>(&amp;self) -&gt; <a href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a></code></h4>
+</div><h4 id='method.get_height' class='method'><code>fn <a href='#method.get_height' class='fnname'>get_height</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a></code></h4>
 <div class='docblock'><p>Return the height of the cell</p>
-</div><h4 id='method.get_width' class='method'><code>fn <a href='#method.get_width' class='fnname'>get_width</a>(&amp;self) -&gt; <a href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a></code></h4>
+</div><h4 id='method.get_width' class='method'><code>fn <a href='#method.get_width' class='fnname'>get_width</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a></code></h4>
 <div class='docblock'><p>Return the width of the cell</p>
 </div><h4 id='method.get_content' class='method'><code>fn <a href='#method.get_content' class='fnname'>get_content</a>(&amp;self) -&gt; <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a></code></h4>
 <div class='docblock'><p>Return a copy of the full string contained in the cell</p>
-</div><h4 id='method.print' class='method'><code>fn <a href='#method.print' class='fnname'>print</a>&lt;T: <a class='trait' href='https://doc.rust-lang.org/nightly/std/io/trait.Write.html' title='std::io::Write'>Write</a> + ?<a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a>&gt;(&amp;self, out: &amp;mut T, idx: <a href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>, col_width: <a href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>, <a class='struct' href='https://doc.rust-lang.org/nightly/std/io/error/struct.Error.html' title='std::io::error::Error'>Error</a>&gt;</code></h4>
+</div><h4 id='method.print' class='method'><code>fn <a href='#method.print' class='fnname'>print</a>&lt;T: <a class='trait' href='https://doc.rust-lang.org/nightly/std/io/trait.Write.html' title='std::io::Write'>Write</a> + ?<a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a>&gt;(&amp;self, out: &amp;mut T, idx: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>, col_width: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>, skip_right_fill: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>, <a class='struct' href='https://doc.rust-lang.org/nightly/std/io/error/struct.Error.html' title='std::io::error::Error'>Error</a>&gt;</code></h4>
 <div class='docblock'><p>Print a partial cell to <code>out</code>. Since the cell may be multi-lined,
 <code>idx</code> is the line index to print. <code>col_width</code> is the column width used to
 fill the cells with blanks so it fits in the table.
 If <code>ìdx</code> is higher than this cell&#39;s height, it will print empty content</p>
-</div><h4 id='method.print_term' class='method'><code>fn <a href='#method.print_term' class='fnname'>print_term</a>&lt;T: <a class='trait' href='../../term/trait.Terminal.html' title='term::Terminal'>Terminal</a> + ?<a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a>&gt;(&amp;self, out: &amp;mut T, idx: <a href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>, col_width: <a href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>, <a class='struct' href='https://doc.rust-lang.org/nightly/std/io/error/struct.Error.html' title='std::io::error::Error'>Error</a>&gt;</code></h4>
+</div><h4 id='method.print_term' class='method'><code>fn <a href='#method.print_term' class='fnname'>print_term</a>&lt;T: <a class='trait' href='../../term/trait.Terminal.html' title='term::Terminal'>Terminal</a> + ?<a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a>&gt;(&amp;self, out: &amp;mut T, idx: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>, col_width: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>, skip_right_fill: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>, <a class='struct' href='https://doc.rust-lang.org/nightly/std/io/error/struct.Error.html' title='std::io::error::Error'>Error</a>&gt;</code></h4>
 <div class='docblock'><p>Apply style then call <code>print</code> to print the cell into a terminal</p>
 </div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl&lt;'a, T: <a class='trait' href='https://doc.rust-lang.org/nightly/collections/string/trait.ToString.html' title='collections::string::ToString'>ToString</a>&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html' title='core::convert::From'>From</a>&lt;&amp;'a T&gt; for <a class='struct' href='../../prettytable/cell/struct.Cell.html' title='prettytable::cell::Cell'>Cell</a></code></h3><div class='impl-items'><h4 id='method.from' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html#method.from' class='fnname'>from</a>(f: &amp;T) -&gt; <a class='struct' href='../../prettytable/cell/struct.Cell.html' title='prettytable::cell::Cell'>Cell</a></code></h4>
 </div><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/collections/string/trait.ToString.html' title='collections::string::ToString'>ToString</a> for <a class='struct' href='../../prettytable/cell/struct.Cell.html' title='prettytable::cell::Cell'>Cell</a></code></h3><div class='impl-items'><h4 id='method.to_string' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/collections/string/trait.ToString.html#method.to_string' class='fnname'>to_string</a>(&amp;self) -&gt; <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a></code></h4>
@@ -184,6 +185,6 @@ If <code>ìdx</code> is higher than this cell&#39;s height, it will print empty 
     <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     
-    <script async src="../../search-index.js"></script>
+    <script defer src="../../search-index.js"></script>
 </body>
 </html>

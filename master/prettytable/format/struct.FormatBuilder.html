@@ -9,6 +9,7 @@
 
     <title>prettytable::format::FormatBuilder - Rust</title>
 
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../main.css">
 
     
@@ -45,20 +46,20 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-453' class='srclink' href='../../src/prettytable/format.rs.html#201-203' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-470' class='srclink' href='../../src/prettytable/format.rs.html#201-203' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct FormatBuilder {
     // some fields omitted
 }</pre><div class='docblock'><p>A builder to create a <code>Table Format</code></p>
 </div><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl <a class='struct' href='../../prettytable/format/struct.FormatBuilder.html' title='prettytable::format::FormatBuilder'>FormatBuilder</a></code></h3><div class='impl-items'><h4 id='method.new' class='method'><code>fn <a href='#method.new' class='fnname'>new</a>() -&gt; <a class='struct' href='../../prettytable/format/struct.FormatBuilder.html' title='prettytable::format::FormatBuilder'>FormatBuilder</a></code></h4>
-<h4 id='method.padding' class='method'><code>fn <a href='#method.padding' class='fnname'>padding</a>(self, left: <a href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>, right: <a href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>) -&gt; Self</code></h4>
+<h4 id='method.padding' class='method'><code>fn <a href='#method.padding' class='fnname'>padding</a>(self, left: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>, right: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>) -&gt; Self</code></h4>
 <div class='docblock'><p>Set left and right padding</p>
-</div><h4 id='method.column_separator' class='method'><code>fn <a href='#method.column_separator' class='fnname'>column_separator</a>(self, separator: <a href='https://doc.rust-lang.org/nightly/std/primitive.char.html'>char</a>) -&gt; Self</code></h4>
+</div><h4 id='method.column_separator' class='method'><code>fn <a href='#method.column_separator' class='fnname'>column_separator</a>(self, separator: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.char.html'>char</a>) -&gt; Self</code></h4>
 <div class='docblock'><p>Set the character used for internal column separation</p>
-</div><h4 id='method.borders' class='method'><code>fn <a href='#method.borders' class='fnname'>borders</a>(self, border: <a href='https://doc.rust-lang.org/nightly/std/primitive.char.html'>char</a>) -&gt; Self</code></h4>
+</div><h4 id='method.borders' class='method'><code>fn <a href='#method.borders' class='fnname'>borders</a>(self, border: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.char.html'>char</a>) -&gt; Self</code></h4>
 <div class='docblock'><p>Set the character used for table borders</p>
 </div><h4 id='method.separator' class='method'><code>fn <a href='#method.separator' class='fnname'>separator</a>(self, what: <a class='enum' href='../../prettytable/format/enum.LinePosition.html' title='prettytable::format::LinePosition'>LinePosition</a>, separator: <a class='struct' href='../../prettytable/format/struct.LineSeparator.html' title='prettytable::format::LineSeparator'>LineSeparator</a>) -&gt; Self</code></h4>
 <div class='docblock'><p>Set a line separator format</p>
-</div><h4 id='method.separators' class='method'><code>fn <a href='#method.separators' class='fnname'>separators</a>(self, what: <a href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;[</a><a class='enum' href='../../prettytable/format/enum.LinePosition.html' title='prettytable::format::LinePosition'>LinePosition</a><a href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>]</a>, separator: <a class='struct' href='../../prettytable/format/struct.LineSeparator.html' title='prettytable::format::LineSeparator'>LineSeparator</a>) -&gt; Self</code></h4>
+</div><h4 id='method.separators' class='method'><code>fn <a href='#method.separators' class='fnname'>separators</a>(self, what: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;[</a><a class='enum' href='../../prettytable/format/enum.LinePosition.html' title='prettytable::format::LinePosition'>LinePosition</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>]</a>, separator: <a class='struct' href='../../prettytable/format/struct.LineSeparator.html' title='prettytable::format::LineSeparator'>LineSeparator</a>) -&gt; Self</code></h4>
 <div class='docblock'><p>Set separator format for multiple kind of line separators</p>
 </div><h4 id='method.build' class='method'><code>fn <a href='#method.build' class='fnname'>build</a>(self) -&gt; <a class='struct' href='../../prettytable/format/struct.TableFormat.html' title='prettytable::format::TableFormat'>TableFormat</a></code></h4>
 <div class='docblock'><p>Consume this builder and return the generated <code>TableFormat</code></p>
@@ -121,6 +122,6 @@
     <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     
-    <script async src="../../search-index.js"></script>
+    <script defer src="../../search-index.js"></script>
 </body>
 </html>
