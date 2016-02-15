@@ -1,6 +1,7 @@
 //! A formatted and aligned table printer written in rust
 extern crate unicode_width;
 extern crate term;
+extern crate atty;
 #[macro_use] extern crate lazy_static;
 
 use std::io;
@@ -143,17 +144,33 @@ impl <'a> TableSlice<'a> {
 		return self.__print(out, Row::print_term);
 	}
 
-	/// Print the table to standard output
+	/// Print the table to standard output. Colors won't be displayed unless
+	/// stdout is a tty terminal, or `force_colorize` is set to `true`.
+	/// In ANSI terminals, colors are displayed using ANSI escape characters. When for example the
+	/// output is redirected to a file, or piped to another program, the output is considered
+	/// as not beeing tty, and ANSI escape characters won't be displayed unless `force colorize`
+	/// is set to `true`.
 	/// # Panic
 	/// Panic if writing to standard output fails
-	pub fn printstd(&self) {
-		let r = match stdout() {
-			Some(mut o) => self.print_term(&mut *o),
-			None => self.print(&mut io::stdout()),
+	pub fn print_tty(&self, force_colorize: bool) {
+		let r = match (stdout(), atty::is() || force_colorize) {
+			(Some(mut o), true) => self.print_term(&mut *o),
+			_ => self.print(&mut io::stdout()),
 		};
 		if let Err(e) = r {
 			panic!("Cannot print table to standard output : {}", e);
 		}
+	}
+
+	/// Print the table to standard output. Colors won't be displayed unless
+	/// stdout is a tty terminal. This means that if stdout is redirected to a file, or piped
+	/// to another program, no color will be displayed.
+	/// To force colors rendering, use `print_tty()` method.
+	/// Calling `printstd()` is equivalent to calling `print_tty(false)`
+	/// # Panic
+	/// Panic if writing to standard output fails
+	pub fn printstd(&self) {
+		self.print_tty(false);
 	}
 }
 
@@ -265,7 +282,23 @@ impl Table {
 		return self.as_ref().print_term(out);
 	}
 
-	/// Print the table to standard output
+	/// Print the table to standard output. Colors won't be displayed unless
+	/// stdout is a tty terminal, or `force_colorize` is set to `true`.
+	/// In ANSI terminals, colors are displayed using ANSI escape characters. When for example the
+	/// output is redirected to a file, or piped to another program, the output is considered
+	/// as not beeing tty, and ANSI escape characters won't be displayed unless `force colorize`
+	/// is set to `true`.
+	/// # Panic
+	/// Panic if writing to standard output fails
+	pub fn print_tty(&self, force_colorize: bool) {
+		self.as_ref().print_tty(force_colorize);
+	}
+
+	/// Print the table to standard output. Colors won't be displayed unless
+	/// stdout is a tty terminal. This means that if stdout is redirected to a file, or piped
+	/// to another program, no color will be displayed.
+	/// To force colors rendering, use `print_tty()` method.
+	/// Calling `printstd()` is equivalent to calling `print_tty(false)`
 	/// # Panic
 	/// Panic if writing to standard output fails
 	pub fn printstd(&self) {
