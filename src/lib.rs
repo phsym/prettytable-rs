@@ -523,11 +523,11 @@ mod tests {
 
 		let out = "\
 ------------------
- t1   t2      t3  \n\
+ t1   t2      t3 \n\
 ==================
  a    bc      def \n\
 ------------------
- def  newval  a   \n\
+ def  newval  a \n\
 ------------------
 ";
 		println!("{}", out);
@@ -549,9 +549,9 @@ mod tests {
 		assert_eq!(table[1][1].get_content(), "newval");
 
 		let out = "\
-\u{0020}t1   t2      t3  \n\
+\u{0020}t1   t2      t3 \n\
 \u{0020}a    bc      def \n\
-\u{0020}def  newval  a   \n\
+\u{0020}def  newval  a \n\
 ";
 		println!("{}", out);
 		println!("____");

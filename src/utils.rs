@@ -45,7 +45,9 @@ impl Write for StringWriter {
 }
 
 /// Align/fill a string and print it to `out`
-pub fn print_align<T: Write+?Sized>(out: &mut T, align: Alignment, text: &str, fill: char, size: usize) -> Result<(), Error> {
+/// If `skip_right_fill` is set to `true`, then no spce will be added after the string
+/// to complete alignment
+pub fn print_align<T: Write+?Sized>(out: &mut T, align: Alignment, text: &str, fill: char, size: usize, skip_right_fill: bool) -> Result<(), Error> {
 	let text_len = UnicodeWidthStr::width(text);
 	let mut nfill = if text_len < size { size - text_len } else { 0 };
 	let n = match align {
@@ -58,7 +60,7 @@ pub fn print_align<T: Write+?Sized>(out: &mut T, align: Alignment, text: &str, f
 		nfill -= n;
 	}
 	try!(out.write(text.as_bytes()));
-	if nfill > 0 {
+	if nfill > 0 && ! skip_right_fill {
 		try!(out.write(&vec![fill as u8; nfill]));
 	}
 	return Ok(());
@@ -83,19 +85,38 @@ mod tests {
 	#[test]
 	fn fill_align() {
 		let mut out = StringWriter::new();
-		print_align(&mut out, Alignment::RIGHT, "foo", '*', 10).unwrap();
+		print_align(&mut out, Alignment::RIGHT, "foo", '*', 10, false).unwrap();
 		assert_eq!(out.as_string(), "*******foo");
 
 		let mut out = StringWriter::new();
-		print_align(&mut out, Alignment::LEFT, "foo", '*', 10).unwrap();
+		print_align(&mut out, Alignment::LEFT, "foo", '*', 10, false).unwrap();
 		assert_eq!(out.as_string(), "foo*******");
 
 		let mut out = StringWriter::new();
-		print_align(&mut out, Alignment::CENTER, "foo", '*', 10).unwrap();
+		print_align(&mut out, Alignment::CENTER, "foo", '*', 10, false).unwrap();
 		assert_eq!(out.as_string(), "***foo****");
 
 		let mut out = StringWriter::new();
-		print_align(&mut out, Alignment::CENTER, "foo", '*', 1).unwrap();
+		print_align(&mut out, Alignment::CENTER, "foo", '*', 1, false).unwrap();
+		assert_eq!(out.as_string(), "foo");
+	}
+
+	#[test]
+	fn skip_right_fill() {
+		let mut out = StringWriter::new();
+		print_align(&mut out, Alignment::RIGHT, "foo", '*', 10, true).unwrap();
+		assert_eq!(out.as_string(), "*******foo");
+
+		let mut out = StringWriter::new();
+		print_align(&mut out, Alignment::LEFT, "foo", '*', 10, true).unwrap();
+		assert_eq!(out.as_string(), "foo");
+
+		let mut out = StringWriter::new();
+		print_align(&mut out, Alignment::CENTER, "foo", '*', 10, true).unwrap();
+		assert_eq!(out.as_string(), "***foo");
+
+		let mut out = StringWriter::new();
+		print_align(&mut out, Alignment::CENTER, "foo", '*', 1, false).unwrap();
 		assert_eq!(out.as_string(), "foo");
 	}
 }
