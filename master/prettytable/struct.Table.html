@@ -46,7 +46,7 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-740' class='srclink' href='../src/prettytable/lib.rs.html#27-31' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-741' class='srclink' href='../src/prettytable/lib.rs.html#28-32' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct Table {
     // some fields omitted
 }</pre><div class='docblock'><p>An owned printable table</p>
@@ -88,10 +88,24 @@ If index is higher than current numbers of rows, <code>row</code> is appended at
 <div class='docblock'><p>Print the table to <code>out</code></p>
 </div><h4 id='method.print_term' class='method'><code>fn <a href='#method.print_term' class='fnname'>print_term</a>&lt;T: <a class='trait' href='../term/trait.Terminal.html' title='term::Terminal'>Terminal</a> + ?<a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a>&gt;(&amp;self, out: &amp;mut T) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>, <a class='struct' href='https://doc.rust-lang.org/nightly/std/io/error/struct.Error.html' title='std::io::error::Error'>Error</a>&gt;</code></h4>
 <div class='docblock'><p>Print the table to terminal <code>out</code>, applying styles when needed</p>
-</div><h4 id='method.printstd' class='method'><code>fn <a href='#method.printstd' class='fnname'>printstd</a>(&amp;self)</code></h4>
-<div class='docblock'><p>Print the table to standard output</p>
+</div><h4 id='method.print_tty' class='method'><code>fn <a href='#method.print_tty' class='fnname'>print_tty</a>(&amp;self, force_colorize: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>)</code></h4>
+<div class='docblock'><p>Print the table to standard output. Colors won&#39;t be displayed unless
+stdout is a tty terminal, or <code>force_colorize</code> is set to <code>true</code>.
+In ANSI terminals, colors are displayed using ANSI escape characters. When for example the
+output is redirected to a file, or piped to another program, the output is considered
+as not beeing tty, and ANSI escape characters won&#39;t be displayed unless <code>force colorize</code>
+is set to <code>true</code>.</p>
 
 <h1 id='panic' class='section-header'><a href='#panic'>Panic</a></h1>
+<p>Panic if writing to standard output fails</p>
+</div><h4 id='method.printstd' class='method'><code>fn <a href='#method.printstd' class='fnname'>printstd</a>(&amp;self)</code></h4>
+<div class='docblock'><p>Print the table to standard output. Colors won&#39;t be displayed unless
+stdout is a tty terminal. This means that if stdout is redirected to a file, or piped
+to another program, no color will be displayed.
+To force colors rendering, use <code>print_tty()</code> method.
+Calling <code>printstd()</code> is equivalent to calling <code>print_tty(false)</code></p>
+
+<h1 id='panic-1' class='section-header'><a href='#panic-1'>Panic</a></h1>
 <p>Panic if writing to standard output fails</p>
 </div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Index.html' title='core::ops::Index'>Index</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>&gt; for <a class='struct' href='../prettytable/struct.Table.html' title='prettytable::Table'>Table</a></code></h3><div class='impl-items'><h4 id='assoc_type.Output' class='type'><code>type Output = <a class='struct' href='../prettytable/row/struct.Row.html' title='prettytable::row::Row'>Row</a></code></h4>
 <h4 id='method.index' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/ops/trait.Index.html#method.index' class='fnname'>index</a>(&amp;self, idx: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>) -&gt; &amp;Self::<a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Index.html' title='core::ops::Index'>Output</a></code></h4>

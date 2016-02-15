@@ -630,10 +630,44 @@
 <span id="587">587</span>
 <span id="588">588</span>
 <span id="589">589</span>
+<span id="590">590</span>
+<span id="591">591</span>
+<span id="592">592</span>
+<span id="593">593</span>
+<span id="594">594</span>
+<span id="595">595</span>
+<span id="596">596</span>
+<span id="597">597</span>
+<span id="598">598</span>
+<span id="599">599</span>
+<span id="600">600</span>
+<span id="601">601</span>
+<span id="602">602</span>
+<span id="603">603</span>
+<span id="604">604</span>
+<span id="605">605</span>
+<span id="606">606</span>
+<span id="607">607</span>
+<span id="608">608</span>
+<span id="609">609</span>
+<span id="610">610</span>
+<span id="611">611</span>
+<span id="612">612</span>
+<span id="613">613</span>
+<span id="614">614</span>
+<span id="615">615</span>
+<span id="616">616</span>
+<span id="617">617</span>
+<span id="618">618</span>
+<span id="619">619</span>
+<span id="620">620</span>
+<span id="621">621</span>
+<span id="622">622</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! A formatted and aligned table printer written in rust</span>
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>unicode_width</span>;
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>term</span>;
+<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>atty</span>;
 <span class='attribute'>#[<span class='ident'>macro_use</span>]</span> <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>lazy_static</span>;
 
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>io</span>;
@@ -776,17 +810,33 @@
 		<span class='kw'>return</span> <span class='self'>self</span>.<span class='ident'>__print</span>(<span class='ident'>out</span>, <span class='ident'>Row</span>::<span class='ident'>print_term</span>);
 	}
 
-	<span class='doccomment'>/// Print the table to standard output</span>
+	<span class='doccomment'>/// Print the table to standard output. Colors won&#39;t be displayed unless</span>
+	<span class='doccomment'>/// stdout is a tty terminal, or `force_colorize` is set to `true`.</span>
+	<span class='doccomment'>/// In ANSI terminals, colors are displayed using ANSI escape characters. When for example the</span>
+	<span class='doccomment'>/// output is redirected to a file, or piped to another program, the output is considered</span>
+	<span class='doccomment'>/// as not beeing tty, and ANSI escape characters won&#39;t be displayed unless `force colorize`</span>
+	<span class='doccomment'>/// is set to `true`.</span>
 	<span class='doccomment'>/// # Panic</span>
 	<span class='doccomment'>/// Panic if writing to standard output fails</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>printstd</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) {
-		<span class='kw'>let</span> <span class='ident'>r</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='ident'>stdout</span>() {
-			<span class='prelude-val'>Some</span>(<span class='kw-2'>mut</span> <span class='ident'>o</span>) <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>print_term</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='op'>*</span><span class='ident'>o</span>),
-			<span class='prelude-val'>None</span> <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>io</span>::<span class='ident'>stdout</span>()),
+	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>print_tty</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>force_colorize</span>: <span class='ident'>bool</span>) {
+		<span class='kw'>let</span> <span class='ident'>r</span> <span class='op'>=</span> <span class='kw'>match</span> (<span class='ident'>stdout</span>(), <span class='ident'>atty</span>::<span class='ident'>is</span>() <span class='op'>||</span> <span class='ident'>force_colorize</span>) {
+			(<span class='prelude-val'>Some</span>(<span class='kw-2'>mut</span> <span class='ident'>o</span>), <span class='boolval'>true</span>) <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>print_term</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='op'>*</span><span class='ident'>o</span>),
+			_ <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>io</span>::<span class='ident'>stdout</span>()),
 		};
 		<span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Err</span>(<span class='ident'>e</span>) <span class='op'>=</span> <span class='ident'>r</span> {
 			<span class='macro'>panic</span><span class='macro'>!</span>(<span class='string'>&quot;Cannot print table to standard output : {}&quot;</span>, <span class='ident'>e</span>);
 		}
+	}
+
+	<span class='doccomment'>/// Print the table to standard output. Colors won&#39;t be displayed unless</span>
+	<span class='doccomment'>/// stdout is a tty terminal. This means that if stdout is redirected to a file, or piped</span>
+	<span class='doccomment'>/// to another program, no color will be displayed.</span>
+	<span class='doccomment'>/// To force colors rendering, use `print_tty()` method.</span>
+	<span class='doccomment'>/// Calling `printstd()` is equivalent to calling `print_tty(false)`</span>
+	<span class='doccomment'>/// # Panic</span>
+	<span class='doccomment'>/// Panic if writing to standard output fails</span>
+	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>printstd</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) {
+		<span class='self'>self</span>.<span class='ident'>print_tty</span>(<span class='boolval'>false</span>);
 	}
 }
 
@@ -898,7 +948,23 @@
 		<span class='kw'>return</span> <span class='self'>self</span>.<span class='ident'>as_ref</span>().<span class='ident'>print_term</span>(<span class='ident'>out</span>);
 	}
 
-	<span class='doccomment'>/// Print the table to standard output</span>
+	<span class='doccomment'>/// Print the table to standard output. Colors won&#39;t be displayed unless</span>
+	<span class='doccomment'>/// stdout is a tty terminal, or `force_colorize` is set to `true`.</span>
+	<span class='doccomment'>/// In ANSI terminals, colors are displayed using ANSI escape characters. When for example the</span>
+	<span class='doccomment'>/// output is redirected to a file, or piped to another program, the output is considered</span>
+	<span class='doccomment'>/// as not beeing tty, and ANSI escape characters won&#39;t be displayed unless `force colorize`</span>
+	<span class='doccomment'>/// is set to `true`.</span>
+	<span class='doccomment'>/// # Panic</span>
+	<span class='doccomment'>/// Panic if writing to standard output fails</span>
+	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>print_tty</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>force_colorize</span>: <span class='ident'>bool</span>) {
+		<span class='self'>self</span>.<span class='ident'>as_ref</span>().<span class='ident'>print_tty</span>(<span class='ident'>force_colorize</span>);
+	}
+
+	<span class='doccomment'>/// Print the table to standard output. Colors won&#39;t be displayed unless</span>
+	<span class='doccomment'>/// stdout is a tty terminal. This means that if stdout is redirected to a file, or piped</span>
+	<span class='doccomment'>/// to another program, no color will be displayed.</span>
+	<span class='doccomment'>/// To force colors rendering, use `print_tty()` method.</span>
+	<span class='doccomment'>/// Calling `printstd()` is equivalent to calling `print_tty(false)`</span>
 	<span class='doccomment'>/// # Panic</span>
 	<span class='doccomment'>/// Panic if writing to standard output fails</span>
 	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>printstd</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) {
