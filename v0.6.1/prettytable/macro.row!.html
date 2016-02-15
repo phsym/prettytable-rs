@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `row!` macro in crate `prettytable`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, row!">
+
+    <title>prettytable::row! - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../main.css">
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'><a href='index.html'>prettytable</a></p><script>window.sidebarCurrent = {name: 'row!', ty: 'macro', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content macro">
+<h1 class='fqn'><span class='in-band'><a href='index.html'>prettytable</a>::<wbr><a class='macro' href=''>row!</a></span><span class='out-of-band'><span id='render-detail'>
+            <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                [<span class='inner'>&#x2212;</span>]
+            </a>
+        </span><a id='src-1006' class='srclink' href='../src/prettytable/row.rs.html#190-199' title='goto source code'>[src]</a></span></h1>
+<pre class='rust macro'>
+<span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>row</span> {
+    (($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>out</span>:<span class='ident'>tt</span>)<span class='op'>*</span>); <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>value</span>:<span class='ident'>expr</span>) <span class='op'>=&gt;</span> { ... };
+    (($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>out</span>:<span class='ident'>tt</span>)<span class='op'>*</span>); <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>value</span>:<span class='ident'>expr</span>, $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>n</span>:<span class='ident'>tt</span>)<span class='op'>*</span>) <span class='op'>=&gt;</span> { ... };
+    (($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>out</span>:<span class='ident'>tt</span>)<span class='op'>*</span>); <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>style</span>:<span class='ident'>ident</span> <span class='op'>-&gt;</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>value</span>:<span class='ident'>expr</span>) <span class='op'>=&gt;</span> { ... };
+    (($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>out</span>:<span class='ident'>tt</span>)<span class='op'>*</span>); <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>style</span>:<span class='ident'>ident</span> <span class='op'>-&gt;</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>value</span>:<span class='ident'>expr</span>, $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>n</span>: <span class='ident'>tt</span>)<span class='op'>*</span>) <span class='op'>=&gt;</span> { ... };
+    ($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>content</span>:<span class='ident'>expr</span>), <span class='op'>*</span>) <span class='op'>=&gt;</span> { ... };
+    (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>style</span>:<span class='ident'>ident</span> <span class='op'>=&gt;</span> $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>content</span>:<span class='ident'>expr</span>), <span class='op'>*</span>) <span class='op'>=&gt;</span> { ... };
+    ($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>content</span>:<span class='ident'>tt</span>)<span class='op'>*</span>) <span class='op'>=&gt;</span> { ... };
+}</pre>
+<div class='docblock'><p>This macro simplifies <code>Row</code> creation</p>
+
+<p>The syntax support style spec</p>
+
+<h1 id='example' class='section-header'><a href='#example'>Example</a></h1><pre class='rust rust-example-rendered'>
+<span class='comment'>// Create a normal row</span>
+<span class='kw'>let</span> <span class='ident'>row1</span> <span class='op'>=</span> <span class='macro'>row</span><span class='macro'>!</span>[<span class='string'>&quot;Element 1&quot;</span>, <span class='string'>&quot;Element 2&quot;</span>, <span class='string'>&quot;Element 3&quot;</span>];
+<span class='comment'>// Create a row with all cells formatted with red foreground color, yellow background color</span>
+<span class='comment'>// bold, italic, align in the center of the cell</span>
+<span class='kw'>let</span> <span class='ident'>row2</span> <span class='op'>=</span> <span class='macro'>row</span><span class='macro'>!</span>[<span class='ident'>FrBybic</span> <span class='op'>=&gt;</span> <span class='string'>&quot;Element 1&quot;</span>, <span class='string'>&quot;Element 2&quot;</span>, <span class='string'>&quot;Element 3&quot;</span>];
+<span class='comment'>// Create a row with first cell in blue, second one in red, and last one with default style</span>
+<span class='kw'>let</span> <span class='ident'>row3</span> <span class='op'>=</span> <span class='macro'>row</span><span class='macro'>!</span>[<span class='ident'>Fb</span><span class='op'>-&gt;</span><span class='string'>&quot;blue&quot;</span>, <span class='ident'>Fr</span><span class='op'>-&gt;</span><span class='string'>&quot;red&quot;</span>, <span class='string'>&quot;normal&quot;</span>];
+<span class='comment'>// Do something with rows</span></pre>
+
+<p>For details about style specifier syntax, check doc for <a href="cell/struct.Cell.html#method.style_spec">Cell::style_spec</a> method</p>
+</div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "prettytable";
+        window.playgroundUrl = "";
+    </script>
+    <script src="../jquery.js"></script>
+    <script src="../main.js"></script>
+    
+    <script defer src="../search-index.js"></script>
+</body>
+</html>
