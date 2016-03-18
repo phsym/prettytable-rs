@@ -12,7 +12,7 @@ use prettytable::cell::Cell;
 	+---------+------+---------+
 	| foobar2 | bar2 | foo2    |
 	+---------+------+---------+
-	Modified : 
+	Modified :
 	+---------+------+---------+
 	| ABC     | DEFG | HIJKLMN |
 	+---------+------+---------+
@@ -34,15 +34,15 @@ fn main() {
     println!("Modified : ");
     table.set_element("new_foo", 2, 1).unwrap();
     table.printstd();
-    
+
     // The same table can be built the following way :
     let _table = table!(["ABC", "DEFG", "HIJKLMN"],
     				   ["foobar", "bar", "foo"],
     				   ["foobar2", "bar2", "foo2"]
     				  );
-    
+
     // Or directly print it like this
-    let _table = table!(["ABC", "DEFG", "HIJKLMN"],
+    let _table = ptable!(["ABC", "DEFG", "HIJKLMN"],
     				   ["foobar", "bar", "foo"],
     				   ["foobar2", "bar2", "foo2"]
     				  );
