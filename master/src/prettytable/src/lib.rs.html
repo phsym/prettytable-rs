@@ -675,6 +675,36 @@
 <span id="632">632</span>
 <span id="633">633</span>
 <span id="634">634</span>
+<span id="635">635</span>
+<span id="636">636</span>
+<span id="637">637</span>
+<span id="638">638</span>
+<span id="639">639</span>
+<span id="640">640</span>
+<span id="641">641</span>
+<span id="642">642</span>
+<span id="643">643</span>
+<span id="644">644</span>
+<span id="645">645</span>
+<span id="646">646</span>
+<span id="647">647</span>
+<span id="648">648</span>
+<span id="649">649</span>
+<span id="650">650</span>
+<span id="651">651</span>
+<span id="652">652</span>
+<span id="653">653</span>
+<span id="654">654</span>
+<span id="655">655</span>
+<span id="656">656</span>
+<span id="657">657</span>
+<span id="658">658</span>
+<span id="659">659</span>
+<span id="660">660</span>
+<span id="661">661</span>
+<span id="662">662</span>
+<span id="663">663</span>
+<span id="664">664</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! &lt;a href=&quot;https://github.com/phsym/prettytable-rs&quot;&gt;&lt;img style=&quot;position: absolute; top: 0; left: 0; border: 0;&quot; src=&quot;https://camo.githubusercontent.com/121cd7cbdc3e4855075ea8b558508b91ac463ac2/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f677265656e5f3030373230302e706e67&quot; alt=&quot;Fork me on GitHub&quot; data-canonical-src=&quot;https://s3.amazonaws.com/github/ribbons/forkme_left_green_007200.png&quot;&gt;&lt;/a&gt;</span>
 <span class='doccomment'>//! &lt;style&gt;.sidebar { margin-top: 53px }&lt;/style&gt;</span>
@@ -788,9 +818,14 @@
 		<span class='kw'>return</span> <span class='ident'>col_width</span>;
 	}
 
-	<span class='doccomment'>/// Return an iterator over the immutable cells of the column specified by `column`</span>
+	<span class='doccomment'>/// Returns an iterator over the immutable cells of the column specified by `column`</span>
 	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>column_iter</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>column</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='ident'>ColumnIter</span> {
 		<span class='kw'>return</span> <span class='ident'>ColumnIter</span>(<span class='self'>self</span>.<span class='ident'>rows</span>.<span class='ident'>iter</span>(), <span class='ident'>column</span>);
+	}
+
+	<span class='doccomment'>/// Returns an iterator over immutable rows</span>
+	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>row_iter</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Iter</span><span class='op'>&lt;</span><span class='ident'>Row</span><span class='op'>&gt;</span> {
+		<span class='self'>self</span>.<span class='ident'>rows</span>.<span class='ident'>iter</span>()
 	}
 
 	<span class='doccomment'>/// Internal only</span>
@@ -852,6 +887,14 @@
 	<span class='doccomment'>/// Panic if writing to standard output fails</span>
 	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>printstd</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) {
 		<span class='self'>self</span>.<span class='ident'>print_tty</span>(<span class='boolval'>false</span>);
+	}
+}
+
+<span class='kw'>impl</span> <span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>IntoIterator</span> <span class='kw'>for</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>TableSlice</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+	<span class='kw'>type</span> <span class='ident'>Item</span><span class='op'>=</span><span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>Row</span>;
+	<span class='kw'>type</span> <span class='ident'>IntoIter</span><span class='op'>=</span><span class='ident'>Iter</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>Row</span><span class='op'>&gt;</span>;
+	<span class='kw'>fn</span> <span class='ident'>into_iter</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Self</span>::<span class='ident'>IntoIter</span> {
+		<span class='kw'>return</span> <span class='self'>self</span>.<span class='ident'>row_iter</span>();
 	}
 }
 
@@ -953,14 +996,15 @@
 		<span class='kw'>return</span> <span class='ident'>ColumnIterMut</span>(<span class='self'>self</span>.<span class='ident'>rows</span>.<span class='ident'>iter_mut</span>(), <span class='ident'>column</span>);
 	}
 
+	<span class='doccomment'>/// Returns an iterator over immutable rows</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>row_iter</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Iter</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>Row</span><span class='op'>&gt;</span> {
         <span class='self'>self</span>.<span class='ident'>rows</span>.<span class='ident'>iter</span>()
     }
 
+	<span class='doccomment'>/// Returns an iterator over mutable rows</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>row_iter_mut</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>IterMut</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>Row</span><span class='op'>&gt;</span> {
         <span class='self'>self</span>.<span class='ident'>rows</span>.<span class='ident'>iter_mut</span>()
     }
-
 
 	<span class='doccomment'>/// Print the table to `out`</span>
 	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>print</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Write</span><span class='op'>+</span>?<span class='ident'>Sized</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>out</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>Error</span><span class='op'>&gt;</span> {
@@ -1041,6 +1085,22 @@
 <span class='kw'>impl</span> <span class='op'>&lt;</span><span class='ident'>T</span>, <span class='ident'>A</span>, <span class='ident'>B</span><span class='op'>&gt;</span> <span class='ident'>From</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Table</span> <span class='kw'>where</span> <span class='ident'>B</span>: <span class='ident'>ToString</span>, <span class='ident'>A</span>: <span class='ident'>IntoIterator</span><span class='op'>&lt;</span><span class='ident'>Item</span><span class='op'>=</span><span class='ident'>B</span><span class='op'>&gt;</span>, <span class='ident'>T</span> : <span class='ident'>IntoIterator</span><span class='op'>&lt;</span><span class='ident'>Item</span><span class='op'>=</span><span class='ident'>A</span><span class='op'>&gt;</span> {
 	<span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>it</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='ident'>Table</span> {
 		<span class='kw'>return</span> <span class='ident'>Self</span>::<span class='ident'>from_iter</span>(<span class='ident'>it</span>);
+	}
+}
+
+<span class='kw'>impl</span> <span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>IntoIterator</span> <span class='kw'>for</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>Table</span> {
+	<span class='kw'>type</span> <span class='ident'>Item</span><span class='op'>=</span><span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>Row</span>;
+	<span class='kw'>type</span> <span class='ident'>IntoIter</span><span class='op'>=</span><span class='ident'>Iter</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>Row</span><span class='op'>&gt;</span>;
+	<span class='kw'>fn</span> <span class='ident'>into_iter</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Self</span>::<span class='ident'>IntoIter</span> {
+		<span class='kw'>return</span> <span class='self'>self</span>.<span class='ident'>as_ref</span>().<span class='ident'>row_iter</span>();
+	}
+}
+
+<span class='kw'>impl</span> <span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>IntoIterator</span> <span class='kw'>for</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='kw-2'>mut</span> <span class='ident'>Table</span> {
+	<span class='kw'>type</span> <span class='ident'>Item</span><span class='op'>=</span><span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='kw-2'>mut</span> <span class='ident'>Row</span>;
+	<span class='kw'>type</span> <span class='ident'>IntoIter</span><span class='op'>=</span><span class='ident'>IterMut</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>Row</span><span class='op'>&gt;</span>;
+	<span class='kw'>fn</span> <span class='ident'>into_iter</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Self</span>::<span class='ident'>IntoIter</span> {
+		<span class='kw'>return</span> <span class='self'>self</span>.<span class='ident'>row_iter_mut</span>();
 	}
 }
 
