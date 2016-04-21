@@ -46,7 +46,7 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-0' class='srclink' href='../src/prettytable/lib.rs.html#1-624' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-0' class='srclink' href='../src/prettytable/src/lib.rs.html#1-634' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p><a href="https://github.com/phsym/prettytable-rs"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/121cd7cbdc3e4855075ea8b558508b91ac463ac2/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_green_007200.png"></a>
 <style>.sidebar { margin-top: 53px }</style>
 A formatted and aligned table printer written in rust</p>
@@ -57,7 +57,6 @@ A formatted and aligned table printer written in rust</p>
                                title='prettytable::cell'>cell</a></td>
                         <td class='docblock short'>
                              <p>This module contains definition of table/row cells stuff</p>
-
                         </td>
                     </tr>
                 
@@ -66,7 +65,6 @@ A formatted and aligned table printer written in rust</p>
                                title='prettytable::format'>format</a></td>
                         <td class='docblock short'>
                              <p>Define table formatting utilities</p>
-
                         </td>
                     </tr>
                 
@@ -75,7 +73,6 @@ A formatted and aligned table printer written in rust</p>
                                title='prettytable::row'>row</a></td>
                         <td class='docblock short'>
                              <p>This module contains definition of table rows stuff</p>
-
                         </td>
                     </tr>
                 </table><h2 id='macros' class='section-header'><a href="#macros">Macros</a></h2>
@@ -85,7 +82,6 @@ A formatted and aligned table printer written in rust</p>
                                title='prettytable::cell!'>cell!</a></td>
                         <td class='docblock short'>
                              <p>This macro simplifies <code>Cell</code> creation</p>
-
                         </td>
                     </tr>
                 
@@ -94,7 +90,6 @@ A formatted and aligned table printer written in rust</p>
                                title='prettytable::ptable!'>ptable!</a></td>
                         <td class='docblock short'>
                              <p>Create a table with <code>table!</code> macro, print it to standard output, then return this table for future usage.</p>
-
                         </td>
                     </tr>
                 
@@ -103,7 +98,6 @@ A formatted and aligned table printer written in rust</p>
                                title='prettytable::row!'>row!</a></td>
                         <td class='docblock short'>
                              <p>This macro simplifies <code>Row</code> creation</p>
-
                         </td>
                     </tr>
                 
@@ -112,7 +106,6 @@ A formatted and aligned table printer written in rust</p>
                                title='prettytable::table!'>table!</a></td>
                         <td class='docblock short'>
                              <p>Create a table filled with some values</p>
-
                         </td>
                     </tr>
                 </table><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
@@ -122,7 +115,6 @@ A formatted and aligned table printer written in rust</p>
                                title='prettytable::ColumnIter'>ColumnIter</a></td>
                         <td class='docblock short'>
                              <p>Iterator over immutable cells in a column</p>
-
                         </td>
                     </tr>
                 
@@ -131,7 +123,6 @@ A formatted and aligned table printer written in rust</p>
                                title='prettytable::ColumnIterMut'>ColumnIterMut</a></td>
                         <td class='docblock short'>
                              <p>Iterator over mutable cells in a column</p>
-
                         </td>
                     </tr>
                 
@@ -140,7 +131,6 @@ A formatted and aligned table printer written in rust</p>
                                title='prettytable::Table'>Table</a></td>
                         <td class='docblock short'>
                              <p>An owned printable table</p>
-
                         </td>
                     </tr>
                 
@@ -150,7 +140,6 @@ A formatted and aligned table printer written in rust</p>
                         <td class='docblock short'>
                              <p>A borrowed immutable <code>Table</code> slice
 A <code>TableSlice</code> is obtained by slicing a <code>Table</code> with the <code>Slice::slice</code> method.</p>
-
                         </td>
                     </tr>
                 </table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
@@ -160,7 +149,6 @@ A <code>TableSlice</code> is obtained by slicing a <code>Table</code> with the <
                                title='prettytable::Slice'>Slice</a></td>
                         <td class='docblock short'>
                              <p>Trait implemented by types which can be sliced</p>
-
                         </td>
                     </tr>
                 </table></section>
@@ -206,7 +194,7 @@ A <code>TableSlice</code> is obtained by slicing a <code>Table</code> with the <
 
                 <p>
                     Search functions by type signature (e.g.
-                    <code>vec -> usize</code>)
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
                 </p>
             </div>
         </div>

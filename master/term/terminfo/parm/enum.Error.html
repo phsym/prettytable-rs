@@ -26,7 +26,7 @@
     
 
     <nav class="sidebar">
-        <a href='../../../term/index.html'><img src='https://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png' alt='' width='100'></a>
+        <a href='../../../term/index.html'><img src='https://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png' alt='logo' width='100'></a>
         <p class='location'><a href='../../index.html'>term</a>::<wbr><a href='../index.html'>terminfo</a>::<wbr><a href='index.html'>parm</a></p><script>window.sidebarCurrent = {name: 'Error', ty: 'enum', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
@@ -60,18 +60,18 @@
     FormatPrecisionOverflow,
 }</pre><div class='docblock'><p>An error from interpreting a parameterized string.</p>
 </div><h2 class='variants'>Variants</h2>
-<table><tr><td id='variant.StackUnderflow'><code>StackUnderflow</code></td><td><div class='docblock'><p>Data was requested from the stack, but the stack didn&#39;t have enough elements.</p>
-</div></td></tr><tr><td id='variant.TypeMismatch'><code>TypeMismatch</code></td><td><div class='docblock'><p>The type of the element(s) on top of the stack did not match the type that the operator
+<table class='variants_table'><tr><td id='variant.StackUnderflow'><code>StackUnderflow</code></td><td><div class='docblock'><p>Data was requested from the stack, but the stack didn&#39;t have enough elements.</p>
+</div></td><td></td></tr><tr><td id='variant.TypeMismatch'><code>TypeMismatch</code></td><td><div class='docblock'><p>The type of the element(s) on top of the stack did not match the type that the operator
 wanted.</p>
-</div></td></tr><tr><td id='variant.UnrecognizedFormatOption'><code>UnrecognizedFormatOption</code></td><td><div class='docblock'><p>An unrecognized format option was used.</p>
-</div></td></tr><tr><td id='variant.InvalidVariableName'><code>InvalidVariableName</code></td><td><div class='docblock'><p>An invalid variable name was used.</p>
-</div></td></tr><tr><td id='variant.InvalidParameterIndex'><code>InvalidParameterIndex</code></td><td><div class='docblock'><p>An invalid parameter index was used.</p>
-</div></td></tr><tr><td id='variant.MalformedCharacterConstant'><code>MalformedCharacterConstant</code></td><td><div class='docblock'><p>A malformed character constant was used.</p>
-</div></td></tr><tr><td id='variant.IntegerConstantOverflow'><code>IntegerConstantOverflow</code></td><td><div class='docblock'><p>An integer constant was too large (overflowed an i32)</p>
-</div></td></tr><tr><td id='variant.MalformedIntegerConstant'><code>MalformedIntegerConstant</code></td><td><div class='docblock'><p>A malformed integer constant was used.</p>
-</div></td></tr><tr><td id='variant.FormatWidthOverflow'><code>FormatWidthOverflow</code></td><td><div class='docblock'><p>A format width constant was too large (overflowed a usize)</p>
-</div></td></tr><tr><td id='variant.FormatPrecisionOverflow'><code>FormatPrecisionOverflow</code></td><td><div class='docblock'><p>A format precision constant was too large (overflowed a usize)</p>
-</div></td></tr></table><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html' title='core::fmt::Display'>Display</a> for <a class='enum' href='../../../term/terminfo/parm/enum.Error.html' title='term::terminfo::parm::Error'>Error</a></code></h3><div class='impl-items'><h4 id='method.fmt' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html#method.fmt' class='fnname'>fmt</a>(&amp;self, f: &amp;mut <a class='struct' href='https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='core::fmt::Formatter'>Formatter</a>) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/core/fmt/type.Result.html' title='core::fmt::Result'>Result</a></code></h4>
+</div></td><td></td></tr><tr><td id='variant.UnrecognizedFormatOption'><code>UnrecognizedFormatOption</code></td><td><div class='docblock'><p>An unrecognized format option was used.</p>
+</div></td><td></td></tr><tr><td id='variant.InvalidVariableName'><code>InvalidVariableName</code></td><td><div class='docblock'><p>An invalid variable name was used.</p>
+</div></td><td></td></tr><tr><td id='variant.InvalidParameterIndex'><code>InvalidParameterIndex</code></td><td><div class='docblock'><p>An invalid parameter index was used.</p>
+</div></td><td></td></tr><tr><td id='variant.MalformedCharacterConstant'><code>MalformedCharacterConstant</code></td><td><div class='docblock'><p>A malformed character constant was used.</p>
+</div></td><td></td></tr><tr><td id='variant.IntegerConstantOverflow'><code>IntegerConstantOverflow</code></td><td><div class='docblock'><p>An integer constant was too large (overflowed an i32)</p>
+</div></td><td></td></tr><tr><td id='variant.MalformedIntegerConstant'><code>MalformedIntegerConstant</code></td><td><div class='docblock'><p>A malformed integer constant was used.</p>
+</div></td><td></td></tr><tr><td id='variant.FormatWidthOverflow'><code>FormatWidthOverflow</code></td><td><div class='docblock'><p>A format width constant was too large (overflowed a usize)</p>
+</div></td><td></td></tr><tr><td id='variant.FormatPrecisionOverflow'><code>FormatPrecisionOverflow</code></td><td><div class='docblock'><p>A format precision constant was too large (overflowed a usize)</p>
+</div></td><td></td></tr></table><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html' title='core::fmt::Display'>Display</a> for <a class='enum' href='../../../term/terminfo/parm/enum.Error.html' title='term::terminfo::parm::Error'>Error</a></code></h3><div class='impl-items'><h4 id='method.fmt' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html#method.fmt' class='fnname'>fmt</a>(&amp;self, f: &amp;mut <a class='struct' href='https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='core::fmt::Formatter'>Formatter</a>) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/core/fmt/type.Result.html' title='core::fmt::Result'>Result</a></code></h4>
 </div><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/std/error/trait.Error.html' title='std::error::Error'>Error</a> for <a class='enum' href='../../../term/terminfo/parm/enum.Error.html' title='term::terminfo::parm::Error'>Error</a></code></h3><div class='impl-items'><h4 id='method.description' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/std/error/trait.Error.html#method.description' class='fnname'>description</a>(&amp;self) -&gt; &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a></code></h4>
 <h4 id='method.cause' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/std/error/trait.Error.html#method.cause' class='fnname'>cause</a>(&amp;self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;&amp;<a class='trait' href='https://doc.rust-lang.org/nightly/std/error/trait.Error.html' title='std::error::Error'>Error</a>&gt;</code></h4>
 </div><h3 id='derived_implementations'>Derived Implementations </h3><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html' title='core::cmp::PartialEq'>PartialEq</a> for <a class='enum' href='../../../term/terminfo/parm/enum.Error.html' title='term::terminfo::parm::Error'>Error</a></code></h3><div class='impl-items'><h4 id='method.eq' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#method.eq' class='fnname'>eq</a>(&amp;self, __arg_0: &amp;<a class='enum' href='../../../term/terminfo/parm/enum.Error.html' title='term::terminfo::parm::Error'>Error</a>) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
@@ -120,7 +120,7 @@ wanted.</p>
 
                 <p>
                     Search functions by type signature (e.g.
-                    <code>vec -> usize</code>)
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
                 </p>
             </div>
         </div>

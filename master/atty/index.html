@@ -54,10 +54,12 @@
 </blockquote>
 
 <p>usage is just as simple</p>
+
 <pre class='rust rust-example-rendered'>
 <span class='kw'>if</span> <span class='ident'>atty</span>::<span class='ident'>is</span>() {
   <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;i&#39;m a tty&quot;</span>)
 }</pre>
+
 <pre class='rust rust-example-rendered'>
 <span class='kw'>if</span> <span class='ident'>atty</span>::<span class='ident'>isnt</span>() {
   <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;i&#39;m not a tty&quot;</span>)
@@ -69,7 +71,6 @@
                                title='atty::is'>is</a></td>
                         <td class='docblock short'>
                              <p>returns true if this is a tty</p>
-
                         </td>
                     </tr>
                 
@@ -78,7 +79,6 @@
                                title='atty::isnt'>isnt</a></td>
                         <td class='docblock short'>
                              <p>returns true if this is <em>not</em> a tty</p>
-
                         </td>
                     </tr>
                 </table></section>
@@ -124,7 +124,7 @@
 
                 <p>
                     Search functions by type signature (e.g.
-                    <code>vec -> usize</code>)
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
                 </p>
             </div>
         </div>

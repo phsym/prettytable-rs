@@ -26,7 +26,7 @@
     
 
     <nav class="sidebar">
-        <a href='../../term/index.html'><img src='https://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png' alt='' width='100'></a>
+        <a href='../../term/index.html'><img src='https://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png' alt='logo' width='100'></a>
         <p class='location'><a href='../index.html'>term</a>::<wbr><a href='index.html'>terminfo</a></p><script>window.sidebarCurrent = {name: 'Error', ty: 'enum', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
@@ -59,22 +59,22 @@
     StringsMissingNull,
 }</pre><div class='docblock'><p>An error from parsing a terminfo entry</p>
 </div><h2 class='variants'>Variants</h2>
-<table><tr><td id='variant.BadMagic'><code>BadMagic</code></td><td><div class='docblock'><p>The &quot;magic&quot; number at the start of the file was wrong.</p>
+<table class='variants_table'><tr><td id='variant.BadMagic'><code>BadMagic</code></td><td><div class='docblock'><p>The &quot;magic&quot; number at the start of the file was wrong.</p>
 
 <p>It should be <code>0x11A</code></p>
-</div></td></tr><tr><td id='variant.NotUtf8'><code>NotUtf8</code></td><td><div class='docblock'><p>The names in the file were not valid UTF-8.</p>
+</div></td><td></td></tr><tr><td id='variant.NotUtf8'><code>NotUtf8</code></td><td><div class='docblock'><p>The names in the file were not valid UTF-8.</p>
 
 <p>In theory these should only be ASCII, but to work with the Rust <code>str</code> type, we treat them
 as UTF-8. This is valid, except when a terminfo file decides to be invalid. This hasn&#39;t
 been encountered in the wild.</p>
-</div></td></tr><tr><td id='variant.ShortNames'><code>ShortNames</code></td><td><div class='docblock'><p>The names section of the file was empty</p>
-</div></td></tr><tr><td id='variant.TooManyBools'><code>TooManyBools</code></td><td><div class='docblock'><p>More boolean parameters are present in the file than this crate knows how to interpret.</p>
-</div></td></tr><tr><td id='variant.TooManyNumbers'><code>TooManyNumbers</code></td><td><div class='docblock'><p>More number parameters are present in the file than this crate knows how to interpret.</p>
-</div></td></tr><tr><td id='variant.TooManyStrings'><code>TooManyStrings</code></td><td><div class='docblock'><p>More string parameters are present in the file than this crate knows how to interpret.</p>
-</div></td></tr><tr><td id='variant.InvalidLength'><code>InvalidLength</code></td><td><div class='docblock'><p>The length of some field was not &gt;= -1.</p>
-</div></td></tr><tr><td id='variant.NamesMissingNull'><code>NamesMissingNull</code></td><td><div class='docblock'><p>The names table was missing a trailing null terminator.</p>
-</div></td></tr><tr><td id='variant.StringsMissingNull'><code>StringsMissingNull</code></td><td><div class='docblock'><p>The strings table was missing a trailing null terminator.</p>
-</div></td></tr></table><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html' title='core::fmt::Display'>Display</a> for <a class='enum' href='../../term/terminfo/enum.Error.html' title='term::terminfo::Error'>Error</a></code></h3><div class='impl-items'><h4 id='method.fmt' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html#method.fmt' class='fnname'>fmt</a>(&amp;self, f: &amp;mut <a class='struct' href='https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='core::fmt::Formatter'>Formatter</a>) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/core/fmt/type.Result.html' title='core::fmt::Result'>Result</a></code></h4>
+</div></td><td></td></tr><tr><td id='variant.ShortNames'><code>ShortNames</code></td><td><div class='docblock'><p>The names section of the file was empty</p>
+</div></td><td></td></tr><tr><td id='variant.TooManyBools'><code>TooManyBools</code></td><td><div class='docblock'><p>More boolean parameters are present in the file than this crate knows how to interpret.</p>
+</div></td><td></td></tr><tr><td id='variant.TooManyNumbers'><code>TooManyNumbers</code></td><td><div class='docblock'><p>More number parameters are present in the file than this crate knows how to interpret.</p>
+</div></td><td></td></tr><tr><td id='variant.TooManyStrings'><code>TooManyStrings</code></td><td><div class='docblock'><p>More string parameters are present in the file than this crate knows how to interpret.</p>
+</div></td><td></td></tr><tr><td id='variant.InvalidLength'><code>InvalidLength</code></td><td><div class='docblock'><p>The length of some field was not &gt;= -1.</p>
+</div></td><td></td></tr><tr><td id='variant.NamesMissingNull'><code>NamesMissingNull</code></td><td><div class='docblock'><p>The names table was missing a trailing null terminator.</p>
+</div></td><td></td></tr><tr><td id='variant.StringsMissingNull'><code>StringsMissingNull</code></td><td><div class='docblock'><p>The strings table was missing a trailing null terminator.</p>
+</div></td><td></td></tr></table><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html' title='core::fmt::Display'>Display</a> for <a class='enum' href='../../term/terminfo/enum.Error.html' title='term::terminfo::Error'>Error</a></code></h3><div class='impl-items'><h4 id='method.fmt' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html#method.fmt' class='fnname'>fmt</a>(&amp;self, f: &amp;mut <a class='struct' href='https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='core::fmt::Formatter'>Formatter</a>) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/core/fmt/type.Result.html' title='core::fmt::Result'>Result</a></code></h4>
 </div><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html' title='core::convert::From'>From</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.FromUtf8Error.html' title='collections::string::FromUtf8Error'>FromUtf8Error</a>&gt; for <a class='enum' href='../../term/terminfo/enum.Error.html' title='term::terminfo::Error'>Error</a></code></h3><div class='impl-items'><h4 id='method.from' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html#method.from' class='fnname'>from</a>(v: <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.FromUtf8Error.html' title='collections::string::FromUtf8Error'>FromUtf8Error</a>) -&gt; Self</code></h4>
 </div><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/std/error/trait.Error.html' title='std::error::Error'>Error</a> for <a class='enum' href='../../term/terminfo/enum.Error.html' title='term::terminfo::Error'>Error</a></code></h3><div class='impl-items'><h4 id='method.description' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/std/error/trait.Error.html#method.description' class='fnname'>description</a>(&amp;self) -&gt; &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a></code></h4>
 <h4 id='method.cause' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/std/error/trait.Error.html#method.cause' class='fnname'>cause</a>(&amp;self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;&amp;<a class='trait' href='https://doc.rust-lang.org/nightly/std/error/trait.Error.html' title='std::error::Error'>Error</a>&gt;</code></h4>
@@ -124,7 +124,7 @@ been encountered in the wild.</p>
 
                 <p>
                     Search functions by type signature (e.g.
-                    <code>vec -> usize</code>)
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
                 </p>
             </div>
         </div>

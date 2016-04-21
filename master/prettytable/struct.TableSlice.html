@@ -46,13 +46,14 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-759' class='srclink' href='../src/prettytable/lib.rs.html#56-60' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-778' class='srclink' href='../src/prettytable/src/lib.rs.html#57-61' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct TableSlice&lt;'a&gt; {
     // some fields omitted
 }</pre><div class='docblock'><p>A borrowed immutable <code>Table</code> slice
 A <code>TableSlice</code> is obtained by slicing a <code>Table</code> with the <code>Slice::slice</code> method.</p>
 
-<h1 id='examples' class='section-header'><a href='#examples'>Examples</a></h1><pre class='rust rust-example-rendered'>
+<h1 id='examples' class='section-header'><a href='#examples'>Examples</a></h1>
+<pre class='rust rust-example-rendered'>
 <span class='kw'>use</span> <span class='ident'>prettytable</span>::{<span class='ident'>Table</span>, <span class='ident'>Slice</span>};
 <span class='kw'>let</span> <span class='ident'>table</span> <span class='op'>=</span> <span class='macro'>table</span><span class='macro'>!</span>[[<span class='number'>1</span>, <span class='number'>2</span>, <span class='number'>3</span>], [<span class='number'>4</span>, <span class='number'>5</span>, <span class='number'>6</span>], [<span class='number'>7</span>, <span class='number'>8</span>, <span class='number'>9</span>]];
 <span class='kw'>let</span> <span class='ident'>slice</span> <span class='op'>=</span> <span class='ident'>table</span>.<span class='ident'>slice</span>(<span class='number'>1</span>..);
@@ -93,13 +94,13 @@ Calling <code>printstd()</code> is equivalent to calling <code>print_tty(false)<
 
 <h1 id='panic-1' class='section-header'><a href='#panic-1'>Panic</a></h1>
 <p>Panic if writing to standard output fails</p>
-</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl&lt;'a&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Index.html' title='core::ops::Index'>Index</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>&gt; for <a class='struct' href='../prettytable/struct.TableSlice.html' title='prettytable::TableSlice'>TableSlice</a>&lt;'a&gt;</code></h3><div class='impl-items'><h4 id='assoc_type.Output' class='type'><code>type Output = <a class='struct' href='../prettytable/row/struct.Row.html' title='prettytable::row::Row'>Row</a></code></h4>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl&lt;'a&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Index.html' title='core::ops::Index'>Index</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>&gt; for <a class='struct' href='../prettytable/struct.TableSlice.html' title='prettytable::TableSlice'>TableSlice</a>&lt;'a&gt;</code></h3><div class='impl-items'><h4 id='associatedtype.Output' class='type'><code>type Output = <a class='struct' href='../prettytable/row/struct.Row.html' title='prettytable::row::Row'>Row</a></code></h4>
 <h4 id='method.index' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/ops/trait.Index.html#method.index' class='fnname'>index</a>(&amp;self, idx: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>) -&gt; &amp;Self::<a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Index.html' title='core::ops::Index'>Output</a></code></h4>
 </div><h3 class='impl'><code>impl&lt;'a&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html' title='core::fmt::Display'>Display</a> for <a class='struct' href='../prettytable/struct.TableSlice.html' title='prettytable::TableSlice'>TableSlice</a>&lt;'a&gt;</code></h3><div class='impl-items'><h4 id='method.fmt' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html#method.fmt' class='fnname'>fmt</a>(&amp;self, fmt: &amp;mut <a class='struct' href='https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='core::fmt::Formatter'>Formatter</a>) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>, <a class='struct' href='https://doc.rust-lang.org/nightly/core/fmt/struct.Error.html' title='core::fmt::Error'>Error</a>&gt;</code></h4>
 </div><h3 class='impl'><code>impl&lt;'a&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html' title='core::convert::AsRef'>AsRef</a>&lt;<a class='struct' href='../prettytable/struct.TableSlice.html' title='prettytable::TableSlice'>TableSlice</a>&lt;'a&gt;&gt; for <a class='struct' href='../prettytable/struct.TableSlice.html' title='prettytable::TableSlice'>TableSlice</a>&lt;'a&gt;</code></h3><div class='impl-items'><h4 id='method.as_ref' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html#method.as_ref' class='fnname'>as_ref</a>(&amp;self) -&gt; &amp;<a class='struct' href='../prettytable/struct.TableSlice.html' title='prettytable::TableSlice'>TableSlice</a>&lt;'a&gt;</code></h4>
 </div><h3 id='derived_implementations'>Derived Implementations </h3><h3 class='impl'><code>impl&lt;'a&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> for <a class='struct' href='../prettytable/struct.TableSlice.html' title='prettytable::TableSlice'>TableSlice</a>&lt;'a&gt;</code></h3><div class='impl-items'><h4 id='method.fmt-1' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#method.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class='struct' href='https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='core::fmt::Formatter'>Formatter</a>) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/core/fmt/type.Result.html' title='core::fmt::Result'>Result</a></code></h4>
 </div><h3 class='impl'><code>impl&lt;'a&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a> for <a class='struct' href='../prettytable/struct.TableSlice.html' title='prettytable::TableSlice'>TableSlice</a>&lt;'a&gt;</code></h3><div class='impl-items'><h4 id='method.clone' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone' class='fnname'>clone</a>(&amp;self) -&gt; <a class='struct' href='../prettytable/struct.TableSlice.html' title='prettytable::TableSlice'>TableSlice</a>&lt;'a&gt;</code></h4>
-<h4 id='method.clone_from' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from' class='fnname'>clone_from</a>(&amp;mut self, source: &amp;Self)</code></h4>
+<h4 id='method.clone_from' class='method'><span class="since">1.0.0</span><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from' class='fnname'>clone_from</a>(&amp;mut self, source: &amp;Self)</code></h4>
 </div></section>
     <section id='search' class="content hidden"></section>
 
@@ -143,7 +144,7 @@ Calling <code>printstd()</code> is equivalent to calling <code>print_tty(false)<
 
                 <p>
                     Search functions by type signature (e.g.
-                    <code>vec -> usize</code>)
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
                 </p>
             </div>
         </div>

@@ -26,7 +26,7 @@
     
 
     <nav class="sidebar">
-        <a href='../term/index.html'><img src='https://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png' alt='' width='100'></a>
+        <a href='../term/index.html'><img src='https://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png' alt='logo' width='100'></a>
         <p class='location'><a href='index.html'>term</a></p><script>window.sidebarCurrent = {name: 'Error', ty: 'enum', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
@@ -59,19 +59,19 @@
     // some variants omitted
 }</pre><div class='docblock'><p>An error arising from interacting with the terminal.</p>
 </div><h2 class='variants'>Variants</h2>
-<table><tr><td id='variant.Io'><code>Io</code></td><td><div class='docblock'><p>Indicates an error from any underlying IO</p>
-</div></td></tr><tr><td id='variant.TerminfoParsing'><code>TerminfoParsing</code></td><td><div class='docblock'><p>Indicates an error during terminfo parsing</p>
-</div></td></tr><tr><td id='variant.ParameterizedExpansion'><code>ParameterizedExpansion</code></td><td><div class='docblock'><p>Indicates an error expanding a parameterized string from the terminfo database</p>
-</div></td></tr><tr><td id='variant.NotSupported'><code>NotSupported</code></td><td><div class='docblock'><p>Indicates that the terminal does not support the requested operation.</p>
-</div></td></tr><tr><td id='variant.TermUnset'><code>TermUnset</code></td><td><div class='docblock'><p>Indicates that the <code>TERM</code> environment variable was unset, and thus we were unable to detect
+<table class='variants_table'><tr><td id='variant.Io'><code>Io</code></td><td><div class='docblock'><p>Indicates an error from any underlying IO</p>
+</div></td><td></td></tr><tr><td id='variant.TerminfoParsing'><code>TerminfoParsing</code></td><td><div class='docblock'><p>Indicates an error during terminfo parsing</p>
+</div></td><td></td></tr><tr><td id='variant.ParameterizedExpansion'><code>ParameterizedExpansion</code></td><td><div class='docblock'><p>Indicates an error expanding a parameterized string from the terminfo database</p>
+</div></td><td></td></tr><tr><td id='variant.NotSupported'><code>NotSupported</code></td><td><div class='docblock'><p>Indicates that the terminal does not support the requested operation.</p>
+</div></td><td></td></tr><tr><td id='variant.TermUnset'><code>TermUnset</code></td><td><div class='docblock'><p>Indicates that the <code>TERM</code> environment variable was unset, and thus we were unable to detect
 which terminal we should be using.</p>
-</div></td></tr><tr><td id='variant.TerminfoEntryNotFound'><code>TerminfoEntryNotFound</code></td><td><div class='docblock'><p>Indicates that we were unable to find a terminfo entry for the requested terminal.</p>
-</div></td></tr><tr><td id='variant.CursorDestinationInvalid'><code>CursorDestinationInvalid</code></td><td><div class='docblock'><p>Indicates that the cursor could not be moved to the requested position.</p>
-</div></td></tr><tr><td id='variant.ColorOutOfRange'><code>ColorOutOfRange</code></td><td><div class='docblock'><p>Indicates that the terminal does not support displaying the requested color.</p>
+</div></td><td></td></tr><tr><td id='variant.TerminfoEntryNotFound'><code>TerminfoEntryNotFound</code></td><td><div class='docblock'><p>Indicates that we were unable to find a terminfo entry for the requested terminal.</p>
+</div></td><td></td></tr><tr><td id='variant.CursorDestinationInvalid'><code>CursorDestinationInvalid</code></td><td><div class='docblock'><p>Indicates that the cursor could not be moved to the requested position.</p>
+</div></td><td></td></tr><tr><td id='variant.ColorOutOfRange'><code>ColorOutOfRange</code></td><td><div class='docblock'><p>Indicates that the terminal does not support displaying the requested color.</p>
 
 <p>This is like <code>NotSupported</code>, but more specific.</p>
-</div></td></tr></table><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html' title='core::cmp::PartialEq'>PartialEq</a> for <a class='enum' href='../term/enum.Error.html' title='term::Error'>Error</a></code></h3><div class='impl-items'><h4 id='method.eq' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#method.eq' class='fnname'>eq</a>(&amp;self, other: &amp;<a class='enum' href='../term/enum.Error.html' title='term::Error'>Error</a>) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
-<h4 id='method.ne' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#method.ne' class='fnname'>ne</a>(&amp;self, other: &amp;Rhs) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
+</div></td><td></td></tr></table><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html' title='core::cmp::PartialEq'>PartialEq</a> for <a class='enum' href='../term/enum.Error.html' title='term::Error'>Error</a></code></h3><div class='impl-items'><h4 id='method.eq' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#method.eq' class='fnname'>eq</a>(&amp;self, other: &amp;<a class='enum' href='../term/enum.Error.html' title='term::Error'>Error</a>) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
+<h4 id='method.ne' class='method'><span class="since">1.0.0</span><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#method.ne' class='fnname'>ne</a>(&amp;self, other: &amp;Rhs) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
 </div><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html' title='core::fmt::Display'>Display</a> for <a class='enum' href='../term/enum.Error.html' title='term::Error'>Error</a></code></h3><div class='impl-items'><h4 id='method.fmt' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html#method.fmt' class='fnname'>fmt</a>(&amp;self, f: &amp;mut <a class='struct' href='https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='core::fmt::Formatter'>Formatter</a>) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/core/fmt/type.Result.html' title='core::fmt::Result'>Result</a></code></h4>
 </div><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/std/error/trait.Error.html' title='std::error::Error'>Error</a> for <a class='enum' href='../term/enum.Error.html' title='term::Error'>Error</a></code></h3><div class='impl-items'><h4 id='method.description' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/std/error/trait.Error.html#method.description' class='fnname'>description</a>(&amp;self) -&gt; &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a></code></h4>
 <h4 id='method.cause' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/std/error/trait.Error.html#method.cause' class='fnname'>cause</a>(&amp;self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;&amp;<a class='trait' href='https://doc.rust-lang.org/nightly/std/error/trait.Error.html' title='std::error::Error'>Error</a>&gt;</code></h4>
@@ -122,7 +122,7 @@ which terminal we should be using.</p>
 
                 <p>
                     Search functions by type signature (e.g.
-                    <code>vec -> usize</code>)
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
                 </p>
             </div>
         </div>

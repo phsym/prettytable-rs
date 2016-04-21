@@ -46,7 +46,7 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-0' class='srclink' href='../src/lazy_static/lib.rs.html#1-156' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-0' class='srclink' href='../src/lazy_static/lib.rs.html#1-157' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>A macro for declaring lazily evaluated statics.</p>
 
 <p>Using this macro, it is possible to have <code>static</code>s that require code to be
@@ -54,7 +54,8 @@ executed at runtime in order to be initialized.
 This includes anything requiring heap allocations, like vectors or hash maps,
 as well as anything that requires function calls to be computed.</p>
 
-<h1 id='syntax' class='section-header'><a href='#syntax'>Syntax</a></h1><pre class='rust rust-example-rendered'>
+<h1 id='syntax' class='section-header'><a href='#syntax'>Syntax</a></h1>
+<pre class='rust rust-example-rendered'>
 <span class='macro'>lazy_static</span><span class='macro'>!</span> {
     [<span class='kw'>pub</span>] <span class='kw'>static</span> <span class='kw-2'>ref</span> <span class='ident'>NAME_1</span>: <span class='ident'>TYPE_1</span> <span class='op'>=</span> <span class='ident'>EXPR_1</span>;
     [<span class='kw'>pub</span>] <span class='kw'>static</span> <span class='kw-2'>ref</span> <span class='ident'>NAME_2</span>: <span class='ident'>TYPE_2</span> <span class='op'>=</span> <span class='ident'>EXPR_2</span>;
@@ -77,6 +78,7 @@ trait.</p>
 
 <h1 id='example' class='section-header'><a href='#example'>Example</a></h1>
 <p>Using the macro:</p>
+
 <pre class='rust rust-example-rendered'>
 <span class='attribute'>#[<span class='ident'>macro_use</span>]</span>
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>lazy_static</span>;
@@ -157,7 +159,7 @@ trait.</p>
 
                 <p>
                     Search functions by type signature (e.g.
-                    <code>vec -> usize</code>)
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
                 </p>
             </div>
         </div>

@@ -46,7 +46,7 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-552' class='srclink' href='../../../src/prettytable/<lazy_static macros>.html#38' title='goto source code'>[src]</a></span></h1>
+        </span></span></h1>
 <pre class='rust struct'>pub struct FORMAT_NO_TITLE {
     // some fields omitted
 }</pre><div class='docblock'><p>Similar to <code>FORMAT_DEFAULT</code> but without special separator after title line</p>
@@ -60,7 +60,7 @@
 | c  | d  |
 +----+----+
 </code></pre>
-</div><h2 id='deref-methods'>Methods from <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Deref.html' title='core::ops::Deref'>Deref</a>&lt;Target=<a class='struct' href='../../../prettytable/format/struct.TableFormat.html' title='prettytable::format::TableFormat'>TableFormat</a>&gt;</h2><div class='impl-items'><h4 id='method.get_padding' class='method'><code>fn <a href='#method.get_padding' class='fnname'>get_padding</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>(<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>, <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>)</a></code></h4>
+</div><h2 id='deref-methods'>Methods from <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Deref.html' title='core::ops::Deref'>Deref</a>&lt;Target=<a class='struct' href='../../../prettytable/format/struct.TableFormat.html' title='prettytable::format::TableFormat'>TableFormat</a>&gt;</h2><div class='impl-items'><h4 id='method.get_padding' class='method'><code>fn <a href='#method.get_padding' class='fnname'>get_padding</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>(</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>, <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>)</a></code></h4>
 <div class='docblock'><p>Return a tuple with left and right padding</p>
 </div><h4 id='method.padding' class='method'><code>fn <a href='#method.padding' class='fnname'>padding</a>(&amp;mut self, left: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>, right: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>)</code></h4>
 <div class='docblock'><p>Set left and right padding</p>
@@ -77,7 +77,7 @@
 </div><h4 id='method.get_column_separator' class='method'><code>fn <a href='#method.get_column_separator' class='fnname'>get_column_separator</a>(&amp;self, pos: <a class='enum' href='../../../prettytable/format/enum.ColumnPosition.html' title='prettytable::format::ColumnPosition'>ColumnPosition</a>) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.char.html'>char</a>&gt;</code></h4>
 <h4 id='method.print_column_separator' class='method'><code>fn <a href='#method.print_column_separator' class='fnname'>print_column_separator</a>&lt;T: <a class='trait' href='https://doc.rust-lang.org/nightly/std/io/trait.Write.html' title='std::io::Write'>Write</a> + ?<a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a>&gt;(&amp;self, out: &amp;mut T, pos: <a class='enum' href='../../../prettytable/format/enum.ColumnPosition.html' title='prettytable::format::ColumnPosition'>ColumnPosition</a>) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>, <a class='struct' href='https://doc.rust-lang.org/nightly/std/io/error/struct.Error.html' title='std::io::error::Error'>Error</a>&gt;</code></h4>
 <div class='docblock'><p>Print a column separator or a table border</p>
-</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Deref.html' title='core::ops::Deref'>Deref</a> for <a class='struct' href='../../../prettytable/format/consts/struct.FORMAT_NO_TITLE.html' title='prettytable::format::consts::FORMAT_NO_TITLE'>FORMAT_NO_TITLE</a></code></h3><div class='impl-items'><h4 id='assoc_type.Target' class='type'><code>type Target = <a class='struct' href='../../../prettytable/format/struct.TableFormat.html' title='prettytable::format::TableFormat'>TableFormat</a></code></h4>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Deref.html' title='core::ops::Deref'>Deref</a> for <a class='struct' href='../../../prettytable/format/consts/struct.FORMAT_NO_TITLE.html' title='prettytable::format::consts::FORMAT_NO_TITLE'>FORMAT_NO_TITLE</a></code></h3><div class='impl-items'><h4 id='associatedtype.Target' class='type'><code>type Target = <a class='struct' href='../../../prettytable/format/struct.TableFormat.html' title='prettytable::format::TableFormat'>TableFormat</a></code></h4>
 <h4 id='method.deref' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/ops/trait.Deref.html#method.deref' class='fnname'>deref</a>&lt;'a&gt;(&amp;'a self) -&gt; &amp;'a <a class='struct' href='../../../prettytable/format/struct.TableFormat.html' title='prettytable::format::TableFormat'>TableFormat</a></code></h4>
 </div></section>
     <section id='search' class="content hidden"></section>
@@ -122,7 +122,7 @@
 
                 <p>
                     Search functions by type signature (e.g.
-                    <code>vec -> usize</code>)
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
                 </p>
             </div>
         </div>
