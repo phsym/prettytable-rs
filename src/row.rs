@@ -96,12 +96,12 @@ impl Row {
 		}
 	}
 
-    // You need to impl Iterator for these to work with for / map implicitly
-    // But there is a compiler warning when you do add the trait.
+    /// Returns an immutable iterator over cells
     pub fn iter<'a>(&'a self) -> Iter<'a, Cell> {
         self.cells.iter()
     }
 
+	/// Returns an mutable iterator over cells
     pub fn iter_mut<'a>(&'a mut self) -> IterMut<'a, Cell> {
         self.cells.iter_mut()
     }
@@ -172,6 +172,22 @@ impl <A: ToString> FromIterator<A> for Row {
 impl <T, A> From<T> for Row where A: ToString, T : IntoIterator<Item=A> {
 	fn from(it: T) -> Row {
 		return Self::from_iter(it);
+	}
+}
+
+impl <'a> IntoIterator for &'a Row {
+	type Item=&'a Cell;
+	type IntoIter=Iter<'a, Cell>;
+	fn into_iter(self) -> Self::IntoIter {
+		return self.iter();
+	}
+}
+
+impl <'a> IntoIterator for &'a mut Row {
+	type Item=&'a mut Cell;
+	type IntoIter=IterMut<'a, Cell>;
+	fn into_iter(self) -> Self::IntoIter {
+		return self.iter_mut();
 	}
 }
 

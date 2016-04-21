@@ -110,9 +110,14 @@ impl <'a> TableSlice<'a> {
 		return col_width;
 	}
 
-	/// Return an iterator over the immutable cells of the column specified by `column`
+	/// Returns an iterator over the immutable cells of the column specified by `column`
 	pub fn column_iter(&self, column: usize) -> ColumnIter {
 		return ColumnIter(self.rows.iter(), column);
+	}
+
+	/// Returns an iterator over immutable rows
+	pub fn row_iter(&self) -> Iter<Row> {
+		self.rows.iter()
 	}
 
 	/// Internal only
@@ -174,6 +179,14 @@ impl <'a> TableSlice<'a> {
 	/// Panic if writing to standard output fails
 	pub fn printstd(&self) {
 		self.print_tty(false);
+	}
+}
+
+impl <'a> IntoIterator for &'a TableSlice<'a> {
+	type Item=&'a Row;
+	type IntoIter=Iter<'a, Row>;
+	fn into_iter(self) -> Self::IntoIter {
+		return self.row_iter();
 	}
 }
 
@@ -275,14 +288,15 @@ impl Table {
 		return ColumnIterMut(self.rows.iter_mut(), column);
 	}
 
+	/// Returns an iterator over immutable rows
     pub fn row_iter<'a>(&'a self) -> Iter<'a, Row> {
         self.rows.iter()
     }
 
+	/// Returns an iterator over mutable rows
     pub fn row_iter_mut<'a>(&'a mut self) -> IterMut<'a, Row> {
         self.rows.iter_mut()
     }
-
 
 	/// Print the table to `out`
 	pub fn print<T: Write+?Sized>(&self, out: &mut T) -> Result<(), Error> {
@@ -363,6 +377,22 @@ impl <B: ToString, A: IntoIterator<Item=B>> FromIterator<A> for Table {
 impl <T, A, B> From<T> for Table where B: ToString, A: IntoIterator<Item=B>, T : IntoIterator<Item=A> {
 	fn from(it: T) -> Table {
 		return Self::from_iter(it);
+	}
+}
+
+impl <'a> IntoIterator for &'a Table {
+	type Item=&'a Row;
+	type IntoIter=Iter<'a, Row>;
+	fn into_iter(self) -> Self::IntoIter {
+		return self.as_ref().row_iter();
+	}
+}
+
+impl <'a> IntoIterator for &'a mut Table {
+	type Item=&'a mut Row;
+	type IntoIter=IterMut<'a, Row>;
+	fn into_iter(self) -> Self::IntoIter {
+		return self.row_iter_mut();
 	}
 }
 

@@ -6,14 +6,14 @@
 
 # prettytable-rs
 
+A formatted and aligned table printer written in rust.
+
 [Documentation](http://phsym.github.io/prettytable-rs)
 
-*Copyright &copy; 2015 Pierre-Henri Symoneaux*
+*Copyright &copy; 2016 Pierre-Henri Symoneaux*
 
 > THIS SOFTWARE IS DISTRIBUTED WITHOUT ANY WARRANTY <br>
 > Check LICENSE.txt file for more information. <br>
-
-A formatted and aligned table printer written in rust.
 
 # How to use
 
