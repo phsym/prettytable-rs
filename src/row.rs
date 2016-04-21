@@ -1,6 +1,7 @@
 //! This module contains definition of table rows stuff
 use std::io::{Write, Error};
 use std::iter::FromIterator;
+use std::slice::{Iter, IterMut};
 use std::ops::{Index, IndexMut};
 
 use term::Terminal;
@@ -94,6 +95,16 @@ impl Row {
 			self.cells.remove(index);
 		}
 	}
+
+    // You need to impl Iterator for these to work with for / map implicitly
+    // But there is a compiler warning when you do add the trait.
+    pub fn iter<'a>(&'a self) -> Iter<'a, Cell> {
+        self.cells.iter()
+    }
+
+    pub fn iter_mut<'a>(&'a mut self) -> IterMut<'a, Cell> {
+        self.cells.iter_mut()
+    }
 
 	/// Internal only
 	fn __print<T:Write+?Sized, F>(&self, out: &mut T, format: &TableFormat, col_width: &[usize], f: F) -> Result<(), Error>

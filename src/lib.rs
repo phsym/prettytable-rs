@@ -10,6 +10,7 @@ use std::io;
 use std::io::{Write, Error};
 use std::fmt;
 use std::iter::{FromIterator, IntoIterator};
+use std::slice::{Iter, IterMut};
 use std::ops::{Index, IndexMut};
 use std::mem::transmute;
 
@@ -273,6 +274,15 @@ impl Table {
 	pub fn column_iter_mut(&mut self, column: usize) -> ColumnIterMut {
 		return ColumnIterMut(self.rows.iter_mut(), column);
 	}
+
+    pub fn row_iter<'a>(&'a self) -> Iter<'a, Row> {
+        self.rows.iter()
+    }
+
+    pub fn row_iter_mut<'a>(&'a mut self) -> IterMut<'a, Row> {
+        self.rows.iter_mut()
+    }
+
 
 	/// Print the table to `out`
 	pub fn print<T: Write+?Sized>(&self, out: &mut T) -> Result<(), Error> {
