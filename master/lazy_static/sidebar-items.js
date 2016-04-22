@@ -1,1 +1,1 @@
-initSidebarItems({"macro":[["lazy_static!",""]]});
+initSidebarItems({"macro":[["__lazy_static_create!",""],["lazy_static!",""]],"mod":[["lazy",""]]});
