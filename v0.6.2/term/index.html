@@ -11,6 +11,7 @@
 
     <link rel="stylesheet" type="text/css" href="../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../main.css">
+    
 
     <link rel="shortcut icon" href="https://doc.rust-lang.org/favicon.ico">
     
@@ -43,10 +44,10 @@
 
     <section id='main' class="content mod">
 <h1 class='fqn'><span class='in-band'>Crate <a class='mod' href=''>term</a></span><span class='out-of-band'><span id='render-detail'>
-            <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
-                [<span class='inner'>&#x2212;</span>]
-            </a>
-        </span><a id='src-0' class='srclink' href='../src/term/lib.rs.html#11-402' title='goto source code'>[src]</a></span></h1>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a id='src-0' class='srclink' href='../src/term/lib.rs.html#11-402' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>Terminal formatting library.</p>
 
 <p>This crate provides the <code>Terminal</code> trait, which abstracts over an <a href="https://en.wikipedia.org/wiki/ANSI_escape_code">ANSI
@@ -88,93 +89,83 @@ term = &quot;0.2&quot;
 </div><h2 id='reexports' class='section-header'><a href="#reexports">Reexports</a></h2>
 <table><tr><td><code>pub use terminfo::<a class='struct' href='../term/terminfo/struct.TerminfoTerminal.html' title='term::terminfo::TerminfoTerminal'>TerminfoTerminal</a>;</code></td></tr></table><h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
 <table>
-                    <tr class=' module-item'>
-                        <td><a class='mod' href='color/index.html'
-                               title='term::color'>color</a></td>
-                        <td class='docblock short'>
-                             <p>Terminal color definitions</p>
-                        </td>
-                    </tr>
-                
-                    <tr class=' module-item'>
-                        <td><a class='mod' href='terminfo/index.html'
-                               title='term::terminfo'>terminfo</a></td>
-                        <td class='docblock short'>
-                             <p>Terminfo database interface.</p>
-                        </td>
-                    </tr>
-                </table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
+                       <tr class=' module-item'>
+                           <td><a class='mod' href='color/index.html'
+                                  title='term::color'>color</a></td>
+                           <td class='docblock short'>
+                                <p>Terminal color definitions</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='mod' href='terminfo/index.html'
+                                  title='term::terminfo'>terminfo</a></td>
+                           <td class='docblock short'>
+                                <p>Terminfo database interface.</p>
+                           </td>
+                       </tr></table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
 <table>
-                    <tr class=' module-item'>
-                        <td><a class='enum' href='enum.Attr.html'
-                               title='term::Attr'>Attr</a></td>
-                        <td class='docblock short'>
-                             <p>Terminal attributes for use with term.attr().</p>
-                        </td>
-                    </tr>
-                
-                    <tr class=' module-item'>
-                        <td><a class='enum' href='enum.Error.html'
-                               title='term::Error'>Error</a></td>
-                        <td class='docblock short'>
-                             <p>An error arising from interacting with the terminal.</p>
-                        </td>
-                    </tr>
-                </table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
+                       <tr class=' module-item'>
+                           <td><a class='enum' href='enum.Attr.html'
+                                  title='term::Attr'>Attr</a></td>
+                           <td class='docblock short'>
+                                <p>Terminal attributes for use with term.attr().</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='enum' href='enum.Error.html'
+                                  title='term::Error'>Error</a></td>
+                           <td class='docblock short'>
+                                <p>An error arising from interacting with the terminal.</p>
+                           </td>
+                       </tr></table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
 <table>
-                    <tr class=' module-item'>
-                        <td><a class='trait' href='trait.Terminal.html'
-                               title='term::Terminal'>Terminal</a></td>
-                        <td class='docblock short'>
-                             <p>A terminal with similar capabilities to an ANSI Terminal
+                       <tr class=' module-item'>
+                           <td><a class='trait' href='trait.Terminal.html'
+                                  title='term::Terminal'>Terminal</a></td>
+                           <td class='docblock short'>
+                                <p>A terminal with similar capabilities to an ANSI Terminal
 (foreground/background colors etc).</p>
-                        </td>
-                    </tr>
-                </table><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
+                           </td>
+                       </tr></table><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
 <table>
-                    <tr class=' module-item'>
-                        <td><a class='fn' href='fn.stderr.html'
-                               title='term::stderr'>stderr</a></td>
-                        <td class='docblock short'>
-                             <p>Return a Terminal wrapping stderr, or None if a terminal couldn&#39;t be
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.stderr.html'
+                                  title='term::stderr'>stderr</a></td>
+                           <td class='docblock short'>
+                                <p>Return a Terminal wrapping stderr, or None if a terminal couldn&#39;t be
 opened.</p>
-                        </td>
-                    </tr>
-                
-                    <tr class=' module-item'>
-                        <td><a class='fn' href='fn.stdout.html'
-                               title='term::stdout'>stdout</a></td>
-                        <td class='docblock short'>
-                             <p>Return a Terminal wrapping stdout, or None if a terminal couldn&#39;t be
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.stdout.html'
+                                  title='term::stdout'>stdout</a></td>
+                           <td class='docblock short'>
+                                <p>Return a Terminal wrapping stdout, or None if a terminal couldn&#39;t be
 opened.</p>
-                        </td>
-                    </tr>
-                </table><h2 id='types' class='section-header'><a href="#types">Type Definitions</a></h2>
+                           </td>
+                       </tr></table><h2 id='types' class='section-header'><a href="#types">Type Definitions</a></h2>
 <table>
-                    <tr class=' module-item'>
-                        <td><a class='type' href='type.Result.html'
-                               title='term::Result'>Result</a></td>
-                        <td class='docblock short'>
-                             <p>The canonical <code>Result</code> type using this crate&#39;s Error type.</p>
-                        </td>
-                    </tr>
-                
-                    <tr class=' module-item'>
-                        <td><a class='type' href='type.StderrTerminal.html'
-                               title='term::StderrTerminal'>StderrTerminal</a></td>
-                        <td class='docblock short'>
-                             <p>Alias for stderr terminals.</p>
-                        </td>
-                    </tr>
-                
-                    <tr class=' module-item'>
-                        <td><a class='type' href='type.StdoutTerminal.html'
-                               title='term::StdoutTerminal'>StdoutTerminal</a></td>
-                        <td class='docblock short'>
-                             <p>Alias for stdout terminals.</p>
-                        </td>
-                    </tr>
-                </table></section>
+                       <tr class=' module-item'>
+                           <td><a class='type' href='type.Result.html'
+                                  title='term::Result'>Result</a></td>
+                           <td class='docblock short'>
+                                <p>The canonical <code>Result</code> type using this crate&#39;s Error type.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='type' href='type.StderrTerminal.html'
+                                  title='term::StderrTerminal'>StderrTerminal</a></td>
+                           <td class='docblock short'>
+                                <p>Alias for stderr terminals.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='type' href='type.StdoutTerminal.html'
+                                  title='term::StdoutTerminal'>StdoutTerminal</a></td>
+                           <td class='docblock short'>
+                                <p>Alias for stdout terminals.</p>
+                           </td>
+                       </tr></table></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>

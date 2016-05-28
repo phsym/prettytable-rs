@@ -11,6 +11,7 @@
 
     <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../main.css">
+    
 
     <link rel="shortcut icon" href="https://doc.rust-lang.org/favicon.ico">
     
@@ -43,10 +44,10 @@
 
     <section id='main' class="content struct">
 <h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>term</a>::<wbr><a href='index.html'>terminfo</a>::<wbr><a class='struct' href=''>TermInfo</a></span><span class='out-of-band'><span id='render-detail'>
-            <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
-                [<span class='inner'>&#x2212;</span>]
-            </a>
-        </span><a id='src-24' class='srclink' href='../../src/term/terminfo/mod.rs.html#33-42' title='goto source code'>[src]</a></span></h1>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a id='src-24' class='srclink' href='../../src/term/terminfo/mod.rs.html#33-42' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct TermInfo {
     pub names: <a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;,
     pub bools: <a class='struct' href='https://doc.rust-lang.org/nightly/std/collections/hash/map/struct.HashMap.html' title='std::collections::hash::map::HashMap'>HashMap</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>, <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>&gt;,
@@ -55,20 +56,20 @@
 }</pre><div class='docblock'><p>A parsed terminfo database entry.</p>
 </div><h2 class='fields'>Fields</h2>
 <table><tr class='stab '>
-                                  <td id='structfield.names'><code>names</code></td><td><div class='docblock'><p>Names for the terminal</p>
+                             <td id='structfield.names'><code>names</code></td><td><div class='docblock'><p>Names for the terminal</p>
 </div></td></tr><tr class='stab '>
-                                  <td id='structfield.bools'><code>bools</code></td><td><div class='docblock'><p>Map of capability name to boolean value</p>
+                             <td id='structfield.bools'><code>bools</code></td><td><div class='docblock'><p>Map of capability name to boolean value</p>
 </div></td></tr><tr class='stab '>
-                                  <td id='structfield.numbers'><code>numbers</code></td><td><div class='docblock'><p>Map of capability name to numeric value</p>
+                             <td id='structfield.numbers'><code>numbers</code></td><td><div class='docblock'><p>Map of capability name to numeric value</p>
 </div></td></tr><tr class='stab '>
-                                  <td id='structfield.strings'><code>strings</code></td><td><div class='docblock'><p>Map of capability name to raw (unexpanded) string</p>
+                             <td id='structfield.strings'><code>strings</code></td><td><div class='docblock'><p>Map of capability name to raw (unexpanded) string</p>
 </div></td></tr></table><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl <a class='struct' href='../../term/terminfo/struct.TermInfo.html' title='term::terminfo::TermInfo'>TermInfo</a></code></h3><div class='impl-items'><h4 id='method.from_env' class='method'><code>fn <a href='#method.from_env' class='fnname'>from_env</a>() -&gt; <a class='type' href='../../term/type.Result.html' title='term::Result'>Result</a>&lt;<a class='struct' href='../../term/terminfo/struct.TermInfo.html' title='term::terminfo::TermInfo'>TermInfo</a>&gt;</code></h4>
 <div class='docblock'><p>Create a TermInfo based on current environment.</p>
 </div><h4 id='method.from_name' class='method'><code>fn <a href='#method.from_name' class='fnname'>from_name</a>(name: &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; <a class='type' href='../../term/type.Result.html' title='term::Result'>Result</a>&lt;<a class='struct' href='../../term/terminfo/struct.TermInfo.html' title='term::terminfo::TermInfo'>TermInfo</a>&gt;</code></h4>
 <div class='docblock'><p>Create a TermInfo for the named terminal.</p>
 </div><h4 id='method.from_path' class='method'><code>fn <a href='#method.from_path' class='fnname'>from_path</a>&lt;P: <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html' title='core::convert::AsRef'>AsRef</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/std/path/struct.Path.html' title='std::path::Path'>Path</a>&gt;&gt;(path: P) -&gt; <a class='type' href='../../term/type.Result.html' title='term::Result'>Result</a>&lt;<a class='struct' href='../../term/terminfo/struct.TermInfo.html' title='term::terminfo::TermInfo'>TermInfo</a>&gt;</code></h4>
 <div class='docblock'><p>Parse the given TermInfo.</p>
-</div></div><h2 id='implementations'>Trait Implementations</h2><h3 id='derived_implementations'>Derived Implementations </h3><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> for <a class='struct' href='../../term/terminfo/struct.TermInfo.html' title='term::terminfo::TermInfo'>TermInfo</a></code></h3><div class='impl-items'><h4 id='method.fmt' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#method.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class='struct' href='https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='core::fmt::Formatter'>Formatter</a>) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/core/fmt/type.Result.html' title='core::fmt::Result'>Result</a></code></h4>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 id='derived_implementations'>Derived Implementations </h3><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> for <a class='struct' href='../../term/terminfo/struct.TermInfo.html' title='term::terminfo::TermInfo'>TermInfo</a></code></h3><div class='impl-items'><h4 id='method.fmt' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class='struct' href='https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='core::fmt::Formatter'>Formatter</a>) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/core/fmt/type.Result.html' title='core::fmt::Result'>Result</a></code></h4>
 </div></section>
     <section id='search' class="content hidden"></section>
 

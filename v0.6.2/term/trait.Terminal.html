@@ -11,6 +11,7 @@
 
     <link rel="stylesheet" type="text/css" href="../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../main.css">
+    
 
     <link rel="shortcut icon" href="https://doc.rust-lang.org/favicon.ico">
     
@@ -43,12 +44,12 @@
 
     <section id='main' class="content trait">
 <h1 class='fqn'><span class='in-band'>Trait <a href='index.html'>term</a>::<wbr><a class='trait' href=''>Terminal</a></span><span class='out-of-band'><span id='render-detail'>
-            <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
-                [<span class='inner'>&#x2212;</span>]
-            </a>
-        </span><a id='src-981' class='srclink' href='../src/term/lib.rs.html#328-402' title='goto source code'>[src]</a></span></h1>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a id='src-976' class='srclink' href='../src/term/lib.rs.html#328-402' title='goto source code'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait Terminal: <a class='trait' href='https://doc.rust-lang.org/nightly/std/io/trait.Write.html' title='std::io::Write'>Write</a> {
-    type Output: <a class='trait' href='https://doc.rust-lang.org/nightly/std/io/trait.Write.html' title='std::io::Write'>Write</a>;
+    type <a href='#associatedtype.Output' class='type'>Output</a>: <a class='trait' href='https://doc.rust-lang.org/nightly/std/io/trait.Write.html' title='std::io::Write'>Write</a>;
     fn <a href='#tymethod.fg' class='fnname'>fg</a>(&amp;mut self, color: <a class='type' href='../term/color/type.Color.html' title='term::color::Color'>Color</a>) -&gt; <a class='type' href='../term/type.Result.html' title='term::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>&gt;;
     fn <a href='#tymethod.bg' class='fnname'>bg</a>(&amp;mut self, color: <a class='type' href='../term/color/type.Color.html' title='term::color::Color'>Color</a>) -&gt; <a class='type' href='../term/type.Result.html' title='term::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>&gt;;
     fn <a href='#tymethod.attr' class='fnname'>attr</a>(&amp;mut self, attr: <a class='enum' href='../term/enum.Attr.html' title='term::Attr'>Attr</a>) -&gt; <a class='type' href='../term/type.Result.html' title='term::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>&gt;;
@@ -67,7 +68,7 @@
 </div>
             <h2 id='associated-types'>Associated Types</h2>
             <div class='methods'>
-        <h3 id='associatedtype.Output' class='method stab '><code>type Output: <a class='trait' href='https://doc.rust-lang.org/nightly/std/io/trait.Write.html' title='std::io::Write'>Write</a></code></h3><div class='docblock'><p>The terminal&#39;s output writer type.</p>
+        <h3 id='associatedtype.Output' class='method stab '><code>type <a href='#associatedtype.Output' class='type'>Output</a>: <a class='trait' href='https://doc.rust-lang.org/nightly/std/io/trait.Write.html' title='std::io::Write'>Write</a></code></h3><div class='docblock'><p>The terminal&#39;s output writer type.</p>
 </div></div>
             <h2 id='required-methods'>Required Methods</h2>
             <div class='methods'>
@@ -121,8 +122,8 @@ error.</p>
         <ul class='item-list' id='implementors-list'>
     <li><code>impl&lt;T: <a class='trait' href='https://doc.rust-lang.org/nightly/std/io/trait.Write.html' title='std::io::Write'>Write</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a>&gt; <a class='trait' href='../term/trait.Terminal.html' title='term::Terminal'>Terminal</a> for <a class='struct' href='../term/terminfo/struct.TerminfoTerminal.html' title='term::terminfo::TerminfoTerminal'>TerminfoTerminal</a>&lt;T&gt;</code></li>
 </ul><script type="text/javascript" async
-                              src="../implementors/term/trait.Terminal.js">
-                      </script></section>
+                         src="../implementors/term/trait.Terminal.js">
+                 </script></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>

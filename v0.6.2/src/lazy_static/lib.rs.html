@@ -4,13 +4,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-88ac128001ac3a9a/lazy_static-0.2.0/src/lib.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-88ac128001ac3a9a/lazy_static-0.2.1/src/lib.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>lib.rs.html -- source</title>
 
     <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../main.css">
+    
 
     
     
@@ -169,6 +170,15 @@
 <span id="126">126</span>
 <span id="127">127</span>
 <span id="128">128</span>
+<span id="129">129</span>
+<span id="130">130</span>
+<span id="131">131</span>
+<span id="132">132</span>
+<span id="133">133</span>
+<span id="134">134</span>
+<span id="135">135</span>
+<span id="136">136</span>
+<span id="137">137</span>
 </pre><pre class='rust '>
 <span class='doccomment'>/*!
 A macro for declaring lazily evaluated statics.
@@ -242,12 +252,20 @@ The `Deref` implementation uses a hidden static variable that is guarded by a at
 
 <span class='attribute'>#<span class='op'>!</span>[<span class='ident'>cfg_attr</span>(<span class='ident'>feature</span><span class='op'>=</span><span class='string'>&quot;nightly&quot;</span>, <span class='ident'>feature</span>(<span class='ident'>const_fn</span>, <span class='ident'>allow_internal_unstable</span>, <span class='ident'>core_intrinsics</span>))]</span>
 
+<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>no_std</span>]</span>
+
 <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>not</span>(<span class='ident'>feature</span><span class='op'>=</span><span class='string'>&quot;nightly&quot;</span>))]</span>
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>lazy</span>;
 
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span><span class='op'>=</span><span class='string'>&quot;nightly&quot;</span>)]</span>
+<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>all</span>(<span class='ident'>feature</span><span class='op'>=</span><span class='string'>&quot;nightly&quot;</span>, <span class='ident'>not</span>(<span class='ident'>feature</span><span class='op'>=</span><span class='string'>&quot;spin_no_std&quot;</span>)))]</span>
 <span class='attribute'>#[<span class='ident'>path</span><span class='op'>=</span><span class='string'>&quot;nightly_lazy.rs&quot;</span>]</span>
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>lazy</span>;
+
+<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>all</span>(<span class='ident'>feature</span><span class='op'>=</span><span class='string'>&quot;nightly&quot;</span>, <span class='ident'>feature</span><span class='op'>=</span><span class='string'>&quot;spin_no_std&quot;</span>))]</span>
+<span class='attribute'>#[<span class='ident'>path</span><span class='op'>=</span><span class='string'>&quot;core_lazy.rs&quot;</span>]</span>
+<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>lazy</span>;
+
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>core</span>::<span class='ident'>ops</span>::<span class='ident'>Deref</span> <span class='kw'>as</span> <span class='ident'>__Deref</span>;
 
 <span class='attribute'>#[<span class='ident'>macro_export</span>]</span>
 <span class='attribute'>#[<span class='ident'>cfg_attr</span>(<span class='ident'>feature</span><span class='op'>=</span><span class='string'>&quot;nightly&quot;</span>, <span class='ident'>allow_internal_unstable</span>)]</span>
@@ -260,8 +278,9 @@ The `Deref` implementation uses a hidden static variable that is guarded by a at
     };
     (<span class='kw-2'>@</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>VIS</span>:<span class='ident'>ident</span>, $(<span class='attribute'>#[<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>attr</span>:<span class='ident'>meta</span>]</span>)<span class='op'>*</span> <span class='kw'>static</span> <span class='kw-2'>ref</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>N</span>:<span class='ident'>ident</span> : <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>T</span>:<span class='ident'>ty</span> <span class='op'>=</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>e</span>:<span class='ident'>expr</span>; $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span>:<span class='ident'>tt</span>)<span class='op'>*</span>) <span class='op'>=&gt;</span> {
         <span class='macro'>lazy_static</span><span class='macro'>!</span>(<span class='kw-2'>@</span><span class='ident'>MAKE</span> <span class='ident'>TY</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>VIS</span>, $(<span class='attribute'>#[<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>attr</span>]</span>)<span class='op'>*</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>N</span>);
-        <span class='kw'>impl</span> ::<span class='ident'>std</span>::<span class='ident'>ops</span>::<span class='ident'>Deref</span> <span class='kw'>for</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>N</span> {
+        <span class='kw'>impl</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>crate</span>::<span class='ident'>__Deref</span> <span class='kw'>for</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>N</span> {
             <span class='kw'>type</span> <span class='ident'>Target</span> <span class='op'>=</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>T</span>;
+            <span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>unsafe_code</span>)]</span>
             <span class='kw'>fn</span> <span class='ident'>deref</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>T</span> {
                 <span class='kw'>unsafe</span> {
                     <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
