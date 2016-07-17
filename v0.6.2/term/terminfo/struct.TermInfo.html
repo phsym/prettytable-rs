@@ -63,14 +63,17 @@
                              <td id='structfield.numbers'><code>numbers</code></td><td><div class='docblock'><p>Map of capability name to numeric value</p>
 </div></td></tr><tr class='stab '>
                              <td id='structfield.strings'><code>strings</code></td><td><div class='docblock'><p>Map of capability name to raw (unexpanded) string</p>
-</div></td></tr></table><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl <a class='struct' href='../../term/terminfo/struct.TermInfo.html' title='term::terminfo::TermInfo'>TermInfo</a></code></h3><div class='impl-items'><h4 id='method.from_env' class='method'><code>fn <a href='#method.from_env' class='fnname'>from_env</a>() -&gt; <a class='type' href='../../term/type.Result.html' title='term::Result'>Result</a>&lt;<a class='struct' href='../../term/terminfo/struct.TermInfo.html' title='term::terminfo::TermInfo'>TermInfo</a>&gt;</code></h4>
+</div></td></tr></table><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class='struct' href='../../term/terminfo/struct.TermInfo.html' title='term::terminfo::TermInfo'>TermInfo</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-38' class='srclink' href='../../src/term/terminfo/mod.rs.html#44-82' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.from_env' class='method'><code>fn <a href='#method.from_env' class='fnname'>from_env</a>() -&gt; <a class='type' href='../../term/type.Result.html' title='term::Result'>Result</a>&lt;<a class='struct' href='../../term/terminfo/struct.TermInfo.html' title='term::terminfo::TermInfo'>TermInfo</a>&gt;</code></h4>
 <div class='docblock'><p>Create a TermInfo based on current environment.</p>
 </div><h4 id='method.from_name' class='method'><code>fn <a href='#method.from_name' class='fnname'>from_name</a>(name: &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; <a class='type' href='../../term/type.Result.html' title='term::Result'>Result</a>&lt;<a class='struct' href='../../term/terminfo/struct.TermInfo.html' title='term::terminfo::TermInfo'>TermInfo</a>&gt;</code></h4>
 <div class='docblock'><p>Create a TermInfo for the named terminal.</p>
 </div><h4 id='method.from_path' class='method'><code>fn <a href='#method.from_path' class='fnname'>from_path</a>&lt;P: <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html' title='core::convert::AsRef'>AsRef</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/std/path/struct.Path.html' title='std::path::Path'>Path</a>&gt;&gt;(path: P) -&gt; <a class='type' href='../../term/type.Result.html' title='term::Result'>Result</a>&lt;<a class='struct' href='../../term/terminfo/struct.TermInfo.html' title='term::terminfo::TermInfo'>TermInfo</a>&gt;</code></h4>
 <div class='docblock'><p>Parse the given TermInfo.</p>
-</div></div><h2 id='implementations'>Trait Implementations</h2><h3 id='derived_implementations'>Derived Implementations </h3><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> for <a class='struct' href='../../term/terminfo/struct.TermInfo.html' title='term::terminfo::TermInfo'>TermInfo</a></code></h3><div class='impl-items'><h4 id='method.fmt' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class='struct' href='https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='core::fmt::Formatter'>Formatter</a>) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/core/fmt/type.Result.html' title='core::fmt::Result'>Result</a></code></h4>
-</div></section>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 id='derived_implementations'>Derived Implementations </h3><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> for <a class='struct' href='../../term/terminfo/struct.TermInfo.html' title='term::terminfo::TermInfo'>TermInfo</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-29' class='srclink' href='../../src/term/terminfo/mod.rs.html#32' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.fmt' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class='struct' href='https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='core::fmt::Formatter'>Formatter</a>) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/core/fmt/type.Result.html' title='core::fmt::Result'>Result</a></code></h4>
+<div class='docblock'><p>Formats the value using the given formatter.</p>
+</div></div></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>
@@ -93,6 +96,8 @@
                     <dd>Move down in search results</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>
 

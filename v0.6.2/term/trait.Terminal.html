@@ -47,7 +47,7 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-976' class='srclink' href='../src/term/lib.rs.html#328-402' title='goto source code'>[src]</a></span></h1>
+               </span><a id='src-971' class='srclink' href='../src/term/lib.rs.html#328-402' title='goto source code'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait Terminal: <a class='trait' href='https://doc.rust-lang.org/nightly/std/io/trait.Write.html' title='std::io::Write'>Write</a> {
     type <a href='#associatedtype.Output' class='type'>Output</a>: <a class='trait' href='https://doc.rust-lang.org/nightly/std/io/trait.Write.html' title='std::io::Write'>Write</a>;
     fn <a href='#tymethod.fg' class='fnname'>fg</a>(&amp;mut self, color: <a class='type' href='../term/color/type.Color.html' title='term::color::Color'>Color</a>) -&gt; <a class='type' href='../term/type.Result.html' title='term::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>&gt;;
@@ -120,7 +120,7 @@ error.</p>
 </div></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
-    <li><code>impl&lt;T: <a class='trait' href='https://doc.rust-lang.org/nightly/std/io/trait.Write.html' title='std::io::Write'>Write</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a>&gt; <a class='trait' href='../term/trait.Terminal.html' title='term::Terminal'>Terminal</a> for <a class='struct' href='../term/terminfo/struct.TerminfoTerminal.html' title='term::terminfo::TerminfoTerminal'>TerminfoTerminal</a>&lt;T&gt;</code></li>
+    <li><code>impl&lt;T: <a class='trait' href='https://doc.rust-lang.org/nightly/std/io/trait.Write.html' title='std::io::Write'>Write</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a>&gt; Terminal for <a class='struct' href='../term/terminfo/struct.TerminfoTerminal.html' title='term::terminfo::TerminfoTerminal'>TerminfoTerminal</a>&lt;T&gt;</code></li>
 </ul><script type="text/javascript" async
                          src="../implementors/term/trait.Terminal.js">
                  </script></section>
@@ -146,6 +146,8 @@ error.</p>
                     <dd>Move down in search results</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>
 

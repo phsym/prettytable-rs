@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-88ac128001ac3a9a/libc-0.2.11/src/unix/notbsd/linux/other/b64/x86_64.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/libc-0.2.14/src/unix/notbsd/linux/other/b64/x86_64.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>x86_64.rs.html -- source</title>
@@ -151,6 +151,33 @@
 <span id="107">107</span>
 <span id="108">108</span>
 <span id="109">109</span>
+<span id="110">110</span>
+<span id="111">111</span>
+<span id="112">112</span>
+<span id="113">113</span>
+<span id="114">114</span>
+<span id="115">115</span>
+<span id="116">116</span>
+<span id="117">117</span>
+<span id="118">118</span>
+<span id="119">119</span>
+<span id="120">120</span>
+<span id="121">121</span>
+<span id="122">122</span>
+<span id="123">123</span>
+<span id="124">124</span>
+<span id="125">125</span>
+<span id="126">126</span>
+<span id="127">127</span>
+<span id="128">128</span>
+<span id="129">129</span>
+<span id="130">130</span>
+<span id="131">131</span>
+<span id="132">132</span>
+<span id="133">133</span>
+<span id="134">134</span>
+<span id="135">135</span>
+<span id="136">136</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! x86_64-specific definitions for 64-bit linux-like values</span>
 
@@ -158,6 +185,7 @@
 <span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>wchar_t</span> <span class='op'>=</span> <span class='ident'>i32</span>;
 <span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>nlink_t</span> <span class='op'>=</span> <span class='ident'>u64</span>;
 <span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>blksize_t</span> <span class='op'>=</span> <span class='ident'>i64</span>;
+<span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>greg_t</span> <span class='op'>=</span> <span class='ident'>i64</span>;
 
 <span class='macro'>s</span><span class='macro'>!</span> {
     <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>stat</span> {
@@ -206,8 +234,34 @@
         <span class='ident'>__size</span>: [<span class='ident'>u64</span>; <span class='number'>7</span>]
     }
 
+    <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>_libc_fpxreg</span> {
+        <span class='kw'>pub</span> <span class='ident'>significand</span>: [<span class='ident'>u16</span>; <span class='number'>4</span>],
+        <span class='kw'>pub</span> <span class='ident'>exponent</span>: <span class='ident'>u16</span>,
+        <span class='ident'>__private</span>: [<span class='ident'>u16</span>; <span class='number'>3</span>],
+    }
+
+    <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>_libc_xmmreg</span> {
+        <span class='kw'>pub</span> <span class='ident'>element</span>: [<span class='ident'>u32</span>; <span class='number'>4</span>],
+    }
+
+    <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>_libc_fpstate</span> {
+        <span class='kw'>pub</span> <span class='ident'>cwd</span>: <span class='ident'>u16</span>,
+        <span class='kw'>pub</span> <span class='ident'>swd</span>: <span class='ident'>u16</span>,
+        <span class='kw'>pub</span> <span class='ident'>ftw</span>: <span class='ident'>u16</span>,
+        <span class='kw'>pub</span> <span class='ident'>fop</span>: <span class='ident'>u16</span>,
+        <span class='kw'>pub</span> <span class='ident'>rip</span>: <span class='ident'>u64</span>,
+        <span class='kw'>pub</span> <span class='ident'>rdp</span>: <span class='ident'>u64</span>,
+        <span class='kw'>pub</span> <span class='ident'>mxcsr</span>: <span class='ident'>u32</span>,
+        <span class='kw'>pub</span> <span class='ident'>mxcr_mask</span>: <span class='ident'>u32</span>,
+        <span class='kw'>pub</span> <span class='ident'>_st</span>: [<span class='ident'>_libc_fpxreg</span>; <span class='number'>8</span>],
+        <span class='kw'>pub</span> <span class='ident'>_xmm</span>: [<span class='ident'>_libc_xmmreg</span>; <span class='number'>16</span>],
+        <span class='ident'>__private</span>: [<span class='ident'>u64</span>; <span class='number'>12</span>],
+    }
+
     <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>mcontext_t</span> {
-        <span class='ident'>__private</span>: [<span class='ident'>u64</span>; <span class='number'>32</span>],
+        <span class='kw'>pub</span> <span class='ident'>gregs</span>: [<span class='ident'>greg_t</span>; <span class='number'>23</span>],
+        <span class='kw'>pub</span> <span class='ident'>fpregs</span>: <span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>_libc_fpstate</span>,
+        <span class='ident'>__private</span>: [<span class='ident'>u64</span>; <span class='number'>8</span>],
     }
 
     <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>ucontext_t</span> {
@@ -285,6 +339,8 @@
                     <dd>Move down in search results</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>
 

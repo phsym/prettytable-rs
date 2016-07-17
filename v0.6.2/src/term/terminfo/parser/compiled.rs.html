@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-88ac128001ac3a9a/term-0.4.4/src/terminfo/parser/compiled.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/term-0.4.4/src/terminfo/parser/compiled.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>compiled.rs.html -- source</title>
@@ -375,7 +375,7 @@
     <span class='kw'>let</span> <span class='ident'>bools_map</span>: <span class='ident'>HashMap</span><span class='op'>&lt;</span><span class='ident'>String</span>, <span class='ident'>bool</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span> {
         (<span class='number'>0</span>..<span class='ident'>bools_bytes</span>).<span class='ident'>filter_map</span>(<span class='op'>|</span><span class='ident'>i</span><span class='op'>|</span> <span class='kw'>match</span> <span class='ident'>read_byte</span>(<span class='ident'>file</span>) {
             <span class='prelude-val'>Err</span>(<span class='ident'>e</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='prelude-val'>Err</span>(<span class='ident'>e</span>)),
-            <span class='prelude-val'>Ok</span>(<span class='number'>1</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='prelude-val'>Ok</span>((<span class='ident'>bnames</span>[<span class='ident'>i</span>].<span class='ident'>to_string</span>(), <span class='boolval'>true</span>))),
+            <span class='prelude-val'>Ok</span>(<span class='number'>1</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='prelude-val'>Ok</span>((<span class='ident'>bnames</span>[<span class='ident'>i</span>].<span class='ident'>to_string</span>(), <span class='boolvalue'>true</span>))),
             <span class='prelude-val'>Ok</span>(_) <span class='op'>=&gt;</span> <span class='prelude-val'>None</span>
         }).<span class='ident'>collect</span>()
     };
@@ -470,7 +470,7 @@
 <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>test</span>)]</span>
 <span class='kw'>mod</span> <span class='ident'>test</span> {
 
-    <span class='kw'>use</span> <span class='ident'>super</span>::{<span class='ident'>boolnames</span>, <span class='ident'>boolfnames</span>, <span class='ident'>numnames</span>, <span class='ident'>numfnames</span>, <span class='ident'>stringnames</span>, <span class='ident'>stringfnames</span>};
+    <span class='kw'>use</span> <span class='kw'>super</span>::{<span class='ident'>boolnames</span>, <span class='ident'>boolfnames</span>, <span class='ident'>numnames</span>, <span class='ident'>numfnames</span>, <span class='ident'>stringnames</span>, <span class='ident'>stringfnames</span>};
 
     <span class='attribute'>#[<span class='ident'>test</span>]</span>
     <span class='kw'>fn</span> <span class='ident'>test_veclens</span>() {
@@ -503,6 +503,8 @@
                     <dd>Move down in search results</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>
 

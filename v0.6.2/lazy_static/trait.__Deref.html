@@ -43,11 +43,11 @@
     </nav>
 
     <section id='main' class="content trait">
-<h1 class='fqn'><span class='in-band'>Trait <a href='index.html'>lazy_static</a>::<wbr><a class='trait' href=''>__Deref</a></span><span class='out-of-band'><span id='render-detail'>
+<h1 class='fqn'><span class='in-band'>Trait <a href='index.html'>lazy_static</a>::<wbr><a class='trait' href=''>__Deref</a></span><span class='out-of-band'><span class='since' title='Stable since Rust version 1.0.0'>1.0.0</span><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-21758' class='srclink' href='https://doc.rust-lang.org/nightly/core/ops/trait.__Deref.html?gotosrc=21758' title='goto source code'>[src]</a></span></h1>
+               </span><a id='src-22331' class='srclink' href='https://doc.rust-lang.org/nightly/core/ops/trait.__Deref.html?gotosrc=22331' title='goto source code'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait __Deref {
     type <a href='#associatedtype.Target' class='type'>Target</a>: ?<a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a>;
     fn <a href='#tymethod.deref' class='fnname'>deref</a>(&amp;self) -&gt; &amp;Self::<a class='trait' href='../lazy_static/trait.__Deref.html' title='lazy_static::__Deref'>Target</a>;
@@ -90,7 +90,14 @@ struct.</p>
 </div></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
-    </ul><script type="text/javascript" async
+    <li><code>impl&lt;T&gt; Deref for <a class='struct' href='https://doc.rust-lang.org/nightly/core/nonzero/struct.NonZero.html' title='core::nonzero::NonZero'>NonZero</a>&lt;T&gt; <span class='where'>where T: <a class='trait' href='https://doc.rust-lang.org/nightly/core/nonzero/trait.Zeroable.html' title='core::nonzero::Zeroable'>Zeroable</a></span></code></li>
+<li><code>impl&lt;T&gt; Deref for <a class='struct' href='https://doc.rust-lang.org/nightly/core/ptr/struct.Unique.html' title='core::ptr::Unique'>Unique</a>&lt;T&gt; <span class='where'>where T: ?<a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a></span></code></li>
+<li><code>impl&lt;T&gt; Deref for <a class='struct' href='https://doc.rust-lang.org/nightly/core/ptr/struct.Shared.html' title='core::ptr::Shared'>Shared</a>&lt;T&gt; <span class='where'>where T: ?<a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a></span></code></li>
+<li><code>impl&lt;'a, T&gt; Deref for &amp;'a T <span class='where'>where T: ?<a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a></span></code></li>
+<li><code>impl&lt;'a, T&gt; Deref for &amp;'a mut T <span class='where'>where T: ?<a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a></span></code></li>
+<li><code>impl&lt;'b, T&gt; Deref for <a class='struct' href='https://doc.rust-lang.org/nightly/core/cell/struct.Ref.html' title='core::cell::Ref'>Ref</a>&lt;'b, T&gt; <span class='where'>where T: ?<a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a></span></code></li>
+<li><code>impl&lt;'b, T&gt; Deref for <a class='struct' href='https://doc.rust-lang.org/nightly/core/cell/struct.RefMut.html' title='core::cell::RefMut'>RefMut</a>&lt;'b, T&gt; <span class='where'>where T: ?<a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a></span></code></li>
+</ul><script type="text/javascript" async
                          src="../implementors/core/ops/trait.__Deref.js">
                  </script></section>
     <section id='search' class="content hidden"></section>
@@ -115,6 +122,8 @@ struct.</p>
                     <dd>Move down in search results</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>
 
