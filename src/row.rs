@@ -49,10 +49,7 @@ impl Row {
 	/// Get the minimum width required by the cell in the column `column`.
 	/// Return 0 if the cell does not exist in this row
 	pub fn get_cell_width(&self, column: usize) -> usize {
-		match self.cells.get(column) {
-			Some(cell) => cell.get_width(),
-			None => 0
-		}
+		self.cells.get(column).map(|cell| cell.get_width()).unwrap_or(0)
 	}
 
 	/// Get the cell at index `idx`
