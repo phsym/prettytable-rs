@@ -70,17 +70,17 @@ impl <'a> TableSlice<'a> {
 				cnum = l;
 			}
 		}
-		return cnum;
+		cnum
 	}
 
 	/// Get the number of rows
 	pub fn len(&self) -> usize {
-		return self.rows.len();
+		self.rows.len()
 	}
 
 	/// Get an immutable reference to a row
 	pub fn get_row(&self, row: usize) -> Option<&Row> {
-		return self.rows.get(row);
+		self.rows.get(row)
 	}
 
 	/// Get the width of the column at position `col_idx`.
@@ -96,7 +96,7 @@ impl <'a> TableSlice<'a> {
 				width = l;
 			}
 		}
-		return width;
+		width
 	}
 
 	/// Get the width of all columns, and return a slice
@@ -107,12 +107,12 @@ impl <'a> TableSlice<'a> {
 		for i in 0..colnum {
 			col_width[i] = self.get_column_width(i);
 		}
-		return col_width;
+		col_width
 	}
 
 	/// Returns an iterator over the immutable cells of the column specified by `column`
 	pub fn column_iter(&self, column: usize) -> ColumnIter {
-		return ColumnIter(self.rows.iter(), column);
+		ColumnIter(self.rows.iter(), column)
 	}
 
 	/// Returns an iterator over immutable rows
@@ -139,17 +139,17 @@ impl <'a> TableSlice<'a> {
 			}
 		}
 		try!(self.format.print_line_separator(out, &col_width, LinePosition::Bottom));
-		return out.flush();
+		out.flush()
 	}
 
 	/// Print the table to `out`
 	pub fn print<T: Write+?Sized>(&self, out: &mut T) -> Result<(), Error> {
-		return self.__print(out, Row::print);
+		self.__print(out, Row::print)
 	}
 
 	/// Print the table to terminal `out`, applying styles when needed
 	pub fn print_term<T: Terminal+?Sized>(&self, out: &mut T) -> Result<(), Error> {
-		return self.__print(out, Row::print_term);
+		self.__print(out, Row::print_term)
 	}
 
 	/// Print the table to standard output. Colors won't be displayed unless
@@ -186,23 +186,23 @@ impl <'a> IntoIterator for &'a TableSlice<'a> {
 	type Item=&'a Row;
 	type IntoIter=Iter<'a, Row>;
 	fn into_iter(self) -> Self::IntoIter {
-		return self.row_iter();
+		self.row_iter()
 	}
 }
 
 impl Table {
 	/// Create an empty table
 	pub fn new() -> Table {
-		return Self::init(Vec::new());
+		Self::init(Vec::new())
 	}
 
 	/// Create a table initialized with `rows`
 	pub fn init(rows: Vec<Row>) -> Table {
-		return Table {
+		Table {
 			rows: rows,
 			titles: Box::new(None),
 			format: Box::new(*consts::FORMAT_DEFAULT)
-		};
+		}
 	}
 
 	/// Change the table format. Eg : Separators
@@ -212,12 +212,12 @@ impl Table {
 
 	/// Compute and return the number of column
 	pub fn get_column_num(&self) -> usize {
-		return self.as_ref().get_column_num();
+		self.as_ref().get_column_num()
 	}
 
 	/// Get the number of rows
 	pub fn len(&self) -> usize {
-		return self.rows.len();
+		self.rows.len()
 	}
 
 	/// Set the optional title lines
@@ -232,12 +232,12 @@ impl Table {
 
 	/// Get a mutable reference to a row
 	pub fn get_mut_row(&mut self, row: usize) -> Option<&mut Row> {
-		return self.rows.get_mut(row);
+		self.rows.get_mut(row)
 	}
 
 	/// Get an immutable reference to a row
 	pub fn get_row(&self, row: usize) -> Option<&Row> {
-		return self.rows.get(row);
+		self.rows.get(row)
 	}
 
 	/// Append a row in the table, transferring ownership of this row to the table
@@ -245,12 +245,12 @@ impl Table {
 	pub fn add_row(&mut self, row: Row) -> &mut Row {
 		self.rows.push(row);
 		let l = self.rows.len()-1;
-		return &mut self.rows[l];
+		&mut self.rows[l]
 	}
 
 	/// Append an empty row in the table. Return a mutable reference to this new row.
 	pub fn add_empty_row(&mut self) -> &mut Row {
-		return self.add_row(Row::default());
+		self.add_row(Row::default())
 	}
 
 	/// Insert `row` at the position `index`, and return a mutable reference to this row.
@@ -258,9 +258,9 @@ impl Table {
 	pub fn insert_row(&mut self, index: usize, row: Row) -> &mut Row {
 		if index < self.rows.len() {
 			self.rows.insert(index, row);
-			return &mut self.rows[index];
+			&mut self.rows[index]
 		} else {
-			return self.add_row(row);
+			self.add_row(row)
 		}
 	}
 
@@ -268,7 +268,7 @@ impl Table {
 	pub fn set_element(&mut self, element: &str, column: usize, row: usize) -> Result<(), &str> {
 		let rowline = try!(self.get_mut_row(row).ok_or("Cannot find row"));
 		// TODO: If a cell already exist, copy it's alignment parameter
-		return rowline.set_cell(Cell::new(element), column);
+		rowline.set_cell(Cell::new(element), column)
 	}
 
 	/// Remove the row at position `index`. Silently skip if the row does not exist
@@ -280,12 +280,12 @@ impl Table {
 
 	/// Return an iterator over the immutable cells of the column specified by `column`
 	pub fn column_iter(&self, column: usize) -> ColumnIter {
-		return ColumnIter(self.rows.iter(), column);
+		ColumnIter(self.rows.iter(), column)
 	}
 
 	/// Return an iterator over the mutable cells of the column specified by `column`
 	pub fn column_iter_mut(&mut self, column: usize) -> ColumnIterMut {
-		return ColumnIterMut(self.rows.iter_mut(), column);
+		ColumnIterMut(self.rows.iter_mut(), column)
 	}
 
 	/// Returns an iterator over immutable rows
@@ -300,12 +300,12 @@ impl Table {
 
 	/// Print the table to `out`
 	pub fn print<T: Write+?Sized>(&self, out: &mut T) -> Result<(), Error> {
-		return self.as_ref().print(out);
+		self.as_ref().print(out)
 	}
 
 	/// Print the table to terminal `out`, applying styles when needed
 	pub fn print_term<T: Terminal+?Sized>(&self, out: &mut T) -> Result<(), Error> {
-		return self.as_ref().print_term(out);
+		self.as_ref().print_term(out)
 	}
 
 	/// Print the table to standard output. Colors won't be displayed unless
@@ -335,26 +335,26 @@ impl Table {
 impl Index<usize> for Table {
 	type Output = Row;
 	fn index(&self, idx: usize) -> &Self::Output {
-		return &self.rows[idx];
+		&self.rows[idx]
 	}
 }
 
 impl <'a> Index<usize> for TableSlice<'a> {
 	type Output = Row;
 	fn index(&self, idx: usize) -> &Self::Output {
-		return &self.rows[idx];
+		&self.rows[idx]
 	}
 }
 
 impl IndexMut<usize> for Table {
 	fn index_mut(&mut self, idx: usize) -> &mut Self::Output {
-		return &mut self.rows[idx];
+		&mut self.rows[idx]
 	}
 }
 
 impl fmt::Display for Table {
 	fn fmt(&self, fmt: &mut fmt::Formatter) -> Result<(), fmt::Error> {
-		return self.as_ref().fmt(fmt);
+		self.as_ref().fmt(fmt)
 	}
 }
 
@@ -364,19 +364,19 @@ impl <'a> fmt::Display for TableSlice<'a> {
 		if let Err(_) = self.print(&mut writer) {
 			return Err(fmt::Error)
 		}
-		return fmt.write_str(writer.as_string());
+		fmt.write_str(writer.as_string())
 	}
 }
 
 impl <B: ToString, A: IntoIterator<Item=B>> FromIterator<A> for Table {
 	fn from_iter<T>(iterator: T) -> Table where T: IntoIterator<Item=A> {
-		return Self::init(iterator.into_iter().map(|r| Row::from(r)).collect());
+		Self::init(iterator.into_iter().map(|r| Row::from(r)).collect())
 	}
 }
 
 impl <T, A, B> From<T> for Table where B: ToString, A: IntoIterator<Item=B>, T : IntoIterator<Item=A> {
 	fn from(it: T) -> Table {
-		return Self::from_iter(it);
+		Self::from_iter(it)
 	}
 }
 
@@ -384,7 +384,7 @@ impl <'a> IntoIterator for &'a Table {
 	type Item=&'a Row;
 	type IntoIter=Iter<'a, Row>;
 	fn into_iter(self) -> Self::IntoIter {
-		return self.as_ref().row_iter();
+		self.as_ref().row_iter()
 	}
 }
 
@@ -392,7 +392,7 @@ impl <'a> IntoIterator for &'a mut Table {
 	type Item=&'a mut Row;
 	type IntoIter=IterMut<'a, Row>;
 	fn into_iter(self) -> Self::IntoIter {
-		return self.row_iter_mut();
+		self.row_iter_mut()
 	}
 }
 
@@ -402,7 +402,7 @@ pub struct ColumnIter<'a>(std::slice::Iter<'a, Row>, usize);
 impl <'a> std::iter::Iterator for ColumnIter<'a> {
 	type Item = &'a Cell;
 	fn next(&mut self) -> Option<&'a Cell> {
-		return match self.0.next() {
+		match self.0.next() {
 			None => None,
 			Some(row) => row.get_cell(self.1)
 		}
@@ -415,7 +415,7 @@ pub struct ColumnIterMut<'a>(std::slice::IterMut<'a, Row>, usize);
 impl <'a> std::iter::Iterator for ColumnIterMut<'a> {
 	type Item = &'a mut Cell;
 	fn next(&mut self) -> Option<&'a mut Cell> {
-		return match self.0.next() {
+		match self.0.next() {
 			None => None,
 			Some(row) => row.get_mut_cell(self.1)
 		}
@@ -424,18 +424,18 @@ impl <'a> std::iter::Iterator for ColumnIterMut<'a> {
 
 impl <'a> AsRef<TableSlice<'a>> for TableSlice<'a> {
 	fn as_ref(&self) -> &TableSlice<'a> {
-		return self;
+		self
 	}
 }
 
 impl <'a> AsRef<TableSlice<'a>> for Table {
 	fn as_ref(&self) -> &TableSlice<'a> {
-		return unsafe {
+		unsafe {
 			// All this is a bit hacky. Let's try to find something else
 			let s = &mut *((self as *const Table) as *mut Table);
 			s.rows.shrink_to_fit();
-			return transmute(self);
-		};
+			transmute(self)
+		}
 	}
 }
 
@@ -451,7 +451,7 @@ impl <'a, T, E> Slice<'a, E> for T where T: AsRef<TableSlice<'a>>, [Row]: Index<
 	type Output = TableSlice<'a>;
 	fn slice(&'a self, arg: E) -> Self::Output {
 		let sl = self.as_ref();
-		return TableSlice {
+		TableSlice {
 			format: sl.format,
 			titles: sl.titles,
 			rows: sl.rows.index(arg)

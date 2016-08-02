@@ -42,7 +42,7 @@ impl Cell {
 	/// Create a new `Cell` initialized with content from `string`.
 	/// By default, content is align to `LEFT`
 	pub fn new(string: &str) -> Cell {
-		return Cell::new_align(string, Alignment::LEFT);
+		Cell::new_align(string, Alignment::LEFT)
 	}
 
 	/// Set text alignment in the cell
@@ -58,7 +58,7 @@ impl Cell {
 	/// Add a style attribute to the cell. Can be chained
 	pub fn with_style(mut self, attr: Attr) -> Cell {
 		self.style(attr);
-		return self;
+		self
 	}
 
 	/// Remove all style attributes and reset alignment to default (LEFT)
@@ -157,17 +157,17 @@ impl Cell {
 
 	/// Return the height of the cell
 	pub fn get_height(&self) -> usize {
-		return self.content.len();
+		self.content.len()
 	}
 
 	/// Return the width of the cell
 	pub fn get_width(&self) -> usize {
-		return self.width;
+		self.width
 	}
 
 	/// Return a copy of the full string contained in the cell
 	pub fn get_content(&self) -> String {
-		return self.content.join("\n");
+		self.content.join("\n")
 	}
 
 	/// Print a partial cell to `out`. Since the cell may be multi-lined,
@@ -179,7 +179,7 @@ impl Cell {
 			Some(s) => s.as_ref(),
 			None => ""
 		};
-		return print_align(out, self.align, c, ' ', col_width, skip_right_fill)
+		print_align(out, self.align, c, ' ', col_width, skip_right_fill)
 	}
 
 	/// Apply style then call `print` to print the cell into a terminal
@@ -193,7 +193,7 @@ impl Cell {
 		}
 		try!(self.print(out, idx, col_width, skip_right_fill));
 		try!(out.reset().map_err(term_error_to_io_error));
-		return Ok(());
+		Ok(())
 	}
 }
 
@@ -206,25 +206,25 @@ fn term_error_to_io_error(te: ::term::Error) -> Error {
 
 impl <'a, T: ToString> From<&'a T> for Cell {
 	fn from(f: &T) -> Cell {
-		return Cell::new(&f.to_string());
+		Cell::new(&f.to_string())
 	}
 }
 
 impl ToString for Cell {
 	fn to_string(&self) -> String {
-		return self.get_content();
+		self.get_content()
 	}
 }
 
 impl Default for Cell {
 	/// Return a cell initialized with a single empty `String`, with LEFT alignment
 	fn default() -> Cell {
-		return Cell {
+		Cell {
 			content: vec!["".to_string(); 1],
 			width: 0,
 			align: Alignment::LEFT,
 			style: Vec::new()
-		};
+		}
 	}
 }
 

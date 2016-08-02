@@ -47,7 +47,7 @@ impl LineSeparator {
 	/// Create a new line separator instance where `line` is the character used to separate 2 lines
 	/// and `junc` is the one used for junctions between columns and lines
 	pub fn new(line: char, junc: char, ljunc: char, rjunc: char) -> LineSeparator {
-		return LineSeparator{line: line, junc: junc, ljunc: ljunc, rjunc: rjunc};
+		LineSeparator{line: line, junc: junc, ljunc: ljunc, rjunc: rjunc}
 	}
 
 	/// Print a full line separator to `out`. `col_width` is a slice containing the width of each column
@@ -65,13 +65,13 @@ impl LineSeparator {
 		if rborder {
 			try!(out.write_all(&[self.rjunc as u8]));
 		}
-		return out.write_all(NEWLINE);
+		out.write_all(NEWLINE)
 	}
 }
 
 impl Default for LineSeparator {
 	fn default() -> Self {
-		return LineSeparator::new('-', '+', '+', '+');
+		LineSeparator::new('-', '+', '+', '+')
 	}
 }
 
@@ -102,7 +102,7 @@ impl TableFormat {
 
 	/// Create a new empty TableFormat.
 	pub fn new() -> TableFormat {
-		 return TableFormat{
+		 TableFormat{
 			 csep: None,
 			 lborder: None,
 			 rborder: None,
@@ -112,12 +112,12 @@ impl TableFormat {
 			 bottom_sep: None,
 			 pad_left: 0,
 			 pad_right: 0
-		 };
+		 }
 	}
 
 	/// Return a tuple with left and right padding
 	pub fn get_padding(&self) -> (usize, usize) {
-		return (self.pad_left, self.pad_right);
+		(self.pad_left, self.pad_right)
 	}
 
 	/// Set left and right padding
@@ -168,32 +168,32 @@ impl TableFormat {
 
 	/// Print a full line separator to `out`. `col_width` is a slice containing the width of each column
 	pub fn print_line_separator<T: Write+?Sized>(&self, out: &mut T, col_width: &[usize], pos: LinePosition) -> Result<(), Error> {
-		return match *self.get_sep_for_line(pos) {
+		match *self.get_sep_for_line(pos) {
 			Some(ref l) => l.print(out, col_width, self.csep.is_some(), self.lborder.is_some(), self.rborder.is_some()),
 			None => Ok(())
-		};
+		}
 	}
 
 	pub fn get_column_separator(&self, pos: ColumnPosition) -> Option<char> {
-		return match pos {
+		match pos {
 			ColumnPosition::Left => self.lborder,
 			ColumnPosition::Intern => self.csep,
 			ColumnPosition::Right => self.rborder
-		};
+		}
 	}
 
 	/// Print a column separator or a table border
 	pub fn print_column_separator<T: Write+?Sized>(&self, out: &mut T, pos: ColumnPosition) -> Result<(), Error> {
-		return match self.get_column_separator(pos) {
+		match self.get_column_separator(pos) {
 			Some(s) => out.write_all(&[s as u8]),
 			None => Ok(())
-		};
+		}
 	}
 }
 
 impl Default for TableFormat {
 	fn default() -> Self {
-		return TableFormat::new();
+		TableFormat::new()
 	}
 }
 
@@ -204,44 +204,44 @@ pub struct FormatBuilder {
 
 impl FormatBuilder {
 	pub fn new() -> FormatBuilder {
-		return FormatBuilder {
+		FormatBuilder {
 			format: Box::new(TableFormat::new())
-		};
+		}
 	}
 
 	/// Set left and right padding
 	pub fn padding(mut self, left: usize, right: usize) -> Self {
 		self.format.padding(left, right);
-		return self;
+		self
 	}
 
 	/// Set the character used for internal column separation
 	pub fn column_separator(mut self, separator: char) -> Self {
 		self.format.column_separator(separator);
-		return self;
+		self
 	}
 
 	/// Set the character used for table borders
 	pub fn borders(mut self, border: char) -> Self {
 		self.format.borders(border);
-		return self;
+		self
 	}
 
 	/// Set a line separator format
 	pub fn separator(mut self, what: LinePosition, separator: LineSeparator) -> Self {
 		self.format.separator(what, separator);
-		return self;
+		self
 	}
 
 	/// Set separator format for multiple kind of line separators
 	pub fn separators(mut self, what: &[LinePosition], separator: LineSeparator) -> Self {
 		self.format.separators(what, separator);
-		return self;
+		self
 	}
 
 	/// Consume this builder and return the generated `TableFormat`
 	pub fn build(self) -> TableFormat {
-		return *self.format;
+		*self.format
 	}
 }
 
