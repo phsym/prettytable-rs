@@ -12,7 +12,6 @@ keywords = ["tab", "table", "format", "pretty", "print"]
 license = "BSD-3-Clause"
 
 [[bin]]
-
 name = "main"
 
 [lib]
