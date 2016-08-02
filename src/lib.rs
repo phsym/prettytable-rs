@@ -402,10 +402,7 @@ pub struct ColumnIter<'a>(std::slice::Iter<'a, Row>, usize);
 impl <'a> std::iter::Iterator for ColumnIter<'a> {
 	type Item = &'a Cell;
 	fn next(&mut self) -> Option<&'a Cell> {
-		match self.0.next() {
-			None => None,
-			Some(row) => row.get_cell(self.1)
-		}
+		self.0.next().and_then(|row| row.get_cell(self.1))
 	}
 }
 
@@ -415,10 +412,7 @@ pub struct ColumnIterMut<'a>(std::slice::IterMut<'a, Row>, usize);
 impl <'a> std::iter::Iterator for ColumnIterMut<'a> {
 	type Item = &'a mut Cell;
 	fn next(&mut self) -> Option<&'a mut Cell> {
-		match self.0.next() {
-			None => None,
-			Some(row) => row.get_mut_cell(self.1)
-		}
+		self.0.next().and_then(|row| row.get_mut_cell(self.1))
 	}
 }
 
