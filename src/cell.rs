@@ -175,10 +175,7 @@ impl Cell {
 	/// fill the cells with blanks so it fits in the table.
 	/// If `ìdx` is higher than this cell's height, it will print empty content
 	pub fn print<T: Write+?Sized>(&self, out: &mut T, idx: usize, col_width: usize, skip_right_fill: bool) -> Result<(), Error> {
-		let c = match self.content.get(idx) {
-			Some(s) => s.as_ref(),
-			None => ""
-		};
+		let c = self.content.get(idx).map(|s| s.as_ref()).unwrap_or("");
 		print_align(out, self.align, c, ' ', col_width, skip_right_fill)
 	}
 
