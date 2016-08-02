@@ -11,6 +11,7 @@
 
     <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../main.css">
+    
 
     
     
@@ -43,14 +44,15 @@
 
     <section id='main' class="content struct">
 <h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>prettytable</a>::<wbr><a href='index.html'>format</a>::<wbr><a class='struct' href=''>FormatBuilder</a></span><span class='out-of-band'><span id='render-detail'>
-            <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
-                [<span class='inner'>&#x2212;</span>]
-            </a>
-        </span><a id='src-491' class='srclink' href='../../src/prettytable/src/format.rs.html#201-203' title='goto source code'>[src]</a></span></h1>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a id='src-462' class='srclink' href='../../src/prettytable/src/format.rs.html#201-203' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct FormatBuilder {
     // some fields omitted
 }</pre><div class='docblock'><p>A builder to create a <code>TableFormat</code></p>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl <a class='struct' href='../../prettytable/format/struct.FormatBuilder.html' title='prettytable::format::FormatBuilder'>FormatBuilder</a></code></h3><div class='impl-items'><h4 id='method.new' class='method'><code>fn <a href='#method.new' class='fnname'>new</a>() -&gt; <a class='struct' href='../../prettytable/format/struct.FormatBuilder.html' title='prettytable::format::FormatBuilder'>FormatBuilder</a></code></h4>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class='struct' href='../../prettytable/format/struct.FormatBuilder.html' title='prettytable::format::FormatBuilder'>FormatBuilder</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-464' class='srclink' href='../../src/prettytable/src/format.rs.html#205-246' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.new' class='method'><code>fn <a href='#method.new' class='fnname'>new</a>() -&gt; <a class='struct' href='../../prettytable/format/struct.FormatBuilder.html' title='prettytable::format::FormatBuilder'>FormatBuilder</a></code></h4>
 <h4 id='method.padding' class='method'><code>fn <a href='#method.padding' class='fnname'>padding</a>(self, left: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>, right: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>) -&gt; Self</code></h4>
 <div class='docblock'><p>Set left and right padding</p>
 </div><h4 id='method.column_separator' class='method'><code>fn <a href='#method.column_separator' class='fnname'>column_separator</a>(self, separator: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.char.html'>char</a>) -&gt; Self</code></h4>
@@ -86,6 +88,8 @@
                     <dd>Move down in search results</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>
 

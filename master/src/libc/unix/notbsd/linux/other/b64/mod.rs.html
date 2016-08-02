@@ -4,13 +4,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-88ac128001ac3a9a/libc-0.2.10/src/unix/notbsd/linux/other/b64/mod.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/libc-0.2.14/src/unix/notbsd/linux/other/b64/mod.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>mod.rs.html -- source</title>
 
     <link rel="stylesheet" type="text/css" href="../../../../../../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../../../../../../main.css">
+    
 
     <link rel="shortcut icon" href="https://doc.rust-lang.org/favicon.ico">
     
@@ -75,6 +76,23 @@
 <span id="32">32</span>
 <span id="33">33</span>
 <span id="34">34</span>
+<span id="35">35</span>
+<span id="36">36</span>
+<span id="37">37</span>
+<span id="38">38</span>
+<span id="39">39</span>
+<span id="40">40</span>
+<span id="41">41</span>
+<span id="42">42</span>
+<span id="43">43</span>
+<span id="44">44</span>
+<span id="45">45</span>
+<span id="46">46</span>
+<span id="47">47</span>
+<span id="48">48</span>
+<span id="49">49</span>
+<span id="50">50</span>
+<span id="51">51</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! 64-bit specific definitions for linux-like values</span>
 
@@ -91,6 +109,23 @@
 <span class='macro'>s</span><span class='macro'>!</span> {
     <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>sigset_t</span> {
         <span class='ident'>__val</span>: [::<span class='ident'>c_ulong</span>; <span class='number'>16</span>],
+    }
+
+    <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>sysinfo</span> {
+        <span class='kw'>pub</span> <span class='ident'>uptime</span>: ::<span class='ident'>c_long</span>,
+        <span class='kw'>pub</span> <span class='ident'>loads</span>: [::<span class='ident'>c_ulong</span>; <span class='number'>3</span>],
+        <span class='kw'>pub</span> <span class='ident'>totalram</span>: ::<span class='ident'>c_ulong</span>,
+        <span class='kw'>pub</span> <span class='ident'>freeram</span>: ::<span class='ident'>c_ulong</span>,
+        <span class='kw'>pub</span> <span class='ident'>sharedram</span>: ::<span class='ident'>c_ulong</span>,
+        <span class='kw'>pub</span> <span class='ident'>bufferram</span>: ::<span class='ident'>c_ulong</span>,
+        <span class='kw'>pub</span> <span class='ident'>totalswap</span>: ::<span class='ident'>c_ulong</span>,
+        <span class='kw'>pub</span> <span class='ident'>freeswap</span>: ::<span class='ident'>c_ulong</span>,
+        <span class='kw'>pub</span> <span class='ident'>procs</span>: ::<span class='ident'>c_ushort</span>,
+        <span class='kw'>pub</span> <span class='ident'>pad</span>: ::<span class='ident'>c_ushort</span>,
+        <span class='kw'>pub</span> <span class='ident'>totalhigh</span>: ::<span class='ident'>c_ulong</span>,
+        <span class='kw'>pub</span> <span class='ident'>freehigh</span>: ::<span class='ident'>c_ulong</span>,
+        <span class='kw'>pub</span> <span class='ident'>mem_unit</span>: ::<span class='ident'>c_uint</span>,
+        <span class='kw'>pub</span> <span class='ident'>_f</span>: [::<span class='ident'>c_char</span>; <span class='number'>0</span>],
     }
 }
 
@@ -134,6 +169,8 @@
                     <dd>Move down in search results</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>
 
