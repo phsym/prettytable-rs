@@ -504,8 +504,8 @@
 	<span class='doccomment'>/// * ... and so on ...</span>
 	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>style_spec</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>spec</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>) <span class='op'>-&gt;</span> <span class='ident'>Cell</span> {
 		<span class='self'>self</span>.<span class='ident'>reset_style</span>();
-		<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>foreground</span> <span class='op'>=</span> <span class='boolvalue'>false</span>;
-		<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>background</span> <span class='op'>=</span> <span class='boolvalue'>false</span>;
+		<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>foreground</span> <span class='op'>=</span> <span class='bool-val'>false</span>;
+		<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>background</span> <span class='op'>=</span> <span class='bool-val'>false</span>;
 		<span class='kw'>for</span> <span class='ident'>c</span> <span class='kw'>in</span> <span class='ident'>spec</span>.<span class='ident'>chars</span>() {
 			<span class='kw'>if</span> <span class='ident'>foreground</span> <span class='op'>||</span> <span class='ident'>background</span> {
 				<span class='kw'>let</span> <span class='ident'>color</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='ident'>c</span> {
@@ -526,23 +526,23 @@
 					<span class='string'>&#39;d&#39;</span> <span class='op'>=&gt;</span> <span class='ident'>color</span>::<span class='ident'>BLACK</span>,
 					<span class='string'>&#39;D&#39;</span> <span class='op'>=&gt;</span> <span class='ident'>color</span>::<span class='ident'>BRIGHT_BLACK</span>,
 					_ <span class='op'>=&gt;</span> { <span class='comment'>// Silently ignore unknown tags</span>
-							<span class='ident'>foreground</span> <span class='op'>=</span> <span class='boolvalue'>false</span>;
-							<span class='ident'>background</span> <span class='op'>=</span> <span class='boolvalue'>false</span>;
+							<span class='ident'>foreground</span> <span class='op'>=</span> <span class='bool-val'>false</span>;
+							<span class='ident'>background</span> <span class='op'>=</span> <span class='bool-val'>false</span>;
 							<span class='kw'>continue</span>;
 						 }
 				};
 				<span class='kw'>if</span> <span class='ident'>foreground</span> { <span class='self'>self</span>.<span class='ident'>style</span>(<span class='ident'>Attr</span>::<span class='ident'>ForegroundColor</span>(<span class='ident'>color</span>)); }
 				<span class='kw'>else</span> <span class='kw'>if</span> <span class='ident'>background</span> { <span class='self'>self</span>.<span class='ident'>style</span>(<span class='ident'>Attr</span>::<span class='ident'>BackgroundColor</span>(<span class='ident'>color</span>)); }
-				<span class='ident'>foreground</span> <span class='op'>=</span> <span class='boolvalue'>false</span>;
-				<span class='ident'>background</span> <span class='op'>=</span> <span class='boolvalue'>false</span>;
+				<span class='ident'>foreground</span> <span class='op'>=</span> <span class='bool-val'>false</span>;
+				<span class='ident'>background</span> <span class='op'>=</span> <span class='bool-val'>false</span>;
 			}
 			<span class='kw'>else</span> {
 				<span class='kw'>match</span> <span class='ident'>c</span> {
-					<span class='string'>&#39;F&#39;</span> <span class='op'>=&gt;</span> <span class='ident'>foreground</span> <span class='op'>=</span> <span class='boolvalue'>true</span>,
-					<span class='string'>&#39;B&#39;</span> <span class='op'>=&gt;</span> <span class='ident'>background</span> <span class='op'>=</span> <span class='boolvalue'>true</span>,
+					<span class='string'>&#39;F&#39;</span> <span class='op'>=&gt;</span> <span class='ident'>foreground</span> <span class='op'>=</span> <span class='bool-val'>true</span>,
+					<span class='string'>&#39;B&#39;</span> <span class='op'>=&gt;</span> <span class='ident'>background</span> <span class='op'>=</span> <span class='bool-val'>true</span>,
 					<span class='string'>&#39;b&#39;</span> <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>style</span>(<span class='ident'>Attr</span>::<span class='ident'>Bold</span>),
-					<span class='string'>&#39;i&#39;</span> <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>style</span>(<span class='ident'>Attr</span>::<span class='ident'>Italic</span>(<span class='boolvalue'>true</span>)),
-					<span class='string'>&#39;u&#39;</span> <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>style</span>(<span class='ident'>Attr</span>::<span class='ident'>Underline</span>(<span class='boolvalue'>true</span>)),
+					<span class='string'>&#39;i&#39;</span> <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>style</span>(<span class='ident'>Attr</span>::<span class='ident'>Italic</span>(<span class='bool-val'>true</span>)),
+					<span class='string'>&#39;u&#39;</span> <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>style</span>(<span class='ident'>Attr</span>::<span class='ident'>Underline</span>(<span class='bool-val'>true</span>)),
 					<span class='string'>&#39;c&#39;</span> <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>align</span>(<span class='ident'>Alignment</span>::<span class='ident'>CENTER</span>),
 					<span class='string'>&#39;l&#39;</span> <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>align</span>(<span class='ident'>Alignment</span>::<span class='ident'>LEFT</span>),
 					<span class='string'>&#39;r&#39;</span> <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>align</span>(<span class='ident'>Alignment</span>::<span class='ident'>RIGHT</span>),
@@ -677,7 +677,7 @@
 		<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>ascii_cell</span>.<span class='ident'>get_width</span>(), <span class='number'>5</span>);
 
 		<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>out</span> <span class='op'>=</span> <span class='ident'>StringWriter</span>::<span class='ident'>new</span>();
-		<span class='kw'>let</span> _ <span class='op'>=</span> <span class='ident'>ascii_cell</span>.<span class='ident'>print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>out</span>, <span class='number'>0</span>, <span class='number'>10</span>, <span class='boolvalue'>false</span>);
+		<span class='kw'>let</span> _ <span class='op'>=</span> <span class='ident'>ascii_cell</span>.<span class='ident'>print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>out</span>, <span class='number'>0</span>, <span class='number'>10</span>, <span class='bool-val'>false</span>);
 		<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>out</span>.<span class='ident'>as_string</span>(), <span class='string'>&quot;hello     &quot;</span>);
 	}
 
@@ -687,7 +687,7 @@
 		<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>unicode_cell</span>.<span class='ident'>get_width</span>(), <span class='number'>6</span>);
 
 		<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>out</span> <span class='op'>=</span> <span class='ident'>StringWriter</span>::<span class='ident'>new</span>();
-		<span class='kw'>let</span> _ <span class='op'>=</span> <span class='ident'>unicode_cell</span>.<span class='ident'>print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>out</span>, <span class='number'>0</span>, <span class='number'>10</span>, <span class='boolvalue'>false</span>);
+		<span class='kw'>let</span> _ <span class='op'>=</span> <span class='ident'>unicode_cell</span>.<span class='ident'>print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>out</span>, <span class='number'>0</span>, <span class='number'>10</span>, <span class='bool-val'>false</span>);
 		<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>out</span>.<span class='ident'>as_string</span>(), <span class='string'>&quot;привет    &quot;</span>);
 	}
 
@@ -696,7 +696,7 @@
 		<span class='kw'>let</span> <span class='ident'>unicode_cell</span> <span class='op'>=</span> <span class='ident'>Cell</span>::<span class='ident'>new</span>(<span class='string'>&quot;由系统自动更新&quot;</span>);
 		<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>unicode_cell</span>.<span class='ident'>get_width</span>(), <span class='number'>14</span>);
 		<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>out</span> <span class='op'>=</span> <span class='ident'>StringWriter</span>::<span class='ident'>new</span>();
-		<span class='kw'>let</span> _ <span class='op'>=</span> <span class='ident'>unicode_cell</span>.<span class='ident'>print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>out</span>, <span class='number'>0</span>, <span class='number'>20</span>, <span class='boolvalue'>false</span>);
+		<span class='kw'>let</span> _ <span class='op'>=</span> <span class='ident'>unicode_cell</span>.<span class='ident'>print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>out</span>, <span class='number'>0</span>, <span class='number'>20</span>, <span class='bool-val'>false</span>);
 		<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>out</span>.<span class='ident'>as_string</span>(), <span class='string'>&quot;由系统自动更新      &quot;</span>);
 	}
 
@@ -704,7 +704,7 @@
 	<span class='kw'>fn</span> <span class='ident'>align_left</span>() {
 		<span class='kw'>let</span> <span class='ident'>cell</span> <span class='op'>=</span> <span class='ident'>Cell</span>::<span class='ident'>new_align</span>(<span class='string'>&quot;test&quot;</span>, <span class='ident'>Alignment</span>::<span class='ident'>LEFT</span>);
 		<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>out</span> <span class='op'>=</span> <span class='ident'>StringWriter</span>::<span class='ident'>new</span>();
-		<span class='kw'>let</span> _ <span class='op'>=</span> <span class='ident'>cell</span>.<span class='ident'>print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>out</span>, <span class='number'>0</span>, <span class='number'>10</span>, <span class='boolvalue'>false</span>);
+		<span class='kw'>let</span> _ <span class='op'>=</span> <span class='ident'>cell</span>.<span class='ident'>print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>out</span>, <span class='number'>0</span>, <span class='number'>10</span>, <span class='bool-val'>false</span>);
 		<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>out</span>.<span class='ident'>as_string</span>(), <span class='string'>&quot;test      &quot;</span>);
 	}
 
@@ -712,7 +712,7 @@
 	<span class='kw'>fn</span> <span class='ident'>align_center</span>() {
 		<span class='kw'>let</span> <span class='ident'>cell</span> <span class='op'>=</span> <span class='ident'>Cell</span>::<span class='ident'>new_align</span>(<span class='string'>&quot;test&quot;</span>, <span class='ident'>Alignment</span>::<span class='ident'>CENTER</span>);
 		<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>out</span> <span class='op'>=</span> <span class='ident'>StringWriter</span>::<span class='ident'>new</span>();
-		<span class='kw'>let</span> _ <span class='op'>=</span> <span class='ident'>cell</span>.<span class='ident'>print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>out</span>, <span class='number'>0</span>, <span class='number'>10</span>, <span class='boolvalue'>false</span>);
+		<span class='kw'>let</span> _ <span class='op'>=</span> <span class='ident'>cell</span>.<span class='ident'>print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>out</span>, <span class='number'>0</span>, <span class='number'>10</span>, <span class='bool-val'>false</span>);
 		<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>out</span>.<span class='ident'>as_string</span>(), <span class='string'>&quot;   test   &quot;</span>);
 	}
 
@@ -720,7 +720,7 @@
 	<span class='kw'>fn</span> <span class='ident'>align_right</span>() {
 		<span class='kw'>let</span> <span class='ident'>cell</span> <span class='op'>=</span> <span class='ident'>Cell</span>::<span class='ident'>new_align</span>(<span class='string'>&quot;test&quot;</span>, <span class='ident'>Alignment</span>::<span class='ident'>RIGHT</span>);
 		<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>out</span> <span class='op'>=</span> <span class='ident'>StringWriter</span>::<span class='ident'>new</span>();
-		<span class='kw'>let</span> _ <span class='op'>=</span> <span class='ident'>cell</span>.<span class='ident'>print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>out</span>, <span class='number'>0</span>, <span class='number'>10</span>, <span class='boolvalue'>false</span>);
+		<span class='kw'>let</span> _ <span class='op'>=</span> <span class='ident'>cell</span>.<span class='ident'>print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>out</span>, <span class='number'>0</span>, <span class='number'>10</span>, <span class='bool-val'>false</span>);
 		<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>out</span>.<span class='ident'>as_string</span>(), <span class='string'>&quot;      test&quot;</span>);
 	}
 
@@ -728,8 +728,8 @@
 	<span class='kw'>fn</span> <span class='ident'>style_spec</span>() {
 		<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>cell</span> <span class='op'>=</span> <span class='ident'>Cell</span>::<span class='ident'>new</span>(<span class='string'>&quot;test&quot;</span>).<span class='ident'>style_spec</span>(<span class='string'>&quot;FrBBbuic&quot;</span>);
 		<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>cell</span>.<span class='ident'>style</span>.<span class='ident'>len</span>(), <span class='number'>5</span>);
-		<span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>cell</span>.<span class='ident'>style</span>.<span class='ident'>contains</span>(<span class='kw-2'>&amp;</span><span class='ident'>Attr</span>::<span class='ident'>Underline</span>(<span class='boolvalue'>true</span>)));
-		<span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>cell</span>.<span class='ident'>style</span>.<span class='ident'>contains</span>(<span class='kw-2'>&amp;</span><span class='ident'>Attr</span>::<span class='ident'>Italic</span>(<span class='boolvalue'>true</span>)));
+		<span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>cell</span>.<span class='ident'>style</span>.<span class='ident'>contains</span>(<span class='kw-2'>&amp;</span><span class='ident'>Attr</span>::<span class='ident'>Underline</span>(<span class='bool-val'>true</span>)));
+		<span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>cell</span>.<span class='ident'>style</span>.<span class='ident'>contains</span>(<span class='kw-2'>&amp;</span><span class='ident'>Attr</span>::<span class='ident'>Italic</span>(<span class='bool-val'>true</span>)));
 		<span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>cell</span>.<span class='ident'>style</span>.<span class='ident'>contains</span>(<span class='kw-2'>&amp;</span><span class='ident'>Attr</span>::<span class='ident'>Bold</span>));
 		<span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>cell</span>.<span class='ident'>style</span>.<span class='ident'>contains</span>(<span class='kw-2'>&amp;</span><span class='ident'>Attr</span>::<span class='ident'>ForegroundColor</span>(<span class='ident'>color</span>::<span class='ident'>RED</span>)));
 		<span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>cell</span>.<span class='ident'>style</span>.<span class='ident'>contains</span>(<span class='kw-2'>&amp;</span><span class='ident'>Attr</span>::<span class='ident'>BackgroundColor</span>(<span class='ident'>color</span>::<span class='ident'>BRIGHT_BLUE</span>)));

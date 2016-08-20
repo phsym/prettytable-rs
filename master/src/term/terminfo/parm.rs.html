@@ -1031,8 +1031,8 @@
                         <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>fstate</span> <span class='op'>=</span> <span class='ident'>FormatStateFlags</span>;
                         <span class='kw'>match</span> <span class='ident'>cur</span> {
                             <span class='string'>&#39;:&#39;</span> <span class='op'>=&gt;</span> (),
-                            <span class='string'>&#39;#&#39;</span> <span class='op'>=&gt;</span> <span class='ident'>flags</span>.<span class='ident'>alternate</span> <span class='op'>=</span> <span class='boolvalue'>true</span>,
-                            <span class='string'>&#39; &#39;</span> <span class='op'>=&gt;</span> <span class='ident'>flags</span>.<span class='ident'>space</span> <span class='op'>=</span> <span class='boolvalue'>true</span>,
+                            <span class='string'>&#39;#&#39;</span> <span class='op'>=&gt;</span> <span class='ident'>flags</span>.<span class='ident'>alternate</span> <span class='op'>=</span> <span class='bool-val'>true</span>,
+                            <span class='string'>&#39; &#39;</span> <span class='op'>=&gt;</span> <span class='ident'>flags</span>.<span class='ident'>space</span> <span class='op'>=</span> <span class='bool-val'>true</span>,
                             <span class='string'>&#39;.&#39;</span> <span class='op'>=&gt;</span> <span class='ident'>fstate</span> <span class='op'>=</span> <span class='ident'>FormatStatePrecision</span>,
                             <span class='string'>&#39;0&#39;</span>...<span class='string'>&#39;9&#39;</span> <span class='op'>=&gt;</span> {
                                 <span class='ident'>flags</span>.<span class='ident'>width</span> <span class='op'>=</span> <span class='ident'>cur</span> <span class='kw'>as</span> <span class='ident'>usize</span> <span class='op'>-</span> <span class='string'>&#39;0&#39;</span> <span class='kw'>as</span> <span class='ident'>usize</span>;
@@ -1135,16 +1135,16 @@
                         }
                     }
                     (<span class='ident'>FormatStateFlags</span>, <span class='string'>&#39;#&#39;</span>) <span class='op'>=&gt;</span> {
-                        <span class='ident'>flags</span>.<span class='ident'>alternate</span> <span class='op'>=</span> <span class='boolvalue'>true</span>;
+                        <span class='ident'>flags</span>.<span class='ident'>alternate</span> <span class='op'>=</span> <span class='bool-val'>true</span>;
                     }
                     (<span class='ident'>FormatStateFlags</span>, <span class='string'>&#39;-&#39;</span>) <span class='op'>=&gt;</span> {
-                        <span class='ident'>flags</span>.<span class='ident'>left</span> <span class='op'>=</span> <span class='boolvalue'>true</span>;
+                        <span class='ident'>flags</span>.<span class='ident'>left</span> <span class='op'>=</span> <span class='bool-val'>true</span>;
                     }
                     (<span class='ident'>FormatStateFlags</span>, <span class='string'>&#39;+&#39;</span>) <span class='op'>=&gt;</span> {
-                        <span class='ident'>flags</span>.<span class='ident'>sign</span> <span class='op'>=</span> <span class='boolvalue'>true</span>;
+                        <span class='ident'>flags</span>.<span class='ident'>sign</span> <span class='op'>=</span> <span class='bool-val'>true</span>;
                     }
                     (<span class='ident'>FormatStateFlags</span>, <span class='string'>&#39; &#39;</span>) <span class='op'>=&gt;</span> {
-                        <span class='ident'>flags</span>.<span class='ident'>space</span> <span class='op'>=</span> <span class='boolvalue'>true</span>;
+                        <span class='ident'>flags</span>.<span class='ident'>space</span> <span class='op'>=</span> <span class='bool-val'>true</span>;
                     }
                     (<span class='ident'>FormatStateFlags</span>, <span class='string'>&#39;0&#39;</span>...<span class='string'>&#39;9&#39;</span>) <span class='op'>=&gt;</span> {
                         <span class='ident'>flags</span>.<span class='ident'>width</span> <span class='op'>=</span> <span class='ident'>cur</span> <span class='kw'>as</span> <span class='ident'>usize</span> <span class='op'>-</span> <span class='string'>&#39;0&#39;</span> <span class='kw'>as</span> <span class='ident'>usize</span>;
@@ -1238,10 +1238,10 @@
         <span class='ident'>Flags</span> {
             <span class='ident'>width</span>: <span class='number'>0</span>,
             <span class='ident'>precision</span>: <span class='number'>0</span>,
-            <span class='ident'>alternate</span>: <span class='boolvalue'>false</span>,
-            <span class='ident'>left</span>: <span class='boolvalue'>false</span>,
-            <span class='ident'>sign</span>: <span class='boolvalue'>false</span>,
-            <span class='ident'>space</span>: <span class='boolvalue'>false</span>,
+            <span class='ident'>alternate</span>: <span class='bool-val'>false</span>,
+            <span class='ident'>left</span>: <span class='bool-val'>false</span>,
+            <span class='ident'>sign</span>: <span class='bool-val'>false</span>,
+            <span class='ident'>space</span>: <span class='bool-val'>false</span>,
         }
     }
 }
