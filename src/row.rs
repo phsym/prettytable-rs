@@ -76,7 +76,7 @@ impl Row {
 		self.cells.push(cell);
 	}
 
-	/// Insert `cell` at position `index`. If `index` is higher than the row lenght,
+	/// Insert `cell` at position `index`. If `index` is higher than the row length,
 	/// the cell will be appended at the end
 	pub fn insert_cell(&mut self, index: usize, cell: Cell) {
 		if index < self.cells.len() {

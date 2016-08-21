@@ -6,7 +6,7 @@ use super::utils::NEWLINE;
 
 /// Alignment for cell's content
 #[derive(Clone, Debug, PartialEq, Copy)]
-pub enum Alignment  {
+pub enum Alignment {
 	LEFT,
 	CENTER,
 	RIGHT
@@ -155,7 +155,7 @@ impl TableFormat {
 	}
 
 	fn get_sep_for_line(&self, pos: LinePosition) -> &Option<LineSeparator> {
-		return match pos {
+		match pos {
 			LinePosition::Intern => return &self.lsep,
 			LinePosition::Top => return &self.top_sep,
 			LinePosition::Bottom => return &self.bottom_sep,
@@ -163,7 +163,7 @@ impl TableFormat {
 				s @ &Some(_) => s,
 				&None => &self.lsep
 			}
-		};
+		}
 	}
 
 	/// Print a full line separator to `out`. `col_width` is a slice containing the width of each column
