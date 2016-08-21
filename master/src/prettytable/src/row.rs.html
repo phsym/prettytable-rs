@@ -344,7 +344,7 @@
 		<span class='self'>self</span>.<span class='ident'>cells</span>.<span class='ident'>push</span>(<span class='ident'>cell</span>);
 	}
 
-	<span class='doccomment'>/// Insert `cell` at position `index`. If `index` is higher than the row lenght,</span>
+	<span class='doccomment'>/// Insert `cell` at position `index`. If `index` is higher than the row length,</span>
 	<span class='doccomment'>/// the cell will be appended at the end</span>
 	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>insert_cell</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>index</span>: <span class='ident'>usize</span>, <span class='ident'>cell</span>: <span class='ident'>Cell</span>) {
 		<span class='kw'>if</span> <span class='ident'>index</span> <span class='op'>&lt;</span> <span class='self'>self</span>.<span class='ident'>cells</span>.<span class='ident'>len</span>() {

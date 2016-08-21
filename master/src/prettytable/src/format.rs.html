@@ -474,7 +474,7 @@
 
 <span class='doccomment'>/// Alignment for cell&#39;s content</span>
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>, <span class='ident'>Debug</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Copy</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>Alignment</span>  {
+<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>Alignment</span> {
 	<span class='ident'>LEFT</span>,
 	<span class='ident'>CENTER</span>,
 	<span class='ident'>RIGHT</span>
@@ -623,7 +623,7 @@
 	}
 
 	<span class='kw'>fn</span> <span class='ident'>get_sep_for_line</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>pos</span>: <span class='ident'>LinePosition</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>LineSeparator</span><span class='op'>&gt;</span> {
-		<span class='kw'>return</span> <span class='kw'>match</span> <span class='ident'>pos</span> {
+		<span class='kw'>match</span> <span class='ident'>pos</span> {
 			<span class='ident'>LinePosition</span>::<span class='ident'>Intern</span> <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>lsep</span>,
 			<span class='ident'>LinePosition</span>::<span class='ident'>Top</span> <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>top_sep</span>,
 			<span class='ident'>LinePosition</span>::<span class='ident'>Bottom</span> <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>bottom_sep</span>,
@@ -631,7 +631,7 @@
 				<span class='ident'>s</span> @ <span class='kw-2'>&amp;</span><span class='prelude-val'>Some</span>(_) <span class='op'>=&gt;</span> <span class='ident'>s</span>,
 				<span class='kw-2'>&amp;</span><span class='prelude-val'>None</span> <span class='op'>=&gt;</span> <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>lsep</span>
 			}
-		};
+		}
 	}
 
 	<span class='doccomment'>/// Print a full line separator to `out`. `col_width` is a slice containing the width of each column</span>
