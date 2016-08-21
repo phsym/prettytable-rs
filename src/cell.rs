@@ -31,12 +31,12 @@ impl Cell {
 				width = l;
 			}
 		}
-		return Cell {
+		Cell {
 			content: content,
 			width: width,
 			align: align,
 			style: Vec::new()
-		};
+		}
 	}
 
 	/// Create a new `Cell` initialized with content from `string`.

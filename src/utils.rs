@@ -19,12 +19,12 @@ pub struct StringWriter {
 impl StringWriter {
 	/// Create a new `StringWriter`
 	pub fn new() -> StringWriter {
-		return StringWriter{string: String::new()};
+		StringWriter{string: String::new()}
 	}
 
 	/// Return a reference to the internally written `String`
 	pub fn as_string(&self) -> &str {
-		return &self.string;
+		&self.string
 	}
 }
 
@@ -35,12 +35,12 @@ impl Write for StringWriter {
 			Err(e) => return Err(Error::new(ErrorKind::Other, format!("Cannot decode utf8 string : {}", e)))
 		};
 		self.string.push_str(string);
-		return Ok(data.len());
+		Ok(data.len())
 	}
 
 	fn flush(&mut self) -> Result<(), Error> {
 		// Nothing to do here
-		return Ok(());
+		Ok(())
 	}
 }
 
@@ -63,7 +63,7 @@ pub fn print_align<T: Write+?Sized>(out: &mut T, align: Alignment, text: &str, f
 	if nfill > 0 && ! skip_right_fill {
 		try!(out.write(&vec![fill as u8; nfill]));
 	}
-	return Ok(());
+	Ok(())
 }
 
 #[cfg(test)]
