@@ -19,7 +19,7 @@ A formatted and aligned table printer written in rust.
 
 ## Including
 
-More often, you will include the library as a dependency to your project. In order to do this, add the following lines to your **Cargo.toml** file :
+Include the library as a dependency to your project by adding the following lines to your **Cargo.toml** file:
 
 ```toml
 [dependencies]
@@ -28,7 +28,7 @@ prettytable-rs = "^0.6"
 
 ## Basic usage
 
-You can start using it the following way :
+You can start using it in the following way:
 
 ```rust
 #[macro_use] extern crate prettytable;
@@ -52,7 +52,7 @@ fn main() {
 }
 ```
 
-This code will produce the following output :
+This code will produce the following output:
 
 ```text
 +---------+------+---------+
@@ -82,7 +82,7 @@ fn main() {
 Using the `ptable!` macro would even print it on stdout for you.
 
 Tables also support multiline cells content. As a consequence, you can print a table into another table (yo dawg ;).
-For example, the following code
+For example:
 ```rust
 let table1 = table!(["ABC", "DEFG", "HIJKLMN"],
 				   ["foobar", "bar", "foo"],
@@ -94,7 +94,7 @@ let table2 = table!(["Title 1", "Title 2"],
 					);
 table2.printstd();
 ```
-Would print the following text :
+Would print the following text:
 ```text
 +-------------------------+------------------------------+
 | Title 1                 | Title 2                      |
@@ -117,9 +117,9 @@ Rows may have different numbers of cells. The table will automatically adapt to 
 
 ## Do it with style
 
-Tables can be added some style like colors (background / foreground), bold, and italic, thanks to the `term` crate.
+Tables can be added some with style like colors (background / foreground), bold, and italic, thanks to the `term` crate.
 
-You can add `term` style attributes to cells programmatically :
+You can add `term` style attributes to cells programmatically:
 ```rust
 extern crate term;
 use term::{Attr, color};
@@ -136,37 +136,37 @@ table.add_row(Row::new(vec![
 );
 ```
 
-Or you can use the style string :
+Or you can use the style string:
 ```rust
 Cell::new("foo2").style_spec("FrByc")
 ```
 
-Where **FrBybc** means **F**oreground: **r**ed, **B**ackground: **y**ellow, **b**old, **c**enter
+Where **FrBybc** means **F**oreground: **r**ed, **B**ackground: **y**ellow, **b**old, **c**enter.
 
-With macros it's even simpler :
+With macros it's even simpler:
 
-In rows, for each cells :
+In rows, for each cells:
 ```rust
 row![FrByb->"ABC", FrByb->"DEFG", "HIJKLMN"];
 ```
-Or for the whole row :
+Or for the whole row:
 ```rust
 row![FY => "styled", "bar", "foo"];
 ```
-In tables, for each cells :
+In tables, for each cells:
 ```rust
 table!([FrBybl->"A", FrBybc->"B", FrBybr->"C"], [123, 234, 345, 456]);
 ```
-Or for each rows :
+Or for each rows:
 ```rust
 table!([Frb => "A", "B", "C"], [Frb => 1, 2, 3, 4], [1, 2, 3]);
 ```
-Or a mix :
+Or a mix:
 ```rust
 table!([Frb => "A", "B", "C"], [Frb->1, Fgi->2, 3, 4], [1, 2, 3]);
 ```
 
-### List of style specifiers :
+### List of style specifiers:
 
 * **F** : **F**oreground (must be followed by a color specifier)
 * **B** : **B**ackground (must be followed by a color specifier)
@@ -178,7 +178,7 @@ table!([Frb => "A", "B", "C"], [Frb->1, Fgi->2, 3, 4], [1, 2, 3]);
 * **r** : Align **r**ight
 * **d** : **d**efault style
 
-### List of color specifiers :
+### List of color specifiers:
 
 * **r** : Red
 * **b** : Blue
@@ -189,7 +189,7 @@ table!([Frb => "A", "B", "C"], [Frb->1, Fgi->2, 3, 4], [1, 2, 3]);
 * **w** : White
 * **d** : Black
 
-Capital letters are for **bright** colors. Eg :
+Capital letters are for **bright** colors. Eg:
 * **R** : Bright Red
 * **B** : Bright Blue
 * ... and so on ...
@@ -199,7 +199,7 @@ Capital letters are for **bright** colors. Eg :
 Tables can be sliced into immutable borrowed subtables.
 Slices are of type `prettytable::TableSlice<'a>`.
 
-For example
+For example:
 ```rust
 use prettytable::Slice;
 (...)
@@ -208,7 +208,7 @@ table.printstd();
 ```
 Would print a table with only lines 2, 3 and 4 from `table`.
 
-Other `Range` syntax are supported. For example :
+Other `Range` syntax are supported. For example:
 ```rust
 table.slice(..); // Returns a borrowed immutable table with all rows
 table.slice(2..); // Returns a table with rows starting at index 2
@@ -222,7 +222,7 @@ For example you can change the characters used for borders, junctions, column se
 To proceed, you can create a new `TableFormat` object and call the setter methods to configure it,
 or you can use the more convenient `prettytable::format::FormatBuilder` structure.
 
-For example :
+For example:
 ```rust
 let mut table = /* Initialize table */;
 let format = format::FormatBuilder::new()
@@ -236,7 +236,7 @@ let format = format::FormatBuilder::new()
 				.build();
 table.set_format(format);
 ```
-Would give a table like the following
+Would give a table like the following:
 ```
 +-------------+------------+
 | Title 1     | Title 2    |
@@ -246,11 +246,11 @@ Would give a table like the following
 ```
 
 For convenience, some predefined formats are provided in the module `prettytable::format::consts`.
-For example :
+For example:
 ```rust
 table.set_format(*format::consts::FORMAT_NO_LINESEP_WITH_TITLE);
 ```
-Would give a table like the following
+Would give a table like the following:
 ```
 +-------------+------------+
 | Title 1     | Title 2    |
@@ -263,7 +263,7 @@ or
 ```rust
 table.set_format(*format::consts::FORMAT_NO_BORDER_LINE_SEPARATOR);
 ```
-Would give
+Would give:
 ```
 Title 1     | Title 2    
 ------------+------------
@@ -271,6 +271,6 @@ Value 1     | Value 2
 Value three | Value four
 ```
 
-Check API documentation for the full list of available predefined formats
+Check API documentation for the full list of available predefined formats.
 
-Additional examples are provided in documentation and in [examples](./examples/) directory
+Additional examples are provided in the documentation and in [examples](./examples/) directory.
