@@ -173,9 +173,9 @@
 
 <span class='kw'>use</span> <span class='kw'>super</span>::<span class='ident'>format</span>::<span class='ident'>Alignment</span>;
 
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>not</span>(<span class='ident'>windows</span>))]</span>
+<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>any</span>(<span class='ident'>not</span>(<span class='ident'>windows</span>), <span class='ident'>not</span>(<span class='ident'>feature</span><span class='op'>=</span><span class='string'>&quot;win_crlf&quot;</span>)))]</span>
 <span class='kw'>pub</span> <span class='kw'>static</span> <span class='ident'>NEWLINE</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;static</span> [<span class='ident'>u8</span>] <span class='op'>=</span> <span class='string'>b&quot;\n&quot;</span>;
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>windows</span>)]</span>
+<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>all</span>(<span class='ident'>windows</span>, <span class='ident'>feature</span><span class='op'>=</span><span class='string'>&quot;win_crlf&quot;</span>))]</span>
 <span class='kw'>pub</span> <span class='kw'>static</span> <span class='ident'>NEWLINE</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;static</span> [<span class='ident'>u8</span>] <span class='op'>=</span> <span class='string'>b&quot;\r\n&quot;</span>;
 
 <span class='doccomment'>/// Internal utility for writing data into a string</span>
