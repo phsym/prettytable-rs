@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["is","returns true if this is a tty"],["isnt","returns true if this is _not_ a tty"]]});

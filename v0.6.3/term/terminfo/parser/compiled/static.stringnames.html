@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `stringnames` static in crate `term`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, stringnames">
+
+    <title>term::terminfo::parser::compiled::stringnames - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../../../main.css">
+    
+
+    <link rel="shortcut icon" href="https://doc.rust-lang.org/favicon.ico">
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        <a href='../../../../term/index.html'><img src='https://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png' alt='logo' width='100'></a>
+        <p class='location'><a href='../../../index.html'>term</a>::<wbr><a href='../../index.html'>terminfo</a>::<wbr><a href='../index.html'>parser</a>::<wbr><a href='index.html'>compiled</a></p><script>window.sidebarCurrent = {name: 'stringnames', ty: 'static', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content static">
+<h1 class='fqn'><span class='in-band'><a href='../../../index.html'>term</a>::<wbr><a href='../../index.html'>terminfo</a>::<wbr><a href='../index.html'>parser</a>::<wbr><a href='index.html'>compiled</a>::<wbr><a class='static' href=''>stringnames</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a id='src-263' class='srclink' href='../../../../src/term/terminfo/parser/names.rs.html#121-154' title='goto source code'>[src]</a></span></h1>
+<pre class='rust static'>pub static stringnames: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;'static [</a>&amp;'static <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>]</a><code> = </code><code>&amp;[&quot;cbt&quot;, &quot;_&quot;, &quot;cr&quot;, &quot;csr&quot;, &quot;tbc&quot;, &quot;clear&quot;, &quot;_&quot;, &quot;_&quot;, &quot;hpa&quot;, &quot;cmdch&quot;, &quot;cup&quot;,
+  &quot;cud1&quot;, &quot;home&quot;, &quot;civis&quot;, &quot;cub1&quot;, &quot;mrcup&quot;, &quot;cnorm&quot;, &quot;cuf1&quot;, &quot;ll&quot;, &quot;cuu1&quot;,
+  &quot;cvvis&quot;, &quot;dch1&quot;, &quot;dl1&quot;, &quot;dsl&quot;, &quot;hd&quot;, &quot;smacs&quot;, &quot;blink&quot;, &quot;bold&quot;, &quot;smcup&quot;,
+  &quot;smdc&quot;, &quot;dim&quot;, &quot;smir&quot;, &quot;invis&quot;, &quot;prot&quot;, &quot;rev&quot;, &quot;smso&quot;, &quot;smul&quot;, &quot;ech&quot;,
+  &quot;rmacs&quot;, &quot;sgr0&quot;, &quot;rmcup&quot;, &quot;rmdc&quot;, &quot;rmir&quot;, &quot;rmso&quot;, &quot;rmul&quot;, &quot;flash&quot;, &quot;ff&quot;,
+  &quot;fsl&quot;, &quot;is1&quot;, &quot;is2&quot;, &quot;is3&quot;, &quot;if&quot;, &quot;ich1&quot;, &quot;il1&quot;, &quot;ip&quot;, &quot;kbs&quot;, &quot;ktbc&quot;,
+  &quot;kclr&quot;, &quot;kctab&quot;, &quot;_&quot;, &quot;_&quot;, &quot;kcud1&quot;, &quot;_&quot;, &quot;_&quot;, &quot;_&quot;, &quot;_&quot;, &quot;_&quot;, &quot;_&quot;, &quot;_&quot;, &quot;_&quot;,
+  &quot;_&quot;, &quot;_&quot;, &quot;_&quot;, &quot;_&quot;, &quot;_&quot;, &quot;_&quot;, &quot;khome&quot;, &quot;_&quot;, &quot;_&quot;, &quot;kcub1&quot;, &quot;_&quot;, &quot;knp&quot;, &quot;kpp&quot;,
+  &quot;kcuf1&quot;, &quot;_&quot;, &quot;_&quot;, &quot;khts&quot;, &quot;_&quot;, &quot;rmkx&quot;, &quot;smkx&quot;, &quot;_&quot;, &quot;_&quot;, &quot;_&quot;, &quot;_&quot;, &quot;_&quot;,
+  &quot;_&quot;, &quot;_&quot;, &quot;_&quot;, &quot;_&quot;, &quot;_&quot;, &quot;_&quot;, &quot;rmm&quot;, &quot;_&quot;, &quot;_&quot;, &quot;pad&quot;, &quot;dch&quot;, &quot;dl&quot;, &quot;cud&quot;,
+  &quot;ich&quot;, &quot;indn&quot;, &quot;il&quot;, &quot;cub&quot;, &quot;cuf&quot;, &quot;rin&quot;, &quot;cuu&quot;, &quot;pfkey&quot;, &quot;pfloc&quot;, &quot;pfx&quot;,
+  &quot;mc0&quot;, &quot;mc4&quot;, &quot;_&quot;, &quot;rep&quot;, &quot;rs1&quot;, &quot;rs2&quot;, &quot;rs3&quot;, &quot;rf&quot;, &quot;rc&quot;, &quot;vpa&quot;, &quot;sc&quot;,
+  &quot;ind&quot;, &quot;ri&quot;, &quot;sgr&quot;, &quot;_&quot;, &quot;wind&quot;, &quot;_&quot;, &quot;tsl&quot;, &quot;uc&quot;, &quot;hu&quot;, &quot;iprog&quot;, &quot;_&quot;, &quot;_&quot;,
+  &quot;_&quot;, &quot;_&quot;, &quot;_&quot;, &quot;mc5p&quot;, &quot;rmp&quot;, &quot;acsc&quot;, &quot;pln&quot;, &quot;kcbt&quot;, &quot;smxon&quot;, &quot;rmxon&quot;,
+  &quot;smam&quot;, &quot;rmam&quot;, &quot;xonc&quot;, &quot;xoffc&quot;, &quot;_&quot;, &quot;smln&quot;, &quot;rmln&quot;, &quot;_&quot;, &quot;kcan&quot;, &quot;kclo&quot;,
+  &quot;kcmd&quot;, &quot;kcpy&quot;, &quot;kcrt&quot;, &quot;_&quot;, &quot;kent&quot;, &quot;kext&quot;, &quot;kfnd&quot;, &quot;khlp&quot;, &quot;kmrk&quot;, &quot;kmsg&quot;,
+  &quot;kmov&quot;, &quot;knxt&quot;, &quot;kopn&quot;, &quot;kopt&quot;, &quot;kprv&quot;, &quot;kprt&quot;, &quot;krdo&quot;, &quot;kref&quot;, &quot;krfr&quot;,
+  &quot;krpl&quot;, &quot;krst&quot;, &quot;kres&quot;, &quot;ksav&quot;, &quot;kspd&quot;, &quot;kund&quot;, &quot;kBEG&quot;, &quot;kCAN&quot;, &quot;kCMD&quot;,
+  &quot;kCPY&quot;, &quot;kCRT&quot;, &quot;_&quot;, &quot;_&quot;, &quot;kslt&quot;, &quot;kEND&quot;, &quot;kEOL&quot;, &quot;kEXT&quot;, &quot;kFND&quot;, &quot;kHLP&quot;,
+  &quot;kHOM&quot;, &quot;_&quot;, &quot;kLFT&quot;, &quot;kMSG&quot;, &quot;kMOV&quot;, &quot;kNXT&quot;, &quot;kOPT&quot;, &quot;kPRV&quot;, &quot;kPRT&quot;, &quot;kRDO&quot;,
+  &quot;kRPL&quot;, &quot;kRIT&quot;, &quot;kRES&quot;, &quot;kSAV&quot;, &quot;kSPD&quot;, &quot;kUND&quot;, &quot;rfi&quot;, &quot;_&quot;, &quot;_&quot;, &quot;_&quot;, &quot;_&quot;,
+  &quot;_&quot;, &quot;_&quot;, &quot;_&quot;, &quot;_&quot;, &quot;_&quot;, &quot;_&quot;, &quot;_&quot;, &quot;_&quot;, &quot;_&quot;, &quot;_&quot;, &quot;_&quot;, &quot;_&quot;, &quot;_&quot;, &quot;_&quot;, &quot;_&quot;,
+  &quot;_&quot;, &quot;_&quot;, &quot;_&quot;, &quot;_&quot;, &quot;_&quot;, &quot;_&quot;, &quot;_&quot;, &quot;_&quot;, &quot;_&quot;, &quot;_&quot;, &quot;_&quot;, &quot;_&quot;, &quot;_&quot;, &quot;_&quot;, &quot;_&quot;,
+  &quot;_&quot;, &quot;_&quot;, &quot;_&quot;, &quot;_&quot;, &quot;_&quot;, &quot;_&quot;, &quot;_&quot;, &quot;_&quot;, &quot;_&quot;, &quot;_&quot;, &quot;_&quot;, &quot;_&quot;, &quot;_&quot;, &quot;_&quot;, &quot;_&quot;,
+  &quot;_&quot;, &quot;_&quot;, &quot;_&quot;, &quot;_&quot;, &quot;_&quot;, &quot;_&quot;, &quot;_&quot;, &quot;_&quot;, &quot;_&quot;, &quot;_&quot;, &quot;dclk&quot;, &quot;rmclk&quot;, &quot;cwin&quot;,
+  &quot;wingo&quot;, &quot;_&quot;, &quot;dial&quot;, &quot;qdial&quot;, &quot;_&quot;, &quot;_&quot;, &quot;hook&quot;, &quot;pause&quot;, &quot;wait&quot;, &quot;_&quot;, &quot;_&quot;,
+  &quot;_&quot;, &quot;_&quot;, &quot;_&quot;, &quot;_&quot;, &quot;_&quot;, &quot;_&quot;, &quot;_&quot;, &quot;_&quot;, &quot;op&quot;, &quot;oc&quot;, &quot;initc&quot;, &quot;initp&quot;, &quot;scp&quot;,
+  &quot;setf&quot;, &quot;setb&quot;, &quot;cpi&quot;, &quot;lpi&quot;, &quot;chr&quot;, &quot;cvr&quot;, &quot;defc&quot;, &quot;swidm&quot;, &quot;sdrfq&quot;,
+  &quot;sitm&quot;, &quot;slm&quot;, &quot;smicm&quot;, &quot;snlq&quot;, &quot;snrmq&quot;, &quot;sshm&quot;, &quot;ssubm&quot;, &quot;ssupm&quot;, &quot;sum&quot;,
+  &quot;rwidm&quot;, &quot;ritm&quot;, &quot;rlm&quot;, &quot;rmicm&quot;, &quot;rshm&quot;, &quot;rsubm&quot;, &quot;rsupm&quot;, &quot;rum&quot;, &quot;mhpa&quot;,
+  &quot;mcud1&quot;, &quot;mcub1&quot;, &quot;mcuf1&quot;, &quot;mvpa&quot;, &quot;mcuu1&quot;, &quot;porder&quot;, &quot;mcud&quot;, &quot;mcub&quot;,
+  &quot;mcuf&quot;, &quot;mcuu&quot;, &quot;scs&quot;, &quot;smgb&quot;, &quot;smgbp&quot;, &quot;smglp&quot;, &quot;smgrp&quot;, &quot;smgt&quot;, &quot;smgtp&quot;,
+  &quot;sbim&quot;, &quot;scsd&quot;, &quot;rbim&quot;, &quot;rcsd&quot;, &quot;subcs&quot;, &quot;supcs&quot;, &quot;docr&quot;, &quot;zerom&quot;, &quot;csnm&quot;,
+  &quot;kmous&quot;, &quot;minfo&quot;, &quot;reqmp&quot;, &quot;getm&quot;, &quot;setaf&quot;, &quot;setab&quot;, &quot;pfxl&quot;, &quot;devt&quot;, &quot;csin&quot;,
+  &quot;s0ds&quot;, &quot;s1ds&quot;, &quot;s2ds&quot;, &quot;s3ds&quot;, &quot;smglr&quot;, &quot;smgtb&quot;, &quot;birep&quot;, &quot;binel&quot;, &quot;bicr&quot;,
+  &quot;colornm&quot;, &quot;defbi&quot;, &quot;endbi&quot;, &quot;setcolor&quot;, &quot;slines&quot;, &quot;dispc&quot;, &quot;smpch&quot;,
+  &quot;rmpch&quot;, &quot;smsc&quot;, &quot;rmsc&quot;, &quot;pctrm&quot;, &quot;scesc&quot;, &quot;scesa&quot;, &quot;ehhlm&quot;, &quot;elhlm&quot;,
+  &quot;elohlm&quot;, &quot;erhlm&quot;, &quot;ethlm&quot;, &quot;evhlm&quot;, &quot;sgr1&quot;, &quot;slength&quot;, &quot;OTi2&quot;, &quot;OTrs&quot;,
+  &quot;OTnl&quot;, &quot;OTbs&quot;, &quot;OTko&quot;, &quot;OTma&quot;, &quot;OTG2&quot;, &quot;OTG3&quot;, &quot;OTG1&quot;, &quot;OTG4&quot;, &quot;OTGR&quot;,
+  &quot;OTGL&quot;, &quot;OTGU&quot;, &quot;OTGD&quot;, &quot;OTGH&quot;, &quot;OTGV&quot;, &quot;OTGC&quot;, &quot;meml&quot;, &quot;memu&quot;, &quot;box1&quot;]</code></pre></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../../../";
+        window.currentCrate = "term";
+        window.playgroundUrl = "";
+    </script>
+    <script src="../../../../jquery.js"></script>
+    <script src="../../../../main.js"></script>
+    
+    <script defer src="../../../../search-index.js"></script>
+</body>
+</html>
