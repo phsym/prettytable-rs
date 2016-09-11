@@ -273,4 +273,13 @@ Value three | Value four
 
 Check API documentation for the full list of available predefined formats.
 
+## Note on line endings
+By default, the library prints tables with platform specific line ending. Thin means on Windows,
+newlines will be rendered with `\r\n` while on other platforms they will be rendered with `\n`.
+Since `v0.6.3`, platform specific line endings are activated though the default feature `win_crlf`, which can be deactivated.
+When this feature is deactivated (for instance with the `--no-default-features` flag in cargo), line endings will be rendered with `\n`
+on any platform.
+
+This customization capability will probably move to Formatting API in `v0.7`.
+
 Additional examples are provided in the documentation and in [examples](./examples/) directory.

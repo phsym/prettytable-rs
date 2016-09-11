@@ -6,9 +6,9 @@ use unicode_width::UnicodeWidthStr;
 
 use super::format::Alignment;
 
-#[cfg(not(windows))]
+#[cfg(any(not(windows), not(feature="win_crlf")))]
 pub static NEWLINE: &'static [u8] = b"\n";
-#[cfg(windows)]
+#[cfg(all(windows, feature="win_crlf"))]
 pub static NEWLINE: &'static [u8] = b"\r\n";
 
 /// Internal utility for writing data into a string
