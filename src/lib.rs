@@ -4,11 +4,12 @@
 extern crate unicode_width;
 extern crate term;
 extern crate atty;
+extern crate csv;
 #[macro_use] extern crate lazy_static;
 
-use std::io;
-use std::io::{Write, Error};
+use std::io::{self, Read, Write, Error};
 use std::fmt;
+use std::path::Path;
 use std::iter::{FromIterator, IntoIterator};
 use std::slice::{Iter, IterMut};
 use std::ops::{Index, IndexMut};
@@ -180,6 +181,26 @@ impl <'a> TableSlice<'a> {
 	pub fn printstd(&self) {
 		self.print_tty(false);
 	}
+
+	/// Write the table to the specified writer.
+	pub fn to_csv<W: Write>(&self, w: W) -> csv::Result<csv::Writer<W>> {
+		self.to_csv_writer(csv::Writer::from_writer(w))
+	}
+
+	/// Write the table to the specified writer.
+	///
+	/// This allows for format customisation.
+	pub fn to_csv_writer<W: Write>(&self, mut writer: csv::Writer<W>) -> csv::Result<csv::Writer<W>> {
+		for title in self.titles {
+			try!(writer.write(title.iter().map(|c| c.get_content())));
+		}
+		for row in self.rows {
+			try!(writer.write(row.iter().map(|c| c.get_content())));
+		}
+
+		try!(writer.flush());
+		Ok(writer)
+	}
 }
 
 impl <'a> IntoIterator for &'a TableSlice<'a> {
@@ -203,6 +224,25 @@ impl Table {
 			titles: Box::new(None),
 			format: Box::new(*consts::FORMAT_DEFAULT)
 		}
+	}
+
+	/// Create a table from a CSV string
+	///
+	/// For more customisability use `from_csv()`
+	pub fn from_csv_string(csv_s: &str) -> csv::Result<Table> {
+		Ok(Table::from_csv(&mut csv::Reader::from_string(csv_s).has_headers(false)))
+	}
+
+	/// Create a table from a CSV file
+	///
+	/// For more customisability use `from_csv()`
+	pub fn from_csv_file<P: AsRef<Path>>(csv_p: P) -> csv::Result<Table> {
+		Ok(Table::from_csv(&mut try!(csv::Reader::from_file(csv_p)).has_headers(false)))
+	}
+
+	/// Create a table from a CSV reader
+	pub fn from_csv<R: Read>(reader: &mut csv::Reader<R>) -> Table {
+		Table::init(reader.records().map(|row| Row::new(row.unwrap().into_iter().map(|cell| Cell::new(&cell)).collect())).collect())
 	}
 
 	/// Change the table format. Eg : Separators
@@ -329,6 +369,18 @@ impl Table {
 	/// Panic if writing to standard output fails
 	pub fn printstd(&self) {
 		self.as_ref().printstd();
+	}
+
+	/// Write the table to the specified writer.
+	pub fn to_csv<W: Write>(&self, w: W) -> csv::Result<csv::Writer<W>> {
+		self.as_ref().to_csv(w)
+	}
+
+	/// Write the table to the specified writer.
+	///
+	/// This allows for format customisation.
+	pub fn to_csv_writer<W: Write>(&self, writer: csv::Writer<W>) -> csv::Result<csv::Writer<W>> {
+		self.as_ref().to_csv_writer(writer)
 	}
 }
 
