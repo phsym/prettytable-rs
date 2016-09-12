@@ -567,7 +567,7 @@ mod tests {
 	use Slice;
 	use row::Row;
 	use cell::Cell;
-    use format::consts::{FORMAT_NO_LINESEP, FORMAT_NO_COLSEP, FORMAT_CLEAN};
+	use format::consts::{FORMAT_NO_LINESEP, FORMAT_NO_COLSEP, FORMAT_CLEAN};
 
 	#[test]
 	fn table() {
@@ -706,5 +706,39 @@ mod tests {
 		let slice = slice.slice(..3);
 		assert_eq!(out, slice.to_string().replace("\r\n", "\n"));
 		assert_eq!(out, table.slice(1..4).to_string().replace("\r\n", "\n"));
+	}
+
+	mod csv {
+		use Table;
+		use row::Row;
+		use cell::Cell;
+
+		static CSV_S: &'static str = "ABC,DEFG,HIJKLMN\n\
+                                  foobar,bar,foo\n\
+                                  foobar2,bar2,foo2\n";
+
+		fn test_table() -> Table {
+			let mut table = Table::new();
+			table.add_row(Row::new(vec![Cell::new("ABC"), Cell::new("DEFG"), Cell::new("HIJKLMN")]));
+			table.add_row(Row::new(vec![Cell::new("foobar"), Cell::new("bar"), Cell::new("foo")]));
+			table.add_row(Row::new(vec![Cell::new("foobar2"), Cell::new("bar2"), Cell::new("foo2")]));
+			table
+		}
+
+		#[test]
+		fn from() {
+			assert_eq!(test_table().to_string().replace("\r\n", "\n"), Table::from_csv_string(CSV_S).unwrap().to_string().replace("\r\n", "\n"));
+		}
+
+		#[test]
+		fn to() {
+			assert_eq!(test_table().to_csv(Vec::new()).unwrap().as_string(), CSV_S);
+		}
+
+		#[test]
+		fn trans() {
+			assert_eq!(Table::from_csv_string(test_table().to_csv(Vec::new()).unwrap().as_string()).unwrap().to_string().replace("\r\n", "\n"),
+				         test_table().to_string().replace("\r\n", "\n"));
+		}
 	}
 }
