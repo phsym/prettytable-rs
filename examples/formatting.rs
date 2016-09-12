@@ -63,4 +63,26 @@ fn main() {
             .build()
     );
     table.printstd();
+
+    // Customized format with unicode
+    // Example to print
+    // ┌─────────────┬────────────┐
+    // | Title 1     | Title 2    |
+    // ├─────────────┼────────────┤
+    // | Value 1     | Value 2    |
+    // ├─────────────┼────────────┤
+    // | Value three | Value four |
+    // └─────────────┴────────────┘
+    println!("With unicode:");
+    table.set_format(
+        format::FormatBuilder::new()
+            .column_separator('|')
+            .borders('|')
+            .separators( &[format::LinePosition::Top],    format::LineSeparator::new('─', '┬', '┌', '┐'))
+            .separators( &[format::LinePosition::Intern], format::LineSeparator::new('─', '┼', '├', '┤'))
+            .separators( &[format::LinePosition::Bottom], format::LineSeparator::new('─', '┴', '└', '┘'))
+            .padding(1, 1)
+            .build()
+    );
+    table.printstd();
 }

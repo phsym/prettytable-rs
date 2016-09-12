@@ -5,6 +5,7 @@ extern crate unicode_width;
 extern crate term;
 extern crate atty;
 #[macro_use] extern crate lazy_static;
+extern crate encode_unicode;
 
 use std::io;
 use std::io::{Write, Error};

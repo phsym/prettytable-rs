@@ -2,6 +2,8 @@
 
 use std::io::{Write, Error};
 
+use encode_unicode::Utf8Char;
+
 use super::utils::NEWLINE;
 
 /// Alignment for cell's content
@@ -53,17 +55,19 @@ impl LineSeparator {
 	/// Print a full line separator to `out`. `col_width` is a slice containing the width of each column
 	pub fn print<T: Write+?Sized>(&self, out: &mut T, col_width: &[usize], colsep: bool, lborder: bool, rborder: bool) -> Result<(), Error> {
 		if lborder {
-			try!(out.write_all(&[self.ljunc as u8]));
+			try!(out.write_all(Utf8Char::from(self.ljunc).as_bytes()));
 		}
 		let mut iter = col_width.into_iter().peekable();
 		while let Some(width) = iter.next() {
-			try!(out.write_all(&vec![self.line as u8; width+2]));
+			for _ in 0..width+2 {
+				try!(out.write_all(Utf8Char::from(self.line).as_bytes()));
+			}
 			if colsep && iter.peek().is_some() {
-				try!(out.write_all(&[self.junc as u8]));
+				try!(out.write_all(Utf8Char::from(self.junc).as_bytes()));
 			}
 		}
 		if rborder {
-			try!(out.write_all(&[self.rjunc as u8]));
+			try!(out.write_all(Utf8Char::from(self.rjunc).as_bytes()));
 		}
 		out.write_all(NEWLINE)
 	}
@@ -185,7 +189,7 @@ impl TableFormat {
 	/// Print a column separator or a table border
 	pub fn print_column_separator<T: Write+?Sized>(&self, out: &mut T, pos: ColumnPosition) -> Result<(), Error> {
 		match self.get_column_separator(pos) {
-			Some(s) => out.write_all(&[s as u8]),
+			Some(s) => out.write_all(Utf8Char::from(s).as_bytes()),
 			None => Ok(())
 		}
 	}
