@@ -160,7 +160,7 @@ impl <'a> TableSlice<'a> {
 	/// # Panic
 	/// Panic if writing to standard output fails
 	pub fn print_tty(&self, force_colorize: bool) {
-		let r = match (stdout(), atty::is() || force_colorize) {
+		let r = match (stdout(), atty::is(atty::Stream::Stdout) || force_colorize) {
 			(Some(mut o), true) => self.print_term(&mut *o),
 			_ => self.print(&mut io::stdout()),
 		};
