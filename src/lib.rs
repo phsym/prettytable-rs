@@ -2,12 +2,13 @@
 extern crate unicode_width;
 extern crate term;
 extern crate atty;
+extern crate csv;
 #[macro_use] extern crate lazy_static;
 extern crate encode_unicode;
 
-use std::io;
-use std::io::{Write, Error};
+use std::io::{self, Read, Write, Error};
 use std::fmt;
+use std::path::Path;
 use std::iter::{FromIterator, IntoIterator};
 use std::slice::{Iter, IterMut};
 use std::ops::{Index, IndexMut};
@@ -179,6 +180,26 @@ impl <'a> TableSlice<'a> {
 	pub fn printstd(&self) {
 		self.print_tty(false);
 	}
+
+	/// Write the table to the specified writer.
+	pub fn to_csv<W: Write>(&self, w: W) -> csv::Result<csv::Writer<W>> {
+		self.to_csv_writer(csv::Writer::from_writer(w))
+	}
+
+	/// Write the table to the specified writer.
+	///
+	/// This allows for format customisation.
+	pub fn to_csv_writer<W: Write>(&self, mut writer: csv::Writer<W>) -> csv::Result<csv::Writer<W>> {
+		for title in self.titles {
+			try!(writer.write(title.iter().map(|c| c.get_content())));
+		}
+		for row in self.rows {
+			try!(writer.write(row.iter().map(|c| c.get_content())));
+		}
+
+		try!(writer.flush());
+		Ok(writer)
+	}
 }
 
 impl <'a> IntoIterator for &'a TableSlice<'a> {
@@ -202,6 +223,25 @@ impl Table {
 			titles: Box::new(None),
 			format: Box::new(*consts::FORMAT_DEFAULT)
 		}
+	}
+
+	/// Create a table from a CSV string
+	///
+	/// For more customisability use `from_csv()`
+	pub fn from_csv_string(csv_s: &str) -> csv::Result<Table> {
+		Ok(Table::from_csv(&mut csv::Reader::from_string(csv_s).has_headers(false)))
+	}
+
+	/// Create a table from a CSV file
+	///
+	/// For more customisability use `from_csv()`
+	pub fn from_csv_file<P: AsRef<Path>>(csv_p: P) -> csv::Result<Table> {
+		Ok(Table::from_csv(&mut try!(csv::Reader::from_file(csv_p)).has_headers(false)))
+	}
+
+	/// Create a table from a CSV reader
+	pub fn from_csv<R: Read>(reader: &mut csv::Reader<R>) -> Table {
+		Table::init(reader.records().map(|row| Row::new(row.unwrap().into_iter().map(|cell| Cell::new(&cell)).collect())).collect())
 	}
 
 	/// Change the table format. Eg : Separators
@@ -328,6 +368,18 @@ impl Table {
 	/// Panic if writing to standard output fails
 	pub fn printstd(&self) {
 		self.as_ref().printstd();
+	}
+
+	/// Write the table to the specified writer.
+	pub fn to_csv<W: Write>(&self, w: W) -> csv::Result<csv::Writer<W>> {
+		self.as_ref().to_csv(w)
+	}
+
+	/// Write the table to the specified writer.
+	///
+	/// This allows for format customisation.
+	pub fn to_csv_writer<W: Write>(&self, writer: csv::Writer<W>) -> csv::Result<csv::Writer<W>> {
+		self.as_ref().to_csv_writer(writer)
 	}
 }
 
@@ -685,5 +737,39 @@ mod tests {
 		println!("____");
 		println!("{}", table.to_string().replace("\r\n", "\n"));
 		assert_eq!(out, table.to_string().replace("\r\n", "\n"));
+	}
+
+	mod csv {
+		use Table;
+		use row::Row;
+		use cell::Cell;
+
+		static CSV_S: &'static str = "ABC,DEFG,HIJKLMN\n\
+                                  foobar,bar,foo\n\
+                                  foobar2,bar2,foo2\n";
+
+		fn test_table() -> Table {
+			let mut table = Table::new();
+			table.add_row(Row::new(vec![Cell::new("ABC"), Cell::new("DEFG"), Cell::new("HIJKLMN")]));
+			table.add_row(Row::new(vec![Cell::new("foobar"), Cell::new("bar"), Cell::new("foo")]));
+			table.add_row(Row::new(vec![Cell::new("foobar2"), Cell::new("bar2"), Cell::new("foo2")]));
+			table
+		}
+
+		#[test]
+		fn from() {
+			assert_eq!(test_table().to_string().replace("\r\n", "\n"), Table::from_csv_string(CSV_S).unwrap().to_string().replace("\r\n", "\n"));
+		}
+
+		#[test]
+		fn to() {
+			assert_eq!(test_table().to_csv(Vec::new()).unwrap().as_string(), CSV_S);
+		}
+
+		#[test]
+		fn trans() {
+			assert_eq!(Table::from_csv_string(test_table().to_csv(Vec::new()).unwrap().as_string()).unwrap().to_string().replace("\r\n", "\n"),
+				         test_table().to_string().replace("\r\n", "\n"));
+		}
 	}
 }
