@@ -3,6 +3,7 @@ extern crate unicode_width;
 extern crate term;
 extern crate atty;
 #[macro_use] extern crate lazy_static;
+extern crate encode_unicode;
 
 use std::io;
 use std::io::{Write, Error};
@@ -513,7 +514,8 @@ mod tests {
 	use Slice;
 	use row::Row;
 	use cell::Cell;
-    use format::consts::{FORMAT_NO_LINESEP, FORMAT_NO_COLSEP, FORMAT_CLEAN};
+	use format;
+	use format::consts::{FORMAT_NO_LINESEP, FORMAT_NO_COLSEP, FORMAT_CLEAN};
 
 	#[test]
 	fn table() {
@@ -652,5 +654,36 @@ mod tests {
 		let slice = slice.slice(..3);
 		assert_eq!(out, slice.to_string().replace("\r\n", "\n"));
 		assert_eq!(out, table.slice(1..4).to_string().replace("\r\n", "\n"));
+	}
+
+	#[test]
+	fn test_unicode_separators() {
+		let mut table = Table::new();
+		table.set_format(
+	        format::FormatBuilder::new()
+	            .column_separator('|')
+	            .borders('|')
+	            .separators( &[format::LinePosition::Top],    format::LineSeparator::new('─', '┬', '┌', '┐'))
+	            .separators( &[format::LinePosition::Intern], format::LineSeparator::new('─', '┼', '├', '┤'))
+	            .separators( &[format::LinePosition::Bottom], format::LineSeparator::new('─', '┴', '└', '┘'))
+	            .padding(1, 1)
+	            .build()
+	    );
+		table.add_row(Row::new(vec![Cell::new("1"), Cell::new("1"), Cell::new("1")]));
+		table.add_row(Row::new(vec![Cell::new("2"), Cell::new("2"), Cell::new("2")]));
+		table.set_titles(Row::new(vec![Cell::new("t1"), Cell::new("t2"), Cell::new("t3")]));
+		let out = "\
+┌────┬────┬────┐
+| t1 | t2 | t3 |
+├────┼────┼────┤
+| 1  | 1  | 1  |
+├────┼────┼────┤
+| 2  | 2  | 2  |
+└────┴────┴────┘
+";
+		println!("{}", out);
+		println!("____");
+		println!("{}", table.to_string().replace("\r\n", "\n"));
+		assert_eq!(out, table.to_string().replace("\r\n", "\n"));
 	}
 }
