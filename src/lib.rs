@@ -2,12 +2,16 @@
 extern crate unicode_width;
 extern crate term;
 extern crate atty;
+#[cfg(feature = "csv")]
 extern crate csv;
 #[macro_use] extern crate lazy_static;
 extern crate encode_unicode;
 
-use std::io::{self, Read, Write, Error};
+use std::io::{self, Write, Error};
+#[cfg(feature = "csv")]
+use std::io::Read;
 use std::fmt;
+#[cfg(feature = "csv")]
 use std::path::Path;
 use std::iter::{FromIterator, IntoIterator};
 use std::slice::{Iter, IterMut};
@@ -182,6 +186,7 @@ impl <'a> TableSlice<'a> {
 	}
 
 	/// Write the table to the specified writer.
+	#[cfg(feature = "csv")]
 	pub fn to_csv<W: Write>(&self, w: W) -> csv::Result<csv::Writer<W>> {
 		self.to_csv_writer(csv::Writer::from_writer(w))
 	}
@@ -189,6 +194,7 @@ impl <'a> TableSlice<'a> {
 	/// Write the table to the specified writer.
 	///
 	/// This allows for format customisation.
+	#[cfg(feature = "csv")]
 	pub fn to_csv_writer<W: Write>(&self, mut writer: csv::Writer<W>) -> csv::Result<csv::Writer<W>> {
 		for title in self.titles {
 			try!(writer.write(title.iter().map(|c| c.get_content())));
@@ -228,6 +234,7 @@ impl Table {
 	/// Create a table from a CSV string
 	///
 	/// For more customisability use `from_csv()`
+	#[cfg(feature = "csv")]
 	pub fn from_csv_string(csv_s: &str) -> csv::Result<Table> {
 		Ok(Table::from_csv(&mut csv::Reader::from_string(csv_s).has_headers(false)))
 	}
@@ -235,11 +242,13 @@ impl Table {
 	/// Create a table from a CSV file
 	///
 	/// For more customisability use `from_csv()`
+	#[cfg(feature = "csv")]
 	pub fn from_csv_file<P: AsRef<Path>>(csv_p: P) -> csv::Result<Table> {
 		Ok(Table::from_csv(&mut try!(csv::Reader::from_file(csv_p)).has_headers(false)))
 	}
 
 	/// Create a table from a CSV reader
+	#[cfg(feature = "csv")]
 	pub fn from_csv<R: Read>(reader: &mut csv::Reader<R>) -> Table {
 		Table::init(reader.records().map(|row| Row::new(row.unwrap().into_iter().map(|cell| Cell::new(&cell)).collect())).collect())
 	}
@@ -371,6 +380,7 @@ impl Table {
 	}
 
 	/// Write the table to the specified writer.
+	#[cfg(feature = "csv")]
 	pub fn to_csv<W: Write>(&self, w: W) -> csv::Result<csv::Writer<W>> {
 		self.as_ref().to_csv(w)
 	}
@@ -378,6 +388,7 @@ impl Table {
 	/// Write the table to the specified writer.
 	///
 	/// This allows for format customisation.
+	#[cfg(feature = "csv")]
 	pub fn to_csv_writer<W: Write>(&self, writer: csv::Writer<W>) -> csv::Result<csv::Writer<W>> {
 		self.as_ref().to_csv_writer(writer)
 	}
@@ -739,6 +750,7 @@ mod tests {
 		assert_eq!(out, table.to_string().replace("\r\n", "\n"));
 	}
 
+	#[cfg(feature = "csv")]
 	mod csv {
 		use Table;
 		use row::Row;
