@@ -396,6 +396,7 @@
 <span id="352">352</span>
 <span id="353">353</span>
 <span id="354">354</span>
+<span id="355">355</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! This module contains definition of table/row cells stuff</span>
 
@@ -582,14 +583,15 @@
 	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>print_term</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Terminal</span><span class='op'>+</span>?<span class='ident'>Sized</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>out</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>T</span>, <span class='ident'>idx</span>: <span class='ident'>usize</span>, <span class='ident'>col_width</span>: <span class='ident'>usize</span>, <span class='ident'>skip_right_fill</span>: <span class='ident'>bool</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>Error</span><span class='op'>&gt;</span> {
 		<span class='kw'>for</span> <span class='ident'>a</span> <span class='kw'>in</span> <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>style</span> {
 			<span class='kw'>match</span> <span class='ident'>out</span>.<span class='ident'>attr</span>(<span class='ident'>a</span>.<span class='ident'>clone</span>()) {
-				<span class='prelude-val'>Ok</span>(<span class='ident'>ok</span>) <span class='op'>=&gt;</span> <span class='ident'>ok</span>,
-				<span class='prelude-val'>Err</span>(::<span class='ident'>term</span>::<span class='ident'>Error</span>::<span class='ident'>NotSupported</span>) <span class='op'>=&gt;</span> (), <span class='comment'>// Ignore unsupported atrributes</span>
+				<span class='prelude-val'>Ok</span>(..) <span class='op'>|</span> <span class='prelude-val'>Err</span>(::<span class='ident'>term</span>::<span class='ident'>Error</span>::<span class='ident'>NotSupported</span>) <span class='op'>|</span> <span class='prelude-val'>Err</span>(::<span class='ident'>term</span>::<span class='ident'>Error</span>::<span class='ident'>ColorOutOfRange</span>) <span class='op'>=&gt;</span> (), <span class='comment'>// Ignore unsupported atrributes</span>
 				<span class='prelude-val'>Err</span>(<span class='ident'>e</span>) <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='ident'>term_error_to_io_error</span>(<span class='ident'>e</span>))
 			};
 		}
 		<span class='macro'>try</span><span class='macro'>!</span>(<span class='self'>self</span>.<span class='ident'>print</span>(<span class='ident'>out</span>, <span class='ident'>idx</span>, <span class='ident'>col_width</span>, <span class='ident'>skip_right_fill</span>));
-		<span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>out</span>.<span class='ident'>reset</span>().<span class='ident'>map_err</span>(<span class='ident'>term_error_to_io_error</span>));
-		<span class='prelude-val'>Ok</span>(())
+		<span class='kw'>match</span> <span class='ident'>out</span>.<span class='ident'>reset</span>() {
+			<span class='prelude-val'>Ok</span>(..) <span class='op'>|</span> <span class='prelude-val'>Err</span>(::<span class='ident'>term</span>::<span class='ident'>Error</span>::<span class='ident'>NotSupported</span>) <span class='op'>|</span> <span class='prelude-val'>Err</span>(::<span class='ident'>term</span>::<span class='ident'>Error</span>::<span class='ident'>ColorOutOfRange</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Ok</span>(()),
+			<span class='prelude-val'>Err</span>(<span class='ident'>e</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Err</span>(<span class='ident'>term_error_to_io_error</span>(<span class='ident'>e</span>))
+		}
 	}
 }
 
