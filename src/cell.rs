@@ -183,14 +183,15 @@ impl Cell {
 	pub fn print_term<T: Terminal+?Sized>(&self, out: &mut T, idx: usize, col_width: usize, skip_right_fill: bool) -> Result<(), Error> {
 		for a in &self.style {
 			match out.attr(a.clone()) {
-				Ok(ok) => ok,
-				Err(::term::Error::NotSupported) => (), // Ignore unsupported atrributes
+				Ok(..) | Err(::term::Error::NotSupported) | Err(::term::Error::ColorOutOfRange) => (), // Ignore unsupported atrributes
 				Err(e) => return Err(term_error_to_io_error(e))
 			};
 		}
 		try!(self.print(out, idx, col_width, skip_right_fill));
-		try!(out.reset().map_err(term_error_to_io_error));
-		Ok(())
+		match out.reset() {
+			Ok(..) | Err(::term::Error::NotSupported) | Err(::term::Error::ColorOutOfRange) => Ok(()),
+			Err(e) => Err(term_error_to_io_error(e))
+		}
 	}
 }
 
