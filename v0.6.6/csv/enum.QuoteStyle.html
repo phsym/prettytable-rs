@@ -47,30 +47,30 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-780' class='srclink' href='../src/csv/writer.rs.html#14-28' title='goto source code'>[src]</a></span></h1>
+               </span><a id='src-775' class='srclink' href='../src/csv/writer.rs.html#14-28' title='goto source code'>[src]</a></span></h1>
 <pre class='rust enum'>pub enum QuoteStyle {
     Always,
     Necessary,
     Never,
 }</pre><div class='docblock'><p>The quoting style to use when writing CSV data.</p>
 </div><h2 class='variants'>Variants</h2>
-<span id='variant.Always' class='variant'><code>Always</code></span><div class='docblock'><p>This puts quotes around every field. Always.</p>
-</div><span id='variant.Necessary' class='variant'><code>Necessary</code></span><div class='docblock'><p>This puts quotes around fields only when necessary.</p>
+<span id='variant.Always' class='variant'><span id='Always.v' class='invisible'><code>Always</code></span></span><div class='docblock'><p>This puts quotes around every field. Always.</p>
+</div><span id='variant.Necessary' class='variant'><span id='Necessary.v' class='invisible'><code>Necessary</code></span></span><div class='docblock'><p>This puts quotes around fields only when necessary.</p>
 
 <p>They are necessary when fields are empty or contain a quote, delimiter
 or record terminator.</p>
 
 <p>This is the default.</p>
-</div><span id='variant.Never' class='variant'><code>Never</code></span><div class='docblock'><p>This <em>never</em> writes quotes.</p>
+</div><span id='variant.Never' class='variant'><span id='Never.v' class='invisible'><code>Never</code></span></span><div class='docblock'><p>This <em>never</em> writes quotes.</p>
 
 <p>If a field requires quotes, then the writer will report an error.</p>
-</div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Copy.html' title='core::marker::Copy'>Copy</a> for <a class='enum' href='../csv/enum.QuoteStyle.html' title='csv::QuoteStyle'>QuoteStyle</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-776' class='srclink' href='../src/csv/writer.rs.html#13' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'></div><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a> for <a class='enum' href='../csv/enum.QuoteStyle.html' title='csv::QuoteStyle'>QuoteStyle</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-777' class='srclink' href='../src/csv/writer.rs.html#13' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.clone' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone' class='fnname'>clone</a>(&amp;self) -&gt; <a class='enum' href='../csv/enum.QuoteStyle.html' title='csv::QuoteStyle'>QuoteStyle</a></code></h4>
+</div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a> for <a class='enum' href='../csv/enum.QuoteStyle.html' title='csv::QuoteStyle'>QuoteStyle</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-779' class='srclink' href='../src/csv/writer.rs.html#13' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.clone' class='method'><span id='clone.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone' class='fnname'>clone</a>(&amp;self) -&gt; <a class='enum' href='../csv/enum.QuoteStyle.html' title='csv::QuoteStyle'>QuoteStyle</a></code></span></h4>
 <div class='docblock'><p>Returns a copy of the value. <a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone">Read more</a></p>
-</div><h4 id='method.clone_from' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from' class='fnname'>clone_from</a>(&amp;mut self, source: &amp;Self)</code><div class='since' title='Stable since Rust version 1.0.0'>1.0.0</div></h4>
+</div><h4 id='method.clone_from' class='method'><span id='clone_from.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from' class='fnname'>clone_from</a>(&amp;mut self, source: &amp;Self)</code><div class='since' title='Stable since Rust version 1.0.0'>1.0.0</div></span></h4>
 <div class='docblock'><p>Performs copy-assignment from <code>source</code>. <a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from">Read more</a></p>
-</div></div></section>
+</div></div><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Copy.html' title='core::marker::Copy'>Copy</a> for <a class='enum' href='../csv/enum.QuoteStyle.html' title='csv::QuoteStyle'>QuoteStyle</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-782' class='srclink' href='../src/csv/writer.rs.html#13' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'></div></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>

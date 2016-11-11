@@ -76,7 +76,7 @@ chocolate,refile,7&quot;</span>;
 <span class='kw'>for</span> <span class='ident'>row</span> <span class='kw'>in</span> <span class='ident'>rdr</span>.<span class='ident'>decode</span>() {
     <span class='kw'>let</span> (<span class='ident'>n1</span>, <span class='ident'>n2</span>, <span class='ident'>dist</span>): (<span class='ident'>String</span>, <span class='ident'>String</span>, <span class='ident'>u32</span>) <span class='op'>=</span> <span class='ident'>row</span>.<span class='ident'>unwrap</span>();
     <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;{}, {}: {}&quot;</span>, <span class='ident'>n1</span>, <span class='ident'>n2</span>, <span class='ident'>dist</span>);
-}</pre>
+}<a class='test-arrow' target='_blank' href=''>Run</a></pre>
 
 <p>If you just want a <code>Vec</code> of all the records, then you can use the
 <code>collect</code> method defined on iterators:</p>
@@ -93,7 +93,7 @@ chocolate,refile,7&quot;</span>;
 
 <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>rdr</span> <span class='op'>=</span> <span class='ident'>csv</span>::<span class='ident'>Reader</span>::<span class='ident'>from_string</span>(<span class='ident'>data</span>).<span class='ident'>has_headers</span>(<span class='bool-val'>false</span>);
 <span class='kw'>let</span> <span class='ident'>rows</span> <span class='op'>=</span> <span class='ident'>rdr</span>.<span class='ident'>decode</span>().<span class='ident'>collect</span>::<span class='op'>&lt;</span><span class='ident'>csv</span>::<span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Row</span><span class='op'>&gt;&gt;</span><span class='op'>&gt;</span>().<span class='ident'>unwrap</span>();
-<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>rows</span>.<span class='ident'>len</span>(), <span class='number'>5</span>);</pre>
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>rows</span>.<span class='ident'>len</span>(), <span class='number'>5</span>);<a class='test-arrow' target='_blank' href=''>Run</a></pre>
 
 <p>Please see the <code>Reader</code> type for more documentation and examples.</p>
 
@@ -127,7 +127,7 @@ chocolate,refile,7&quot;</span>;
 <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>rdr</span> <span class='op'>=</span> <span class='ident'>csv</span>::<span class='ident'>Reader</span>::<span class='ident'>from_string</span>(<span class='ident'>data</span>).<span class='ident'>has_headers</span>(<span class='bool-val'>false</span>);
 <span class='kw'>for</span> <span class='ident'>row</span> <span class='kw'>in</span> <span class='ident'>rdr</span>.<span class='ident'>records</span>().<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>r</span><span class='op'>|</span> <span class='ident'>r</span>.<span class='ident'>unwrap</span>()) {
     <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;{:?}&quot;</span>, <span class='ident'>row</span>);
-}</pre>
+}<a class='test-arrow' target='_blank' href=''>Run</a></pre>
 
 <h3 id='byte-string-records' class='section-header'><a href='#byte-string-records'>Byte string records</a></h3>
 <p>Yields each record as a <code>Vec&lt;ByteString&gt;</code>. Namely, this allows reading CSV
@@ -141,7 +141,7 @@ chocolate,refile,7&quot;</span>;
 <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>rdr</span> <span class='op'>=</span> <span class='ident'>csv</span>::<span class='ident'>Reader</span>::<span class='ident'>from_bytes</span>(<span class='kw-2'>&amp;</span><span class='ident'>data</span>[..]).<span class='ident'>has_headers</span>(<span class='bool-val'>false</span>);
 <span class='kw'>for</span> <span class='ident'>row</span> <span class='kw'>in</span> <span class='ident'>rdr</span>.<span class='ident'>byte_records</span>().<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>r</span><span class='op'>|</span> <span class='ident'>r</span>.<span class='ident'>unwrap</span>()) {
     <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;{:?}&quot;</span>, <span class='ident'>row</span>);
-}</pre>
+}<a class='test-arrow' target='_blank' href=''>Run</a></pre>
 
 <h3 id='byte-slice-records' class='section-header'><a href='#byte-slice-records'>Byte slice records</a></h3>
 <p>This iterator is defined on the <code>Reader</code> type itself and yields <em>fields</em>
@@ -168,7 +168,7 @@ chocolate,refile,7&quot;</span>;
         <span class='macro'>print</span><span class='macro'>!</span>(<span class='string'>&quot;{:?} &quot;</span>, <span class='ident'>r</span>.<span class='ident'>unwrap</span>());
     }
     <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>);
-}</pre>
+}<a class='test-arrow' target='_blank' href=''>Run</a></pre>
 
 <p>There is more explanation for how this iterator interface works on the
 <code>Reader</code> type.</p>
@@ -222,7 +222,7 @@ while providing an outlet to use byte strings.</li>
                        <tr class=' module-item'>
                            <td><a class='mod' href='index/index.html'
                                   title='csv::index'>index</a></td>
-                           <td class='docblock short'>
+                           <td class='docblock-short'>
                                 <p>This sub-module provides experimental CSV record indexing.</p>
                            </td>
                        </tr></table><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
@@ -230,56 +230,56 @@ while providing an outlet to use byte strings.</li>
                        <tr class=' module-item'>
                            <td><a class='struct' href='struct.ByteRecords.html'
                                   title='csv::ByteRecords'>ByteRecords</a></td>
-                           <td class='docblock short'>
+                           <td class='docblock-short'>
                                 <p>An iterator of <code>ByteString</code> records.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class='struct' href='struct.Decoded.html'
                                   title='csv::Decoded'>Decoded</a></td>
-                           <td class='docblock short'>
+                           <td class='docblock-short'>
                                 <p>A record to be decoded.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class='struct' href='struct.DecodedRecords.html'
                                   title='csv::DecodedRecords'>DecodedRecords</a></td>
-                           <td class='docblock short'>
+                           <td class='docblock-short'>
                                 <p>An iterator of decoded records.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class='struct' href='struct.Encoded.html'
                                   title='csv::Encoded'>Encoded</a></td>
-                           <td class='docblock short'>
+                           <td class='docblock-short'>
                                 <p>A record to be encoded.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class='struct' href='struct.LocatableError.html'
                                   title='csv::LocatableError'>LocatableError</a></td>
-                           <td class='docblock short'>
+                           <td class='docblock-short'>
                                 <p>An error tagged with a location at which it occurred.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class='struct' href='struct.Reader.html'
                                   title='csv::Reader'>Reader</a></td>
-                           <td class='docblock short'>
+                           <td class='docblock-short'>
                                 <p>A CSV reader.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class='struct' href='struct.StringRecords.html'
                                   title='csv::StringRecords'>StringRecords</a></td>
-                           <td class='docblock short'>
+                           <td class='docblock-short'>
                                 <p>An iterator of <code>String</code> records.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class='struct' href='struct.Writer.html'
                                   title='csv::Writer'>Writer</a></td>
-                           <td class='docblock short'>
+                           <td class='docblock-short'>
                                 <p>A CSV writer.</p>
                            </td>
                        </tr></table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
@@ -287,35 +287,35 @@ while providing an outlet to use byte strings.</li>
                        <tr class=' module-item'>
                            <td><a class='enum' href='enum.Error.html'
                                   title='csv::Error'>Error</a></td>
-                           <td class='docblock short'>
+                           <td class='docblock-short'>
                                 <p>An error produced by an operation on CSV data.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class='enum' href='enum.NextField.html'
                                   title='csv::NextField'>NextField</a></td>
-                           <td class='docblock short'>
+                           <td class='docblock-short'>
                                 <p>NextField is the result of parsing a single CSV field.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class='enum' href='enum.ParseError.html'
                                   title='csv::ParseError'>ParseError</a></td>
-                           <td class='docblock short'>
+                           <td class='docblock-short'>
                                 <p>A description of a CSV parse error.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class='enum' href='enum.QuoteStyle.html'
                                   title='csv::QuoteStyle'>QuoteStyle</a></td>
-                           <td class='docblock short'>
+                           <td class='docblock-short'>
                                 <p>The quoting style to use when writing CSV data.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class='enum' href='enum.RecordTerminator.html'
                                   title='csv::RecordTerminator'>RecordTerminator</a></td>
-                           <td class='docblock short'>
+                           <td class='docblock-short'>
                                 <p>A record terminator.</p>
                            </td>
                        </tr></table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
@@ -323,7 +323,7 @@ while providing an outlet to use byte strings.</li>
                        <tr class=' module-item'>
                            <td><a class='trait' href='trait.BorrowBytes.html'
                                   title='csv::BorrowBytes'>BorrowBytes</a></td>
-                           <td class='docblock short'>
+                           <td class='docblock-short'>
                                 <p>A trait that permits borrowing byte vectors.</p>
                            </td>
                        </tr></table><h2 id='types' class='section-header'><a href="#types">Type Definitions</a></h2>
@@ -331,14 +331,14 @@ while providing an outlet to use byte strings.</li>
                        <tr class=' module-item'>
                            <td><a class='type' href='type.ByteString.html'
                                   title='csv::ByteString'>ByteString</a></td>
-                           <td class='docblock short'>
+                           <td class='docblock-short'>
                                 <p>A convenience type for referring to a plain byte string.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class='type' href='type.Result.html'
                                   title='csv::Result'>Result</a></td>
-                           <td class='docblock short'>
+                           <td class='docblock-short'>
                                 <p>A convenience type for representing the result of most CSV reader/writer
 operations.</p>
                            </td>
