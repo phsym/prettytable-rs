@@ -47,10 +47,8 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-495' class='srclink' href='../src/csv/reader.rs.html#96-123' title='goto source code'>[src]</a></span></h1>
-<pre class='rust struct'>pub struct Reader&lt;R&gt; {
-    // some fields omitted
-}</pre><div class='docblock'><p>A CSV reader.</p>
+               </span><a id='src-494' class='srclink' href='../src/csv/reader.rs.html#96-123' title='goto source code'>[src]</a></span></h1>
+<pre class='rust struct'>pub struct Reader&lt;R&gt; { /* fields omitted */ }</pre><div class='docblock'><p>A CSV reader.</p>
 
 <p>This reader parses CSV data and exposes records via iterators.</p>
 
@@ -70,7 +68,7 @@ chocolate,refile,7&quot;</span>;
 <span class='kw'>for</span> <span class='ident'>row</span> <span class='kw'>in</span> <span class='ident'>rdr</span>.<span class='ident'>decode</span>() {
     <span class='kw'>let</span> (<span class='ident'>n1</span>, <span class='ident'>n2</span>, <span class='ident'>dist</span>): (<span class='ident'>String</span>, <span class='ident'>String</span>, <span class='ident'>u32</span>) <span class='op'>=</span> <span class='ident'>row</span>.<span class='ident'>unwrap</span>();
     <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;{}, {}: {}&quot;</span>, <span class='ident'>n1</span>, <span class='ident'>n2</span>, <span class='ident'>dist</span>);
-}</pre>
+}<a class='test-arrow' target='_blank' href=''>Run</a></pre>
 
 <p>Here&#39;s another example that parses tab-delimited values with records of
 varying length:</p>
@@ -90,22 +88,22 @@ chocolate\trefile\t7&quot;</span>;
 <span class='kw'>for</span> <span class='ident'>row</span> <span class='kw'>in</span> <span class='ident'>rdr</span>.<span class='ident'>records</span>() {
     <span class='kw'>let</span> <span class='ident'>row</span> <span class='op'>=</span> <span class='ident'>row</span>.<span class='ident'>unwrap</span>();
     <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;{:?}&quot;</span>, <span class='ident'>row</span>);
-}</pre>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;R:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/std/io/trait.Read.html' title='std::io::Read'>Read</a>&gt; <a class='struct' href='../csv/struct.Reader.html' title='csv::Reader'>Reader</a>&lt;R&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-516' class='srclink' href='../src/csv/reader.rs.html#125-152' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.from_reader' class='method'><code>fn <a href='#method.from_reader' class='fnname'>from_reader</a>(rdr: R) -&gt; <a class='struct' href='../csv/struct.Reader.html' title='csv::Reader'>Reader</a>&lt;R&gt;</code></h4>
+}<a class='test-arrow' target='_blank' href=''>Run</a></pre>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;R:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/std/io/trait.Read.html' title='std::io::Read'>Read</a>&gt; <a class='struct' href='../csv/struct.Reader.html' title='csv::Reader'>Reader</a>&lt;R&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-515' class='srclink' href='../src/csv/reader.rs.html#125-152' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.from_reader' class='method'><span id='from_reader.v' class='invisible'><code>fn <a href='#method.from_reader' class='fnname'>from_reader</a>(rdr: R) -&gt; <a class='struct' href='../csv/struct.Reader.html' title='csv::Reader'>Reader</a>&lt;R&gt;</code></span></h4>
 <div class='docblock'><p>Creates a new CSV reader from an arbitrary <code>io::Read</code>.</p>
 
 <p>The reader is buffered for you automatically.</p>
-</div></div><h3 class='impl'><span class='in-band'><code>impl <a class='struct' href='../csv/struct.Reader.html' title='csv::Reader'>Reader</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/std/fs/struct.File.html' title='std::fs::File'>File</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-520' class='srclink' href='../src/csv/reader.rs.html#154-159' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.from_file' class='method'><code>fn <a href='#method.from_file' class='fnname'>from_file</a>&lt;P:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html' title='core::convert::AsRef'>AsRef</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/std/path/struct.Path.html' title='std::path::Path'>Path</a>&gt;&gt;(path: P) -&gt; <a class='type' href='../csv/type.Result.html' title='csv::Result'>Result</a>&lt;<a class='struct' href='../csv/struct.Reader.html' title='csv::Reader'>Reader</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/std/fs/struct.File.html' title='std::fs::File'>File</a>&gt;&gt;</code></h4>
+</div></div><h3 class='impl'><span class='in-band'><code>impl <a class='struct' href='../csv/struct.Reader.html' title='csv::Reader'>Reader</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/std/fs/struct.File.html' title='std::fs::File'>File</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-519' class='srclink' href='../src/csv/reader.rs.html#154-159' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.from_file' class='method'><span id='from_file.v' class='invisible'><code>fn <a href='#method.from_file' class='fnname'>from_file</a>&lt;P:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html' title='core::convert::AsRef'>AsRef</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/std/path/struct.Path.html' title='std::path::Path'>Path</a>&gt;&gt;(path: P) -&gt; <a class='type' href='../csv/type.Result.html' title='csv::Result'>Result</a>&lt;<a class='struct' href='../csv/struct.Reader.html' title='csv::Reader'>Reader</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/std/fs/struct.File.html' title='std::fs::File'>File</a>&gt;&gt;</code></span></h4>
 <div class='docblock'><p>Creates a new CSV reader for the data at the file path given.</p>
-</div></div><h3 class='impl'><span class='in-band'><code>impl <a class='struct' href='../csv/struct.Reader.html' title='csv::Reader'>Reader</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/std/io/cursor/struct.Cursor.html' title='std::io::cursor::Cursor'>Cursor</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a>&gt;&gt;&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-526' class='srclink' href='../src/csv/reader.rs.html#161-173' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.from_string' class='method'><code>fn <a href='#method.from_string' class='fnname'>from_string</a>&lt;'a,&nbsp;S&gt;(s: S) -&gt; <a class='struct' href='../csv/struct.Reader.html' title='csv::Reader'>Reader</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/std/io/cursor/struct.Cursor.html' title='std::io::cursor::Cursor'>Cursor</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a>&gt;&gt;&gt; <span class='where'>where S: <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;</span></code></h4>
+</div></div><h3 class='impl'><span class='in-band'><code>impl <a class='struct' href='../csv/struct.Reader.html' title='csv::Reader'>Reader</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/std/io/cursor/struct.Cursor.html' title='std::io::cursor::Cursor'>Cursor</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a>&gt;&gt;&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-525' class='srclink' href='../src/csv/reader.rs.html#161-173' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.from_string' class='method'><span id='from_string.v' class='invisible'><code>fn <a href='#method.from_string' class='fnname'>from_string</a>&lt;'a,&nbsp;S&gt;(s: S) -&gt; <a class='struct' href='../csv/struct.Reader.html' title='csv::Reader'>Reader</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/std/io/cursor/struct.Cursor.html' title='std::io::cursor::Cursor'>Cursor</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a>&gt;&gt;&gt; <span class='where'>where S: <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;</span></code></span></h4>
 <div class='docblock'><p>Creates a CSV reader for an in memory string buffer.</p>
-</div><h4 id='method.from_bytes' class='method'><code>fn <a href='#method.from_bytes' class='fnname'>from_bytes</a>&lt;'a,&nbsp;V&gt;(bytes: V) -&gt; <a class='struct' href='../csv/struct.Reader.html' title='csv::Reader'>Reader</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/std/io/cursor/struct.Cursor.html' title='std::io::cursor::Cursor'>Cursor</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a>&gt;&gt;&gt; <span class='where'>where V: <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a>&gt;&gt;</span></code></h4>
+</div><h4 id='method.from_bytes' class='method'><span id='from_bytes.v' class='invisible'><code>fn <a href='#method.from_bytes' class='fnname'>from_bytes</a>&lt;'a,&nbsp;V&gt;(bytes: V) -&gt; <a class='struct' href='../csv/struct.Reader.html' title='csv::Reader'>Reader</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/std/io/cursor/struct.Cursor.html' title='std::io::cursor::Cursor'>Cursor</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a>&gt;&gt;&gt; <span class='where'>where V: <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a>&gt;&gt;</span></code></span></h4>
 <div class='docblock'><p>Creates a CSV reader for an in memory buffer of bytes.</p>
-</div></div><h3 class='impl'><span class='in-band'><code>impl&lt;R:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/std/io/trait.Read.html' title='std::io::Read'>Read</a>&gt; <a class='struct' href='../csv/struct.Reader.html' title='csv::Reader'>Reader</a>&lt;R&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-535' class='srclink' href='../src/csv/reader.rs.html#175-355' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.decode' class='method'><code>fn <a href='#method.decode' class='fnname'>decode</a>&lt;'a,&nbsp;D:&nbsp;<a class='trait' href='../rustc_serialize/serialize/trait.Decodable.html' title='rustc_serialize::serialize::Decodable'>Decodable</a>&gt;(&amp;'a mut self) -&gt; <a class='struct' href='../csv/struct.DecodedRecords.html' title='csv::DecodedRecords'>DecodedRecords</a>&lt;'a,&nbsp;R,&nbsp;D&gt;</code></h4>
+</div></div><h3 class='impl'><span class='in-band'><code>impl&lt;R:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/std/io/trait.Read.html' title='std::io::Read'>Read</a>&gt; <a class='struct' href='../csv/struct.Reader.html' title='csv::Reader'>Reader</a>&lt;R&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-534' class='srclink' href='../src/csv/reader.rs.html#175-355' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.decode' class='method'><span id='decode.v' class='invisible'><code>fn <a href='#method.decode' class='fnname'>decode</a>&lt;'a,&nbsp;D:&nbsp;<a class='trait' href='../rustc_serialize/serialize/trait.Decodable.html' title='rustc_serialize::serialize::Decodable'>Decodable</a>&gt;(&amp;'a mut self) -&gt; <a class='struct' href='../csv/struct.DecodedRecords.html' title='csv::DecodedRecords'>DecodedRecords</a>&lt;'a,&nbsp;R,&nbsp;D&gt;</code></span></h4>
 <div class='docblock'><p>Uses type-based decoding to read a single record from CSV data.</p>
 
 <p>The type that is being decoded into should correspond to <em>one full
@@ -139,7 +137,7 @@ currently, the <em>names</em> of the struct members are irrelevant.)</p>
 <span class='kw'>let</span> <span class='ident'>rows</span> <span class='op'>=</span> <span class='ident'>rdr</span>.<span class='ident'>decode</span>().<span class='ident'>collect</span>::<span class='op'>&lt;</span><span class='ident'>csv</span>::<span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Pair</span><span class='op'>&gt;&gt;</span><span class='op'>&gt;</span>().<span class='ident'>unwrap</span>();
 
 <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>rows</span>[<span class='number'>0</span>].<span class='ident'>dist</span>, <span class='number'>1</span>);
-<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>rows</span>[<span class='number'>1</span>].<span class='ident'>dist</span>, <span class='number'>2</span>);</pre>
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>rows</span>[<span class='number'>1</span>].<span class='ident'>dist</span>, <span class='number'>2</span>);<a class='test-arrow' target='_blank' href=''>Run</a></pre>
 
 <p>We can get a little crazier with custon enum types or <code>Option</code> types.
 An <code>Option</code> type in particular is useful when a column doesn&#39;t contain
@@ -169,7 +167,7 @@ valid data in every record (whether it be empty or malformed).</p>
 <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>rows</span>[<span class='number'>0</span>].<span class='ident'>dist</span>, <span class='prelude-val'>Some</span>(<span class='ident'>MyUint</span>(<span class='number'>1</span>)));
 <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>rows</span>[<span class='number'>1</span>].<span class='ident'>dist</span>, <span class='prelude-val'>None</span>);
 <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>rows</span>[<span class='number'>0</span>].<span class='ident'>dist2</span>, <span class='ident'>Number</span>::<span class='ident'>Integer</span>(<span class='number'>1</span>));
-<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>rows</span>[<span class='number'>1</span>].<span class='ident'>dist2</span>, <span class='ident'>Number</span>::<span class='ident'>Float</span>(<span class='number'>1.5</span>));</pre>
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>rows</span>[<span class='number'>1</span>].<span class='ident'>dist2</span>, <span class='ident'>Number</span>::<span class='ident'>Float</span>(<span class='number'>1.5</span>));<a class='test-arrow' target='_blank' href=''>Run</a></pre>
 
 <p>Finally, as a special case, a tuple/struct/<code>Vec</code> can be used as the
 &quot;tail&quot; of another tuple/struct/<code>Vec</code> to capture all remaining fields:</p>
@@ -189,14 +187,14 @@ valid data in every record (whether it be empty or malformed).</p>
 <span class='kw'>let</span> <span class='ident'>rows</span> <span class='op'>=</span> <span class='ident'>rdr</span>.<span class='ident'>decode</span>().<span class='ident'>collect</span>::<span class='op'>&lt;</span><span class='ident'>csv</span>::<span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Pair</span><span class='op'>&gt;&gt;</span><span class='op'>&gt;</span>().<span class='ident'>unwrap</span>();
 
 <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>rows</span>[<span class='number'>0</span>].<span class='ident'>attrs</span>, <span class='macro'>vec</span><span class='macro'>!</span>[<span class='number'>1</span>,<span class='number'>2</span>,<span class='number'>3</span>,<span class='number'>4</span>]);
-<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>rows</span>[<span class='number'>1</span>].<span class='ident'>attrs</span>, <span class='macro'>vec</span><span class='macro'>!</span>[<span class='number'>5</span>,<span class='number'>6</span>,<span class='number'>7</span>,<span class='number'>8</span>]);</pre>
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>rows</span>[<span class='number'>1</span>].<span class='ident'>attrs</span>, <span class='macro'>vec</span><span class='macro'>!</span>[<span class='number'>5</span>,<span class='number'>6</span>,<span class='number'>7</span>,<span class='number'>8</span>]);<a class='test-arrow' target='_blank' href=''>Run</a></pre>
 
 <p>If a tuple/struct/<code>Vec</code> appears any where other than the &quot;tail&quot; of a
 record, then the behavior is undefined. (You&#39;ll likely get a runtime
 error. I believe this is a limitation of the current decoding machinery
 in the <code>serialize</code> crate.)
 ```</p>
-</div><h4 id='method.records' class='method'><code>fn <a href='#method.records' class='fnname'>records</a>&lt;'a&gt;(&amp;'a mut self) -&gt; <a class='struct' href='../csv/struct.StringRecords.html' title='csv::StringRecords'>StringRecords</a>&lt;'a,&nbsp;R&gt;</code></h4>
+</div><h4 id='method.records' class='method'><span id='records.v' class='invisible'><code>fn <a href='#method.records' class='fnname'>records</a>&lt;'a&gt;(&amp;'a mut self) -&gt; <a class='struct' href='../csv/struct.StringRecords.html' title='csv::StringRecords'>StringRecords</a>&lt;'a,&nbsp;R&gt;</code></span></h4>
 <div class='docblock'><p>Returns an iterator of records in the CSV data where each field is
 a <code>String</code>.</p>
 
@@ -215,8 +213,8 @@ chocolate,refile,7&quot;</span>;
 <span class='kw'>for</span> <span class='ident'>row</span> <span class='kw'>in</span> <span class='ident'>rdr</span>.<span class='ident'>records</span>() {
     <span class='kw'>let</span> <span class='ident'>row</span> <span class='op'>=</span> <span class='ident'>row</span>.<span class='ident'>unwrap</span>();
     <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;{:?}&quot;</span>, <span class='ident'>row</span>);
-}</pre>
-</div><h4 id='method.headers' class='method'><code>fn <a href='#method.headers' class='fnname'>headers</a>(&amp;mut self) -&gt; <a class='type' href='../csv/type.Result.html' title='csv::Result'>Result</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;&gt;</code></h4>
+}<a class='test-arrow' target='_blank' href=''>Run</a></pre>
+</div><h4 id='method.headers' class='method'><span id='headers.v' class='invisible'><code>fn <a href='#method.headers' class='fnname'>headers</a>(&amp;mut self) -&gt; <a class='type' href='../csv/type.Result.html' title='csv::Result'>Result</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;&gt;</code></span></h4>
 <div class='docblock'><p>Returns a <em>copy</em> of the first record in the CSV data as strings.</p>
 
 <p>This method may be called at any time and regardless of whether
@@ -234,7 +232,7 @@ chocolate,refile,7&quot;</span>;
 <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>headers1</span>, <span class='ident'>headers2</span>);
 <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>headers1</span>, <span class='macro'>vec</span><span class='macro'>!</span>[<span class='ident'>s</span>(<span class='string'>&quot;a&quot;</span>), <span class='ident'>s</span>(<span class='string'>&quot;b&quot;</span>), <span class='ident'>s</span>(<span class='string'>&quot;c&quot;</span>)]);
 <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>rows</span>.<span class='ident'>len</span>(), <span class='number'>1</span>);
-<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>rows</span>[<span class='number'>0</span>], <span class='macro'>vec</span><span class='macro'>!</span>[<span class='ident'>s</span>(<span class='string'>&quot;1&quot;</span>), <span class='ident'>s</span>(<span class='string'>&quot;2&quot;</span>), <span class='ident'>s</span>(<span class='string'>&quot;3&quot;</span>)]);</pre>
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>rows</span>[<span class='number'>0</span>], <span class='macro'>vec</span><span class='macro'>!</span>[<span class='ident'>s</span>(<span class='string'>&quot;1&quot;</span>), <span class='ident'>s</span>(<span class='string'>&quot;2&quot;</span>), <span class='ident'>s</span>(<span class='string'>&quot;3&quot;</span>)]);<a class='test-arrow' target='_blank' href=''>Run</a></pre>
 
 <p>Note that if <code>no_headers</code> is called on the CSV reader, the rows
 returned in this example include the first record:</p>
@@ -254,9 +252,9 @@ returned in this example include the first record:</p>
 <span class='comment'>// The header rows are now part of the record iterators.</span>
 <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>rows</span>.<span class='ident'>len</span>(), <span class='number'>2</span>);
 <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>rows</span>[<span class='number'>0</span>], <span class='ident'>headers1</span>);
-<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>rows</span>[<span class='number'>1</span>], <span class='macro'>vec</span><span class='macro'>!</span>[<span class='ident'>s</span>(<span class='string'>&quot;1&quot;</span>), <span class='ident'>s</span>(<span class='string'>&quot;2&quot;</span>), <span class='ident'>s</span>(<span class='string'>&quot;3&quot;</span>)]);</pre>
-</div></div><h3 class='impl'><span class='in-band'><code>impl&lt;R:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/std/io/trait.Read.html' title='std::io::Read'>Read</a>&gt; <a class='struct' href='../csv/struct.Reader.html' title='csv::Reader'>Reader</a>&lt;R&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-548' class='srclink' href='../src/csv/reader.rs.html#357-458' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.delimiter' class='method'><code>fn <a href='#method.delimiter' class='fnname'>delimiter</a>(self, delimiter: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a>) -&gt; <a class='struct' href='../csv/struct.Reader.html' title='csv::Reader'>Reader</a>&lt;R&gt;</code></h4>
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>rows</span>[<span class='number'>1</span>], <span class='macro'>vec</span><span class='macro'>!</span>[<span class='ident'>s</span>(<span class='string'>&quot;1&quot;</span>), <span class='ident'>s</span>(<span class='string'>&quot;2&quot;</span>), <span class='ident'>s</span>(<span class='string'>&quot;3&quot;</span>)]);<a class='test-arrow' target='_blank' href=''>Run</a></pre>
+</div></div><h3 class='impl'><span class='in-band'><code>impl&lt;R:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/std/io/trait.Read.html' title='std::io::Read'>Read</a>&gt; <a class='struct' href='../csv/struct.Reader.html' title='csv::Reader'>Reader</a>&lt;R&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-547' class='srclink' href='../src/csv/reader.rs.html#357-458' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.delimiter' class='method'><span id='delimiter.v' class='invisible'><code>fn <a href='#method.delimiter' class='fnname'>delimiter</a>(self, delimiter: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a>) -&gt; <a class='struct' href='../csv/struct.Reader.html' title='csv::Reader'>Reader</a>&lt;R&gt;</code></span></h4>
 <div class='docblock'><p>The delimiter to use when reading CSV data.</p>
 
 <p>Since the CSV reader is meant to be mostly encoding agnostic, you must
@@ -264,7 +262,7 @@ specify the delimiter as a single ASCII byte. For example, to read
 tab-delimited data, you would use <code>b&#39;\t&#39;</code>.</p>
 
 <p>The default value is <code>b&#39;,&#39;</code>.</p>
-</div><h4 id='method.has_headers' class='method'><code>fn <a href='#method.has_headers' class='fnname'>has_headers</a>(self, yes: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>) -&gt; <a class='struct' href='../csv/struct.Reader.html' title='csv::Reader'>Reader</a>&lt;R&gt;</code></h4>
+</div><h4 id='method.has_headers' class='method'><span id='has_headers.v' class='invisible'><code>fn <a href='#method.has_headers' class='fnname'>has_headers</a>(self, yes: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>) -&gt; <a class='struct' href='../csv/struct.Reader.html' title='csv::Reader'>Reader</a>&lt;R&gt;</code></span></h4>
 <div class='docblock'><p>Whether to treat the first row as a special header row.</p>
 
 <p>By default, the first row is treated as a special header row, which
@@ -273,14 +271,14 @@ or <code>byte_records</code> methods. When <code>yes</code> is set to <code>fals
 is included in those iterators.</p>
 
 <p>Note that the <code>headers</code> method is unaffected by whether this is set.</p>
-</div><h4 id='method.flexible' class='method'><code>fn <a href='#method.flexible' class='fnname'>flexible</a>(self, yes: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>) -&gt; <a class='struct' href='../csv/struct.Reader.html' title='csv::Reader'>Reader</a>&lt;R&gt;</code></h4>
+</div><h4 id='method.flexible' class='method'><span id='flexible.v' class='invisible'><code>fn <a href='#method.flexible' class='fnname'>flexible</a>(self, yes: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>) -&gt; <a class='struct' href='../csv/struct.Reader.html' title='csv::Reader'>Reader</a>&lt;R&gt;</code></span></h4>
 <div class='docblock'><p>Whether to allow flexible length records when reading CSV data.</p>
 
 <p>When this is set to <code>true</code>, records in the CSV data can have different
 lengths. By default, this is disabled, which will cause the CSV reader
 to return an error if it tries to read a record that has a different
 length than the first record that it read.</p>
-</div><h4 id='method.record_terminator' class='method'><code>fn <a href='#method.record_terminator' class='fnname'>record_terminator</a>(self, term: <a class='enum' href='../csv/enum.RecordTerminator.html' title='csv::RecordTerminator'>RecordTerminator</a>) -&gt; <a class='struct' href='../csv/struct.Reader.html' title='csv::Reader'>Reader</a>&lt;R&gt;</code></h4>
+</div><h4 id='method.record_terminator' class='method'><span id='record_terminator.v' class='invisible'><code>fn <a href='#method.record_terminator' class='fnname'>record_terminator</a>(self, term: <a class='enum' href='../csv/enum.RecordTerminator.html' title='csv::RecordTerminator'>RecordTerminator</a>) -&gt; <a class='struct' href='../csv/struct.Reader.html' title='csv::Reader'>Reader</a>&lt;R&gt;</code></span></h4>
 <div class='docblock'><p>Set the record terminator to use when reading CSV data.</p>
 
 <p>In the vast majority of situations, you&#39;ll want to use the default
@@ -292,7 +290,7 @@ case since two characters can correspond to a single terminator token.)</p>
 character to use as the record terminator. For example, you could
 use <code>RecordTerminator::Any(b&#39;\n&#39;)</code> to only accept line feeds as
 record terminators, or <code>b&#39;\x1e&#39;</code> for the ASCII record separator.</p>
-</div><h4 id='method.quote' class='method'><code>fn <a href='#method.quote' class='fnname'>quote</a>(self, quote: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a>) -&gt; <a class='struct' href='../csv/struct.Reader.html' title='csv::Reader'>Reader</a>&lt;R&gt;</code></h4>
+</div><h4 id='method.quote' class='method'><span id='quote.v' class='invisible'><code>fn <a href='#method.quote' class='fnname'>quote</a>(self, quote: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a>) -&gt; <a class='struct' href='../csv/struct.Reader.html' title='csv::Reader'>Reader</a>&lt;R&gt;</code></span></h4>
 <div class='docblock'><p>Set the quote character to use when reading CSV data.</p>
 
 <p>Since the CSV reader is meant to be mostly encoding agnostic, you must
@@ -302,7 +300,7 @@ single quoted data, you would use <code>b&#39;\&#39;&#39;</code>.</p>
 <p>The default value is <code>b&#39;&quot;&#39;</code>.</p>
 
 <p>If <code>quote</code> is <code>None</code>, then no quoting will be used.</p>
-</div><h4 id='method.escape' class='method'><code>fn <a href='#method.escape' class='fnname'>escape</a>(self, escape: <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a>&gt;) -&gt; <a class='struct' href='../csv/struct.Reader.html' title='csv::Reader'>Reader</a>&lt;R&gt;</code></h4>
+</div><h4 id='method.escape' class='method'><span id='escape.v' class='invisible'><code>fn <a href='#method.escape' class='fnname'>escape</a>(self, escape: <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a>&gt;) -&gt; <a class='struct' href='../csv/struct.Reader.html' title='csv::Reader'>Reader</a>&lt;R&gt;</code></span></h4>
 <div class='docblock'><p>Set the escape character to use when reading CSV data.</p>
 
 <p>Since the CSV reader is meant to be mostly encoding agnostic, you must
@@ -313,11 +311,11 @@ is used for quote character.</p>
 
 <p>When set to something other than <code>None</code>, it is used as the escape
 character for quotes. (e.g., <code>b&#39;\\&#39;</code>.)</p>
-</div><h4 id='method.double_quote' class='method'><code>fn <a href='#method.double_quote' class='fnname'>double_quote</a>(self, yes: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>) -&gt; <a class='struct' href='../csv/struct.Reader.html' title='csv::Reader'>Reader</a>&lt;R&gt;</code></h4>
+</div><h4 id='method.double_quote' class='method'><span id='double_quote.v' class='invisible'><code>fn <a href='#method.double_quote' class='fnname'>double_quote</a>(self, yes: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>) -&gt; <a class='struct' href='../csv/struct.Reader.html' title='csv::Reader'>Reader</a>&lt;R&gt;</code></span></h4>
 <div class='docblock'><p>Enable double quote escapes.</p>
 
 <p>When disabled, doubled quotes are not interpreted as escapes.</p>
-</div><h4 id='method.ascii' class='method'><code>fn <a href='#method.ascii' class='fnname'>ascii</a>(self) -&gt; <a class='struct' href='../csv/struct.Reader.html' title='csv::Reader'>Reader</a>&lt;R&gt;</code></h4>
+</div><h4 id='method.ascii' class='method'><span id='ascii.v' class='invisible'><code>fn <a href='#method.ascii' class='fnname'>ascii</a>(self) -&gt; <a class='struct' href='../csv/struct.Reader.html' title='csv::Reader'>Reader</a>&lt;R&gt;</code></span></h4>
 <div class='docblock'><p>A convenience method for reading ASCII delimited text.</p>
 
 <p>This sets the delimiter and record terminator to the ASCII unit
@@ -325,17 +323,17 @@ separator (<code>\x1f</code>) and record separator (<code>\x1e</code>), respecti
 
 <p>Since ASCII delimited text is meant to be unquoted, this also sets
 <code>quote</code> to <code>None</code>.</p>
-</div></div><h3 class='impl'><span class='in-band'><code>impl&lt;R:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/std/io/trait.Read.html' title='std::io::Read'>Read</a>&gt; <a class='struct' href='../csv/struct.Reader.html' title='csv::Reader'>Reader</a>&lt;R&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-610' class='srclink' href='../src/csv/reader.rs.html#516-844' title='goto source code'>[src]</a></span></h3>
+</div></div><h3 class='impl'><span class='in-band'><code>impl&lt;R:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/std/io/trait.Read.html' title='std::io::Read'>Read</a>&gt; <a class='struct' href='../csv/struct.Reader.html' title='csv::Reader'>Reader</a>&lt;R&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-609' class='srclink' href='../src/csv/reader.rs.html#516-844' title='goto source code'>[src]</a></span></h3>
 <div class='docblock'><p>These are low level methods for dealing with the raw bytes of CSV records.
 You should only need to use these when you need the performance or if
 your CSV data isn&#39;t UTF-8 encoded.</p>
-</div><div class='impl-items'><h4 id='method.byte_headers' class='method'><code>fn <a href='#method.byte_headers' class='fnname'>byte_headers</a>(&amp;mut self) -&gt; <a class='type' href='../csv/type.Result.html' title='csv::Result'>Result</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='type' href='../csv/type.ByteString.html' title='csv::ByteString'>ByteString</a>&gt;&gt;</code></h4>
+</div><div class='impl-items'><h4 id='method.byte_headers' class='method'><span id='byte_headers.v' class='invisible'><code>fn <a href='#method.byte_headers' class='fnname'>byte_headers</a>(&amp;mut self) -&gt; <a class='type' href='../csv/type.Result.html' title='csv::Result'>Result</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='type' href='../csv/type.ByteString.html' title='csv::ByteString'>ByteString</a>&gt;&gt;</code></span></h4>
 <div class='docblock'><p>This is just like <code>headers</code>, except fields are <code>ByteString</code>s instead
 of <code>String</code>s.</p>
-</div><h4 id='method.byte_records' class='method'><code>fn <a href='#method.byte_records' class='fnname'>byte_records</a>&lt;'a&gt;(&amp;'a mut self) -&gt; <a class='struct' href='../csv/struct.ByteRecords.html' title='csv::ByteRecords'>ByteRecords</a>&lt;'a,&nbsp;R&gt;</code></h4>
+</div><h4 id='method.byte_records' class='method'><span id='byte_records.v' class='invisible'><code>fn <a href='#method.byte_records' class='fnname'>byte_records</a>&lt;'a&gt;(&amp;'a mut self) -&gt; <a class='struct' href='../csv/struct.ByteRecords.html' title='csv::ByteRecords'>ByteRecords</a>&lt;'a,&nbsp;R&gt;</code></span></h4>
 <div class='docblock'><p>This is just like <code>records</code>, except fields are <code>ByteString</code>s instead
 of <code>String</code>s.</p>
-</div><h4 id='method.done' class='method'><code>fn <a href='#method.done' class='fnname'>done</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
+</div><h4 id='method.done' class='method'><span id='done.v' class='invisible'><code>fn <a href='#method.done' class='fnname'>done</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h4>
 <div class='docblock'><p>Returns <code>true</code> if the CSV parser has reached its final state. When
 this method returns <code>true</code>, all iterators will always return <code>None</code>.</p>
 
@@ -372,8 +370,8 @@ chocolate,refile,7&quot;</span>;
     }
 }
 
-<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>count</span>, <span class='number'>5</span>);</pre>
-</div><h4 id='method.next_bytes' class='method'><code>fn <a href='#method.next_bytes' class='fnname'>next_bytes</a>(&amp;mut self) -&gt; <a class='enum' href='../csv/enum.NextField.html' title='csv::NextField'>NextField</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>[</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>]</a>&gt;</code></h4>
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>count</span>, <span class='number'>5</span>);<a class='test-arrow' target='_blank' href=''>Run</a></pre>
+</div><h4 id='method.next_bytes' class='method'><span id='next_bytes.v' class='invisible'><code>fn <a href='#method.next_bytes' class='fnname'>next_bytes</a>(&amp;mut self) -&gt; <a class='enum' href='../csv/enum.NextField.html' title='csv::NextField'>NextField</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>[</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>]</a>&gt;</code></span></h4>
 <div class='docblock'><p>An iterator over fields in the current record.</p>
 
 <p>This provides low level access to CSV records as raw byte slices.
@@ -406,14 +404,14 @@ chocolate,refile,7&quot;</span>;
         <span class='macro'>print</span><span class='macro'>!</span>(<span class='string'>&quot;{:?} &quot;</span>, <span class='ident'>r</span>.<span class='ident'>unwrap</span>());
     }
     <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>);
-}</pre>
-</div><h4 id='method.next_str' class='method'><code>fn <a href='#method.next_str' class='fnname'>next_str</a>(&amp;mut self) -&gt; <a class='enum' href='../csv/enum.NextField.html' title='csv::NextField'>NextField</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>&gt;</code></h4>
+}<a class='test-arrow' target='_blank' href=''>Run</a></pre>
+</div><h4 id='method.next_str' class='method'><span id='next_str.v' class='invisible'><code>fn <a href='#method.next_str' class='fnname'>next_str</a>(&amp;mut self) -&gt; <a class='enum' href='../csv/enum.NextField.html' title='csv::NextField'>NextField</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>&gt;</code></span></h4>
 <div class='docblock'><p>This is just like <code>next_bytes</code> except it converts each field to
 a Unicode string in place.</p>
-</div><h4 id='method.byte_offset' class='method'><code>fn <a href='#method.byte_offset' class='fnname'>byte_offset</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u64.html'>u64</a></code></h4>
+</div><h4 id='method.byte_offset' class='method'><span id='byte_offset.v' class='invisible'><code>fn <a href='#method.byte_offset' class='fnname'>byte_offset</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u64.html'>u64</a></code></span></h4>
 <div class='docblock'><p>Returns the byte offset at which the current record started.</p>
-</div></div><h3 class='impl'><span class='in-band'><code>impl&lt;R:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/std/io/trait.Read.html' title='std::io::Read'>Read</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/std/io/trait.Seek.html' title='std::io::Seek'>Seek</a>&gt; <a class='struct' href='../csv/struct.Reader.html' title='csv::Reader'>Reader</a>&lt;R&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-695' class='srclink' href='../src/csv/reader.rs.html#857-882' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.seek' class='method'><code>fn <a href='#method.seek' class='fnname'>seek</a>(&amp;mut self, pos: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u64.html'>u64</a>) -&gt; <a class='type' href='../csv/type.Result.html' title='csv::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>&gt;</code></h4>
+</div></div><h3 class='impl'><span class='in-band'><code>impl&lt;R:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/std/io/trait.Read.html' title='std::io::Read'>Read</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/std/io/trait.Seek.html' title='std::io::Seek'>Seek</a>&gt; <a class='struct' href='../csv/struct.Reader.html' title='csv::Reader'>Reader</a>&lt;R&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-694' class='srclink' href='../src/csv/reader.rs.html#857-882' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.seek' class='method'><span id='seek.v' class='invisible'><code>fn <a href='#method.seek' class='fnname'>seek</a>(&amp;mut self, pos: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u64.html'>u64</a>) -&gt; <a class='type' href='../csv/type.Result.html' title='csv::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>&gt;</code></span></h4>
 <div class='docblock'><p>Seeks the underlying reader to the file cursor specified.</p>
 
 <p>This comes with several caveats:</p>
