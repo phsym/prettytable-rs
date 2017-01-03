@@ -214,7 +214,7 @@
 <span class='doccomment'>/// Align/fill a string and print it to `out`</span>
 <span class='doccomment'>/// If `skip_right_fill` is set to `true`, then no spce will be added after the string</span>
 <span class='doccomment'>/// to complete alignment</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>print_align</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Write</span><span class='op'>+</span>?<span class='ident'>Sized</span><span class='op'>&gt;</span>(<span class='ident'>out</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>T</span>, <span class='ident'>align</span>: <span class='ident'>Alignment</span>, <span class='ident'>text</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>, <span class='ident'>fill</span>: <span class='ident'>char</span>, <span class='ident'>size</span>: <span class='ident'>usize</span>, <span class='ident'>skip_right_fill</span>: <span class='ident'>bool</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>Error</span><span class='op'>&gt;</span> {
+<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>print_align</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Write</span><span class='op'>+</span><span class='question-mark'>?</span><span class='ident'>Sized</span><span class='op'>&gt;</span>(<span class='ident'>out</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>T</span>, <span class='ident'>align</span>: <span class='ident'>Alignment</span>, <span class='ident'>text</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>, <span class='ident'>fill</span>: <span class='ident'>char</span>, <span class='ident'>size</span>: <span class='ident'>usize</span>, <span class='ident'>skip_right_fill</span>: <span class='ident'>bool</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>Error</span><span class='op'>&gt;</span> {
 	<span class='kw'>let</span> <span class='ident'>text_len</span> <span class='op'>=</span> <span class='ident'>UnicodeWidthStr</span>::<span class='ident'>width</span>(<span class='ident'>text</span>);
 	<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>nfill</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='ident'>text_len</span> <span class='op'>&lt;</span> <span class='ident'>size</span> { <span class='ident'>size</span> <span class='op'>-</span> <span class='ident'>text_len</span> } <span class='kw'>else</span> { <span class='number'>0</span> };
 	<span class='kw'>let</span> <span class='ident'>n</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='ident'>align</span> {
@@ -344,11 +344,9 @@
     <script>
         window.rootPath = "../../../";
         window.currentCrate = "prettytable";
-        window.playgroundUrl = "";
     </script>
     <script src="../../../jquery.js"></script>
     <script src="../../../main.js"></script>
-    
     <script defer src="../../../search-index.js"></script>
 </body>
 </html>

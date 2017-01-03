@@ -47,7 +47,7 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-783' class='srclink' href='../src/csv/writer.rs.html#67-77' title='goto source code'>[src]</a></span></h1>
+               </span><a id='src-654' class='srclink' href='../src/csv/writer.rs.html#68-78' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct Writer&lt;W:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/std/io/trait.Write.html' title='std::io::Write'>Write</a>&gt; { /* fields omitted */ }</pre><div class='docblock'><p>A CSV writer.</p>
 
 <p>This writer provides a convenient interface for encoding CSV data. While
@@ -82,14 +82,14 @@ this crate).</p>
 <span class='kw'>for</span> <span class='ident'>record</span> <span class='kw'>in</span> <span class='ident'>records</span>.<span class='ident'>into_iter</span>() {
     <span class='kw'>let</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>wtr</span>.<span class='ident'>encode</span>(<span class='ident'>record</span>);
     <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>result</span>.<span class='ident'>is_ok</span>());
-}<a class='test-arrow' target='_blank' href=''>Run</a></pre>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class='struct' href='../csv/struct.Writer.html' title='csv::Writer'>Writer</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/std/fs/struct.File.html' title='std::fs::File'>File</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-794' class='srclink' href='../src/csv/writer.rs.html#79-87' title='goto source code'>[src]</a></span></h3>
+}</pre>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class='struct' href='../csv/struct.Writer.html' title='csv::Writer'>Writer</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/std/fs/struct.File.html' title='std::fs::File'>File</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-665' class='srclink' href='../src/csv/writer.rs.html#80-88' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.from_file' class='method'><span id='from_file.v' class='invisible'><code>fn <a href='#method.from_file' class='fnname'>from_file</a>&lt;P:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html' title='core::convert::AsRef'>AsRef</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/std/path/struct.Path.html' title='std::path::Path'>Path</a>&gt;&gt;(path: P) -&gt; <a class='type' href='../csv/type.Result.html' title='csv::Result'>Result</a>&lt;<a class='struct' href='../csv/struct.Writer.html' title='csv::Writer'>Writer</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/std/fs/struct.File.html' title='std::fs::File'>File</a>&gt;&gt;</code></span></h4>
 <div class='docblock'><p>Creates a new <code>Writer</code> that writes CSV data to the file path given.</p>
 
 <p>The file is created if it does not already exist and is truncated
 otherwise.</p>
-</div></div><h3 class='impl'><span class='in-band'><code>impl&lt;W:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/std/io/trait.Write.html' title='std::io::Write'>Write</a>&gt; <a class='struct' href='../csv/struct.Writer.html' title='csv::Writer'>Writer</a>&lt;W&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-800' class='srclink' href='../src/csv/writer.rs.html#90-116' title='goto source code'>[src]</a></span></h3>
+</div></div><h3 class='impl'><span class='in-band'><code>impl&lt;W:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/std/io/trait.Write.html' title='std::io::Write'>Write</a>&gt; <a class='struct' href='../csv/struct.Writer.html' title='csv::Writer'>Writer</a>&lt;W&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-669' class='srclink' href='../src/csv/writer.rs.html#91-117' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.from_writer' class='method'><span id='from_writer.v' class='invisible'><code>fn <a href='#method.from_writer' class='fnname'>from_writer</a>(w: W) -&gt; <a class='struct' href='../csv/struct.Writer.html' title='csv::Writer'>Writer</a>&lt;W&gt;</code></span></h4>
 <div class='docblock'><p>Creates a new CSV writer that writes to the <code>io::Write</code> given.</p>
 
@@ -100,7 +100,7 @@ otherwise.</p>
 <p>This lets you specify your own buffered writer (e.g., use a different
 capacity). All other constructors wrap the writer given in a buffer
 with default capacity.</p>
-</div></div><h3 class='impl'><span class='in-band'><code>impl <a class='struct' href='../csv/struct.Writer.html' title='csv::Writer'>Writer</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a>&gt;&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-806' class='srclink' href='../src/csv/writer.rs.html#118-164' title='goto source code'>[src]</a></span></h3>
+</div></div><h3 class='impl'><span class='in-band'><code>impl <a class='struct' href='../csv/struct.Writer.html' title='csv::Writer'>Writer</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a>&gt;&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-675' class='srclink' href='../src/csv/writer.rs.html#119-165' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.from_memory' class='method'><span id='from_memory.v' class='invisible'><code>fn <a href='#method.from_memory' class='fnname'>from_memory</a>() -&gt; <a class='struct' href='../csv/struct.Writer.html' title='csv::Writer'>Writer</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a>&gt;&gt;</code></span></h4>
 <div class='docblock'><p>Creates a new CSV writer that writes to an in memory buffer. At any
 time, <code>as_string</code> or <code>as_bytes</code> can be called to retrieve the
@@ -113,7 +113,7 @@ cumulative CSV data.</p>
 <div class='docblock'><p>Convert the Writer into a string of written CSV data</p>
 </div><h4 id='method.into_bytes' class='method'><span id='into_bytes.v' class='invisible'><code>fn <a href='#method.into_bytes' class='fnname'>into_bytes</a>(self) -&gt; <a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a>&gt;</code></span></h4>
 <div class='docblock'><p>Convert the Writer into a vector of encoded CSV bytes.</p>
-</div></div><h3 class='impl'><span class='in-band'><code>impl&lt;W:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/std/io/trait.Write.html' title='std::io::Write'>Write</a>&gt; <a class='struct' href='../csv/struct.Writer.html' title='csv::Writer'>Writer</a>&lt;W&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-830' class='srclink' href='../src/csv/writer.rs.html#166-290' title='goto source code'>[src]</a></span></h3>
+</div></div><h3 class='impl'><span class='in-band'><code>impl&lt;W:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/std/io/trait.Write.html' title='std::io::Write'>Write</a>&gt; <a class='struct' href='../csv/struct.Writer.html' title='csv::Writer'>Writer</a>&lt;W&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-690' class='srclink' href='../src/csv/writer.rs.html#167-291' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.encode' class='method'><span id='encode.v' class='invisible'><code>fn <a href='#method.encode' class='fnname'>encode</a>&lt;E&gt;(&amp;mut self, e: E) -&gt; <a class='type' href='../csv/type.Result.html' title='csv::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>&gt; <span class='where'>where E: <a class='trait' href='../rustc_serialize/serialize/trait.Encodable.html' title='rustc_serialize::serialize::Encodable'>Encodable</a></span></code></span></h4>
 <div class='docblock'><p>Writes a record by encoding any <code>Encodable</code> value.</p>
 
@@ -149,8 +149,8 @@ edit distances computed.</p>
     <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>result</span>.<span class='ident'>is_ok</span>());
 }
 <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>wtr</span>.<span class='ident'>as_string</span>(),
-           <span class='string'>&quot;sticker,mortals,\nbribed,personae,7\n&quot;</span>);<a class='test-arrow' target='_blank' href=''>Run</a></pre>
-</div><h4 id='method.write' class='method'><span id='write.v' class='invisible'><code>fn <a href='#method.write' class='fnname'>write</a>&lt;'a,&nbsp;I&gt;(&amp;mut self, r: I) -&gt; <a class='type' href='../csv/type.Result.html' title='csv::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>&gt; <span class='where'>where I: <a class='trait' href='https://doc.rust-lang.org/nightly/core/iter/iterator/trait.Iterator.html' title='core::iter::iterator::Iterator'>Iterator</a>, I::Item: <a class='trait' href='../csv/trait.BorrowBytes.html' title='csv::BorrowBytes'>BorrowBytes</a></span></code></span></h4>
+           <span class='string'>&quot;sticker,mortals,\nbribed,personae,7\n&quot;</span>);</pre>
+</div><h4 id='method.write' class='method'><span id='write.v' class='invisible'><code>fn <a href='#method.write' class='fnname'>write</a>&lt;'a, I&gt;(&amp;mut self, r: I) -&gt; <a class='type' href='../csv/type.Result.html' title='csv::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>&gt; <span class='where'>where I: <a class='trait' href='https://doc.rust-lang.org/nightly/core/iter/iterator/trait.Iterator.html' title='core::iter::iterator::Iterator'>Iterator</a>, I::Item: <a class='trait' href='../csv/trait.BorrowBytes.html' title='csv::BorrowBytes'>BorrowBytes</a></span></code></span></h4>
 <div class='docblock'><p>Writes a record of strings (Unicode or raw bytes).</p>
 
 <p>This is meant to be the standard method provided by most CSV writers.
@@ -176,7 +176,7 @@ allocation.</p>
 <span class='kw'>for</span> <span class='ident'>record</span> <span class='kw'>in</span> <span class='ident'>records</span>.<span class='ident'>into_iter</span>() {
     <span class='kw'>let</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>wtr</span>.<span class='ident'>write</span>(<span class='ident'>record</span>.<span class='ident'>into_iter</span>());
     <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>result</span>.<span class='ident'>is_ok</span>());
-}<a class='test-arrow' target='_blank' href=''>Run</a></pre>
+}</pre>
 
 <p>This shows how to write records that do not correspond to a valid UTF-8
 encoding. (Note the use of Rust&#39;s byte string syntax!)</p>
@@ -186,10 +186,10 @@ encoding. (Note the use of Rust&#39;s byte string syntax!)</p>
 <span class='kw'>let</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>wtr</span>.<span class='ident'>write</span>(<span class='macro'>vec</span><span class='macro'>!</span>[<span class='kw-2'>&amp;</span><span class='string'>b&quot;\xff&quot;</span>[..], <span class='kw-2'>&amp;</span><span class='string'>b&quot;\x00&quot;</span>[..]].<span class='ident'>into_iter</span>());
 <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>result</span>.<span class='ident'>is_ok</span>());
 
-<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>wtr</span>.<span class='ident'>as_bytes</span>(), <span class='string'>b&quot;\xff,\x00\n&quot;</span>);<a class='test-arrow' target='_blank' href=''>Run</a></pre>
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>wtr</span>.<span class='ident'>as_bytes</span>(), <span class='string'>b&quot;\xff,\x00\n&quot;</span>);</pre>
 </div><h4 id='method.flush' class='method'><span id='flush.v' class='invisible'><code>fn <a href='#method.flush' class='fnname'>flush</a>(&amp;mut self) -&gt; <a class='type' href='../csv/type.Result.html' title='csv::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>&gt;</code></span></h4>
 <div class='docblock'><p>Flushes the underlying buffer.</p>
-</div></div><h3 class='impl'><span class='in-band'><code>impl&lt;W:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/std/io/trait.Write.html' title='std::io::Write'>Write</a>&gt; <a class='struct' href='../csv/struct.Writer.html' title='csv::Writer'>Writer</a>&lt;W&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-870' class='srclink' href='../src/csv/writer.rs.html#292-370' title='goto source code'>[src]</a></span></h3>
+</div></div><h3 class='impl'><span class='in-band'><code>impl&lt;W:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/std/io/trait.Write.html' title='std::io::Write'>Write</a>&gt; <a class='struct' href='../csv/struct.Writer.html' title='csv::Writer'>Writer</a>&lt;W&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-718' class='srclink' href='../src/csv/writer.rs.html#293-371' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.delimiter' class='method'><span id='delimiter.v' class='invisible'><code>fn <a href='#method.delimiter' class='fnname'>delimiter</a>(self, delimiter: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a>) -&gt; <a class='struct' href='../csv/struct.Writer.html' title='csv::Writer'>Writer</a>&lt;W&gt;</code></span></h4>
 <div class='docblock'><p>The delimiter to use when writing CSV data.</p>
 
@@ -296,11 +296,9 @@ is <code>\\</code> by default).</p>
     <script>
         window.rootPath = "../";
         window.currentCrate = "csv";
-        window.playgroundUrl = "";
     </script>
     <script src="../jquery.js"></script>
     <script src="../main.js"></script>
-    
     <script defer src="../search-index.js"></script>
 </body>
 </html>

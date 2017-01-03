@@ -47,7 +47,7 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-0' class='srclink' href='../src/byteorder/lib.rs.html#1-802' title='goto source code'>[src]</a></span></h1>
+               </span><a id='src-0' class='srclink' href='../src/byteorder/lib.rs.html#1-819' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>This crate provides convenience methods for encoding and decoding numbers
 in either big-endian or little-endian order.</p>
 
@@ -69,7 +69,7 @@ implement <code>Read</code> and <code>Write</code>.</p>
 <span class='comment'>// Note that we use type parameters to indicate which kind of byte order</span>
 <span class='comment'>// we want!</span>
 <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='number'>517</span>, <span class='ident'>rdr</span>.<span class='ident'>read_u16</span>::<span class='op'>&lt;</span><span class='ident'>BigEndian</span><span class='op'>&gt;</span>().<span class='ident'>unwrap</span>());
-<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='number'>768</span>, <span class='ident'>rdr</span>.<span class='ident'>read_u16</span>::<span class='op'>&lt;</span><span class='ident'>BigEndian</span><span class='op'>&gt;</span>().<span class='ident'>unwrap</span>());<a class='test-arrow' target='_blank' href=''>Run</a></pre>
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='number'>768</span>, <span class='ident'>rdr</span>.<span class='ident'>read_u16</span>::<span class='op'>&lt;</span><span class='ident'>BigEndian</span><span class='op'>&gt;</span>().<span class='ident'>unwrap</span>());</pre>
 
 <p>Write unsigned 16 bit little-endian integers to a <code>Write</code> type:</p>
 
@@ -79,7 +79,7 @@ implement <code>Read</code> and <code>Write</code>.</p>
 <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>wtr</span> <span class='op'>=</span> <span class='macro'>vec</span><span class='macro'>!</span>[];
 <span class='ident'>wtr</span>.<span class='ident'>write_u16</span>::<span class='op'>&lt;</span><span class='ident'>LittleEndian</span><span class='op'>&gt;</span>(<span class='number'>517</span>).<span class='ident'>unwrap</span>();
 <span class='ident'>wtr</span>.<span class='ident'>write_u16</span>::<span class='op'>&lt;</span><span class='ident'>LittleEndian</span><span class='op'>&gt;</span>(<span class='number'>768</span>).<span class='ident'>unwrap</span>();
-<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>wtr</span>, <span class='macro'>vec</span><span class='macro'>!</span>[<span class='number'>5</span>, <span class='number'>2</span>, <span class='number'>0</span>, <span class='number'>3</span>]);<a class='test-arrow' target='_blank' href=''>Run</a></pre>
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>wtr</span>, <span class='macro'>vec</span><span class='macro'>!</span>[<span class='number'>5</span>, <span class='number'>2</span>, <span class='number'>0</span>, <span class='number'>3</span>]);</pre>
 </div><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
 <table>
                        <tr class=' module-item'>
@@ -188,11 +188,9 @@ implement <code>Read</code> and <code>Write</code>.</p>
     <script>
         window.rootPath = "../";
         window.currentCrate = "byteorder";
-        window.playgroundUrl = "";
     </script>
     <script src="../jquery.js"></script>
     <script src="../main.js"></script>
-    
     <script defer src="../search-index.js"></script>
 </body>
 </html>

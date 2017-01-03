@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/byteorder-0.5.3/src/new.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/byteorder-1.0.0/src/new.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>new.rs.html -- source</title>
@@ -442,7 +442,7 @@
 
 <span class='doccomment'>/// All types that implement `Read` get methods defined in `ReadBytesExt`</span>
 <span class='doccomment'>/// for free.</span>
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>R</span>: <span class='ident'>io</span>::<span class='ident'>Read</span> <span class='op'>+</span> ?<span class='ident'>Sized</span><span class='op'>&gt;</span> <span class='ident'>ReadBytesExt</span> <span class='kw'>for</span> <span class='ident'>R</span> {}
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>R</span>: <span class='ident'>io</span>::<span class='ident'>Read</span> <span class='op'>+</span> <span class='question-mark'>?</span><span class='ident'>Sized</span><span class='op'>&gt;</span> <span class='ident'>ReadBytesExt</span> <span class='kw'>for</span> <span class='ident'>R</span> {}
 
 <span class='doccomment'>/// Extends `Write` with methods for writing numbers. (For `std::io`.)</span>
 <span class='doccomment'>///</span>
@@ -580,7 +580,7 @@
 
 <span class='doccomment'>/// All types that implement `Write` get methods defined in `WriteBytesExt`</span>
 <span class='doccomment'>/// for free.</span>
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>W</span>: <span class='ident'>io</span>::<span class='ident'>Write</span> <span class='op'>+</span> ?<span class='ident'>Sized</span><span class='op'>&gt;</span> <span class='ident'>WriteBytesExt</span> <span class='kw'>for</span> <span class='ident'>W</span> {}
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>W</span>: <span class='ident'>io</span>::<span class='ident'>Write</span> <span class='op'>+</span> <span class='question-mark'>?</span><span class='ident'>Sized</span><span class='op'>&gt;</span> <span class='ident'>WriteBytesExt</span> <span class='kw'>for</span> <span class='ident'>W</span> {}
 </pre>
 </section>
     <section id='search' class="content hidden"></section>
@@ -638,11 +638,9 @@
     <script>
         window.rootPath = "../../";
         window.currentCrate = "byteorder";
-        window.playgroundUrl = "";
     </script>
     <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
-    
     <script defer src="../../search-index.js"></script>
 </body>
 </html>
