@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/term-0.4.4/src/terminfo/searcher.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/term-0.4.5/src/terminfo/searcher.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>searcher.rs.html -- source</title>
@@ -122,6 +122,17 @@
 <span id="78">78</span>
 <span id="79">79</span>
 <span id="80">80</span>
+<span id="81">81</span>
+<span id="82">82</span>
+<span id="83">83</span>
+<span id="84">84</span>
+<span id="85">85</span>
+<span id="86">86</span>
+<span id="87">87</span>
+<span id="88">88</span>
+<span id="89">89</span>
+<span id="90">90</span>
+<span id="91">91</span>
 </pre><pre class='rust '>
 <span class='comment'>// Copyright 2012 The Rust Project Developers. See the COPYRIGHT</span>
 <span class='comment'>// file at the top-level directory of this distribution and at</span>
@@ -150,36 +161,47 @@
     };
 
     <span class='comment'>// Find search directory</span>
-    <span class='kw'>match</span> <span class='ident'>env</span>::<span class='ident'>var_os</span>(<span class='string'>&quot;TERMINFO&quot;</span>) {
-        <span class='prelude-val'>Some</span>(<span class='ident'>dir</span>) <span class='op'>=&gt;</span> <span class='ident'>dirs_to_search</span>.<span class='ident'>push</span>(<span class='ident'>PathBuf</span>::<span class='ident'>from</span>(<span class='ident'>dir</span>)),
-        <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> {
-            <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='kw-2'>mut</span> <span class='ident'>homedir</span>) <span class='op'>=</span> <span class='ident'>env</span>::<span class='ident'>home_dir</span>() {
-                <span class='comment'>// ncurses compatibility;</span>
-                <span class='ident'>homedir</span>.<span class='ident'>push</span>(<span class='string'>&quot;.terminfo&quot;</span>);
-                <span class='ident'>dirs_to_search</span>.<span class='ident'>push</span>(<span class='ident'>homedir</span>)
-            }
-            <span class='kw'>match</span> <span class='ident'>env</span>::<span class='ident'>var</span>(<span class='string'>&quot;TERMINFO_DIRS&quot;</span>) {
-                <span class='prelude-val'>Ok</span>(<span class='ident'>dirs</span>) <span class='op'>=&gt;</span> {
-                    <span class='kw'>for</span> <span class='ident'>i</span> <span class='kw'>in</span> <span class='ident'>dirs</span>.<span class='ident'>split</span>(<span class='string'>&#39;:&#39;</span>) {
-                        <span class='kw'>if</span> <span class='ident'>i</span> <span class='op'>==</span> <span class='string'>&quot;&quot;</span> {
-                            <span class='ident'>dirs_to_search</span>.<span class='ident'>push</span>(<span class='ident'>PathBuf</span>::<span class='ident'>from</span>(<span class='string'>&quot;/usr/share/terminfo&quot;</span>));
-                        } <span class='kw'>else</span> {
-                            <span class='ident'>dirs_to_search</span>.<span class='ident'>push</span>(<span class='ident'>PathBuf</span>::<span class='ident'>from</span>(<span class='ident'>i</span>));
-                        }
-                    }
-                }
-                <span class='comment'>// Found nothing in TERMINFO_DIRS, use the default paths:</span>
-                <span class='comment'>// According to  /etc/terminfo/README, after looking at</span>
-                <span class='comment'>// ~/.terminfo, ncurses will search /etc/terminfo, then</span>
-                <span class='comment'>// /lib/terminfo, and eventually /usr/share/terminfo.</span>
-                <span class='prelude-val'>Err</span>(..) <span class='op'>=&gt;</span> {
-                    <span class='ident'>dirs_to_search</span>.<span class='ident'>push</span>(<span class='ident'>PathBuf</span>::<span class='ident'>from</span>(<span class='string'>&quot;/etc/terminfo&quot;</span>));
-                    <span class='ident'>dirs_to_search</span>.<span class='ident'>push</span>(<span class='ident'>PathBuf</span>::<span class='ident'>from</span>(<span class='string'>&quot;/lib/terminfo&quot;</span>));
-                    <span class='ident'>dirs_to_search</span>.<span class='ident'>push</span>(<span class='ident'>PathBuf</span>::<span class='ident'>from</span>(<span class='string'>&quot;/usr/share/terminfo&quot;</span>));
-                }
+    <span class='comment'>// The terminfo manual says:</span>
+    <span class='comment'>// </span>
+    <span class='comment'>// &gt; If  the  environment  variable  TERMINFO is set, it is interpreted</span>
+    <span class='comment'>// &gt; as the pathname of a directory containing the compiled description</span>
+    <span class='comment'>// &gt; you are working on.  Only that directory is searched.</span>
+    <span class='comment'>//</span>
+    <span class='comment'>// However, the ncurses manual says:</span>
+    <span class='comment'>//</span>
+    <span class='comment'>// &gt; If the environment variable TERMINFO is defined, any program using</span>
+    <span class='comment'>// &gt; curses checks for a local terminal definition  before  checking in</span>
+    <span class='comment'>// &gt; the standard place.</span>
+    <span class='comment'>//</span>
+    <span class='comment'>// Given that ncurses is the defacto standard, we follow the ncurses manual.</span>
+    <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='ident'>dir</span>) <span class='op'>=</span> <span class='ident'>env</span>::<span class='ident'>var_os</span>(<span class='string'>&quot;TERMINFO&quot;</span>) {
+        <span class='ident'>dirs_to_search</span>.<span class='ident'>push</span>(<span class='ident'>PathBuf</span>::<span class='ident'>from</span>(<span class='ident'>dir</span>));
+    }
+
+    <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Ok</span>(<span class='ident'>dirs</span>) <span class='op'>=</span> <span class='ident'>env</span>::<span class='ident'>var</span>(<span class='string'>&quot;TERMINFO_DIRS&quot;</span>) {
+        <span class='kw'>for</span> <span class='ident'>i</span> <span class='kw'>in</span> <span class='ident'>dirs</span>.<span class='ident'>split</span>(<span class='string'>&#39;:&#39;</span>) {
+            <span class='kw'>if</span> <span class='ident'>i</span> <span class='op'>==</span> <span class='string'>&quot;&quot;</span> {
+                <span class='ident'>dirs_to_search</span>.<span class='ident'>push</span>(<span class='ident'>PathBuf</span>::<span class='ident'>from</span>(<span class='string'>&quot;/usr/share/terminfo&quot;</span>));
+            } <span class='kw'>else</span> {
+                <span class='ident'>dirs_to_search</span>.<span class='ident'>push</span>(<span class='ident'>PathBuf</span>::<span class='ident'>from</span>(<span class='ident'>i</span>));
             }
         }
-    };
+    } <span class='kw'>else</span> {
+        <span class='comment'>// Found nothing in TERMINFO_DIRS, use the default paths:</span>
+        <span class='comment'>// According to  /etc/terminfo/README, after looking at</span>
+        <span class='comment'>// ~/.terminfo, ncurses will search /etc/terminfo, then</span>
+        <span class='comment'>// /lib/terminfo, and eventually /usr/share/terminfo.</span>
+        <span class='comment'>// On Haiku the database can be found at /boot/system/data/terminfo</span>
+        <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='kw-2'>mut</span> <span class='ident'>homedir</span>) <span class='op'>=</span> <span class='ident'>env</span>::<span class='ident'>home_dir</span>() {
+            <span class='ident'>homedir</span>.<span class='ident'>push</span>(<span class='string'>&quot;.terminfo&quot;</span>);
+            <span class='ident'>dirs_to_search</span>.<span class='ident'>push</span>(<span class='ident'>homedir</span>)
+        }
+
+        <span class='ident'>dirs_to_search</span>.<span class='ident'>push</span>(<span class='ident'>PathBuf</span>::<span class='ident'>from</span>(<span class='string'>&quot;/etc/terminfo&quot;</span>));
+        <span class='ident'>dirs_to_search</span>.<span class='ident'>push</span>(<span class='ident'>PathBuf</span>::<span class='ident'>from</span>(<span class='string'>&quot;/lib/terminfo&quot;</span>));
+        <span class='ident'>dirs_to_search</span>.<span class='ident'>push</span>(<span class='ident'>PathBuf</span>::<span class='ident'>from</span>(<span class='string'>&quot;/usr/share/terminfo&quot;</span>));
+        <span class='ident'>dirs_to_search</span>.<span class='ident'>push</span>(<span class='ident'>PathBuf</span>::<span class='ident'>from</span>(<span class='string'>&quot;/boot/system/data/terminfo&quot;</span>));
+    }
 
     <span class='comment'>// Look for the terminal in all of the search directories</span>
     <span class='kw'>for</span> <span class='kw-2'>mut</span> <span class='ident'>p</span> <span class='kw'>in</span> <span class='ident'>dirs_to_search</span> {

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/encode_unicode-0.2.0/src/lib.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/encode_unicode-0.3.0/src/lib.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>lib.rs.html -- source</title>
@@ -103,6 +103,16 @@
 <span id="59">59</span>
 <span id="60">60</span>
 <span id="61">61</span>
+<span id="62">62</span>
+<span id="63">63</span>
+<span id="64">64</span>
+<span id="65">65</span>
+<span id="66">66</span>
+<span id="67">67</span>
+<span id="68">68</span>
+<span id="69">69</span>
+<span id="70">70</span>
+<span id="71">71</span>
 </pre><pre class='rust '>
 <span class='comment'>/* Copyright 2016 Torbjørn Birch Moltu
  *
@@ -114,32 +124,41 @@
 
 
 <span class='doccomment'>/*!
-Alternatives and extensions to the unstable `char.encode_utf8()` and `char.encode_utf16()`.
-
-[crates.io page](https://crates.io/crates/encode_unicode)
-[github repository](https://github.com/tormol/encode_unicode)
+Miscellaneous UTF-8 and UTF-16 types and methods.
 
 # Optional features:
-* **no_std**: Use `#[no_std]`; There are some differences:
+* `#![no_std]`-mode: There are a few differences:
   * `AsciiExt` doesn&#39;t exist, but `is_ascii()` is made available as an inherent impl.
   * `Error` doesn&#39;t exist, but `description()` is made available as an inherent impl.
+  * `Extend`/`FromIterator`-implementations for `String`/`Vec&lt;u8&gt;`/`Vec&lt;u16&gt;`.
   * There is no `io`, so `Utf8Iterator` doesn&#39;t implement `Read`.
-  * The iterators doesn&#39;t implement `Debug`.
-* **ascii**: Convert `Utf8Char` and `Utf16Char` to and from [ascii](https://tomprogrammer.github.io/rust-ascii/ascii/index.html)::[`AsciiChar`](https://tomprogrammer.github.io/rust-ascii/ascii/enum.AsciiChar.html).
-* **ascii_no_std**: You need to use this feature instead of both ascii and no_std.
-  This is because the ascii crate needs to know about `#[no_std]`, but the features are otherwize independent.
+
+  This feature is enabled by setting `default-features=false` in `Cargo.toml`:
+  `encode_unicode = {version=&quot;0.3&quot;, default-features=false}`
+* Integration with the [ascii](https://tomprogrammer.github.io/rust-ascii/ascii/index.html) crate:  
+  Convert `Utf8Char` and `Utf16Char` to and from
+  [ascii::`AsciiChar`](https://tomprogrammer.github.io/rust-ascii/ascii/enum.AsciiChar.html).
+
+The minimum supported version of Rust is 1.15,
+older versions might work, but also break in a minor update.
+
+[crates.io page](https://crates.io/crates/encode_unicode)  
+[githab repository](https://github.com/tormol/encode_unicode)
+
 */</span>
 
 
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>warn</span>(<span class='ident'>missing_docs</span>)]</span>
+<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>cfg_attr</span>(<span class='ident'>feature</span><span class='op'>=</span><span class='string'>&quot;std&quot;</span>, <span class='ident'>warn</span>(<span class='ident'>missing_docs</span>))]</span> <span class='comment'>// Don&#39;t bother documenting std standins.</span>
 
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>cfg_attr</span>(<span class='ident'>feature</span><span class='op'>=</span><span class='string'>&quot;no_std&quot;</span>, <span class='ident'>no_std</span>)]</span>
+<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>cfg_attr</span>(<span class='ident'>not</span>(<span class='ident'>feature</span><span class='op'>=</span><span class='string'>&quot;std&quot;</span>), <span class='ident'>no_std</span>)]</span>
 <span class='comment'>// either `cargo clippy` doesn&#39;t see theese, or I get a warning when I build.</span>
 <span class='attribute'>#<span class='op'>!</span>[<span class='ident'>cfg_attr</span>(<span class='ident'>feature</span><span class='op'>=</span><span class='string'>&quot;clippy&quot;</span>, <span class='ident'>feature</span>(<span class='ident'>plugin</span>))]</span>
 <span class='attribute'>#<span class='op'>!</span>[<span class='ident'>cfg_attr</span>(<span class='ident'>feature</span><span class='op'>=</span><span class='string'>&quot;clippy&quot;</span>, <span class='ident'>plugin</span>(<span class='ident'>clippy</span>))]</span>
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>cfg_attr</span>(<span class='ident'>feature</span><span class='op'>=</span><span class='string'>&quot;clippy&quot;</span>, <span class='ident'>allow</span>(<span class='ident'>len_without_is_empty</span>))]</span><span class='comment'>// UtfxChar is never empty</span>
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>cfg_attr</span>(<span class='ident'>feature</span><span class='op'>=</span><span class='string'>&quot;clippy&quot;</span>, <span class='ident'>allow</span>(<span class='ident'>match_same_arms</span>))]</span>
 <span class='attribute'>#<span class='op'>!</span>[<span class='ident'>cfg_attr</span>(<span class='ident'>feature</span><span class='op'>=</span><span class='string'>&quot;clippy&quot;</span>, <span class='ident'>allow</span>(<span class='ident'>derive_hash_xor_eq</span>))]</span><span class='comment'>// tested</span>
+<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>cfg_attr</span>(<span class='ident'>feature</span><span class='op'>=</span><span class='string'>&quot;clippy&quot;</span>, <span class='ident'>allow</span>(<span class='ident'>len_without_is_empty</span>))]</span><span class='comment'>// UtfxChar is never empty</span>
+<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>cfg_attr</span>(<span class='ident'>feature</span><span class='op'>=</span><span class='string'>&quot;clippy&quot;</span>, <span class='ident'>allow</span>(<span class='ident'>match_same_arms</span>))]</span><span class='comment'>// looks better IMO</span>
+<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>cfg_attr</span>(<span class='ident'>feature</span><span class='op'>=</span><span class='string'>&quot;clippy&quot;</span>, <span class='ident'>allow</span>(<span class='ident'>needless_return</span>))]</span><span class='comment'>// `foo.bar(); foo` looks unfinished</span>
+<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>cfg_attr</span>(<span class='ident'>feature</span><span class='op'>=</span><span class='string'>&quot;clippy&quot;</span>, <span class='ident'>allow</span>(<span class='ident'>redundant_closure</span>))]</span><span class='comment'>// keep it explicit</span>
 <span class='comment'>// precedence: I prefer spaces to parentheses, but it&#39;s nice to recheck.</span>
 
 <span class='kw'>mod</span> <span class='ident'>errors</span>;
@@ -161,7 +180,8 @@ Alternatives and extensions to the unstable `char.encode_utf8()` and `char.encod
     <span class='doccomment'>//! Errors returned by various conversion methods in this crate.</span>
     <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>utf8_char</span>::<span class='ident'>FromStrError</span>;
     <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>errors</span>::{<span class='ident'>InvalidCodepoint</span>};
-    <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>errors</span>::{<span class='ident'>InvalidUtf8FirstByte</span>,<span class='ident'>InvalidUtf8</span>};
+    <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>errors</span>::{<span class='ident'>InvalidUtf8</span>};
+    <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>errors</span>::{<span class='ident'>InvalidUtf8FirstByte</span>,<span class='ident'>InvalidUtf16FirstUnit</span>};
     <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>errors</span>::{<span class='ident'>InvalidUtf8Slice</span>,<span class='ident'>InvalidUtf16Slice</span>};
     <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>errors</span>::{<span class='ident'>InvalidUtf8Array</span>,<span class='ident'>InvalidUtf16Tuple</span>};
 }

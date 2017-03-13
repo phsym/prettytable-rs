@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/term-0.4.4/src/terminfo/mod.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/term-0.4.5/src/terminfo/mod.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>mod.rs.html -- source</title>
@@ -381,6 +381,14 @@
 <span id="337">337</span>
 <span id="338">338</span>
 <span id="339">339</span>
+<span id="340">340</span>
+<span id="341">341</span>
+<span id="342">342</span>
+<span id="343">343</span>
+<span id="344">344</span>
+<span id="345">345</span>
+<span id="346">346</span>
+<span id="347">347</span>
 </pre><pre class='rust '>
 <span class='comment'>// Copyright 2012-2014 The Rust Project Developers. See the COPYRIGHT</span>
 <span class='comment'>// file at the top-level directory of this distribution and at</span>
@@ -413,20 +421,20 @@
 
 
 <span class='doccomment'>/// A parsed terminfo database entry.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>)]</span>
+<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>, <span class='ident'>Clone</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>TermInfo</span> {
     <span class='doccomment'>/// Names for the terminal</span>
     <span class='kw'>pub</span> <span class='ident'>names</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span>,
     <span class='doccomment'>/// Map of capability name to boolean value</span>
-    <span class='kw'>pub</span> <span class='ident'>bools</span>: <span class='ident'>HashMap</span><span class='op'>&lt;</span><span class='ident'>String</span>, <span class='ident'>bool</span><span class='op'>&gt;</span>,
+    <span class='kw'>pub</span> <span class='ident'>bools</span>: <span class='ident'>HashMap</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='lifetime'>&#39;static</span> <span class='ident'>str</span>, <span class='ident'>bool</span><span class='op'>&gt;</span>,
     <span class='doccomment'>/// Map of capability name to numeric value</span>
-    <span class='kw'>pub</span> <span class='ident'>numbers</span>: <span class='ident'>HashMap</span><span class='op'>&lt;</span><span class='ident'>String</span>, <span class='ident'>u16</span><span class='op'>&gt;</span>,
+    <span class='kw'>pub</span> <span class='ident'>numbers</span>: <span class='ident'>HashMap</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='lifetime'>&#39;static</span> <span class='ident'>str</span>, <span class='ident'>u16</span><span class='op'>&gt;</span>,
     <span class='doccomment'>/// Map of capability name to raw (unexpanded) string</span>
-    <span class='kw'>pub</span> <span class='ident'>strings</span>: <span class='ident'>HashMap</span><span class='op'>&lt;</span><span class='ident'>String</span>, <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>u8</span><span class='op'>&gt;&gt;</span>,
+    <span class='kw'>pub</span> <span class='ident'>strings</span>: <span class='ident'>HashMap</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='lifetime'>&#39;static</span> <span class='ident'>str</span>, <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>u8</span><span class='op'>&gt;&gt;</span>,
 }
 
 <span class='kw'>impl</span> <span class='ident'>TermInfo</span> {
-    <span class='doccomment'>/// Create a TermInfo based on current environment.</span>
+    <span class='doccomment'>/// Create a `TermInfo` based on current environment.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>from_env</span>() <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>TermInfo</span><span class='op'>&gt;</span> {
         <span class='kw'>let</span> <span class='ident'>term</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='ident'>env</span>::<span class='ident'>var</span>(<span class='string'>&quot;TERM&quot;</span>) {
             <span class='prelude-val'>Ok</span>(<span class='ident'>name</span>) <span class='op'>=&gt;</span> <span class='ident'>TermInfo</span>::<span class='ident'>from_name</span>(<span class='kw-2'>&amp;</span><span class='ident'>name</span>),
@@ -441,14 +449,14 @@
         }
     }
 
-    <span class='doccomment'>/// Create a TermInfo for the named terminal.</span>
+    <span class='doccomment'>/// Create a `TermInfo` for the named terminal.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>from_name</span>(<span class='ident'>name</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>TermInfo</span><span class='op'>&gt;</span> {
         <span class='ident'>get_dbpath_for_term</span>(<span class='ident'>name</span>)
             .<span class='ident'>ok_or_else</span>(<span class='op'>||</span> ::<span class='ident'>Error</span>::<span class='ident'>TerminfoEntryNotFound</span>)
             .<span class='ident'>and_then</span>(<span class='op'>|</span><span class='ident'>p</span><span class='op'>|</span> <span class='ident'>TermInfo</span>::<span class='ident'>from_path</span>(<span class='kw-2'>&amp;</span><span class='ident'>p</span>))
     }
 
-    <span class='doccomment'>/// Parse the given TermInfo.</span>
+    <span class='doccomment'>/// Parse the given `TermInfo`.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>from_path</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span><span class='ident'>Path</span><span class='op'>&gt;&gt;</span>(<span class='ident'>path</span>: <span class='ident'>P</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>TermInfo</span><span class='op'>&gt;</span> {
         <span class='self'>Self</span>::<span class='ident'>_from_path</span>(<span class='ident'>path</span>.<span class='ident'>as_ref</span>())
     }
@@ -459,10 +467,49 @@
     <span class='comment'>// might do this for</span>
     <span class='comment'>// us. Alas. )</span>
     <span class='kw'>fn</span> <span class='ident'>_from_path</span>(<span class='ident'>path</span>: <span class='kw-2'>&amp;</span><span class='ident'>Path</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>TermInfo</span><span class='op'>&gt;</span> {
-        <span class='kw'>let</span> <span class='ident'>file</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>File</span>::<span class='ident'>open</span>(<span class='ident'>path</span>).<span class='ident'>map_err</span>(<span class='op'>|</span><span class='ident'>e</span><span class='op'>|</span> ::<span class='ident'>Error</span>::<span class='ident'>Io</span>(<span class='ident'>e</span>)));
+        <span class='kw'>let</span> <span class='ident'>file</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>File</span>::<span class='ident'>open</span>(<span class='ident'>path</span>).<span class='ident'>map_err</span>(::<span class='ident'>Error</span>::<span class='ident'>Io</span>));
         <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>reader</span> <span class='op'>=</span> <span class='ident'>BufReader</span>::<span class='ident'>new</span>(<span class='ident'>file</span>);
         <span class='ident'>parse</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>reader</span>, <span class='bool-val'>false</span>)
     }
+
+    <span class='doccomment'>/// Retrieve a capability `cmd` and expand it with `params`, writing result to `out`.</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>apply_cap</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>cmd</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>, <span class='ident'>params</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>Param</span>], <span class='ident'>out</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>io</span>::<span class='ident'>Write</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>()<span class='op'>&gt;</span> {
+        <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>strings</span>.<span class='ident'>get</span>(<span class='ident'>cmd</span>) {
+            <span class='prelude-val'>Some</span>(<span class='ident'>cmd</span>) <span class='op'>=&gt;</span> {
+                <span class='kw'>match</span> <span class='ident'>expand</span>(<span class='ident'>cmd</span>, <span class='ident'>params</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Variables</span>::<span class='ident'>new</span>()) {
+                    <span class='prelude-val'>Ok</span>(<span class='ident'>s</span>) <span class='op'>=&gt;</span> {
+                        <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>out</span>.<span class='ident'>write_all</span>(<span class='kw-2'>&amp;</span><span class='ident'>s</span>));
+                        <span class='prelude-val'>Ok</span>(())
+                    }
+                    <span class='prelude-val'>Err</span>(<span class='ident'>e</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Err</span>(<span class='ident'>e</span>.<span class='ident'>into</span>()),
+                }
+            }
+            <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> <span class='prelude-val'>Err</span>(::<span class='ident'>Error</span>::<span class='ident'>NotSupported</span>),
+        }
+    }
+
+    <span class='doccomment'>/// Write the reset string to `out`.</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>reset</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>out</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>io</span>::<span class='ident'>Write</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>()<span class='op'>&gt;</span> {
+        <span class='comment'>// are there any terminals that have color/attrs and not sgr0?</span>
+        <span class='comment'>// Try falling back to sgr, then op</span>
+        <span class='kw'>let</span> <span class='ident'>cmd</span> <span class='op'>=</span> <span class='kw'>match</span> [(<span class='string'>&quot;sgr0&quot;</span>, <span class='kw-2'>&amp;</span>[] <span class='kw'>as</span> <span class='kw-2'>&amp;</span>[<span class='ident'>Param</span>]), (<span class='string'>&quot;sgr&quot;</span>, <span class='kw-2'>&amp;</span>[<span class='ident'>Param</span>::<span class='ident'>Number</span>(<span class='number'>0</span>)]), (<span class='string'>&quot;op&quot;</span>, <span class='kw-2'>&amp;</span>[])]
+                            .<span class='ident'>iter</span>()
+                            .<span class='ident'>filter_map</span>(<span class='op'>|</span><span class='kw-2'>&amp;</span>(<span class='ident'>cap</span>, <span class='ident'>params</span>)<span class='op'>|</span> {
+                                <span class='self'>self</span>.<span class='ident'>strings</span>.<span class='ident'>get</span>(<span class='ident'>cap</span>).<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>c</span><span class='op'>|</span> (<span class='ident'>c</span>, <span class='ident'>params</span>))
+                            })
+                            .<span class='ident'>next</span>() {
+            <span class='prelude-val'>Some</span>((<span class='ident'>op</span>, <span class='ident'>params</span>)) <span class='op'>=&gt;</span> {
+                <span class='kw'>match</span> <span class='ident'>expand</span>(<span class='ident'>op</span>, <span class='ident'>params</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Variables</span>::<span class='ident'>new</span>()) {
+                    <span class='prelude-val'>Ok</span>(<span class='ident'>cmd</span>) <span class='op'>=&gt;</span> <span class='ident'>cmd</span>,
+                    <span class='prelude-val'>Err</span>(<span class='ident'>e</span>) <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='ident'>e</span>.<span class='ident'>into</span>()),
+                }
+            }
+            <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='prelude-val'>Err</span>(::<span class='ident'>Error</span>::<span class='ident'>NotSupported</span>),
+        };
+        <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>out</span>.<span class='ident'>write_all</span>(<span class='kw-2'>&amp;</span><span class='ident'>cmd</span>));
+        <span class='prelude-val'>Ok</span>(())
+    }
+
 }
 
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>, <span class='ident'>Eq</span>, <span class='ident'>PartialEq</span>)]</span>
@@ -497,9 +544,9 @@
 <span class='kw'>impl</span> ::<span class='ident'>std</span>::<span class='ident'>fmt</span>::<span class='ident'>Display</span> <span class='kw'>for</span> <span class='ident'>Error</span> {
     <span class='kw'>fn</span> <span class='ident'>fmt</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>f</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> ::<span class='ident'>std</span>::<span class='ident'>fmt</span>::<span class='ident'>Formatter</span>) <span class='op'>-&gt;</span> ::<span class='ident'>std</span>::<span class='ident'>fmt</span>::<span class='prelude-ty'>Result</span> {
         <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>error</span>::<span class='ident'>Error</span>;
-        <span class='kw'>match</span> <span class='self'>self</span> {
-            <span class='kw-2'>&amp;</span><span class='ident'>NotUtf8</span>(<span class='ident'>e</span>) <span class='op'>=&gt;</span> <span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>f</span>, <span class='string'>&quot;{}&quot;</span>, <span class='ident'>e</span>),
-            <span class='kw-2'>&amp;</span><span class='ident'>BadMagic</span>(<span class='ident'>v</span>) <span class='op'>=&gt;</span> <span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>f</span>, <span class='string'>&quot;bad magic number {:x} in terminfo header&quot;</span>, <span class='ident'>v</span>),
+        <span class='kw'>match</span> <span class='op'>*</span><span class='self'>self</span> {
+            <span class='ident'>NotUtf8</span>(<span class='ident'>e</span>) <span class='op'>=&gt;</span> <span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>f</span>, <span class='string'>&quot;{}&quot;</span>, <span class='ident'>e</span>),
+            <span class='ident'>BadMagic</span>(<span class='ident'>v</span>) <span class='op'>=&gt;</span> <span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>f</span>, <span class='string'>&quot;bad magic number {:x} in terminfo header&quot;</span>, <span class='ident'>v</span>),
             _ <span class='op'>=&gt;</span> <span class='ident'>f</span>.<span class='ident'>write_str</span>(<span class='self'>self</span>.<span class='ident'>description</span>()),
         }
     }
@@ -513,22 +560,22 @@
 
 <span class='kw'>impl</span> ::<span class='ident'>std</span>::<span class='ident'>error</span>::<span class='ident'>Error</span> <span class='kw'>for</span> <span class='ident'>Error</span> {
     <span class='kw'>fn</span> <span class='ident'>description</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>str</span> {
-        <span class='kw'>match</span> <span class='self'>self</span> {
-            <span class='kw-2'>&amp;</span><span class='ident'>BadMagic</span>(..) <span class='op'>=&gt;</span> <span class='string'>&quot;incorrect magic number at start of file&quot;</span>,
-            <span class='kw-2'>&amp;</span><span class='ident'>ShortNames</span> <span class='op'>=&gt;</span> <span class='string'>&quot;no names exposed, need at least one&quot;</span>,
-            <span class='kw-2'>&amp;</span><span class='ident'>TooManyBools</span> <span class='op'>=&gt;</span> <span class='string'>&quot;more boolean properties than libterm knows about&quot;</span>,
-            <span class='kw-2'>&amp;</span><span class='ident'>TooManyNumbers</span> <span class='op'>=&gt;</span> <span class='string'>&quot;more number properties than libterm knows about&quot;</span>,
-            <span class='kw-2'>&amp;</span><span class='ident'>TooManyStrings</span> <span class='op'>=&gt;</span> <span class='string'>&quot;more string properties than libterm knows about&quot;</span>,
-            <span class='kw-2'>&amp;</span><span class='ident'>InvalidLength</span> <span class='op'>=&gt;</span> <span class='string'>&quot;invalid length field value, must be &gt;= -1&quot;</span>,
-            <span class='kw-2'>&amp;</span><span class='ident'>NotUtf8</span>(<span class='kw-2'>ref</span> <span class='ident'>e</span>) <span class='op'>=&gt;</span> <span class='ident'>e</span>.<span class='ident'>description</span>(),
-            <span class='kw-2'>&amp;</span><span class='ident'>NamesMissingNull</span> <span class='op'>=&gt;</span> <span class='string'>&quot;names table missing NUL terminator&quot;</span>,
-            <span class='kw-2'>&amp;</span><span class='ident'>StringsMissingNull</span> <span class='op'>=&gt;</span> <span class='string'>&quot;string table missing NUL terminator&quot;</span>,
+        <span class='kw'>match</span> <span class='op'>*</span><span class='self'>self</span> {
+            <span class='ident'>BadMagic</span>(..) <span class='op'>=&gt;</span> <span class='string'>&quot;incorrect magic number at start of file&quot;</span>,
+            <span class='ident'>ShortNames</span> <span class='op'>=&gt;</span> <span class='string'>&quot;no names exposed, need at least one&quot;</span>,
+            <span class='ident'>TooManyBools</span> <span class='op'>=&gt;</span> <span class='string'>&quot;more boolean properties than libterm knows about&quot;</span>,
+            <span class='ident'>TooManyNumbers</span> <span class='op'>=&gt;</span> <span class='string'>&quot;more number properties than libterm knows about&quot;</span>,
+            <span class='ident'>TooManyStrings</span> <span class='op'>=&gt;</span> <span class='string'>&quot;more string properties than libterm knows about&quot;</span>,
+            <span class='ident'>InvalidLength</span> <span class='op'>=&gt;</span> <span class='string'>&quot;invalid length field value, must be &gt;= -1&quot;</span>,
+            <span class='ident'>NotUtf8</span>(<span class='kw-2'>ref</span> <span class='ident'>e</span>) <span class='op'>=&gt;</span> <span class='ident'>e</span>.<span class='ident'>description</span>(),
+            <span class='ident'>NamesMissingNull</span> <span class='op'>=&gt;</span> <span class='string'>&quot;names table missing NUL terminator&quot;</span>,
+            <span class='ident'>StringsMissingNull</span> <span class='op'>=&gt;</span> <span class='string'>&quot;string table missing NUL terminator&quot;</span>,
         }
     }
 
     <span class='kw'>fn</span> <span class='ident'>cause</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span>::<span class='ident'>std</span>::<span class='ident'>error</span>::<span class='ident'>Error</span><span class='op'>&gt;</span> {
-        <span class='kw'>match</span> <span class='self'>self</span> {
-            <span class='kw-2'>&amp;</span><span class='ident'>NotUtf8</span>(<span class='kw-2'>ref</span> <span class='ident'>e</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>e</span>),
+        <span class='kw'>match</span> <span class='op'>*</span><span class='self'>self</span> {
+            <span class='ident'>NotUtf8</span>(<span class='kw-2'>ref</span> <span class='ident'>e</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>e</span>),
             _ <span class='op'>=&gt;</span> <span class='prelude-val'>None</span>,
         }
     }
@@ -536,7 +583,7 @@
 
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>searcher</span>;
 
-<span class='doccomment'>/// TermInfo format parsing.</span>
+<span class='doccomment'>/// `TermInfo` format parsing.</span>
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>parser</span> {
     <span class='doccomment'>//! ncurses-compatible compiled terminfo format parsing (term(5))</span>
     <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>compiled</span>;
@@ -565,18 +612,19 @@
 
 <span class='doccomment'>/// A Terminal that knows how many colors it supports, with a reference to its</span>
 <span class='doccomment'>/// parsed Terminfo database record.</span>
+<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>, <span class='ident'>Debug</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>TerminfoTerminal</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
     <span class='ident'>num_colors</span>: <span class='ident'>u16</span>,
     <span class='ident'>out</span>: <span class='ident'>T</span>,
     <span class='ident'>ti</span>: <span class='ident'>TermInfo</span>,
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Write</span> <span class='op'>+</span> <span class='ident'>Send</span><span class='op'>&gt;</span> <span class='ident'>Terminal</span> <span class='kw'>for</span> <span class='ident'>TerminfoTerminal</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Write</span><span class='op'>&gt;</span> <span class='ident'>Terminal</span> <span class='kw'>for</span> <span class='ident'>TerminfoTerminal</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
     <span class='kw'>type</span> <span class='ident'>Output</span> <span class='op'>=</span> <span class='ident'>T</span>;
     <span class='kw'>fn</span> <span class='ident'>fg</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>color</span>: <span class='ident'>color</span>::<span class='ident'>Color</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>()<span class='op'>&gt;</span> {
         <span class='kw'>let</span> <span class='ident'>color</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>dim_if_necessary</span>(<span class='ident'>color</span>);
         <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>num_colors</span> <span class='op'>&gt;</span> <span class='ident'>color</span> {
-            <span class='kw'>return</span> <span class='self'>self</span>.<span class='ident'>apply_cap</span>(<span class='string'>&quot;setaf&quot;</span>, <span class='kw-2'>&amp;</span>[<span class='ident'>Param</span>::<span class='ident'>Number</span>(<span class='ident'>color</span> <span class='kw'>as</span> <span class='ident'>i32</span>)]);
+            <span class='kw'>return</span> <span class='self'>self</span>.<span class='ident'>ti</span>.<span class='ident'>apply_cap</span>(<span class='string'>&quot;setaf&quot;</span>, <span class='kw-2'>&amp;</span>[<span class='ident'>Param</span>::<span class='ident'>Number</span>(<span class='ident'>color</span> <span class='kw'>as</span> <span class='ident'>i32</span>)], <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>out</span>);
         }
         <span class='prelude-val'>Err</span>(::<span class='ident'>Error</span>::<span class='ident'>ColorOutOfRange</span>)
     }
@@ -584,7 +632,7 @@
     <span class='kw'>fn</span> <span class='ident'>bg</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>color</span>: <span class='ident'>color</span>::<span class='ident'>Color</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>()<span class='op'>&gt;</span> {
         <span class='kw'>let</span> <span class='ident'>color</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>dim_if_necessary</span>(<span class='ident'>color</span>);
         <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>num_colors</span> <span class='op'>&gt;</span> <span class='ident'>color</span> {
-            <span class='kw'>return</span> <span class='self'>self</span>.<span class='ident'>apply_cap</span>(<span class='string'>&quot;setab&quot;</span>, <span class='kw-2'>&amp;</span>[<span class='ident'>Param</span>::<span class='ident'>Number</span>(<span class='ident'>color</span> <span class='kw'>as</span> <span class='ident'>i32</span>)]);
+            <span class='kw'>return</span> <span class='self'>self</span>.<span class='ident'>ti</span>.<span class='ident'>apply_cap</span>(<span class='string'>&quot;setab&quot;</span>, <span class='kw-2'>&amp;</span>[<span class='ident'>Param</span>::<span class='ident'>Number</span>(<span class='ident'>color</span> <span class='kw'>as</span> <span class='ident'>i32</span>)], <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>out</span>);
         }
         <span class='prelude-val'>Err</span>(::<span class='ident'>Error</span>::<span class='ident'>ColorOutOfRange</span>)
     }
@@ -593,7 +641,7 @@
         <span class='kw'>match</span> <span class='ident'>attr</span> {
             <span class='ident'>Attr</span>::<span class='ident'>ForegroundColor</span>(<span class='ident'>c</span>) <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>fg</span>(<span class='ident'>c</span>),
             <span class='ident'>Attr</span>::<span class='ident'>BackgroundColor</span>(<span class='ident'>c</span>) <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>bg</span>(<span class='ident'>c</span>),
-            _ <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>apply_cap</span>(<span class='ident'>cap_for_attr</span>(<span class='ident'>attr</span>), <span class='kw-2'>&amp;</span>[]),
+            _ <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>ti</span>.<span class='ident'>apply_cap</span>(<span class='ident'>cap_for_attr</span>(<span class='ident'>attr</span>), <span class='kw-2'>&amp;</span>[], <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>out</span>),
         }
     }
 
@@ -608,24 +656,7 @@
     }
 
     <span class='kw'>fn</span> <span class='ident'>reset</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>()<span class='op'>&gt;</span> {
-        <span class='comment'>// are there any terminals that have color/attrs and not sgr0?</span>
-        <span class='comment'>// Try falling back to sgr, then op</span>
-        <span class='kw'>let</span> <span class='ident'>cmd</span> <span class='op'>=</span> <span class='kw'>match</span> [(<span class='string'>&quot;sgr0&quot;</span>, <span class='kw-2'>&amp;</span>[] <span class='kw'>as</span> <span class='kw-2'>&amp;</span>[<span class='ident'>Param</span>]),
-                         (<span class='string'>&quot;sgr&quot;</span>, <span class='kw-2'>&amp;</span>[<span class='ident'>Param</span>::<span class='ident'>Number</span>(<span class='number'>0</span>)]),
-                         (<span class='string'>&quot;op&quot;</span>, <span class='kw-2'>&amp;</span>[])]
-                            .<span class='ident'>iter</span>()
-                            .<span class='ident'>filter_map</span>(<span class='op'>|</span><span class='kw-2'>&amp;</span>(<span class='ident'>cap</span>, <span class='ident'>params</span>)<span class='op'>|</span> <span class='self'>self</span>.<span class='ident'>ti</span>.<span class='ident'>strings</span>.<span class='ident'>get</span>(<span class='ident'>cap</span>).<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>c</span><span class='op'>|</span> (<span class='ident'>c</span>, <span class='ident'>params</span>)))
-                            .<span class='ident'>next</span>() {
-            <span class='prelude-val'>Some</span>((<span class='ident'>op</span>, <span class='ident'>params</span>)) <span class='op'>=&gt;</span> {
-                <span class='kw'>match</span> <span class='ident'>expand</span>(<span class='ident'>op</span>, <span class='ident'>params</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Variables</span>::<span class='ident'>new</span>()) {
-                    <span class='prelude-val'>Ok</span>(<span class='ident'>cmd</span>) <span class='op'>=&gt;</span> <span class='ident'>cmd</span>,
-                    <span class='prelude-val'>Err</span>(<span class='ident'>e</span>) <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='ident'>e</span>.<span class='ident'>into</span>()),
-                }
-            }
-            <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='prelude-val'>Err</span>(::<span class='ident'>Error</span>::<span class='ident'>NotSupported</span>),
-        };
-        <span class='macro'>try</span><span class='macro'>!</span>(<span class='self'>self</span>.<span class='ident'>out</span>.<span class='ident'>write_all</span>(<span class='kw-2'>&amp;</span><span class='ident'>cmd</span>));
-        <span class='prelude-val'>Ok</span>(())
+        <span class='self'>self</span>.<span class='ident'>ti</span>.<span class='ident'>reset</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>out</span>)
     }
 
     <span class='kw'>fn</span> <span class='ident'>supports_reset</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
@@ -637,22 +668,22 @@
     }
 
     <span class='kw'>fn</span> <span class='ident'>cursor_up</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>()<span class='op'>&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>apply_cap</span>(<span class='string'>&quot;cuu1&quot;</span>, <span class='kw-2'>&amp;</span>[])
+        <span class='self'>self</span>.<span class='ident'>ti</span>.<span class='ident'>apply_cap</span>(<span class='string'>&quot;cuu1&quot;</span>, <span class='kw-2'>&amp;</span>[], <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>out</span>)
     }
 
     <span class='kw'>fn</span> <span class='ident'>delete_line</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>()<span class='op'>&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>apply_cap</span>(<span class='string'>&quot;dl&quot;</span>, <span class='kw-2'>&amp;</span>[])
+        <span class='self'>self</span>.<span class='ident'>ti</span>.<span class='ident'>apply_cap</span>(<span class='string'>&quot;el&quot;</span>, <span class='kw-2'>&amp;</span>[], <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>out</span>)
     }
 
     <span class='kw'>fn</span> <span class='ident'>carriage_return</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>()<span class='op'>&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>apply_cap</span>(<span class='string'>&quot;cr&quot;</span>, <span class='kw-2'>&amp;</span>[])
+        <span class='self'>self</span>.<span class='ident'>ti</span>.<span class='ident'>apply_cap</span>(<span class='string'>&quot;cr&quot;</span>, <span class='kw-2'>&amp;</span>[], <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>out</span>)
     }
 
-    <span class='kw'>fn</span> <span class='ident'>get_ref</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>T</span> {
+    <span class='kw'>fn</span> <span class='ident'>get_ref</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>T</span> {
         <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>out</span>
     }
 
-    <span class='kw'>fn</span> <span class='ident'>get_mut</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='kw-2'>mut</span> <span class='ident'>T</span> {
+    <span class='kw'>fn</span> <span class='ident'>get_mut</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>T</span> {
         <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>out</span>
     }
 
@@ -663,7 +694,7 @@
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Write</span> <span class='op'>+</span> <span class='ident'>Send</span><span class='op'>&gt;</span> <span class='ident'>TerminfoTerminal</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Write</span><span class='op'>&gt;</span> <span class='ident'>TerminfoTerminal</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
     <span class='doccomment'>/// Create a new TerminfoTerminal with the given TermInfo and Write.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new_with_terminfo</span>(<span class='ident'>out</span>: <span class='ident'>T</span>, <span class='ident'>terminfo</span>: <span class='ident'>TermInfo</span>) <span class='op'>-&gt;</span> <span class='ident'>TerminfoTerminal</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
         <span class='kw'>let</span> <span class='ident'>nc</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='ident'>terminfo</span>.<span class='ident'>strings</span>.<span class='ident'>contains_key</span>(<span class='string'>&quot;setaf&quot;</span>) <span class='op'>&amp;&amp;</span>
@@ -692,21 +723,6 @@
             <span class='ident'>color</span> <span class='op'>-</span> <span class='number'>8</span>
         } <span class='kw'>else</span> {
             <span class='ident'>color</span>
-        }
-    }
-
-    <span class='kw'>fn</span> <span class='ident'>apply_cap</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>cmd</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>, <span class='ident'>params</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>Param</span>]) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>()<span class='op'>&gt;</span> {
-        <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>ti</span>.<span class='ident'>strings</span>.<span class='ident'>get</span>(<span class='ident'>cmd</span>) {
-            <span class='prelude-val'>Some</span>(<span class='ident'>cmd</span>) <span class='op'>=&gt;</span> {
-                <span class='kw'>match</span> <span class='ident'>expand</span>(<span class='kw-2'>&amp;</span><span class='ident'>cmd</span>, <span class='ident'>params</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Variables</span>::<span class='ident'>new</span>()) {
-                    <span class='prelude-val'>Ok</span>(<span class='ident'>s</span>) <span class='op'>=&gt;</span> {
-                        <span class='macro'>try</span><span class='macro'>!</span>(<span class='self'>self</span>.<span class='ident'>out</span>.<span class='ident'>write_all</span>(<span class='kw-2'>&amp;</span><span class='ident'>s</span>));
-                        <span class='prelude-val'>Ok</span>(())
-                    }
-                    <span class='prelude-val'>Err</span>(<span class='ident'>e</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Err</span>(<span class='ident'>e</span>.<span class='ident'>into</span>()),
-                }
-            }
-            <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> <span class='prelude-val'>Err</span>(::<span class='ident'>Error</span>::<span class='ident'>NotSupported</span>),
         }
     }
 }

@@ -47,7 +47,7 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-92' class='srclink' href='../src/csv/encoder.rs.html#12-14' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../src/csv/encoder.rs.html#12-14' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct Encoded { /* fields omitted */ }</pre><div class='docblock'><p>A record to be encoded.</p>
 
 <p>This is a &quot;wrapper&quot; type that allows the <code>Encoder</code> machinery from the
@@ -55,14 +55,14 @@
 
 <p>Generally, you should not need to use this type directly. Instead, you
 should prefer the <code>encode</code> or <code>encode_all</code> methods defined on <code>CsvWriter</code>.</p>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class='struct' href='../csv/struct.Encoded.html' title='csv::Encoded'>Encoded</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-94' class='srclink' href='../src/csv/encoder.rs.html#16-39' title='goto source code'>[src]</a></span></h3>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class='struct' href='../csv/struct.Encoded.html' title='csv::Encoded'>Encoded</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/csv/encoder.rs.html#16-39' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.new' class='method'><span id='new.v' class='invisible'><code>fn <a href='#method.new' class='fnname'>new</a>() -&gt; <a class='struct' href='../csv/struct.Encoded.html' title='csv::Encoded'>Encoded</a></code></span></h4>
 <div class='docblock'><p>Creates a new encodable record. The value returned can be passed to
 <code>Encodable::encode</code>.</p>
 </div><h4 id='method.unwrap' class='method'><span id='unwrap.v' class='invisible'><code>fn <a href='#method.unwrap' class='fnname'>unwrap</a>(self) -&gt; <a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='type' href='../csv/type.ByteString.html' title='csv::ByteString'>ByteString</a>&gt;</code></span></h4>
 <div class='docblock'><p>Once a record has been encoded into this value, <code>unwrap</code> can be used
 to access the raw CSV record.</p>
-</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='../rustc_serialize/serialize/trait.Encoder.html' title='rustc_serialize::serialize::Encoder'>Encoder</a> for <a class='struct' href='../csv/struct.Encoded.html' title='csv::Encoded'>Encoded</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-112' class='srclink' href='../src/csv/encoder.rs.html#41-162' title='goto source code'>[src]</a></span></h3>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='../rustc_serialize/serialize/trait.Encoder.html' title='rustc_serialize::serialize::Encoder'>Encoder</a> for <a class='struct' href='../csv/struct.Encoded.html' title='csv::Encoded'>Encoded</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/csv/encoder.rs.html#41-162' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='associatedtype.Error' class='type'><span id='Error.t' class='invisible'><code>type <a href='../rustc_serialize/serialize/trait.Encoder.html#associatedtype.Error' class='type'>Error</a> = <a class='enum' href='../csv/enum.Error.html' title='csv::Error'>Error</a></code></span></h4>
 <div class='docblock'><p>The error type for method results.</p>
 </div><h4 id='method.emit_nil' class='method'><span id='emit_nil.v' class='invisible'><code>fn <a href='../rustc_serialize/serialize/trait.Encoder.html#tymethod.emit_nil' class='fnname'>emit_nil</a>(&amp;mut self) -&gt; <a class='type' href='../csv/type.Result.html' title='csv::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>&gt;</code></span></h4>

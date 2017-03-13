@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/encode_unicode-0.2.0/src/utf16_iterator.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/encode_unicode-0.3.0/src/utf16_iterator.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>utf16_iterator.rs.html -- source</title>
@@ -105,6 +105,7 @@
 <span id="61">61</span>
 <span id="62">62</span>
 <span id="63">63</span>
+<span id="64">64</span>
 </pre><pre class='rust '>
 <span class='comment'>/* Copyright 2016 Torbjørn Birch Moltu
  *
@@ -116,17 +117,15 @@
 
 <span class='kw'>use</span> <span class='ident'>CharExt</span>;
 <span class='kw'>use</span> <span class='ident'>Utf16Char</span>;
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>not</span>(<span class='ident'>feature</span><span class='op'>=</span><span class='string'>&quot;no_std&quot;</span>))]</span>
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>core</span>;
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>not</span>(<span class='ident'>feature</span><span class='op'>=</span><span class='string'>&quot;no_std&quot;</span>))]</span>
 <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>core</span>::<span class='ident'>fmt</span>;
 
-<span class='comment'>// Invalid values that says the field consumed or empty.</span>
+<span class='comment'>// Invalid values that says the field is consumed or empty.</span>
 <span class='kw'>const</span> <span class='ident'>FIRST_USED</span>: <span class='ident'>u16</span> <span class='op'>=</span> <span class='number'>0x_dc_00</span>;
 <span class='kw'>const</span> <span class='ident'>SECOND_USED</span>: <span class='ident'>u16</span> <span class='op'>=</span> <span class='number'>0</span>;
 
-<span class='doccomment'>/// Iterate over the units in an UTF-16 representation of a codepoint.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>,<span class='ident'>Copy</span>)]</span>
+<span class='doccomment'>/// Iterate over the units of the UTF-16 representation of a codepoint.</span>
+<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Utf16Iterator</span> {
     <span class='ident'>first</span>: <span class='ident'>u16</span>,
     <span class='ident'>second</span>: <span class='ident'>u16</span>,
@@ -162,11 +161,14 @@
         (<span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>second</span> <span class='op'>==</span> <span class='ident'>SECOND_USED</span> {<span class='number'>0</span>} <span class='kw'>else</span> {<span class='number'>1</span>})
     }
 }
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>not</span>(<span class='ident'>feature</span><span class='op'>=</span><span class='string'>&quot;no_std&quot;</span>))]</span>
 <span class='kw'>impl</span> <span class='ident'>fmt</span>::<span class='ident'>Debug</span> <span class='kw'>for</span> <span class='ident'>Utf16Iterator</span> {
     <span class='kw'>fn</span> <span class='ident'>fmt</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>,  <span class='ident'>fmtr</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>fmt</span>::<span class='ident'>Formatter</span>) <span class='op'>-&gt;</span> <span class='ident'>fmt</span>::<span class='prelude-ty'>Result</span> {
-        <span class='kw'>let</span> <span class='ident'>v</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>u16</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>collect</span>();
-        <span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>fmtr</span>, <span class='string'>&quot;{:?}&quot;</span>, <span class='ident'>v</span>)
+        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>clone</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>clone</span>();
+        <span class='kw'>match</span> (<span class='ident'>clone</span>.<span class='ident'>next</span>(), <span class='ident'>clone</span>.<span class='ident'>next</span>()) {
+            (<span class='prelude-val'>Some</span>(<span class='ident'>one</span>), <span class='prelude-val'>None</span>)  <span class='op'>=&gt;</span> <span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>fmtr</span>, <span class='string'>&quot;[{}]&quot;</span>, <span class='ident'>one</span>),
+            (<span class='prelude-val'>Some</span>(<span class='ident'>a</span>), <span class='prelude-val'>Some</span>(<span class='ident'>b</span>)) <span class='op'>=&gt;</span> <span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>fmtr</span>, <span class='string'>&quot;[{}, {}]&quot;</span>, <span class='ident'>a</span>, <span class='ident'>b</span>),
+            (<span class='prelude-val'>None</span>,  _)         <span class='op'>=&gt;</span> <span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>fmtr</span>, <span class='string'>&quot;[]&quot;</span>),
+        }
     }
 }
 </pre>
