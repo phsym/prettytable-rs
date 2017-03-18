@@ -9,6 +9,7 @@
 
     <title>prettytable::row - Rust</title>
 
+    <link rel="stylesheet" type="text/css" href="../normalize.css">
     <link rel="stylesheet" type="text/css" href="../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../main.css">
     
@@ -50,13 +51,13 @@
                </span><a class='srclink' href='../src/prettytable/row.rs.html#214-223' title='goto source code'>[src]</a></span></h1>
 <pre class='rust macro'>
 <span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>row</span> {
-    (($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>out</span>:<span class='ident'>tt</span>)<span class='op'>*</span>); <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>value</span>:<span class='ident'>expr</span>) <span class='op'>=&gt;</span> { ... };
-    (($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>out</span>:<span class='ident'>tt</span>)<span class='op'>*</span>); <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>value</span>:<span class='ident'>expr</span>, $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>n</span>:<span class='ident'>tt</span>)<span class='op'>*</span>) <span class='op'>=&gt;</span> { ... };
-    (($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>out</span>:<span class='ident'>tt</span>)<span class='op'>*</span>); <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>style</span>:<span class='ident'>ident</span> <span class='op'>-&gt;</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>value</span>:<span class='ident'>expr</span>) <span class='op'>=&gt;</span> { ... };
-    (($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>out</span>:<span class='ident'>tt</span>)<span class='op'>*</span>); <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>style</span>:<span class='ident'>ident</span> <span class='op'>-&gt;</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>value</span>:<span class='ident'>expr</span>, $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>n</span>: <span class='ident'>tt</span>)<span class='op'>*</span>) <span class='op'>=&gt;</span> { ... };
-    ($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>content</span>:<span class='ident'>expr</span>), <span class='op'>*</span>) <span class='op'>=&gt;</span> { ... };
-    (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>style</span>:<span class='ident'>ident</span> <span class='op'>=&gt;</span> $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>content</span>:<span class='ident'>expr</span>), <span class='op'>*</span>) <span class='op'>=&gt;</span> { ... };
-    ($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>content</span>:<span class='ident'>tt</span>)<span class='op'>*</span>) <span class='op'>=&gt;</span> { ... };
+    (($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>out</span>:<span class='ident'>tt</span>)<span class='kw-2'>*</span>); <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>value</span>:<span class='ident'>expr</span>) <span class='op'>=&gt;</span> { ... };
+    (($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>out</span>:<span class='ident'>tt</span>)<span class='kw-2'>*</span>); <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>value</span>:<span class='ident'>expr</span>, $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>n</span>:<span class='ident'>tt</span>)<span class='kw-2'>*</span>) <span class='op'>=&gt;</span> { ... };
+    (($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>out</span>:<span class='ident'>tt</span>)<span class='kw-2'>*</span>); <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>style</span>:<span class='ident'>ident</span> <span class='op'>-&gt;</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>value</span>:<span class='ident'>expr</span>) <span class='op'>=&gt;</span> { ... };
+    (($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>out</span>:<span class='ident'>tt</span>)<span class='kw-2'>*</span>); <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>style</span>:<span class='ident'>ident</span> <span class='op'>-&gt;</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>value</span>:<span class='ident'>expr</span>, $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>n</span>: <span class='ident'>tt</span>)<span class='kw-2'>*</span>) <span class='op'>=&gt;</span> { ... };
+    ($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>content</span>:<span class='ident'>expr</span>), <span class='kw-2'>*</span>) <span class='op'>=&gt;</span> { ... };
+    (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>style</span>:<span class='ident'>ident</span> <span class='op'>=&gt;</span> $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>content</span>:<span class='ident'>expr</span>), <span class='kw-2'>*</span>) <span class='op'>=&gt;</span> { ... };
+    ($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>content</span>:<span class='ident'>tt</span>)<span class='kw-2'>*</span>) <span class='op'>=&gt;</span> { ... };
 }</pre>
 <div class='docblock'><p>This macro simplifies <code>Row</code> creation</p>
 

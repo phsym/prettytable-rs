@@ -9,6 +9,7 @@
 
     <title>traits.rs.html -- source</title>
 
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
     <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../main.css">
     
@@ -414,7 +415,7 @@
 <span class='kw'>use</span> <span class='ident'>Utf16Char</span>;
 <span class='kw'>use</span> <span class='ident'>Utf8Iterator</span>;
 <span class='kw'>use</span> <span class='ident'>Utf16Iterator</span>;
-<span class='kw'>use</span> <span class='ident'>error</span>::<span class='op'>*</span>;
+<span class='kw'>use</span> <span class='ident'>error</span>::<span class='kw-2'>*</span>;
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>core</span>;
 <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>core</span>::{<span class='ident'>char</span>, <span class='ident'>u32</span>, <span class='ident'>mem</span>};
 <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>core</span>::<span class='ident'>ops</span>::<span class='ident'>Not</span>;
@@ -480,7 +481,7 @@
     }}
 
     <span class='kw'>fn</span> <span class='ident'>is_utf16_leading_surrogate</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        (<span class='self'>self</span> <span class='kw-2'>&amp;</span> <span class='number'>0xfc00</span>) <span class='op'>==</span> <span class='number'>0xd800</span><span class='comment'>// Clear the ten content bytes of a surrogate,</span>
+        (<span class='self'>self</span> <span class='op'>&amp;</span> <span class='number'>0xfc00</span>) <span class='op'>==</span> <span class='number'>0xd800</span><span class='comment'>// Clear the ten content bytes of a surrogate,</span>
                                  <span class='comment'>// and see if it&#39;s a leading surrogate.</span>
     }
 }
@@ -585,17 +586,17 @@
             ([<span class='ident'>c</span> <span class='kw'>as</span> <span class='ident'>u8</span>, <span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>],  <span class='number'>1</span>)
         } <span class='kw'>else</span> {
             <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>parts</span> <span class='op'>=</span> <span class='number'>0</span>;<span class='comment'>// convert to 6-bit bytes</span>
-                        <span class='ident'>parts</span> <span class='op'>|=</span> <span class='ident'>c</span> <span class='kw-2'>&amp;</span> <span class='number'>0x3f</span>;  <span class='ident'>c</span><span class='op'>&gt;&gt;=</span><span class='number'>6</span>;
-            <span class='ident'>parts</span><span class='op'>&lt;&lt;=</span><span class='number'>8</span>;  <span class='ident'>parts</span> <span class='op'>|=</span> <span class='ident'>c</span> <span class='kw-2'>&amp;</span> <span class='number'>0x3f</span>;  <span class='ident'>c</span><span class='op'>&gt;&gt;=</span><span class='number'>6</span>;
-            <span class='ident'>parts</span><span class='op'>&lt;&lt;=</span><span class='number'>8</span>;  <span class='ident'>parts</span> <span class='op'>|=</span> <span class='ident'>c</span> <span class='kw-2'>&amp;</span> <span class='number'>0x3f</span>;  <span class='ident'>c</span><span class='op'>&gt;&gt;=</span><span class='number'>6</span>;
-            <span class='ident'>parts</span><span class='op'>&lt;&lt;=</span><span class='number'>8</span>;  <span class='ident'>parts</span> <span class='op'>|=</span> <span class='ident'>c</span> <span class='kw-2'>&amp;</span> <span class='number'>0x3f</span>;
+                        <span class='ident'>parts</span> <span class='op'>|=</span> <span class='ident'>c</span> <span class='op'>&amp;</span> <span class='number'>0x3f</span>;  <span class='ident'>c</span><span class='op'>&gt;&gt;=</span><span class='number'>6</span>;
+            <span class='ident'>parts</span><span class='op'>&lt;&lt;=</span><span class='number'>8</span>;  <span class='ident'>parts</span> <span class='op'>|=</span> <span class='ident'>c</span> <span class='op'>&amp;</span> <span class='number'>0x3f</span>;  <span class='ident'>c</span><span class='op'>&gt;&gt;=</span><span class='number'>6</span>;
+            <span class='ident'>parts</span><span class='op'>&lt;&lt;=</span><span class='number'>8</span>;  <span class='ident'>parts</span> <span class='op'>|=</span> <span class='ident'>c</span> <span class='op'>&amp;</span> <span class='number'>0x3f</span>;  <span class='ident'>c</span><span class='op'>&gt;&gt;=</span><span class='number'>6</span>;
+            <span class='ident'>parts</span><span class='op'>&lt;&lt;=</span><span class='number'>8</span>;  <span class='ident'>parts</span> <span class='op'>|=</span> <span class='ident'>c</span> <span class='op'>&amp;</span> <span class='number'>0x3f</span>;
             <span class='ident'>parts</span> <span class='op'>|=</span> <span class='number'>0x80_80_80_80</span>;<span class='comment'>// set the most significant bit</span>
-            <span class='ident'>parts</span> <span class='op'>&gt;&gt;=</span> <span class='number'>8</span><span class='op'>*</span>(<span class='number'>4</span><span class='op'>-</span><span class='ident'>len</span>);<span class='comment'>// right-align bytes</span>
+            <span class='ident'>parts</span> <span class='op'>&gt;&gt;=</span> <span class='number'>8</span><span class='kw-2'>*</span>(<span class='number'>4</span><span class='op'>-</span><span class='ident'>len</span>);<span class='comment'>// right-align bytes</span>
             <span class='comment'>// Now, unused bytes are zero, (which matters for Utf8Char.eq())</span>
             <span class='comment'>// and the rest are 0b10xx_xxxx</span>
 
             <span class='comment'>// set header on first byte</span>
-            <span class='ident'>parts</span> <span class='op'>|=</span> (<span class='number'>0xff_00u32</span> <span class='op'>&gt;&gt;</span> <span class='ident'>len</span>)  <span class='kw-2'>&amp;</span>  <span class='number'>0xff</span>;<span class='comment'>// store length</span>
+            <span class='ident'>parts</span> <span class='op'>|=</span> (<span class='number'>0xff_00u32</span> <span class='op'>&gt;&gt;</span> <span class='ident'>len</span>)  <span class='op'>&amp;</span>  <span class='number'>0xff</span>;<span class='comment'>// store length</span>
             <span class='ident'>parts</span> <span class='op'>&amp;=</span> <span class='ident'>Not</span>::<span class='ident'>not</span>(<span class='number'>1u32</span> <span class='op'>&lt;&lt;</span> <span class='number'>7</span><span class='op'>-</span><span class='ident'>len</span>);<span class='comment'>// clear the next bit after it</span>
 
             <span class='kw'>let</span> <span class='ident'>bytes</span>: [<span class='ident'>u8</span>; <span class='number'>4</span>] <span class='op'>=</span> <span class='kw'>unsafe</span>{ <span class='ident'>mem</span>::<span class='ident'>transmute</span>(<span class='ident'>u32</span>::<span class='ident'>from_le</span>(<span class='ident'>parts</span>)) };
@@ -605,10 +606,10 @@
 
 
     <span class='kw'>fn</span> <span class='ident'>from_utf8_slice_start</span>(<span class='ident'>src</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(<span class='self'>Self</span>,<span class='ident'>usize</span>),<span class='ident'>InvalidUtf8Slice</span><span class='op'>&gt;</span> {
-        <span class='kw'>use</span> <span class='ident'>errors</span>::<span class='ident'>InvalidUtf8</span>::<span class='op'>*</span>;
-        <span class='kw'>use</span> <span class='ident'>errors</span>::<span class='ident'>InvalidUtf8Slice</span>::<span class='op'>*</span>;
+        <span class='kw'>use</span> <span class='ident'>errors</span>::<span class='ident'>InvalidUtf8</span>::<span class='kw-2'>*</span>;
+        <span class='kw'>use</span> <span class='ident'>errors</span>::<span class='ident'>InvalidUtf8Slice</span>::<span class='kw-2'>*</span>;
         <span class='kw'>let</span> <span class='ident'>first</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='ident'>src</span>.<span class='ident'>first</span>() {
-            <span class='prelude-val'>Some</span>(<span class='ident'>first</span>) <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>first</span>,
+            <span class='prelude-val'>Some</span>(<span class='ident'>first</span>) <span class='op'>=&gt;</span> <span class='kw-2'>*</span><span class='ident'>first</span>,
             <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='ident'>TooShort</span>(<span class='number'>1</span>)),
         };
         <span class='kw'>let</span> <span class='ident'>bytes</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='ident'>first</span>.<span class='ident'>extra_utf8_bytes</span>() {
@@ -632,8 +633,8 @@
     }
 
     <span class='kw'>fn</span> <span class='ident'>from_utf8_array</span>(<span class='ident'>utf8</span>: [<span class='ident'>u8</span>; <span class='number'>4</span>]) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='self'>Self</span>,<span class='ident'>InvalidUtf8Array</span><span class='op'>&gt;</span> {
-        <span class='kw'>use</span> <span class='ident'>errors</span>::<span class='ident'>InvalidUtf8</span>::<span class='op'>*</span>;
-        <span class='kw'>use</span> <span class='ident'>errors</span>::<span class='ident'>InvalidUtf8Array</span>::<span class='op'>*</span>;
+        <span class='kw'>use</span> <span class='ident'>errors</span>::<span class='ident'>InvalidUtf8</span>::<span class='kw-2'>*</span>;
+        <span class='kw'>use</span> <span class='ident'>errors</span>::<span class='ident'>InvalidUtf8Array</span>::<span class='kw-2'>*</span>;
         <span class='kw'>let</span> <span class='ident'>src</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='ident'>utf8</span>[<span class='number'>0</span>].<span class='ident'>extra_utf8_bytes</span>() {
             <span class='prelude-val'>Err</span>(<span class='ident'>error</span>) <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='ident'>Utf8</span>(<span class='ident'>FirstByte</span>(<span class='ident'>error</span>))),
             <span class='prelude-val'>Ok</span>(<span class='number'>0</span>)      <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='prelude-val'>Ok</span>(<span class='ident'>utf8</span>[<span class='number'>0</span>] <span class='kw'>as</span> <span class='ident'>char</span>),
@@ -654,9 +655,9 @@
         <span class='kw'>if</span> <span class='ident'>src</span>.<span class='ident'>len</span>() <span class='op'>==</span> <span class='number'>1</span> {
             <span class='ident'>src</span>[<span class='number'>0</span>] <span class='kw'>as</span> <span class='ident'>char</span>
         } <span class='kw'>else</span> {
-            <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>c</span> <span class='op'>=</span> <span class='ident'>src</span>[<span class='number'>0</span>] <span class='kw'>as</span> <span class='ident'>u32</span> <span class='kw-2'>&amp;</span> (<span class='number'>0xff</span> <span class='op'>&gt;&gt;</span> <span class='number'>2</span><span class='op'>+</span><span class='ident'>src</span>.<span class='ident'>len</span>()<span class='op'>-</span><span class='number'>1</span>);
+            <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>c</span> <span class='op'>=</span> <span class='ident'>src</span>[<span class='number'>0</span>] <span class='kw'>as</span> <span class='ident'>u32</span> <span class='op'>&amp;</span> (<span class='number'>0xff</span> <span class='op'>&gt;&gt;</span> <span class='number'>2</span><span class='op'>+</span><span class='ident'>src</span>.<span class='ident'>len</span>()<span class='op'>-</span><span class='number'>1</span>);
             <span class='kw'>for</span> <span class='ident'>b</span> <span class='kw'>in</span> <span class='kw-2'>&amp;</span><span class='ident'>src</span>[<span class='number'>1</span>..] {
-                <span class='ident'>c</span> <span class='op'>=</span> (<span class='ident'>c</span> <span class='op'>&lt;&lt;</span> <span class='number'>6</span>)  <span class='op'>|</span>  (<span class='ident'>b</span> <span class='kw-2'>&amp;</span> <span class='number'>0b00111111</span>) <span class='kw'>as</span> <span class='ident'>u32</span>;
+                <span class='ident'>c</span> <span class='op'>=</span> (<span class='ident'>c</span> <span class='op'>&lt;&lt;</span> <span class='number'>6</span>)  <span class='op'>|</span>  (<span class='ident'>b</span> <span class='op'>&amp;</span> <span class='number'>0b00111111</span>) <span class='kw'>as</span> <span class='ident'>u32</span>;
             }
             <span class='kw'>unsafe</span>{ <span class='ident'>char</span>::<span class='ident'>from_u32_unchecked</span>(<span class='ident'>c</span>) }
         }
@@ -682,14 +683,14 @@
         } <span class='kw'>else</span> {<span class='comment'>// double (or too high, which we ignore)</span>
             <span class='kw'>let</span> <span class='ident'>c</span> <span class='op'>=</span> <span class='ident'>c</span> <span class='op'>-</span> <span class='number'>0x_01_00_00</span>;
             <span class='kw'>let</span> <span class='ident'>high</span> <span class='op'>=</span> <span class='number'>0x_d8_00</span> <span class='op'>+</span> (<span class='ident'>c</span> <span class='op'>&gt;&gt;</span> <span class='number'>10</span>);
-            <span class='kw'>let</span> <span class='ident'>low</span> <span class='op'>=</span> <span class='number'>0x_dc_00</span> <span class='op'>+</span> (<span class='ident'>c</span> <span class='kw-2'>&amp;</span> <span class='number'>0x_03_ff</span>);
+            <span class='kw'>let</span> <span class='ident'>low</span> <span class='op'>=</span> <span class='number'>0x_dc_00</span> <span class='op'>+</span> (<span class='ident'>c</span> <span class='op'>&amp;</span> <span class='number'>0x_03_ff</span>);
             (<span class='ident'>high</span> <span class='kw'>as</span> <span class='ident'>u16</span>,  <span class='prelude-val'>Some</span>(<span class='ident'>low</span> <span class='kw'>as</span> <span class='ident'>u16</span>))
         }
     }
 
 
     <span class='kw'>fn</span> <span class='ident'>from_utf16_slice_start</span>(<span class='ident'>src</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>u16</span>]) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(<span class='self'>Self</span>,<span class='ident'>usize</span>), <span class='ident'>InvalidUtf16Slice</span><span class='op'>&gt;</span> {
-        <span class='kw'>use</span> <span class='ident'>errors</span>::<span class='ident'>InvalidUtf16Slice</span>::<span class='op'>*</span>;
+        <span class='kw'>use</span> <span class='ident'>errors</span>::<span class='ident'>InvalidUtf16Slice</span>::<span class='kw-2'>*</span>;
         <span class='kw'>unsafe</span> {<span class='kw'>match</span> (<span class='ident'>src</span>.<span class='ident'>get</span>(<span class='number'>0</span>), <span class='ident'>src</span>.<span class='ident'>get</span>(<span class='number'>1</span>)) {
             (<span class='prelude-val'>Some</span>(<span class='kw-2'>&amp;</span><span class='ident'>u</span> @ <span class='number'>0x00_00</span>...<span class='number'>0xd7_ff</span>), _) <span class='op'>|</span>
             (<span class='prelude-val'>Some</span>(<span class='kw-2'>&amp;</span><span class='ident'>u</span> @ <span class='number'>0xe0_00</span>...<span class='number'>0xff_ff</span>), _)
@@ -705,7 +706,7 @@
     }
 
     <span class='kw'>fn</span> <span class='ident'>from_utf16_tuple</span>(<span class='ident'>utf16</span>: (<span class='ident'>u16</span>, <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>u16</span><span class='op'>&gt;</span>)) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='self'>Self</span>, <span class='ident'>InvalidUtf16Tuple</span><span class='op'>&gt;</span> {
-        <span class='kw'>use</span> <span class='ident'>errors</span>::<span class='ident'>InvalidUtf16Tuple</span>::<span class='op'>*</span>;
+        <span class='kw'>use</span> <span class='ident'>errors</span>::<span class='ident'>InvalidUtf16Tuple</span>::<span class='kw-2'>*</span>;
         <span class='kw'>unsafe</span>{ <span class='kw'>match</span> <span class='ident'>utf16</span> {
             (<span class='number'>0x00_00</span>...<span class='number'>0xd7_ff</span>, <span class='prelude-val'>None</span>) <span class='op'>|</span> <span class='comment'>// single</span>
             (<span class='number'>0xe0_00</span>...<span class='number'>0xff_ff</span>, <span class='prelude-val'>None</span>) <span class='op'>|</span> <span class='comment'>// single</span>
@@ -728,7 +729,7 @@
 
 
     <span class='kw'>fn</span> <span class='ident'>from_u32_detailed</span>(<span class='ident'>c</span>: <span class='ident'>u32</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='self'>Self</span>,<span class='ident'>InvalidCodepoint</span><span class='op'>&gt;</span> {
-        <span class='kw'>use</span> <span class='ident'>errors</span>::<span class='ident'>InvalidCodepoint</span>::<span class='op'>*</span>;
+        <span class='kw'>use</span> <span class='ident'>errors</span>::<span class='ident'>InvalidCodepoint</span>::<span class='kw-2'>*</span>;
         <span class='kw'>unsafe</span>{ <span class='kw'>match</span> <span class='ident'>c</span> {
             <span class='number'>0x00_00_00</span>...<span class='number'>0x00_d7_ff</span> <span class='op'>=&gt;</span> <span class='prelude-val'>Ok</span>(<span class='ident'>char</span>::<span class='ident'>from_u32_unchecked</span>(<span class='ident'>c</span>)),
             <span class='number'>0x00_d8_00</span>...<span class='number'>0x00_df_ff</span> <span class='op'>=&gt;</span> <span class='prelude-val'>Err</span>(<span class='ident'>Utf16Reserved</span>),
@@ -752,8 +753,8 @@
 
 <span class='comment'>// Create a `char` from a leading and a trailing surrogate.</span>
 <span class='kw'>unsafe</span> <span class='kw'>fn</span> <span class='ident'>combine_surrogates</span>(<span class='ident'>first</span>: <span class='ident'>u16</span>, <span class='ident'>second</span>: <span class='ident'>u16</span>) <span class='op'>-&gt;</span> <span class='ident'>char</span> {
-    <span class='kw'>let</span> <span class='ident'>high</span> <span class='op'>=</span> (<span class='ident'>first</span> <span class='kw-2'>&amp;</span> <span class='number'>0x_03_ff</span>) <span class='kw'>as</span> <span class='ident'>u32</span>;
-    <span class='kw'>let</span> <span class='ident'>low</span> <span class='op'>=</span> (<span class='ident'>second</span> <span class='kw-2'>&amp;</span> <span class='number'>0x_03_ff</span>) <span class='kw'>as</span> <span class='ident'>u32</span>;
+    <span class='kw'>let</span> <span class='ident'>high</span> <span class='op'>=</span> (<span class='ident'>first</span> <span class='op'>&amp;</span> <span class='number'>0x_03_ff</span>) <span class='kw'>as</span> <span class='ident'>u32</span>;
+    <span class='kw'>let</span> <span class='ident'>low</span> <span class='op'>=</span> (<span class='ident'>second</span> <span class='op'>&amp;</span> <span class='number'>0x_03_ff</span>) <span class='kw'>as</span> <span class='ident'>u32</span>;
     <span class='kw'>let</span> <span class='ident'>c</span> <span class='op'>=</span> ((<span class='ident'>high</span> <span class='op'>&lt;&lt;</span> <span class='number'>10</span>) <span class='op'>|</span> <span class='ident'>low</span>) <span class='op'>+</span> <span class='number'>0x_01_00_00</span>; <span class='comment'>// no, the constant can&#39;t be or&#39;d in</span>
     <span class='ident'>char</span>::<span class='ident'>from_u32_unchecked</span>(<span class='ident'>c</span>)
 }

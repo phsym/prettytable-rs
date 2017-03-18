@@ -9,6 +9,7 @@
 
     <title>main.rs.html -- source</title>
 
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
     <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../main.css">
     
@@ -100,7 +101,7 @@
 <span class='kw'>use</span> <span class='ident'>prettytable</span>::<span class='ident'>Table</span>;
 <span class='kw'>use</span> <span class='ident'>prettytable</span>::<span class='ident'>row</span>::<span class='ident'>Row</span>;
 <span class='kw'>use</span> <span class='ident'>prettytable</span>::<span class='ident'>cell</span>::<span class='ident'>Cell</span>;
-<span class='kw'>use</span> <span class='ident'>prettytable</span>::<span class='ident'>format</span>::<span class='op'>*</span>;
+<span class='kw'>use</span> <span class='ident'>prettytable</span>::<span class='ident'>format</span>::<span class='kw-2'>*</span>;
 
 <span class='kw'>use</span> <span class='ident'>term</span>::{<span class='ident'>Attr</span>, <span class='ident'>color</span>};
 
@@ -141,7 +142,7 @@
  	<span class='comment'>// You can also apply style to full rows :</span>
     <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>table</span> <span class='op'>=</span> <span class='macro'>table</span><span class='macro'>!</span>([<span class='ident'>Frb</span> <span class='op'>=&gt;</span> <span class='string'>&quot;A&quot;</span>, <span class='string'>&quot;B&quot;</span>, <span class='string'>&quot;C&quot;</span>], [<span class='number'>1</span>, <span class='number'>2</span>, <span class='number'>3</span>, <span class='number'>4</span>], [<span class='string'>&quot;A\nBCCZZZ\nDDD&quot;</span>, <span class='number'>2</span>, <span class='ident'>table</span>]);
     <span class='ident'>table</span>.<span class='ident'>set_titles</span>(<span class='macro'>row</span><span class='macro'>!</span>[<span class='string'>&quot;Title 1&quot;</span>, <span class='string'>&quot;Title 2&quot;</span>]);
-    <span class='ident'>table</span>.<span class='ident'>set_format</span>(<span class='op'>*</span><span class='ident'>consts</span>::<span class='ident'>FORMAT_DEFAULT</span>);
+    <span class='ident'>table</span>.<span class='ident'>set_format</span>(<span class='kw-2'>*</span><span class='ident'>consts</span>::<span class='ident'>FORMAT_DEFAULT</span>);
     <span class='ident'>table</span>.<span class='ident'>printstd</span>();
 <span class='comment'>//    println!(&quot;{:#?}&quot;, table);</span>
 }

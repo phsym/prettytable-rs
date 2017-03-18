@@ -9,6 +9,7 @@
 
     <title>encode_unicode::U16UtfExt - Rust</title>
 
+    <link rel="stylesheet" type="text/css" href="../normalize.css">
     <link rel="stylesheet" type="text/css" href="../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../main.css">
     
@@ -55,11 +56,11 @@
 </div>
             <h2 id='required-methods'>Required Methods</h2>
             <div class='methods'>
-        <h3 id='tymethod.utf16_needs_extra_unit' class='method stab '><span id='utf16_needs_extra_unit.v' class='invisible'><code>fn <a href='#tymethod.utf16_needs_extra_unit' class='fnname'>utf16_needs_extra_unit</a>(self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>, <a class='struct' href='../encode_unicode/error/struct.InvalidUtf16FirstUnit.html' title='encode_unicode::error::InvalidUtf16FirstUnit'>InvalidUtf16FirstUnit</a>&gt;</code></span></h3><div class='docblock'><p>Will you need an extra unit to complete this codepoint?</p>
+        <h3 id='tymethod.utf16_needs_extra_unit' class='method'><span id='utf16_needs_extra_unit.v' class='invisible'><code>fn <a href='#tymethod.utf16_needs_extra_unit' class='fnname'>utf16_needs_extra_unit</a>(self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>, <a class='struct' href='../encode_unicode/error/struct.InvalidUtf16FirstUnit.html' title='encode_unicode::error::InvalidUtf16FirstUnit'>InvalidUtf16FirstUnit</a>&gt;</code></span></h3><div class='docblock'><p>Will you need an extra unit to complete this codepoint?</p>
 
 <p>Returns <code>Err</code> for trailing surrogates, <code>Ok(true)</code> for leading surrogates,
 and <code>Ok(false)</code> for others.</p>
-</div><h3 id='tymethod.is_utf16_leading_surrogate' class='method stab '><span id='is_utf16_leading_surrogate.v' class='invisible'><code>fn <a href='#tymethod.is_utf16_leading_surrogate' class='fnname'>is_utf16_leading_surrogate</a>(self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h3><div class='docblock'><p>Does this <code>u16</code> need another <code>u16</code> to complete a codepoint?
+</div><h3 id='tymethod.is_utf16_leading_surrogate' class='method'><span id='is_utf16_leading_surrogate.v' class='invisible'><code>fn <a href='#tymethod.is_utf16_leading_surrogate' class='fnname'>is_utf16_leading_surrogate</a>(self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h3><div class='docblock'><p>Does this <code>u16</code> need another <code>u16</code> to complete a codepoint?
 Returns <code>(self &amp; 0xfc00) == 0xd800</code></p>
 
 <p>Is basically an unchecked variant of <code>utf16_needs_extra_unit()</code>.</p>

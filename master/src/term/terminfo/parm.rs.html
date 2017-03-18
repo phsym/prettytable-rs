@@ -9,6 +9,7 @@
 
     <title>parm.rs.html -- source</title>
 
+    <link rel="stylesheet" type="text/css" href="../../../normalize.css">
     <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../../main.css">
     
@@ -753,8 +754,8 @@
 
 <span class='doccomment'>//! Parameterized string expansion</span>
 
-<span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>Param</span>::<span class='op'>*</span>;
-<span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>States</span>::<span class='op'>*</span>;
+<span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>Param</span>::<span class='kw-2'>*</span>;
+<span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>States</span>::<span class='kw-2'>*</span>;
 
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>iter</span>::<span class='ident'>repeat</span>;
 
@@ -831,8 +832,8 @@
 
 <span class='kw'>impl</span> ::<span class='ident'>std</span>::<span class='ident'>error</span>::<span class='ident'>Error</span> <span class='kw'>for</span> <span class='ident'>Error</span> {
     <span class='kw'>fn</span> <span class='ident'>description</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>str</span> {
-        <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>Error</span>::<span class='op'>*</span>;
-        <span class='kw'>match</span> <span class='op'>*</span><span class='self'>self</span> {
+        <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>Error</span>::<span class='kw-2'>*</span>;
+        <span class='kw'>match</span> <span class='kw-2'>*</span><span class='self'>self</span> {
             <span class='ident'>StackUnderflow</span> <span class='op'>=&gt;</span> <span class='string'>&quot;not enough elements on the stack&quot;</span>,
             <span class='ident'>TypeMismatch</span> <span class='op'>=&gt;</span> <span class='string'>&quot;type mismatch&quot;</span>,
             <span class='ident'>UnrecognizedFormatOption</span>(_) <span class='op'>=&gt;</span> <span class='string'>&quot;unrecognized format option&quot;</span>,
@@ -888,7 +889,7 @@
     <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>mparams</span> <span class='op'>=</span> [<span class='ident'>Number</span>(<span class='number'>0</span>), <span class='ident'>Number</span>(<span class='number'>0</span>), <span class='ident'>Number</span>(<span class='number'>0</span>), <span class='ident'>Number</span>(<span class='number'>0</span>), <span class='ident'>Number</span>(<span class='number'>0</span>), <span class='ident'>Number</span>(<span class='number'>0</span>),
                        <span class='ident'>Number</span>(<span class='number'>0</span>), <span class='ident'>Number</span>(<span class='number'>0</span>), <span class='ident'>Number</span>(<span class='number'>0</span>)];
     <span class='kw'>for</span> (<span class='ident'>dst</span>, <span class='ident'>src</span>) <span class='kw'>in</span> <span class='ident'>mparams</span>.<span class='ident'>iter_mut</span>().<span class='ident'>zip</span>(<span class='ident'>params</span>.<span class='ident'>iter</span>()) {
-        <span class='op'>*</span><span class='ident'>dst</span> <span class='op'>=</span> (<span class='op'>*</span><span class='ident'>src</span>).<span class='ident'>clone</span>();
+        <span class='kw-2'>*</span><span class='ident'>dst</span> <span class='op'>=</span> (<span class='kw-2'>*</span><span class='ident'>src</span>).<span class='ident'>clone</span>();
     }
 
     <span class='kw'>for</span> <span class='kw-2'>&amp;</span><span class='ident'>c</span> <span class='kw'>in</span> <span class='ident'>cap</span>.<span class='ident'>iter</span>() {
@@ -939,7 +940,7 @@
                                     <span class='string'>&#39;*&#39;</span> <span class='op'>=&gt;</span> <span class='ident'>x</span> <span class='op'>*</span> <span class='ident'>y</span>,
                                     <span class='string'>&#39;/&#39;</span> <span class='op'>=&gt;</span> <span class='ident'>x</span> <span class='op'>/</span> <span class='ident'>y</span>,
                                     <span class='string'>&#39;|&#39;</span> <span class='op'>=&gt;</span> <span class='ident'>x</span> <span class='op'>|</span> <span class='ident'>y</span>,
-                                    <span class='string'>&#39;&amp;&#39;</span> <span class='op'>=&gt;</span> <span class='ident'>x</span> <span class='kw-2'>&amp;</span> <span class='ident'>y</span>,
+                                    <span class='string'>&#39;&amp;&#39;</span> <span class='op'>=&gt;</span> <span class='ident'>x</span> <span class='op'>&amp;</span> <span class='ident'>y</span>,
                                     <span class='string'>&#39;^&#39;</span> <span class='op'>=&gt;</span> <span class='ident'>x</span> <span class='op'>^</span> <span class='ident'>y</span>,
                                     <span class='string'>&#39;m&#39;</span> <span class='op'>=&gt;</span> <span class='ident'>x</span> <span class='op'>%</span> <span class='ident'>y</span>,
                                     _ <span class='op'>=&gt;</span> <span class='macro'>unreachable</span><span class='macro'>!</span>(<span class='string'>&quot;logic error&quot;</span>),
@@ -1099,13 +1100,13 @@
             }
             <span class='ident'>FormatPattern</span>(<span class='kw-2'>ref</span> <span class='kw-2'>mut</span> <span class='ident'>flags</span>, <span class='kw-2'>ref</span> <span class='kw-2'>mut</span> <span class='ident'>fstate</span>) <span class='op'>=&gt;</span> {
                 <span class='ident'>old_state</span> <span class='op'>=</span> <span class='ident'>Nothing</span>;
-                <span class='kw'>match</span> (<span class='op'>*</span><span class='ident'>fstate</span>, <span class='ident'>cur</span>) {
+                <span class='kw'>match</span> (<span class='kw-2'>*</span><span class='ident'>fstate</span>, <span class='ident'>cur</span>) {
                     (_, <span class='string'>&#39;d&#39;</span>) <span class='op'>|</span> (_, <span class='string'>&#39;o&#39;</span>) <span class='op'>|</span> (_, <span class='string'>&#39;x&#39;</span>) <span class='op'>|</span> (_, <span class='string'>&#39;X&#39;</span>) <span class='op'>|</span> (_, <span class='string'>&#39;s&#39;</span>) <span class='op'>=&gt;</span> {
                         <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='ident'>arg</span>) <span class='op'>=</span> <span class='ident'>stack</span>.<span class='ident'>pop</span>() {
-                            <span class='kw'>let</span> <span class='ident'>res</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>format</span>(<span class='ident'>arg</span>, <span class='ident'>FormatOp</span>::<span class='ident'>from_char</span>(<span class='ident'>cur</span>), <span class='op'>*</span><span class='ident'>flags</span>));
+                            <span class='kw'>let</span> <span class='ident'>res</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>format</span>(<span class='ident'>arg</span>, <span class='ident'>FormatOp</span>::<span class='ident'>from_char</span>(<span class='ident'>cur</span>), <span class='kw-2'>*</span><span class='ident'>flags</span>));
                             <span class='ident'>output</span>.<span class='ident'>extend</span>(<span class='ident'>res</span>);
                             <span class='comment'>// will cause state to go to Nothing</span>
-                            <span class='ident'>old_state</span> <span class='op'>=</span> <span class='ident'>FormatPattern</span>(<span class='op'>*</span><span class='ident'>flags</span>, <span class='op'>*</span><span class='ident'>fstate</span>);
+                            <span class='ident'>old_state</span> <span class='op'>=</span> <span class='ident'>FormatPattern</span>(<span class='kw-2'>*</span><span class='ident'>flags</span>, <span class='kw-2'>*</span><span class='ident'>fstate</span>);
                         } <span class='kw'>else</span> {
                             <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='ident'>Error</span>::<span class='ident'>StackUnderflow</span>);
                         }
@@ -1124,7 +1125,7 @@
                     }
                     (<span class='ident'>FormatState</span>::<span class='ident'>Flags</span>, <span class='string'>&#39;0&#39;</span>...<span class='string'>&#39;9&#39;</span>) <span class='op'>=&gt;</span> {
                         <span class='ident'>flags</span>.<span class='ident'>width</span> <span class='op'>=</span> <span class='ident'>cur</span> <span class='kw'>as</span> <span class='ident'>usize</span> <span class='op'>-</span> <span class='string'>&#39;0&#39;</span> <span class='kw'>as</span> <span class='ident'>usize</span>;
-                        <span class='op'>*</span><span class='ident'>fstate</span> <span class='op'>=</span> <span class='ident'>FormatState</span>::<span class='ident'>Width</span>;
+                        <span class='kw-2'>*</span><span class='ident'>fstate</span> <span class='op'>=</span> <span class='ident'>FormatState</span>::<span class='ident'>Width</span>;
                     }
                     (<span class='ident'>FormatState</span>::<span class='ident'>Width</span>, <span class='string'>&#39;0&#39;</span>...<span class='string'>&#39;9&#39;</span>) <span class='op'>=&gt;</span> {
                         <span class='ident'>flags</span>.<span class='ident'>width</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='ident'>flags</span>.<span class='ident'>width</span>.<span class='ident'>checked_mul</span>(<span class='number'>10</span>).<span class='ident'>and_then</span>(<span class='op'>|</span><span class='ident'>w</span><span class='op'>|</span> {
@@ -1135,7 +1136,7 @@
                         }
                     }
                     (<span class='ident'>FormatState</span>::<span class='ident'>Width</span>, <span class='string'>&#39;.&#39;</span>)<span class='op'>|</span>(<span class='ident'>FormatState</span>::<span class='ident'>Flags</span>, <span class='string'>&#39;.&#39;</span>) <span class='op'>=&gt;</span> {
-                        <span class='op'>*</span><span class='ident'>fstate</span> <span class='op'>=</span> <span class='ident'>FormatState</span>::<span class='ident'>Precision</span>;
+                        <span class='kw-2'>*</span><span class='ident'>fstate</span> <span class='op'>=</span> <span class='ident'>FormatState</span>::<span class='ident'>Precision</span>;
                     }
                     (<span class='ident'>FormatState</span>::<span class='ident'>Precision</span>, <span class='string'>&#39;0&#39;</span>...<span class='string'>&#39;9&#39;</span>) <span class='op'>=&gt;</span> {
                         <span class='ident'>flags</span>.<span class='ident'>precision</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='ident'>flags</span>.<span class='ident'>precision</span>.<span class='ident'>checked_mul</span>(<span class='number'>10</span>).<span class='ident'>and_then</span>(<span class='op'>|</span><span class='ident'>w</span><span class='op'>|</span> {
@@ -1217,7 +1218,7 @@
 
 <span class='kw'>impl</span> <span class='ident'>FormatOp</span> {
     <span class='kw'>fn</span> <span class='ident'>from_char</span>(<span class='ident'>c</span>: <span class='ident'>char</span>) <span class='op'>-&gt;</span> <span class='ident'>FormatOp</span> {
-        <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>FormatOp</span>::<span class='op'>*</span>;
+        <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>FormatOp</span>::<span class='kw-2'>*</span>;
         <span class='kw'>match</span> <span class='ident'>c</span> {
             <span class='string'>&#39;d&#39;</span> <span class='op'>=&gt;</span> <span class='ident'>Digit</span>,
             <span class='string'>&#39;o&#39;</span> <span class='op'>=&gt;</span> <span class='ident'>Octal</span>,
@@ -1230,7 +1231,7 @@
 }
 
 <span class='kw'>fn</span> <span class='ident'>format</span>(<span class='ident'>val</span>: <span class='ident'>Param</span>, <span class='ident'>op</span>: <span class='ident'>FormatOp</span>, <span class='ident'>flags</span>: <span class='ident'>Flags</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>u8</span><span class='op'>&gt;</span>, <span class='ident'>Error</span><span class='op'>&gt;</span> {
-    <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>FormatOp</span>::<span class='op'>*</span>;
+    <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>FormatOp</span>::<span class='kw-2'>*</span>;
     <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>s</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='ident'>val</span> {
         <span class='ident'>Number</span>(<span class='ident'>d</span>) <span class='op'>=&gt;</span> {
             <span class='kw'>match</span> <span class='ident'>op</span> {

@@ -9,6 +9,7 @@
 
     <title>lib.rs.html -- source</title>
 
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
     <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../main.css">
     
@@ -571,9 +572,9 @@
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>writer</span>::{<span class='ident'>Writer</span>, <span class='ident'>QuoteStyle</span>};
 
 <span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>lg</span> {
-    ($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>tt</span>:<span class='ident'>tt</span>)<span class='op'>*</span>) <span class='op'>=&gt;</span> ({
+    ($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>tt</span>:<span class='ident'>tt</span>)<span class='kw-2'>*</span>) <span class='op'>=&gt;</span> ({
         <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>io</span>::<span class='ident'>Write</span>;
-        <span class='macro'>writeln</span><span class='macro'>!</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> ::<span class='ident'>std</span>::<span class='ident'>io</span>::<span class='ident'>stderr</span>(), $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>tt</span>)<span class='op'>*</span>).<span class='ident'>unwrap</span>();
+        <span class='macro'>writeln</span><span class='macro'>!</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> ::<span class='ident'>std</span>::<span class='ident'>io</span>::<span class='ident'>stderr</span>(), $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>tt</span>)<span class='kw-2'>*</span>).<span class='ident'>unwrap</span>();
     });
 }
 
@@ -642,7 +643,7 @@
 
 <span class='kw'>impl</span> <span class='ident'>fmt</span>::<span class='ident'>Display</span> <span class='kw'>for</span> <span class='ident'>Error</span> {
     <span class='kw'>fn</span> <span class='ident'>fmt</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>f</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>fmt</span>::<span class='ident'>Formatter</span>) <span class='op'>-&gt;</span> <span class='ident'>fmt</span>::<span class='prelude-ty'>Result</span> {
-        <span class='kw'>match</span> <span class='op'>*</span><span class='self'>self</span> {
+        <span class='kw'>match</span> <span class='kw-2'>*</span><span class='self'>self</span> {
             <span class='ident'>Error</span>::<span class='ident'>Encode</span>(<span class='kw-2'>ref</span> <span class='ident'>msg</span>) <span class='op'>=&gt;</span> <span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>f</span>, <span class='string'>&quot;CSV encode error: {}&quot;</span>, <span class='ident'>msg</span>),
             <span class='ident'>Error</span>::<span class='ident'>Decode</span>(<span class='kw-2'>ref</span> <span class='ident'>msg</span>) <span class='op'>=&gt;</span> <span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>f</span>, <span class='string'>&quot;CSV decode error: {}&quot;</span>, <span class='ident'>msg</span>),
             <span class='ident'>Error</span>::<span class='ident'>Parse</span>(<span class='kw-2'>ref</span> <span class='ident'>err</span>) <span class='op'>=&gt;</span> <span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>f</span>, <span class='string'>&quot;{}&quot;</span>, <span class='ident'>err</span>),
@@ -661,7 +662,7 @@
 
 <span class='kw'>impl</span> <span class='ident'>fmt</span>::<span class='ident'>Display</span> <span class='kw'>for</span> <span class='ident'>ParseError</span> {
     <span class='kw'>fn</span> <span class='ident'>fmt</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>f</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>fmt</span>::<span class='ident'>Formatter</span>) <span class='op'>-&gt;</span> <span class='ident'>fmt</span>::<span class='prelude-ty'>Result</span> {
-        <span class='kw'>match</span> <span class='op'>*</span><span class='self'>self</span> {
+        <span class='kw'>match</span> <span class='kw-2'>*</span><span class='self'>self</span> {
             <span class='ident'>ParseError</span>::<span class='ident'>UnequalLengths</span> { <span class='ident'>expected</span>, <span class='ident'>got</span> } <span class='op'>=&gt;</span>
                 <span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>f</span>, <span class='string'>&quot;First record has length {}, but found record \
                            with length {}.&quot;</span>, <span class='ident'>expected</span>, <span class='ident'>got</span>),
@@ -673,7 +674,7 @@
 
 <span class='kw'>impl</span> <span class='ident'>StdError</span> <span class='kw'>for</span> <span class='ident'>Error</span> {
     <span class='kw'>fn</span> <span class='ident'>description</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>str</span> {
-        <span class='kw'>match</span> <span class='op'>*</span><span class='self'>self</span> {
+        <span class='kw'>match</span> <span class='kw-2'>*</span><span class='self'>self</span> {
             <span class='ident'>Error</span>::<span class='ident'>Encode</span>(..) <span class='op'>=&gt;</span> <span class='string'>&quot;CSV encoding error&quot;</span>,
             <span class='ident'>Error</span>::<span class='ident'>Decode</span>(..) <span class='op'>=&gt;</span> <span class='string'>&quot;CSV decoding error&quot;</span>,
             <span class='ident'>Error</span>::<span class='ident'>Parse</span>(..) <span class='op'>=&gt;</span> <span class='string'>&quot;CSV parse error&quot;</span>,
@@ -683,7 +684,7 @@
     }
 
     <span class='kw'>fn</span> <span class='ident'>cause</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='ident'>StdError</span><span class='op'>&gt;</span> {
-        <span class='kw'>match</span> <span class='op'>*</span><span class='self'>self</span> {
+        <span class='kw'>match</span> <span class='kw-2'>*</span><span class='self'>self</span> {
             <span class='ident'>Error</span>::<span class='ident'>Io</span>(<span class='kw-2'>ref</span> <span class='ident'>err</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>err</span>),
             _ <span class='op'>=&gt;</span> <span class='prelude-val'>None</span>,
         }

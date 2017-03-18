@@ -9,6 +9,7 @@
 
     <title>lazy_static - Rust</title>
 
+    <link rel="stylesheet" type="text/css" href="../normalize.css">
     <link rel="stylesheet" type="text/css" href="../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../main.css">
     
@@ -108,9 +109,9 @@ trait.</p>
 <span class='kw'>fn</span> <span class='ident'>times_two</span>(<span class='ident'>n</span>: <span class='ident'>u32</span>) <span class='op'>-&gt;</span> <span class='ident'>u32</span> { <span class='ident'>n</span> <span class='op'>*</span> <span class='number'>2</span> }
 
 <span class='kw'>fn</span> <span class='ident'>main</span>() {
-    <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;The map has {} entries.&quot;</span>, <span class='op'>*</span><span class='ident'>COUNT</span>);
+    <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;The map has {} entries.&quot;</span>, <span class='kw-2'>*</span><span class='ident'>COUNT</span>);
     <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;The entry for `0` is \&quot;{}\&quot;.&quot;</span>, <span class='ident'>HASHMAP</span>.<span class='ident'>get</span>(<span class='kw-2'>&amp;</span><span class='number'>0</span>).<span class='ident'>unwrap</span>());
-    <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;A expensive calculation on a static results in: {}.&quot;</span>, <span class='op'>*</span><span class='ident'>NUMBER</span>);
+    <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;A expensive calculation on a static results in: {}.&quot;</span>, <span class='kw-2'>*</span><span class='ident'>NUMBER</span>);
 }</pre>
 
 <h1 id='implementation-details' class='section-header'><a href='#implementation-details'>Implementation details</a></h1>

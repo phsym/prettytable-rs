@@ -9,6 +9,7 @@
 
     <title>lazy.rs.html -- source</title>
 
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
     <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../main.css">
     
@@ -78,10 +79,10 @@
 </pre><pre class='rust '>
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>std</span>;
 
-<span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>std</span>::<span class='ident'>prelude</span>::<span class='ident'>v1</span>::<span class='op'>*</span>;
+<span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>std</span>::<span class='ident'>prelude</span>::<span class='ident'>v1</span>::<span class='kw-2'>*</span>;
 <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>std</span>::<span class='ident'>sync</span>::<span class='ident'>Once</span>;
 
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Lazy</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Sync</span><span class='op'>&gt;</span>(<span class='kw'>pub</span> <span class='op'>*</span><span class='kw'>const</span> <span class='ident'>T</span>, <span class='kw'>pub</span> <span class='ident'>Once</span>);
+<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Lazy</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Sync</span><span class='op'>&gt;</span>(<span class='kw'>pub</span> <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>T</span>, <span class='kw'>pub</span> <span class='ident'>Once</span>);
 
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Sync</span><span class='op'>&gt;</span> <span class='ident'>Lazy</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
     <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
@@ -91,10 +92,10 @@
         <span class='kw'>unsafe</span> {
             <span class='kw'>let</span> <span class='ident'>r</span> <span class='op'>=</span> <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='number'>0</span>;
             <span class='self'>self</span>.<span class='number'>1</span>.<span class='ident'>call_once</span>(<span class='op'>||</span> {
-                <span class='op'>*</span><span class='ident'>r</span> <span class='op'>=</span> <span class='ident'>Box</span>::<span class='ident'>into_raw</span>(<span class='ident'>Box</span>::<span class='ident'>new</span>(<span class='ident'>f</span>()));
+                <span class='kw-2'>*</span><span class='ident'>r</span> <span class='op'>=</span> <span class='ident'>Box</span>::<span class='ident'>into_raw</span>(<span class='ident'>Box</span>::<span class='ident'>new</span>(<span class='ident'>f</span>()));
             });
 
-            <span class='kw-2'>&amp;</span><span class='op'>*</span><span class='self'>self</span>.<span class='number'>0</span>
+            <span class='kw-2'>&amp;</span><span class='kw-2'>*</span><span class='self'>self</span>.<span class='number'>0</span>
         }
     }
 }
@@ -106,7 +107,7 @@
 <span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>__lazy_static_create</span> {
     (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>NAME</span>:<span class='ident'>ident</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>T</span>:<span class='ident'>ty</span>) <span class='op'>=&gt;</span> {
         <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>sync</span>::<span class='ident'>ONCE_INIT</span>;
-        <span class='kw'>static</span> <span class='kw-2'>mut</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>NAME</span>: <span class='macro-nonterminal'>$</span><span class='kw'>crate</span>::<span class='macro-nonterminal'>lazy</span>::<span class='ident'>Lazy</span><span class='op'>&lt;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>T</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='macro-nonterminal'>$</span><span class='kw'>crate</span>::<span class='macro-nonterminal'>lazy</span>::<span class='ident'>Lazy</span>(<span class='number'>0</span> <span class='kw'>as</span> <span class='op'>*</span><span class='kw'>const</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>T</span>, <span class='ident'>ONCE_INIT</span>);
+        <span class='kw'>static</span> <span class='kw-2'>mut</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>NAME</span>: <span class='macro-nonterminal'>$</span><span class='kw'>crate</span>::<span class='macro-nonterminal'>lazy</span>::<span class='ident'>Lazy</span><span class='op'>&lt;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>T</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='macro-nonterminal'>$</span><span class='kw'>crate</span>::<span class='macro-nonterminal'>lazy</span>::<span class='ident'>Lazy</span>(<span class='number'>0</span> <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw'>const</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>T</span>, <span class='ident'>ONCE_INIT</span>);
     }
 }
 </pre>

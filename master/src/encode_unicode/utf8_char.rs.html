@@ -9,6 +9,7 @@
 
     <title>utf8_char.rs.html -- source</title>
 
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
     <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../main.css">
     
@@ -441,23 +442,23 @@
                 <span class='ident'>Utf8Char</span>{ <span class='ident'>bytes</span>: [<span class='ident'>a</span> <span class='kw'>as</span> <span class='ident'>u8</span>, <span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>] }
             },
             (<span class='ident'>u</span> @ <span class='number'>0</span>...<span class='number'>0x07_ff</span>, _) <span class='op'>=&gt;</span> {
-                <span class='kw'>let</span> <span class='ident'>b</span> <span class='op'>=</span> <span class='number'>0x80</span> <span class='op'>|</span>  (<span class='ident'>u</span> <span class='kw-2'>&amp;</span> <span class='number'>0x00_3f</span>) <span class='kw'>as</span> <span class='ident'>u8</span>;
-                <span class='kw'>let</span> <span class='ident'>a</span> <span class='op'>=</span> <span class='number'>0xc0</span> <span class='op'>|</span> ((<span class='ident'>u</span> <span class='kw-2'>&amp;</span> <span class='number'>0x07_c0</span>) <span class='op'>&gt;&gt;</span> <span class='number'>6</span>) <span class='kw'>as</span> <span class='ident'>u8</span>;
+                <span class='kw'>let</span> <span class='ident'>b</span> <span class='op'>=</span> <span class='number'>0x80</span> <span class='op'>|</span>  (<span class='ident'>u</span> <span class='op'>&amp;</span> <span class='number'>0x00_3f</span>) <span class='kw'>as</span> <span class='ident'>u8</span>;
+                <span class='kw'>let</span> <span class='ident'>a</span> <span class='op'>=</span> <span class='number'>0xc0</span> <span class='op'>|</span> ((<span class='ident'>u</span> <span class='op'>&amp;</span> <span class='number'>0x07_c0</span>) <span class='op'>&gt;&gt;</span> <span class='number'>6</span>) <span class='kw'>as</span> <span class='ident'>u8</span>;
                 <span class='ident'>Utf8Char</span>{ <span class='ident'>bytes</span>: [<span class='ident'>a</span>, <span class='ident'>b</span>, <span class='number'>0</span>, <span class='number'>0</span>] }
             },
             (<span class='ident'>u</span>, <span class='prelude-val'>None</span>) <span class='op'>=&gt;</span> {
-                <span class='kw'>let</span> <span class='ident'>c</span> <span class='op'>=</span> <span class='number'>0x80</span> <span class='op'>|</span>  (<span class='ident'>u</span> <span class='kw-2'>&amp;</span> <span class='number'>0x00_3f</span>) <span class='kw'>as</span> <span class='ident'>u8</span>;
-                <span class='kw'>let</span> <span class='ident'>b</span> <span class='op'>=</span> <span class='number'>0x80</span> <span class='op'>|</span> ((<span class='ident'>u</span> <span class='kw-2'>&amp;</span> <span class='number'>0x0f_c0</span>) <span class='op'>&gt;&gt;</span> <span class='number'>6</span>) <span class='kw'>as</span> <span class='ident'>u8</span>;
-                <span class='kw'>let</span> <span class='ident'>a</span> <span class='op'>=</span> <span class='number'>0xe0</span> <span class='op'>|</span> ((<span class='ident'>u</span> <span class='kw-2'>&amp;</span> <span class='number'>0xf0_00</span>) <span class='op'>&gt;&gt;</span> <span class='number'>12</span>) <span class='kw'>as</span> <span class='ident'>u8</span>;
+                <span class='kw'>let</span> <span class='ident'>c</span> <span class='op'>=</span> <span class='number'>0x80</span> <span class='op'>|</span>  (<span class='ident'>u</span> <span class='op'>&amp;</span> <span class='number'>0x00_3f</span>) <span class='kw'>as</span> <span class='ident'>u8</span>;
+                <span class='kw'>let</span> <span class='ident'>b</span> <span class='op'>=</span> <span class='number'>0x80</span> <span class='op'>|</span> ((<span class='ident'>u</span> <span class='op'>&amp;</span> <span class='number'>0x0f_c0</span>) <span class='op'>&gt;&gt;</span> <span class='number'>6</span>) <span class='kw'>as</span> <span class='ident'>u8</span>;
+                <span class='kw'>let</span> <span class='ident'>a</span> <span class='op'>=</span> <span class='number'>0xe0</span> <span class='op'>|</span> ((<span class='ident'>u</span> <span class='op'>&amp;</span> <span class='number'>0xf0_00</span>) <span class='op'>&gt;&gt;</span> <span class='number'>12</span>) <span class='kw'>as</span> <span class='ident'>u8</span>;
                 <span class='ident'>Utf8Char</span>{ <span class='ident'>bytes</span>: [<span class='ident'>a</span>, <span class='ident'>b</span>, <span class='ident'>c</span>, <span class='number'>0</span>] }
             },
             (<span class='ident'>f</span>, <span class='prelude-val'>Some</span>(<span class='ident'>s</span>)) <span class='op'>=&gt;</span> {
                 <span class='kw'>let</span> <span class='ident'>f</span> <span class='op'>=</span> <span class='ident'>f</span> <span class='op'>+</span> (<span class='number'>0x01_00_00u32</span> <span class='op'>&gt;&gt;</span> <span class='number'>10</span>) <span class='kw'>as</span> <span class='ident'>u16</span>;
-                <span class='kw'>let</span> <span class='ident'>d</span> <span class='op'>=</span> <span class='number'>0x80</span> <span class='op'>|</span>  (<span class='ident'>s</span> <span class='kw-2'>&amp;</span> <span class='number'>0x00_3f</span>) <span class='kw'>as</span> <span class='ident'>u8</span>;
-                <span class='kw'>let</span> <span class='ident'>c</span> <span class='op'>=</span> <span class='number'>0x80</span> <span class='op'>|</span> ((<span class='ident'>s</span> <span class='kw-2'>&amp;</span> <span class='number'>0x03_c0</span>) <span class='op'>&gt;&gt;</span> <span class='number'>6</span>) <span class='kw'>as</span> <span class='ident'>u8</span>
-                             <span class='op'>|</span> ((<span class='ident'>f</span> <span class='kw-2'>&amp;</span> <span class='number'>0x00_03</span>) <span class='op'>&lt;&lt;</span> <span class='number'>4</span>) <span class='kw'>as</span> <span class='ident'>u8</span>;
-                <span class='kw'>let</span> <span class='ident'>b</span> <span class='op'>=</span> <span class='number'>0x80</span> <span class='op'>|</span> ((<span class='ident'>f</span> <span class='kw-2'>&amp;</span> <span class='number'>0x00_fc</span>) <span class='op'>&gt;&gt;</span> <span class='number'>2</span>) <span class='kw'>as</span> <span class='ident'>u8</span>;
-                <span class='kw'>let</span> <span class='ident'>a</span> <span class='op'>=</span> <span class='number'>0xf0</span> <span class='op'>|</span> ((<span class='ident'>f</span> <span class='kw-2'>&amp;</span> <span class='number'>0x07_00</span>) <span class='op'>&gt;&gt;</span> <span class='number'>8</span>) <span class='kw'>as</span> <span class='ident'>u8</span>;
+                <span class='kw'>let</span> <span class='ident'>d</span> <span class='op'>=</span> <span class='number'>0x80</span> <span class='op'>|</span>  (<span class='ident'>s</span> <span class='op'>&amp;</span> <span class='number'>0x00_3f</span>) <span class='kw'>as</span> <span class='ident'>u8</span>;
+                <span class='kw'>let</span> <span class='ident'>c</span> <span class='op'>=</span> <span class='number'>0x80</span> <span class='op'>|</span> ((<span class='ident'>s</span> <span class='op'>&amp;</span> <span class='number'>0x03_c0</span>) <span class='op'>&gt;&gt;</span> <span class='number'>6</span>) <span class='kw'>as</span> <span class='ident'>u8</span>
+                             <span class='op'>|</span> ((<span class='ident'>f</span> <span class='op'>&amp;</span> <span class='number'>0x00_03</span>) <span class='op'>&lt;&lt;</span> <span class='number'>4</span>) <span class='kw'>as</span> <span class='ident'>u8</span>;
+                <span class='kw'>let</span> <span class='ident'>b</span> <span class='op'>=</span> <span class='number'>0x80</span> <span class='op'>|</span> ((<span class='ident'>f</span> <span class='op'>&amp;</span> <span class='number'>0x00_fc</span>) <span class='op'>&gt;&gt;</span> <span class='number'>2</span>) <span class='kw'>as</span> <span class='ident'>u8</span>;
+                <span class='kw'>let</span> <span class='ident'>a</span> <span class='op'>=</span> <span class='number'>0xf0</span> <span class='op'>|</span> ((<span class='ident'>f</span> <span class='op'>&amp;</span> <span class='number'>0x07_00</span>) <span class='op'>&gt;&gt;</span> <span class='number'>8</span>) <span class='kw'>as</span> <span class='ident'>u8</span>;
                 <span class='ident'>Utf8Char</span>{ <span class='ident'>bytes</span>: [<span class='ident'>a</span>, <span class='ident'>b</span>, <span class='ident'>c</span>, <span class='ident'>d</span>] }
             }
         }
@@ -560,12 +561,12 @@
         <span class='kw'>else</span>               {<span class='self'>self</span> <span class='op'>==</span> <span class='ident'>other</span>}
     }
     <span class='kw'>fn</span> <span class='ident'>to_ascii_uppercase</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Owned</span> {
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>uc</span> <span class='op'>=</span> <span class='op'>*</span><span class='self'>self</span>;
+        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>uc</span> <span class='op'>=</span> <span class='kw-2'>*</span><span class='self'>self</span>;
         <span class='ident'>uc</span>.<span class='ident'>make_ascii_uppercase</span>();
         <span class='ident'>uc</span>
     }
     <span class='kw'>fn</span> <span class='ident'>to_ascii_lowercase</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Owned</span> {
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>uc</span> <span class='op'>=</span> <span class='op'>*</span><span class='self'>self</span>;
+        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>uc</span> <span class='op'>=</span> <span class='kw-2'>*</span><span class='self'>self</span>;
         <span class='ident'>uc</span>.<span class='ident'>make_ascii_lowercase</span>();
         <span class='ident'>uc</span>
     }
@@ -635,7 +636,7 @@
     <span class='kw'>pub</span> <span class='kw'>unsafe</span> <span class='kw'>fn</span> <span class='ident'>from_slice_start_unchecked</span>(<span class='ident'>src</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> (<span class='self'>Self</span>,<span class='ident'>usize</span>) {
         <span class='kw'>let</span> <span class='ident'>len</span> <span class='op'>=</span> <span class='number'>1</span><span class='op'>+</span><span class='ident'>src</span>.<span class='ident'>get_unchecked</span>(<span class='number'>0</span>).<span class='ident'>extra_utf8_bytes_unchecked</span>();
         <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>bytes</span> <span class='op'>=</span> [<span class='number'>0</span>; <span class='number'>4</span>];
-        <span class='ident'>ptr</span>::<span class='ident'>copy_nonoverlapping</span>(<span class='ident'>src</span>.<span class='ident'>as_ptr</span>(), <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>bytes</span>[<span class='number'>0</span>] <span class='kw'>as</span> <span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>u8</span>, <span class='ident'>len</span>);
+        <span class='ident'>ptr</span>::<span class='ident'>copy_nonoverlapping</span>(<span class='ident'>src</span>.<span class='ident'>as_ptr</span>(), <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>bytes</span>[<span class='number'>0</span>] <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>u8</span>, <span class='ident'>len</span>);
         (<span class='ident'>Utf8Char</span>{ <span class='ident'>bytes</span>: <span class='ident'>bytes</span> }, <span class='ident'>len</span>)
     }
     <span class='doccomment'>/// Validate the array and store it.</span>
@@ -643,8 +644,8 @@
         <span class='kw'>unsafe</span> {
             <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>char</span>::<span class='ident'>from_utf8_array</span>(<span class='ident'>utf8</span>));
             <span class='kw'>let</span> <span class='ident'>extra</span> <span class='op'>=</span> <span class='ident'>utf8</span>[<span class='number'>0</span>].<span class='ident'>extra_utf8_bytes_unchecked</span>() <span class='kw'>as</span> <span class='ident'>u32</span>;
-            <span class='kw'>let</span> <span class='ident'>mask</span> <span class='op'>=</span> <span class='ident'>u32</span>::<span class='ident'>from_le</span>(<span class='number'>0xff_ff_ff_ff</span> <span class='op'>&gt;&gt;</span> <span class='number'>8</span><span class='op'>*</span>(<span class='number'>3</span><span class='op'>-</span><span class='ident'>extra</span>));
-            <span class='kw'>let</span> <span class='ident'>unused_zeroed</span> <span class='op'>=</span> <span class='ident'>mask</span>  <span class='kw-2'>&amp;</span>  <span class='ident'>transmute</span>::<span class='op'>&lt;</span>_,<span class='ident'>u32</span><span class='op'>&gt;</span>(<span class='ident'>utf8</span>);
+            <span class='kw'>let</span> <span class='ident'>mask</span> <span class='op'>=</span> <span class='ident'>u32</span>::<span class='ident'>from_le</span>(<span class='number'>0xff_ff_ff_ff</span> <span class='op'>&gt;&gt;</span> <span class='number'>8</span><span class='kw-2'>*</span>(<span class='number'>3</span><span class='op'>-</span><span class='ident'>extra</span>));
+            <span class='kw'>let</span> <span class='ident'>unused_zeroed</span> <span class='op'>=</span> <span class='ident'>mask</span>  <span class='op'>&amp;</span>  <span class='ident'>transmute</span>::<span class='op'>&lt;</span>_,<span class='ident'>u32</span><span class='op'>&gt;</span>(<span class='ident'>utf8</span>);
             <span class='prelude-val'>Ok</span>(<span class='ident'>transmute</span>(<span class='ident'>unused_zeroed</span>))
         }
     }

@@ -9,6 +9,7 @@
 
     <title>x86_64.rs.html -- source</title>
 
+    <link rel="stylesheet" type="text/css" href="../../../../../../../normalize.css">
     <link rel="stylesheet" type="text/css" href="../../../../../../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../../../../../../main.css">
     
@@ -639,13 +640,13 @@
 
     <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>mcontext_t</span> {
         <span class='kw'>pub</span> <span class='ident'>gregs</span>: [<span class='ident'>greg_t</span>; <span class='number'>23</span>],
-        <span class='kw'>pub</span> <span class='ident'>fpregs</span>: <span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>_libc_fpstate</span>,
+        <span class='kw'>pub</span> <span class='ident'>fpregs</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>_libc_fpstate</span>,
         <span class='ident'>__private</span>: [<span class='ident'>u64</span>; <span class='number'>8</span>],
     }
 
     <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>ucontext_t</span> {
         <span class='kw'>pub</span> <span class='ident'>uc_flags</span>: ::<span class='ident'>c_ulong</span>,
-        <span class='kw'>pub</span> <span class='ident'>uc_link</span>: <span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>ucontext_t</span>,
+        <span class='kw'>pub</span> <span class='ident'>uc_link</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>ucontext_t</span>,
         <span class='kw'>pub</span> <span class='ident'>uc_stack</span>: ::<span class='ident'>stack_t</span>,
         <span class='kw'>pub</span> <span class='ident'>uc_mcontext</span>: <span class='ident'>mcontext_t</span>,
         <span class='kw'>pub</span> <span class='ident'>uc_sigmask</span>: ::<span class='ident'>sigset_t</span>,
@@ -1063,13 +1064,13 @@
 <span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>FIONREAD</span>: ::<span class='ident'>c_ulong</span> <span class='op'>=</span> <span class='number'>0x541B</span>;
 
 <span class='kw'>extern</span> {
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>getcontext</span>(<span class='ident'>ucp</span>: <span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>ucontext_t</span>) <span class='op'>-&gt;</span> ::<span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>setcontext</span>(<span class='ident'>ucp</span>: <span class='op'>*</span><span class='kw'>const</span> <span class='ident'>ucontext_t</span>) <span class='op'>-&gt;</span> ::<span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>makecontext</span>(<span class='ident'>ucp</span>: <span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>ucontext_t</span>,
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>getcontext</span>(<span class='ident'>ucp</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>ucontext_t</span>) <span class='op'>-&gt;</span> ::<span class='ident'>c_int</span>;
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>setcontext</span>(<span class='ident'>ucp</span>: <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>ucontext_t</span>) <span class='op'>-&gt;</span> ::<span class='ident'>c_int</span>;
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>makecontext</span>(<span class='ident'>ucp</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>ucontext_t</span>,
                        <span class='ident'>func</span>:  <span class='kw'>extern</span> <span class='kw'>fn</span> (),
                        <span class='ident'>argc</span>: ::<span class='ident'>c_int</span>, ...);
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>swapcontext</span>(<span class='ident'>uocp</span>: <span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>ucontext_t</span>,
-                       <span class='ident'>ucp</span>: <span class='op'>*</span><span class='kw'>const</span> <span class='ident'>ucontext_t</span>) <span class='op'>-&gt;</span> ::<span class='ident'>c_int</span>;
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>swapcontext</span>(<span class='ident'>uocp</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>ucontext_t</span>,
+                       <span class='ident'>ucp</span>: <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>ucontext_t</span>) <span class='op'>-&gt;</span> ::<span class='ident'>c_int</span>;
 }
 </pre>
 </section>

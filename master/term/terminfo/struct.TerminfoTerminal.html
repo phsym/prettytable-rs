@@ -9,6 +9,7 @@
 
     <title>term::terminfo::TerminfoTerminal - Rust</title>
 
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
     <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../main.css">
     
@@ -92,7 +93,7 @@ parsed Terminfo database record.</p>
 <div class='docblock'><p>Gets an immutable reference to the stream inside</p>
 </div><h4 id='method.get_mut' class='method'><span id='get_mut.v' class='invisible'><code>fn <a href='../../term/trait.Terminal.html#tymethod.get_mut' class='fnname'>get_mut</a>(&amp;mut self) -&gt; &amp;mut T</code></span></h4>
 <div class='docblock'><p>Gets a mutable reference to the stream inside</p>
-</div><h4 id='method.into_inner' class='method'><span id='into_inner.v' class='invisible'><code>fn <a href='../../term/trait.Terminal.html#tymethod.into_inner' class='fnname'>into_inner</a>(self) -&gt; T <span class='where'>where Self: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a></span></code></span></h4>
+</div><h4 id='method.into_inner' class='method'><span id='into_inner.v' class='invisible'><code>fn <a href='../../term/trait.Terminal.html#tymethod.into_inner' class='fnname'>into_inner</a>(self) -&gt; T <span class='where fmt-newline'>where Self: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a></span></code></span></h4>
 <div class='docblock'><p>Returns the contained stream, destroying the <code>Terminal</code></p>
 </div></div><h3 class='impl'><span class='in-band'><code>impl&lt;T:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/std/io/trait.Write.html' title='std::io::Write'>Write</a>&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/std/io/trait.Write.html' title='std::io::Write'>Write</a> for <a class='struct' href='../../term/terminfo/struct.TerminfoTerminal.html' title='term::terminfo::TerminfoTerminal'>TerminfoTerminal</a>&lt;T&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/term/terminfo/mod.rs.html#339-347' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.write' class='method'><span id='write.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/std/io/trait.Write.html#tymethod.write' class='fnname'>write</a>(&amp;mut self, buf: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;[</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>]</a>) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/std/io/error/type.Result.html' title='std::io::error::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>&gt;</code></span></h4>

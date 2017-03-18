@@ -9,6 +9,7 @@
 
     <title>mod.rs.html -- source</title>
 
+    <link rel="stylesheet" type="text/css" href="../../../normalize.css">
     <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../../main.css">
     
@@ -540,7 +541,7 @@ assert_eq!(row, vec![&quot;d&quot;, &quot;e&quot;, &quot;f&quot;]);
                   <span class='ident'>G</span>: <span class='ident'>FnOnce</span>(<span class='ident'>CsvReader</span>) <span class='op'>-&gt;</span> <span class='ident'>CsvReader</span> {
         <span class='kw'>let</span> <span class='ident'>data</span> <span class='op'>=</span> <span class='ident'>s</span>.<span class='ident'>into</span>();
         <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>idx_bytes</span> <span class='op'>=</span> <span class='ident'>io</span>::<span class='ident'>Cursor</span>::<span class='ident'>new</span>(<span class='macro'>vec</span><span class='macro'>!</span>[]);
-        <span class='kw'>super</span>::<span class='ident'>create_index</span>(<span class='ident'>create</span>(<span class='ident'>Reader</span>::<span class='ident'>from_string</span>(<span class='kw-2'>&amp;</span><span class='op'>*</span><span class='ident'>data</span>)),
+        <span class='kw'>super</span>::<span class='ident'>create_index</span>(<span class='ident'>create</span>(<span class='ident'>Reader</span>::<span class='ident'>from_string</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>*</span><span class='ident'>data</span>)),
                             <span class='ident'>idx_bytes</span>.<span class='ident'>by_ref</span>()).<span class='ident'>unwrap</span>();
         <span class='kw'>super</span>::<span class='ident'>Indexed</span>::<span class='ident'>open</span>(<span class='ident'>new</span>(<span class='ident'>Reader</span>::<span class='ident'>from_string</span>(<span class='ident'>data</span>)),
                              <span class='ident'>idx_bytes</span>).<span class='ident'>unwrap</span>()

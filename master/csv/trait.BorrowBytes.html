@@ -9,6 +9,7 @@
 
     <title>csv::BorrowBytes - Rust</title>
 
+    <link rel="stylesheet" type="text/css" href="../normalize.css">
     <link rel="stylesheet" type="text/css" href="../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../main.css">
     
@@ -57,7 +58,7 @@ strings and byte strings.</p>
 </div>
             <h2 id='required-methods'>Required Methods</h2>
             <div class='methods'>
-        <h3 id='tymethod.borrow_bytes' class='method stab '><span id='borrow_bytes.v' class='invisible'><code>fn <a href='#tymethod.borrow_bytes' class='fnname'>borrow_bytes</a>&lt;'a&gt;(&amp;'a self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;'a [</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>]</a></code></span></h3><div class='docblock'><p>Borrow a byte vector.</p>
+        <h3 id='tymethod.borrow_bytes' class='method'><span id='borrow_bytes.v' class='invisible'><code>fn <a href='#tymethod.borrow_bytes' class='fnname'>borrow_bytes</a>&lt;'a&gt;(&amp;'a self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;'a [</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>]</a></code></span></h3><div class='docblock'><p>Borrow a byte vector.</p>
 </div></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
@@ -65,7 +66,7 @@ strings and byte strings.</p>
 <li><code>impl BorrowBytes for <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a></code></li>
 <li><code>impl BorrowBytes for <a class='type' href='../csv/type.ByteString.html' title='csv::ByteString'>ByteString</a></code></li>
 <li><code>impl BorrowBytes for <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>[</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>]</a></code></li>
-<li><code>impl&lt;'a, B:&nbsp;?<a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a>&gt; BorrowBytes for <a class='enum' href='https://doc.rust-lang.org/nightly/collections/borrow/enum.Cow.html' title='collections::borrow::Cow'>Cow</a>&lt;'a, B&gt; <span class='where'>where B: <a class='trait' href='../csv/trait.BorrowBytes.html' title='csv::BorrowBytes'>BorrowBytes</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/collections/borrow/trait.ToOwned.html' title='collections::borrow::ToOwned'>ToOwned</a>, B::<a class='trait' href='https://doc.rust-lang.org/nightly/collections/borrow/trait.ToOwned.html' title='collections::borrow::ToOwned'>Owned</a>: <a class='trait' href='../csv/trait.BorrowBytes.html' title='csv::BorrowBytes'>BorrowBytes</a></span></code></li>
+<li><code>impl&lt;'a, B:&nbsp;?<a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a>&gt; BorrowBytes for <a class='enum' href='https://doc.rust-lang.org/nightly/collections/borrow/enum.Cow.html' title='collections::borrow::Cow'>Cow</a>&lt;'a, B&gt; <span class='where fmt-newline'>where B: <a class='trait' href='../csv/trait.BorrowBytes.html' title='csv::BorrowBytes'>BorrowBytes</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/collections/borrow/trait.ToOwned.html' title='collections::borrow::ToOwned'>ToOwned</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;B::<a class='trait' href='https://doc.rust-lang.org/nightly/collections/borrow/trait.ToOwned.html' title='collections::borrow::ToOwned'>Owned</a>: <a class='trait' href='../csv/trait.BorrowBytes.html' title='csv::BorrowBytes'>BorrowBytes</a></span></code></li>
 <li><code>impl&lt;'a, T:&nbsp;?<a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a> + <a class='trait' href='../csv/trait.BorrowBytes.html' title='csv::BorrowBytes'>BorrowBytes</a>&gt; BorrowBytes for &amp;'a T</code></li>
 </ul><script type="text/javascript" async
                          src="../implementors/csv/trait.BorrowBytes.js">

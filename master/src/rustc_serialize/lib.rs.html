@@ -4,11 +4,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/rustc-serialize-0.3.22/src/lib.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/rustc-serialize-0.3.23/src/lib.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>lib.rs.html -- source</title>
 
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
     <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../main.css">
     
@@ -111,6 +112,9 @@
 <span id="67">67</span>
 <span id="68">68</span>
 <span id="69">69</span>
+<span id="70">70</span>
+<span id="71">71</span>
+<span id="72">72</span>
 </pre><pre class='rust '>
 <span class='comment'>// Copyright 2012-2014 The Rust Project Developers. See the COPYRIGHT</span>
 <span class='comment'>// file at the top-level directory of this distribution and at</span>
@@ -140,6 +144,9 @@
 <span class='doccomment'>//! ```rust</span>
 <span class='doccomment'>//! extern crate rustc_serialize;</span>
 <span class='doccomment'>//! ```</span>
+
+<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>cfg_attr</span>(<span class='ident'>rustbuild</span>, <span class='ident'>feature</span>(<span class='ident'>staged_api</span>, <span class='ident'>rustc_private</span>))]</span>
+<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>cfg_attr</span>(<span class='ident'>rustbuild</span>, <span class='ident'>unstable</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;rustc_private&quot;</span>, <span class='ident'>issue</span> <span class='op'>=</span> <span class='string'>&quot;27812&quot;</span>))]</span>
 
 <span class='attribute'>#<span class='op'>!</span>[<span class='ident'>doc</span>(<span class='ident'>html_logo_url</span> <span class='op'>=</span> <span class='string'>&quot;https://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png&quot;</span>,
        <span class='ident'>html_favicon_url</span> <span class='op'>=</span> <span class='string'>&quot;https://www.rust-lang.org/favicon.ico&quot;</span>,
@@ -179,7 +186,7 @@
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>json</span>;
 
 <span class='kw'>mod</span> <span class='ident'>rustc_serialize</span> {
-    <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>serialize</span>::<span class='op'>*</span>;
+    <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>serialize</span>::<span class='kw-2'>*</span>;
 }
 </pre>
 </section>

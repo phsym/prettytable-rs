@@ -9,6 +9,7 @@
 
     <title>compiled.rs.html -- source</title>
 
+    <link rel="stylesheet" type="text/css" href="../../../../normalize.css">
     <link rel="stylesheet" type="text/css" href="../../../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../../../main.css">
     
@@ -274,14 +275,14 @@
 <span class='doccomment'>//! ncurses-compatible compiled terminfo format parsing (term(5))</span>
 
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>collections</span>::<span class='ident'>HashMap</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>io</span>::<span class='ident'>prelude</span>::<span class='op'>*</span>;
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>io</span>::<span class='ident'>prelude</span>::<span class='kw-2'>*</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>io</span>;
 
-<span class='kw'>use</span> <span class='ident'>terminfo</span>::<span class='ident'>Error</span>::<span class='op'>*</span>;
+<span class='kw'>use</span> <span class='ident'>terminfo</span>::<span class='ident'>Error</span>::<span class='kw-2'>*</span>;
 <span class='kw'>use</span> <span class='ident'>terminfo</span>::<span class='ident'>TermInfo</span>;
 <span class='kw'>use</span> <span class='prelude-ty'>Result</span>;
 
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>terminfo</span>::<span class='ident'>parser</span>::<span class='ident'>names</span>::<span class='op'>*</span>;
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>terminfo</span>::<span class='ident'>parser</span>::<span class='ident'>names</span>::<span class='kw-2'>*</span>;
 
 <span class='comment'>// These are the orders ncurses uses in its compiled format (as of 5.9). Not</span>
 <span class='comment'>// sure if portable.</span>

@@ -9,6 +9,7 @@
 
     <title>csv::index::create_index - Rust</title>
 
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
     <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../main.css">
     
@@ -48,7 +49,7 @@
                        [<span class='inner'>&#x2212;</span>]
                    </a>
                </span><a class='srclink' href='../../src/csv/index/mod.rs.html#132-149' title='goto source code'>[src]</a></span></h1>
-<pre class='rust fn'>pub fn create_index&lt;R, W&gt;(rdr: <a class='struct' href='../../csv/struct.Reader.html' title='csv::Reader'>Reader</a>&lt;R&gt;, wtr: W) -&gt; <a class='type' href='../../csv/type.Result.html' title='csv::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>&gt; <span class='where'>where R: <a class='trait' href='https://doc.rust-lang.org/nightly/std/io/trait.Read.html' title='std::io::Read'>Read</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/std/io/trait.Seek.html' title='std::io::Seek'>Seek</a>, W: <a class='trait' href='https://doc.rust-lang.org/nightly/std/io/trait.Write.html' title='std::io::Write'>Write</a></span></pre><div class='docblock'><p>Creates a new index for the given CSV reader.</p>
+<pre class='rust fn'>pub fn create_index&lt;R, W&gt;(rdr: <a class='struct' href='../../csv/struct.Reader.html' title='csv::Reader'>Reader</a>&lt;R&gt;, wtr: W) -&gt; <a class='type' href='../../csv/type.Result.html' title='csv::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>&gt; <span class='where fmt-newline'>where R: <a class='trait' href='https://doc.rust-lang.org/nightly/std/io/trait.Read.html' title='std::io::Read'>Read</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/std/io/trait.Seek.html' title='std::io::Seek'>Seek</a>, W: <a class='trait' href='https://doc.rust-lang.org/nightly/std/io/trait.Write.html' title='std::io::Write'>Write</a></span></pre><div class='docblock'><p>Creates a new index for the given CSV reader.</p>
 
 <p>The CSV data is read from <code>rdr</code> and the index is written to <code>wtr</code>.</p>
 </div></section>

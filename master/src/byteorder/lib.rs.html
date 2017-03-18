@@ -9,6 +9,7 @@
 
     <title>lib.rs.html -- source</title>
 
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
     <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../main.css">
     
@@ -1184,7 +1185,7 @@ assert_eq!(wtr, vec![5, 2, 0, 3]);
         <span class='kw'>unsafe</span> {
             <span class='ident'>copy_nonoverlapping</span>(
                 <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>src</span>.<span class='ident'>as_ptr</span>(),
-                <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>data</span> <span class='kw'>as</span> <span class='op'>*</span><span class='kw-2'>mut</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>ty</span> <span class='kw'>as</span> <span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>u8</span>,
+                <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>data</span> <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>ty</span> <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>u8</span>,
                 <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>size</span>);
         }
         <span class='ident'>data</span>.<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>which</span>()
@@ -1226,7 +1227,7 @@ assert_eq!(wtr, vec![5, 2, 0, 3]);
         <span class='kw'>unsafe</span> {
             <span class='ident'>copy_nonoverlapping</span>(
                 <span class='ident'>buf</span>.<span class='ident'>as_ptr</span>(), <span class='ident'>ptr_out</span>.<span class='ident'>offset</span>((<span class='number'>8</span> <span class='op'>-</span> <span class='ident'>nbytes</span>) <span class='kw'>as</span> <span class='ident'>isize</span>), <span class='ident'>nbytes</span>);
-            (<span class='op'>*</span>(<span class='ident'>ptr_out</span> <span class='kw'>as</span> <span class='op'>*</span><span class='kw'>const</span> <span class='ident'>u64</span>)).<span class='ident'>to_be</span>()
+            (<span class='kw-2'>*</span>(<span class='ident'>ptr_out</span> <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>u64</span>)).<span class='ident'>to_be</span>()
         }
     }
 
@@ -1282,7 +1283,7 @@ assert_eq!(wtr, vec![5, 2, 0, 3]);
         <span class='kw'>let</span> <span class='ident'>ptr_out</span> <span class='op'>=</span> <span class='ident'>out</span>.<span class='ident'>as_mut_ptr</span>();
         <span class='kw'>unsafe</span> {
             <span class='ident'>copy_nonoverlapping</span>(<span class='ident'>buf</span>.<span class='ident'>as_ptr</span>(), <span class='ident'>ptr_out</span>, <span class='ident'>nbytes</span>);
-            (<span class='op'>*</span>(<span class='ident'>ptr_out</span> <span class='kw'>as</span> <span class='op'>*</span><span class='kw'>const</span> <span class='ident'>u64</span>)).<span class='ident'>to_le</span>()
+            (<span class='kw-2'>*</span>(<span class='ident'>ptr_out</span> <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>u64</span>)).<span class='ident'>to_le</span>()
         }
     }
 
