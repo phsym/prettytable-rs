@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1"> 1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -114,8 +114,8 @@
 <span id="69">69</span>
 <span id="70">70</span>
 <span id="71">71</span>
-</pre><pre class='rust '>
-<span class='comment'>/* Copyright 2016 Torbjørn Birch Moltu
+</pre><pre class="rust ">
+<span class="comment">/* Copyright 2016 Torbjørn Birch Moltu
  *
  * Licensed under the Apache License, Version 2.0, &lt;LICENSE-APACHE or
  * http://apache.org/licenses/LICENSE-2.0&gt; or the MIT license &lt;LICENSE-MIT or
@@ -124,7 +124,7 @@
  */</span>
 
 
-<span class='doccomment'>/*!
+<span class="doccomment">/*!
 Miscellaneous UTF-8 and UTF-16 types and methods.
 
 # Optional features:
@@ -149,42 +149,42 @@ older versions might work, but also break in a minor update.
 */</span>
 
 
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>cfg_attr</span>(<span class='ident'>feature</span><span class='op'>=</span><span class='string'>&quot;std&quot;</span>, <span class='ident'>warn</span>(<span class='ident'>missing_docs</span>))]</span> <span class='comment'>// Don&#39;t bother documenting std standins.</span>
+<span class="attribute">#<span class="op">!</span>[<span class="ident">cfg_attr</span>(<span class="ident">feature</span><span class="op">=</span><span class="string">&quot;std&quot;</span>, <span class="ident">warn</span>(<span class="ident">missing_docs</span>))]</span> <span class="comment">// Don&#39;t bother documenting std standins.</span>
 
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>cfg_attr</span>(<span class='ident'>not</span>(<span class='ident'>feature</span><span class='op'>=</span><span class='string'>&quot;std&quot;</span>), <span class='ident'>no_std</span>)]</span>
-<span class='comment'>// either `cargo clippy` doesn&#39;t see theese, or I get a warning when I build.</span>
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>cfg_attr</span>(<span class='ident'>feature</span><span class='op'>=</span><span class='string'>&quot;clippy&quot;</span>, <span class='ident'>feature</span>(<span class='ident'>plugin</span>))]</span>
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>cfg_attr</span>(<span class='ident'>feature</span><span class='op'>=</span><span class='string'>&quot;clippy&quot;</span>, <span class='ident'>plugin</span>(<span class='ident'>clippy</span>))]</span>
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>cfg_attr</span>(<span class='ident'>feature</span><span class='op'>=</span><span class='string'>&quot;clippy&quot;</span>, <span class='ident'>allow</span>(<span class='ident'>derive_hash_xor_eq</span>))]</span><span class='comment'>// tested</span>
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>cfg_attr</span>(<span class='ident'>feature</span><span class='op'>=</span><span class='string'>&quot;clippy&quot;</span>, <span class='ident'>allow</span>(<span class='ident'>len_without_is_empty</span>))]</span><span class='comment'>// UtfxChar is never empty</span>
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>cfg_attr</span>(<span class='ident'>feature</span><span class='op'>=</span><span class='string'>&quot;clippy&quot;</span>, <span class='ident'>allow</span>(<span class='ident'>match_same_arms</span>))]</span><span class='comment'>// looks better IMO</span>
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>cfg_attr</span>(<span class='ident'>feature</span><span class='op'>=</span><span class='string'>&quot;clippy&quot;</span>, <span class='ident'>allow</span>(<span class='ident'>needless_return</span>))]</span><span class='comment'>// `foo.bar(); foo` looks unfinished</span>
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>cfg_attr</span>(<span class='ident'>feature</span><span class='op'>=</span><span class='string'>&quot;clippy&quot;</span>, <span class='ident'>allow</span>(<span class='ident'>redundant_closure</span>))]</span><span class='comment'>// keep it explicit</span>
-<span class='comment'>// precedence: I prefer spaces to parentheses, but it&#39;s nice to recheck.</span>
+<span class="attribute">#<span class="op">!</span>[<span class="ident">cfg_attr</span>(<span class="ident">not</span>(<span class="ident">feature</span><span class="op">=</span><span class="string">&quot;std&quot;</span>), <span class="ident">no_std</span>)]</span>
+<span class="comment">// either `cargo clippy` doesn&#39;t see theese, or I get a warning when I build.</span>
+<span class="attribute">#<span class="op">!</span>[<span class="ident">cfg_attr</span>(<span class="ident">feature</span><span class="op">=</span><span class="string">&quot;clippy&quot;</span>, <span class="ident">feature</span>(<span class="ident">plugin</span>))]</span>
+<span class="attribute">#<span class="op">!</span>[<span class="ident">cfg_attr</span>(<span class="ident">feature</span><span class="op">=</span><span class="string">&quot;clippy&quot;</span>, <span class="ident">plugin</span>(<span class="ident">clippy</span>))]</span>
+<span class="attribute">#<span class="op">!</span>[<span class="ident">cfg_attr</span>(<span class="ident">feature</span><span class="op">=</span><span class="string">&quot;clippy&quot;</span>, <span class="ident">allow</span>(<span class="ident">derive_hash_xor_eq</span>))]</span><span class="comment">// tested</span>
+<span class="attribute">#<span class="op">!</span>[<span class="ident">cfg_attr</span>(<span class="ident">feature</span><span class="op">=</span><span class="string">&quot;clippy&quot;</span>, <span class="ident">allow</span>(<span class="ident">len_without_is_empty</span>))]</span><span class="comment">// UtfxChar is never empty</span>
+<span class="attribute">#<span class="op">!</span>[<span class="ident">cfg_attr</span>(<span class="ident">feature</span><span class="op">=</span><span class="string">&quot;clippy&quot;</span>, <span class="ident">allow</span>(<span class="ident">match_same_arms</span>))]</span><span class="comment">// looks better IMO</span>
+<span class="attribute">#<span class="op">!</span>[<span class="ident">cfg_attr</span>(<span class="ident">feature</span><span class="op">=</span><span class="string">&quot;clippy&quot;</span>, <span class="ident">allow</span>(<span class="ident">needless_return</span>))]</span><span class="comment">// `foo.bar(); foo` looks unfinished</span>
+<span class="attribute">#<span class="op">!</span>[<span class="ident">cfg_attr</span>(<span class="ident">feature</span><span class="op">=</span><span class="string">&quot;clippy&quot;</span>, <span class="ident">allow</span>(<span class="ident">redundant_closure</span>))]</span><span class="comment">// keep it explicit</span>
+<span class="comment">// precedence: I prefer spaces to parentheses, but it&#39;s nice to recheck.</span>
 
-<span class='kw'>mod</span> <span class='ident'>errors</span>;
-<span class='kw'>mod</span> <span class='ident'>traits</span>;
-<span class='kw'>mod</span> <span class='ident'>utf8_char</span>;
-<span class='kw'>mod</span> <span class='ident'>utf8_iterator</span>;
-<span class='kw'>mod</span> <span class='ident'>utf16_char</span>;
-<span class='kw'>mod</span> <span class='ident'>utf16_iterator</span>;
+<span class="kw">mod</span> <span class="ident">errors</span>;
+<span class="kw">mod</span> <span class="ident">traits</span>;
+<span class="kw">mod</span> <span class="ident">utf8_char</span>;
+<span class="kw">mod</span> <span class="ident">utf8_iterator</span>;
+<span class="kw">mod</span> <span class="ident">utf16_char</span>;
+<span class="kw">mod</span> <span class="ident">utf16_iterator</span>;
 
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>traits</span>::<span class='ident'>CharExt</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>utf8_char</span>::<span class='ident'>Utf8Char</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>utf16_char</span>::<span class='ident'>Utf16Char</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>utf8_iterator</span>::<span class='ident'>Utf8Iterator</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>utf16_iterator</span>::<span class='ident'>Utf16Iterator</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>traits</span>::<span class='ident'>U8UtfExt</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>traits</span>::<span class='ident'>U16UtfExt</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">traits</span>::<span class="ident">CharExt</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">utf8_char</span>::<span class="ident">Utf8Char</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">utf16_char</span>::<span class="ident">Utf16Char</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">utf8_iterator</span>::<span class="ident">Utf8Iterator</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">utf16_iterator</span>::<span class="ident">Utf16Iterator</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">traits</span>::<span class="ident">U8UtfExt</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">traits</span>::<span class="ident">U16UtfExt</span>;
 
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>error</span> {<span class='comment'>// keeping the public interface in one file</span>
-    <span class='doccomment'>//! Errors returned by various conversion methods in this crate.</span>
-    <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>utf8_char</span>::<span class='ident'>FromStrError</span>;
-    <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>errors</span>::{<span class='ident'>InvalidCodepoint</span>};
-    <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>errors</span>::{<span class='ident'>InvalidUtf8</span>};
-    <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>errors</span>::{<span class='ident'>InvalidUtf8FirstByte</span>,<span class='ident'>InvalidUtf16FirstUnit</span>};
-    <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>errors</span>::{<span class='ident'>InvalidUtf8Slice</span>,<span class='ident'>InvalidUtf16Slice</span>};
-    <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>errors</span>::{<span class='ident'>InvalidUtf8Array</span>,<span class='ident'>InvalidUtf16Tuple</span>};
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">error</span> {<span class="comment">// keeping the public interface in one file</span>
+    <span class="doccomment">//! Errors returned by various conversion methods in this crate.</span>
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">utf8_char</span>::<span class="ident">FromStrError</span>;
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">errors</span>::{<span class="ident">InvalidCodepoint</span>};
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">errors</span>::{<span class="ident">InvalidUtf8</span>};
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">errors</span>::{<span class="ident">InvalidUtf8FirstByte</span>,<span class="ident">InvalidUtf16FirstUnit</span>};
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">errors</span>::{<span class="ident">InvalidUtf8Slice</span>,<span class="ident">InvalidUtf16Slice</span>};
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">errors</span>::{<span class="ident">InvalidUtf8Array</span>,<span class="ident">InvalidUtf16Tuple</span>};
 }
 </pre>
 </section>

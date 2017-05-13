@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc macro">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,17 +43,17 @@
         </form>
     </nav>
 
-    <section id='main' class="content macro">
-<h1 class='fqn'><span class='in-band'>Macro <a href='index.html'>prettytable</a>::<wbr><a class='macro' href=''>cell</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Macro <a href='index.html'>prettytable</a>::<wbr><a class="macro" href=''>cell</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
                </span><a class='srclink' href='../src/prettytable/cell.rs.html#257-261' title='goto source code'>[src]</a></span></h1>
-<pre class='rust macro'>
-<span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>cell</span> {
-    () <span class='op'>=&gt;</span> { ... };
-    (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>value</span>:<span class='ident'>expr</span>) <span class='op'>=&gt;</span> { ... };
-    (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>style</span>:<span class='ident'>ident</span> <span class='op'>-&gt;</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>value</span>:<span class='ident'>expr</span>) <span class='op'>=&gt;</span> { ... };
+<pre class="rust macro">
+<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">cell</span> {
+    () <span class="op">=&gt;</span> { ... };
+    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">value</span>:<span class="ident">expr</span>) <span class="op">=&gt;</span> { ... };
+    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">style</span>:<span class="ident">ident</span> <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">value</span>:<span class="ident">expr</span>) <span class="op">=&gt;</span> { ... };
 }</pre>
 <div class='docblock'><p>This macro simplifies <code>Cell</code> creation</p>
 
@@ -73,11 +73,11 @@
 <p>For details about style specifier syntax, check doc for <a href="cell/struct.Cell.html#method.style_spec">Cell::style_spec</a> method</p>
 
 <h1 id='example' class='section-header'><a href='#example'>Example</a></h1>
-<pre class='rust rust-example-rendered'>
-<span class='kw'>let</span> <span class='ident'>cell</span> <span class='op'>=</span> <span class='macro'>cell</span><span class='macro'>!</span>(<span class='string'>&quot;value&quot;</span>);
-<span class='comment'>// Do something with the cell</span>
-<span class='comment'>// Create a cell with style (Red foreground, Bold, aligned to left);</span>
-<span class='kw'>let</span> <span class='ident'>styled</span> <span class='op'>=</span> <span class='macro'>cell</span><span class='macro'>!</span>(<span class='ident'>Frbl</span><span class='op'>-&gt;</span><span class='string'>&quot;value&quot;</span>);</pre>
+<pre class="rust rust-example-rendered">
+<span class="kw">let</span> <span class="ident">cell</span> <span class="op">=</span> <span class="macro">cell</span><span class="macro">!</span>(<span class="string">&quot;value&quot;</span>);
+<span class="comment">// Do something with the cell</span>
+<span class="comment">// Create a cell with style (Red foreground, Bold, aligned to left);</span>
+<span class="kw">let</span> <span class="ident">styled</span> <span class="op">=</span> <span class="macro">cell</span><span class="macro">!</span>(<span class="ident">Frbl</span><span class="op">-&gt;</span><span class="string">&quot;value&quot;</span>);</pre>
 </div></section>
     <section id='search' class="content hidden"></section>
 

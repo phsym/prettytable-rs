@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -366,8 +366,8 @@
 <span id="321">321</span>
 <span id="322">322</span>
 <span id="323">323</span>
-</pre><pre class='rust '>
-<span class='doccomment'>/*!
+</pre><pre class="rust ">
+<span class="doccomment">/*!
 This sub-module provides experimental CSV record indexing.
 
 It is simplistic, but once a CSV index is created, you can use it to jump to
@@ -411,253 +411,253 @@ assert_eq!(row, vec![&quot;d&quot;, &quot;e&quot;, &quot;f&quot;]);
 # }
 ```
 */</span>
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>io</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>ops</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ops</span>;
 
-<span class='kw'>use</span> <span class='ident'>byteorder</span>::{<span class='ident'>ReadBytesExt</span>, <span class='ident'>WriteBytesExt</span>, <span class='ident'>BigEndian</span>};
+<span class="kw">use</span> <span class="ident">byteorder</span>::{<span class="ident">ReadBytesExt</span>, <span class="ident">WriteBytesExt</span>, <span class="ident">BigEndian</span>};
 
-<span class='kw'>use</span> {<span class='prelude-ty'>Result</span>, <span class='ident'>Error</span>, <span class='ident'>Reader</span>, <span class='ident'>NextField</span>};
+<span class="kw">use</span> {<span class="prelude-ty">Result</span>, <span class="ident">Error</span>, <span class="ident">Reader</span>, <span class="ident">NextField</span>};
 
-<span class='doccomment'>/// A type for representing CSV data with a basic record index.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// The index is a sequence of 64 bit (8 bytes) integers, where each integer</span>
-<span class='doccomment'>/// corresponds to the *byte offset* of the start of the corresponding record</span>
-<span class='doccomment'>/// in the CSV data. This allows one to skip to any record in the CSV data</span>
-<span class='doccomment'>/// and read it instantly.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// Note that this type derefs to a `&amp;mut csv::Reader&lt;R&gt;`.</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Indexed</span><span class='op'>&lt;</span><span class='ident'>R</span>, <span class='ident'>I</span><span class='op'>&gt;</span> {
-    <span class='ident'>rdr</span>: <span class='ident'>Reader</span><span class='op'>&lt;</span><span class='ident'>R</span><span class='op'>&gt;</span>,
-    <span class='ident'>idx</span>: <span class='ident'>I</span>,
-    <span class='ident'>count</span>: <span class='ident'>u64</span>,
+<span class="doccomment">/// A type for representing CSV data with a basic record index.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// The index is a sequence of 64 bit (8 bytes) integers, where each integer</span>
+<span class="doccomment">/// corresponds to the *byte offset* of the start of the corresponding record</span>
+<span class="doccomment">/// in the CSV data. This allows one to skip to any record in the CSV data</span>
+<span class="doccomment">/// and read it instantly.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Note that this type derefs to a `&amp;mut csv::Reader&lt;R&gt;`.</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Indexed</span><span class="op">&lt;</span><span class="ident">R</span>, <span class="ident">I</span><span class="op">&gt;</span> {
+    <span class="ident">rdr</span>: <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>,
+    <span class="ident">idx</span>: <span class="ident">I</span>,
+    <span class="ident">count</span>: <span class="ident">u64</span>,
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>R</span>, <span class='ident'>I</span><span class='op'>&gt;</span> <span class='ident'>ops</span>::<span class='ident'>Deref</span> <span class='kw'>for</span> <span class='ident'>Indexed</span><span class='op'>&lt;</span><span class='ident'>R</span>, <span class='ident'>I</span><span class='op'>&gt;</span> {
-    <span class='kw'>type</span> <span class='ident'>Target</span> <span class='op'>=</span> <span class='ident'>Reader</span><span class='op'>&lt;</span><span class='ident'>R</span><span class='op'>&gt;</span>;
-    <span class='kw'>fn</span> <span class='ident'>deref</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>Reader</span><span class='op'>&lt;</span><span class='ident'>R</span><span class='op'>&gt;</span> { <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>rdr</span> }
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">R</span>, <span class="ident">I</span><span class="op">&gt;</span> <span class="ident">ops</span>::<span class="ident">Deref</span> <span class="kw">for</span> <span class="ident">Indexed</span><span class="op">&lt;</span><span class="ident">R</span>, <span class="ident">I</span><span class="op">&gt;</span> {
+    <span class="kw">type</span> <span class="ident">Target</span> <span class="op">=</span> <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">deref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> { <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">rdr</span> }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>R</span>, <span class='ident'>I</span><span class='op'>&gt;</span> <span class='ident'>ops</span>::<span class='ident'>DerefMut</span> <span class='kw'>for</span> <span class='ident'>Indexed</span><span class='op'>&lt;</span><span class='ident'>R</span>, <span class='ident'>I</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>deref_mut</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Reader</span><span class='op'>&lt;</span><span class='ident'>R</span><span class='op'>&gt;</span> { <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>rdr</span> }
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">R</span>, <span class="ident">I</span><span class="op">&gt;</span> <span class="ident">ops</span>::<span class="ident">DerefMut</span> <span class="kw">for</span> <span class="ident">Indexed</span><span class="op">&lt;</span><span class="ident">R</span>, <span class="ident">I</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">deref_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> { <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">rdr</span> }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>R</span>, <span class='ident'>I</span><span class='op'>&gt;</span> <span class='ident'>Indexed</span><span class='op'>&lt;</span><span class='ident'>R</span>, <span class='ident'>I</span><span class='op'>&gt;</span> <span class='kw'>where</span> <span class='ident'>R</span>: <span class='ident'>io</span>::<span class='ident'>Read</span> <span class='op'>+</span> <span class='ident'>io</span>::<span class='ident'>Seek</span>, <span class='ident'>I</span>: <span class='ident'>io</span>::<span class='ident'>Read</span> <span class='op'>+</span> <span class='ident'>io</span>::<span class='ident'>Seek</span> {
-    <span class='doccomment'>/// Opens a new index corresponding to the CSV reader given.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// If the CSV reader has headers enabled, they are read first.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Note that there are no checks in place to make sure the index</span>
-    <span class='doccomment'>/// accurately represents the CSV reader given.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>open</span>(<span class='kw-2'>mut</span> <span class='ident'>rdr</span>: <span class='ident'>Reader</span><span class='op'>&lt;</span><span class='ident'>R</span><span class='op'>&gt;</span>, <span class='kw-2'>mut</span> <span class='ident'>idx</span>: <span class='ident'>I</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>Indexed</span><span class='op'>&lt;</span><span class='ident'>R</span>, <span class='ident'>I</span><span class='op'>&gt;&gt;</span> {
-        <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>idx</span>.<span class='ident'>seek</span>(<span class='ident'>io</span>::<span class='ident'>SeekFrom</span>::<span class='ident'>End</span>(<span class='op'>-</span><span class='number'>8</span>)));
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>count</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>idx</span>.<span class='ident'>read_u64</span>::<span class='op'>&lt;</span><span class='ident'>BigEndian</span><span class='op'>&gt;</span>());
-        <span class='kw'>if</span> <span class='ident'>rdr</span>.<span class='ident'>has_headers</span> <span class='op'>&amp;&amp;</span> <span class='ident'>count</span> <span class='op'>&gt;</span> <span class='number'>0</span> {
-            <span class='ident'>count</span> <span class='op'>-=</span> <span class='number'>1</span>;
-            <span class='kw'>let</span> _ <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>rdr</span>.<span class='ident'>byte_headers</span>());
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">R</span>, <span class="ident">I</span><span class="op">&gt;</span> <span class="ident">Indexed</span><span class="op">&lt;</span><span class="ident">R</span>, <span class="ident">I</span><span class="op">&gt;</span> <span class="kw">where</span> <span class="ident">R</span>: <span class="ident">io</span>::<span class="ident">Read</span> <span class="op">+</span> <span class="ident">io</span>::<span class="ident">Seek</span>, <span class="ident">I</span>: <span class="ident">io</span>::<span class="ident">Read</span> <span class="op">+</span> <span class="ident">io</span>::<span class="ident">Seek</span> {
+    <span class="doccomment">/// Opens a new index corresponding to the CSV reader given.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// If the CSV reader has headers enabled, they are read first.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Note that there are no checks in place to make sure the index</span>
+    <span class="doccomment">/// accurately represents the CSV reader given.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">open</span>(<span class="kw-2">mut</span> <span class="ident">rdr</span>: <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>, <span class="kw-2">mut</span> <span class="ident">idx</span>: <span class="ident">I</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Indexed</span><span class="op">&lt;</span><span class="ident">R</span>, <span class="ident">I</span><span class="op">&gt;&gt;</span> {
+        <span class="macro">try</span><span class="macro">!</span>(<span class="ident">idx</span>.<span class="ident">seek</span>(<span class="ident">io</span>::<span class="ident">SeekFrom</span>::<span class="ident">End</span>(<span class="op">-</span><span class="number">8</span>)));
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">count</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">idx</span>.<span class="ident">read_u64</span>::<span class="op">&lt;</span><span class="ident">BigEndian</span><span class="op">&gt;</span>());
+        <span class="kw">if</span> <span class="ident">rdr</span>.<span class="ident">has_headers</span> <span class="op">&amp;&amp;</span> <span class="ident">count</span> <span class="op">&gt;</span> <span class="number">0</span> {
+            <span class="ident">count</span> <span class="op">-=</span> <span class="number">1</span>;
+            <span class="kw">let</span> _ <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">rdr</span>.<span class="ident">byte_headers</span>());
         }
-        <span class='prelude-val'>Ok</span>(<span class='ident'>Indexed</span> {
-            <span class='ident'>rdr</span>: <span class='ident'>rdr</span>,
-            <span class='ident'>idx</span>: <span class='ident'>idx</span>,
-            <span class='ident'>count</span>: <span class='ident'>count</span>,
+        <span class="prelude-val">Ok</span>(<span class="ident">Indexed</span> {
+            <span class="ident">rdr</span>: <span class="ident">rdr</span>,
+            <span class="ident">idx</span>: <span class="ident">idx</span>,
+            <span class="ident">count</span>: <span class="ident">count</span>,
         })
     }
 
-    <span class='doccomment'>/// Seeks to `i`th record.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// This uses zero-based indexing, so seeking to the `0`th record will read</span>
-    <span class='doccomment'>/// the first record. (The first record may not be the first written row</span>
-    <span class='doccomment'>/// in the CSV data if the underlying reader has headers enabled.)</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// An error is returned if the index given is greater than or equal to the</span>
-    <span class='doccomment'>/// number of records in the index.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>seek</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='kw-2'>mut</span> <span class='ident'>i</span>: <span class='ident'>u64</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>()<span class='op'>&gt;</span> {
-        <span class='kw'>if</span> <span class='ident'>i</span> <span class='op'>&gt;=</span> <span class='self'>self</span>.<span class='ident'>count</span> {
-            <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='ident'>Error</span>::<span class='ident'>Index</span>(<span class='macro'>format</span><span class='macro'>!</span>(
-                <span class='string'>&quot;Record index {} is out of bounds. (There are {} records.)&quot;</span>,
-                <span class='ident'>i</span>, <span class='self'>self</span>.<span class='ident'>count</span>)));
+    <span class="doccomment">/// Seeks to `i`th record.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This uses zero-based indexing, so seeking to the `0`th record will read</span>
+    <span class="doccomment">/// the first record. (The first record may not be the first written row</span>
+    <span class="doccomment">/// in the CSV data if the underlying reader has headers enabled.)</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// An error is returned if the index given is greater than or equal to the</span>
+    <span class="doccomment">/// number of records in the index.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">seek</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">i</span>: <span class="ident">u64</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+        <span class="kw">if</span> <span class="ident">i</span> <span class="op">&gt;=</span> <span class="self">self</span>.<span class="ident">count</span> {
+            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">Index</span>(<span class="macro">format</span><span class="macro">!</span>(
+                <span class="string">&quot;Record index {} is out of bounds. (There are {} records.)&quot;</span>,
+                <span class="ident">i</span>, <span class="self">self</span>.<span class="ident">count</span>)));
         }
-        <span class='comment'>// If the underlying reader has headers enabled, then we should offset</span>
-        <span class='comment'>// the index appropriately.</span>
-        <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>rdr</span>.<span class='ident'>has_headers</span> {
-            <span class='ident'>i</span> <span class='op'>+=</span> <span class='number'>1</span>;
+        <span class="comment">// If the underlying reader has headers enabled, then we should offset</span>
+        <span class="comment">// the index appropriately.</span>
+        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">rdr</span>.<span class="ident">has_headers</span> {
+            <span class="ident">i</span> <span class="op">+=</span> <span class="number">1</span>;
         }
-        <span class='comment'>// 1. Seek the index.</span>
-        <span class='comment'>// 2. Read the corresponding offset.</span>
-        <span class='comment'>// 3. Seek the CSV reader.</span>
-        <span class='macro'>try</span><span class='macro'>!</span>(<span class='self'>self</span>.<span class='ident'>idx</span>.<span class='ident'>seek</span>(<span class='ident'>io</span>::<span class='ident'>SeekFrom</span>::<span class='ident'>Start</span>(<span class='ident'>i</span> <span class='op'>*</span> <span class='number'>8</span>)));
-        <span class='kw'>let</span> <span class='ident'>offset</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='self'>self</span>.<span class='ident'>idx</span>.<span class='ident'>read_u64</span>::<span class='op'>&lt;</span><span class='ident'>BigEndian</span><span class='op'>&gt;</span>());
-        <span class='self'>self</span>.<span class='ident'>rdr</span>.<span class='ident'>seek</span>(<span class='ident'>offset</span>)
+        <span class="comment">// 1. Seek the index.</span>
+        <span class="comment">// 2. Read the corresponding offset.</span>
+        <span class="comment">// 3. Seek the CSV reader.</span>
+        <span class="macro">try</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">idx</span>.<span class="ident">seek</span>(<span class="ident">io</span>::<span class="ident">SeekFrom</span>::<span class="ident">Start</span>(<span class="ident">i</span> <span class="op">*</span> <span class="number">8</span>)));
+        <span class="kw">let</span> <span class="ident">offset</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">idx</span>.<span class="ident">read_u64</span>::<span class="op">&lt;</span><span class="ident">BigEndian</span><span class="op">&gt;</span>());
+        <span class="self">self</span>.<span class="ident">rdr</span>.<span class="ident">seek</span>(<span class="ident">offset</span>)
     }
 
-    <span class='doccomment'>/// Returns the number of CSV records in the index in `O(1)` time.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>count</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>u64</span> {
-        <span class='self'>self</span>.<span class='ident'>count</span>
+    <span class="doccomment">/// Returns the number of CSV records in the index in `O(1)` time.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">count</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">u64</span> {
+        <span class="self">self</span>.<span class="ident">count</span>
     }
 }
 
-<span class='doccomment'>/// Creates a new index for the given CSV reader.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// The CSV data is read from `rdr` and the index is written to `wtr`.</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>create_index</span><span class='op'>&lt;</span><span class='ident'>R</span>, <span class='ident'>W</span><span class='op'>&gt;</span>(<span class='kw-2'>mut</span> <span class='ident'>rdr</span>: <span class='ident'>Reader</span><span class='op'>&lt;</span><span class='ident'>R</span><span class='op'>&gt;</span>, <span class='kw-2'>mut</span> <span class='ident'>wtr</span>: <span class='ident'>W</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>()<span class='op'>&gt;</span>
-        <span class='kw'>where</span> <span class='ident'>R</span>: <span class='ident'>io</span>::<span class='ident'>Read</span> <span class='op'>+</span> <span class='ident'>io</span>::<span class='ident'>Seek</span>, <span class='ident'>W</span>: <span class='ident'>io</span>::<span class='ident'>Write</span> {
-    <span class='comment'>// Seek to the beginning so that we get everything.</span>
-    <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>rdr</span>.<span class='ident'>seek</span>(<span class='number'>0</span>));
-    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>count</span> <span class='op'>=</span> <span class='number'>0u64</span>;
-    <span class='kw'>while</span> <span class='op'>!</span><span class='ident'>rdr</span>.<span class='ident'>done</span>() {
-        <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>wtr</span>.<span class='ident'>write_u64</span>::<span class='op'>&lt;</span><span class='ident'>BigEndian</span><span class='op'>&gt;</span>(<span class='ident'>rdr</span>.<span class='ident'>byte_offset</span>()));
-        <span class='kw'>loop</span> {
-            <span class='kw'>match</span> <span class='ident'>rdr</span>.<span class='ident'>next_bytes</span>() {
-                <span class='ident'>NextField</span>::<span class='ident'>EndOfCsv</span> <span class='op'>=&gt;</span> <span class='kw'>break</span>,
-                <span class='ident'>NextField</span>::<span class='ident'>EndOfRecord</span> <span class='op'>=&gt;</span> { <span class='ident'>count</span> <span class='op'>+=</span> <span class='number'>1</span>; <span class='kw'>break</span>; },
-                <span class='ident'>NextField</span>::<span class='ident'>Error</span>(<span class='ident'>err</span>) <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='ident'>err</span>),
-                <span class='ident'>NextField</span>::<span class='ident'>Data</span>(_) <span class='op'>=&gt;</span> {}
+<span class="doccomment">/// Creates a new index for the given CSV reader.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// The CSV data is read from `rdr` and the index is written to `wtr`.</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">create_index</span><span class="op">&lt;</span><span class="ident">R</span>, <span class="ident">W</span><span class="op">&gt;</span>(<span class="kw-2">mut</span> <span class="ident">rdr</span>: <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>, <span class="kw-2">mut</span> <span class="ident">wtr</span>: <span class="ident">W</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>
+        <span class="kw">where</span> <span class="ident">R</span>: <span class="ident">io</span>::<span class="ident">Read</span> <span class="op">+</span> <span class="ident">io</span>::<span class="ident">Seek</span>, <span class="ident">W</span>: <span class="ident">io</span>::<span class="ident">Write</span> {
+    <span class="comment">// Seek to the beginning so that we get everything.</span>
+    <span class="macro">try</span><span class="macro">!</span>(<span class="ident">rdr</span>.<span class="ident">seek</span>(<span class="number">0</span>));
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">count</span> <span class="op">=</span> <span class="number">0u64</span>;
+    <span class="kw">while</span> <span class="op">!</span><span class="ident">rdr</span>.<span class="ident">done</span>() {
+        <span class="macro">try</span><span class="macro">!</span>(<span class="ident">wtr</span>.<span class="ident">write_u64</span>::<span class="op">&lt;</span><span class="ident">BigEndian</span><span class="op">&gt;</span>(<span class="ident">rdr</span>.<span class="ident">byte_offset</span>()));
+        <span class="kw">loop</span> {
+            <span class="kw">match</span> <span class="ident">rdr</span>.<span class="ident">next_bytes</span>() {
+                <span class="ident">NextField</span>::<span class="ident">EndOfCsv</span> <span class="op">=&gt;</span> <span class="kw">break</span>,
+                <span class="ident">NextField</span>::<span class="ident">EndOfRecord</span> <span class="op">=&gt;</span> { <span class="ident">count</span> <span class="op">+=</span> <span class="number">1</span>; <span class="kw">break</span>; },
+                <span class="ident">NextField</span>::<span class="ident">Error</span>(<span class="ident">err</span>) <span class="op">=&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">err</span>),
+                <span class="ident">NextField</span>::<span class="ident">Data</span>(_) <span class="op">=&gt;</span> {}
             }
         }
     }
-    <span class='ident'>wtr</span>.<span class='ident'>write_u64</span>::<span class='op'>&lt;</span><span class='ident'>BigEndian</span><span class='op'>&gt;</span>(<span class='ident'>count</span>).<span class='ident'>map_err</span>(<span class='ident'>From</span>::<span class='ident'>from</span>)
+    <span class="ident">wtr</span>.<span class="ident">write_u64</span>::<span class="op">&lt;</span><span class="ident">BigEndian</span><span class="op">&gt;</span>(<span class="ident">count</span>).<span class="ident">map_err</span>(<span class="ident">From</span>::<span class="ident">from</span>)
 }
 
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>test</span>)]</span>
-<span class='kw'>mod</span> <span class='ident'>tests</span> {
-    <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>io</span>::{<span class='self'>self</span>, <span class='ident'>Write</span>};
-    <span class='kw'>use</span> <span class='ident'>Reader</span>;
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
+<span class="kw">mod</span> <span class="ident">tests</span> {
+    <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>::{<span class="self">self</span>, <span class="ident">Write</span>};
+    <span class="kw">use</span> <span class="ident">Reader</span>;
 
-    <span class='kw'>type</span> <span class='ident'>CsvReader</span> <span class='op'>=</span> <span class='ident'>Reader</span><span class='op'>&lt;</span><span class='ident'>io</span>::<span class='ident'>Cursor</span><span class='op'>&lt;</span><span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>u8</span><span class='op'>&gt;&gt;</span><span class='op'>&gt;</span>;
-    <span class='kw'>type</span> <span class='ident'>Bytes</span> <span class='op'>=</span> <span class='ident'>io</span>::<span class='ident'>Cursor</span><span class='op'>&lt;</span><span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>u8</span><span class='op'>&gt;&gt;</span>;
-    <span class='kw'>type</span> <span class='ident'>Indexed</span> <span class='op'>=</span> <span class='kw'>super</span>::<span class='ident'>Indexed</span><span class='op'>&lt;</span><span class='ident'>Bytes</span>, <span class='ident'>Bytes</span><span class='op'>&gt;</span>;
+    <span class="kw">type</span> <span class="ident">CsvReader</span> <span class="op">=</span> <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">io</span>::<span class="ident">Cursor</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;&gt;</span><span class="op">&gt;</span>;
+    <span class="kw">type</span> <span class="ident">Bytes</span> <span class="op">=</span> <span class="ident">io</span>::<span class="ident">Cursor</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;&gt;</span>;
+    <span class="kw">type</span> <span class="ident">Indexed</span> <span class="op">=</span> <span class="kw">super</span>::<span class="ident">Indexed</span><span class="op">&lt;</span><span class="ident">Bytes</span>, <span class="ident">Bytes</span><span class="op">&gt;</span>;
 
-    <span class='kw'>fn</span> <span class='ident'>index</span><span class='op'>&lt;</span><span class='ident'>S</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;&gt;</span>(<span class='ident'>s</span>: <span class='ident'>S</span>) <span class='op'>-&gt;</span> <span class='ident'>Indexed</span> {
-        <span class='ident'>index_with</span>(<span class='ident'>s</span>, <span class='op'>|</span><span class='ident'>rdr</span><span class='op'>|</span> <span class='ident'>rdr</span>, <span class='op'>|</span><span class='ident'>rdr</span><span class='op'>|</span> <span class='ident'>rdr</span>)
+    <span class="kw">fn</span> <span class="ident">index</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;&gt;</span>(<span class="ident">s</span>: <span class="ident">S</span>) <span class="op">-&gt;</span> <span class="ident">Indexed</span> {
+        <span class="ident">index_with</span>(<span class="ident">s</span>, <span class="op">|</span><span class="ident">rdr</span><span class="op">|</span> <span class="ident">rdr</span>, <span class="op">|</span><span class="ident">rdr</span><span class="op">|</span> <span class="ident">rdr</span>)
     }
 
-    <span class='kw'>fn</span> <span class='ident'>index_nh</span><span class='op'>&lt;</span><span class='ident'>S</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;&gt;</span>(<span class='ident'>s</span>: <span class='ident'>S</span>) <span class='op'>-&gt;</span> <span class='ident'>Indexed</span> {
-        <span class='kw'>let</span> <span class='ident'>then</span> <span class='op'>=</span> <span class='op'>|</span><span class='ident'>rdr</span>: <span class='ident'>CsvReader</span><span class='op'>|</span> <span class='ident'>rdr</span>.<span class='ident'>has_headers</span>(<span class='bool-val'>false</span>);
-        <span class='ident'>index_with</span>(<span class='ident'>s</span>, <span class='kw-2'>&amp;</span><span class='ident'>then</span>, <span class='kw-2'>&amp;</span><span class='ident'>then</span>)
+    <span class="kw">fn</span> <span class="ident">index_nh</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;&gt;</span>(<span class="ident">s</span>: <span class="ident">S</span>) <span class="op">-&gt;</span> <span class="ident">Indexed</span> {
+        <span class="kw">let</span> <span class="ident">then</span> <span class="op">=</span> <span class="op">|</span><span class="ident">rdr</span>: <span class="ident">CsvReader</span><span class="op">|</span> <span class="ident">rdr</span>.<span class="ident">has_headers</span>(<span class="bool-val">false</span>);
+        <span class="ident">index_with</span>(<span class="ident">s</span>, <span class="kw-2">&amp;</span><span class="ident">then</span>, <span class="kw-2">&amp;</span><span class="ident">then</span>)
     }
 
-    <span class='kw'>fn</span> <span class='ident'>index_with</span><span class='op'>&lt;</span><span class='ident'>S</span>, <span class='ident'>F</span>, <span class='ident'>G</span><span class='op'>&gt;</span>(<span class='ident'>s</span>: <span class='ident'>S</span>, <span class='ident'>create</span>: <span class='ident'>F</span>, <span class='ident'>new</span>: <span class='ident'>G</span>) <span class='op'>-&gt;</span> <span class='ident'>Indexed</span>
-            <span class='kw'>where</span> <span class='ident'>S</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span>,
-                  <span class='ident'>F</span>: <span class='ident'>FnOnce</span>(<span class='ident'>CsvReader</span>) <span class='op'>-&gt;</span> <span class='ident'>CsvReader</span>,
-                  <span class='ident'>G</span>: <span class='ident'>FnOnce</span>(<span class='ident'>CsvReader</span>) <span class='op'>-&gt;</span> <span class='ident'>CsvReader</span> {
-        <span class='kw'>let</span> <span class='ident'>data</span> <span class='op'>=</span> <span class='ident'>s</span>.<span class='ident'>into</span>();
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>idx_bytes</span> <span class='op'>=</span> <span class='ident'>io</span>::<span class='ident'>Cursor</span>::<span class='ident'>new</span>(<span class='macro'>vec</span><span class='macro'>!</span>[]);
-        <span class='kw'>super</span>::<span class='ident'>create_index</span>(<span class='ident'>create</span>(<span class='ident'>Reader</span>::<span class='ident'>from_string</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>*</span><span class='ident'>data</span>)),
-                            <span class='ident'>idx_bytes</span>.<span class='ident'>by_ref</span>()).<span class='ident'>unwrap</span>();
-        <span class='kw'>super</span>::<span class='ident'>Indexed</span>::<span class='ident'>open</span>(<span class='ident'>new</span>(<span class='ident'>Reader</span>::<span class='ident'>from_string</span>(<span class='ident'>data</span>)),
-                             <span class='ident'>idx_bytes</span>).<span class='ident'>unwrap</span>()
+    <span class="kw">fn</span> <span class="ident">index_with</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">F</span>, <span class="ident">G</span><span class="op">&gt;</span>(<span class="ident">s</span>: <span class="ident">S</span>, <span class="ident">create</span>: <span class="ident">F</span>, <span class="ident">new</span>: <span class="ident">G</span>) <span class="op">-&gt;</span> <span class="ident">Indexed</span>
+            <span class="kw">where</span> <span class="ident">S</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
+                  <span class="ident">F</span>: <span class="ident">FnOnce</span>(<span class="ident">CsvReader</span>) <span class="op">-&gt;</span> <span class="ident">CsvReader</span>,
+                  <span class="ident">G</span>: <span class="ident">FnOnce</span>(<span class="ident">CsvReader</span>) <span class="op">-&gt;</span> <span class="ident">CsvReader</span> {
+        <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="ident">s</span>.<span class="ident">into</span>();
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">idx_bytes</span> <span class="op">=</span> <span class="ident">io</span>::<span class="ident">Cursor</span>::<span class="ident">new</span>(<span class="macro">vec</span><span class="macro">!</span>[]);
+        <span class="kw">super</span>::<span class="ident">create_index</span>(<span class="ident">create</span>(<span class="ident">Reader</span>::<span class="ident">from_string</span>(<span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="ident">data</span>)),
+                            <span class="ident">idx_bytes</span>.<span class="ident">by_ref</span>()).<span class="ident">unwrap</span>();
+        <span class="kw">super</span>::<span class="ident">Indexed</span>::<span class="ident">open</span>(<span class="ident">new</span>(<span class="ident">Reader</span>::<span class="ident">from_string</span>(<span class="ident">data</span>)),
+                             <span class="ident">idx_bytes</span>).<span class="ident">unwrap</span>()
     }
 
-    <span class='kw'>fn</span> <span class='ident'>next</span>(<span class='ident'>idx</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Indexed</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span> {
-        <span class='ident'>idx</span>.<span class='ident'>records</span>().<span class='ident'>next</span>().<span class='ident'>unwrap</span>().<span class='ident'>unwrap</span>()
+    <span class="kw">fn</span> <span class="ident">next</span>(<span class="ident">idx</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Indexed</span>) <span class="op">-&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
+        <span class="ident">idx</span>.<span class="ident">records</span>().<span class="ident">next</span>().<span class="ident">unwrap</span>().<span class="ident">unwrap</span>()
     }
 
-    <span class='kw'>fn</span> <span class='ident'>nth</span>(<span class='ident'>idx</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Indexed</span>, <span class='ident'>i</span>: <span class='ident'>u64</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span> {
-        <span class='ident'>idx</span>.<span class='ident'>seek</span>(<span class='ident'>i</span>).<span class='ident'>unwrap</span>();
-        <span class='ident'>next</span>(<span class='ident'>idx</span>)
+    <span class="kw">fn</span> <span class="ident">nth</span>(<span class="ident">idx</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Indexed</span>, <span class="ident">i</span>: <span class="ident">u64</span>) <span class="op">-&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
+        <span class="ident">idx</span>.<span class="ident">seek</span>(<span class="ident">i</span>).<span class="ident">unwrap</span>();
+        <span class="ident">next</span>(<span class="ident">idx</span>)
     }
 
-    <span class='attribute'>#[<span class='ident'>test</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>headers_one_field</span>() {
-        <span class='kw'>let</span> <span class='ident'>data</span> <span class='op'>=</span> <span class='string'>&quot;\
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">headers_one_field</span>() {
+        <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="string">&quot;\
 h1
 a
 b
 c
 &quot;</span>;
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>idx</span> <span class='op'>=</span> <span class='ident'>index</span>(<span class='ident'>data</span>);
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>idx</span>.<span class='ident'>count</span>(), <span class='number'>3</span>);
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">idx</span> <span class="op">=</span> <span class="ident">index</span>(<span class="ident">data</span>);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">idx</span>.<span class="ident">count</span>(), <span class="number">3</span>);
 
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>nth</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>idx</span>, <span class='number'>0</span>), <span class='macro'>vec</span><span class='macro'>!</span>[<span class='string'>&quot;a&quot;</span>]);
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>nth</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>idx</span>, <span class='number'>1</span>), <span class='macro'>vec</span><span class='macro'>!</span>[<span class='string'>&quot;b&quot;</span>]);
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>nth</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>idx</span>, <span class='number'>2</span>), <span class='macro'>vec</span><span class='macro'>!</span>[<span class='string'>&quot;c&quot;</span>]);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">nth</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">idx</span>, <span class="number">0</span>), <span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;a&quot;</span>]);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">nth</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">idx</span>, <span class="number">1</span>), <span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;b&quot;</span>]);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">nth</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">idx</span>, <span class="number">2</span>), <span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;c&quot;</span>]);
     }
 
-    <span class='attribute'>#[<span class='ident'>test</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>headers_many_fields</span>() {
-        <span class='kw'>let</span> <span class='ident'>data</span> <span class='op'>=</span> <span class='string'>&quot;\
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">headers_many_fields</span>() {
+        <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="string">&quot;\
 h1,h2,h3
 a,b,c
 d,e,f
 g,h,i
 &quot;</span>;
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>idx</span> <span class='op'>=</span> <span class='ident'>index</span>(<span class='ident'>data</span>);
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>idx</span>.<span class='ident'>count</span>(), <span class='number'>3</span>);
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">idx</span> <span class="op">=</span> <span class="ident">index</span>(<span class="ident">data</span>);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">idx</span>.<span class="ident">count</span>(), <span class="number">3</span>);
 
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>nth</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>idx</span>, <span class='number'>0</span>), <span class='macro'>vec</span><span class='macro'>!</span>[<span class='string'>&quot;a&quot;</span>, <span class='string'>&quot;b&quot;</span>, <span class='string'>&quot;c&quot;</span>]);
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>nth</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>idx</span>, <span class='number'>1</span>), <span class='macro'>vec</span><span class='macro'>!</span>[<span class='string'>&quot;d&quot;</span>, <span class='string'>&quot;e&quot;</span>, <span class='string'>&quot;f&quot;</span>]);
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>nth</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>idx</span>, <span class='number'>2</span>), <span class='macro'>vec</span><span class='macro'>!</span>[<span class='string'>&quot;g&quot;</span>, <span class='string'>&quot;h&quot;</span>, <span class='string'>&quot;i&quot;</span>]);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">nth</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">idx</span>, <span class="number">0</span>), <span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>, <span class="string">&quot;c&quot;</span>]);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">nth</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">idx</span>, <span class="number">1</span>), <span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;d&quot;</span>, <span class="string">&quot;e&quot;</span>, <span class="string">&quot;f&quot;</span>]);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">nth</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">idx</span>, <span class="number">2</span>), <span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;g&quot;</span>, <span class="string">&quot;h&quot;</span>, <span class="string">&quot;i&quot;</span>]);
     }
 
-    <span class='attribute'>#[<span class='ident'>test</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>no_headers_one_field</span>() {
-        <span class='kw'>let</span> <span class='ident'>data</span> <span class='op'>=</span> <span class='string'>&quot;\
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">no_headers_one_field</span>() {
+        <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="string">&quot;\
 h1
 a
 b
 c
 &quot;</span>;
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>idx</span> <span class='op'>=</span> <span class='ident'>index_nh</span>(<span class='ident'>data</span>);
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>idx</span>.<span class='ident'>count</span>(), <span class='number'>4</span>);
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">idx</span> <span class="op">=</span> <span class="ident">index_nh</span>(<span class="ident">data</span>);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">idx</span>.<span class="ident">count</span>(), <span class="number">4</span>);
 
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>nth</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>idx</span>, <span class='number'>0</span>), <span class='macro'>vec</span><span class='macro'>!</span>[<span class='string'>&quot;h1&quot;</span>]);
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>nth</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>idx</span>, <span class='number'>1</span>), <span class='macro'>vec</span><span class='macro'>!</span>[<span class='string'>&quot;a&quot;</span>]);
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>nth</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>idx</span>, <span class='number'>2</span>), <span class='macro'>vec</span><span class='macro'>!</span>[<span class='string'>&quot;b&quot;</span>]);
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>nth</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>idx</span>, <span class='number'>3</span>), <span class='macro'>vec</span><span class='macro'>!</span>[<span class='string'>&quot;c&quot;</span>]);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">nth</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">idx</span>, <span class="number">0</span>), <span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;h1&quot;</span>]);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">nth</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">idx</span>, <span class="number">1</span>), <span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;a&quot;</span>]);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">nth</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">idx</span>, <span class="number">2</span>), <span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;b&quot;</span>]);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">nth</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">idx</span>, <span class="number">3</span>), <span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;c&quot;</span>]);
     }
 
-    <span class='attribute'>#[<span class='ident'>test</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>no_headers_many_fields</span>() {
-        <span class='kw'>let</span> <span class='ident'>data</span> <span class='op'>=</span> <span class='string'>&quot;\
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">no_headers_many_fields</span>() {
+        <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="string">&quot;\
 h1,h2,h3
 a,b,c
 d,e,f
 g,h,i
 &quot;</span>;
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>idx</span> <span class='op'>=</span> <span class='ident'>index_nh</span>(<span class='ident'>data</span>);
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>idx</span>.<span class='ident'>count</span>(), <span class='number'>4</span>);
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">idx</span> <span class="op">=</span> <span class="ident">index_nh</span>(<span class="ident">data</span>);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">idx</span>.<span class="ident">count</span>(), <span class="number">4</span>);
 
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>nth</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>idx</span>, <span class='number'>0</span>), <span class='macro'>vec</span><span class='macro'>!</span>[<span class='string'>&quot;h1&quot;</span>, <span class='string'>&quot;h2&quot;</span>, <span class='string'>&quot;h3&quot;</span>]);
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>nth</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>idx</span>, <span class='number'>1</span>), <span class='macro'>vec</span><span class='macro'>!</span>[<span class='string'>&quot;a&quot;</span>, <span class='string'>&quot;b&quot;</span>, <span class='string'>&quot;c&quot;</span>]);
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>nth</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>idx</span>, <span class='number'>2</span>), <span class='macro'>vec</span><span class='macro'>!</span>[<span class='string'>&quot;d&quot;</span>, <span class='string'>&quot;e&quot;</span>, <span class='string'>&quot;f&quot;</span>]);
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>nth</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>idx</span>, <span class='number'>3</span>), <span class='macro'>vec</span><span class='macro'>!</span>[<span class='string'>&quot;g&quot;</span>, <span class='string'>&quot;h&quot;</span>, <span class='string'>&quot;i&quot;</span>]);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">nth</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">idx</span>, <span class="number">0</span>), <span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;h1&quot;</span>, <span class="string">&quot;h2&quot;</span>, <span class="string">&quot;h3&quot;</span>]);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">nth</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">idx</span>, <span class="number">1</span>), <span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>, <span class="string">&quot;c&quot;</span>]);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">nth</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">idx</span>, <span class="number">2</span>), <span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;d&quot;</span>, <span class="string">&quot;e&quot;</span>, <span class="string">&quot;f&quot;</span>]);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">nth</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">idx</span>, <span class="number">3</span>), <span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;g&quot;</span>, <span class="string">&quot;h&quot;</span>, <span class="string">&quot;i&quot;</span>]);
     }
 
-    <span class='attribute'>#[<span class='ident'>test</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>switch_headers_one_field1</span>() {
-        <span class='kw'>let</span> <span class='ident'>data</span> <span class='op'>=</span> <span class='string'>&quot;\
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">switch_headers_one_field1</span>() {
+        <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="string">&quot;\
 h1
 a
 b
 c
 &quot;</span>;
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>idx</span> <span class='op'>=</span> <span class='ident'>index_with</span>(<span class='ident'>data</span>, <span class='op'>|</span><span class='ident'>r</span><span class='op'>|</span> <span class='ident'>r</span>.<span class='ident'>has_headers</span>(<span class='bool-val'>false</span>), <span class='op'>|</span><span class='ident'>r</span><span class='op'>|</span> <span class='ident'>r</span>);
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>idx</span>.<span class='ident'>count</span>(), <span class='number'>3</span>);
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">idx</span> <span class="op">=</span> <span class="ident">index_with</span>(<span class="ident">data</span>, <span class="op">|</span><span class="ident">r</span><span class="op">|</span> <span class="ident">r</span>.<span class="ident">has_headers</span>(<span class="bool-val">false</span>), <span class="op">|</span><span class="ident">r</span><span class="op">|</span> <span class="ident">r</span>);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">idx</span>.<span class="ident">count</span>(), <span class="number">3</span>);
 
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>nth</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>idx</span>, <span class='number'>0</span>), <span class='macro'>vec</span><span class='macro'>!</span>[<span class='string'>&quot;a&quot;</span>]);
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>nth</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>idx</span>, <span class='number'>1</span>), <span class='macro'>vec</span><span class='macro'>!</span>[<span class='string'>&quot;b&quot;</span>]);
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>nth</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>idx</span>, <span class='number'>2</span>), <span class='macro'>vec</span><span class='macro'>!</span>[<span class='string'>&quot;c&quot;</span>]);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">nth</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">idx</span>, <span class="number">0</span>), <span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;a&quot;</span>]);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">nth</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">idx</span>, <span class="number">1</span>), <span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;b&quot;</span>]);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">nth</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">idx</span>, <span class="number">2</span>), <span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;c&quot;</span>]);
     }
 
-    <span class='attribute'>#[<span class='ident'>test</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>switch_headers_one_field2</span>() {
-        <span class='kw'>let</span> <span class='ident'>data</span> <span class='op'>=</span> <span class='string'>&quot;\
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">switch_headers_one_field2</span>() {
+        <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="string">&quot;\
 h1
 a
 b
 c
 &quot;</span>;
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>idx</span> <span class='op'>=</span> <span class='ident'>index_with</span>(<span class='ident'>data</span>, <span class='op'>|</span><span class='ident'>r</span><span class='op'>|</span> <span class='ident'>r</span>, <span class='op'>|</span><span class='ident'>r</span><span class='op'>|</span> <span class='ident'>r</span>.<span class='ident'>has_headers</span>(<span class='bool-val'>false</span>));
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>idx</span>.<span class='ident'>count</span>(), <span class='number'>4</span>);
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">idx</span> <span class="op">=</span> <span class="ident">index_with</span>(<span class="ident">data</span>, <span class="op">|</span><span class="ident">r</span><span class="op">|</span> <span class="ident">r</span>, <span class="op">|</span><span class="ident">r</span><span class="op">|</span> <span class="ident">r</span>.<span class="ident">has_headers</span>(<span class="bool-val">false</span>));
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">idx</span>.<span class="ident">count</span>(), <span class="number">4</span>);
 
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>nth</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>idx</span>, <span class='number'>0</span>), <span class='macro'>vec</span><span class='macro'>!</span>[<span class='string'>&quot;h1&quot;</span>]);
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>nth</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>idx</span>, <span class='number'>1</span>), <span class='macro'>vec</span><span class='macro'>!</span>[<span class='string'>&quot;a&quot;</span>]);
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>nth</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>idx</span>, <span class='number'>2</span>), <span class='macro'>vec</span><span class='macro'>!</span>[<span class='string'>&quot;b&quot;</span>]);
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>nth</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>idx</span>, <span class='number'>3</span>), <span class='macro'>vec</span><span class='macro'>!</span>[<span class='string'>&quot;c&quot;</span>]);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">nth</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">idx</span>, <span class="number">0</span>), <span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;h1&quot;</span>]);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">nth</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">idx</span>, <span class="number">1</span>), <span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;a&quot;</span>]);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">nth</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">idx</span>, <span class="number">2</span>), <span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;b&quot;</span>]);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">nth</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">idx</span>, <span class="number">3</span>), <span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;c&quot;</span>]);
     }
 
-    <span class='attribute'>#[<span class='ident'>test</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>headers_one_field_newlines</span>() {
-        <span class='kw'>let</span> <span class='ident'>data</span> <span class='op'>=</span> <span class='string'>&quot;
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">headers_one_field_newlines</span>() {
+        <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="string">&quot;
 
 
 
@@ -682,12 +682,12 @@ c
 
 
 &quot;</span>;
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>idx</span> <span class='op'>=</span> <span class='ident'>index</span>(<span class='ident'>data</span>);
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>idx</span>.<span class='ident'>count</span>(), <span class='number'>3</span>);
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">idx</span> <span class="op">=</span> <span class="ident">index</span>(<span class="ident">data</span>);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">idx</span>.<span class="ident">count</span>(), <span class="number">3</span>);
 
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>nth</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>idx</span>, <span class='number'>0</span>), <span class='macro'>vec</span><span class='macro'>!</span>[<span class='string'>&quot;a&quot;</span>]);
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>nth</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>idx</span>, <span class='number'>1</span>), <span class='macro'>vec</span><span class='macro'>!</span>[<span class='string'>&quot;b&quot;</span>]);
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>nth</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>idx</span>, <span class='number'>2</span>), <span class='macro'>vec</span><span class='macro'>!</span>[<span class='string'>&quot;c&quot;</span>]);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">nth</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">idx</span>, <span class="number">0</span>), <span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;a&quot;</span>]);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">nth</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">idx</span>, <span class="number">1</span>), <span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;b&quot;</span>]);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">nth</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">idx</span>, <span class="number">2</span>), <span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;c&quot;</span>]);
     }
 }
 </pre>

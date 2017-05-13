@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -165,127 +165,127 @@
 <span id="120">120</span>
 <span id="121">121</span>
 <span id="122">122</span>
-</pre><pre class='rust '>
-<span class='doccomment'>//! Internal only utilities</span>
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>io</span>::{<span class='ident'>Error</span>, <span class='ident'>ErrorKind</span>, <span class='ident'>Write</span>};
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>str</span>;
+</pre><pre class="rust ">
+<span class="doccomment">//! Internal only utilities</span>
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>::{<span class="ident">Error</span>, <span class="ident">ErrorKind</span>, <span class="ident">Write</span>};
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">str</span>;
 
-<span class='kw'>use</span> <span class='ident'>unicode_width</span>::<span class='ident'>UnicodeWidthStr</span>;
+<span class="kw">use</span> <span class="ident">unicode_width</span>::<span class="ident">UnicodeWidthStr</span>;
 
-<span class='kw'>use</span> <span class='kw'>super</span>::<span class='ident'>format</span>::<span class='ident'>Alignment</span>;
+<span class="kw">use</span> <span class="kw">super</span>::<span class="ident">format</span>::<span class="ident">Alignment</span>;
 
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>any</span>(<span class='ident'>not</span>(<span class='ident'>windows</span>), <span class='ident'>not</span>(<span class='ident'>feature</span><span class='op'>=</span><span class='string'>&quot;win_crlf&quot;</span>)))]</span>
-<span class='kw'>pub</span> <span class='kw'>static</span> <span class='ident'>NEWLINE</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;static</span> [<span class='ident'>u8</span>] <span class='op'>=</span> <span class='string'>b&quot;\n&quot;</span>;
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>all</span>(<span class='ident'>windows</span>, <span class='ident'>feature</span><span class='op'>=</span><span class='string'>&quot;win_crlf&quot;</span>))]</span>
-<span class='kw'>pub</span> <span class='kw'>static</span> <span class='ident'>NEWLINE</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;static</span> [<span class='ident'>u8</span>] <span class='op'>=</span> <span class='string'>b&quot;\r\n&quot;</span>;
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">not</span>(<span class="ident">windows</span>), <span class="ident">not</span>(<span class="ident">feature</span><span class="op">=</span><span class="string">&quot;win_crlf&quot;</span>)))]</span>
+<span class="kw">pub</span> <span class="kw">static</span> <span class="ident">NEWLINE</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> [<span class="ident">u8</span>] <span class="op">=</span> <span class="string">b&quot;\n&quot;</span>;
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">windows</span>, <span class="ident">feature</span><span class="op">=</span><span class="string">&quot;win_crlf&quot;</span>))]</span>
+<span class="kw">pub</span> <span class="kw">static</span> <span class="ident">NEWLINE</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> [<span class="ident">u8</span>] <span class="op">=</span> <span class="string">b&quot;\r\n&quot;</span>;
 
-<span class='doccomment'>/// Internal utility for writing data into a string</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>StringWriter</span> {
-	<span class='ident'>string</span>: <span class='ident'>String</span>
+<span class="doccomment">/// Internal utility for writing data into a string</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">StringWriter</span> {
+	<span class="ident">string</span>: <span class="ident">String</span>
 }
 
-<span class='kw'>impl</span> <span class='ident'>StringWriter</span> {
-	<span class='doccomment'>/// Create a new `StringWriter`</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>() <span class='op'>-&gt;</span> <span class='ident'>StringWriter</span> {
-		<span class='ident'>StringWriter</span>{<span class='ident'>string</span>: <span class='ident'>String</span>::<span class='ident'>new</span>()}
+<span class="kw">impl</span> <span class="ident">StringWriter</span> {
+	<span class="doccomment">/// Create a new `StringWriter`</span>
+	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-&gt;</span> <span class="ident">StringWriter</span> {
+		<span class="ident">StringWriter</span>{<span class="ident">string</span>: <span class="ident">String</span>::<span class="ident">new</span>()}
 	}
 
-	<span class='doccomment'>/// Return a reference to the internally written `String`</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>as_string</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>str</span> {
-		<span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>string</span>
+	<span class="doccomment">/// Return a reference to the internally written `String`</span>
+	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_string</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
+		<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">string</span>
 	}
 }
 
-<span class='kw'>impl</span> <span class='ident'>Write</span> <span class='kw'>for</span> <span class='ident'>StringWriter</span> {
-	<span class='kw'>fn</span> <span class='ident'>write</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>data</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>usize</span>, <span class='ident'>Error</span><span class='op'>&gt;</span> {
-		<span class='kw'>let</span> <span class='ident'>string</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='ident'>str</span>::<span class='ident'>from_utf8</span>(<span class='ident'>data</span>) {
-			<span class='prelude-val'>Ok</span>(<span class='ident'>s</span>) <span class='op'>=&gt;</span> <span class='ident'>s</span>,
-			<span class='prelude-val'>Err</span>(<span class='ident'>e</span>) <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='ident'>Error</span>::<span class='ident'>new</span>(<span class='ident'>ErrorKind</span>::<span class='ident'>Other</span>, <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;Cannot decode utf8 string : {}&quot;</span>, <span class='ident'>e</span>)))
+<span class="kw">impl</span> <span class="ident">Write</span> <span class="kw">for</span> <span class="ident">StringWriter</span> {
+	<span class="kw">fn</span> <span class="ident">write</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">data</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+		<span class="kw">let</span> <span class="ident">string</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">str</span>::<span class="ident">from_utf8</span>(<span class="ident">data</span>) {
+			<span class="prelude-val">Ok</span>(<span class="ident">s</span>) <span class="op">=&gt;</span> <span class="ident">s</span>,
+			<span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">new</span>(<span class="ident">ErrorKind</span>::<span class="ident">Other</span>, <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;Cannot decode utf8 string : {}&quot;</span>, <span class="ident">e</span>)))
 		};
-		<span class='self'>self</span>.<span class='ident'>string</span>.<span class='ident'>push_str</span>(<span class='ident'>string</span>);
-		<span class='prelude-val'>Ok</span>(<span class='ident'>data</span>.<span class='ident'>len</span>())
+		<span class="self">self</span>.<span class="ident">string</span>.<span class="ident">push_str</span>(<span class="ident">string</span>);
+		<span class="prelude-val">Ok</span>(<span class="ident">data</span>.<span class="ident">len</span>())
 	}
 
-	<span class='kw'>fn</span> <span class='ident'>flush</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>Error</span><span class='op'>&gt;</span> {
-		<span class='comment'>// Nothing to do here</span>
-		<span class='prelude-val'>Ok</span>(())
+	<span class="kw">fn</span> <span class="ident">flush</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
+		<span class="comment">// Nothing to do here</span>
+		<span class="prelude-val">Ok</span>(())
 	}
 }
 
-<span class='doccomment'>/// Align/fill a string and print it to `out`</span>
-<span class='doccomment'>/// If `skip_right_fill` is set to `true`, then no spce will be added after the string</span>
-<span class='doccomment'>/// to complete alignment</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>print_align</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Write</span><span class='op'>+</span><span class='question-mark'>?</span><span class='ident'>Sized</span><span class='op'>&gt;</span>(<span class='ident'>out</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>T</span>, <span class='ident'>align</span>: <span class='ident'>Alignment</span>, <span class='ident'>text</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>, <span class='ident'>fill</span>: <span class='ident'>char</span>, <span class='ident'>size</span>: <span class='ident'>usize</span>, <span class='ident'>skip_right_fill</span>: <span class='ident'>bool</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>Error</span><span class='op'>&gt;</span> {
-	<span class='kw'>let</span> <span class='ident'>text_len</span> <span class='op'>=</span> <span class='ident'>UnicodeWidthStr</span>::<span class='ident'>width</span>(<span class='ident'>text</span>);
-	<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>nfill</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='ident'>text_len</span> <span class='op'>&lt;</span> <span class='ident'>size</span> { <span class='ident'>size</span> <span class='op'>-</span> <span class='ident'>text_len</span> } <span class='kw'>else</span> { <span class='number'>0</span> };
-	<span class='kw'>let</span> <span class='ident'>n</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='ident'>align</span> {
-		<span class='ident'>Alignment</span>::<span class='ident'>LEFT</span> <span class='op'>=&gt;</span> <span class='number'>0</span>,
-		<span class='ident'>Alignment</span>:: <span class='ident'>RIGHT</span> <span class='op'>=&gt;</span> <span class='ident'>nfill</span>,
-		<span class='ident'>Alignment</span>:: <span class='ident'>CENTER</span> <span class='op'>=&gt;</span> <span class='ident'>nfill</span><span class='op'>/</span><span class='number'>2</span>
+<span class="doccomment">/// Align/fill a string and print it to `out`</span>
+<span class="doccomment">/// If `skip_right_fill` is set to `true`, then no spce will be added after the string</span>
+<span class="doccomment">/// to complete alignment</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">print_align</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Write</span><span class="op">+</span><span class="question-mark">?</span><span class="ident">Sized</span><span class="op">&gt;</span>(<span class="ident">out</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">T</span>, <span class="ident">align</span>: <span class="ident">Alignment</span>, <span class="ident">text</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">fill</span>: <span class="ident">char</span>, <span class="ident">size</span>: <span class="ident">usize</span>, <span class="ident">skip_right_fill</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
+	<span class="kw">let</span> <span class="ident">text_len</span> <span class="op">=</span> <span class="ident">UnicodeWidthStr</span>::<span class="ident">width</span>(<span class="ident">text</span>);
+	<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">nfill</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">text_len</span> <span class="op">&lt;</span> <span class="ident">size</span> { <span class="ident">size</span> <span class="op">-</span> <span class="ident">text_len</span> } <span class="kw">else</span> { <span class="number">0</span> };
+	<span class="kw">let</span> <span class="ident">n</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">align</span> {
+		<span class="ident">Alignment</span>::<span class="ident">LEFT</span> <span class="op">=&gt;</span> <span class="number">0</span>,
+		<span class="ident">Alignment</span>:: <span class="ident">RIGHT</span> <span class="op">=&gt;</span> <span class="ident">nfill</span>,
+		<span class="ident">Alignment</span>:: <span class="ident">CENTER</span> <span class="op">=&gt;</span> <span class="ident">nfill</span><span class="op">/</span><span class="number">2</span>
 	};
-	<span class='kw'>if</span> <span class='ident'>n</span> <span class='op'>&gt;</span> <span class='number'>0</span> {
-		<span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>out</span>.<span class='ident'>write</span>(<span class='kw-2'>&amp;</span><span class='macro'>vec</span><span class='macro'>!</span>[<span class='ident'>fill</span> <span class='kw'>as</span> <span class='ident'>u8</span>; <span class='ident'>n</span>]));
-		<span class='ident'>nfill</span> <span class='op'>-=</span> <span class='ident'>n</span>;
+	<span class="kw">if</span> <span class="ident">n</span> <span class="op">&gt;</span> <span class="number">0</span> {
+		<span class="macro">try</span><span class="macro">!</span>(<span class="ident">out</span>.<span class="ident">write</span>(<span class="kw-2">&amp;</span><span class="macro">vec</span><span class="macro">!</span>[<span class="ident">fill</span> <span class="kw">as</span> <span class="ident">u8</span>; <span class="ident">n</span>]));
+		<span class="ident">nfill</span> <span class="op">-=</span> <span class="ident">n</span>;
 	}
-	<span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>out</span>.<span class='ident'>write</span>(<span class='ident'>text</span>.<span class='ident'>as_bytes</span>()));
-	<span class='kw'>if</span> <span class='ident'>nfill</span> <span class='op'>&gt;</span> <span class='number'>0</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span> <span class='ident'>skip_right_fill</span> {
-		<span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>out</span>.<span class='ident'>write</span>(<span class='kw-2'>&amp;</span><span class='macro'>vec</span><span class='macro'>!</span>[<span class='ident'>fill</span> <span class='kw'>as</span> <span class='ident'>u8</span>; <span class='ident'>nfill</span>]));
+	<span class="macro">try</span><span class="macro">!</span>(<span class="ident">out</span>.<span class="ident">write</span>(<span class="ident">text</span>.<span class="ident">as_bytes</span>()));
+	<span class="kw">if</span> <span class="ident">nfill</span> <span class="op">&gt;</span> <span class="number">0</span> <span class="op">&amp;&amp;</span> <span class="op">!</span> <span class="ident">skip_right_fill</span> {
+		<span class="macro">try</span><span class="macro">!</span>(<span class="ident">out</span>.<span class="ident">write</span>(<span class="kw-2">&amp;</span><span class="macro">vec</span><span class="macro">!</span>[<span class="ident">fill</span> <span class="kw">as</span> <span class="ident">u8</span>; <span class="ident">nfill</span>]));
 	}
-	<span class='prelude-val'>Ok</span>(())
+	<span class="prelude-val">Ok</span>(())
 }
 
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>test</span>)]</span>
-<span class='kw'>mod</span> <span class='ident'>tests</span> {
-	<span class='kw'>use</span> <span class='kw'>super</span>::<span class='kw-2'>*</span>;
-	<span class='kw'>use</span> <span class='ident'>format</span>::<span class='ident'>Alignment</span>;
-	<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>io</span>::<span class='ident'>Write</span>;
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
+<span class="kw">mod</span> <span class="ident">tests</span> {
+	<span class="kw">use</span> <span class="kw">super</span>::<span class="kw-2">*</span>;
+	<span class="kw">use</span> <span class="ident">format</span>::<span class="ident">Alignment</span>;
+	<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>::<span class="ident">Write</span>;
 
-	<span class='attribute'>#[<span class='ident'>test</span>]</span>
-	<span class='kw'>fn</span> <span class='ident'>string_writer</span>() {
-		<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>out</span> <span class='op'>=</span> <span class='ident'>StringWriter</span>::<span class='ident'>new</span>();
-		<span class='ident'>out</span>.<span class='ident'>write</span>(<span class='string'>&quot;foo&quot;</span>.<span class='ident'>as_bytes</span>()).<span class='ident'>unwrap</span>();
-		<span class='ident'>out</span>.<span class='ident'>write</span>(<span class='string'>&quot; &quot;</span>.<span class='ident'>as_bytes</span>()).<span class='ident'>unwrap</span>();
-		<span class='ident'>out</span>.<span class='ident'>write</span>(<span class='string'>&quot;&quot;</span>.<span class='ident'>as_bytes</span>()).<span class='ident'>unwrap</span>();
-		<span class='ident'>out</span>.<span class='ident'>write</span>(<span class='string'>&quot;bar&quot;</span>.<span class='ident'>as_bytes</span>()).<span class='ident'>unwrap</span>();
-		<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>out</span>.<span class='ident'>as_string</span>(), <span class='string'>&quot;foo bar&quot;</span>);
+	<span class="attribute">#[<span class="ident">test</span>]</span>
+	<span class="kw">fn</span> <span class="ident">string_writer</span>() {
+		<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">out</span> <span class="op">=</span> <span class="ident">StringWriter</span>::<span class="ident">new</span>();
+		<span class="ident">out</span>.<span class="ident">write</span>(<span class="string">&quot;foo&quot;</span>.<span class="ident">as_bytes</span>()).<span class="ident">unwrap</span>();
+		<span class="ident">out</span>.<span class="ident">write</span>(<span class="string">&quot; &quot;</span>.<span class="ident">as_bytes</span>()).<span class="ident">unwrap</span>();
+		<span class="ident">out</span>.<span class="ident">write</span>(<span class="string">&quot;&quot;</span>.<span class="ident">as_bytes</span>()).<span class="ident">unwrap</span>();
+		<span class="ident">out</span>.<span class="ident">write</span>(<span class="string">&quot;bar&quot;</span>.<span class="ident">as_bytes</span>()).<span class="ident">unwrap</span>();
+		<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">out</span>.<span class="ident">as_string</span>(), <span class="string">&quot;foo bar&quot;</span>);
 	}
 
-	<span class='attribute'>#[<span class='ident'>test</span>]</span>
-	<span class='kw'>fn</span> <span class='ident'>fill_align</span>() {
-		<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>out</span> <span class='op'>=</span> <span class='ident'>StringWriter</span>::<span class='ident'>new</span>();
-		<span class='ident'>print_align</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>out</span>, <span class='ident'>Alignment</span>::<span class='ident'>RIGHT</span>, <span class='string'>&quot;foo&quot;</span>, <span class='string'>&#39;*&#39;</span>, <span class='number'>10</span>, <span class='bool-val'>false</span>).<span class='ident'>unwrap</span>();
-		<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>out</span>.<span class='ident'>as_string</span>(), <span class='string'>&quot;*******foo&quot;</span>);
+	<span class="attribute">#[<span class="ident">test</span>]</span>
+	<span class="kw">fn</span> <span class="ident">fill_align</span>() {
+		<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">out</span> <span class="op">=</span> <span class="ident">StringWriter</span>::<span class="ident">new</span>();
+		<span class="ident">print_align</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">out</span>, <span class="ident">Alignment</span>::<span class="ident">RIGHT</span>, <span class="string">&quot;foo&quot;</span>, <span class="string">&#39;*&#39;</span>, <span class="number">10</span>, <span class="bool-val">false</span>).<span class="ident">unwrap</span>();
+		<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">out</span>.<span class="ident">as_string</span>(), <span class="string">&quot;*******foo&quot;</span>);
 
-		<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>out</span> <span class='op'>=</span> <span class='ident'>StringWriter</span>::<span class='ident'>new</span>();
-		<span class='ident'>print_align</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>out</span>, <span class='ident'>Alignment</span>::<span class='ident'>LEFT</span>, <span class='string'>&quot;foo&quot;</span>, <span class='string'>&#39;*&#39;</span>, <span class='number'>10</span>, <span class='bool-val'>false</span>).<span class='ident'>unwrap</span>();
-		<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>out</span>.<span class='ident'>as_string</span>(), <span class='string'>&quot;foo*******&quot;</span>);
+		<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">out</span> <span class="op">=</span> <span class="ident">StringWriter</span>::<span class="ident">new</span>();
+		<span class="ident">print_align</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">out</span>, <span class="ident">Alignment</span>::<span class="ident">LEFT</span>, <span class="string">&quot;foo&quot;</span>, <span class="string">&#39;*&#39;</span>, <span class="number">10</span>, <span class="bool-val">false</span>).<span class="ident">unwrap</span>();
+		<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">out</span>.<span class="ident">as_string</span>(), <span class="string">&quot;foo*******&quot;</span>);
 
-		<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>out</span> <span class='op'>=</span> <span class='ident'>StringWriter</span>::<span class='ident'>new</span>();
-		<span class='ident'>print_align</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>out</span>, <span class='ident'>Alignment</span>::<span class='ident'>CENTER</span>, <span class='string'>&quot;foo&quot;</span>, <span class='string'>&#39;*&#39;</span>, <span class='number'>10</span>, <span class='bool-val'>false</span>).<span class='ident'>unwrap</span>();
-		<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>out</span>.<span class='ident'>as_string</span>(), <span class='string'>&quot;***foo****&quot;</span>);
+		<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">out</span> <span class="op">=</span> <span class="ident">StringWriter</span>::<span class="ident">new</span>();
+		<span class="ident">print_align</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">out</span>, <span class="ident">Alignment</span>::<span class="ident">CENTER</span>, <span class="string">&quot;foo&quot;</span>, <span class="string">&#39;*&#39;</span>, <span class="number">10</span>, <span class="bool-val">false</span>).<span class="ident">unwrap</span>();
+		<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">out</span>.<span class="ident">as_string</span>(), <span class="string">&quot;***foo****&quot;</span>);
 
-		<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>out</span> <span class='op'>=</span> <span class='ident'>StringWriter</span>::<span class='ident'>new</span>();
-		<span class='ident'>print_align</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>out</span>, <span class='ident'>Alignment</span>::<span class='ident'>CENTER</span>, <span class='string'>&quot;foo&quot;</span>, <span class='string'>&#39;*&#39;</span>, <span class='number'>1</span>, <span class='bool-val'>false</span>).<span class='ident'>unwrap</span>();
-		<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>out</span>.<span class='ident'>as_string</span>(), <span class='string'>&quot;foo&quot;</span>);
+		<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">out</span> <span class="op">=</span> <span class="ident">StringWriter</span>::<span class="ident">new</span>();
+		<span class="ident">print_align</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">out</span>, <span class="ident">Alignment</span>::<span class="ident">CENTER</span>, <span class="string">&quot;foo&quot;</span>, <span class="string">&#39;*&#39;</span>, <span class="number">1</span>, <span class="bool-val">false</span>).<span class="ident">unwrap</span>();
+		<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">out</span>.<span class="ident">as_string</span>(), <span class="string">&quot;foo&quot;</span>);
 	}
 
-	<span class='attribute'>#[<span class='ident'>test</span>]</span>
-	<span class='kw'>fn</span> <span class='ident'>skip_right_fill</span>() {
-		<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>out</span> <span class='op'>=</span> <span class='ident'>StringWriter</span>::<span class='ident'>new</span>();
-		<span class='ident'>print_align</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>out</span>, <span class='ident'>Alignment</span>::<span class='ident'>RIGHT</span>, <span class='string'>&quot;foo&quot;</span>, <span class='string'>&#39;*&#39;</span>, <span class='number'>10</span>, <span class='bool-val'>true</span>).<span class='ident'>unwrap</span>();
-		<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>out</span>.<span class='ident'>as_string</span>(), <span class='string'>&quot;*******foo&quot;</span>);
+	<span class="attribute">#[<span class="ident">test</span>]</span>
+	<span class="kw">fn</span> <span class="ident">skip_right_fill</span>() {
+		<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">out</span> <span class="op">=</span> <span class="ident">StringWriter</span>::<span class="ident">new</span>();
+		<span class="ident">print_align</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">out</span>, <span class="ident">Alignment</span>::<span class="ident">RIGHT</span>, <span class="string">&quot;foo&quot;</span>, <span class="string">&#39;*&#39;</span>, <span class="number">10</span>, <span class="bool-val">true</span>).<span class="ident">unwrap</span>();
+		<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">out</span>.<span class="ident">as_string</span>(), <span class="string">&quot;*******foo&quot;</span>);
 
-		<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>out</span> <span class='op'>=</span> <span class='ident'>StringWriter</span>::<span class='ident'>new</span>();
-		<span class='ident'>print_align</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>out</span>, <span class='ident'>Alignment</span>::<span class='ident'>LEFT</span>, <span class='string'>&quot;foo&quot;</span>, <span class='string'>&#39;*&#39;</span>, <span class='number'>10</span>, <span class='bool-val'>true</span>).<span class='ident'>unwrap</span>();
-		<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>out</span>.<span class='ident'>as_string</span>(), <span class='string'>&quot;foo&quot;</span>);
+		<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">out</span> <span class="op">=</span> <span class="ident">StringWriter</span>::<span class="ident">new</span>();
+		<span class="ident">print_align</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">out</span>, <span class="ident">Alignment</span>::<span class="ident">LEFT</span>, <span class="string">&quot;foo&quot;</span>, <span class="string">&#39;*&#39;</span>, <span class="number">10</span>, <span class="bool-val">true</span>).<span class="ident">unwrap</span>();
+		<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">out</span>.<span class="ident">as_string</span>(), <span class="string">&quot;foo&quot;</span>);
 
-		<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>out</span> <span class='op'>=</span> <span class='ident'>StringWriter</span>::<span class='ident'>new</span>();
-		<span class='ident'>print_align</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>out</span>, <span class='ident'>Alignment</span>::<span class='ident'>CENTER</span>, <span class='string'>&quot;foo&quot;</span>, <span class='string'>&#39;*&#39;</span>, <span class='number'>10</span>, <span class='bool-val'>true</span>).<span class='ident'>unwrap</span>();
-		<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>out</span>.<span class='ident'>as_string</span>(), <span class='string'>&quot;***foo&quot;</span>);
+		<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">out</span> <span class="op">=</span> <span class="ident">StringWriter</span>::<span class="ident">new</span>();
+		<span class="ident">print_align</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">out</span>, <span class="ident">Alignment</span>::<span class="ident">CENTER</span>, <span class="string">&quot;foo&quot;</span>, <span class="string">&#39;*&#39;</span>, <span class="number">10</span>, <span class="bool-val">true</span>).<span class="ident">unwrap</span>();
+		<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">out</span>.<span class="ident">as_string</span>(), <span class="string">&quot;***foo&quot;</span>);
 
-		<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>out</span> <span class='op'>=</span> <span class='ident'>StringWriter</span>::<span class='ident'>new</span>();
-		<span class='ident'>print_align</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>out</span>, <span class='ident'>Alignment</span>::<span class='ident'>CENTER</span>, <span class='string'>&quot;foo&quot;</span>, <span class='string'>&#39;*&#39;</span>, <span class='number'>1</span>, <span class='bool-val'>false</span>).<span class='ident'>unwrap</span>();
-		<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>out</span>.<span class='ident'>as_string</span>(), <span class='string'>&quot;foo&quot;</span>);
+		<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">out</span> <span class="op">=</span> <span class="ident">StringWriter</span>::<span class="ident">new</span>();
+		<span class="ident">print_align</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">out</span>, <span class="ident">Alignment</span>::<span class="ident">CENTER</span>, <span class="string">&quot;foo&quot;</span>, <span class="string">&#39;*&#39;</span>, <span class="number">1</span>, <span class="bool-val">false</span>).<span class="ident">unwrap</span>();
+		<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">out</span>.<span class="ident">as_string</span>(), <span class="string">&quot;foo&quot;</span>);
 	}
 }
 </pre>

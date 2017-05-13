@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc mod">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,8 +43,8 @@
         </form>
     </nav>
 
-    <section id='main' class="content mod">
-<h1 class='fqn'><span class='in-band'>Module <a href='../index.html'>csv</a>::<wbr><a class='mod' href=''>index</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Module <a href='../index.html'>csv</a>::<wbr><a class="mod" href=''>index</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
@@ -60,46 +60,46 @@ modest upfront cost in time and memory.</p>
 any record in the data. (The indexing interface works with seekable readers
 and writers, so you can use <code>std::fs::File</code> for this too.)</p>
 
-<pre class='rust rust-example-rendered'>
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>io</span>::{<span class='self'>self</span>, <span class='ident'>Write</span>};
-<span class='kw'>use</span> <span class='ident'>csv</span>::<span class='ident'>index</span>::{<span class='ident'>Indexed</span>, <span class='ident'>create_index</span>};
+<pre class="rust rust-example-rendered">
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>::{<span class="self">self</span>, <span class="ident">Write</span>};
+<span class="kw">use</span> <span class="ident">csv</span>::<span class="ident">index</span>::{<span class="ident">Indexed</span>, <span class="ident">create_index</span>};
 
-<span class='kw'>let</span> <span class='ident'>data</span> <span class='op'>=</span> <span class='string'>&quot;
+<span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="string">&quot;
 h1,h2,h3
 a,b,c
 d,e,f
 g,h,i
 &quot;</span>;
 
-<span class='kw'>let</span> <span class='ident'>new_csv_rdr</span> <span class='op'>=</span> <span class='op'>||</span> <span class='ident'>csv</span>::<span class='ident'>Reader</span>::<span class='ident'>from_string</span>(<span class='ident'>data</span>);
+<span class="kw">let</span> <span class="ident">new_csv_rdr</span> <span class="op">=</span> <span class="op">||</span> <span class="ident">csv</span>::<span class="ident">Reader</span>::<span class="ident">from_string</span>(<span class="ident">data</span>);
 
-<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>index_data</span> <span class='op'>=</span> <span class='ident'>io</span>::<span class='ident'>Cursor</span>::<span class='ident'>new</span>(<span class='ident'>Vec</span>::<span class='ident'>new</span>());
-<span class='ident'>create_index</span>(<span class='ident'>new_csv_rdr</span>(), <span class='ident'>index_data</span>.<span class='ident'>by_ref</span>()).<span class='ident'>unwrap</span>();
-<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>index</span> <span class='op'>=</span> <span class='ident'>Indexed</span>::<span class='ident'>open</span>(<span class='ident'>new_csv_rdr</span>(), <span class='ident'>index_data</span>).<span class='ident'>unwrap</span>();
+<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">index_data</span> <span class="op">=</span> <span class="ident">io</span>::<span class="ident">Cursor</span>::<span class="ident">new</span>(<span class="ident">Vec</span>::<span class="ident">new</span>());
+<span class="ident">create_index</span>(<span class="ident">new_csv_rdr</span>(), <span class="ident">index_data</span>.<span class="ident">by_ref</span>()).<span class="ident">unwrap</span>();
+<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">index</span> <span class="op">=</span> <span class="ident">Indexed</span>::<span class="ident">open</span>(<span class="ident">new_csv_rdr</span>(), <span class="ident">index_data</span>).<span class="ident">unwrap</span>();
 
-<span class='comment'>// Seek to the second record and read its data. This is done *without*</span>
-<span class='comment'>// reading the first record.</span>
-<span class='ident'>index</span>.<span class='ident'>seek</span>(<span class='number'>1</span>).<span class='ident'>unwrap</span>();
+<span class="comment">// Seek to the second record and read its data. This is done *without*</span>
+<span class="comment">// reading the first record.</span>
+<span class="ident">index</span>.<span class="ident">seek</span>(<span class="number">1</span>).<span class="ident">unwrap</span>();
 
-<span class='comment'>// Read the first row at this position (which is the second record).</span>
-<span class='comment'>// Since `Indexed` derefs to a `csv::Reader`, we can call CSV reader methods</span>
-<span class='comment'>// on it directly.</span>
-<span class='kw'>let</span> <span class='ident'>row</span> <span class='op'>=</span> <span class='ident'>index</span>.<span class='ident'>records</span>().<span class='ident'>next</span>().<span class='ident'>unwrap</span>().<span class='ident'>unwrap</span>();
+<span class="comment">// Read the first row at this position (which is the second record).</span>
+<span class="comment">// Since `Indexed` derefs to a `csv::Reader`, we can call CSV reader methods</span>
+<span class="comment">// on it directly.</span>
+<span class="kw">let</span> <span class="ident">row</span> <span class="op">=</span> <span class="ident">index</span>.<span class="ident">records</span>().<span class="ident">next</span>().<span class="ident">unwrap</span>().<span class="ident">unwrap</span>();
 
-<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>row</span>, <span class='macro'>vec</span><span class='macro'>!</span>[<span class='string'>&quot;d&quot;</span>, <span class='string'>&quot;e&quot;</span>, <span class='string'>&quot;f&quot;</span>]);</pre>
+<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">row</span>, <span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;d&quot;</span>, <span class="string">&quot;e&quot;</span>, <span class="string">&quot;f&quot;</span>]);</pre>
 </div><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
                        <tr class=' module-item'>
-                           <td><a class='struct' href='struct.Indexed.html'
-                                  title='csv::index::Indexed'>Indexed</a></td>
+                           <td><a class="struct" href="struct.Indexed.html"
+                                  title='struct csv::index::Indexed'>Indexed</a></td>
                            <td class='docblock-short'>
                                 <p>A type for representing CSV data with a basic record index.</p>
                            </td>
                        </tr></table><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
 <table>
                        <tr class=' module-item'>
-                           <td><a class='fn' href='fn.create_index.html'
-                                  title='csv::index::create_index'>create_index</a></td>
+                           <td><a class="fn" href="fn.create_index.html"
+                                  title='fn csv::index::create_index'>create_index</a></td>
                            <td class='docblock-short'>
                                 <p>Creates a new index for the given CSV reader.</p>
                            </td>

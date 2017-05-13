@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -511,473 +511,473 @@
 <span id="466">466</span>
 <span id="467">467</span>
 <span id="468">468</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>fs</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>io</span>::{<span class='self'>self</span>, <span class='ident'>Write</span>};
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>path</span>::<span class='ident'>Path</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>str</span>;
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fs</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>::{<span class="self">self</span>, <span class="ident">Write</span>};
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">path</span>::<span class="ident">Path</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">str</span>;
 
-<span class='kw'>use</span> <span class='ident'>memchr</span>::<span class='ident'>memchr</span>;
-<span class='kw'>use</span> <span class='ident'>rustc_serialize</span>::<span class='ident'>Encodable</span>;
+<span class="kw">use</span> <span class="ident">memchr</span>::<span class="ident">memchr</span>;
+<span class="kw">use</span> <span class="ident">rustc_serialize</span>::<span class="ident">Encodable</span>;
 
-<span class='kw'>use</span> {
-    <span class='ident'>BorrowBytes</span>, <span class='ident'>ByteString</span>, <span class='prelude-ty'>Result</span>, <span class='ident'>Encoded</span>, <span class='ident'>Error</span>, <span class='ident'>RecordTerminator</span>,
+<span class="kw">use</span> {
+    <span class="ident">BorrowBytes</span>, <span class="ident">ByteString</span>, <span class="prelude-ty">Result</span>, <span class="ident">Encoded</span>, <span class="ident">Error</span>, <span class="ident">RecordTerminator</span>,
 };
 
-<span class='doccomment'>/// The quoting style to use when writing CSV data.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>, <span class='ident'>Copy</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>QuoteStyle</span> {
-    <span class='doccomment'>/// This puts quotes around every field. Always.</span>
-    <span class='ident'>Always</span>,
-    <span class='doccomment'>/// This puts quotes around fields only when necessary.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// They are necessary when fields are empty or contain a quote, delimiter</span>
-    <span class='doccomment'>/// or record terminator.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// This is the default.</span>
-    <span class='ident'>Necessary</span>,
-    <span class='doccomment'>/// This *never* writes quotes.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// If a field requires quotes, then the writer will report an error.</span>
-    <span class='ident'>Never</span>,
+<span class="doccomment">/// The quoting style to use when writing CSV data.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Copy</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">QuoteStyle</span> {
+    <span class="doccomment">/// This puts quotes around every field. Always.</span>
+    <span class="ident">Always</span>,
+    <span class="doccomment">/// This puts quotes around fields only when necessary.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// They are necessary when fields are empty or contain a quote, delimiter</span>
+    <span class="doccomment">/// or record terminator.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This is the default.</span>
+    <span class="ident">Necessary</span>,
+    <span class="doccomment">/// This *never* writes quotes.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// If a field requires quotes, then the writer will report an error.</span>
+    <span class="ident">Never</span>,
 }
 
-<span class='doccomment'>/// A CSV writer.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// This writer provides a convenient interface for encoding CSV data. While</span>
-<span class='doccomment'>/// creating CSV data is much easier than parsing it, having a writer can</span>
-<span class='doccomment'>/// be convenient because it can handle quoting for you automatically.</span>
-<span class='doccomment'>/// Moreover, this particular writer supports `Encodable` types, which makes</span>
-<span class='doccomment'>/// it easy to write your custom types as CSV records.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// All CSV data produced by this writer, with default options, conforms with</span>
-<span class='doccomment'>/// [RFC 4180](http://tools.ietf.org/html/rfc4180). (If certain options like</span>
-<span class='doccomment'>/// flexible record lengths are enabled, then compliance with RFC 4180 cannot</span>
-<span class='doccomment'>/// be guaranteed.)</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// One slight deviation is that records with a single empty field are always</span>
-<span class='doccomment'>/// encoded as `&quot;&quot;`. This ensures that the record is not skipped since some</span>
-<span class='doccomment'>/// CSV parsers will ignore consecutive record terminators (like the one in</span>
-<span class='doccomment'>/// this crate).</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// ### Example</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// Here&#39;s an example that encodes word pairs and their edit distances:</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// ```rust</span>
-<span class='doccomment'>/// let records = vec![</span>
-<span class='doccomment'>///     (&quot;sticker&quot;, &quot;mortals&quot;, 7),</span>
-<span class='doccomment'>///     (&quot;bribed&quot;, &quot;personae&quot;, 7),</span>
-<span class='doccomment'>///     (&quot;wobbling&quot;, &quot;poncing&quot;, 4),</span>
-<span class='doccomment'>///     (&quot;interposed&quot;, &quot;emmett&quot;, 9),</span>
-<span class='doccomment'>///     (&quot;chocolate&quot;, &quot;refile&quot;, 7),</span>
-<span class='doccomment'>/// ];</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// let mut wtr = csv::Writer::from_memory();</span>
-<span class='doccomment'>/// for record in records.into_iter() {</span>
-<span class='doccomment'>///     let result = wtr.encode(record);</span>
-<span class='doccomment'>///     assert!(result.is_ok());</span>
-<span class='doccomment'>/// }</span>
-<span class='doccomment'>/// ```</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Writer</span><span class='op'>&lt;</span><span class='ident'>W</span>: <span class='ident'>Write</span><span class='op'>&gt;</span> {
-    <span class='ident'>buf</span>: <span class='ident'>io</span>::<span class='ident'>BufWriter</span><span class='op'>&lt;</span><span class='ident'>W</span><span class='op'>&gt;</span>,
-    <span class='ident'>delimiter</span>: <span class='ident'>u8</span>,
-    <span class='ident'>record_terminator</span>: <span class='ident'>RecordTerminator</span>,
-    <span class='ident'>flexible</span>: <span class='ident'>bool</span>,
-    <span class='ident'>quote</span>: <span class='ident'>u8</span>,
-    <span class='ident'>escape</span>: <span class='ident'>u8</span>,
-    <span class='ident'>double_quote</span>: <span class='ident'>bool</span>,
-    <span class='ident'>quote_style</span>: <span class='ident'>QuoteStyle</span>,
-    <span class='ident'>first_len</span>: <span class='ident'>usize</span>,
+<span class="doccomment">/// A CSV writer.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// This writer provides a convenient interface for encoding CSV data. While</span>
+<span class="doccomment">/// creating CSV data is much easier than parsing it, having a writer can</span>
+<span class="doccomment">/// be convenient because it can handle quoting for you automatically.</span>
+<span class="doccomment">/// Moreover, this particular writer supports `Encodable` types, which makes</span>
+<span class="doccomment">/// it easy to write your custom types as CSV records.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// All CSV data produced by this writer, with default options, conforms with</span>
+<span class="doccomment">/// [RFC 4180](http://tools.ietf.org/html/rfc4180). (If certain options like</span>
+<span class="doccomment">/// flexible record lengths are enabled, then compliance with RFC 4180 cannot</span>
+<span class="doccomment">/// be guaranteed.)</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// One slight deviation is that records with a single empty field are always</span>
+<span class="doccomment">/// encoded as `&quot;&quot;`. This ensures that the record is not skipped since some</span>
+<span class="doccomment">/// CSV parsers will ignore consecutive record terminators (like the one in</span>
+<span class="doccomment">/// this crate).</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// ### Example</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Here&#39;s an example that encodes word pairs and their edit distances:</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// ```rust</span>
+<span class="doccomment">/// let records = vec![</span>
+<span class="doccomment">///     (&quot;sticker&quot;, &quot;mortals&quot;, 7),</span>
+<span class="doccomment">///     (&quot;bribed&quot;, &quot;personae&quot;, 7),</span>
+<span class="doccomment">///     (&quot;wobbling&quot;, &quot;poncing&quot;, 4),</span>
+<span class="doccomment">///     (&quot;interposed&quot;, &quot;emmett&quot;, 9),</span>
+<span class="doccomment">///     (&quot;chocolate&quot;, &quot;refile&quot;, 7),</span>
+<span class="doccomment">/// ];</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// let mut wtr = csv::Writer::from_memory();</span>
+<span class="doccomment">/// for record in records.into_iter() {</span>
+<span class="doccomment">///     let result = wtr.encode(record);</span>
+<span class="doccomment">///     assert!(result.is_ok());</span>
+<span class="doccomment">/// }</span>
+<span class="doccomment">/// ```</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Writer</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">Write</span><span class="op">&gt;</span> {
+    <span class="ident">buf</span>: <span class="ident">io</span>::<span class="ident">BufWriter</span><span class="op">&lt;</span><span class="ident">W</span><span class="op">&gt;</span>,
+    <span class="ident">delimiter</span>: <span class="ident">u8</span>,
+    <span class="ident">record_terminator</span>: <span class="ident">RecordTerminator</span>,
+    <span class="ident">flexible</span>: <span class="ident">bool</span>,
+    <span class="ident">quote</span>: <span class="ident">u8</span>,
+    <span class="ident">escape</span>: <span class="ident">u8</span>,
+    <span class="ident">double_quote</span>: <span class="ident">bool</span>,
+    <span class="ident">quote_style</span>: <span class="ident">QuoteStyle</span>,
+    <span class="ident">first_len</span>: <span class="ident">usize</span>,
 }
 
-<span class='kw'>impl</span> <span class='ident'>Writer</span><span class='op'>&lt;</span><span class='ident'>fs</span>::<span class='ident'>File</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// Creates a new `Writer` that writes CSV data to the file path given.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// The file is created if it does not already exist and is truncated</span>
-    <span class='doccomment'>/// otherwise.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>from_file</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span><span class='ident'>Path</span><span class='op'>&gt;&gt;</span>(<span class='ident'>path</span>: <span class='ident'>P</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>Writer</span><span class='op'>&lt;</span><span class='ident'>fs</span>::<span class='ident'>File</span><span class='op'>&gt;&gt;</span> {
-        <span class='prelude-val'>Ok</span>(<span class='ident'>Writer</span>::<span class='ident'>from_writer</span>(<span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>fs</span>::<span class='ident'>File</span>::<span class='ident'>create</span>(<span class='ident'>path</span>))))
+<span class="kw">impl</span> <span class="ident">Writer</span><span class="op">&lt;</span><span class="ident">fs</span>::<span class="ident">File</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Creates a new `Writer` that writes CSV data to the file path given.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// The file is created if it does not already exist and is truncated</span>
+    <span class="doccomment">/// otherwise.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_file</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">Path</span><span class="op">&gt;&gt;</span>(<span class="ident">path</span>: <span class="ident">P</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Writer</span><span class="op">&lt;</span><span class="ident">fs</span>::<span class="ident">File</span><span class="op">&gt;&gt;</span> {
+        <span class="prelude-val">Ok</span>(<span class="ident">Writer</span>::<span class="ident">from_writer</span>(<span class="macro">try</span><span class="macro">!</span>(<span class="ident">fs</span>::<span class="ident">File</span>::<span class="ident">create</span>(<span class="ident">path</span>))))
     }
 }
 
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>W</span>: <span class='ident'>io</span>::<span class='ident'>Write</span><span class='op'>&gt;</span> <span class='ident'>Writer</span><span class='op'>&lt;</span><span class='ident'>W</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// Creates a new CSV writer that writes to the `io::Write` given.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Note that the writer is buffered for you automatically.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>from_writer</span>(<span class='ident'>w</span>: <span class='ident'>W</span>) <span class='op'>-&gt;</span> <span class='ident'>Writer</span><span class='op'>&lt;</span><span class='ident'>W</span><span class='op'>&gt;</span> {
-        <span class='ident'>Writer</span>::<span class='ident'>from_buffer</span>(<span class='ident'>io</span>::<span class='ident'>BufWriter</span>::<span class='ident'>new</span>(<span class='ident'>w</span>))
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">io</span>::<span class="ident">Write</span><span class="op">&gt;</span> <span class="ident">Writer</span><span class="op">&lt;</span><span class="ident">W</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Creates a new CSV writer that writes to the `io::Write` given.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Note that the writer is buffered for you automatically.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_writer</span>(<span class="ident">w</span>: <span class="ident">W</span>) <span class="op">-&gt;</span> <span class="ident">Writer</span><span class="op">&lt;</span><span class="ident">W</span><span class="op">&gt;</span> {
+        <span class="ident">Writer</span>::<span class="ident">from_buffer</span>(<span class="ident">io</span>::<span class="ident">BufWriter</span>::<span class="ident">new</span>(<span class="ident">w</span>))
     }
 
-    <span class='doccomment'>/// Creates a new CSV writer that writes to the buffer given.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// This lets you specify your own buffered writer (e.g., use a different</span>
-    <span class='doccomment'>/// capacity). All other constructors wrap the writer given in a buffer</span>
-    <span class='doccomment'>/// with default capacity.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>from_buffer</span>(<span class='ident'>buf</span>: <span class='ident'>io</span>::<span class='ident'>BufWriter</span><span class='op'>&lt;</span><span class='ident'>W</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>Writer</span><span class='op'>&lt;</span><span class='ident'>W</span><span class='op'>&gt;</span> {
-        <span class='ident'>Writer</span> {
-            <span class='ident'>buf</span>: <span class='ident'>buf</span>,
-            <span class='ident'>delimiter</span>: <span class='string'>b&#39;,&#39;</span>,
-            <span class='ident'>record_terminator</span>: <span class='ident'>RecordTerminator</span>::<span class='ident'>Any</span>(<span class='string'>b&#39;\n&#39;</span>),
-            <span class='ident'>flexible</span>: <span class='bool-val'>false</span>,
-            <span class='ident'>quote</span>: <span class='string'>b&#39;&quot;&#39;</span>,
-            <span class='ident'>escape</span>: <span class='string'>b&#39;\\&#39;</span>,
-            <span class='ident'>double_quote</span>: <span class='bool-val'>true</span>,
-            <span class='ident'>quote_style</span>: <span class='ident'>QuoteStyle</span>::<span class='ident'>Necessary</span>,
-            <span class='ident'>first_len</span>: <span class='number'>0</span>,
+    <span class="doccomment">/// Creates a new CSV writer that writes to the buffer given.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This lets you specify your own buffered writer (e.g., use a different</span>
+    <span class="doccomment">/// capacity). All other constructors wrap the writer given in a buffer</span>
+    <span class="doccomment">/// with default capacity.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_buffer</span>(<span class="ident">buf</span>: <span class="ident">io</span>::<span class="ident">BufWriter</span><span class="op">&lt;</span><span class="ident">W</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">Writer</span><span class="op">&lt;</span><span class="ident">W</span><span class="op">&gt;</span> {
+        <span class="ident">Writer</span> {
+            <span class="ident">buf</span>: <span class="ident">buf</span>,
+            <span class="ident">delimiter</span>: <span class="string">b&#39;,&#39;</span>,
+            <span class="ident">record_terminator</span>: <span class="ident">RecordTerminator</span>::<span class="ident">Any</span>(<span class="string">b&#39;\n&#39;</span>),
+            <span class="ident">flexible</span>: <span class="bool-val">false</span>,
+            <span class="ident">quote</span>: <span class="string">b&#39;&quot;&#39;</span>,
+            <span class="ident">escape</span>: <span class="string">b&#39;\\&#39;</span>,
+            <span class="ident">double_quote</span>: <span class="bool-val">true</span>,
+            <span class="ident">quote_style</span>: <span class="ident">QuoteStyle</span>::<span class="ident">Necessary</span>,
+            <span class="ident">first_len</span>: <span class="number">0</span>,
         }
     }
 }
 
-<span class='kw'>impl</span> <span class='ident'>Writer</span><span class='op'>&lt;</span><span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>u8</span><span class='op'>&gt;&gt;</span> {
-    <span class='doccomment'>/// Creates a new CSV writer that writes to an in memory buffer. At any</span>
-    <span class='doccomment'>/// time, `as_string` or `as_bytes` can be called to retrieve the</span>
-    <span class='doccomment'>/// cumulative CSV data.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>from_memory</span>() <span class='op'>-&gt;</span> <span class='ident'>Writer</span><span class='op'>&lt;</span><span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>u8</span><span class='op'>&gt;&gt;</span> {
-        <span class='ident'>Writer</span>::<span class='ident'>from_writer</span>(<span class='ident'>Vec</span>::<span class='ident'>with_capacity</span>(<span class='number'>1024</span> <span class='op'>*</span> <span class='number'>64</span>))
+<span class="kw">impl</span> <span class="ident">Writer</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;&gt;</span> {
+    <span class="doccomment">/// Creates a new CSV writer that writes to an in memory buffer. At any</span>
+    <span class="doccomment">/// time, `as_string` or `as_bytes` can be called to retrieve the</span>
+    <span class="doccomment">/// cumulative CSV data.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_memory</span>() <span class="op">-&gt;</span> <span class="ident">Writer</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;&gt;</span> {
+        <span class="ident">Writer</span>::<span class="ident">from_writer</span>(<span class="ident">Vec</span>::<span class="ident">with_capacity</span>(<span class="number">1024</span> <span class="op">*</span> <span class="number">64</span>))
     }
 
-    <span class='doccomment'>/// Returns the written CSV data as a string.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>as_string</span><span class='op'>&lt;</span><span class='lifetime'>&#39;r</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;r</span> <span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;r</span> <span class='ident'>str</span> {
-        <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>buf</span>.<span class='ident'>flush</span>() {
-            <span class='comment'>// shouldn&#39;t panic with Vec&lt;u8&gt;</span>
-            <span class='prelude-val'>Err</span>(<span class='ident'>err</span>) <span class='op'>=&gt;</span> <span class='macro'>panic</span><span class='macro'>!</span>(<span class='string'>&quot;Error flushing to Vec&lt;u8&gt;: {}&quot;</span>, <span class='ident'>err</span>),
-            <span class='comment'>// This seems suspicious. If the client only writes `String`</span>
-            <span class='comment'>// values, then this can never fail. If the client is writing</span>
-            <span class='comment'>// byte strings, then they should be calling `as_bytes` instead.</span>
-            <span class='prelude-val'>Ok</span>(()) <span class='op'>=&gt;</span> <span class='ident'>str</span>::<span class='ident'>from_utf8</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>*</span><span class='kw-2'>*</span><span class='self'>self</span>.<span class='ident'>buf</span>.<span class='ident'>get_ref</span>()).<span class='ident'>unwrap</span>(),
+    <span class="doccomment">/// Returns the written CSV data as a string.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_string</span><span class="op">&lt;</span><span class="lifetime">&#39;r</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;r</span> <span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;r</span> <span class="ident">str</span> {
+        <span class="kw">match</span> <span class="self">self</span>.<span class="ident">buf</span>.<span class="ident">flush</span>() {
+            <span class="comment">// shouldn&#39;t panic with Vec&lt;u8&gt;</span>
+            <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Error flushing to Vec&lt;u8&gt;: {}&quot;</span>, <span class="ident">err</span>),
+            <span class="comment">// This seems suspicious. If the client only writes `String`</span>
+            <span class="comment">// values, then this can never fail. If the client is writing</span>
+            <span class="comment">// byte strings, then they should be calling `as_bytes` instead.</span>
+            <span class="prelude-val">Ok</span>(()) <span class="op">=&gt;</span> <span class="ident">str</span>::<span class="ident">from_utf8</span>(<span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="kw-2">*</span><span class="self">self</span>.<span class="ident">buf</span>.<span class="ident">get_ref</span>()).<span class="ident">unwrap</span>(),
         }
     }
 
-    <span class='doccomment'>/// Returns the encoded CSV data as raw bytes.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>as_bytes</span><span class='op'>&lt;</span><span class='lifetime'>&#39;r</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;r</span> <span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;r</span> [<span class='ident'>u8</span>] {
-        <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>buf</span>.<span class='ident'>flush</span>() {
-            <span class='comment'>// shouldn&#39;t panic with Vec&lt;u8&gt;</span>
-            <span class='prelude-val'>Err</span>(<span class='ident'>err</span>) <span class='op'>=&gt;</span> <span class='macro'>panic</span><span class='macro'>!</span>(<span class='string'>&quot;Error flushing to Vec&lt;u8&gt;: {}&quot;</span>, <span class='ident'>err</span>),
-            <span class='prelude-val'>Ok</span>(()) <span class='op'>=&gt;</span> <span class='kw-2'>&amp;</span><span class='kw-2'>*</span><span class='kw-2'>*</span><span class='self'>self</span>.<span class='ident'>buf</span>.<span class='ident'>get_ref</span>(),
+    <span class="doccomment">/// Returns the encoded CSV data as raw bytes.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_bytes</span><span class="op">&lt;</span><span class="lifetime">&#39;r</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;r</span> <span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;r</span> [<span class="ident">u8</span>] {
+        <span class="kw">match</span> <span class="self">self</span>.<span class="ident">buf</span>.<span class="ident">flush</span>() {
+            <span class="comment">// shouldn&#39;t panic with Vec&lt;u8&gt;</span>
+            <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Error flushing to Vec&lt;u8&gt;: {}&quot;</span>, <span class="ident">err</span>),
+            <span class="prelude-val">Ok</span>(()) <span class="op">=&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="kw-2">*</span><span class="self">self</span>.<span class="ident">buf</span>.<span class="ident">get_ref</span>(),
         }
     }
 
-    <span class='doccomment'>/// Convert the Writer into a string of written CSV data</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>into_string</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>String</span> {
-        <span class='comment'>// This seems suspicious. If the client only writes `String`</span>
-        <span class='comment'>// values, then this can never fail. If the client is writing</span>
-        <span class='comment'>// byte strings, then they should be calling `to_bytes` instead.</span>
-        <span class='ident'>String</span>::<span class='ident'>from_utf8</span>(<span class='self'>self</span>.<span class='ident'>into_bytes</span>()).<span class='ident'>unwrap</span>()
+    <span class="doccomment">/// Convert the Writer into a string of written CSV data</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">into_string</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">String</span> {
+        <span class="comment">// This seems suspicious. If the client only writes `String`</span>
+        <span class="comment">// values, then this can never fail. If the client is writing</span>
+        <span class="comment">// byte strings, then they should be calling `to_bytes` instead.</span>
+        <span class="ident">String</span>::<span class="ident">from_utf8</span>(<span class="self">self</span>.<span class="ident">into_bytes</span>()).<span class="ident">unwrap</span>()
     }
 
-    <span class='doccomment'>/// Convert the Writer into a vector of encoded CSV bytes.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>into_bytes</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>u8</span><span class='op'>&gt;</span> {
-        <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>buf</span>.<span class='ident'>flush</span>() {
-            <span class='comment'>// shouldn&#39;t panic with Vec&lt;u8&gt;</span>
-            <span class='prelude-val'>Err</span>(<span class='ident'>err</span>) <span class='op'>=&gt;</span> <span class='macro'>panic</span><span class='macro'>!</span>(<span class='string'>&quot;Error flushing to Vec&lt;u8&gt;: {}&quot;</span>, <span class='ident'>err</span>),
-            <span class='comment'>// won&#39;t panic with in-memory writer (i.e. Vec&lt;u8&gt;)</span>
-            <span class='prelude-val'>Ok</span>(()) <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>buf</span>.<span class='ident'>into_inner</span>().<span class='ident'>unwrap</span>(),
+    <span class="doccomment">/// Convert the Writer into a vector of encoded CSV bytes.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">into_bytes</span>(<span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span> {
+        <span class="kw">match</span> <span class="self">self</span>.<span class="ident">buf</span>.<span class="ident">flush</span>() {
+            <span class="comment">// shouldn&#39;t panic with Vec&lt;u8&gt;</span>
+            <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Error flushing to Vec&lt;u8&gt;: {}&quot;</span>, <span class="ident">err</span>),
+            <span class="comment">// won&#39;t panic with in-memory writer (i.e. Vec&lt;u8&gt;)</span>
+            <span class="prelude-val">Ok</span>(()) <span class="op">=&gt;</span> <span class="self">self</span>.<span class="ident">buf</span>.<span class="ident">into_inner</span>().<span class="ident">unwrap</span>(),
         }
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>W</span>: <span class='ident'>io</span>::<span class='ident'>Write</span><span class='op'>&gt;</span> <span class='ident'>Writer</span><span class='op'>&lt;</span><span class='ident'>W</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// Writes a record by encoding any `Encodable` value.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// This is the most convenient way to write CSV data. Most Rust types</span>
-    <span class='doccomment'>/// map to CSV data in a straight forward way. A vector is just a sequence</span>
-    <span class='doccomment'>/// of fields. Similarly for a struct. Enumerations of zero or one</span>
-    <span class='doccomment'>/// arguments are supported too. (Enums with zero arguments encode to their</span>
-    <span class='doccomment'>/// name, while enums of one argument encode to their constituent value.)</span>
-    <span class='doccomment'>/// Option types are also supported (`None` encodes to an empty field).</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// ### Example</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// This example encodes word pairs that may or may not have their</span>
-    <span class='doccomment'>/// edit distances computed.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// ```rust</span>
-    <span class='doccomment'>/// extern crate rustc_serialize;</span>
-    <span class='doccomment'>/// # extern crate csv;</span>
-    <span class='doccomment'>/// # fn main() {</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// #[derive(RustcEncodable)]</span>
-    <span class='doccomment'>/// struct Distance {</span>
-    <span class='doccomment'>///     name1: &amp;&#39;static str,</span>
-    <span class='doccomment'>///     name2: &amp;&#39;static str,</span>
-    <span class='doccomment'>///     dist: Option&lt;usize&gt;,</span>
-    <span class='doccomment'>/// }</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// let records = vec![</span>
-    <span class='doccomment'>///     Distance { name1: &quot;sticker&quot;, name2: &quot;mortals&quot;, dist: None },</span>
-    <span class='doccomment'>///     Distance { name1: &quot;bribed&quot;, name2: &quot;personae&quot;, dist: Some(7) },</span>
-    <span class='doccomment'>/// ];</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// let mut wtr = csv::Writer::from_memory();</span>
-    <span class='doccomment'>/// for record in records.into_iter() {</span>
-    <span class='doccomment'>///     let result = wtr.encode(record);</span>
-    <span class='doccomment'>///     assert!(result.is_ok());</span>
-    <span class='doccomment'>/// }</span>
-    <span class='doccomment'>/// assert_eq!(wtr.as_string(),</span>
-    <span class='doccomment'>///            &quot;sticker,mortals,\nbribed,personae,7\n&quot;);</span>
-    <span class='doccomment'>/// # }</span>
-    <span class='doccomment'>/// ```</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>encode</span><span class='op'>&lt;</span><span class='ident'>E</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>e</span>: <span class='ident'>E</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>()<span class='op'>&gt;</span> <span class='kw'>where</span> <span class='ident'>E</span>: <span class='ident'>Encodable</span> {
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>erecord</span> <span class='op'>=</span> <span class='ident'>Encoded</span>::<span class='ident'>new</span>();
-        <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>e</span>.<span class='ident'>encode</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>erecord</span>));
-        <span class='self'>self</span>.<span class='ident'>write</span>(<span class='ident'>erecord</span>.<span class='ident'>unwrap</span>().<span class='ident'>into_iter</span>())
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">io</span>::<span class="ident">Write</span><span class="op">&gt;</span> <span class="ident">Writer</span><span class="op">&lt;</span><span class="ident">W</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Writes a record by encoding any `Encodable` value.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This is the most convenient way to write CSV data. Most Rust types</span>
+    <span class="doccomment">/// map to CSV data in a straight forward way. A vector is just a sequence</span>
+    <span class="doccomment">/// of fields. Similarly for a struct. Enumerations of zero or one</span>
+    <span class="doccomment">/// arguments are supported too. (Enums with zero arguments encode to their</span>
+    <span class="doccomment">/// name, while enums of one argument encode to their constituent value.)</span>
+    <span class="doccomment">/// Option types are also supported (`None` encodes to an empty field).</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ### Example</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This example encodes word pairs that may or may not have their</span>
+    <span class="doccomment">/// edit distances computed.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```rust</span>
+    <span class="doccomment">/// extern crate rustc_serialize;</span>
+    <span class="doccomment">/// # extern crate csv;</span>
+    <span class="doccomment">/// # fn main() {</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// #[derive(RustcEncodable)]</span>
+    <span class="doccomment">/// struct Distance {</span>
+    <span class="doccomment">///     name1: &amp;&#39;static str,</span>
+    <span class="doccomment">///     name2: &amp;&#39;static str,</span>
+    <span class="doccomment">///     dist: Option&lt;usize&gt;,</span>
+    <span class="doccomment">/// }</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// let records = vec![</span>
+    <span class="doccomment">///     Distance { name1: &quot;sticker&quot;, name2: &quot;mortals&quot;, dist: None },</span>
+    <span class="doccomment">///     Distance { name1: &quot;bribed&quot;, name2: &quot;personae&quot;, dist: Some(7) },</span>
+    <span class="doccomment">/// ];</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// let mut wtr = csv::Writer::from_memory();</span>
+    <span class="doccomment">/// for record in records.into_iter() {</span>
+    <span class="doccomment">///     let result = wtr.encode(record);</span>
+    <span class="doccomment">///     assert!(result.is_ok());</span>
+    <span class="doccomment">/// }</span>
+    <span class="doccomment">/// assert_eq!(wtr.as_string(),</span>
+    <span class="doccomment">///            &quot;sticker,mortals,\nbribed,personae,7\n&quot;);</span>
+    <span class="doccomment">/// # }</span>
+    <span class="doccomment">/// ```</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">encode</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">e</span>: <span class="ident">E</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> <span class="kw">where</span> <span class="ident">E</span>: <span class="ident">Encodable</span> {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">erecord</span> <span class="op">=</span> <span class="ident">Encoded</span>::<span class="ident">new</span>();
+        <span class="macro">try</span><span class="macro">!</span>(<span class="ident">e</span>.<span class="ident">encode</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">erecord</span>));
+        <span class="self">self</span>.<span class="ident">write</span>(<span class="ident">erecord</span>.<span class="ident">unwrap</span>().<span class="ident">into_iter</span>())
     }
 
-    <span class='doccomment'>/// Writes a record of strings (Unicode or raw bytes).</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// This is meant to be the standard method provided by most CSV writers.</span>
-    <span class='doccomment'>/// That is, it writes a record of strings---no more and no less.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// This method accepts an iterator of *fields* for a single record. Each</span>
-    <span class='doccomment'>/// field must satisfy `BorrowBytes`, which allows the caller to control</span>
-    <span class='doccomment'>/// allocation.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// ### Example</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// This shows how to write string records.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// ```rust</span>
-    <span class='doccomment'>/// let records = vec![</span>
-    <span class='doccomment'>///     vec![&quot;sticker&quot;, &quot;mortals&quot;, &quot;7&quot;],</span>
-    <span class='doccomment'>///     vec![&quot;bribed&quot;, &quot;personae&quot;, &quot;7&quot;],</span>
-    <span class='doccomment'>///     vec![&quot;wobbling&quot;, &quot;poncing&quot;, &quot;4&quot;],</span>
-    <span class='doccomment'>///     vec![&quot;interposed&quot;, &quot;emmett&quot;, &quot;9&quot;],</span>
-    <span class='doccomment'>///     vec![&quot;chocolate&quot;, &quot;refile&quot;, &quot;7&quot;],</span>
-    <span class='doccomment'>/// ];</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// let mut wtr = csv::Writer::from_memory();</span>
-    <span class='doccomment'>/// for record in records.into_iter() {</span>
-    <span class='doccomment'>///     let result = wtr.write(record.into_iter());</span>
-    <span class='doccomment'>///     assert!(result.is_ok());</span>
-    <span class='doccomment'>/// }</span>
-    <span class='doccomment'>/// ```</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// This shows how to write records that do not correspond to a valid UTF-8</span>
-    <span class='doccomment'>/// encoding. (Note the use of Rust&#39;s byte string syntax!)</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// ```rust</span>
-    <span class='doccomment'>/// let mut wtr = csv::Writer::from_memory();</span>
-    <span class='doccomment'>/// let result = wtr.write(vec![&amp;b&quot;\xff&quot;[..], &amp;b&quot;\x00&quot;[..]].into_iter());</span>
-    <span class='doccomment'>/// assert!(result.is_ok());</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// assert_eq!(wtr.as_bytes(), b&quot;\xff,\x00\n&quot;);</span>
-    <span class='doccomment'>/// ```</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>write</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>I</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>r</span>: <span class='ident'>I</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>()<span class='op'>&gt;</span>
-            <span class='kw'>where</span> <span class='ident'>I</span>: <span class='ident'>Iterator</span>, <span class='op'>&lt;</span><span class='ident'>I</span> <span class='kw'>as</span> <span class='ident'>Iterator</span><span class='op'>&gt;</span>::<span class='ident'>Item</span>: <span class='ident'>BorrowBytes</span> {
-        <span class='self'>self</span>.<span class='ident'>write_iter</span>(<span class='ident'>r</span>.<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>f</span><span class='op'>|</span> <span class='prelude-val'>Ok</span>(<span class='ident'>f</span>)))
+    <span class="doccomment">/// Writes a record of strings (Unicode or raw bytes).</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This is meant to be the standard method provided by most CSV writers.</span>
+    <span class="doccomment">/// That is, it writes a record of strings---no more and no less.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This method accepts an iterator of *fields* for a single record. Each</span>
+    <span class="doccomment">/// field must satisfy `BorrowBytes`, which allows the caller to control</span>
+    <span class="doccomment">/// allocation.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ### Example</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This shows how to write string records.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```rust</span>
+    <span class="doccomment">/// let records = vec![</span>
+    <span class="doccomment">///     vec![&quot;sticker&quot;, &quot;mortals&quot;, &quot;7&quot;],</span>
+    <span class="doccomment">///     vec![&quot;bribed&quot;, &quot;personae&quot;, &quot;7&quot;],</span>
+    <span class="doccomment">///     vec![&quot;wobbling&quot;, &quot;poncing&quot;, &quot;4&quot;],</span>
+    <span class="doccomment">///     vec![&quot;interposed&quot;, &quot;emmett&quot;, &quot;9&quot;],</span>
+    <span class="doccomment">///     vec![&quot;chocolate&quot;, &quot;refile&quot;, &quot;7&quot;],</span>
+    <span class="doccomment">/// ];</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// let mut wtr = csv::Writer::from_memory();</span>
+    <span class="doccomment">/// for record in records.into_iter() {</span>
+    <span class="doccomment">///     let result = wtr.write(record.into_iter());</span>
+    <span class="doccomment">///     assert!(result.is_ok());</span>
+    <span class="doccomment">/// }</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This shows how to write records that do not correspond to a valid UTF-8</span>
+    <span class="doccomment">/// encoding. (Note the use of Rust&#39;s byte string syntax!)</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```rust</span>
+    <span class="doccomment">/// let mut wtr = csv::Writer::from_memory();</span>
+    <span class="doccomment">/// let result = wtr.write(vec![&amp;b&quot;\xff&quot;[..], &amp;b&quot;\x00&quot;[..]].into_iter());</span>
+    <span class="doccomment">/// assert!(result.is_ok());</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// assert_eq!(wtr.as_bytes(), b&quot;\xff,\x00\n&quot;);</span>
+    <span class="doccomment">/// ```</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">write</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">I</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">r</span>: <span class="ident">I</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>
+            <span class="kw">where</span> <span class="ident">I</span>: <span class="ident">Iterator</span>, <span class="op">&lt;</span><span class="ident">I</span> <span class="kw">as</span> <span class="ident">Iterator</span><span class="op">&gt;</span>::<span class="ident">Item</span>: <span class="ident">BorrowBytes</span> {
+        <span class="self">self</span>.<span class="ident">write_iter</span>(<span class="ident">r</span>.<span class="ident">map</span>(<span class="op">|</span><span class="ident">f</span><span class="op">|</span> <span class="prelude-val">Ok</span>(<span class="ident">f</span>)))
     }
 
-    <span class='doccomment'>/// Writes a record of results. If any of the results resolve to an error,</span>
-    <span class='doccomment'>/// then writing stops and that error is returned.</span>
-    <span class='attribute'>#[<span class='ident'>doc</span>(<span class='ident'>hidden</span>)]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>write_iter</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>I</span>, <span class='ident'>F</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>r</span>: <span class='ident'>I</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>()<span class='op'>&gt;</span>
-            <span class='kw'>where</span> <span class='ident'>I</span>: <span class='ident'>Iterator</span><span class='op'>&lt;</span><span class='ident'>Item</span><span class='op'>=</span><span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>F</span><span class='op'>&gt;&gt;</span>, <span class='ident'>F</span>: <span class='ident'>BorrowBytes</span> {
-        <span class='kw'>let</span> <span class='ident'>delim</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>delimiter</span>;
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>count</span> <span class='op'>=</span> <span class='number'>0</span>;
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>last_len</span> <span class='op'>=</span> <span class='number'>0</span>;
-        <span class='kw'>for</span> <span class='ident'>field</span> <span class='kw'>in</span> <span class='ident'>r</span> {
-            <span class='kw'>if</span> <span class='ident'>count</span> <span class='op'>&gt;</span> <span class='number'>0</span> {
-                <span class='macro'>try</span><span class='macro'>!</span>(<span class='self'>self</span>.<span class='ident'>w_bytes</span>(<span class='kw-2'>&amp;</span>[<span class='ident'>delim</span>]));
+    <span class="doccomment">/// Writes a record of results. If any of the results resolve to an error,</span>
+    <span class="doccomment">/// then writing stops and that error is returned.</span>
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">write_iter</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">I</span>, <span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">r</span>: <span class="ident">I</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>
+            <span class="kw">where</span> <span class="ident">I</span>: <span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span><span class="op">=</span><span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;&gt;</span>, <span class="ident">F</span>: <span class="ident">BorrowBytes</span> {
+        <span class="kw">let</span> <span class="ident">delim</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">delimiter</span>;
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">count</span> <span class="op">=</span> <span class="number">0</span>;
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">last_len</span> <span class="op">=</span> <span class="number">0</span>;
+        <span class="kw">for</span> <span class="ident">field</span> <span class="kw">in</span> <span class="ident">r</span> {
+            <span class="kw">if</span> <span class="ident">count</span> <span class="op">&gt;</span> <span class="number">0</span> {
+                <span class="macro">try</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">w_bytes</span>(<span class="kw-2">&amp;</span>[<span class="ident">delim</span>]));
             }
-            <span class='ident'>count</span> <span class='op'>+=</span> <span class='number'>1</span>;
-            <span class='kw'>let</span> <span class='ident'>field</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>field</span>);
-            <span class='ident'>last_len</span> <span class='op'>=</span> <span class='ident'>field</span>.<span class='ident'>borrow_bytes</span>().<span class='ident'>len</span>();
-            <span class='macro'>try</span><span class='macro'>!</span>(<span class='self'>self</span>.<span class='ident'>w_user_bytes</span>(<span class='ident'>field</span>.<span class='ident'>borrow_bytes</span>()));
+            <span class="ident">count</span> <span class="op">+=</span> <span class="number">1</span>;
+            <span class="kw">let</span> <span class="ident">field</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">field</span>);
+            <span class="ident">last_len</span> <span class="op">=</span> <span class="ident">field</span>.<span class="ident">borrow_bytes</span>().<span class="ident">len</span>();
+            <span class="macro">try</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">w_user_bytes</span>(<span class="ident">field</span>.<span class="ident">borrow_bytes</span>()));
         }
-        <span class='comment'>// This tomfoolery makes sure that a record with a single empty field</span>
-        <span class='comment'>// is encoded as `&quot;&quot;`. Otherwise, you end up with a run of consecutive</span>
-        <span class='comment'>// record terminators, which are ignored by some CSV parsers (such</span>
-        <span class='comment'>// as the one in this library).</span>
-        <span class='kw'>if</span> <span class='ident'>count</span> <span class='op'>==</span> <span class='number'>1</span> <span class='op'>&amp;&amp;</span> <span class='ident'>last_len</span> <span class='op'>==</span> <span class='number'>0</span> {
-            <span class='kw'>let</span> <span class='ident'>q</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>quote</span>;
-            <span class='macro'>try</span><span class='macro'>!</span>(<span class='self'>self</span>.<span class='ident'>w_bytes</span>(<span class='kw-2'>&amp;</span>[<span class='ident'>q</span>, <span class='ident'>q</span>]));
+        <span class="comment">// This tomfoolery makes sure that a record with a single empty field</span>
+        <span class="comment">// is encoded as `&quot;&quot;`. Otherwise, you end up with a run of consecutive</span>
+        <span class="comment">// record terminators, which are ignored by some CSV parsers (such</span>
+        <span class="comment">// as the one in this library).</span>
+        <span class="kw">if</span> <span class="ident">count</span> <span class="op">==</span> <span class="number">1</span> <span class="op">&amp;&amp;</span> <span class="ident">last_len</span> <span class="op">==</span> <span class="number">0</span> {
+            <span class="kw">let</span> <span class="ident">q</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">quote</span>;
+            <span class="macro">try</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">w_bytes</span>(<span class="kw-2">&amp;</span>[<span class="ident">q</span>, <span class="ident">q</span>]));
         }
-        <span class='macro'>try</span><span class='macro'>!</span>(<span class='self'>self</span>.<span class='ident'>w_lineterm</span>());
-        <span class='self'>self</span>.<span class='ident'>set_first_len</span>(<span class='ident'>count</span>)
+        <span class="macro">try</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">w_lineterm</span>());
+        <span class="self">self</span>.<span class="ident">set_first_len</span>(<span class="ident">count</span>)
     }
 
-    <span class='doccomment'>/// Flushes the underlying buffer.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>flush</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>()<span class='op'>&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>buf</span>.<span class='ident'>flush</span>().<span class='ident'>map_err</span>(<span class='ident'>From</span>::<span class='ident'>from</span>)
+    <span class="doccomment">/// Flushes the underlying buffer.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">flush</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">buf</span>.<span class="ident">flush</span>().<span class="ident">map_err</span>(<span class="ident">From</span>::<span class="ident">from</span>)
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>W</span>: <span class='ident'>io</span>::<span class='ident'>Write</span><span class='op'>&gt;</span> <span class='ident'>Writer</span><span class='op'>&lt;</span><span class='ident'>W</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// The delimiter to use when writing CSV data.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Since the CSV writer is meant to be mostly encoding agnostic, you must</span>
-    <span class='doccomment'>/// specify the delimiter as a single ASCII byte. For example, to write</span>
-    <span class='doccomment'>/// tab-delimited data, you would use `b&#39;\t&#39;`.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// The default value is `b&#39;,&#39;`.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>delimiter</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>delimiter</span>: <span class='ident'>u8</span>) <span class='op'>-&gt;</span> <span class='ident'>Writer</span><span class='op'>&lt;</span><span class='ident'>W</span><span class='op'>&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>delimiter</span> <span class='op'>=</span> <span class='ident'>delimiter</span>;
-        <span class='self'>self</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">io</span>::<span class="ident">Write</span><span class="op">&gt;</span> <span class="ident">Writer</span><span class="op">&lt;</span><span class="ident">W</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// The delimiter to use when writing CSV data.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Since the CSV writer is meant to be mostly encoding agnostic, you must</span>
+    <span class="doccomment">/// specify the delimiter as a single ASCII byte. For example, to write</span>
+    <span class="doccomment">/// tab-delimited data, you would use `b&#39;\t&#39;`.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// The default value is `b&#39;,&#39;`.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">delimiter</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">delimiter</span>: <span class="ident">u8</span>) <span class="op">-&gt;</span> <span class="ident">Writer</span><span class="op">&lt;</span><span class="ident">W</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">delimiter</span> <span class="op">=</span> <span class="ident">delimiter</span>;
+        <span class="self">self</span>
     }
 
-    <span class='doccomment'>/// Whether to allow flexible length records when writing CSV data.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// When this is set to `true`, records in the CSV data can have different</span>
-    <span class='doccomment'>/// lengths. By default, this is disabled, which will cause the CSV writer</span>
-    <span class='doccomment'>/// to return an error if it tries to write a record that has a different</span>
-    <span class='doccomment'>/// length than other records it has already written.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>flexible</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>yes</span>: <span class='ident'>bool</span>) <span class='op'>-&gt;</span> <span class='ident'>Writer</span><span class='op'>&lt;</span><span class='ident'>W</span><span class='op'>&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>flexible</span> <span class='op'>=</span> <span class='ident'>yes</span>;
-        <span class='self'>self</span>
+    <span class="doccomment">/// Whether to allow flexible length records when writing CSV data.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// When this is set to `true`, records in the CSV data can have different</span>
+    <span class="doccomment">/// lengths. By default, this is disabled, which will cause the CSV writer</span>
+    <span class="doccomment">/// to return an error if it tries to write a record that has a different</span>
+    <span class="doccomment">/// length than other records it has already written.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">flexible</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">yes</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="ident">Writer</span><span class="op">&lt;</span><span class="ident">W</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">flexible</span> <span class="op">=</span> <span class="ident">yes</span>;
+        <span class="self">self</span>
     }
 
-    <span class='doccomment'>/// Sets the record terminator to use when writing CSV data.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// By default, this is `RecordTerminator::Any(b&#39;\n&#39;)`. If you want to</span>
-    <span class='doccomment'>/// use CRLF (`\r\n`) line endings, then use `RecordTerminator:CRLF`.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>record_terminator</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>term</span>: <span class='ident'>RecordTerminator</span>) <span class='op'>-&gt;</span> <span class='ident'>Writer</span><span class='op'>&lt;</span><span class='ident'>W</span><span class='op'>&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>record_terminator</span> <span class='op'>=</span> <span class='ident'>term</span>;
-        <span class='self'>self</span>
+    <span class="doccomment">/// Sets the record terminator to use when writing CSV data.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// By default, this is `RecordTerminator::Any(b&#39;\n&#39;)`. If you want to</span>
+    <span class="doccomment">/// use CRLF (`\r\n`) line endings, then use `RecordTerminator:CRLF`.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">record_terminator</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">term</span>: <span class="ident">RecordTerminator</span>) <span class="op">-&gt;</span> <span class="ident">Writer</span><span class="op">&lt;</span><span class="ident">W</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">record_terminator</span> <span class="op">=</span> <span class="ident">term</span>;
+        <span class="self">self</span>
     }
 
-    <span class='doccomment'>/// Set the quoting style to use when writing CSV data.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// By default, this is set to `QuoteStyle::Necessary`, which will only</span>
-    <span class='doccomment'>/// use quotes when they are necessary to preserve the integrity of data.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>quote_style</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>style</span>: <span class='ident'>QuoteStyle</span>) <span class='op'>-&gt;</span> <span class='ident'>Writer</span><span class='op'>&lt;</span><span class='ident'>W</span><span class='op'>&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>quote_style</span> <span class='op'>=</span> <span class='ident'>style</span>;
-        <span class='self'>self</span>
+    <span class="doccomment">/// Set the quoting style to use when writing CSV data.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// By default, this is set to `QuoteStyle::Necessary`, which will only</span>
+    <span class="doccomment">/// use quotes when they are necessary to preserve the integrity of data.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">quote_style</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">style</span>: <span class="ident">QuoteStyle</span>) <span class="op">-&gt;</span> <span class="ident">Writer</span><span class="op">&lt;</span><span class="ident">W</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">quote_style</span> <span class="op">=</span> <span class="ident">style</span>;
+        <span class="self">self</span>
     }
 
-    <span class='doccomment'>/// Set the quote character to use when writing CSV data.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Since the CSV parser is meant to be mostly encoding agnostic, you must</span>
-    <span class='doccomment'>/// specify the quote as a single ASCII byte. For example, to write</span>
-    <span class='doccomment'>/// single quoted data, you would use `b&#39;\&#39;&#39;`.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// The default value is `b&#39;&quot;&#39;`.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>quote</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>quote</span>: <span class='ident'>u8</span>) <span class='op'>-&gt;</span> <span class='ident'>Writer</span><span class='op'>&lt;</span><span class='ident'>W</span><span class='op'>&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>quote</span> <span class='op'>=</span> <span class='ident'>quote</span>;
-        <span class='self'>self</span>
+    <span class="doccomment">/// Set the quote character to use when writing CSV data.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Since the CSV parser is meant to be mostly encoding agnostic, you must</span>
+    <span class="doccomment">/// specify the quote as a single ASCII byte. For example, to write</span>
+    <span class="doccomment">/// single quoted data, you would use `b&#39;\&#39;&#39;`.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// The default value is `b&#39;&quot;&#39;`.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">quote</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">quote</span>: <span class="ident">u8</span>) <span class="op">-&gt;</span> <span class="ident">Writer</span><span class="op">&lt;</span><span class="ident">W</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">quote</span> <span class="op">=</span> <span class="ident">quote</span>;
+        <span class="self">self</span>
     }
 
-    <span class='doccomment'>/// Set the escape character to use when writing CSV data.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// This is only used when `double_quote` is set to `false`.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Since the CSV parser is meant to be mostly encoding agnostic, you must</span>
-    <span class='doccomment'>/// specify the escape as a single ASCII byte.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// The default value is `b&#39;\\&#39;`.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>escape</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>escape</span>: <span class='ident'>u8</span>) <span class='op'>-&gt;</span> <span class='ident'>Writer</span><span class='op'>&lt;</span><span class='ident'>W</span><span class='op'>&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>escape</span> <span class='op'>=</span> <span class='ident'>escape</span>;
-        <span class='self'>self</span>
+    <span class="doccomment">/// Set the escape character to use when writing CSV data.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This is only used when `double_quote` is set to `false`.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Since the CSV parser is meant to be mostly encoding agnostic, you must</span>
+    <span class="doccomment">/// specify the escape as a single ASCII byte.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// The default value is `b&#39;\\&#39;`.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">escape</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">escape</span>: <span class="ident">u8</span>) <span class="op">-&gt;</span> <span class="ident">Writer</span><span class="op">&lt;</span><span class="ident">W</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">escape</span> <span class="op">=</span> <span class="ident">escape</span>;
+        <span class="self">self</span>
     }
 
-    <span class='doccomment'>/// Set the quoting escape mechanism.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// When enabled (which is the default), quotes are escaped by doubling</span>
-    <span class='doccomment'>/// them. e.g., `&quot;` escapes to `&quot;&quot;`.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// When disabled, quotes are escaped with the escape character (which</span>
-    <span class='doccomment'>/// is `\\` by default).</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>double_quote</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>yes</span>: <span class='ident'>bool</span>) <span class='op'>-&gt;</span> <span class='ident'>Writer</span><span class='op'>&lt;</span><span class='ident'>W</span><span class='op'>&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>double_quote</span> <span class='op'>=</span> <span class='ident'>yes</span>;
-        <span class='self'>self</span>
+    <span class="doccomment">/// Set the quoting escape mechanism.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// When enabled (which is the default), quotes are escaped by doubling</span>
+    <span class="doccomment">/// them. e.g., `&quot;` escapes to `&quot;&quot;`.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// When disabled, quotes are escaped with the escape character (which</span>
+    <span class="doccomment">/// is `\\` by default).</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">double_quote</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">yes</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="ident">Writer</span><span class="op">&lt;</span><span class="ident">W</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">double_quote</span> <span class="op">=</span> <span class="ident">yes</span>;
+        <span class="self">self</span>
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>W</span>: <span class='ident'>io</span>::<span class='ident'>Write</span><span class='op'>&gt;</span> <span class='ident'>Writer</span><span class='op'>&lt;</span><span class='ident'>W</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>err</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>S</span>, <span class='ident'>T</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>msg</span>: <span class='ident'>S</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> <span class='kw'>where</span> <span class='ident'>S</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span> {
-        <span class='prelude-val'>Err</span>(<span class='ident'>Error</span>::<span class='ident'>Encode</span>(<span class='ident'>msg</span>.<span class='ident'>into</span>()))
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">io</span>::<span class="ident">Write</span><span class="op">&gt;</span> <span class="ident">Writer</span><span class="op">&lt;</span><span class="ident">W</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">err</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">msg</span>: <span class="ident">S</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">where</span> <span class="ident">S</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
+        <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">Encode</span>(<span class="ident">msg</span>.<span class="ident">into</span>()))
     }
 
-    <span class='kw'>fn</span> <span class='ident'>w_bytes</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>s</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>()<span class='op'>&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>buf</span>.<span class='ident'>write_all</span>(<span class='ident'>s</span>).<span class='ident'>map_err</span>(<span class='ident'>Error</span>::<span class='ident'>Io</span>)
+    <span class="kw">fn</span> <span class="ident">w_bytes</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">s</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">buf</span>.<span class="ident">write_all</span>(<span class="ident">s</span>).<span class="ident">map_err</span>(<span class="ident">Error</span>::<span class="ident">Io</span>)
     }
 
-    <span class='kw'>fn</span> <span class='ident'>w_user_bytes</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>s</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>()<span class='op'>&gt;</span> {
-        <span class='kw'>if</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='self'>self</span>.<span class='ident'>should_quote</span>(<span class='ident'>s</span>)) {
-            <span class='kw'>let</span> <span class='ident'>quoted</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>quote_field</span>(<span class='ident'>s</span>);
-            <span class='self'>self</span>.<span class='ident'>w_bytes</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>*</span><span class='ident'>quoted</span>)
-        } <span class='kw'>else</span> {
-            <span class='self'>self</span>.<span class='ident'>w_bytes</span>(<span class='ident'>s</span>)
+    <span class="kw">fn</span> <span class="ident">w_user_bytes</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">s</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+        <span class="kw">if</span> <span class="macro">try</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">should_quote</span>(<span class="ident">s</span>)) {
+            <span class="kw">let</span> <span class="ident">quoted</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">quote_field</span>(<span class="ident">s</span>);
+            <span class="self">self</span>.<span class="ident">w_bytes</span>(<span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="ident">quoted</span>)
+        } <span class="kw">else</span> {
+            <span class="self">self</span>.<span class="ident">w_bytes</span>(<span class="ident">s</span>)
         }
     }
 
-    <span class='kw'>fn</span> <span class='ident'>w_lineterm</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>()<span class='op'>&gt;</span> {
-        <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>record_terminator</span> {
-            <span class='ident'>RecordTerminator</span>::<span class='ident'>CRLF</span> <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>w_bytes</span>(<span class='string'>b&quot;\r\n&quot;</span>),
-            <span class='ident'>RecordTerminator</span>::<span class='ident'>Any</span>(<span class='ident'>b</span>) <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>w_bytes</span>(<span class='kw-2'>&amp;</span>[<span class='ident'>b</span>]),
+    <span class="kw">fn</span> <span class="ident">w_lineterm</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+        <span class="kw">match</span> <span class="self">self</span>.<span class="ident">record_terminator</span> {
+            <span class="ident">RecordTerminator</span>::<span class="ident">CRLF</span> <span class="op">=&gt;</span> <span class="self">self</span>.<span class="ident">w_bytes</span>(<span class="string">b&quot;\r\n&quot;</span>),
+            <span class="ident">RecordTerminator</span>::<span class="ident">Any</span>(<span class="ident">b</span>) <span class="op">=&gt;</span> <span class="self">self</span>.<span class="ident">w_bytes</span>(<span class="kw-2">&amp;</span>[<span class="ident">b</span>]),
         }
     }
 
-    <span class='kw'>fn</span> <span class='ident'>set_first_len</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>cur_len</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>()<span class='op'>&gt;</span> {
-        <span class='kw'>if</span> <span class='ident'>cur_len</span> <span class='op'>==</span> <span class='number'>0</span> {
-            <span class='kw'>return</span> <span class='self'>self</span>.<span class='ident'>err</span>(<span class='string'>&quot;Records must have length greater than 0.&quot;</span>)
+    <span class="kw">fn</span> <span class="ident">set_first_len</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">cur_len</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+        <span class="kw">if</span> <span class="ident">cur_len</span> <span class="op">==</span> <span class="number">0</span> {
+            <span class="kw">return</span> <span class="self">self</span>.<span class="ident">err</span>(<span class="string">&quot;Records must have length greater than 0.&quot;</span>)
         }
-        <span class='kw'>if</span> <span class='op'>!</span><span class='self'>self</span>.<span class='ident'>flexible</span> {
-            <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>first_len</span> <span class='op'>==</span> <span class='number'>0</span> {
-                <span class='self'>self</span>.<span class='ident'>first_len</span> <span class='op'>=</span> <span class='ident'>cur_len</span>;
-            } <span class='kw'>else</span> <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>first_len</span> <span class='op'>!=</span> <span class='ident'>cur_len</span> {
-                <span class='kw'>return</span> <span class='self'>self</span>.<span class='ident'>err</span>(<span class='macro'>format</span><span class='macro'>!</span>(
-                    <span class='string'>&quot;Record has length {} but other records have length {}&quot;</span>,
-                    <span class='ident'>cur_len</span>, <span class='self'>self</span>.<span class='ident'>first_len</span>))
+        <span class="kw">if</span> <span class="op">!</span><span class="self">self</span>.<span class="ident">flexible</span> {
+            <span class="kw">if</span> <span class="self">self</span>.<span class="ident">first_len</span> <span class="op">==</span> <span class="number">0</span> {
+                <span class="self">self</span>.<span class="ident">first_len</span> <span class="op">=</span> <span class="ident">cur_len</span>;
+            } <span class="kw">else</span> <span class="kw">if</span> <span class="self">self</span>.<span class="ident">first_len</span> <span class="op">!=</span> <span class="ident">cur_len</span> {
+                <span class="kw">return</span> <span class="self">self</span>.<span class="ident">err</span>(<span class="macro">format</span><span class="macro">!</span>(
+                    <span class="string">&quot;Record has length {} but other records have length {}&quot;</span>,
+                    <span class="ident">cur_len</span>, <span class="self">self</span>.<span class="ident">first_len</span>))
             }
         }
-        <span class='prelude-val'>Ok</span>(())
+        <span class="prelude-val">Ok</span>(())
     }
 
-    <span class='kw'>fn</span> <span class='ident'>should_quote</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>field</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>bool</span><span class='op'>&gt;</span> {
-        <span class='kw'>let</span> <span class='ident'>needs</span> <span class='op'>=</span> <span class='op'>||</span> <span class='ident'>field</span>.<span class='ident'>iter</span>().<span class='ident'>any</span>(<span class='op'>|</span><span class='kw-2'>&amp;</span><span class='ident'>b</span><span class='op'>|</span> <span class='self'>self</span>.<span class='ident'>byte_needs_quotes</span>(<span class='ident'>b</span>));
-        <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>quote_style</span> {
-            <span class='ident'>QuoteStyle</span>::<span class='ident'>Always</span> <span class='op'>=&gt;</span> <span class='prelude-val'>Ok</span>(<span class='bool-val'>true</span>),
-            <span class='ident'>QuoteStyle</span>::<span class='ident'>Necessary</span> <span class='op'>=&gt;</span> <span class='prelude-val'>Ok</span>(<span class='ident'>needs</span>()),
-            <span class='ident'>QuoteStyle</span>::<span class='ident'>Never</span> <span class='op'>=&gt;</span> {
-                <span class='kw'>if</span> <span class='op'>!</span><span class='ident'>needs</span>() {
-                    <span class='prelude-val'>Ok</span>(<span class='bool-val'>false</span>)
-                } <span class='kw'>else</span> {
-                    <span class='self'>self</span>.<span class='ident'>err</span>(<span class='macro'>format</span><span class='macro'>!</span>(
-                        <span class='string'>&quot;Field requires quotes, but quote style \
+    <span class="kw">fn</span> <span class="ident">should_quote</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">field</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">needs</span> <span class="op">=</span> <span class="op">||</span> <span class="ident">field</span>.<span class="ident">iter</span>().<span class="ident">any</span>(<span class="op">|</span><span class="kw-2">&amp;</span><span class="ident">b</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">byte_needs_quotes</span>(<span class="ident">b</span>));
+        <span class="kw">match</span> <span class="self">self</span>.<span class="ident">quote_style</span> {
+            <span class="ident">QuoteStyle</span>::<span class="ident">Always</span> <span class="op">=&gt;</span> <span class="prelude-val">Ok</span>(<span class="bool-val">true</span>),
+            <span class="ident">QuoteStyle</span>::<span class="ident">Necessary</span> <span class="op">=&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">needs</span>()),
+            <span class="ident">QuoteStyle</span>::<span class="ident">Never</span> <span class="op">=&gt;</span> {
+                <span class="kw">if</span> <span class="op">!</span><span class="ident">needs</span>() {
+                    <span class="prelude-val">Ok</span>(<span class="bool-val">false</span>)
+                } <span class="kw">else</span> {
+                    <span class="self">self</span>.<span class="ident">err</span>(<span class="macro">format</span><span class="macro">!</span>(
+                        <span class="string">&quot;Field requires quotes, but quote style \
                          is &#39;Never&#39;: &#39;{}&#39;&quot;</span>,
-                        <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='ident'>field</span>)))
+                        <span class="ident">String</span>::<span class="ident">from_utf8_lossy</span>(<span class="ident">field</span>)))
                 }
             }
         }
     }
 
-    <span class='kw'>fn</span> <span class='ident'>byte_needs_quotes</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>b</span>: <span class='ident'>u8</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='ident'>b</span> <span class='op'>==</span> <span class='self'>self</span>.<span class='ident'>delimiter</span>
-        <span class='op'>||</span> <span class='self'>self</span>.<span class='ident'>record_terminator</span> <span class='op'>==</span> <span class='ident'>b</span>
-        <span class='op'>||</span> <span class='ident'>b</span> <span class='op'>==</span> <span class='self'>self</span>.<span class='ident'>quote</span>
-        <span class='comment'>// This is a bit hokey. By default, the record terminator is</span>
-        <span class='comment'>// &#39;\n&#39;, but we still need to quote &#39;\r&#39; because the reader</span>
-        <span class='comment'>// interprets &#39;\r&#39; as a record terminator by default.</span>
-        <span class='op'>||</span> <span class='ident'>b</span> <span class='op'>==</span> <span class='string'>b&#39;\r&#39;</span> <span class='op'>||</span> <span class='ident'>b</span> <span class='op'>==</span> <span class='string'>b&#39;\n&#39;</span>
+    <span class="kw">fn</span> <span class="ident">byte_needs_quotes</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">b</span>: <span class="ident">u8</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="ident">b</span> <span class="op">==</span> <span class="self">self</span>.<span class="ident">delimiter</span>
+        <span class="op">||</span> <span class="self">self</span>.<span class="ident">record_terminator</span> <span class="op">==</span> <span class="ident">b</span>
+        <span class="op">||</span> <span class="ident">b</span> <span class="op">==</span> <span class="self">self</span>.<span class="ident">quote</span>
+        <span class="comment">// This is a bit hokey. By default, the record terminator is</span>
+        <span class="comment">// &#39;\n&#39;, but we still need to quote &#39;\r&#39; because the reader</span>
+        <span class="comment">// interprets &#39;\r&#39; as a record terminator by default.</span>
+        <span class="op">||</span> <span class="ident">b</span> <span class="op">==</span> <span class="string">b&#39;\r&#39;</span> <span class="op">||</span> <span class="ident">b</span> <span class="op">==</span> <span class="string">b&#39;\n&#39;</span>
     }
 
-    <span class='kw'>fn</span> <span class='ident'>quote_field</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='kw-2'>mut</span> <span class='ident'>s</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='ident'>ByteString</span> {
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>buf</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>with_capacity</span>(<span class='ident'>s</span>.<span class='ident'>len</span>() <span class='op'>+</span> <span class='number'>2</span>);
+    <span class="kw">fn</span> <span class="ident">quote_field</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">s</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="ident">ByteString</span> {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buf</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">with_capacity</span>(<span class="ident">s</span>.<span class="ident">len</span>() <span class="op">+</span> <span class="number">2</span>);
 
-        <span class='ident'>buf</span>.<span class='ident'>push</span>(<span class='self'>self</span>.<span class='ident'>quote</span>);
-        <span class='kw'>loop</span> {
-            <span class='kw'>match</span> <span class='ident'>memchr</span>(<span class='self'>self</span>.<span class='ident'>quote</span>, <span class='ident'>s</span>) {
-                <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> {
-                    <span class='ident'>buf</span>.<span class='ident'>extend_from_slice</span>(<span class='ident'>s</span>);
-                    <span class='kw'>break</span>
+        <span class="ident">buf</span>.<span class="ident">push</span>(<span class="self">self</span>.<span class="ident">quote</span>);
+        <span class="kw">loop</span> {
+            <span class="kw">match</span> <span class="ident">memchr</span>(<span class="self">self</span>.<span class="ident">quote</span>, <span class="ident">s</span>) {
+                <span class="prelude-val">None</span> <span class="op">=&gt;</span> {
+                    <span class="ident">buf</span>.<span class="ident">extend_from_slice</span>(<span class="ident">s</span>);
+                    <span class="kw">break</span>
                 }
-                <span class='prelude-val'>Some</span>(<span class='ident'>next_quote</span>) <span class='op'>=&gt;</span> {
-                    <span class='ident'>buf</span>.<span class='ident'>extend_from_slice</span>(<span class='kw-2'>&amp;</span><span class='ident'>s</span>[..<span class='ident'>next_quote</span>]);
-                    <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>double_quote</span> {
-                        <span class='ident'>buf</span>.<span class='ident'>push</span>(<span class='self'>self</span>.<span class='ident'>quote</span>);
-                        <span class='ident'>buf</span>.<span class='ident'>push</span>(<span class='self'>self</span>.<span class='ident'>quote</span>);
-                    } <span class='kw'>else</span> {
-                        <span class='ident'>buf</span>.<span class='ident'>push</span>(<span class='self'>self</span>.<span class='ident'>escape</span>);
-                        <span class='ident'>buf</span>.<span class='ident'>push</span>(<span class='self'>self</span>.<span class='ident'>quote</span>);
+                <span class="prelude-val">Some</span>(<span class="ident">next_quote</span>) <span class="op">=&gt;</span> {
+                    <span class="ident">buf</span>.<span class="ident">extend_from_slice</span>(<span class="kw-2">&amp;</span><span class="ident">s</span>[..<span class="ident">next_quote</span>]);
+                    <span class="kw">if</span> <span class="self">self</span>.<span class="ident">double_quote</span> {
+                        <span class="ident">buf</span>.<span class="ident">push</span>(<span class="self">self</span>.<span class="ident">quote</span>);
+                        <span class="ident">buf</span>.<span class="ident">push</span>(<span class="self">self</span>.<span class="ident">quote</span>);
+                    } <span class="kw">else</span> {
+                        <span class="ident">buf</span>.<span class="ident">push</span>(<span class="self">self</span>.<span class="ident">escape</span>);
+                        <span class="ident">buf</span>.<span class="ident">push</span>(<span class="self">self</span>.<span class="ident">quote</span>);
                     }
-                    <span class='ident'>s</span> <span class='op'>=</span> <span class='kw-2'>&amp;</span><span class='ident'>s</span>[<span class='ident'>next_quote</span> <span class='op'>+</span> <span class='number'>1</span>..];
+                    <span class="ident">s</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">s</span>[<span class="ident">next_quote</span> <span class="op">+</span> <span class="number">1</span>..];
                 }
             }
         }
-        <span class='ident'>buf</span>.<span class='ident'>push</span>(<span class='self'>self</span>.<span class='ident'>quote</span>);
-        <span class='ident'>buf</span>
+        <span class="ident">buf</span>.<span class="ident">push</span>(<span class="self">self</span>.<span class="ident">quote</span>);
+        <span class="ident">buf</span>
     }
 }
 </pre>
