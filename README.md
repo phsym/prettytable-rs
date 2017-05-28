@@ -39,17 +39,18 @@ use prettytable::row::Row;
 use prettytable::cell::Cell;
 
 fn main() {
-	// Create the table
-	let mut table = Table::new();
-	// Add a row
-	table.add_row(row!["ABC", "DEFG", "HIJKLMN"]);
+    // Create the table
+    let mut table = Table::new();
+    // Add a row
+    table.add_row(row!["ABC", "DEFG", "HIJKLMN"]);
     table.add_row(row!["foobar", "bar", "foo"]);
     // Or the more complicated way :
     table.add_row(Row::new(vec![
-    		Cell::new("foobar2"),
-    		Cell::new("bar2"),
-    		Cell::new("foo2")])
-    	);
+        Cell::new("foobar2"),
+        Cell::new("bar2"),
+        Cell::new("foo2")])
+    );
+    // Print the table to stdout
     table.printstd();
 }
 ```
@@ -73,10 +74,10 @@ To make the code simpler, the `table!` macro is there for you. The following cod
 #[macro_use] extern crate prettytable;
 
 fn main() {
-	let table = table!(["ABC", "DEFG", "HIJKLMN"],
-    				   ["foobar", "bar", "foo"],
-    				   ["foobar2", "bar2", "foo2"]
-    				  );
+    let table = table!(["ABC", "DEFG", "HIJKLMN"],
+                       ["foobar", "bar", "foo"],
+                       ["foobar2", "bar2", "foo2"]
+                      );
     table.printstd();
 }
 ```
@@ -87,13 +88,13 @@ Tables also support multiline cells content. As a consequence, you can print a t
 For example:
 ```rust
 let table1 = table!(["ABC", "DEFG", "HIJKLMN"],
-				   ["foobar", "bar", "foo"],
-				   ["foobar2", "bar2", "foo2"]
-				  );
+                    ["foobar", "bar", "foo"],
+                    ["foobar2", "bar2", "foo2"]
+                   );
 let table2 = table!(["Title 1", "Title 2"],
-					["This is\na multiline\ncell", "foo"],
-					["Yo dawg ;) You can even\nprint tables\ninto tables", table1]
-					);
+                    ["This is\na multiline\ncell", "foo"],
+                    ["Yo dawg ;) You can even\nprint tables\ninto tables", table1]
+                   );
 table2.printstd();
 ```
 Would print the following text:
@@ -129,12 +130,12 @@ use term::{Attr, color};
 (...)
 
 table.add_row(Row::new(vec![
-    	Cell::new("foobar2")
-                .with_style(Attr::ForegroundColor(color::GREEN))
-                .with_style(Attr::Bold),
-        Cell::new("bar2")
-                .with_style(Attr::ForegroundColor(color::RED)),
-        Cell::new("foo2")])
+    Cell::new("foobar2")
+        .with_style(Attr::ForegroundColor(color::GREEN))
+        .with_style(Attr::Bold),
+    Cell::new("bar2")
+        .with_style(Attr::ForegroundColor(color::RED)),
+    Cell::new("foo2")])
 );
 ```
 
@@ -228,14 +229,14 @@ For example:
 ```rust
 let mut table = /* Initialize table */;
 let format = format::FormatBuilder::new()
-				.column_separator('|')
-				.borders('|')
-				.separators(
-						&[format::LinePosition::Top, format::LinePosition::Bottom],
-						format::LineSeparator::new('-', '+', '+', '+')
-				)
-				.padding(1, 1)
-				.build();
+    .column_separator('|')
+    .borders('|')
+    .separators(
+        &[format::LinePosition::Top, format::LinePosition::Bottom],
+        format::LineSeparator::new('-', '+', '+', '+')
+    )
+    .padding(1, 1)
+    .build();
 table.set_format(format);
 ```
 Would give a table like the following:
@@ -267,9 +268,9 @@ table.set_format(*format::consts::FORMAT_NO_BORDER_LINE_SEPARATOR);
 ```
 Would give:
 ```
-Title 1     | Title 2    
+Title 1     | Title 2
 ------------+------------
-Value 1     | Value 2    
+Value 1     | Value 2
 Value three | Value four
 ```
 
