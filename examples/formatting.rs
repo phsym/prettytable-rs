@@ -35,7 +35,6 @@ fn main() {
     // | Title 1      Title 2    |
     // +=========================+
     // | Value 1      Value 2    |
-    // +-------------------------+
     // | Value three  Value four |
     // +-------------------------+
     println!("FORMAT_BORDERS_ONLY :");
