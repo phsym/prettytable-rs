@@ -310,7 +310,7 @@ pub mod consts {
 		/// ```text
 		/// +----+----+
 		/// | T1 | T2 |
-		/// +====+====+
+		/// +----+----+
 		/// | a  | b  |
 		/// | c  | d  |
 		/// +----+----+
@@ -337,6 +337,8 @@ pub mod consts {
 		pub static ref FORMAT_NO_LINESEP: TableFormat = FormatBuilder::new()
 																	.column_separator('|')
 																	.borders('|')
+																	.separator(LinePosition::Bottom, *MINUS_PLUS_SEP)
+																	.separator(LinePosition::Top, *MINUS_PLUS_SEP)
 																	.padding(1, 1)
 																	.build();
 
@@ -385,7 +387,6 @@ pub mod consts {
 		/// ```
 		pub static ref FORMAT_BORDERS_ONLY: TableFormat = FormatBuilder::new()
 																	.padding(1, 1)
-																	.separator(LinePosition::Intern, *MINUS_PLUS_SEP)
 																	.separator(LinePosition::Title, *EQU_PLUS_SEP)
 																	.separator(LinePosition::Bottom, *MINUS_PLUS_SEP)
 																	.separator(LinePosition::Top, *MINUS_PLUS_SEP)

@@ -634,9 +634,11 @@ mod tests {
 		assert_eq!(table[1][1].get_content(), "newval");
 
 		let out = "\
++-----+--------+-----+
 | t1  | t2     | t3  |
 | a   | bc     | def |
 | def | newval | a   |
++-----+--------+-----+
 ";
 		assert_eq!(table.to_string().replace("\r\n", "\n"), out);
 	}
