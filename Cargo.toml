@@ -9,6 +9,7 @@ documentation = "http://phsym.github.io/prettytable-rs"
 readme = "README.md"
 authors = [ "Pierre-Henri Symoneaux" ]
 keywords = ["tab", "table", "format", "pretty", "print"]
+categories = ["command-line-interface"]
 license = "BSD-3-Clause"
 
 [features]
