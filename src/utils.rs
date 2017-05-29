@@ -48,7 +48,7 @@ impl Write for StringWriter {
 }
 
 /// Align/fill a string and print it to `out`
-/// If `skip_right_fill` is set to `true`, then no spce will be added after the string
+/// If `skip_right_fill` is set to `true`, then no space will be added after the string
 /// to complete alignment
 pub fn print_align<T: Write + ?Sized>(out: &mut T,
                                       align: Alignment,
