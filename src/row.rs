@@ -13,179 +13,199 @@ use super::format::{TableFormat, ColumnPosition};
 /// Represent a table row made of cells
 #[derive(Clone, Debug)]
 pub struct Row {
-	cells: Vec<Cell>
+    cells: Vec<Cell>,
 }
 
 impl Row {
-	/// Create a new `Row` backed with `cells` vector
-	pub fn new(cells: Vec<Cell>) -> Row {
-		Row {
-			cells: cells
-		}
-	}
+    /// Create a new `Row` backed with `cells` vector
+    pub fn new(cells: Vec<Cell>) -> Row {
+        Row { cells: cells }
+    }
 
-	/// Create an row of length `size`, with empty strings stored
-	pub fn empty() -> Row {
-		Self::new(vec![Cell::default(); 0])
-	}
+    /// Create an row of length `size`, with empty strings stored
+    pub fn empty() -> Row {
+        Self::new(vec![Cell::default(); 0])
+    }
 
-	/// Get the number of cells in this row
-	pub fn len(&self) -> usize {
-		self.cells.len()
-	}
+    /// Get the number of cells in this row
+    pub fn len(&self) -> usize {
+        self.cells.len()
+    }
 
-	/// Get the height of this row
-	pub fn get_height(&self) -> usize {
-		let mut height = 1; // Minimum height must be 1 to print empty rows
-		for cell in &self.cells {
-			let h = cell.get_height();
-			if h > height {
-				height = h;
-			}
-		}
-		height
-	}
+    /// Get the height of this row
+    pub fn get_height(&self) -> usize {
+        let mut height = 1; // Minimum height must be 1 to print empty rows
+        for cell in &self.cells {
+            let h = cell.get_height();
+            if h > height {
+                height = h;
+            }
+        }
+        height
+    }
 
-	/// Get the minimum width required by the cell in the column `column`.
-	/// Return 0 if the cell does not exist in this row
-	pub fn get_cell_width(&self, column: usize) -> usize {
-		self.cells.get(column).map(|cell| cell.get_width()).unwrap_or(0)
-	}
+    /// Get the minimum width required by the cell in the column `column`.
+    /// Return 0 if the cell does not exist in this row
+    pub fn get_cell_width(&self, column: usize) -> usize {
+        self.cells
+            .get(column)
+            .map(|cell| cell.get_width())
+            .unwrap_or(0)
+    }
 
-	/// Get the cell at index `idx`
-	pub fn get_cell(&self, idx: usize) -> Option<&Cell> {
-		self.cells.get(idx)
-	}
+    /// Get the cell at index `idx`
+    pub fn get_cell(&self, idx: usize) -> Option<&Cell> {
+        self.cells.get(idx)
+    }
 
-	/// Get the mutable cell at index `idx`
-	pub fn get_mut_cell(&mut self, idx: usize) -> Option<&mut Cell> {
-		self.cells.get_mut(idx)
-	}
+    /// Get the mutable cell at index `idx`
+    pub fn get_mut_cell(&mut self, idx: usize) -> Option<&mut Cell> {
+        self.cells.get_mut(idx)
+    }
 
-	/// Set the `cell` in the row at the given `column`
-	pub fn set_cell(&mut self, cell: Cell, column: usize) -> Result<(), &str> {
-		if column >= self.len() {
-			return Err("Cannot find cell");
-		}
-		self.cells[column] = cell;
-		Ok(())
-	}
+    /// Set the `cell` in the row at the given `column`
+    pub fn set_cell(&mut self, cell: Cell, column: usize) -> Result<(), &str> {
+        if column >= self.len() {
+            return Err("Cannot find cell");
+        }
+        self.cells[column] = cell;
+        Ok(())
+    }
 
-	/// Append a `cell` at the end of the row
-	pub fn add_cell(&mut self, cell: Cell) {
-		self.cells.push(cell);
-	}
+    /// Append a `cell` at the end of the row
+    pub fn add_cell(&mut self, cell: Cell) {
+        self.cells.push(cell);
+    }
 
-	/// Insert `cell` at position `index`. If `index` is higher than the row length,
-	/// the cell will be appended at the end
-	pub fn insert_cell(&mut self, index: usize, cell: Cell) {
-		if index < self.cells.len() {
-			self.cells.insert(index, cell);
-		} else {
-			self.add_cell(cell);
-		}
-	}
+    /// Insert `cell` at position `index`. If `index` is higher than the row length,
+    /// the cell will be appended at the end
+    pub fn insert_cell(&mut self, index: usize, cell: Cell) {
+        if index < self.cells.len() {
+            self.cells.insert(index, cell);
+        } else {
+            self.add_cell(cell);
+        }
+    }
 
-	/// Remove the cell at position `index`. Silently skip if this cell does not exist
-	pub fn remove_cell(&mut self, index: usize) {
-		if index < self.cells.len() {
-			self.cells.remove(index);
-		}
-	}
+    /// Remove the cell at position `index`. Silently skip if this cell does not exist
+    pub fn remove_cell(&mut self, index: usize) {
+        if index < self.cells.len() {
+            self.cells.remove(index);
+        }
+    }
 
     /// Returns an immutable iterator over cells
     pub fn iter<'a>(&'a self) -> Iter<'a, Cell> {
         self.cells.iter()
     }
 
-	/// Returns an mutable iterator over cells
+    /// Returns an mutable iterator over cells
     pub fn iter_mut<'a>(&'a mut self) -> IterMut<'a, Cell> {
         self.cells.iter_mut()
     }
 
-	/// Internal only
-	fn __print<T:Write+?Sized, F>(&self, out: &mut T, format: &TableFormat, col_width: &[usize], f: F) -> Result<(), Error>
-		where F: Fn(&Cell, &mut T, usize, usize, bool) -> Result<(), Error>
-	{
-		for i in 0..self.get_height() {
-			try!(format.print_column_separator(out, ColumnPosition::Left));
-			let (lp, rp) = format.get_padding();
-			for j in 0..col_width.len() {
-				try!(out.write(&vec![' ' as u8; lp]));
-				let skip_r_fill = (j == col_width.len() - 1) && format.get_column_separator(ColumnPosition::Right).is_none();
-				match self.get_cell(j) {
-					Some(ref c) => try!(f(c, out, i, col_width[j], skip_r_fill)),
-					None => try!(f(&Cell::default(), out, i, col_width[j], skip_r_fill))
-				};
-				try!(out.write(&vec![' ' as u8; rp]));
-				if j < col_width.len() - 1 {
-					try!(format.print_column_separator(out, ColumnPosition::Intern));
-				}
-			}
-			try!(format.print_column_separator(out, ColumnPosition::Right));
-			try!(out.write_all(NEWLINE));
-		}
-		Ok(())
-	}
+    /// Internal only
+    fn __print<T: Write + ?Sized, F>(&self,
+                                     out: &mut T,
+                                     format: &TableFormat,
+                                     col_width: &[usize],
+                                     f: F)
+                                     -> Result<(), Error>
+        where F: Fn(&Cell, &mut T, usize, usize, bool) -> Result<(), Error>
+    {
+        for i in 0..self.get_height() {
+            try!(format.print_column_separator(out, ColumnPosition::Left));
+            let (lp, rp) = format.get_padding();
+            for j in 0..col_width.len() {
+                try!(out.write(&vec![' ' as u8; lp]));
+                let skip_r_fill = (j == col_width.len() - 1) &&
+                                  format.get_column_separator(ColumnPosition::Right).is_none();
+                match self.get_cell(j) {
+                    Some(ref c) => try!(f(c, out, i, col_width[j], skip_r_fill)),
+                    None => try!(f(&Cell::default(), out, i, col_width[j], skip_r_fill)),
+                };
+                try!(out.write(&vec![' ' as u8; rp]));
+                if j < col_width.len() - 1 {
+                    try!(format.print_column_separator(out, ColumnPosition::Intern));
+                }
+            }
+            try!(format.print_column_separator(out, ColumnPosition::Right));
+            try!(out.write_all(NEWLINE));
+        }
+        Ok(())
+    }
 
-	/// Print the row to `out`, with `separator` as column separator, and `col_width`
-	/// specifying the width of each columns
-	pub fn print<T: Write+?Sized>(&self, out: &mut T, format: &TableFormat, col_width: &[usize]) -> Result<(), Error> {
-		self.__print(out, format, col_width, Cell::print)
-	}
+    /// Print the row to `out`, with `separator` as column separator, and `col_width`
+    /// specifying the width of each columns
+    pub fn print<T: Write + ?Sized>(&self,
+                                    out: &mut T,
+                                    format: &TableFormat,
+                                    col_width: &[usize])
+                                    -> Result<(), Error> {
+        self.__print(out, format, col_width, Cell::print)
+    }
 
-	/// Print the row to terminal `out`, with `separator` as column separator, and `col_width`
-	/// specifying the width of each columns. Apply style when needed
-	pub fn print_term<T: Terminal+?Sized>(&self, out: &mut T, format: &TableFormat, col_width: &[usize]) -> Result<(), Error> {
-		self.__print(out, format, col_width, Cell::print_term)
-	}
+    /// Print the row to terminal `out`, with `separator` as column separator, and `col_width`
+    /// specifying the width of each columns. Apply style when needed
+    pub fn print_term<T: Terminal + ?Sized>(&self,
+                                            out: &mut T,
+                                            format: &TableFormat,
+                                            col_width: &[usize])
+                                            -> Result<(), Error> {
+        self.__print(out, format, col_width, Cell::print_term)
+    }
 }
 
 impl Default for Row {
-	fn default() -> Row {
-		Row::empty()
-	}
+    fn default() -> Row {
+        Row::empty()
+    }
 }
 
 impl Index<usize> for Row {
-	type Output = Cell;
-	fn index(&self, idx: usize) -> &Self::Output {
-		&self.cells[idx]
-	}
+    type Output = Cell;
+    fn index(&self, idx: usize) -> &Self::Output {
+        &self.cells[idx]
+    }
 }
 
 impl IndexMut<usize> for Row {
-	fn index_mut(&mut self, idx: usize) -> &mut Self::Output {
-		&mut self.cells[idx]
-	}
+    fn index_mut(&mut self, idx: usize) -> &mut Self::Output {
+        &mut self.cells[idx]
+    }
 }
 
-impl <A: ToString> FromIterator<A> for Row {
-	fn from_iter<T>(iterator: T) -> Row where T: IntoIterator<Item=A> {
-		Self::new(iterator.into_iter().map(|ref e| Cell::from(e)).collect())
-	}
+impl<A: ToString> FromIterator<A> for Row {
+    fn from_iter<T>(iterator: T) -> Row
+        where T: IntoIterator<Item = A>
+    {
+        Self::new(iterator.into_iter().map(|ref e| Cell::from(e)).collect())
+    }
 }
 
-impl <T, A> From<T> for Row where A: ToString, T : IntoIterator<Item=A> {
-	fn from(it: T) -> Row {
-		Self::from_iter(it)
-	}
+impl<T, A> From<T> for Row
+    where A: ToString,
+          T: IntoIterator<Item = A>
+{
+    fn from(it: T) -> Row {
+        Self::from_iter(it)
+    }
 }
 
-impl <'a> IntoIterator for &'a Row {
-	type Item=&'a Cell;
-	type IntoIter=Iter<'a, Cell>;
-	fn into_iter(self) -> Self::IntoIter {
-		self.iter()
-	}
+impl<'a> IntoIterator for &'a Row {
+    type Item = &'a Cell;
+    type IntoIter = Iter<'a, Cell>;
+    fn into_iter(self) -> Self::IntoIter {
+        self.iter()
+    }
 }
 
-impl <'a> IntoIterator for &'a mut Row {
-	type Item=&'a mut Cell;
-	type IntoIter=IterMut<'a, Cell>;
-	fn into_iter(self) -> Self::IntoIter {
-		self.iter_mut()
-	}
+impl<'a> IntoIterator for &'a mut Row {
+    type Item = &'a mut Cell;
+    type IntoIter = IterMut<'a, Cell>;
+    fn into_iter(self) -> Self::IntoIter {
+        self.iter_mut()
+    }
 }
 
 /// This macro simplifies `Row` creation
@@ -212,12 +232,12 @@ impl <'a> IntoIterator for &'a mut Row {
 /// For details about style specifier syntax, check doc for [Cell::style_spec](cell/struct.Cell.html#method.style_spec) method
 #[macro_export]
 macro_rules! row {
-	(($($out:tt)*); $value:expr) => (vec![$($out)* cell!($value)]);
-	(($($out:tt)*); $value:expr, $($n:tt)*) => (row!(($($out)* cell!($value),); $($n)*));
-	(($($out:tt)*); $style:ident -> $value:expr) => (vec![$($out)* cell!($style -> $value)]);
-	(($($out:tt)*); $style:ident -> $value:expr, $($n: tt)*) => (row!(($($out)* cell!($style -> $value),); $($n)*));
+    (($($out:tt)*); $value:expr) => (vec![$($out)* cell!($value)]);
+    (($($out:tt)*); $value:expr, $($n:tt)*) => (row!(($($out)* cell!($value),); $($n)*));
+    (($($out:tt)*); $style:ident -> $value:expr) => (vec![$($out)* cell!($style -> $value)]);
+    (($($out:tt)*); $style:ident -> $value:expr, $($n: tt)*) => (row!(($($out)* cell!($style -> $value),); $($n)*));
 
-	($($content:expr), *) => ($crate::row::Row::new(vec![$(cell!($content)), *]));
-	($style:ident => $($content:expr), *) => ($crate::row::Row::new(vec![$(cell!($style -> $content)), *]));
-	($($content:tt)*) => ($crate::row::Row::new(row!((); $($content)*)));
+    ($($content:expr), *) => ($crate::row::Row::new(vec![$(cell!($content)), *]));
+    ($style:ident => $($content:expr), *) => ($crate::row::Row::new(vec![$(cell!($style -> $content)), *]));
+    ($($content:tt)*) => ($crate::row::Row::new(row!((); $($content)*)));
 }
