@@ -16,7 +16,7 @@ pub struct Cell {
     content: Vec<String>,
     width: usize,
     align: Alignment,
-    style: Vec<Attr>
+    style: Vec<Attr>,
 }
 
 impl Cell {
@@ -35,7 +35,7 @@ impl Cell {
             content: content,
             width: width,
             align: align,
-            style: Vec::new()
+            style: Vec::new(),
         }
     }
 
@@ -126,18 +126,21 @@ impl Cell {
                     'W' => color::BRIGHT_WHITE,
                     'd' => color::BLACK,
                     'D' => color::BRIGHT_BLACK,
-                    _ => { // Silently ignore unknown tags
-                            foreground = false;
-                            background = false;
-                            continue;
-                         }
+                    _ => {
+                        // Silently ignore unknown tags
+                        foreground = false;
+                        background = false;
+                        continue;
+                    }
                 };
-                if foreground { self.style(Attr::ForegroundColor(color)); }
-                else if background { self.style(Attr::BackgroundColor(color)); }
+                if foreground {
+                    self.style(Attr::ForegroundColor(color));
+                } else if background {
+                    self.style(Attr::BackgroundColor(color));
+                }
                 foreground = false;
                 background = false;
-            }
-            else {
+            } else {
                 match c {
                     'F' => foreground = true,
                     'B' => background = true,
@@ -147,8 +150,8 @@ impl Cell {
                     'c' => self.align(Alignment::CENTER),
                     'l' => self.align(Alignment::LEFT),
                     'r' => self.align(Alignment::RIGHT),
-                    'd' => {/* Default : do nothing */}
-                    _ => {/* Silently ignore unknown tags */}
+                    'd' => { /* Default : do nothing */ }
+                    _ => { /* Silently ignore unknown tags */ }
                 }
             }
         }
@@ -174,23 +177,37 @@ impl Cell {
     /// `idx` is the line index to print. `col_width` is the column width used to
     /// fill the cells with blanks so it fits in the table.
     /// If `ìdx` is higher than this cell's height, it will print empty content
-    pub fn print<T: Write+?Sized>(&self, out: &mut T, idx: usize, col_width: usize, skip_right_fill: bool) -> Result<(), Error> {
+    pub fn print<T: Write + ?Sized>(&self,
+                                    out: &mut T,
+                                    idx: usize,
+                                    col_width: usize,
+                                    skip_right_fill: bool)
+                                    -> Result<(), Error> {
         let c = self.content.get(idx).map(|s| s.as_ref()).unwrap_or("");
         print_align(out, self.align, c, ' ', col_width, skip_right_fill)
     }
 
     /// Apply style then call `print` to print the cell into a terminal
-    pub fn print_term<T: Terminal+?Sized>(&self, out: &mut T, idx: usize, col_width: usize, skip_right_fill: bool) -> Result<(), Error> {
+    pub fn print_term<T: Terminal + ?Sized>(&self,
+                                            out: &mut T,
+                                            idx: usize,
+                                            col_width: usize,
+                                            skip_right_fill: bool)
+                                            -> Result<(), Error> {
         for a in &self.style {
             match out.attr(a.clone()) {
-                Ok(..) | Err(::term::Error::NotSupported) | Err(::term::Error::ColorOutOfRange) => (), // Ignore unsupported atrributes
-                Err(e) => return Err(term_error_to_io_error(e))
+                Ok(..) |
+                Err(::term::Error::NotSupported) |
+                Err(::term::Error::ColorOutOfRange) => (), // Ignore unsupported atrributes
+                Err(e) => return Err(term_error_to_io_error(e)),
             };
         }
         try!(self.print(out, idx, col_width, skip_right_fill));
         match out.reset() {
-            Ok(..) | Err(::term::Error::NotSupported) | Err(::term::Error::ColorOutOfRange) => Ok(()),
-            Err(e) => Err(term_error_to_io_error(e))
+            Ok(..) |
+            Err(::term::Error::NotSupported) |
+            Err(::term::Error::ColorOutOfRange) => Ok(()),
+            Err(e) => Err(term_error_to_io_error(e)),
         }
     }
 }
@@ -202,7 +219,7 @@ fn term_error_to_io_error(te: ::term::Error) -> Error {
     }
 }
 
-impl <'a, T: ToString> From<&'a T> for Cell {
+impl<'a, T: ToString> From<&'a T> for Cell {
     fn from(f: &T) -> Cell {
         Cell::new(&f.to_string())
     }
@@ -221,7 +238,7 @@ impl Default for Cell {
             content: vec!["".to_string(); 1],
             width: 0,
             align: Alignment::LEFT,
-            style: Vec::new()
+            style: Vec::new(),
         }
     }
 }
@@ -334,12 +351,14 @@ mod tests {
         assert!(cell.style.contains(&Attr::Italic(true)));
         assert!(cell.style.contains(&Attr::Bold));
         assert!(cell.style.contains(&Attr::ForegroundColor(color::RED)));
-        assert!(cell.style.contains(&Attr::BackgroundColor(color::BRIGHT_BLUE)));
+        assert!(cell.style
+                    .contains(&Attr::BackgroundColor(color::BRIGHT_BLUE)));
         assert_eq!(cell.align, Alignment::CENTER);
 
         cell = cell.style_spec("FDBwr");
         assert_eq!(cell.style.len(), 2);
-        assert!(cell.style.contains(&Attr::ForegroundColor(color::BRIGHT_BLACK)));
+        assert!(cell.style
+                    .contains(&Attr::ForegroundColor(color::BRIGHT_BLACK)));
         assert!(cell.style.contains(&Attr::BackgroundColor(color::WHITE)));
         assert_eq!(cell.align, Alignment::RIGHT)
     }

@@ -1,4 +1,5 @@
-#[macro_use]extern crate prettytable;
+#[macro_use]
+extern crate prettytable;
 use prettytable::Table;
 
 use std::io;
@@ -10,7 +11,9 @@ const EMPTY: &'static str = " ";
 const ROUND: &'static str = "O";
 
 fn main() {
-    let mut table = table![[EMPTY, EMPTY, EMPTY], [EMPTY, EMPTY, EMPTY], [EMPTY, EMPTY, EMPTY]];
+    let mut table = table![[EMPTY, EMPTY, EMPTY],
+                           [EMPTY, EMPTY, EMPTY],
+                           [EMPTY, EMPTY, EMPTY]];
     table.printstd();
     let stdin = io::stdin();
     let mut stdout = io::stdout();
@@ -31,8 +34,8 @@ fn main() {
             println!("Bad input, should be between 1 and 9");
             continue;
         }
-        let x = (i-1)%3;
-        let y = (i-1)/3;
+        let x = (i - 1) % 3;
+        let y = (i - 1) / 3;
         {
             let mut row = table.get_mut_row(y).unwrap();
             if row.get_cell(x).unwrap().to_string() != EMPTY {
@@ -43,7 +46,7 @@ fn main() {
         }
         table.printstd();
         if check(&table) {
-            return
+            return;
         }
         if current == CROSS {
             current = ROUND;
@@ -55,15 +58,17 @@ fn main() {
 
 fn get(table: &Table, x: usize, y: usize) -> String {
     match table.get_row(y) {
-        Some(ref r) => match r.get_cell(x){
-            Some(ref c) => c.to_string(),
-            _ => EMPTY.to_string()
-        },
-        _ => EMPTY.to_string()
+        Some(ref r) => {
+            match r.get_cell(x) {
+                Some(ref c) => c.to_string(),
+                _ => EMPTY.to_string(),
+            }
+        }
+        _ => EMPTY.to_string(),
     }
 }
 
-fn is(table: &Table, s : &str, x: usize, y: usize) -> bool {
+fn is(table: &Table, s: &str, x: usize, y: usize) -> bool {
     get(table, x, y).as_str() == s
 }
 
@@ -77,7 +82,10 @@ fn check(table: &Table) -> bool {
             }
             let current = get(table, x, y);
             let c = current.as_str();
-            if is(table, c, x+1, y) && is(table, c, x+2, y) || is(table, c, x+1, y+1) && is(table, c, x+2, y+2) || x >= 2 && is(table, c, x-1, y+1) && is(table, c, x-2, y+2) || is(table, c, x, y+1) && is(table, c, x, y+2) {
+            if is(table, c, x + 1, y) && is(table, c, x + 2, y) ||
+               is(table, c, x + 1, y + 1) && is(table, c, x + 2, y + 2) ||
+               x >= 2 && is(table, c, x - 1, y + 1) && is(table, c, x - 2, y + 2) ||
+               is(table, c, x, y + 1) && is(table, c, x, y + 2) {
                 println!("Game is over. {} is the winner", current);
                 return true;
             }

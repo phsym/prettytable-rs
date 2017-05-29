@@ -13,15 +13,13 @@ use super::format::{TableFormat, ColumnPosition};
 /// Represent a table row made of cells
 #[derive(Clone, Debug)]
 pub struct Row {
-    cells: Vec<Cell>
+    cells: Vec<Cell>,
 }
 
 impl Row {
     /// Create a new `Row` backed with `cells` vector
     pub fn new(cells: Vec<Cell>) -> Row {
-        Row {
-            cells: cells
-        }
+        Row { cells: cells }
     }
 
     /// Create an row of length `size`, with empty strings stored
@@ -49,7 +47,10 @@ impl Row {
     /// Get the minimum width required by the cell in the column `column`.
     /// Return 0 if the cell does not exist in this row
     pub fn get_cell_width(&self, column: usize) -> usize {
-        self.cells.get(column).map(|cell| cell.get_width()).unwrap_or(0)
+        self.cells
+            .get(column)
+            .map(|cell| cell.get_width())
+            .unwrap_or(0)
     }
 
     /// Get the cell at index `idx`
@@ -104,7 +105,12 @@ impl Row {
     }
 
     /// Internal only
-    fn __print<T:Write+?Sized, F>(&self, out: &mut T, format: &TableFormat, col_width: &[usize], f: F) -> Result<(), Error>
+    fn __print<T: Write + ?Sized, F>(&self,
+                                     out: &mut T,
+                                     format: &TableFormat,
+                                     col_width: &[usize],
+                                     f: F)
+                                     -> Result<(), Error>
         where F: Fn(&Cell, &mut T, usize, usize, bool) -> Result<(), Error>
     {
         for i in 0..self.get_height() {
@@ -112,10 +118,11 @@ impl Row {
             let (lp, rp) = format.get_padding();
             for j in 0..col_width.len() {
                 try!(out.write(&vec![' ' as u8; lp]));
-                let skip_r_fill = (j == col_width.len() - 1) && format.get_column_separator(ColumnPosition::Right).is_none();
+                let skip_r_fill = (j == col_width.len() - 1) &&
+                                  format.get_column_separator(ColumnPosition::Right).is_none();
                 match self.get_cell(j) {
                     Some(ref c) => try!(f(c, out, i, col_width[j], skip_r_fill)),
-                    None => try!(f(&Cell::default(), out, i, col_width[j], skip_r_fill))
+                    None => try!(f(&Cell::default(), out, i, col_width[j], skip_r_fill)),
                 };
                 try!(out.write(&vec![' ' as u8; rp]));
                 if j < col_width.len() - 1 {
@@ -130,13 +137,21 @@ impl Row {
 
     /// Print the row to `out`, with `separator` as column separator, and `col_width`
     /// specifying the width of each columns
-    pub fn print<T: Write+?Sized>(&self, out: &mut T, format: &TableFormat, col_width: &[usize]) -> Result<(), Error> {
+    pub fn print<T: Write + ?Sized>(&self,
+                                    out: &mut T,
+                                    format: &TableFormat,
+                                    col_width: &[usize])
+                                    -> Result<(), Error> {
         self.__print(out, format, col_width, Cell::print)
     }
 
     /// Print the row to terminal `out`, with `separator` as column separator, and `col_width`
     /// specifying the width of each columns. Apply style when needed
-    pub fn print_term<T: Terminal+?Sized>(&self, out: &mut T, format: &TableFormat, col_width: &[usize]) -> Result<(), Error> {
+    pub fn print_term<T: Terminal + ?Sized>(&self,
+                                            out: &mut T,
+                                            format: &TableFormat,
+                                            col_width: &[usize])
+                                            -> Result<(), Error> {
         self.__print(out, format, col_width, Cell::print_term)
     }
 }
@@ -160,29 +175,34 @@ impl IndexMut<usize> for Row {
     }
 }
 
-impl <A: ToString> FromIterator<A> for Row {
-    fn from_iter<T>(iterator: T) -> Row where T: IntoIterator<Item=A> {
+impl<A: ToString> FromIterator<A> for Row {
+    fn from_iter<T>(iterator: T) -> Row
+        where T: IntoIterator<Item = A>
+    {
         Self::new(iterator.into_iter().map(|ref e| Cell::from(e)).collect())
     }
 }
 
-impl <T, A> From<T> for Row where A: ToString, T : IntoIterator<Item=A> {
+impl<T, A> From<T> for Row
+    where A: ToString,
+          T: IntoIterator<Item = A>
+{
     fn from(it: T) -> Row {
         Self::from_iter(it)
     }
 }
 
-impl <'a> IntoIterator for &'a Row {
-    type Item=&'a Cell;
-    type IntoIter=Iter<'a, Cell>;
+impl<'a> IntoIterator for &'a Row {
+    type Item = &'a Cell;
+    type IntoIter = Iter<'a, Cell>;
     fn into_iter(self) -> Self::IntoIter {
         self.iter()
     }
 }
 
-impl <'a> IntoIterator for &'a mut Row {
-    type Item=&'a mut Cell;
-    type IntoIter=IterMut<'a, Cell>;
+impl<'a> IntoIterator for &'a mut Row {
+    type Item = &'a mut Cell;
+    type IntoIter = IterMut<'a, Cell>;
     fn into_iter(self) -> Self::IntoIter {
         self.iter_mut()
     }

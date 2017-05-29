@@ -4,7 +4,8 @@ extern crate term;
 extern crate atty;
 #[cfg(feature = "csv")]
 extern crate csv;
-#[macro_use] extern crate lazy_static;
+#[macro_use]
+extern crate lazy_static;
 extern crate encode_unicode;
 
 use std::io::{self, Write, Error};
@@ -35,7 +36,7 @@ use utils::StringWriter;
 pub struct Table {
     format: Box<TableFormat>,
     titles: Box<Option<Row>>,
-    rows: Vec<Row>
+    rows: Vec<Row>,
 }
 
 /// A borrowed immutable `Table` slice
@@ -61,10 +62,10 @@ pub struct Table {
 pub struct TableSlice<'a> {
     format: &'a TableFormat,
     titles: &'a Option<Row>,
-    rows: &'a [Row]
+    rows: &'a [Row],
 }
 
-impl <'a> TableSlice<'a> {
+impl<'a> TableSlice<'a> {
     /// Compute and return the number of column
     pub fn get_column_num(&self) -> usize {
         let mut cnum = 0;
@@ -92,7 +93,7 @@ impl <'a> TableSlice<'a> {
     fn get_column_width(&self, col_idx: usize) -> usize {
         let mut width = match *self.titles {
             Some(ref t) => t.get_cell_width(col_idx),
-            None => 0
+            None => 0,
         };
         for r in self.rows {
             let l = r.get_cell_width(col_idx);
@@ -125,34 +126,39 @@ impl <'a> TableSlice<'a> {
     }
 
     /// Internal only
-    fn __print<T: Write+?Sized, F>(&self, out: &mut T, f: F) -> Result<(), Error>
-        where F: Fn(&Row, &mut T, &TableFormat, &[usize]) -> Result<(), Error> {
+    fn __print<T: Write + ?Sized, F>(&self, out: &mut T, f: F) -> Result<(), Error>
+        where F: Fn(&Row, &mut T, &TableFormat, &[usize]) -> Result<(), Error>
+    {
         // Compute columns width
         let col_width = self.get_all_column_width();
-        try!(self.format.print_line_separator(out, &col_width, LinePosition::Top));
+        try!(self.format
+                 .print_line_separator(out, &col_width, LinePosition::Top));
         if let Some(ref t) = *self.titles {
             try!(f(t, out, &self.format, &col_width));
-            try!(self.format.print_line_separator(out, &col_width, LinePosition::Title));
+            try!(self.format
+                     .print_line_separator(out, &col_width, LinePosition::Title));
         }
         // Print rows
         let mut iter = self.rows.into_iter().peekable();
         while let Some(r) = iter.next() {
             try!(f(r, out, &self.format, &col_width));
             if iter.peek().is_some() {
-                try!(self.format.print_line_separator(out, &col_width, LinePosition::Intern));
+                try!(self.format
+                         .print_line_separator(out, &col_width, LinePosition::Intern));
             }
         }
-        try!(self.format.print_line_separator(out, &col_width, LinePosition::Bottom));
+        try!(self.format
+                 .print_line_separator(out, &col_width, LinePosition::Bottom));
         out.flush()
     }
 
     /// Print the table to `out`
-    pub fn print<T: Write+?Sized>(&self, out: &mut T) -> Result<(), Error> {
+    pub fn print<T: Write + ?Sized>(&self, out: &mut T) -> Result<(), Error> {
         self.__print(out, Row::print)
     }
 
     /// Print the table to terminal `out`, applying styles when needed
-    pub fn print_term<T: Terminal+?Sized>(&self, out: &mut T) -> Result<(), Error> {
+    pub fn print_term<T: Terminal + ?Sized>(&self, out: &mut T) -> Result<(), Error> {
         self.__print(out, Row::print_term)
     }
 
@@ -195,7 +201,9 @@ impl <'a> TableSlice<'a> {
     ///
     /// This allows for format customisation.
     #[cfg(feature = "csv")]
-    pub fn to_csv_writer<W: Write>(&self, mut writer: csv::Writer<W>) -> csv::Result<csv::Writer<W>> {
+    pub fn to_csv_writer<W: Write>(&self,
+                                   mut writer: csv::Writer<W>)
+                                   -> csv::Result<csv::Writer<W>> {
         for title in self.titles {
             try!(writer.write(title.iter().map(|c| c.get_content())));
         }
@@ -208,9 +216,9 @@ impl <'a> TableSlice<'a> {
     }
 }
 
-impl <'a> IntoIterator for &'a TableSlice<'a> {
-    type Item=&'a Row;
-    type IntoIter=Iter<'a, Row>;
+impl<'a> IntoIterator for &'a TableSlice<'a> {
+    type Item = &'a Row;
+    type IntoIter = Iter<'a, Row>;
     fn into_iter(self) -> Self::IntoIter {
         self.row_iter()
     }
@@ -227,7 +235,7 @@ impl Table {
         Table {
             rows: rows,
             titles: Box::new(None),
-            format: Box::new(*consts::FORMAT_DEFAULT)
+            format: Box::new(*consts::FORMAT_DEFAULT),
         }
     }
 
@@ -250,7 +258,15 @@ impl Table {
     /// Create a table from a CSV reader
     #[cfg(feature = "csv")]
     pub fn from_csv<R: Read>(reader: &mut csv::Reader<R>) -> Table {
-        Table::init(reader.records().map(|row| Row::new(row.unwrap().into_iter().map(|cell| Cell::new(&cell)).collect())).collect())
+        Table::init(reader
+                        .records()
+                        .map(|row| {
+                                 Row::new(row.unwrap()
+                                              .into_iter()
+                                              .map(|cell| Cell::new(&cell))
+                                              .collect())
+                             })
+                        .collect())
     }
 
     /// Change the table format. Eg : Separators
@@ -292,7 +308,7 @@ impl Table {
     /// and returning a mutable reference to the row
     pub fn add_row(&mut self, row: Row) -> &mut Row {
         self.rows.push(row);
-        let l = self.rows.len()-1;
+        let l = self.rows.len() - 1;
         &mut self.rows[l]
     }
 
@@ -347,12 +363,12 @@ impl Table {
     }
 
     /// Print the table to `out`
-    pub fn print<T: Write+?Sized>(&self, out: &mut T) -> Result<(), Error> {
+    pub fn print<T: Write + ?Sized>(&self, out: &mut T) -> Result<(), Error> {
         self.as_ref().print(out)
     }
 
     /// Print the table to terminal `out`, applying styles when needed
-    pub fn print_term<T: Terminal+?Sized>(&self, out: &mut T) -> Result<(), Error> {
+    pub fn print_term<T: Terminal + ?Sized>(&self, out: &mut T) -> Result<(), Error> {
         self.as_ref().print_term(out)
     }
 
@@ -401,7 +417,7 @@ impl Index<usize> for Table {
     }
 }
 
-impl <'a> Index<usize> for TableSlice<'a> {
+impl<'a> Index<usize> for TableSlice<'a> {
     type Output = Row;
     fn index(&self, idx: usize) -> &Self::Output {
         &self.rows[idx]
@@ -420,39 +436,45 @@ impl fmt::Display for Table {
     }
 }
 
-impl <'a> fmt::Display for TableSlice<'a> {
+impl<'a> fmt::Display for TableSlice<'a> {
     fn fmt(&self, fmt: &mut fmt::Formatter) -> Result<(), fmt::Error> {
         let mut writer = StringWriter::new();
         if let Err(_) = self.print(&mut writer) {
-            return Err(fmt::Error)
+            return Err(fmt::Error);
         }
         fmt.write_str(writer.as_string())
     }
 }
 
-impl <B: ToString, A: IntoIterator<Item=B>> FromIterator<A> for Table {
-    fn from_iter<T>(iterator: T) -> Table where T: IntoIterator<Item=A> {
+impl<B: ToString, A: IntoIterator<Item = B>> FromIterator<A> for Table {
+    fn from_iter<T>(iterator: T) -> Table
+        where T: IntoIterator<Item = A>
+    {
         Self::init(iterator.into_iter().map(|r| Row::from(r)).collect())
     }
 }
 
-impl <T, A, B> From<T> for Table where B: ToString, A: IntoIterator<Item=B>, T : IntoIterator<Item=A> {
+impl<T, A, B> From<T> for Table
+    where B: ToString,
+          A: IntoIterator<Item = B>,
+          T: IntoIterator<Item = A>
+{
     fn from(it: T) -> Table {
         Self::from_iter(it)
     }
 }
 
-impl <'a> IntoIterator for &'a Table {
-    type Item=&'a Row;
-    type IntoIter=Iter<'a, Row>;
+impl<'a> IntoIterator for &'a Table {
+    type Item = &'a Row;
+    type IntoIter = Iter<'a, Row>;
     fn into_iter(self) -> Self::IntoIter {
         self.as_ref().row_iter()
     }
 }
 
-impl <'a> IntoIterator for &'a mut Table {
-    type Item=&'a mut Row;
-    type IntoIter=IterMut<'a, Row>;
+impl<'a> IntoIterator for &'a mut Table {
+    type Item = &'a mut Row;
+    type IntoIter = IterMut<'a, Row>;
     fn into_iter(self) -> Self::IntoIter {
         self.row_iter_mut()
     }
@@ -461,7 +483,7 @@ impl <'a> IntoIterator for &'a mut Table {
 /// Iterator over immutable cells in a column
 pub struct ColumnIter<'a>(std::slice::Iter<'a, Row>, usize);
 
-impl <'a> std::iter::Iterator for ColumnIter<'a> {
+impl<'a> std::iter::Iterator for ColumnIter<'a> {
     type Item = &'a Cell;
     fn next(&mut self) -> Option<&'a Cell> {
         self.0.next().and_then(|row| row.get_cell(self.1))
@@ -471,20 +493,20 @@ impl <'a> std::iter::Iterator for ColumnIter<'a> {
 /// Iterator over mutable cells in a column
 pub struct ColumnIterMut<'a>(std::slice::IterMut<'a, Row>, usize);
 
-impl <'a> std::iter::Iterator for ColumnIterMut<'a> {
+impl<'a> std::iter::Iterator for ColumnIterMut<'a> {
     type Item = &'a mut Cell;
     fn next(&mut self) -> Option<&'a mut Cell> {
         self.0.next().and_then(|row| row.get_mut_cell(self.1))
     }
 }
 
-impl <'a> AsRef<TableSlice<'a>> for TableSlice<'a> {
+impl<'a> AsRef<TableSlice<'a>> for TableSlice<'a> {
     fn as_ref(&self) -> &TableSlice<'a> {
         self
     }
 }
 
-impl <'a> AsRef<TableSlice<'a>> for Table {
+impl<'a> AsRef<TableSlice<'a>> for Table {
     fn as_ref(&self) -> &TableSlice<'a> {
         unsafe {
             // All this is a bit hacky. Let's try to find something else
@@ -503,14 +525,17 @@ pub trait Slice<'a, E> {
     fn slice(&'a self, arg: E) -> Self::Output;
 }
 
-impl <'a, T, E> Slice<'a, E> for T where T: AsRef<TableSlice<'a>>, [Row]: Index<E, Output=[Row]> {
+impl<'a, T, E> Slice<'a, E> for T
+    where T: AsRef<TableSlice<'a>>,
+          [Row]: Index<E, Output = [Row]>
+{
     type Output = TableSlice<'a>;
     fn slice(&'a self, arg: E) -> Self::Output {
         let sl = self.as_ref();
         TableSlice {
             format: sl.format,
             titles: sl.titles,
-            rows: sl.rows.index(arg)
+            rows: sl.rows.index(arg),
         }
     }
 }
@@ -724,16 +749,26 @@ mod tests {
     #[test]
     fn test_unicode_separators() {
         let mut table = Table::new();
-        table.set_format(
-            format::FormatBuilder::new()
-                .column_separator('|')
-                .borders('|')
-                .separators( &[format::LinePosition::Top],    format::LineSeparator::new('─', '┬', '┌', '┐'))
-                .separators( &[format::LinePosition::Intern], format::LineSeparator::new('─', '┼', '├', '┤'))
-                .separators( &[format::LinePosition::Bottom], format::LineSeparator::new('─', '┴', '└', '┘'))
-                .padding(1, 1)
-                .build()
-        );
+        table.set_format(format::FormatBuilder::new()
+                             .column_separator('|')
+                             .borders('|')
+                             .separators(&[format::LinePosition::Top],
+                                         format::LineSeparator::new('─',
+                                                                    '┬',
+                                                                    '┌',
+                                                                    '┐'))
+                             .separators(&[format::LinePosition::Intern],
+                                         format::LineSeparator::new('─',
+                                                                    '┼',
+                                                                    '├',
+                                                                    '┤'))
+                             .separators(&[format::LinePosition::Bottom],
+                                         format::LineSeparator::new('─',
+                                                                    '┴',
+                                                                    '└',
+                                                                    '┘'))
+                             .padding(1, 1)
+                             .build());
         table.add_row(Row::new(vec![Cell::new("1"), Cell::new("1"), Cell::new("1")]));
         table.add_row(Row::new(vec![Cell::new("2"), Cell::new("2"), Cell::new("2")]));
         table.set_titles(Row::new(vec![Cell::new("t1"), Cell::new("t2"), Cell::new("t3")]));
@@ -764,15 +799,22 @@ mod tests {
 
         fn test_table() -> Table {
             let mut table = Table::new();
-            table.add_row(Row::new(vec![Cell::new("ABC"), Cell::new("DEFG"), Cell::new("HIJKLMN")]));
+            table
+                .add_row(Row::new(vec![Cell::new("ABC"), Cell::new("DEFG"), Cell::new("HIJKLMN")]));
             table.add_row(Row::new(vec![Cell::new("foobar"), Cell::new("bar"), Cell::new("foo")]));
-            table.add_row(Row::new(vec![Cell::new("foobar2"), Cell::new("bar2"), Cell::new("foo2")]));
+            table.add_row(Row::new(vec![Cell::new("foobar2"),
+                                        Cell::new("bar2"),
+                                        Cell::new("foo2")]));
             table
         }
 
         #[test]
         fn from() {
-            assert_eq!(test_table().to_string().replace("\r\n", "\n"), Table::from_csv_string(CSV_S).unwrap().to_string().replace("\r\n", "\n"));
+            assert_eq!(test_table().to_string().replace("\r\n", "\n"),
+                       Table::from_csv_string(CSV_S)
+                           .unwrap()
+                           .to_string()
+                           .replace("\r\n", "\n"));
         }
 
         #[test]
@@ -782,8 +824,14 @@ mod tests {
 
         #[test]
         fn trans() {
-            assert_eq!(Table::from_csv_string(test_table().to_csv(Vec::new()).unwrap().as_string()).unwrap().to_string().replace("\r\n", "\n"),
-                         test_table().to_string().replace("\r\n", "\n"));
+            assert_eq!(Table::from_csv_string(test_table()
+                                                  .to_csv(Vec::new())
+                                                  .unwrap()
+                                                  .as_string())
+                               .unwrap()
+                               .to_string()
+                               .replace("\r\n", "\n"),
+                       test_table().to_string().replace("\r\n", "\n"));
         }
     }
 }

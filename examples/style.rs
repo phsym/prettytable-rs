@@ -1,4 +1,5 @@
-#[macro_use] extern crate prettytable;
+#[macro_use]
+extern crate prettytable;
 extern crate term;
 use prettytable::Table;
 use prettytable::row::Row;
@@ -28,9 +29,9 @@ fn main() {
 
     // Print a table with some styles on it :
     // FrBybl means : Foregound red, Background yellow, bold, left align
-     ptable!([FrBybl->"A", "B", FrBybr->"C"], [123, 234, 345, 456], [Fg => 1, 2, 3]);
+    ptable!([FrBybl->"A", "B", FrBybr->"C"], [123, 234, 345, 456], [Fg => 1, 2, 3]);
 
-     // You can also apply style to full rows :
+    // You can also apply style to full rows :
     let mut table = table!([Frb => "A", "B", "C"], [1, 2, 3, 4], ["A\nBCCZZZ\nDDD", 2, table]);
     // Set a title line, with all text centered in the cell
     table.set_titles(row![c => "Title 1", "Title 2"]);

@@ -1,5 +1,6 @@
 //#![feature(trace_macros)]
-#[macro_use] extern crate prettytable;
+#[macro_use]
+extern crate prettytable;
 extern crate term;
 use prettytable::Table;
 use prettytable::row::Row;
@@ -40,12 +41,12 @@ fn main() {
     // Print a table with some styles on it :
     // FrBybl means : Foregound red, Background yellow, bold, left align
     // d means : Default, do nothing
-     ptable!([FrBybl->"A", "B", FrBybr->"C"], [d->123, 234, 345, 456]);
+    ptable!([FrBybl->"A", "B", FrBybr->"C"], [d->123, 234, 345, 456]);
 
-     // You can also apply style to full rows :
+    // You can also apply style to full rows :
     let mut table = table!([Frb => "A", "B", "C"], [1, 2, 3, 4], ["A\nBCCZZZ\nDDD", 2, table]);
     table.set_titles(row!["Title 1", "Title 2"]);
     table.set_format(*consts::FORMAT_DEFAULT);
     table.printstd();
-//    println!("{:#?}", table);
+    //    println!("{:#?}", table);
 }

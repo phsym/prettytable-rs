@@ -13,13 +13,13 @@ pub static NEWLINE: &'static [u8] = b"\r\n";
 
 /// Internal utility for writing data into a string
 pub struct StringWriter {
-    string: String
+    string: String,
 }
 
 impl StringWriter {
     /// Create a new `StringWriter`
     pub fn new() -> StringWriter {
-        StringWriter{string: String::new()}
+        StringWriter { string: String::new() }
     }
 
     /// Return a reference to the internally written `String`
@@ -32,7 +32,10 @@ impl Write for StringWriter {
     fn write(&mut self, data: &[u8]) -> Result<usize, Error> {
         let string = match str::from_utf8(data) {
             Ok(s) => s,
-            Err(e) => return Err(Error::new(ErrorKind::Other, format!("Cannot decode utf8 string : {}", e)))
+            Err(e) => {
+                return Err(Error::new(ErrorKind::Other,
+                                      format!("Cannot decode utf8 string : {}", e)))
+            }
         };
         self.string.push_str(string);
         Ok(data.len())
@@ -47,20 +50,26 @@ impl Write for StringWriter {
 /// Align/fill a string and print it to `out`
 /// If `skip_right_fill` is set to `true`, then no spce will be added after the string
 /// to complete alignment
-pub fn print_align<T: Write+?Sized>(out: &mut T, align: Alignment, text: &str, fill: char, size: usize, skip_right_fill: bool) -> Result<(), Error> {
+pub fn print_align<T: Write + ?Sized>(out: &mut T,
+                                      align: Alignment,
+                                      text: &str,
+                                      fill: char,
+                                      size: usize,
+                                      skip_right_fill: bool)
+                                      -> Result<(), Error> {
     let text_len = UnicodeWidthStr::width(text);
     let mut nfill = if text_len < size { size - text_len } else { 0 };
     let n = match align {
         Alignment::LEFT => 0,
-        Alignment:: RIGHT => nfill,
-        Alignment:: CENTER => nfill/2
+        Alignment::RIGHT => nfill,
+        Alignment::CENTER => nfill / 2,
     };
     if n > 0 {
         try!(out.write(&vec![fill as u8; n]));
         nfill -= n;
     }
     try!(out.write(text.as_bytes()));
-    if nfill > 0 && ! skip_right_fill {
+    if nfill > 0 && !skip_right_fill {
         try!(out.write(&vec![fill as u8; nfill]));
     }
     Ok(())

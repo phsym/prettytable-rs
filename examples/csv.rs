@@ -20,7 +20,8 @@ fn main() {
 
     let table = Table::from_csv_string("ABC,DEFG,HIJKLMN\n\
                                         foobar,bar,foo\n\
-                                        foobar2,bar2,foo2").unwrap();
+                                        foobar2,bar2,foo2")
+            .unwrap();
     table.printstd();
 
     println!("");
