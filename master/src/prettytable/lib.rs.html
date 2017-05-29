@@ -830,6 +830,8 @@
 <span id="785">785</span>
 <span id="786">786</span>
 <span id="787">787</span>
+<span id="788">788</span>
+<span id="789">789</span>
 </pre><pre class="rust ">
 <span class="doccomment">//! A formatted and aligned table printer written in rust</span>
 <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">unicode_width</span>;
@@ -1467,9 +1469,11 @@
 		<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">table</span>[<span class="number">1</span>][<span class="number">1</span>].<span class="ident">get_content</span>(), <span class="string">&quot;newval&quot;</span>);
 
 		<span class="kw">let</span> <span class="ident">out</span> <span class="op">=</span> <span class="string">&quot;\
++-----+--------+-----+
 | t1  | t2     | t3  |
 | a   | bc     | def |
 | def | newval | a   |
++-----+--------+-----+
 &quot;</span>;
 		<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">table</span>.<span class="ident">to_string</span>().<span class="ident">replace</span>(<span class="string">&quot;\r\n&quot;</span>, <span class="string">&quot;\n&quot;</span>), <span class="ident">out</span>);
 	}

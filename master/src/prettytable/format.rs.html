@@ -470,6 +470,7 @@
 <span id="425">425</span>
 <span id="426">426</span>
 <span id="427">427</span>
+<span id="428">428</span>
 </pre><pre class="rust ">
 <span class="doccomment">//! Define table formatting utilities</span>
 
@@ -783,7 +784,7 @@
 		<span class="doccomment">/// ```text</span>
 		<span class="doccomment">/// +----+----+</span>
 		<span class="doccomment">/// | T1 | T2 |</span>
-		<span class="doccomment">/// +====+====+</span>
+		<span class="doccomment">/// +----+----+</span>
 		<span class="doccomment">/// | a  | b  |</span>
 		<span class="doccomment">/// | c  | d  |</span>
 		<span class="doccomment">/// +----+----+</span>
@@ -810,6 +811,8 @@
 		<span class="kw">pub</span> <span class="kw">static</span> <span class="kw-2">ref</span> <span class="ident">FORMAT_NO_LINESEP</span>: <span class="ident">TableFormat</span> <span class="op">=</span> <span class="ident">FormatBuilder</span>::<span class="ident">new</span>()
 																	.<span class="ident">column_separator</span>(<span class="string">&#39;|&#39;</span>)
 																	.<span class="ident">borders</span>(<span class="string">&#39;|&#39;</span>)
+																	.<span class="ident">separator</span>(<span class="ident">LinePosition</span>::<span class="ident">Bottom</span>, <span class="kw-2">*</span><span class="ident">MINUS_PLUS_SEP</span>)
+																	.<span class="ident">separator</span>(<span class="ident">LinePosition</span>::<span class="ident">Top</span>, <span class="kw-2">*</span><span class="ident">MINUS_PLUS_SEP</span>)
 																	.<span class="ident">padding</span>(<span class="number">1</span>, <span class="number">1</span>)
 																	.<span class="ident">build</span>();
 
@@ -858,7 +861,6 @@
 		<span class="doccomment">/// ```</span>
 		<span class="kw">pub</span> <span class="kw">static</span> <span class="kw-2">ref</span> <span class="ident">FORMAT_BORDERS_ONLY</span>: <span class="ident">TableFormat</span> <span class="op">=</span> <span class="ident">FormatBuilder</span>::<span class="ident">new</span>()
 																	.<span class="ident">padding</span>(<span class="number">1</span>, <span class="number">1</span>)
-																	.<span class="ident">separator</span>(<span class="ident">LinePosition</span>::<span class="ident">Intern</span>, <span class="kw-2">*</span><span class="ident">MINUS_PLUS_SEP</span>)
 																	.<span class="ident">separator</span>(<span class="ident">LinePosition</span>::<span class="ident">Title</span>, <span class="kw-2">*</span><span class="ident">EQU_PLUS_SEP</span>)
 																	.<span class="ident">separator</span>(<span class="ident">LinePosition</span>::<span class="ident">Bottom</span>, <span class="kw-2">*</span><span class="ident">MINUS_PLUS_SEP</span>)
 																	.<span class="ident">separator</span>(<span class="ident">LinePosition</span>::<span class="ident">Top</span>, <span class="kw-2">*</span><span class="ident">MINUS_PLUS_SEP</span>)
