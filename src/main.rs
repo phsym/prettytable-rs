@@ -12,7 +12,7 @@ use term::{Attr, color};
 
 #[allow(dead_code)]
 fn main() {
-	let _ = table!();
+    let _ = table!();
     let mut table = Table::new();
     table.add_row(row![FrByb->"ABC", "DEFG", "HIJKLMN"]);
     table.add_row(row!["foobar", "bar", "foo"]);
@@ -20,17 +20,17 @@ fn main() {
     // Add style to a full row
     table.add_row(row![FY => "styled", "bar", "foo"]);
     table.add_row(Row::new(vec![
-    		Cell::new("foobar2"),
-    		// Create a cell with a red foreground color
-			Cell::new("bar2").with_style(Attr::ForegroundColor(color::RED)),
-			// Create a cell with red foreground color, yellow background color, with bold characters
-    		Cell::new("foo2").style_spec("FrByb")])
-    	);
+            Cell::new("foobar2"),
+            // Create a cell with a red foreground color
+            Cell::new("bar2").with_style(Attr::ForegroundColor(color::RED)),
+            // Create a cell with red foreground color, yellow background color, with bold characters
+            Cell::new("foo2").style_spec("FrByb")])
+        );
     for cell in table.column_iter_mut(2) {
-    	cell.align(Alignment::RIGHT);
+        cell.align(Alignment::RIGHT);
     }
     for cell in table.column_iter_mut(1) {
-    	cell.align(Alignment::CENTER);
+        cell.align(Alignment::CENTER);
     }
     table.printstd();
     println!("Modified : ");
@@ -40,9 +40,9 @@ fn main() {
     // Print a table with some styles on it :
     // FrBybl means : Foregound red, Background yellow, bold, left align
     // d means : Default, do nothing
- 	ptable!([FrBybl->"A", "B", FrBybr->"C"], [d->123, 234, 345, 456]);
+     ptable!([FrBybl->"A", "B", FrBybr->"C"], [d->123, 234, 345, 456]);
 
- 	// You can also apply style to full rows :
+     // You can also apply style to full rows :
     let mut table = table!([Frb => "A", "B", "C"], [1, 2, 3, 4], ["A\nBCCZZZ\nDDD", 2, table]);
     table.set_titles(row!["Title 1", "Title 2"]);
     table.set_format(*consts::FORMAT_DEFAULT);

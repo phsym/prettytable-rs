@@ -1,14 +1,14 @@
 extern crate prettytable;
 
 /*
-	Following main function will print :
-	+---------+------+---------+
-	| ABC     | DEFG | HIJKLMN |
-	+---------+------+---------+
-	| foobar  | bar  | foo     |
-	+---------+------+---------+
-	| foobar2 | bar2 | foo2    |
-	+---------+------+---------+
+    Following main function will print :
+    +---------+------+---------+
+    | ABC     | DEFG | HIJKLMN |
+    +---------+------+---------+
+    | foobar  | bar  | foo     |
+    +---------+------+---------+
+    | foobar2 | bar2 | foo2    |
+    +---------+------+---------+
 
     ABC,DEFG,HIJKLMN
     foobar,bar,foo
