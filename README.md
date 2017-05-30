@@ -10,7 +10,7 @@ A formatted and aligned table printer written in rust.
 
 [Documentation](http://phsym.github.io/prettytable-rs)
 
-*Copyright &copy; 2016 Pierre-Henri Symoneaux*
+*Copyright &copy; 2017 Pierre-Henri Symoneaux*
 
 > THIS SOFTWARE IS DISTRIBUTED WITHOUT ANY WARRANTY <br>
 > Check LICENSE.txt file for more information. <br>
@@ -275,6 +275,38 @@ Value three | Value four
 ```
 
 Check API documentation for the full list of available predefined formats.
+
+## CSV import/export
+Tables can be imported from and exported to **CSV**.  This is possible thanks to the default & optional feature `csv`.
+> The `csv` feature may become deactivated by default on future major releases.
+
+### Importing
+A `Table` can be imported directly from a string
+```rust
+Table::from_csv_string("ABC,DEFG,HIJKLMN\n\
+                        foobar,bar,foo\n\
+                        foobar2,bar2,foo2");
+```
+Or from CSV files with 
+```rust
+Table::from_csv_file<P: AsRef<Path>>(csv_p: P) -> csv::Result<Table>
+```
+> Those 2 ways of importing CSV assumes a CSV format with `no headers`, and delimitred with `comas`
+
+Import can also be performed from a csv reader which allows for more customization around the CSV format.
+```rust
+Table::from_csv<R: Read>(reader: &mut csv::Reader<R>) -> Table
+```
+
+### Exporting
+The same way as used when importing CSV, exporting can be performed using the 2 following functions
+```rust
+Table::to_csv<W: Write>(&self, w: W) -> csv::Result<csv::Writer<W>>
+to_csv_writer<W: Write>(&self,
+                        mut writer: csv::Writer<W>)
+                        -> csv::Result<csv::Writer<W>>
+```
+
 
 ## Note on line endings
 By default, the library prints tables with platform specific line ending. Thin means on Windows,
