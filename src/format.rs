@@ -60,6 +60,7 @@ impl LineSeparator {
     pub fn print<T: Write + ?Sized>(&self,
                                     out: &mut T,
                                     col_width: &[usize],
+                                    padding: (usize, usize),
                                     colsep: bool,
                                     lborder: bool,
                                     rborder: bool)
@@ -69,7 +70,7 @@ impl LineSeparator {
         }
         let mut iter = col_width.into_iter().peekable();
         while let Some(width) = iter.next() {
-            for _ in 0..width + 2 {
+            for _ in 0..width + padding.0 + padding.1 {
                 try!(out.write_all(Utf8Char::from(self.line).as_bytes()));
             }
             if colsep && iter.peek().is_some() {
@@ -191,6 +192,7 @@ impl TableFormat {
             Some(ref l) => {
                 l.print(out,
                         col_width,
+                        self.get_padding(),
                         self.csep.is_some(),
                         self.lborder.is_some(),
                         self.rborder.is_some())
