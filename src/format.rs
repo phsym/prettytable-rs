@@ -57,14 +57,25 @@ impl LineSeparator {
     }
 
     /// Print a full line separator to `out`. `col_width` is a slice containing the width of each column
+    #[deprecated(since = "0.6.7", note = "assumes padding is always (1, 1)")]
     pub fn print<T: Write + ?Sized>(&self,
                                     out: &mut T,
                                     col_width: &[usize],
-                                    padding: (usize, usize),
                                     colsep: bool,
                                     lborder: bool,
                                     rborder: bool)
                                     -> Result<(), Error> {
+        self.real_print(out, col_width, (1, 1), colsep, lborder, rborder)
+    }
+
+    fn real_print<T: Write + ?Sized>(&self,
+                                     out: &mut T,
+                                     col_width: &[usize],
+                                     padding: (usize, usize),
+                                     colsep: bool,
+                                     lborder: bool,
+                                     rborder: bool)
+                                     -> Result<(), Error> {
         if lborder {
             try!(out.write_all(Utf8Char::from(self.ljunc).as_bytes()));
         }
@@ -190,12 +201,12 @@ impl TableFormat {
                                                    -> Result<(), Error> {
         match *self.get_sep_for_line(pos) {
             Some(ref l) => {
-                l.print(out,
-                        col_width,
-                        self.get_padding(),
-                        self.csep.is_some(),
-                        self.lborder.is_some(),
-                        self.rborder.is_some())
+                l.real_print(out,
+                             col_width,
+                             self.get_padding(),
+                             self.csep.is_some(),
+                             self.lborder.is_some(),
+                             self.rborder.is_some())
             }
             None => Ok(()),
         }
