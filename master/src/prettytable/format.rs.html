@@ -506,6 +506,20 @@
 <span id="461">461</span>
 <span id="462">462</span>
 <span id="463">463</span>
+<span id="464">464</span>
+<span id="465">465</span>
+<span id="466">466</span>
+<span id="467">467</span>
+<span id="468">468</span>
+<span id="469">469</span>
+<span id="470">470</span>
+<span id="471">471</span>
+<span id="472">472</span>
+<span id="473">473</span>
+<span id="474">474</span>
+<span id="475">475</span>
+<span id="476">476</span>
+<span id="477">477</span>
 </pre><pre class="rust ">
 <span class="doccomment">//! Define table formatting utilities</span>
 
@@ -518,25 +532,36 @@
 <span class="doccomment">/// Alignment for cell&#39;s content</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">Copy</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Alignment</span> {
+    <span class="doccomment">/// Align left</span>
     <span class="ident">LEFT</span>,
+    <span class="doccomment">/// Align in the center</span>
     <span class="ident">CENTER</span>,
+    <span class="doccomment">/// Align right</span>
     <span class="ident">RIGHT</span>,
 }
 
 <span class="doccomment">/// Position of a line separator in a table</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">Copy</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">LinePosition</span> {
+    <span class="doccomment">/// Table&#39;s border on top</span>
     <span class="ident">Top</span>,
+    <span class="doccomment">/// Line separator between the titles row,</span>
+    <span class="doccomment">/// and the first data row</span>
     <span class="ident">Title</span>,
+    <span class="doccomment">/// Line separator between data rows</span>
     <span class="ident">Intern</span>,
+    <span class="doccomment">/// Bottom table&#39;s border</span>
     <span class="ident">Bottom</span>,
 }
 
 <span class="doccomment">/// Position of a column separator in a row</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">Copy</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">ColumnPosition</span> {
+    <span class="doccomment">/// Left table&#39;s border</span>
     <span class="ident">Left</span>,
+    <span class="doccomment">/// Internal column separators</span>
     <span class="ident">Intern</span>,
+    <span class="doccomment">/// Rigth table&#39;s border</span>
     <span class="ident">Right</span>,
 }
 
@@ -690,9 +715,9 @@
 
     <span class="kw">fn</span> <span class="ident">get_sep_for_line</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">pos</span>: <span class="ident">LinePosition</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">LineSeparator</span><span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="ident">pos</span> {
-            <span class="ident">LinePosition</span>::<span class="ident">Intern</span> <span class="op">=&gt;</span> <span class="kw">return</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">lsep</span>,
-            <span class="ident">LinePosition</span>::<span class="ident">Top</span> <span class="op">=&gt;</span> <span class="kw">return</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">top_sep</span>,
-            <span class="ident">LinePosition</span>::<span class="ident">Bottom</span> <span class="op">=&gt;</span> <span class="kw">return</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">bottom_sep</span>,
+            <span class="ident">LinePosition</span>::<span class="ident">Intern</span> <span class="op">=&gt;</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">lsep</span>,
+            <span class="ident">LinePosition</span>::<span class="ident">Top</span> <span class="op">=&gt;</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">top_sep</span>,
+            <span class="ident">LinePosition</span>::<span class="ident">Bottom</span> <span class="op">=&gt;</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">bottom_sep</span>,
             <span class="ident">LinePosition</span>::<span class="ident">Title</span> <span class="op">=&gt;</span> {
                 <span class="kw">match</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">tsep</span> {
                     <span class="ident">s</span> @ <span class="kw-2">&amp;</span><span class="prelude-val">Some</span>(_) <span class="op">=&gt;</span> <span class="ident">s</span>,
@@ -721,6 +746,8 @@
         }
     }
 
+    <span class="doccomment">/// Returns the character used to separate columns.</span>
+    <span class="doccomment">/// `pos` specify if the separator is left/right final or internal to the table</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_column_separator</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">pos</span>: <span class="ident">ColumnPosition</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">char</span><span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="ident">pos</span> {
             <span class="ident">ColumnPosition</span>::<span class="ident">Left</span> <span class="op">=&gt;</span> <span class="self">self</span>.<span class="ident">lborder</span>,
@@ -753,6 +780,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">FormatBuilder</span> {
+    <span class="doccomment">/// Creates a new builder</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-&gt;</span> <span class="ident">FormatBuilder</span> {
         <span class="ident">FormatBuilder</span> { <span class="ident">format</span>: <span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">TableFormat</span>::<span class="ident">new</span>()) }
     }

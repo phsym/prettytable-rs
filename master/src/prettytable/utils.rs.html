@@ -242,12 +242,12 @@
         <span class="ident">Alignment</span>::<span class="ident">CENTER</span> <span class="op">=&gt;</span> <span class="ident">nfill</span> <span class="op">/</span> <span class="number">2</span>,
     };
     <span class="kw">if</span> <span class="ident">n</span> <span class="op">&gt;</span> <span class="number">0</span> {
-        <span class="macro">try</span><span class="macro">!</span>(<span class="ident">out</span>.<span class="ident">write</span>(<span class="kw-2">&amp;</span><span class="macro">vec</span><span class="macro">!</span>[<span class="ident">fill</span> <span class="kw">as</span> <span class="ident">u8</span>; <span class="ident">n</span>]));
+        <span class="macro">try</span><span class="macro">!</span>(<span class="ident">out</span>.<span class="ident">write_all</span>(<span class="kw-2">&amp;</span><span class="macro">vec</span><span class="macro">!</span>[<span class="ident">fill</span> <span class="kw">as</span> <span class="ident">u8</span>; <span class="ident">n</span>]));
         <span class="ident">nfill</span> <span class="op">-=</span> <span class="ident">n</span>;
     }
-    <span class="macro">try</span><span class="macro">!</span>(<span class="ident">out</span>.<span class="ident">write</span>(<span class="ident">text</span>.<span class="ident">as_bytes</span>()));
+    <span class="macro">try</span><span class="macro">!</span>(<span class="ident">out</span>.<span class="ident">write_all</span>(<span class="ident">text</span>.<span class="ident">as_bytes</span>()));
     <span class="kw">if</span> <span class="ident">nfill</span> <span class="op">&gt;</span> <span class="number">0</span> <span class="op">&amp;&amp;</span> <span class="op">!</span><span class="ident">skip_right_fill</span> {
-        <span class="macro">try</span><span class="macro">!</span>(<span class="ident">out</span>.<span class="ident">write</span>(<span class="kw-2">&amp;</span><span class="macro">vec</span><span class="macro">!</span>[<span class="ident">fill</span> <span class="kw">as</span> <span class="ident">u8</span>; <span class="ident">nfill</span>]));
+        <span class="macro">try</span><span class="macro">!</span>(<span class="ident">out</span>.<span class="ident">write_all</span>(<span class="kw-2">&amp;</span><span class="macro">vec</span><span class="macro">!</span>[<span class="ident">fill</span> <span class="kw">as</span> <span class="ident">u8</span>; <span class="ident">nfill</span>]));
     }
     <span class="prelude-val">Ok</span>(())
 }
