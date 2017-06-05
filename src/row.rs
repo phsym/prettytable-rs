@@ -32,6 +32,11 @@ impl Row {
         self.cells.len()
     }
 
+    /// Check if the row is empty (has no cell)
+    pub fn is_empty(&self) -> bool {
+        self.cells.is_empty()
+    }
+
     /// Get the height of this row
     pub fn get_height(&self) -> usize {
         let mut height = 1; // Minimum height must be 1 to print empty rows
@@ -95,12 +100,12 @@ impl Row {
     }
 
     /// Returns an immutable iterator over cells
-    pub fn iter<'a>(&'a self) -> Iter<'a, Cell> {
+    pub fn iter(&self) -> Iter<Cell> {
         self.cells.iter()
     }
 
     /// Returns an mutable iterator over cells
-    pub fn iter_mut<'a>(&'a mut self) -> IterMut<'a, Cell> {
+    pub fn iter_mut(&mut self) -> IterMut<Cell> {
         self.cells.iter_mut()
     }
 
@@ -117,14 +122,14 @@ impl Row {
             try!(format.print_column_separator(out, ColumnPosition::Left));
             let (lp, rp) = format.get_padding();
             for j in 0..col_width.len() {
-                try!(out.write(&vec![' ' as u8; lp]));
+                try!(out.write_all(&vec![b' '; lp]));
                 let skip_r_fill = (j == col_width.len() - 1) &&
                                   format.get_column_separator(ColumnPosition::Right).is_none();
                 match self.get_cell(j) {
-                    Some(ref c) => try!(f(c, out, i, col_width[j], skip_r_fill)),
+                    Some(c) => try!(f(c, out, i, col_width[j], skip_r_fill)),
                     None => try!(f(&Cell::default(), out, i, col_width[j], skip_r_fill)),
                 };
-                try!(out.write(&vec![' ' as u8; rp]));
+                try!(out.write_all(&vec![b' '; rp]));
                 if j < col_width.len() - 1 {
                     try!(format.print_column_separator(out, ColumnPosition::Intern));
                 }
@@ -229,7 +234,7 @@ impl<'a> IntoIterator for &'a mut Row {
 /// # }
 /// ```
 ///
-/// For details about style specifier syntax, check doc for [Cell::style_spec](cell/struct.Cell.html#method.style_spec) method
+/// For details about style specifier syntax, check doc for [`Cell::style_spec`](cell/struct.Cell.html#method.style_spec) method
 #[macro_export]
 macro_rules! row {
     (($($out:tt)*); $value:expr) => (vec![$($out)* cell!($value)]);

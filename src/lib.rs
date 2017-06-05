@@ -1,3 +1,7 @@
+#![warn(missing_docs,
+        unused_extern_crates,
+        unused_import_braces,
+        unused_qualifications)]
 //! A formatted and aligned table printer written in rust
 extern crate unicode_width;
 extern crate term;
@@ -83,6 +87,11 @@ impl<'a> TableSlice<'a> {
         self.rows.len()
     }
 
+    /// Check if the table slice is empty
+    pub fn is_empty(&self) -> bool {
+        self.rows.is_empty()
+    }
+
     /// Get an immutable reference to a row
     pub fn get_row(&self, row: usize) -> Option<&Row> {
         self.rows.get(row)
@@ -134,14 +143,14 @@ impl<'a> TableSlice<'a> {
         try!(self.format
                  .print_line_separator(out, &col_width, LinePosition::Top));
         if let Some(ref t) = *self.titles {
-            try!(f(t, out, &self.format, &col_width));
+            try!(f(t, out, self.format, &col_width));
             try!(self.format
                      .print_line_separator(out, &col_width, LinePosition::Title));
         }
         // Print rows
         let mut iter = self.rows.into_iter().peekable();
         while let Some(r) = iter.next() {
-            try!(f(r, out, &self.format, &col_width));
+            try!(f(r, out, self.format, &col_width));
             if iter.peek().is_some() {
                 try!(self.format
                          .print_line_separator(out, &col_width, LinePosition::Intern));
@@ -284,6 +293,11 @@ impl Table {
         self.rows.len()
     }
 
+    /// Check if the table is empty
+    pub fn is_empty(&self) -> bool {
+        self.rows.is_empty()
+    }
+
     /// Set the optional title lines
     pub fn set_titles(&mut self, titles: Row) {
         *self.titles = Some(titles);
@@ -353,12 +367,12 @@ impl Table {
     }
 
     /// Returns an iterator over immutable rows
-    pub fn row_iter<'a>(&'a self) -> Iter<'a, Row> {
+    pub fn row_iter(&self) -> Iter<Row> {
         self.rows.iter()
     }
 
     /// Returns an iterator over mutable rows
-    pub fn row_iter_mut<'a>(&'a mut self) -> IterMut<'a, Row> {
+    pub fn row_iter_mut(&mut self) -> IterMut<Row> {
         self.rows.iter_mut()
     }
 
@@ -439,7 +453,7 @@ impl fmt::Display for Table {
 impl<'a> fmt::Display for TableSlice<'a> {
     fn fmt(&self, fmt: &mut fmt::Formatter) -> Result<(), fmt::Error> {
         let mut writer = StringWriter::new();
-        if let Err(_) = self.print(&mut writer) {
+        if self.print(&mut writer).is_err() {
             return Err(fmt::Error);
         }
         fmt.write_str(writer.as_string())
@@ -450,7 +464,7 @@ impl<B: ToString, A: IntoIterator<Item = B>> FromIterator<A> for Table {
     fn from_iter<T>(iterator: T) -> Table
         where T: IntoIterator<Item = A>
     {
-        Self::init(iterator.into_iter().map(|r| Row::from(r)).collect())
+        Self::init(iterator.into_iter().map(Row::from).collect())
     }
 }
 
@@ -481,9 +495,9 @@ impl<'a> IntoIterator for &'a mut Table {
 }
 
 /// Iterator over immutable cells in a column
-pub struct ColumnIter<'a>(std::slice::Iter<'a, Row>, usize);
+pub struct ColumnIter<'a>(Iter<'a, Row>, usize);
 
-impl<'a> std::iter::Iterator for ColumnIter<'a> {
+impl<'a> Iterator for ColumnIter<'a> {
     type Item = &'a Cell;
     fn next(&mut self) -> Option<&'a Cell> {
         self.0.next().and_then(|row| row.get_cell(self.1))
@@ -491,9 +505,9 @@ impl<'a> std::iter::Iterator for ColumnIter<'a> {
 }
 
 /// Iterator over mutable cells in a column
-pub struct ColumnIterMut<'a>(std::slice::IterMut<'a, Row>, usize);
+pub struct ColumnIterMut<'a>(IterMut<'a, Row>, usize);
 
-impl<'a> std::iter::Iterator for ColumnIterMut<'a> {
+impl<'a> Iterator for ColumnIterMut<'a> {
     type Item = &'a mut Cell;
     fn next(&mut self) -> Option<&'a mut Cell> {
         self.0.next().and_then(|row| row.get_mut_cell(self.1))
@@ -574,7 +588,7 @@ impl<'a, T, E> Slice<'a, E> for T
 /// # }
 /// ```
 ///
-/// For details about style specifier syntax, check doc for [Cell::style_spec](cell/struct.Cell.html#method.style_spec) method
+/// For details about style specifier syntax, check doc for [`Cell::style_spec`](cell/struct.Cell.html#method.style_spec) method
 #[macro_export]
 macro_rules! table {
     ($([$($content:tt)*]), *) => (

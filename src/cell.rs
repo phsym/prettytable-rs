@@ -23,7 +23,7 @@ impl Cell {
     /// Create a new `Cell` initialized with content from `string`.
     /// Text alignment in cell is configurable with the `align` argument
     pub fn new_align(string: &str, align: Alignment) -> Cell {
-        let content: Vec<String> = string.lines().map(|ref x| x.to_string()).collect();
+        let content: Vec<String> = string.lines().map(|x| x.to_string()).collect();
         let mut width = 0;
         for cont in &content {
             let l = UnicodeWidthStr::width(&cont[..]);
@@ -150,12 +150,11 @@ impl Cell {
                     'c' => self.align(Alignment::CENTER),
                     'l' => self.align(Alignment::LEFT),
                     'r' => self.align(Alignment::RIGHT),
-                    'd' => { /* Default : do nothing */ }
                     _ => { /* Silently ignore unknown tags */ }
                 }
             }
         }
-        return self;
+        self
     }
 
     /// Return the height of the cell
@@ -195,7 +194,7 @@ impl Cell {
                                             skip_right_fill: bool)
                                             -> Result<(), Error> {
         for a in &self.style {
-            match out.attr(a.clone()) {
+            match out.attr(*a) {
                 Ok(..) |
                 Err(::term::Error::NotSupported) |
                 Err(::term::Error::ColorOutOfRange) => (), // Ignore unsupported atrributes
@@ -257,7 +256,7 @@ impl Default for Cell {
 /// ```
 /// Value must implement the `std::string::ToString` trait
 ///
-/// For details about style specifier syntax, check doc for [Cell::style_spec](cell/struct.Cell.html#method.style_spec) method
+/// For details about style specifier syntax, check doc for [`Cell::style_spec`](cell/struct.Cell.html#method.style_spec) method
 /// # Example
 /// ```
 /// # #[macro_use] extern crate prettytable;

@@ -58,9 +58,9 @@ fn main() {
 
 fn get(table: &Table, x: usize, y: usize) -> String {
     match table.get_row(y) {
-        Some(ref r) => {
+        Some(r) => {
             match r.get_cell(x) {
-                Some(ref c) => c.to_string(),
+                Some(c) => c.to_string(),
                 _ => EMPTY.to_string(),
             }
         }
@@ -94,5 +94,5 @@ fn check(table: &Table) -> bool {
     if full {
         println!("Game is over. It's a draw");
     }
-    return full;
+    full
 }

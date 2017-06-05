@@ -9,25 +9,36 @@ use super::utils::NEWLINE;
 /// Alignment for cell's content
 #[derive(Clone, Debug, PartialEq, Copy)]
 pub enum Alignment {
+    /// Align left
     LEFT,
+    /// Align in the center
     CENTER,
+    /// Align right
     RIGHT,
 }
 
 /// Position of a line separator in a table
 #[derive(Clone, Debug, PartialEq, Copy)]
 pub enum LinePosition {
+    /// Table's border on top
     Top,
+    /// Line separator between the titles row,
+    /// and the first data row
     Title,
+    /// Line separator between data rows
     Intern,
+    /// Bottom table's border
     Bottom,
 }
 
 /// Position of a column separator in a row
 #[derive(Clone, Debug, PartialEq, Copy)]
 pub enum ColumnPosition {
+    /// Left table's border
     Left,
+    /// Internal column separators
     Intern,
+    /// Rigth table's border
     Right,
 }
 
@@ -181,9 +192,9 @@ impl TableFormat {
 
     fn get_sep_for_line(&self, pos: LinePosition) -> &Option<LineSeparator> {
         match pos {
-            LinePosition::Intern => return &self.lsep,
-            LinePosition::Top => return &self.top_sep,
-            LinePosition::Bottom => return &self.bottom_sep,
+            LinePosition::Intern => &self.lsep,
+            LinePosition::Top => &self.top_sep,
+            LinePosition::Bottom => &self.bottom_sep,
             LinePosition::Title => {
                 match &self.tsep {
                     s @ &Some(_) => s,
@@ -212,6 +223,8 @@ impl TableFormat {
         }
     }
 
+    /// Returns the character used to separate columns.
+    /// `pos` specify if the separator is left/right final or internal to the table
     pub fn get_column_separator(&self, pos: ColumnPosition) -> Option<char> {
         match pos {
             ColumnPosition::Left => self.lborder,
@@ -244,6 +257,7 @@ pub struct FormatBuilder {
 }
 
 impl FormatBuilder {
+    /// Creates a new builder
     pub fn new() -> FormatBuilder {
         FormatBuilder { format: Box::new(TableFormat::new()) }
     }
