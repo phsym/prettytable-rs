@@ -1,7 +1,7 @@
 ![License](http://img.shields.io/badge/license-BSD-lightgrey.svg)
 [![Build Status](https://travis-ci.org/phsym/prettytable-rs.svg)](https://travis-ci.org/phsym/prettytable-rs)
 [![Build status](https://ci.appveyor.com/api/projects/status/wdh9klb35fed6ik9?svg=true)](https://ci.appveyor.com/project/phsym/tabprint)
-[![Coverage Status](https://coveralls.io/repos/phsym/prettytable-rs/badge.svg?branch=master)](https://coveralls.io/github/phsym/prettytable-rs?branch=master)
+[![codecov](https://codecov.io/gh/phsym/prettytable-rs/branch/master/graph/badge.svg)](https://codecov.io/gh/phsym/prettytable-rs)
 [![Crates.io](https://img.shields.io/crates/v/prettytable-rs.svg)](https://crates.io/crates/prettytable-rs)
 [![Doc.rs](https://docs.rs/prettytable-rs/badge.svg)](https://docs.rs/crate/prettytable-rs/)
 [![Doc.rs](https://img.shields.io/badge/docs-master-blue.svg)](http://phsym.github.io/prettytable-rs/master)

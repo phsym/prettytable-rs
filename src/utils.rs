@@ -128,4 +128,11 @@ mod tests {
         print_align(&mut out, Alignment::CENTER, "foo", '*', 1, false).unwrap();
         assert_eq!(out.as_string(), "foo");
     }
+
+    #[test]
+    fn utf8_error() {
+        let mut out = StringWriter::new();
+        let res = out.write_all(&vec![0, 255]);
+        assert!(res.is_err());
+    }
 }
