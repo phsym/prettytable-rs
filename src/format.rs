@@ -225,7 +225,7 @@ impl TableFormat {
                                                    -> Result<(), Error> {
         match *self.get_sep_for_line(pos) {
             Some(ref l) => {
-                write!(out, "{:1$}", "", self.get_indent());
+                out.write_all(&vec![b' '; self.get_indent()]);
                 l._print(out,
                          col_width,
                          self.get_padding(),
@@ -281,6 +281,11 @@ impl FormatBuilder {
         FormatBuilder { format: Box::new(format) }
     }
 
+    /// Consumes the builder and returns the generated `TableFormat`
+    pub fn into_table_format(self) -> TableFormat {
+        *self.format
+    }
+
     /// Set left and right padding
     pub fn padding(mut self, left: usize, right: usize) -> Self {
         self.format.padding(left, right);
@@ -317,9 +322,21 @@ impl FormatBuilder {
         self
     }
 
-    /// Consume this builder and return the generated `TableFormat`
-    pub fn build(self) -> TableFormat {
+    /// Return the generated `TableFormat`
+    pub fn build(&self) -> TableFormat {
         *self.format
+    }
+}
+
+impl Into<TableFormat> for FormatBuilder {
+    fn into(self) -> TableFormat {
+        self.into_table_format()
+    }
+}
+
+impl From<TableFormat> for FormatBuilder {
+    fn from(fmt: TableFormat) -> Self {
+        Self::from_format(fmt)
     }
 }
 
