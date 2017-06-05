@@ -29,4 +29,4 @@ after_success: |
   kcov --coveralls-id=$TRAVIS_JOB_ID --verify --include-pattern=/src --exclude-pattern=/.cargo,/usr/lib target/kcov target/debug/prettytable-*
   rm -Rf master.tar.gz kcov-master
   git clone https://gist.github.com/deaf3815d2eecce72279.git ./publish_doc &&
-  sh ./publish_doc/publish_doc.sh prettytable
+  sh ./publish_doc/publish_doc.sh prettytable yes

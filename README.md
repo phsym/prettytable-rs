@@ -3,12 +3,12 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/wdh9klb35fed6ik9?svg=true)](https://ci.appveyor.com/project/phsym/tabprint)
 [![Coverage Status](https://coveralls.io/repos/phsym/prettytable-rs/badge.svg?branch=master)](https://coveralls.io/github/phsym/prettytable-rs?branch=master)
 [![Crates.io](https://img.shields.io/crates/v/prettytable-rs.svg)](https://crates.io/crates/prettytable-rs)
+[![Doc.rs](https://docs.rs/prettytable-rs/badge.svg)](https://docs.rs/crate/prettytable-rs/)
+[![Doc.rs](https://img.shields.io/badge/docs-master-blue.svg)](http://phsym.github.io/prettytable-rs/master)
 
 # prettytable-rs
 
-A formatted and aligned table printer written in rust.
-
-[Documentation](http://phsym.github.io/prettytable-rs)
+A formatted and aligned table printer library for [Rust](https://www.rust-lang.org).
 
 *Copyright &copy; 2017 Pierre-Henri Symoneaux*
 
