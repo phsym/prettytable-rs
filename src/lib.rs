@@ -603,7 +603,7 @@ mod tests {
     use row::Row;
     use cell::Cell;
     use format;
-    use format::consts::{FORMAT_NO_LINESEP, FORMAT_NO_COLSEP, FORMAT_CLEAN};
+    use format::consts::{FORMAT_DEFAULT, FORMAT_NO_LINESEP, FORMAT_NO_COLSEP, FORMAT_CLEAN};
 
     #[test]
     fn table() {
@@ -711,6 +711,35 @@ mod tests {
 \u{0020}t1   t2      t3 \n\
 \u{0020}a    bc      def \n\
 \u{0020}def  newval  a \n\
+";
+        println!("{}", out);
+        println!("____");
+        println!("{}", table.to_string().replace("\r\n", "\n"));
+        assert_eq!(out, table.to_string().replace("\r\n", "\n"));
+    }
+
+    #[test]
+    fn padding() {
+        let mut table = Table::new();
+        let mut format = *FORMAT_DEFAULT;
+        format.padding(2, 2);
+        table.set_format(format);
+        table.add_row(Row::new(vec![Cell::new("a"), Cell::new("bc"), Cell::new("def")]));
+        table.add_row(Row::new(vec![Cell::new("def"), Cell::new("bc"), Cell::new("a")]));
+        table.set_titles(Row::new(vec![Cell::new("t1"), Cell::new("t2"), Cell::new("t3")]));
+        assert_eq!(table[1][1].get_content(), "bc");
+
+        table[1][1] = Cell::new("newval");
+        assert_eq!(table[1][1].get_content(), "newval");
+
+        let out = "\
++-------+----------+-------+
+|  t1   |  t2      |  t3   |
++=======+==========+=======+
+|  a    |  bc      |  def  |
++-------+----------+-------+
+|  def  |  newval  |  a    |
++-------+----------+-------+
 ";
         println!("{}", out);
         println!("____");
