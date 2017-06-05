@@ -283,6 +283,11 @@ impl Table {
         *self.format = format;
     }
 
+    /// Get a mutable reference to the internal format
+    pub fn get_format(&mut self) -> &mut TableFormat {
+        &mut self.format
+    }
+
     /// Compute and return the number of column
     pub fn get_column_num(&self) -> usize {
         self.as_ref().get_column_num()

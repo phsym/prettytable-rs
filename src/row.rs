@@ -119,6 +119,7 @@ impl Row {
         where F: Fn(&Cell, &mut T, usize, usize, bool) -> Result<(), Error>
     {
         for i in 0..self.get_height() {
+            write!(out, "{:1$}", "", format.get_indent());
             try!(format.print_column_separator(out, ColumnPosition::Left));
             let (lp, rp) = format.get_padding();
             for j in 0..col_width.len() {

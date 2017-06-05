@@ -133,6 +133,8 @@ pub struct TableFormat {
     pad_left: usize,
     /// Right padding
     pad_right: usize,
+    /// Global indentation when rendering the table
+    indent: usize,
 }
 
 impl TableFormat {
@@ -148,6 +150,7 @@ impl TableFormat {
             bottom_sep: None,
             pad_left: 0,
             pad_right: 0,
+            indent: 0
         }
     }
 
@@ -204,6 +207,16 @@ impl TableFormat {
         }
     }
 
+    /// Set global indentation in spaces used when rendering a table 
+    pub fn indent(&mut self, spaces: usize) {
+        self.indent = spaces;
+    }
+
+    /// Get global indentation in spaces used when rendering a table 
+    pub fn get_indent(&self) -> usize {
+        self.indent
+    }
+
     /// Print a full line separator to `out`. `col_width` is a slice containing the width of each column
     pub fn print_line_separator<T: Write + ?Sized>(&self,
                                                    out: &mut T,
@@ -212,6 +225,7 @@ impl TableFormat {
                                                    -> Result<(), Error> {
         match *self.get_sep_for_line(pos) {
             Some(ref l) => {
+                write!(out, "{:1$}", "", self.get_indent());
                 l._print(out,
                          col_width,
                          self.get_padding(),
@@ -262,6 +276,11 @@ impl FormatBuilder {
         FormatBuilder { format: Box::new(TableFormat::new()) }
     }
 
+    /// Creates a new builder initialized with provided format
+    pub fn from_format(format: TableFormat) -> FormatBuilder {
+        FormatBuilder { format: Box::new(format) }
+    }
+
     /// Set left and right padding
     pub fn padding(mut self, left: usize, right: usize) -> Self {
         self.format.padding(left, right);
@@ -289,6 +308,12 @@ impl FormatBuilder {
     /// Set separator format for multiple kind of line separators
     pub fn separators(mut self, what: &[LinePosition], separator: LineSeparator) -> Self {
         self.format.separators(what, separator);
+        self
+    }
+
+    /// Set global indentation in spaces used when rendering a table 
+    pub fn indent(mut self, spaces: usize) -> Self {
+        self.format.indent(spaces);
         self
     }
 
