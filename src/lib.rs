@@ -283,6 +283,11 @@ impl Table {
         *self.format = format;
     }
 
+    /// Get a mutable reference to the internal format
+    pub fn get_format(&mut self) -> &mut TableFormat {
+        &mut self.format
+    }
+
     /// Compute and return the number of column
     pub fn get_column_num(&self) -> usize {
         self.as_ref().get_column_num()
@@ -759,6 +764,24 @@ mod tests {
         println!("____");
         println!("{}", table.to_string().replace("\r\n", "\n"));
         assert_eq!(out, table.to_string().replace("\r\n", "\n"));
+    }
+
+    #[test]
+    fn indent() {
+        let mut table = Table::new();
+        table.add_row(Row::new(vec![Cell::new("a"), Cell::new("bc"), Cell::new("def")]));
+        table.add_row(Row::new(vec![Cell::new("def"), Cell::new("bc"), Cell::new("a")]));
+        table.set_titles(Row::new(vec![Cell::new("t1"), Cell::new("t2"), Cell::new("t3")]));
+        table.get_format().indent(8);
+        let out = r"        +-----+----+-----+
+        | t1  | t2 | t3  |
+        +=====+====+=====+
+        | a   | bc | def |
+        +-----+----+-----+
+        | def | bc | a   |
+        +-----+----+-----+
+";
+        assert_eq!(table.to_string().replace("\r\n", "\n"), out);
     }
 
     #[test]

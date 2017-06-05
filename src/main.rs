@@ -37,6 +37,7 @@ fn main() {
     println!("Modified : ");
     table.set_element("new_foo", 2, 1).unwrap();
     table.printstd();
+    // table.get_format().indent(8);
 
     // Print a table with some styles on it :
     // FrBybl means : Foregound red, Background yellow, bold, left align
@@ -47,6 +48,7 @@ fn main() {
     let mut table = table!([Frb => "A", "B", "C"], [1, 2, 3, 4], ["A\nBCCZZZ\nDDD", 2, table]);
     table.set_titles(row!["Title 1", "Title 2"]);
     table.set_format(*consts::FORMAT_DEFAULT);
+    table.get_format().indent(8);
     table.printstd();
-    //    println!("{:#?}", table);
+    // println!("{:#?}", table);
 }

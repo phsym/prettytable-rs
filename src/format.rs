@@ -133,6 +133,8 @@ pub struct TableFormat {
     pad_left: usize,
     /// Right padding
     pad_right: usize,
+    /// Global indentation when rendering the table
+    indent: usize,
 }
 
 impl TableFormat {
@@ -148,6 +150,7 @@ impl TableFormat {
             bottom_sep: None,
             pad_left: 0,
             pad_right: 0,
+            indent: 0,
         }
     }
 
@@ -204,6 +207,16 @@ impl TableFormat {
         }
     }
 
+    /// Set global indentation in spaces used when rendering a table
+    pub fn indent(&mut self, spaces: usize) {
+        self.indent = spaces;
+    }
+
+    /// Get global indentation in spaces used when rendering a table
+    pub fn get_indent(&self) -> usize {
+        self.indent
+    }
+
     /// Print a full line separator to `out`. `col_width` is a slice containing the width of each column
     pub fn print_line_separator<T: Write + ?Sized>(&self,
                                                    out: &mut T,
@@ -212,6 +225,8 @@ impl TableFormat {
                                                    -> Result<(), Error> {
         match *self.get_sep_for_line(pos) {
             Some(ref l) => {
+                //TODO: Wrap this into dedicated function one day
+                try!(out.write_all(&vec![b' '; self.get_indent()]));
                 l._print(out,
                          col_width,
                          self.get_padding(),
@@ -292,9 +307,27 @@ impl FormatBuilder {
         self
     }
 
-    /// Consume this builder and return the generated `TableFormat`
-    pub fn build(self) -> TableFormat {
+    /// Set global indentation in spaces used when rendering a table
+    pub fn indent(mut self, spaces: usize) -> Self {
+        self.format.indent(spaces);
+        self
+    }
+
+    /// Return the generated `TableFormat`
+    pub fn build(&self) -> TableFormat {
         *self.format
+    }
+}
+
+impl Into<TableFormat> for FormatBuilder {
+    fn into(self) -> TableFormat {
+        *self.format
+    }
+}
+
+impl From<TableFormat> for FormatBuilder {
+    fn from(fmt: TableFormat) -> Self {
+        FormatBuilder { format: Box::new(fmt) }
     }
 }
 
