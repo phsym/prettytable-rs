@@ -150,7 +150,7 @@ impl TableFormat {
             bottom_sep: None,
             pad_left: 0,
             pad_right: 0,
-            indent: 0
+            indent: 0,
         }
     }
 
@@ -207,12 +207,12 @@ impl TableFormat {
         }
     }
 
-    /// Set global indentation in spaces used when rendering a table 
+    /// Set global indentation in spaces used when rendering a table
     pub fn indent(&mut self, spaces: usize) {
         self.indent = spaces;
     }
 
-    /// Get global indentation in spaces used when rendering a table 
+    /// Get global indentation in spaces used when rendering a table
     pub fn get_indent(&self) -> usize {
         self.indent
     }
@@ -225,7 +225,8 @@ impl TableFormat {
                                                    -> Result<(), Error> {
         match *self.get_sep_for_line(pos) {
             Some(ref l) => {
-                out.write_all(&vec![b' '; self.get_indent()]);
+                //TODO: Wrap this into dedicated function one day
+                try!(out.write_all(&vec![b' '; self.get_indent()]));
                 l._print(out,
                          col_width,
                          self.get_padding(),
@@ -276,16 +277,6 @@ impl FormatBuilder {
         FormatBuilder { format: Box::new(TableFormat::new()) }
     }
 
-    /// Creates a new builder initialized with provided format
-    pub fn from_format(format: TableFormat) -> FormatBuilder {
-        FormatBuilder { format: Box::new(format) }
-    }
-
-    /// Consumes the builder and returns the generated `TableFormat`
-    pub fn into_table_format(self) -> TableFormat {
-        *self.format
-    }
-
     /// Set left and right padding
     pub fn padding(mut self, left: usize, right: usize) -> Self {
         self.format.padding(left, right);
@@ -316,7 +307,7 @@ impl FormatBuilder {
         self
     }
 
-    /// Set global indentation in spaces used when rendering a table 
+    /// Set global indentation in spaces used when rendering a table
     pub fn indent(mut self, spaces: usize) -> Self {
         self.format.indent(spaces);
         self
@@ -330,13 +321,13 @@ impl FormatBuilder {
 
 impl Into<TableFormat> for FormatBuilder {
     fn into(self) -> TableFormat {
-        self.into_table_format()
+        *self.format
     }
 }
 
 impl From<TableFormat> for FormatBuilder {
     fn from(fmt: TableFormat) -> Self {
-        Self::from_format(fmt)
+        FormatBuilder { format: Box::new(fmt) }
     }
 }
 
