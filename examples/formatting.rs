@@ -83,4 +83,18 @@ fn main() {
                          .padding(1, 1)
                          .build());
     table.printstd();
+
+    // Customized format with unicode and different padding
+    // Example to print
+    // ┌───────────────┬──────────────┐
+    // │  Title 1      │  Title 2     │
+    // ├───────────────┼──────────────┤
+    // │  Value 1      │  Value 2     │
+    // ├───────────────┼──────────────┤
+    // │  Value three  │  Value four  │
+    // └───────────────┴──────────────┘
+    // Change individual format settings
+    println!("With unicode and padding:");
+    table.get_format().padding(2, 2);
+    table.printstd();
 }
