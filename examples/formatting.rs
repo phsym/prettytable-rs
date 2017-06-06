@@ -64,16 +64,16 @@ fn main() {
     // Customized format with unicode
     // Example to print
     // ┌─────────────┬────────────┐
-    // | Title 1     | Title 2    |
+    // │ Title 1     │ Title 2    │
     // ├─────────────┼────────────┤
-    // | Value 1     | Value 2    |
+    // │ Value 1     │ Value 2    │
     // ├─────────────┼────────────┤
-    // | Value three | Value four |
+    // │ Value three │ Value four │
     // └─────────────┴────────────┘
     println!("With unicode:");
     table.set_format(format::FormatBuilder::new()
-                         .column_separator('|')
-                         .borders('|')
+                         .column_separator('│')
+                         .borders('│')
                          .separators(&[format::LinePosition::Top],
                                      format::LineSeparator::new('─', '┬', '┌', '┐'))
                          .separators(&[format::LinePosition::Intern],
@@ -82,5 +82,19 @@ fn main() {
                                      format::LineSeparator::new('─', '┴', '└', '┘'))
                          .padding(1, 1)
                          .build());
+    table.printstd();
+
+    // Customized format with unicode and different padding
+    // Example to print
+    // ┌───────────────┬──────────────┐
+    // │  Title 1      │  Title 2     │
+    // ├───────────────┼──────────────┤
+    // │  Value 1      │  Value 2     │
+    // ├───────────────┼──────────────┤
+    // │  Value three  │  Value four  │
+    // └───────────────┴──────────────┘
+    // Change individual format settings
+    println!("With unicode and padding:");
+    table.get_format().padding(2, 2);
     table.printstd();
 }

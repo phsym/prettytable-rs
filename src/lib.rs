@@ -773,7 +773,7 @@ mod tests {
         table.add_row(Row::new(vec![Cell::new("def"), Cell::new("bc"), Cell::new("a")]));
         table.set_titles(Row::new(vec![Cell::new("t1"), Cell::new("t2"), Cell::new("t3")]));
         table.get_format().indent(8);
-        let out = r"        +-----+----+-----+
+        let out = "        +-----+----+-----+
         | t1  | t2 | t3  |
         +=====+====+=====+
         | a   | bc | def |
@@ -816,8 +816,8 @@ mod tests {
     fn test_unicode_separators() {
         let mut table = Table::new();
         table.set_format(format::FormatBuilder::new()
-                             .column_separator('|')
-                             .borders('|')
+                             .column_separator('│')
+                             .borders('│')
                              .separators(&[format::LinePosition::Top],
                                          format::LineSeparator::new('─',
                                                                     '┬',
@@ -840,11 +840,11 @@ mod tests {
         table.set_titles(Row::new(vec![Cell::new("t1"), Cell::new("t2"), Cell::new("t3")]));
         let out = "\
 ┌────┬────┬────┐
-| t1 | t2 | t3 |
+│ t1 │ t2 │ t3 │
 ├────┼────┼────┤
-| 1  | 1  | 1  |
+│ 1  │ 1  │ 1  │
 ├────┼────┼────┤
-| 2  | 2  | 2  |
+│ 2  │ 2  │ 2  │
 └────┴────┴────┘
 ";
         println!("{}", out);
