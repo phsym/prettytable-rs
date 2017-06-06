@@ -359,13 +359,27 @@ mod tests {
         assert!(cell.style
                     .contains(&Attr::ForegroundColor(color::BRIGHT_BLACK)));
         assert!(cell.style.contains(&Attr::BackgroundColor(color::WHITE)));
-        assert_eq!(cell.align, Alignment::RIGHT)
+        assert_eq!(cell.align, Alignment::RIGHT);
+
+        // Test with invalid sepcifier chars
+        cell = cell.clone();
+        cell = cell.style_spec("FzBr");
+        assert!(cell.style.contains(&Attr::BackgroundColor(color::RED)));
+        assert_eq!(cell.style.len(), 1);
+        cell = cell.style_spec("zzz");
+        assert!(cell.style.is_empty());
     }
 
     #[test]
     fn reset_style() {
-        let mut cell = Cell::new("test").style_spec("FDBwr");
+        let mut cell = Cell::new("test")
+            .with_style(Attr::ForegroundColor(color::BRIGHT_BLACK))
+            .with_style(Attr::BackgroundColor(color::WHITE));
+        cell.align(Alignment::RIGHT);
+        
+        //style_spec("FDBwr");
         assert_eq!(cell.style.len(), 2);
+        assert_eq!(cell.align, Alignment::RIGHT);
         cell.reset_style();
         assert_eq!(cell.style.len(), 0);
         assert_eq!(cell.align, Alignment::LEFT);
