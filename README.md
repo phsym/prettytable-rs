@@ -17,6 +17,21 @@ A formatted and aligned table printer library for [Rust](https://www.rust-lang.o
 
 # How to use
 
+## Table of Contents
+
+  * [Including](#user-content-including)
+  * [Basic usage](#user-content-basic-usage)
+  * [Using macros](#user-content-using-macros)
+  * [Do it with style](#user-content-do-it-with-style)
+    * [List of style specifiers](#user-content-list-of-style-specifiers)
+    * [List of color specifiers](#user-content-list-of-color-specifiers)
+  * [Slicing](#user-content-slicing)
+  * [Customize your table look and feel](#user-content-customize-your-table-look-and-feel)
+  * [CSV import/export](#user-content-csv-importexport)
+    * [Importing](#user-content-importing)
+    * [Exporting](#user-content-exporting)
+  * [Note on line endings](#user-content-note-on-line-endings)
+
 ## Including
 
 Include the library as a dependency to your project by adding the following lines to your **Cargo.toml** file:
