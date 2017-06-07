@@ -640,6 +640,15 @@ mod tests {
 +-----+----+-----+
 ";
         assert_eq!(table.to_string().replace("\r\n", "\n"), out);
+        table.unset_titles();
+        let out = "\
++-----+----+-----+
+| a   | bc | def |
++-----+----+-----+
+| def | bc | a   |
++-----+----+-----+
+";
+        assert_eq!(table.to_string().replace("\r\n", "\n"), out);
     }
 
     #[test]
@@ -663,6 +672,86 @@ mod tests {
 +-----+--------+-----+
 ";
         assert_eq!(table.to_string().replace("\r\n", "\n"), out);
+    }
+
+    #[test]
+    fn table_size() {
+        let mut table = Table::new();
+        assert!(table.is_empty());
+        assert!(table.as_ref().is_empty());
+        assert_eq!(table.len(), 0);
+        assert_eq!(table.as_ref().len(), 0);
+        assert_eq!(table.get_column_num(), 0);
+        assert_eq!(table.as_ref().get_column_num(), 0);
+        table.add_empty_row();
+        assert!(!table.is_empty());
+        assert!(!table.as_ref().is_empty());
+        assert_eq!(table.len(), 1);
+        assert_eq!(table.as_ref().len(), 1);
+        assert_eq!(table.get_column_num(), 0);
+        assert_eq!(table.as_ref().get_column_num(), 0);
+        table[0].add_cell(Cell::default());
+        assert_eq!(table.get_column_num(), 1);
+        assert_eq!(table.as_ref().get_column_num(), 1);
+    }
+
+    #[test]
+    fn get_row() {
+        let mut table = Table::new();
+        table.add_row(Row::new(vec![Cell::new("a"), Cell::new("bc"), Cell::new("def")]));
+        table.add_row(Row::new(vec![Cell::new("def"), Cell::new("bc"), Cell::new("a")]));
+        assert!(table.get_row(12).is_none());
+        assert!(table.get_row(1).is_some());
+        assert_eq!(table.get_row(1).unwrap()[0].get_content(), "def");
+        assert!(table.get_mut_row(12).is_none());
+        assert!(table.get_mut_row(1).is_some());
+        table.get_mut_row(1).unwrap().add_cell(Cell::new("z"));
+        assert_eq!(table.get_row(1).unwrap()[3].get_content(), "z");
+    }
+
+    #[test]
+    fn add_empty_row() {
+        let mut table = Table::new();
+        assert_eq!(table.len(), 0);
+        table.add_empty_row();
+        assert_eq!(table.len(), 1);
+        assert_eq!(table[0].len(), 0);
+    }
+
+    #[test]
+    fn remove_row() {
+        let mut table = Table::new();
+        table.add_row(Row::new(vec![Cell::new("a"), Cell::new("bc"), Cell::new("def")]));
+        table.add_row(Row::new(vec![Cell::new("def"), Cell::new("bc"), Cell::new("a")]));
+        table.remove_row(12);
+        assert_eq!(table.len(), 2);
+        table.remove_row(0);
+        assert_eq!(table.len(), 1);
+        assert_eq!(table[0][0].get_content(), "def");
+    }
+
+    #[test]
+    fn insert_row() {
+        let mut table = Table::new();
+        table.add_row(Row::new(vec![Cell::new("a"), Cell::new("bc"), Cell::new("def")]));
+        table.add_row(Row::new(vec![Cell::new("def"), Cell::new("bc"), Cell::new("a")]));
+        table.insert_row(12, Row::new(vec![Cell::new("1"), Cell::new("2"), Cell::new("3")]));
+        assert_eq!(table.len(), 3);
+        assert_eq!(table[2][1].get_content(), "2");
+        table.insert_row(1, Row::new(vec![Cell::new("3"), Cell::new("4"), Cell::new("5")]));
+        assert_eq!(table.len(), 4);
+        assert_eq!(table[1][1].get_content(), "4");
+        assert_eq!(table[2][1].get_content(), "bc");
+    }
+
+    #[test]
+    fn set_element() {
+        let mut table = Table::new();
+        table.add_row(Row::new(vec![Cell::new("a"), Cell::new("bc"), Cell::new("def")]));
+        table.add_row(Row::new(vec![Cell::new("def"), Cell::new("bc"), Cell::new("a")]));
+        assert!(table.set_element("foo", 12, 12).is_err());
+        assert!(table.set_element("foo", 1, 1).is_ok());
+        assert_eq!(table[1][1].get_content(), "foo");
     }
 
     #[test]
