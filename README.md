@@ -17,8 +17,6 @@ A formatted and aligned table printer library for [Rust](https://www.rust-lang.o
 
 # How to use
 
-## Table of Contents
-
   * [Including](#user-content-including)
   * [Basic usage](#user-content-basic-usage)
   * [Using macros](#user-content-using-macros)
