@@ -330,13 +330,13 @@ Tables can be imported from and exported to **CSV**.  This is possible thanks to
 ### Importing
 A `Table` can be imported from a string:
 ```rust
-let table = try!(Table::from_csv_string("ABC,DEFG,HIJKLMN\n\
-                                         foobar,bar,foo\n\
-                                         foobar2,bar2,foo2"));
+let table = Table::from_csv_string("ABC,DEFG,HIJKLMN\n\
+                                    foobar,bar,foo\n\
+                                    foobar2,bar2,foo2")?;
 ```
 or from CSV files:
 ```rust
-let table = try!(Table::from_csv_file("input_csv.txt"));
+let table = Table::from_csv_file("input_csv.txt")?;
 ```
 > Those 2 ways of importing CSV assumes a CSV format with `no headers`, and delimited with `commas`
 
@@ -350,14 +350,14 @@ let table = Table::from_csv(reader);
 ### Exporting
 Export to a generic `Write`:
 ```rust
-let out = try!(File::create("output_csv.txt"));
-try!(table.to_csv(out));
+let out = File::create("output_csv.txt")?;
+table.to_csv(out)?;
 ```
 or to a `csv::Writer<W: Write>`:
 ```rust
 let writer = /* create a writer */;
 /* do something with the writer */
-try!(table.to_csv_writer(writer));
+table.to_csv_writer(writer)?;
 ```
 
 ## Note on line endings
