@@ -252,6 +252,7 @@ macro_rules! row {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use cell::Cell;
 
     #[test]
     fn row_default_empty() {
@@ -269,6 +270,7 @@ mod tests {
         assert_eq!(c1.get_content(), "foo");
 
         let c1 = Cell::from(&"baz");
+        assert!(row.set_cell(c1.clone(), 1000).is_err());
         assert!(row.set_cell(c1.clone(), 0).is_ok());
         assert_eq!(row.get_cell(0).unwrap().get_content(), "baz");
 
