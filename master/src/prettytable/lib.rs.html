@@ -946,6 +946,95 @@
 <span id="901">901</span>
 <span id="902">902</span>
 <span id="903">903</span>
+<span id="904">904</span>
+<span id="905">905</span>
+<span id="906">906</span>
+<span id="907">907</span>
+<span id="908">908</span>
+<span id="909">909</span>
+<span id="910">910</span>
+<span id="911">911</span>
+<span id="912">912</span>
+<span id="913">913</span>
+<span id="914">914</span>
+<span id="915">915</span>
+<span id="916">916</span>
+<span id="917">917</span>
+<span id="918">918</span>
+<span id="919">919</span>
+<span id="920">920</span>
+<span id="921">921</span>
+<span id="922">922</span>
+<span id="923">923</span>
+<span id="924">924</span>
+<span id="925">925</span>
+<span id="926">926</span>
+<span id="927">927</span>
+<span id="928">928</span>
+<span id="929">929</span>
+<span id="930">930</span>
+<span id="931">931</span>
+<span id="932">932</span>
+<span id="933">933</span>
+<span id="934">934</span>
+<span id="935">935</span>
+<span id="936">936</span>
+<span id="937">937</span>
+<span id="938">938</span>
+<span id="939">939</span>
+<span id="940">940</span>
+<span id="941">941</span>
+<span id="942">942</span>
+<span id="943">943</span>
+<span id="944">944</span>
+<span id="945">945</span>
+<span id="946">946</span>
+<span id="947">947</span>
+<span id="948">948</span>
+<span id="949">949</span>
+<span id="950">950</span>
+<span id="951">951</span>
+<span id="952">952</span>
+<span id="953">953</span>
+<span id="954">954</span>
+<span id="955">955</span>
+<span id="956">956</span>
+<span id="957">957</span>
+<span id="958">958</span>
+<span id="959">959</span>
+<span id="960">960</span>
+<span id="961">961</span>
+<span id="962">962</span>
+<span id="963">963</span>
+<span id="964">964</span>
+<span id="965">965</span>
+<span id="966">966</span>
+<span id="967">967</span>
+<span id="968">968</span>
+<span id="969">969</span>
+<span id="970">970</span>
+<span id="971">971</span>
+<span id="972">972</span>
+<span id="973">973</span>
+<span id="974">974</span>
+<span id="975">975</span>
+<span id="976">976</span>
+<span id="977">977</span>
+<span id="978">978</span>
+<span id="979">979</span>
+<span id="980">980</span>
+<span id="981">981</span>
+<span id="982">982</span>
+<span id="983">983</span>
+<span id="984">984</span>
+<span id="985">985</span>
+<span id="986">986</span>
+<span id="987">987</span>
+<span id="988">988</span>
+<span id="989">989</span>
+<span id="990">990</span>
+<span id="991">991</span>
+<span id="992">992</span>
 </pre><pre class="rust ">
 <span class="attribute">#<span class="op">!</span>[<span class="ident">warn</span>(<span class="ident">missing_docs</span>,
         <span class="ident">unused_extern_crates</span>,
@@ -1589,6 +1678,15 @@
 +-----+----+-----+
 &quot;</span>;
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">table</span>.<span class="ident">to_string</span>().<span class="ident">replace</span>(<span class="string">&quot;\r\n&quot;</span>, <span class="string">&quot;\n&quot;</span>), <span class="ident">out</span>);
+        <span class="ident">table</span>.<span class="ident">unset_titles</span>();
+        <span class="kw">let</span> <span class="ident">out</span> <span class="op">=</span> <span class="string">&quot;\
++-----+----+-----+
+| a   | bc | def |
++-----+----+-----+
+| def | bc | a   |
++-----+----+-----+
+&quot;</span>;
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">table</span>.<span class="ident">to_string</span>().<span class="ident">replace</span>(<span class="string">&quot;\r\n&quot;</span>, <span class="string">&quot;\n&quot;</span>), <span class="ident">out</span>);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
@@ -1612,6 +1710,86 @@
 +-----+--------+-----+
 &quot;</span>;
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">table</span>.<span class="ident">to_string</span>().<span class="ident">replace</span>(<span class="string">&quot;\r\n&quot;</span>, <span class="string">&quot;\n&quot;</span>), <span class="ident">out</span>);
+    }
+
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">table_size</span>() {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">table</span> <span class="op">=</span> <span class="ident">Table</span>::<span class="ident">new</span>();
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">table</span>.<span class="ident">is_empty</span>());
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">table</span>.<span class="ident">as_ref</span>().<span class="ident">is_empty</span>());
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">table</span>.<span class="ident">len</span>(), <span class="number">0</span>);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">table</span>.<span class="ident">as_ref</span>().<span class="ident">len</span>(), <span class="number">0</span>);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">table</span>.<span class="ident">get_column_num</span>(), <span class="number">0</span>);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">table</span>.<span class="ident">as_ref</span>().<span class="ident">get_column_num</span>(), <span class="number">0</span>);
+        <span class="ident">table</span>.<span class="ident">add_empty_row</span>();
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">table</span>.<span class="ident">is_empty</span>());
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">table</span>.<span class="ident">as_ref</span>().<span class="ident">is_empty</span>());
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">table</span>.<span class="ident">len</span>(), <span class="number">1</span>);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">table</span>.<span class="ident">as_ref</span>().<span class="ident">len</span>(), <span class="number">1</span>);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">table</span>.<span class="ident">get_column_num</span>(), <span class="number">0</span>);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">table</span>.<span class="ident">as_ref</span>().<span class="ident">get_column_num</span>(), <span class="number">0</span>);
+        <span class="ident">table</span>[<span class="number">0</span>].<span class="ident">add_cell</span>(<span class="ident">Cell</span>::<span class="ident">default</span>());
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">table</span>.<span class="ident">get_column_num</span>(), <span class="number">1</span>);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">table</span>.<span class="ident">as_ref</span>().<span class="ident">get_column_num</span>(), <span class="number">1</span>);
+    }
+
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">get_row</span>() {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">table</span> <span class="op">=</span> <span class="ident">Table</span>::<span class="ident">new</span>();
+        <span class="ident">table</span>.<span class="ident">add_row</span>(<span class="ident">Row</span>::<span class="ident">new</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="ident">Cell</span>::<span class="ident">new</span>(<span class="string">&quot;a&quot;</span>), <span class="ident">Cell</span>::<span class="ident">new</span>(<span class="string">&quot;bc&quot;</span>), <span class="ident">Cell</span>::<span class="ident">new</span>(<span class="string">&quot;def&quot;</span>)]));
+        <span class="ident">table</span>.<span class="ident">add_row</span>(<span class="ident">Row</span>::<span class="ident">new</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="ident">Cell</span>::<span class="ident">new</span>(<span class="string">&quot;def&quot;</span>), <span class="ident">Cell</span>::<span class="ident">new</span>(<span class="string">&quot;bc&quot;</span>), <span class="ident">Cell</span>::<span class="ident">new</span>(<span class="string">&quot;a&quot;</span>)]));
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">table</span>.<span class="ident">get_row</span>(<span class="number">12</span>).<span class="ident">is_none</span>());
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">table</span>.<span class="ident">get_row</span>(<span class="number">1</span>).<span class="ident">is_some</span>());
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">table</span>.<span class="ident">get_row</span>(<span class="number">1</span>).<span class="ident">unwrap</span>()[<span class="number">0</span>].<span class="ident">get_content</span>(), <span class="string">&quot;def&quot;</span>);
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">table</span>.<span class="ident">get_mut_row</span>(<span class="number">12</span>).<span class="ident">is_none</span>());
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">table</span>.<span class="ident">get_mut_row</span>(<span class="number">1</span>).<span class="ident">is_some</span>());
+        <span class="ident">table</span>.<span class="ident">get_mut_row</span>(<span class="number">1</span>).<span class="ident">unwrap</span>().<span class="ident">add_cell</span>(<span class="ident">Cell</span>::<span class="ident">new</span>(<span class="string">&quot;z&quot;</span>));
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">table</span>.<span class="ident">get_row</span>(<span class="number">1</span>).<span class="ident">unwrap</span>()[<span class="number">3</span>].<span class="ident">get_content</span>(), <span class="string">&quot;z&quot;</span>);
+    }
+
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">add_empty_row</span>() {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">table</span> <span class="op">=</span> <span class="ident">Table</span>::<span class="ident">new</span>();
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">table</span>.<span class="ident">len</span>(), <span class="number">0</span>);
+        <span class="ident">table</span>.<span class="ident">add_empty_row</span>();
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">table</span>.<span class="ident">len</span>(), <span class="number">1</span>);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">table</span>[<span class="number">0</span>].<span class="ident">len</span>(), <span class="number">0</span>);
+    }
+
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">remove_row</span>() {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">table</span> <span class="op">=</span> <span class="ident">Table</span>::<span class="ident">new</span>();
+        <span class="ident">table</span>.<span class="ident">add_row</span>(<span class="ident">Row</span>::<span class="ident">new</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="ident">Cell</span>::<span class="ident">new</span>(<span class="string">&quot;a&quot;</span>), <span class="ident">Cell</span>::<span class="ident">new</span>(<span class="string">&quot;bc&quot;</span>), <span class="ident">Cell</span>::<span class="ident">new</span>(<span class="string">&quot;def&quot;</span>)]));
+        <span class="ident">table</span>.<span class="ident">add_row</span>(<span class="ident">Row</span>::<span class="ident">new</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="ident">Cell</span>::<span class="ident">new</span>(<span class="string">&quot;def&quot;</span>), <span class="ident">Cell</span>::<span class="ident">new</span>(<span class="string">&quot;bc&quot;</span>), <span class="ident">Cell</span>::<span class="ident">new</span>(<span class="string">&quot;a&quot;</span>)]));
+        <span class="ident">table</span>.<span class="ident">remove_row</span>(<span class="number">12</span>);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">table</span>.<span class="ident">len</span>(), <span class="number">2</span>);
+        <span class="ident">table</span>.<span class="ident">remove_row</span>(<span class="number">0</span>);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">table</span>.<span class="ident">len</span>(), <span class="number">1</span>);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">table</span>[<span class="number">0</span>][<span class="number">0</span>].<span class="ident">get_content</span>(), <span class="string">&quot;def&quot;</span>);
+    }
+
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">insert_row</span>() {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">table</span> <span class="op">=</span> <span class="ident">Table</span>::<span class="ident">new</span>();
+        <span class="ident">table</span>.<span class="ident">add_row</span>(<span class="ident">Row</span>::<span class="ident">new</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="ident">Cell</span>::<span class="ident">new</span>(<span class="string">&quot;a&quot;</span>), <span class="ident">Cell</span>::<span class="ident">new</span>(<span class="string">&quot;bc&quot;</span>), <span class="ident">Cell</span>::<span class="ident">new</span>(<span class="string">&quot;def&quot;</span>)]));
+        <span class="ident">table</span>.<span class="ident">add_row</span>(<span class="ident">Row</span>::<span class="ident">new</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="ident">Cell</span>::<span class="ident">new</span>(<span class="string">&quot;def&quot;</span>), <span class="ident">Cell</span>::<span class="ident">new</span>(<span class="string">&quot;bc&quot;</span>), <span class="ident">Cell</span>::<span class="ident">new</span>(<span class="string">&quot;a&quot;</span>)]));
+        <span class="ident">table</span>.<span class="ident">insert_row</span>(<span class="number">12</span>, <span class="ident">Row</span>::<span class="ident">new</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="ident">Cell</span>::<span class="ident">new</span>(<span class="string">&quot;1&quot;</span>), <span class="ident">Cell</span>::<span class="ident">new</span>(<span class="string">&quot;2&quot;</span>), <span class="ident">Cell</span>::<span class="ident">new</span>(<span class="string">&quot;3&quot;</span>)]));
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">table</span>.<span class="ident">len</span>(), <span class="number">3</span>);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">table</span>[<span class="number">2</span>][<span class="number">1</span>].<span class="ident">get_content</span>(), <span class="string">&quot;2&quot;</span>);
+        <span class="ident">table</span>.<span class="ident">insert_row</span>(<span class="number">1</span>, <span class="ident">Row</span>::<span class="ident">new</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="ident">Cell</span>::<span class="ident">new</span>(<span class="string">&quot;3&quot;</span>), <span class="ident">Cell</span>::<span class="ident">new</span>(<span class="string">&quot;4&quot;</span>), <span class="ident">Cell</span>::<span class="ident">new</span>(<span class="string">&quot;5&quot;</span>)]));
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">table</span>.<span class="ident">len</span>(), <span class="number">4</span>);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">table</span>[<span class="number">1</span>][<span class="number">1</span>].<span class="ident">get_content</span>(), <span class="string">&quot;4&quot;</span>);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">table</span>[<span class="number">2</span>][<span class="number">1</span>].<span class="ident">get_content</span>(), <span class="string">&quot;bc&quot;</span>);
+    }
+
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">set_element</span>() {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">table</span> <span class="op">=</span> <span class="ident">Table</span>::<span class="ident">new</span>();
+        <span class="ident">table</span>.<span class="ident">add_row</span>(<span class="ident">Row</span>::<span class="ident">new</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="ident">Cell</span>::<span class="ident">new</span>(<span class="string">&quot;a&quot;</span>), <span class="ident">Cell</span>::<span class="ident">new</span>(<span class="string">&quot;bc&quot;</span>), <span class="ident">Cell</span>::<span class="ident">new</span>(<span class="string">&quot;def&quot;</span>)]));
+        <span class="ident">table</span>.<span class="ident">add_row</span>(<span class="ident">Row</span>::<span class="ident">new</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="ident">Cell</span>::<span class="ident">new</span>(<span class="string">&quot;def&quot;</span>), <span class="ident">Cell</span>::<span class="ident">new</span>(<span class="string">&quot;bc&quot;</span>), <span class="ident">Cell</span>::<span class="ident">new</span>(<span class="string">&quot;a&quot;</span>)]));
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">table</span>.<span class="ident">set_element</span>(<span class="string">&quot;foo&quot;</span>, <span class="number">12</span>, <span class="number">12</span>).<span class="ident">is_err</span>());
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">table</span>.<span class="ident">set_element</span>(<span class="string">&quot;foo&quot;</span>, <span class="number">1</span>, <span class="number">1</span>).<span class="ident">is_ok</span>());
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">table</span>[<span class="number">1</span>][<span class="number">1</span>].<span class="ident">get_content</span>(), <span class="string">&quot;foo&quot;</span>);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
