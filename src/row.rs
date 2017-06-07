@@ -248,3 +248,59 @@ macro_rules! row {
     ($style:ident => $($content:expr), *) => ($crate::row::Row::new(vec![$(cell!($style -> $content)), *]));
     ($($content:tt)*) => ($crate::row::Row::new(row!((); $($content)*)));
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use cell::Cell;
+
+    #[test]
+    fn row_default_empty() {
+        let row1 = Row::default();
+        assert_eq!(row1.len(), 0);
+        assert!(row1.is_empty());
+    }
+
+    #[test]
+    fn get_add_set_cell() {
+        let mut row = Row::from(vec!["foo", "bar", "foobar"]);
+        assert_eq!(row.len(), 3);
+        assert!(row.get_mut_cell(12).is_none());
+        let c1 = row.get_mut_cell(0).unwrap().clone();
+        assert_eq!(c1.get_content(), "foo");
+
+        let c1 = Cell::from(&"baz");
+        assert!(row.set_cell(c1.clone(), 1000).is_err());
+        assert!(row.set_cell(c1.clone(), 0).is_ok());
+        assert_eq!(row.get_cell(0).unwrap().get_content(), "baz");
+
+        row.add_cell(c1.clone());
+        assert_eq!(row.len(), 4);
+        assert_eq!(row.get_cell(3).unwrap().get_content(), "baz");
+    }
+
+    #[test]
+    fn insert_cell() {
+        let mut row = Row::from(vec!["foo", "bar", "foobar"]);
+        assert_eq!(row.len(), 3);
+        let cell = Cell::new("baz");
+        row.insert_cell(1000, cell.clone());
+        assert_eq!(row.len(), 4);
+        assert_eq!(row.get_cell(3).unwrap().get_content(), "baz");
+        row.insert_cell(1, cell.clone());
+        assert_eq!(row.len(), 5);
+        assert_eq!(row.get_cell(1).unwrap().get_content(), "baz");
+    }
+
+    #[test]
+    fn remove_cell() {
+        let mut row = Row::from(vec!["foo", "bar", "foobar"]);
+        assert_eq!(row.len(), 3);
+        row.remove_cell(1000);
+        assert_eq!(row.len(), 3);
+        row.remove_cell(1);
+        assert_eq!(row.len(), 2);
+        assert_eq!(row.get_cell(0).unwrap().get_content(), "foo");
+        assert_eq!(row.get_cell(1).unwrap().get_content(), "foobar");
+    }
+}
