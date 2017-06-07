@@ -384,4 +384,15 @@ mod tests {
         assert_eq!(cell.style.len(), 0);
         assert_eq!(cell.align, Alignment::LEFT);
     }
+
+    #[test]
+    fn default_empty_cell() {
+        let cell = Cell::default();
+        assert_eq!(cell.align, Alignment::LEFT);
+        assert!(cell.style.is_empty());
+        assert_eq!(cell.get_content(), "");
+        assert_eq!(cell.to_string(), "");
+        assert_eq!(cell.get_height(), 1);
+        assert_eq!(cell.get_width(), 0);
+    }
 }
