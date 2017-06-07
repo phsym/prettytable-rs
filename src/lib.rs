@@ -140,24 +140,24 @@ impl<'a> TableSlice<'a> {
     {
         // Compute columns width
         let col_width = self.get_all_column_width();
-        try!(self.format
-                 .print_line_separator(out, &col_width, LinePosition::Top));
+        self.format
+            .print_line_separator(out, &col_width, LinePosition::Top)?;
         if let Some(ref t) = *self.titles {
-            try!(f(t, out, self.format, &col_width));
-            try!(self.format
-                     .print_line_separator(out, &col_width, LinePosition::Title));
+            f(t, out, self.format, &col_width)?;
+            self.format
+                .print_line_separator(out, &col_width, LinePosition::Title)?;
         }
         // Print rows
         let mut iter = self.rows.into_iter().peekable();
         while let Some(r) = iter.next() {
-            try!(f(r, out, self.format, &col_width));
+            f(r, out, self.format, &col_width)?;
             if iter.peek().is_some() {
-                try!(self.format
-                         .print_line_separator(out, &col_width, LinePosition::Intern));
+                self.format
+                    .print_line_separator(out, &col_width, LinePosition::Intern)?;
             }
         }
-        try!(self.format
-                 .print_line_separator(out, &col_width, LinePosition::Bottom));
+        self.format
+            .print_line_separator(out, &col_width, LinePosition::Bottom)?;
         out.flush()
     }
 
@@ -214,13 +214,13 @@ impl<'a> TableSlice<'a> {
                                    mut writer: csv::Writer<W>)
                                    -> csv::Result<csv::Writer<W>> {
         for title in self.titles {
-            try!(writer.write(title.iter().map(|c| c.get_content())));
+            writer.write(title.iter().map(|c| c.get_content()))?;
         }
         for row in self.rows {
-            try!(writer.write(row.iter().map(|c| c.get_content())));
+            writer.write(row.iter().map(|c| c.get_content()))?;
         }
 
-        try!(writer.flush());
+        writer.flush()?;
         Ok(writer)
     }
 }
@@ -261,7 +261,7 @@ impl Table {
     /// For more customisability use `from_csv()`
     #[cfg(feature = "csv")]
     pub fn from_csv_file<P: AsRef<Path>>(csv_p: P) -> csv::Result<Table> {
-        Ok(Table::from_csv(&mut try!(csv::Reader::from_file(csv_p)).has_headers(false)))
+        Ok(Table::from_csv(&mut csv::Reader::from_file(csv_p)?.has_headers(false)))
     }
 
     /// Create a table from a CSV reader
@@ -349,7 +349,7 @@ impl Table {
 
     /// Modify a single element in the table
     pub fn set_element(&mut self, element: &str, column: usize, row: usize) -> Result<(), &str> {
-        let rowline = try!(self.get_mut_row(row).ok_or("Cannot find row"));
+        let rowline = self.get_mut_row(row).ok_or("Cannot find row")?;
         // TODO: If a cell already exist, copy it's alignment parameter
         rowline.set_cell(Cell::new(element), column)
     }

@@ -65,12 +65,12 @@ pub fn print_align<T: Write + ?Sized>(out: &mut T,
         Alignment::CENTER => nfill / 2,
     };
     if n > 0 {
-        try!(out.write_all(&vec![fill as u8; n]));
+        out.write_all(&vec![fill as u8; n])?;
         nfill -= n;
     }
-    try!(out.write_all(text.as_bytes()));
+    out.write_all(text.as_bytes())?;
     if nfill > 0 && !skip_right_fill {
-        try!(out.write_all(&vec![fill as u8; nfill]));
+        out.write_all(&vec![fill as u8; nfill])?;
     }
     Ok(())
 }

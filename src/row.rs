@@ -120,24 +120,24 @@ impl Row {
     {
         for i in 0..self.get_height() {
             //TODO: Wrap this into dedicated function one day
-            try!(out.write_all(&vec![b' '; format.get_indent()]));
-            try!(format.print_column_separator(out, ColumnPosition::Left));
+            out.write_all(&vec![b' '; format.get_indent()])?;
+            format.print_column_separator(out, ColumnPosition::Left)?;
             let (lp, rp) = format.get_padding();
             for j in 0..col_width.len() {
-                try!(out.write_all(&vec![b' '; lp]));
+                out.write_all(&vec![b' '; lp])?;
                 let skip_r_fill = (j == col_width.len() - 1) &&
                                   format.get_column_separator(ColumnPosition::Right).is_none();
                 match self.get_cell(j) {
-                    Some(c) => try!(f(c, out, i, col_width[j], skip_r_fill)),
-                    None => try!(f(&Cell::default(), out, i, col_width[j], skip_r_fill)),
+                    Some(c) => f(c, out, i, col_width[j], skip_r_fill)?,
+                    None => f(&Cell::default(), out, i, col_width[j], skip_r_fill)?,
                 };
-                try!(out.write_all(&vec![b' '; rp]));
+                out.write_all(&vec![b' '; rp])?;
                 if j < col_width.len() - 1 {
-                    try!(format.print_column_separator(out, ColumnPosition::Intern));
+                    format.print_column_separator(out, ColumnPosition::Intern)?;
                 }
             }
-            try!(format.print_column_separator(out, ColumnPosition::Right));
-            try!(out.write_all(NEWLINE));
+            format.print_column_separator(out, ColumnPosition::Right)?;
+            out.write_all(NEWLINE)?;
         }
         Ok(())
     }

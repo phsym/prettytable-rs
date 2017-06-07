@@ -88,19 +88,19 @@ impl LineSeparator {
                                  rborder: bool)
                                  -> Result<(), Error> {
         if lborder {
-            try!(out.write_all(Utf8Char::from(self.ljunc).as_bytes()));
+            out.write_all(Utf8Char::from(self.ljunc).as_bytes())?;
         }
         let mut iter = col_width.into_iter().peekable();
         while let Some(width) = iter.next() {
             for _ in 0..width + padding.0 + padding.1 {
-                try!(out.write_all(Utf8Char::from(self.line).as_bytes()));
+                out.write_all(Utf8Char::from(self.line).as_bytes())?;
             }
             if colsep && iter.peek().is_some() {
-                try!(out.write_all(Utf8Char::from(self.junc).as_bytes()));
+                out.write_all(Utf8Char::from(self.junc).as_bytes())?;
             }
         }
         if rborder {
-            try!(out.write_all(Utf8Char::from(self.rjunc).as_bytes()));
+            out.write_all(Utf8Char::from(self.rjunc).as_bytes())?;
         }
         out.write_all(NEWLINE)
     }
@@ -226,7 +226,7 @@ impl TableFormat {
         match *self.get_sep_for_line(pos) {
             Some(ref l) => {
                 //TODO: Wrap this into dedicated function one day
-                try!(out.write_all(&vec![b' '; self.get_indent()]));
+                out.write_all(&vec![b' '; self.get_indent()])?;
                 l._print(out,
                          col_width,
                          self.get_padding(),
