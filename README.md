@@ -39,7 +39,8 @@ Include the library as a dependency to your project by adding the following line
 prettytable-rs = "^0.6"
 ```
 
-The library requires at least `rust v1.9.0` in order to build
+The library requires at least `rust v1.9.0` in order to build,
+while `master` branch only builds starting from `rust v1.13.0`
 
 ## Basic usage
 

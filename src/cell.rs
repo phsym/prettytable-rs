@@ -201,7 +201,7 @@ impl Cell {
                 Err(e) => return Err(term_error_to_io_error(e)),
             };
         }
-        try!(self.print(out, idx, col_width, skip_right_fill));
+        self.print(out, idx, col_width, skip_right_fill)?;
         match out.reset() {
             Ok(..) |
             Err(::term::Error::NotSupported) |
@@ -376,7 +376,7 @@ mod tests {
             .with_style(Attr::ForegroundColor(color::BRIGHT_BLACK))
             .with_style(Attr::BackgroundColor(color::WHITE));
         cell.align(Alignment::RIGHT);
-        
+
         //style_spec("FDBwr");
         assert_eq!(cell.style.len(), 2);
         assert_eq!(cell.align, Alignment::RIGHT);
