@@ -645,7 +645,7 @@
                 <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">term_error_to_io_error</span>(<span class="ident">e</span>)),
             };
         }
-        <span class="macro">try</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">print</span>(<span class="ident">out</span>, <span class="ident">idx</span>, <span class="ident">col_width</span>, <span class="ident">skip_right_fill</span>));
+        <span class="self">self</span>.<span class="ident">print</span>(<span class="ident">out</span>, <span class="ident">idx</span>, <span class="ident">col_width</span>, <span class="ident">skip_right_fill</span>)<span class="question-mark">?</span>;
         <span class="kw">match</span> <span class="ident">out</span>.<span class="ident">reset</span>() {
             <span class="prelude-val">Ok</span>(..) <span class="op">|</span>
             <span class="prelude-val">Err</span>(::<span class="ident">term</span>::<span class="ident">Error</span>::<span class="ident">NotSupported</span>) <span class="op">|</span>
@@ -820,7 +820,7 @@
             .<span class="ident">with_style</span>(<span class="ident">Attr</span>::<span class="ident">ForegroundColor</span>(<span class="ident">color</span>::<span class="ident">BRIGHT_BLACK</span>))
             .<span class="ident">with_style</span>(<span class="ident">Attr</span>::<span class="ident">BackgroundColor</span>(<span class="ident">color</span>::<span class="ident">WHITE</span>));
         <span class="ident">cell</span>.<span class="ident">align</span>(<span class="ident">Alignment</span>::<span class="ident">RIGHT</span>);
-        
+
         <span class="comment">//style_spec(&quot;FDBwr&quot;);</span>
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">cell</span>.<span class="ident">style</span>.<span class="ident">len</span>(), <span class="number">2</span>);
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">cell</span>.<span class="ident">align</span>, <span class="ident">Alignment</span>::<span class="ident">RIGHT</span>);
