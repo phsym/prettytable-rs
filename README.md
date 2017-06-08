@@ -17,6 +17,19 @@ A formatted and aligned table printer library for [Rust](https://www.rust-lang.o
 
 # How to use
 
+  * [Including](#user-content-including)
+  * [Basic usage](#user-content-basic-usage)
+  * [Using macros](#user-content-using-macros)
+  * [Do it with style](#user-content-do-it-with-style)
+    * [List of style specifiers](#user-content-list-of-style-specifiers)
+    * [List of color specifiers](#user-content-list-of-color-specifiers)
+  * [Slicing](#user-content-slicing)
+  * [Customize your table look and feel](#user-content-customize-your-table-look-and-feel)
+  * [CSV import/export](#user-content-csv-importexport)
+    * [Importing](#user-content-importing)
+    * [Exporting](#user-content-exporting)
+  * [Note on line endings](#user-content-note-on-line-endings)
+
 ## Including
 
 Include the library as a dependency to your project by adding the following lines to your **Cargo.toml** file:
@@ -30,7 +43,7 @@ The library requires at least `rust v1.9.0` in order to build
 
 ## Basic usage
 
-You can start using it in the following way:
+Start using it like this:
 
 ```rust
 #[macro_use] extern crate prettytable;
@@ -41,21 +54,22 @@ use prettytable::cell::Cell;
 fn main() {
     // Create the table
     let mut table = Table::new();
-    // Add a row
+
+    // Add a row per time
     table.add_row(row!["ABC", "DEFG", "HIJKLMN"]);
     table.add_row(row!["foobar", "bar", "foo"]);
-    // Or the more complicated way :
+    // A more compicated way to add a row:
     table.add_row(Row::new(vec![
         Cell::new("foobar2"),
         Cell::new("bar2"),
-        Cell::new("foo2")])
-    );
+        Cell::new("foo2")]));
+
     // Print the table to stdout
     table.printstd();
 }
 ```
 
-This code will produce the following output:
+The code above will output
 
 ```text
 +---------+------+---------+
@@ -69,35 +83,44 @@ This code will produce the following output:
 
 ## Using macros
 
-To make the code simpler, the `table!` macro is there for you. The following code would produce the same output :
+For everyday usage consider `table!` macro. This code will produce the same output as above:
 ```rust
 #[macro_use] extern crate prettytable;
 
 fn main() {
     let table = table!(["ABC", "DEFG", "HIJKLMN"],
                        ["foobar", "bar", "foo"],
-                       ["foobar2", "bar2", "foo2"]
-                      );
+                       ["foobar2", "bar2", "foo2"]);
+
     table.printstd();
 }
 ```
 
-Using the `ptable!` macro would even print it on stdout for you.
+The `ptable!` macro combines creating and printing a table:
+```rust
+#[macro_use] extern crate prettytable;
 
-Tables also support multiline cells content. As a consequence, you can print a table into another table (yo dawg ;).
+fn main() {
+    let table = ptable!(["ABC", "DEFG", "HIJKLMN"],
+                        ["foobar", "bar", "foo"],
+                        ["foobar2", "bar2", "foo2"]);
+}
+```
+
+Tables also support multiline cells content. As a result, you can print a table into another table (yo dawg ;).
 For example:
 ```rust
 let table1 = table!(["ABC", "DEFG", "HIJKLMN"],
                     ["foobar", "bar", "foo"],
-                    ["foobar2", "bar2", "foo2"]
-                   );
+                    ["foobar2", "bar2", "foo2"]);
+
 let table2 = table!(["Title 1", "Title 2"],
                     ["This is\na multiline\ncell", "foo"],
-                    ["Yo dawg ;) You can even\nprint tables\ninto tables", table1]
-                   );
+                    ["Yo dawg ;) You can even\nprint tables\ninto tables", table1]);
+
 table2.printstd();
 ```
-Would print the following text:
+will print
 ```text
 +-------------------------+------------------------------+
 | Title 1                 | Title 2                      |
@@ -118,56 +141,75 @@ Would print the following text:
 
 Rows may have different numbers of cells. The table will automatically adapt to the largest row by printing additional empty cells in smaller rows.
 
-## Do it with style
+## Do it with style!
 
-Tables can be added some with style like colors (background / foreground), bold, and italic, thanks to the `term` crate.
+Tables can have a styled output with background and foreground colors, bold and italic as configurable settings, thanks to the `term` crate.
 
-You can add `term` style attributes to cells programmatically:
-```rust
-extern crate term;
-use term::{Attr, color};
+`term` style attributes can be used
 
-(...)
+- directly:
+  ```rust
+  extern crate term;
+  use term::{Attr, color};
 
-table.add_row(Row::new(vec![
-    Cell::new("foobar2")
-        .with_style(Attr::ForegroundColor(color::GREEN))
-        .with_style(Attr::Bold),
-    Cell::new("bar2")
-        .with_style(Attr::ForegroundColor(color::RED)),
-    Cell::new("foo2")])
-);
-```
+  /* ... */
 
-Or you can use the style string:
-```rust
-Cell::new("foo2").style_spec("FrByc")
-```
+  table.add_row(Row::new(vec![
+      Cell::new("foobar")
+          .with_style(Attr::Bold),
+          .with_style(Attr::ForegroundColor(color::GREEN))
+      Cell::new("bar")
+          .with_style(Attr::BackgroundColor(color::RED)),
+          .with_style(Attr::Italic(true)),
+      Cell::new("foo")]));
+  ```
 
-Where **FrBybc** means **F**oreground: **r**ed, **B**ackground: **y**ellow, **b**old, **c**enter.
+- through style strings:
+  ```rust
+  table.add_row(Row::new(vec![
+      Cell::new("foobar").style_spec("bFg"),
+      Cell::new("bar").style_spec("Bri"),
+      Cell::new("foo")]));
+  ```
 
-With macros it's even simpler:
+- using `row!` macro:
+  ```rust
+  table.add_row(row![bFg->"foobar", Bri->"bar", "foo"]);
+  ```
 
-In rows, for each cells:
-```rust
-row![FrByb->"ABC", FrByb->"DEFG", "HIJKLMN"];
-```
-Or for the whole row:
-```rust
-row![FY => "styled", "bar", "foo"];
-```
-In tables, for each cells:
-```rust
-table!([FrBybl->"A", FrBybc->"B", FrBybr->"C"], [123, 234, 345, 456]);
-```
-Or for each rows:
-```rust
-table!([Frb => "A", "B", "C"], [Frb => 1, 2, 3, 4], [1, 2, 3]);
-```
-Or a mix:
-```rust
-table!([Frb => "A", "B", "C"], [Frb->1, Fgi->2, 3, 4], [1, 2, 3]);
-```
+- using `table!` macro (this one creates a new table, unlike previous examples):
+  ```rust
+  table!([bFg->"foobar", Bri->"bar", "foo"]);
+  ```
+
+Here
+- **bFg** means **bold**, **F**oreground: **g**reen,
+- **Bri** means **B**ackground: **r**ed, **i**talic.
+
+Another example: **FrBybc** means **F**oreground: **r**ed, **B**ackground: **y**ellow, **b**old, **c**enter.
+
+All cases of styling cells in macros:
+
+- With `row!`, for each cell separately:
+  ```rust
+  row![FrByb->"ABC", FrByb->"DEFG", "HIJKLMN"];
+  ```
+- With `row!`, for the whole row:
+  ```rust
+  row![FY => "styled", "bar", "foo"];
+  ```
+- With `table!`, for each cell separately:
+  ```rust
+  table!([FrBybl->"A", FrBybc->"B", FrBybr->"C"], [123, 234, 345, 456]);
+  ```
+- With `table!`, for whole rows:
+  ```rust
+  table!([Frb => "A", "B", "C"], [Frb => 1, 2, 3, 4], [1, 2, 3]);
+  ```
+- With `table!`, mixed styling:
+  ```rust
+  table!([Frb => "A", "B", "C"], [Frb->1, Fgi->2, 3, 4], [1, 2, 3]);
+  ```
 
 ### List of style specifiers:
 
@@ -183,6 +225,7 @@ table!([Frb => "A", "B", "C"], [Frb->1, Fgi->2, 3, 4], [1, 2, 3]);
 
 ### List of color specifiers:
 
+Lowercase letters stand for **usual** colors:
 * **r** : Red
 * **b** : Blue
 * **g** : Green
@@ -192,7 +235,7 @@ table!([Frb => "A", "B", "C"], [Frb->1, Fgi->2, 3, 4], [1, 2, 3]);
 * **w** : White
 * **d** : Black
 
-Capital letters are for **bright** colors. Eg:
+Uppercase letters stand for **bright** counterparts of the above colors:
 * **R** : Bright Red
 * **B** : Bright Blue
 * ... and so on ...
@@ -202,44 +245,50 @@ Capital letters are for **bright** colors. Eg:
 Tables can be sliced into immutable borrowed subtables.
 Slices are of type `prettytable::TableSlice<'a>`.
 
-For example:
+For example,
 ```rust
 use prettytable::Slice;
-(...)
+/* ... */
 let slice = table.slice(2..5);
 table.printstd();
 ```
-Would print a table with only lines 2, 3 and 4 from `table`.
+will print a table with only lines 2, 3 and 4 from `table`.
 
-Other `Range` syntax are supported. For example:
+Other `Range` syntaxes are supported. For example:
 ```rust
 table.slice(..); // Returns a borrowed immutable table with all rows
 table.slice(2..); // Returns a table with rows starting at index 2
 table.slice(..3); // Returns a table with rows until the one at index 3
 ```
 
-## Customize your table look and feel
+## Customize look and feel of a table
 
-You can customize the look and feel of a table by providing it a `prettytable::format::TableFormat`.
-For example you can change the characters used for borders, junctions, column separations or line separations.
-To proceed, you can create a new `TableFormat` object and call the setter methods to configure it,
-or you can use the more convenient `prettytable::format::FormatBuilder` structure.
+The look and feel of a table can be customized with `prettytable::format::TableFormat`.
 
-For example:
+Configurable settings include:
+- Borders (left and right)
+- Junctions
+- Column separators
+- Line separators
+
+To do this, either:
+- create a new `TableFormat` object, then call setters until you get the desired configuration;
+- or use the convenient `FormatBuilder` and Builder pattern, shown below
+
 ```rust
 let mut table = /* Initialize table */;
 let format = format::FormatBuilder::new()
     .column_separator('|')
     .borders('|')
-    .separators(
-        &[format::LinePosition::Top, format::LinePosition::Bottom],
-        format::LineSeparator::new('-', '+', '+', '+')
-    )
+    .separators(&[format::LinePosition::Top,
+                  format::LinePosition::Bottom],
+                format::LineSeparator::new('-', '+', '+', '+'))
     .padding(1, 1)
     .build();
 table.set_format(format);
 ```
-Would give a table like the following:
+
+The code above will make the table look like
 ```
 +-------------+------------+
 | Title 1     | Title 2    |
@@ -248,31 +297,29 @@ Would give a table like the following:
 +-------------+------------+
 ```
 
-For convenience, some predefined formats are provided in the module `prettytable::format::consts`.
-For example:
-```rust
-table.set_format(*format::consts::FORMAT_NO_LINESEP_WITH_TITLE);
-```
-Would give a table like the following:
-```
-+-------------+------------+
-| Title 1     | Title 2    |
-+-------------+------------+
-| Value 1     | Value 2    |
-| Value three | Value four |
-+-------------+------------+
-```
-or
-```rust
-table.set_format(*format::consts::FORMAT_NO_BORDER_LINE_SEPARATOR);
-```
-Would give:
-```
-Title 1     | Title 2
-------------+------------
-Value 1     | Value 2
-Value three | Value four
-```
+For convenience, several formats are predefined in `prettytable::format::consts` module.
+
+Some formats and their respective outputs:
+- ```rust
+  table.set_format(*format::consts::FORMAT_NO_LINESEP_WITH_TITLE);
+  ```
+  ```
+  +-------------+------------+
+  | Title 1     | Title 2    |
+  +-------------+------------+
+  | Value 1     | Value 2    |
+  | Value three | Value four |
+  +-------------+------------+
+  ```
+- ```rust
+  table.set_format(*format::consts::FORMAT_NO_BORDER_LINE_SEPARATOR);
+  ```
+  ```
+  Title 1     | Title 2
+  ------------+------------
+  Value 1     | Value 2
+  Value three | Value four
+  ```
 
 Check API documentation for the full list of available predefined formats.
 
@@ -281,32 +328,37 @@ Tables can be imported from and exported to **CSV**.  This is possible thanks to
 > The `csv` feature may become deactivated by default on future major releases.
 
 ### Importing
-A `Table` can be imported directly from a string
+A `Table` can be imported from a string:
 ```rust
-Table::from_csv_string("ABC,DEFG,HIJKLMN\n\
-                        foobar,bar,foo\n\
-                        foobar2,bar2,foo2");
+let table = Table::from_csv_string("ABC,DEFG,HIJKLMN\n\
+                                    foobar,bar,foo\n\
+                                    foobar2,bar2,foo2")?;
 ```
-Or from CSV files with 
+or from CSV files:
 ```rust
-Table::from_csv_file<P: AsRef<Path>>(csv_p: P) -> csv::Result<Table>
+let table = Table::from_csv_file("input_csv.txt")?;
 ```
-> Those 2 ways of importing CSV assumes a CSV format with `no headers`, and delimitred with `comas`
+> Those 2 ways of importing CSV assumes a CSV format with `no headers`, and delimited with `commas`
 
-Import can also be performed from a csv reader which allows for more customization around the CSV format.
+Import can also be done from a CSV reader which allows more customization around the CSV format:
 ```rust
-Table::from_csv<R: Read>(reader: &mut csv::Reader<R>) -> Table
+let reader = /* create a reader */;
+/* do something with the reader */
+let table = Table::from_csv(reader);
 ```
 
 ### Exporting
-The same way as used when importing CSV, exporting can be performed using the 2 following functions
+Export to a generic `Write`:
 ```rust
-Table::to_csv<W: Write>(&self, w: W) -> csv::Result<csv::Writer<W>>
-to_csv_writer<W: Write>(&self,
-                        mut writer: csv::Writer<W>)
-                        -> csv::Result<csv::Writer<W>>
+let out = File::create("output_csv.txt")?;
+table.to_csv(out)?;
 ```
-
+or to a `csv::Writer<W: Write>`:
+```rust
+let writer = /* create a writer */;
+/* do something with the writer */
+table.to_csv_writer(writer)?;
+```
 
 ## Note on line endings
 By default, the library prints tables with platform specific line ending. Thin means on Windows,
