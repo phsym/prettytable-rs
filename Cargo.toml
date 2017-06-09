@@ -15,7 +15,7 @@ license = "BSD-3-Clause"
 [badges]
 appveyor = { repository = "phsym/prettytable-rs", branch = "master", service = "github" }
 travis-ci = { repository = "phsym/prettytable-rs", branch = "master" }
-#codecov = { repository = "phsym/prettytable-rs", branch = "master", service = "github" }
+codecov = { repository = "phsym/prettytable-rs", branch = "master", service = "github" }
 
 [features]
 default = ["win_crlf", "csv"]

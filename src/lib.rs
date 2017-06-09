@@ -735,10 +735,12 @@ mod tests {
         let mut table = Table::new();
         table.add_row(Row::new(vec![Cell::new("a"), Cell::new("bc"), Cell::new("def")]));
         table.add_row(Row::new(vec![Cell::new("def"), Cell::new("bc"), Cell::new("a")]));
-        table.insert_row(12, Row::new(vec![Cell::new("1"), Cell::new("2"), Cell::new("3")]));
+        table.insert_row(12,
+                         Row::new(vec![Cell::new("1"), Cell::new("2"), Cell::new("3")]));
         assert_eq!(table.len(), 3);
         assert_eq!(table[2][1].get_content(), "2");
-        table.insert_row(1, Row::new(vec![Cell::new("3"), Cell::new("4"), Cell::new("5")]));
+        table.insert_row(1,
+                         Row::new(vec![Cell::new("3"), Cell::new("4"), Cell::new("5")]));
         assert_eq!(table.len(), 4);
         assert_eq!(table[1][1].get_content(), "4");
         assert_eq!(table[2][1].get_content(), "bc");
