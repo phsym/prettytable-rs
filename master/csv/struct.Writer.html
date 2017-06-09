@@ -29,7 +29,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'><a href='index.html'>csv</a></p><script>window.sidebarCurrent = {name: 'Writer', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Struct Writer</p><div class="block items"><ul><li><a href="#methods">Methods</a></li></ul></div><p class='location'><a href='index.html'>csv</a></p><script>window.sidebarCurrent = {name: 'Writer', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -115,7 +115,7 @@ cumulative CSV data.</p>
 </div><h4 id='method.into_bytes' class="method"><span id='into_bytes.v' class='invisible'><code>fn <a href='#method.into_bytes' class='fnname'>into_bytes</a>(self) -&gt; <a class="struct" href="https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html" title="struct collections::vec::Vec">Vec</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>&gt;</code></span></h4>
 <div class='docblock'><p>Convert the Writer into a vector of encoded CSV bytes.</p>
 </div></div><h3 class='impl'><span class='in-band'><code>impl&lt;W:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/std/io/trait.Write.html" title="trait std::io::Write">Write</a>&gt; <a class="struct" href="../csv/struct.Writer.html" title="struct csv::Writer">Writer</a>&lt;W&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/csv/writer.rs.html#167-291' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.encode' class="method"><span id='encode.v' class='invisible'><code>fn <a href='#method.encode' class='fnname'>encode</a>&lt;E&gt;(&amp;mut self, e: E) -&gt; <a class="type" href="../csv/type.Result.html" title="type csv::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt; <span class="where fmt-newline">where E: <a class="trait" href="../rustc_serialize/serialize/trait.Encodable.html" title="trait rustc_serialize::serialize::Encodable">Encodable</a></span></code></span></h4>
+<div class='impl-items'><h4 id='method.encode' class="method"><span id='encode.v' class='invisible'><code>fn <a href='#method.encode' class='fnname'>encode</a>&lt;E&gt;(&amp;mut self, e: E) -&gt; <a class="type" href="../csv/type.Result.html" title="type csv::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;E: <a class="trait" href="../rustc_serialize/serialize/trait.Encodable.html" title="trait rustc_serialize::serialize::Encodable">Encodable</a>,&nbsp;</span></code></span></h4>
 <div class='docblock'><p>Writes a record by encoding any <code>Encodable</code> value.</p>
 
 <p>This is the most convenient way to write CSV data. Most Rust types
@@ -151,7 +151,7 @@ edit distances computed.</p>
 }
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">wtr</span>.<span class="ident">as_string</span>(),
            <span class="string">&quot;sticker,mortals,\nbribed,personae,7\n&quot;</span>);</pre>
-</div><h4 id='method.write' class="method"><span id='write.v' class='invisible'><code>fn <a href='#method.write' class='fnname'>write</a>&lt;'a, I&gt;(&amp;mut self, r: I) -&gt; <a class="type" href="../csv/type.Result.html" title="type csv::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt; <span class="where fmt-newline">where I: <a class="trait" href="https://doc.rust-lang.org/nightly/core/iter/iterator/trait.Iterator.html" title="trait core::iter::iterator::Iterator">Iterator</a>, I::<a class="trait" href="https://doc.rust-lang.org/nightly/core/iter/iterator/trait.Iterator.html" title="trait core::iter::iterator::Iterator">Item</a>: <a class="trait" href="../csv/trait.BorrowBytes.html" title="trait csv::BorrowBytes">BorrowBytes</a></span></code></span></h4>
+</div><h4 id='method.write' class="method"><span id='write.v' class='invisible'><code>fn <a href='#method.write' class='fnname'>write</a>&lt;'a, I&gt;(&amp;mut self, r: I) -&gt; <a class="type" href="../csv/type.Result.html" title="type csv::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;I: <a class="trait" href="https://doc.rust-lang.org/nightly/core/iter/iterator/trait.Iterator.html" title="trait core::iter::iterator::Iterator">Iterator</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;I as <a class="trait" href="https://doc.rust-lang.org/nightly/core/iter/iterator/trait.Iterator.html" title="trait core::iter::iterator::Iterator">Iterator</a>&gt;::<a class="trait" href="https://doc.rust-lang.org/nightly/core/iter/iterator/trait.Iterator.html" title="trait core::iter::iterator::Iterator">Item</a>: <a class="trait" href="../csv/trait.BorrowBytes.html" title="trait csv::BorrowBytes">BorrowBytes</a>,&nbsp;</span></code></span></h4>
 <div class='docblock'><p>Writes a record of strings (Unicode or raw bytes).</p>
 
 <p>This is meant to be the standard method provided by most CSV writers.

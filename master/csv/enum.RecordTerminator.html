@@ -29,7 +29,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'><a href='index.html'>csv</a></p><script>window.sidebarCurrent = {name: 'RecordTerminator', ty: 'enum', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Enum RecordTerminator</p><div class="block items"><ul><li><a href="#variants">Variants</a></li><li><a href="#implementations">Trait Implementations</a></li></ul></div><p class='location'><a href='index.html'>csv</a></p><script>window.sidebarCurrent = {name: 'RecordTerminator', ty: 'enum', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -59,7 +59,7 @@ CSV parser must special case CRLF handling. Hence, this enum.</p>
 
 <p>Generally, you won&#39;t need to use this type because <code>CRLF</code> is the default,
 which is by far the most widely used record terminator.</p>
-</div><h2 class='variants'>Variants</h2>
+</div><h2 id='variants' class='variants'>Variants</h2>
 <span id='variant.CRLF' class='variant'><span id='CRLF.v' class='invisible'><code>CRLF</code></span></span><div class='docblock'><p>Parses <code>\r</code>, <code>\n</code> or <code>\r\n</code> as a single record terminator.</p>
 </div><span id='variant.Any' class='variant'><span id='Any.v' class='invisible'><code>Any(<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>)</code></span></span><div class='docblock'><p>Parses the byte given as a record terminator.</p>
 </div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html" title="trait core::clone::Clone">Clone</a> for <a class="enum" href="../csv/enum.RecordTerminator.html" title="enum csv::RecordTerminator">RecordTerminator</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/csv/reader.rs.html#24' title='goto source code'>[src]</a></span></h3>

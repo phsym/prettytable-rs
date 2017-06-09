@@ -29,7 +29,7 @@
 
     <nav class="sidebar">
         <a href='../../rustc_serialize/index.html'><img src='https://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png' alt='logo' width='100'></a>
-        <p class='location'><a href='../index.html'>rustc_serialize</a>::<wbr><a href='index.html'>json</a></p><script>window.sidebarCurrent = {name: 'StackElement', ty: 'enum', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Enum StackElement</p><div class="block items"><ul><li><a href="#variants">Variants</a></li><li><a href="#implementations">Trait Implementations</a></li></ul></div><p class='location'><a href='../index.html'>rustc_serialize</a>::<wbr><a href='index.html'>json</a></p><script>window.sidebarCurrent = {name: 'StackElement', ty: 'enum', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -55,7 +55,7 @@
 }</pre><div class='docblock'><p>StackElements compose a Stack.
 For example, Key(&quot;foo&quot;), Key(&quot;bar&quot;), Index(3) and Key(&quot;x&quot;) are the
 StackElements compositing the stack that represents foo.bar[3].x</p>
-</div><h2 class='variants'>Variants</h2>
+</div><h2 id='variants' class='variants'>Variants</h2>
 <span id='variant.Index' class='variant'><span id='Index.v' class='invisible'><code>Index(<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>)</code></span></span><span id='variant.Key' class='variant'><span id='Key.v' class='invisible'><code>Key(&amp;'l <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>)</code></span></span><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl&lt;'l&gt; <a class="trait" href="https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html" title="trait core::cmp::PartialEq">PartialEq</a> for <a class="enum" href="../../rustc_serialize/json/enum.StackElement.html" title="enum rustc_serialize::json::StackElement">StackElement</a>&lt;'l&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/rustc_serialize/json.rs.html#1266' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.eq' class="method"><span id='eq.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#tymethod.eq' class='fnname'>eq</a>(&amp;self, __arg_0: &amp;<a class="enum" href="../../rustc_serialize/json/enum.StackElement.html" title="enum rustc_serialize::json::StackElement">StackElement</a>&lt;'l&gt;) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span></h4>
 <div class='docblock'><p>This method tests for <code>self</code> and <code>other</code> values to be equal, and is used by <code>==</code>. <a href="https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#tymethod.eq">Read more</a></p>

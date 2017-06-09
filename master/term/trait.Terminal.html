@@ -29,7 +29,7 @@
 
     <nav class="sidebar">
         <a href='../term/index.html'><img src='https://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png' alt='logo' width='100'></a>
-        <p class='location'><a href='index.html'>term</a></p><script>window.sidebarCurrent = {name: 'Terminal', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Trait Terminal</p><div class="block items"><ul><li><a href="#associated-types">Associated Types</a></li><li><a href="#required-methods">Required Methods</a></li><li><a href="#implementors">Implementors</a></li></ul></div><p class='location'><a href='index.html'>term</a></p><script>window.sidebarCurrent = {name: 'Terminal', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -63,7 +63,7 @@
     fn <a href='#tymethod.carriage_return' class='fnname'>carriage_return</a>(&amp;mut self) -&gt; <a class="type" href="../term/type.Result.html" title="type term::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt;;
     fn <a href='#tymethod.get_ref' class='fnname'>get_ref</a>(&amp;self) -&gt; &amp;Self::<a class="trait" href="../term/trait.Terminal.html" title="trait term::Terminal">Output</a>;
     fn <a href='#tymethod.get_mut' class='fnname'>get_mut</a>(&amp;mut self) -&gt; &amp;mut Self::<a class="trait" href="../term/trait.Terminal.html" title="trait term::Terminal">Output</a>;
-    fn <a href='#tymethod.into_inner' class='fnname'>into_inner</a>(self) -&gt; Self::<a class="trait" href="../term/trait.Terminal.html" title="trait term::Terminal">Output</a> <span class="where fmt-newline">where Self: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a></span>;
+    fn <a href='#tymethod.into_inner' class='fnname'>into_inner</a>(self) -&gt; Self::<a class="trait" href="../term/trait.Terminal.html" title="trait term::Terminal">Output</a><br>&nbsp;&nbsp;&nbsp; <span class="where">where<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Self: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a></span>;
 }</pre><div class='docblock'><p>A terminal with similar capabilities to an ANSI Terminal
 (foreground/background colors etc).</p>
 </div>
@@ -117,7 +117,7 @@ error.</p>
 <p>Returns <code>Ok(true)</code> if the deletion code was printed, or <code>Err(e)</code> if there was an error.</p>
 </div><h3 id='tymethod.get_ref' class='method'><span id='get_ref.v' class='invisible'><code>fn <a href='#tymethod.get_ref' class='fnname'>get_ref</a>(&amp;self) -&gt; &amp;Self::<a class="trait" href="../term/trait.Terminal.html" title="trait term::Terminal">Output</a></code></span></h3><div class='docblock'><p>Gets an immutable reference to the stream inside</p>
 </div><h3 id='tymethod.get_mut' class='method'><span id='get_mut.v' class='invisible'><code>fn <a href='#tymethod.get_mut' class='fnname'>get_mut</a>(&amp;mut self) -&gt; &amp;mut Self::<a class="trait" href="../term/trait.Terminal.html" title="trait term::Terminal">Output</a></code></span></h3><div class='docblock'><p>Gets a mutable reference to the stream inside</p>
-</div><h3 id='tymethod.into_inner' class='method'><span id='into_inner.v' class='invisible'><code>fn <a href='#tymethod.into_inner' class='fnname'>into_inner</a>(self) -&gt; Self::<a class="trait" href="../term/trait.Terminal.html" title="trait term::Terminal">Output</a> <span class="where fmt-newline">where Self: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a></span></code></span></h3><div class='docblock'><p>Returns the contained stream, destroying the <code>Terminal</code></p>
+</div><h3 id='tymethod.into_inner' class='method'><span id='into_inner.v' class='invisible'><code>fn <a href='#tymethod.into_inner' class='fnname'>into_inner</a>(self) -&gt; Self::<a class="trait" href="../term/trait.Terminal.html" title="trait term::Terminal">Output</a> <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;Self: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a>,&nbsp;</span></code></span></h3><div class='docblock'><p>Returns the contained stream, destroying the <code>Terminal</code></p>
 </div></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
