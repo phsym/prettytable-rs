@@ -51,7 +51,7 @@
                </span><a class='srclink' href='../src/prettytable/lib.rs.html#540-545' title='goto source code'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait Slice&lt;'a, E&gt; {
     type <a href='#associatedtype.Output' class="type">Output</a>: 'a;
-    fn <a href='#tymethod.slice' class='fnname'>slice</a>(&amp;'a self, arg: E) -&gt; Self::<a class="trait" href="../prettytable/trait.Slice.html" title="trait prettytable::Slice">Output</a>;
+    fn <a href='#tymethod.slice' class='fnname'>slice</a>(&amp;'a self, arg: E) -&gt; Self::<a class="type" href="../prettytable/trait.Slice.html#associatedtype.Output" title="type prettytable::Slice::Output">Output</a>;
 }</pre><div class='docblock'><p>Trait implemented by types which can be sliced</p>
 </div>
             <h2 id='associated-types'>Associated Types</h2>
@@ -60,11 +60,11 @@
 </div></div>
             <h2 id='required-methods'>Required Methods</h2>
             <div class='methods'>
-        <h3 id='tymethod.slice' class='method'><span id='slice.v' class='invisible'><code>fn <a href='#tymethod.slice' class='fnname'>slice</a>(&amp;'a self, arg: E) -&gt; Self::<a class="trait" href="../prettytable/trait.Slice.html" title="trait prettytable::Slice">Output</a></code></span></h3><div class='docblock'><p>Get a slice from self</p>
+        <h3 id='tymethod.slice' class='method'><span id='slice.v' class='invisible'><code>fn <a href='#tymethod.slice' class='fnname'>slice</a>(&amp;'a self, arg: E) -&gt; Self::<a class="type" href="../prettytable/trait.Slice.html#associatedtype.Output" title="type prettytable::Slice::Output">Output</a></code></span></h3><div class='docblock'><p>Get a slice from self</p>
 </div></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
-    <li><code>impl&lt;'a, T, E&gt; Slice&lt;'a, E&gt; for T <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html" title="trait core::convert::AsRef">AsRef</a>&lt;<a class="struct" href="../prettytable/struct.TableSlice.html" title="struct prettytable::TableSlice">TableSlice</a>&lt;'a&gt;&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">[</a><a class="struct" href="../prettytable/row/struct.Row.html" title="struct prettytable::row::Row">Row</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>: <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/trait.Index.html" title="trait core::ops::Index">Index</a>&lt;E, Output = <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">[</a><a class="struct" href="../prettytable/row/struct.Row.html" title="struct prettytable::row::Row">Row</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>&gt;,&nbsp;</span></code></li>
+    <li><code>impl&lt;'a, T, E&gt; Slice&lt;'a, E&gt; for T <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html" title="trait core::convert::AsRef">AsRef</a>&lt;<a class="struct" href="../prettytable/struct.TableSlice.html" title="struct prettytable::TableSlice">TableSlice</a>&lt;'a&gt;&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">[</a><a class="struct" href="../prettytable/row/struct.Row.html" title="struct prettytable::row::Row">Row</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>: <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/index/trait.Index.html" title="trait core::ops::index::Index">Index</a>&lt;E, Output = <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">[</a><a class="struct" href="../prettytable/row/struct.Row.html" title="struct prettytable::row::Row">Row</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>&gt;,&nbsp;</span></code></li>
 </ul><script type="text/javascript" async
                          src="../implementors/prettytable/trait.Slice.js">
                  </script></section>
@@ -124,7 +124,6 @@
         window.rootPath = "../";
         window.currentCrate = "prettytable";
     </script>
-    <script src="../jquery.js"></script>
     <script src="../main.js"></script>
     <script defer src="../search-index.js"></script>
 </body>

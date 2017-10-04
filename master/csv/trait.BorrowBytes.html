@@ -62,11 +62,11 @@ strings and byte strings.</p>
 </div></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
-    <li><code>impl BorrowBytes for <a class="struct" href="https://doc.rust-lang.org/nightly/collections/string/struct.String.html" title="struct collections::string::String">String</a></code></li>
+    <li><code>impl BorrowBytes for <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a></code></li>
 <li><code>impl BorrowBytes for <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a></code></li>
 <li><code>impl BorrowBytes for <a class="type" href="../csv/type.ByteString.html" title="type csv::ByteString">ByteString</a></code></li>
 <li><code>impl BorrowBytes for <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">[</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a></code></li>
-<li><code>impl&lt;'a, B:&nbsp;?<a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a>&gt; BorrowBytes for <a class="enum" href="https://doc.rust-lang.org/nightly/collections/borrow/enum.Cow.html" title="enum collections::borrow::Cow">Cow</a>&lt;'a, B&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;B: <a class="trait" href="../csv/trait.BorrowBytes.html" title="trait csv::BorrowBytes">BorrowBytes</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/collections/borrow/trait.ToOwned.html" title="trait collections::borrow::ToOwned">ToOwned</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;B as <a class="trait" href="https://doc.rust-lang.org/nightly/collections/borrow/trait.ToOwned.html" title="trait collections::borrow::ToOwned">ToOwned</a>&gt;::<a class="trait" href="https://doc.rust-lang.org/nightly/collections/borrow/trait.ToOwned.html" title="trait collections::borrow::ToOwned">Owned</a>: <a class="trait" href="../csv/trait.BorrowBytes.html" title="trait csv::BorrowBytes">BorrowBytes</a>,&nbsp;</span></code></li>
+<li><code>impl&lt;'a, B:&nbsp;?<a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a>&gt; BorrowBytes for <a class="enum" href="https://doc.rust-lang.org/nightly/alloc/borrow/enum.Cow.html" title="enum alloc::borrow::Cow">Cow</a>&lt;'a, B&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;B: <a class="trait" href="../csv/trait.BorrowBytes.html" title="trait csv::BorrowBytes">BorrowBytes</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/alloc/borrow/trait.ToOwned.html" title="trait alloc::borrow::ToOwned">ToOwned</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;B as <a class="trait" href="https://doc.rust-lang.org/nightly/alloc/borrow/trait.ToOwned.html" title="trait alloc::borrow::ToOwned">ToOwned</a>&gt;::<a class="type" href="https://doc.rust-lang.org/nightly/alloc/borrow/trait.ToOwned.html#associatedtype.Owned" title="type alloc::borrow::ToOwned::Owned">Owned</a>: <a class="trait" href="../csv/trait.BorrowBytes.html" title="trait csv::BorrowBytes">BorrowBytes</a>,&nbsp;</span></code></li>
 <li><code>impl&lt;'a, T:&nbsp;?<a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a> + <a class="trait" href="../csv/trait.BorrowBytes.html" title="trait csv::BorrowBytes">BorrowBytes</a>&gt; BorrowBytes for &amp;'a T</code></li>
 </ul><script type="text/javascript" async
                          src="../implementors/csv/trait.BorrowBytes.js">
@@ -127,7 +127,6 @@ strings and byte strings.</p>
         window.rootPath = "../";
         window.currentCrate = "csv";
     </script>
-    <script src="../jquery.js"></script>
     <script src="../main.js"></script>
     <script defer src="../search-index.js"></script>
 </body>

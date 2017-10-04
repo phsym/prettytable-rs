@@ -29,7 +29,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'><a href='index.html'>csv</a></p><script>window.sidebarCurrent = {name: 'ByteString', ty: 'type', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Type Definition ByteString</p><div class="block items"><ul><li><a href="#implementations">Trait Implementations</a></li></ul></div><p class='location'><a href='index.html'>csv</a></p><script>window.sidebarCurrent = {name: 'ByteString', ty: 'type', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -49,8 +49,11 @@
                        [<span class='inner'>&#x2212;</span>]
                    </a>
                </span><a class='srclink' href='../src/csv/lib.rs.html#226' title='goto source code'>[src]</a></span></h1>
-<pre class='rust typedef'>type ByteString = <a class="struct" href="https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html" title="struct collections::vec::Vec">Vec</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>&gt;;</pre><div class='docblock'><p>A convenience type for referring to a plain byte string.</p>
-</div></section>
+<pre class='rust typedef'>type ByteString = <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>&gt;;</pre><div class='docblock'><p>A convenience type for referring to a plain byte string.</p>
+</div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="../csv/trait.BorrowBytes.html" title="trait csv::BorrowBytes">BorrowBytes</a> for <a class="type" href="../csv/type.ByteString.html" title="type csv::ByteString">ByteString</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/csv/borrow_bytes.rs.html#21-23' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.borrow_bytes' class="method"><span id='borrow_bytes.v' class='invisible'><code>fn <a href='../csv/trait.BorrowBytes.html#tymethod.borrow_bytes' class='fnname'>borrow_bytes</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a></code></span></h4>
+<div class='docblock'><p>Borrow a byte vector.</p>
+</div></div></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>
@@ -107,7 +110,6 @@
         window.rootPath = "../";
         window.currentCrate = "csv";
     </script>
-    <script src="../jquery.js"></script>
     <script src="../main.js"></script>
     <script defer src="../search-index.js"></script>
 </body>
