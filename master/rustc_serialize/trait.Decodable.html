@@ -50,7 +50,7 @@
                    </a>
                </span><a class='srclink' href='../src/rustc_serialize/serialize.rs.html#902-905' title='goto source code'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait Decodable: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a> {
-    fn <a href='#tymethod.decode' class='fnname'>decode</a>&lt;D:&nbsp;<a class="trait" href="../rustc_serialize/trait.Decoder.html" title="trait rustc_serialize::Decoder">Decoder</a>&gt;(d: &amp;mut D) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;Self, D::<a class="type" href="../rustc_serialize/trait.Decoder.html#associatedtype.Error" title="type rustc_serialize::Decoder::Error">Error</a>&gt;;
+    fn <a href='#tymethod.decode' class='fnname'>decode</a>&lt;D:&nbsp;<a class="trait" href="../rustc_serialize/trait.Decoder.html" title="trait rustc_serialize::Decoder">Decoder</a>&gt;(d: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;mut </a>D) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;Self, D::<a class="type" href="../rustc_serialize/trait.Decoder.html#associatedtype.Error" title="type rustc_serialize::Decoder::Error">Error</a>&gt;;
 }</pre><div class='docblock'><p>Trait for deserializing a type.</p>
 
 <p>This can be implemented for custom data types to allow them to be decoded
@@ -93,11 +93,15 @@ using the <code>derive(RustcDecodable)</code> attribute.</p>
     }
 }</pre>
 </div>
-            <h2 id='required-methods'>Required Methods</h2>
+            <h2 id='required-methods' class='small-section-header'>
+              Required Methods<a href='#required-methods' class='anchor'></a>
+            </h2>
             <div class='methods'>
-        <h3 id='tymethod.decode' class='method'><span id='decode.v' class='invisible'><code>fn <a href='#tymethod.decode' class='fnname'>decode</a>&lt;D:&nbsp;<a class="trait" href="../rustc_serialize/trait.Decoder.html" title="trait rustc_serialize::Decoder">Decoder</a>&gt;(d: &amp;mut D) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;Self, D::<a class="type" href="../rustc_serialize/trait.Decoder.html#associatedtype.Error" title="type rustc_serialize::Decoder::Error">Error</a>&gt;</code></span></h3><div class='docblock'><p>Deserialize a value using a <code>Decoder</code>.</p>
+        <h3 id='tymethod.decode' class='method'><span id='decode.v' class='invisible'><code>fn <a href='#tymethod.decode' class='fnname'>decode</a>&lt;D:&nbsp;<a class="trait" href="../rustc_serialize/trait.Decoder.html" title="trait rustc_serialize::Decoder">Decoder</a>&gt;(d: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;mut </a>D) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;Self, D::<a class="type" href="../rustc_serialize/trait.Decoder.html#associatedtype.Error" title="type rustc_serialize::Decoder::Error">Error</a>&gt;</code></span></h3><div class='docblock'><p>Deserialize a value using a <code>Decoder</code>.</p>
 </div></div>
-        <h2 id='implementors'>Implementors</h2>
+        <h2 id='implementors' class='small-section-header'>
+          Implementors<a href='#implementors' class='anchor'></a>
+        </h2>
         <ul class='item-list' id='implementors-list'>
     <li><code>impl Decodable for <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a></code></li>
 <li><code>impl Decodable for <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a></code></li>

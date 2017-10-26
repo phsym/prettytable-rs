@@ -50,16 +50,18 @@
                    </a>
                </span><a class='srclink' href='../src/rustc_serialize/serialize.rs.html#1515-1548' title='goto source code'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait DecoderHelpers: <a class="trait" href="../rustc_serialize/trait.Decoder.html" title="trait rustc_serialize::Decoder">Decoder</a> {
-    fn <a href='#tymethod.read_to_vec' class='fnname'>read_to_vec</a>&lt;T, F&gt;(&amp;mut self, f: F) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;T&gt;, Self::<a class="type" href="../rustc_serialize/trait.Decoder.html#associatedtype.Error" title="type rustc_serialize::Decoder::Error">Error</a>&gt;<br>&nbsp;&nbsp;&nbsp; <span class="where">where<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;F: <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/function/trait.FnMut.html" title="trait core::ops::function::FnMut">FnMut</a>(&amp;mut Self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;T, Self::<a class="type" href="../rustc_serialize/trait.Decoder.html#associatedtype.Error" title="type rustc_serialize::Decoder::Error">Error</a>&gt;</span>;
+    fn <a href='#tymethod.read_to_vec' class='fnname'>read_to_vec</a>&lt;T, F&gt;(&amp;mut self, f: F) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;T&gt;, Self::<a class="type" href="../rustc_serialize/trait.Decoder.html#associatedtype.Error" title="type rustc_serialize::Decoder::Error">Error</a>&gt;<br>&nbsp;&nbsp;&nbsp; <span class="where">where<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;F: <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/function/trait.FnMut.html" title="trait core::ops::function::FnMut">FnMut</a>(<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;mut </a>Self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;T, Self::<a class="type" href="../rustc_serialize/trait.Decoder.html#associatedtype.Error" title="type rustc_serialize::Decoder::Error">Error</a>&gt;</span>;
 }</pre><div class='docblock'><p>Trait with helper functions for implementing <code>Decodable</code>.</p>
 
 <p>This trait is implemented for everything that implements <code>Decoder</code>.
 <code>Decodable</code> implementations can make use of it to make their implementations
 easier.</p>
 </div>
-            <h2 id='required-methods'>Required Methods</h2>
+            <h2 id='required-methods' class='small-section-header'>
+              Required Methods<a href='#required-methods' class='anchor'></a>
+            </h2>
             <div class='methods'>
-        <h3 id='tymethod.read_to_vec' class='method'><span id='read_to_vec.v' class='invisible'><code>fn <a href='#tymethod.read_to_vec' class='fnname'>read_to_vec</a>&lt;T, F&gt;(&amp;mut self, f: F) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;T&gt;, Self::<a class="type" href="../rustc_serialize/trait.Decoder.html#associatedtype.Error" title="type rustc_serialize::Decoder::Error">Error</a>&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;F: <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/function/trait.FnMut.html" title="trait core::ops::function::FnMut">FnMut</a>(&amp;mut Self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;T, Self::<a class="type" href="../rustc_serialize/trait.Decoder.html#associatedtype.Error" title="type rustc_serialize::Decoder::Error">Error</a>&gt;,&nbsp;</span></code></span></h3><div class='docblock'><p>Read a sequence into a vector.</p>
+        <h3 id='tymethod.read_to_vec' class='method'><span id='read_to_vec.v' class='invisible'><code>fn <a href='#tymethod.read_to_vec' class='fnname'>read_to_vec</a>&lt;T, F&gt;(&amp;mut self, f: F) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;T&gt;, Self::<a class="type" href="../rustc_serialize/trait.Decoder.html#associatedtype.Error" title="type rustc_serialize::Decoder::Error">Error</a>&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;F: <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/function/trait.FnMut.html" title="trait core::ops::function::FnMut">FnMut</a>(<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;mut </a>Self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;T, Self::<a class="type" href="../rustc_serialize/trait.Decoder.html#associatedtype.Error" title="type rustc_serialize::Decoder::Error">Error</a>&gt;,&nbsp;</span></code></span></h3><div class='docblock'><p>Read a sequence into a vector.</p>
 
 <p>Storing sequences as vectors is a common pattern. This method makes
 deserializing such sequences easier by wrapping the calls to
@@ -87,7 +89,9 @@ deserializing such sequences easier by wrapping the calls to
     }
 }</pre>
 </div></div>
-        <h2 id='implementors'>Implementors</h2>
+        <h2 id='implementors' class='small-section-header'>
+          Implementors<a href='#implementors' class='anchor'></a>
+        </h2>
         <ul class='item-list' id='implementors-list'>
     <li><code>impl&lt;D:&nbsp;<a class="trait" href="../rustc_serialize/trait.Decoder.html" title="trait rustc_serialize::Decoder">Decoder</a>&gt; DecoderHelpers for D</code></li>
 </ul><script type="text/javascript" async

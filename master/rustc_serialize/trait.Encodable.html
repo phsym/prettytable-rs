@@ -50,7 +50,7 @@
                    </a>
                </span><a class='srclink' href='../src/rustc_serialize/serialize.rs.html#851-854' title='goto source code'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait Encodable {
-    fn <a href='#tymethod.encode' class='fnname'>encode</a>&lt;S:&nbsp;<a class="trait" href="../rustc_serialize/trait.Encoder.html" title="trait rustc_serialize::Encoder">Encoder</a>&gt;(&amp;self, s: &amp;mut S) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>, S::<a class="type" href="../rustc_serialize/trait.Encoder.html#associatedtype.Error" title="type rustc_serialize::Encoder::Error">Error</a>&gt;;
+    fn <a href='#tymethod.encode' class='fnname'>encode</a>&lt;S:&nbsp;<a class="trait" href="../rustc_serialize/trait.Encoder.html" title="trait rustc_serialize::Encoder">Encoder</a>&gt;(&amp;self, s: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;mut </a>S) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>, S::<a class="type" href="../rustc_serialize/trait.Encoder.html#associatedtype.Error" title="type rustc_serialize::Encoder::Error">Error</a>&gt;;
 }</pre><div class='docblock'><p>Trait for serializing a type.</p>
 
 <p>This can be implemented for custom data types to allow them to be encoded
@@ -97,11 +97,15 @@ using the <code>derive(RustcEncodable)</code> attribute.</p>
     }
 }</pre>
 </div>
-            <h2 id='required-methods'>Required Methods</h2>
+            <h2 id='required-methods' class='small-section-header'>
+              Required Methods<a href='#required-methods' class='anchor'></a>
+            </h2>
             <div class='methods'>
-        <h3 id='tymethod.encode' class='method'><span id='encode.v' class='invisible'><code>fn <a href='#tymethod.encode' class='fnname'>encode</a>&lt;S:&nbsp;<a class="trait" href="../rustc_serialize/trait.Encoder.html" title="trait rustc_serialize::Encoder">Encoder</a>&gt;(&amp;self, s: &amp;mut S) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>, S::<a class="type" href="../rustc_serialize/trait.Encoder.html#associatedtype.Error" title="type rustc_serialize::Encoder::Error">Error</a>&gt;</code></span></h3><div class='docblock'><p>Serialize a value using an <code>Encoder</code>.</p>
+        <h3 id='tymethod.encode' class='method'><span id='encode.v' class='invisible'><code>fn <a href='#tymethod.encode' class='fnname'>encode</a>&lt;S:&nbsp;<a class="trait" href="../rustc_serialize/trait.Encoder.html" title="trait rustc_serialize::Encoder">Encoder</a>&gt;(&amp;self, s: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;mut </a>S) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>, S::<a class="type" href="../rustc_serialize/trait.Encoder.html#associatedtype.Error" title="type rustc_serialize::Encoder::Error">Error</a>&gt;</code></span></h3><div class='docblock'><p>Serialize a value using an <code>Encoder</code>.</p>
 </div></div>
-        <h2 id='implementors'>Implementors</h2>
+        <h2 id='implementors' class='small-section-header'>
+          Implementors<a href='#implementors' class='anchor'></a>
+        </h2>
         <ul class='item-list' id='implementors-list'>
     <li><code>impl Encodable for <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a></code></li>
 <li><code>impl Encodable for <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a></code></li>
@@ -120,7 +124,7 @@ using the <code>derive(RustcEncodable)</code> attribute.</p>
 <li><code>impl Encodable for <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></li>
 <li><code>impl Encodable for <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.char.html">char</a></code></li>
 <li><code>impl Encodable for <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a></code></li>
-<li><code>impl&lt;'a, T:&nbsp;?<a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a> + <a class="trait" href="../rustc_serialize/trait.Encodable.html" title="trait rustc_serialize::Encodable">Encodable</a>&gt; Encodable for &amp;'a T</code></li>
+<li><code>impl&lt;'a, T:&nbsp;?<a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a> + <a class="trait" href="../rustc_serialize/trait.Encodable.html" title="trait rustc_serialize::Encodable">Encodable</a>&gt; Encodable for <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;'a </a>T</code></li>
 <li><code>impl&lt;T:&nbsp;?<a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a> + <a class="trait" href="../rustc_serialize/trait.Encodable.html" title="trait rustc_serialize::Encodable">Encodable</a>&gt; Encodable for <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html" title="struct alloc::boxed::Box">Box</a>&lt;T&gt;</code></li>
 <li><code>impl&lt;T:&nbsp;<a class="trait" href="../rustc_serialize/trait.Encodable.html" title="trait rustc_serialize::Encodable">Encodable</a>&gt; Encodable for <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/rc/struct.Rc.html" title="struct alloc::rc::Rc">Rc</a>&lt;T&gt;</code></li>
 <li><code>impl&lt;'a, T:&nbsp;<a class="trait" href="../rustc_serialize/trait.Encodable.html" title="trait rustc_serialize::Encodable">Encodable</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/alloc/borrow/trait.ToOwned.html" title="trait alloc::borrow::ToOwned">ToOwned</a> + ?<a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a>&gt; Encodable for <a class="enum" href="https://doc.rust-lang.org/nightly/alloc/borrow/enum.Cow.html" title="enum alloc::borrow::Cow">Cow</a>&lt;'a, T&gt;</code></li>
