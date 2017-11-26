@@ -57,10 +57,10 @@
 In sinking precedence.</p>
 </div><h2 id='variants' class='variants small-section-header'>
                    Variants<a href='#variants' class='anchor'></a></h2>
-<span id='variant.FirstByte' class='variant'><span id='FirstByte.v' class='invisible'><code>FirstByte(<a class="enum" href="../../encode_unicode/error/enum.InvalidUtf8FirstByte.html" title="enum encode_unicode::error::InvalidUtf8FirstByte">InvalidUtf8FirstByte</a>)</code></span></span><div class='docblock'><p>Something is wrong with the first byte.</p>
-</div><span id='variant.NotAContinuationByte' class='variant'><span id='NotAContinuationByte.v' class='invisible'><code>NotAContinuationByte(<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>)</code></span></span><div class='docblock'><p>Thee byte at index 1...3 should be a continuation byte,
+<span id="variant.FirstByte" class="variant small-section-header"><a href="#variant.FirstByte" class="anchor field"></a><span id='FirstByte.v' class='invisible'><code>FirstByte(<a class="enum" href="../../encode_unicode/error/enum.InvalidUtf8FirstByte.html" title="enum encode_unicode::error::InvalidUtf8FirstByte">InvalidUtf8FirstByte</a>)</code></span></span><div class='docblock'><p>Something is wrong with the first byte.</p>
+</div><span id="variant.NotAContinuationByte" class="variant small-section-header"><a href="#variant.NotAContinuationByte" class="anchor field"></a><span id='NotAContinuationByte.v' class='invisible'><code>NotAContinuationByte(<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>)</code></span></span><div class='docblock'><p>Thee byte at index 1...3 should be a continuation byte,
 but dosesn&#39;t fit the pattern 0b10xx_xxxx.</p>
-</div><span id='variant.OverLong' class='variant'><span id='OverLong.v' class='invisible'><code>OverLong</code></span></span><div class='docblock'><p>There are too many leading zeros: it could be a byte shorter.</p>
+</div><span id="variant.OverLong" class="variant small-section-header"><a href="#variant.OverLong" class="anchor field"></a><span id='OverLong.v' class='invisible'><code>OverLong</code></span></span><div class='docblock'><p>There are too many leading zeros: it could be a byte shorter.</p>
 
 <p><a href="https://tools.ietf.org/html/rfc3629#section-10">Decoding this could allow someone to input otherwise prohibited
 characters and sequences, such as &quot;../&quot;</a>.</p>

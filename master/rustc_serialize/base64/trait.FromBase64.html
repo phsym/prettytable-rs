@@ -29,7 +29,7 @@
 
     <nav class="sidebar">
         <a href='../../rustc_serialize/index.html'><img src='https://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png' alt='logo' width='100'></a>
-        <p class='location'>Trait FromBase64</p><div class="block items"><ul><li><a href="#required-methods">Required Methods</a></li><li><a href="#implementors">Implementors</a></li></ul></div><p class='location'><a href='../index.html'>rustc_serialize</a>::<wbr><a href='index.html'>base64</a></p><script>window.sidebarCurrent = {name: 'FromBase64', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Trait FromBase64</p><div class="block items"><ul><li><a href="#required-methods">Required Methods</a></li><li><a href="#foreign-impls">Implementations on Foreign Types</a></li><li><a href="#implementors">Implementors</a></li></ul></div><p class='location'><a href='../index.html'>rustc_serialize</a>::<wbr><a href='index.html'>base64</a></p><script>window.sidebarCurrent = {name: 'FromBase64', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -60,14 +60,45 @@
         <h3 id='tymethod.from_base64' class='method'><span id='from_base64.v' class='invisible'><code>fn <a href='#tymethod.from_base64' class='fnname'>from_base64</a>(&amp;self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>&gt;, <a class="enum" href="../../rustc_serialize/base64/enum.FromBase64Error.html" title="enum rustc_serialize::base64::FromBase64Error">FromBase64Error</a>&gt;</code></span></h3><div class='docblock'><p>Converts the value of <code>self</code>, interpreted as base64 encoded data, into
 an owned vector of bytes, returning the vector.</p>
 </div></div>
+                <h2 id='foreign-impls' class='section-header'>
+                  Implementations on Foreign Types<a href='#foreign-impls' class='anchor'></a>
+                </h2>
+            <h3 id='impl-FromBase64' class='impl'><span class='in-band'><code>impl <a class="trait" href="../../rustc_serialize/base64/trait.FromBase64.html" title="trait rustc_serialize::base64::FromBase64">FromBase64</a> for <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a></code><a href='#impl-FromBase64' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/rustc_serialize/base64.rs.html#241-272' title='goto source code'>[src]</a></span></h3>
+<span class='docblock autohide'><div class='impl-items'><h4 id='method.from_base64' class="method"><span id='from_base64.v-1' class='invisible'><code>fn <a href='#method.from_base64' class='fnname'>from_base64</a>(&amp;self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>&gt;, <a class="enum" href="../../rustc_serialize/base64/enum.FromBase64Error.html" title="enum rustc_serialize::base64::FromBase64Error">FromBase64Error</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/rustc_serialize/base64.rs.html#269-271' title='goto source code'>[src]</a></span></h4>
+<div class='docblock'><p>Convert any base64 encoded string (literal, <code>@</code>, <code>&amp;</code>, or <code>~</code>)
+to the byte values it encodes.</p>
+
+<p>You can use the <code>String::from_utf8</code> function to turn a <code>Vec&lt;u8&gt;</code> into a
+string with characters corresponding to those values.</p>
+
+<h1 id='example' class='section-header'><a href='#example'>Example</a></h1>
+<p>This converts a string literal to base64 and back.</p>
+
+<pre class="rust rust-example-rendered">
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">rustc_serialize</span>;
+<span class="kw">use</span> <span class="ident">rustc_serialize</span>::<span class="ident">base64</span>::{<span class="ident">ToBase64</span>, <span class="ident">FromBase64</span>, <span class="ident">STANDARD</span>};
+
+<span class="kw">fn</span> <span class="ident">main</span> () {
+    <span class="kw">let</span> <span class="ident">hello_str</span> <span class="op">=</span> <span class="string">b&quot;Hello, World&quot;</span>.<span class="ident">to_base64</span>(<span class="ident">STANDARD</span>);
+    <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;base64 output: {}&quot;</span>, <span class="ident">hello_str</span>);
+    <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="ident">hello_str</span>.<span class="ident">from_base64</span>();
+    <span class="kw">if</span> <span class="ident">res</span>.<span class="ident">is_ok</span>() {
+      <span class="kw">let</span> <span class="ident">opt_bytes</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">from_utf8</span>(<span class="ident">res</span>.<span class="ident">unwrap</span>());
+      <span class="kw">if</span> <span class="ident">opt_bytes</span>.<span class="ident">is_ok</span>() {
+        <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;decoded from base64: {:?}&quot;</span>, <span class="ident">opt_bytes</span>.<span class="ident">unwrap</span>());
+      }
+    }
+}</pre>
+</div></div></span><h3 id='impl-FromBase64-1' class='impl'><span class='in-band'><code>impl <a class="trait" href="../../rustc_serialize/base64/trait.FromBase64.html" title="trait rustc_serialize::base64::FromBase64">FromBase64</a> for <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">[</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a></code><a href='#impl-FromBase64-1' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/rustc_serialize/base64.rs.html#274-324' title='goto source code'>[src]</a></span></h3>
+<span class='docblock autohide'><div class='impl-items'><h4 id='method.from_base64-1' class="method"><span id='from_base64.v-2' class='invisible'><code>fn <a href='#method.from_base64' class='fnname'>from_base64</a>(&amp;self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>&gt;, <a class="enum" href="../../rustc_serialize/base64/enum.FromBase64Error.html" title="enum rustc_serialize::base64::FromBase64Error">FromBase64Error</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/rustc_serialize/base64.rs.html#275-323' title='goto source code'>[src]</a></span></h4>
+</div></span><h3 id='impl-FromBase64-2' class='impl'><span class='in-band'><code>impl&lt;'a, T:&nbsp;?<a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a> + <a class="trait" href="../../rustc_serialize/base64/trait.FromBase64.html" title="trait rustc_serialize::base64::FromBase64">FromBase64</a>&gt; <a class="trait" href="../../rustc_serialize/base64/trait.FromBase64.html" title="trait rustc_serialize::base64::FromBase64">FromBase64</a> for <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;'a </a>T</code><a href='#impl-FromBase64-2' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/rustc_serialize/base64.rs.html#326-330' title='goto source code'>[src]</a></span></h3>
+<span class='docblock autohide'><div class='impl-items'><h4 id='method.from_base64-2' class="method"><span id='from_base64.v-3' class='invisible'><code>fn <a href='#method.from_base64' class='fnname'>from_base64</a>(&amp;self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>&gt;, <a class="enum" href="../../rustc_serialize/base64/enum.FromBase64Error.html" title="enum rustc_serialize::base64::FromBase64Error">FromBase64Error</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/rustc_serialize/base64.rs.html#327-329' title='goto source code'>[src]</a></span></h4>
+</div></span>
         <h2 id='implementors' class='small-section-header'>
           Implementors<a href='#implementors' class='anchor'></a>
         </h2>
         <ul class='item-list' id='implementors-list'>
-    <li><code>impl FromBase64 for <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a></code></li>
-<li><code>impl FromBase64 for <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">[</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a></code></li>
-<li><code>impl&lt;'a, T:&nbsp;?<a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a> + <a class="trait" href="../../rustc_serialize/base64/trait.FromBase64.html" title="trait rustc_serialize::base64::FromBase64">FromBase64</a>&gt; FromBase64 for <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;'a </a>T</code></li>
-</ul><script type="text/javascript" async
+    </ul><script type="text/javascript" async
                          src="../../implementors/rustc_serialize/base64/trait.FromBase64.js">
                  </script></section>
     <section id='search' class="content hidden"></section>

@@ -159,17 +159,17 @@
 <span class="doccomment">//! extern crate rustc_serialize;</span>
 <span class="doccomment">//! ```</span>
 
-<span class="attribute">#<span class="op">!</span>[<span class="ident">cfg_attr</span>(<span class="ident">rustbuild</span>, <span class="ident">feature</span>(<span class="ident">staged_api</span>, <span class="ident">rustc_private</span>))]</span>
-<span class="attribute">#<span class="op">!</span>[<span class="ident">cfg_attr</span>(<span class="ident">rustbuild</span>, <span class="ident">unstable</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;rustc_private&quot;</span>, <span class="ident">issue</span> <span class="op">=</span> <span class="string">&quot;27812&quot;</span>))]</span>
+<span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">rustbuild</span>, <span class="ident">feature</span>(<span class="ident">staged_api</span>, <span class="ident">rustc_private</span>))]</span>
+<span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">rustbuild</span>, <span class="ident">unstable</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;rustc_private&quot;</span>, <span class="ident">issue</span> <span class="op">=</span> <span class="string">&quot;27812&quot;</span>))]</span>
 
-<span class="attribute">#<span class="op">!</span>[<span class="ident">doc</span>(<span class="ident">html_logo_url</span> <span class="op">=</span> <span class="string">&quot;https://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png&quot;</span>,
+<span class="attribute">#![<span class="ident">doc</span>(<span class="ident">html_logo_url</span> <span class="op">=</span> <span class="string">&quot;https://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png&quot;</span>,
        <span class="ident">html_favicon_url</span> <span class="op">=</span> <span class="string">&quot;https://www.rust-lang.org/favicon.ico&quot;</span>,
        <span class="ident">html_root_url</span> <span class="op">=</span> <span class="string">&quot;https://doc.rust-lang.org/rustc-serialize/&quot;</span>)]</span>
-<span class="attribute">#<span class="op">!</span>[<span class="ident">cfg_attr</span>(<span class="ident">test</span>, <span class="ident">deny</span>(<span class="ident">warnings</span>))]</span>
-<span class="attribute">#<span class="op">!</span>[<span class="ident">allow</span>(<span class="ident">trivial_numeric_casts</span>)]</span>
-<span class="attribute">#<span class="op">!</span>[<span class="ident">cfg_attr</span>(<span class="ident">rust_build</span>, <span class="ident">feature</span>(<span class="ident">staged_api</span>))]</span>
-<span class="attribute">#<span class="op">!</span>[<span class="ident">cfg_attr</span>(<span class="ident">rust_build</span>, <span class="ident">staged_api</span>)]</span>
-<span class="attribute">#<span class="op">!</span>[<span class="ident">cfg_attr</span>(<span class="ident">rust_build</span>,
+<span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">test</span>, <span class="ident">deny</span>(<span class="ident">warnings</span>))]</span>
+<span class="attribute">#![<span class="ident">allow</span>(<span class="ident">trivial_numeric_casts</span>)]</span>
+<span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">rust_build</span>, <span class="ident">feature</span>(<span class="ident">staged_api</span>))]</span>
+<span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">rust_build</span>, <span class="ident">staged_api</span>)]</span>
+<span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">rust_build</span>,
             <span class="ident">unstable</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;rustc_private&quot;</span>,
                      <span class="ident">reason</span> <span class="op">=</span> <span class="string">&quot;use the crates.io `rustc-serialize` library instead&quot;</span>))]</span>
 

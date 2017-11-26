@@ -62,21 +62,21 @@
 }</pre><div class='docblock'><p>An error from parsing a terminfo entry</p>
 </div><h2 id='variants' class='variants small-section-header'>
                    Variants<a href='#variants' class='anchor'></a></h2>
-<span id='variant.BadMagic' class='variant'><span id='BadMagic.v' class='invisible'><code>BadMagic(<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u16.html">u16</a>)</code></span></span><div class='docblock'><p>The &quot;magic&quot; number at the start of the file was wrong.</p>
+<span id="variant.BadMagic" class="variant small-section-header"><a href="#variant.BadMagic" class="anchor field"></a><span id='BadMagic.v' class='invisible'><code>BadMagic(<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u16.html">u16</a>)</code></span></span><div class='docblock'><p>The &quot;magic&quot; number at the start of the file was wrong.</p>
 
 <p>It should be <code>0x11A</code></p>
-</div><span id='variant.NotUtf8' class='variant'><span id='NotUtf8.v' class='invisible'><code>NotUtf8(<a class="struct" href="https://doc.rust-lang.org/nightly/core/str/struct.Utf8Error.html" title="struct core::str::Utf8Error">Utf8Error</a>)</code></span></span><div class='docblock'><p>The names in the file were not valid UTF-8.</p>
+</div><span id="variant.NotUtf8" class="variant small-section-header"><a href="#variant.NotUtf8" class="anchor field"></a><span id='NotUtf8.v' class='invisible'><code>NotUtf8(<a class="struct" href="https://doc.rust-lang.org/nightly/core/str/struct.Utf8Error.html" title="struct core::str::Utf8Error">Utf8Error</a>)</code></span></span><div class='docblock'><p>The names in the file were not valid UTF-8.</p>
 
 <p>In theory these should only be ASCII, but to work with the Rust <code>str</code> type, we treat them
 as UTF-8. This is valid, except when a terminfo file decides to be invalid. This hasn&#39;t
 been encountered in the wild.</p>
-</div><span id='variant.ShortNames' class='variant'><span id='ShortNames.v' class='invisible'><code>ShortNames</code></span></span><div class='docblock'><p>The names section of the file was empty</p>
-</div><span id='variant.TooManyBools' class='variant'><span id='TooManyBools.v' class='invisible'><code>TooManyBools</code></span></span><div class='docblock'><p>More boolean parameters are present in the file than this crate knows how to interpret.</p>
-</div><span id='variant.TooManyNumbers' class='variant'><span id='TooManyNumbers.v' class='invisible'><code>TooManyNumbers</code></span></span><div class='docblock'><p>More number parameters are present in the file than this crate knows how to interpret.</p>
-</div><span id='variant.TooManyStrings' class='variant'><span id='TooManyStrings.v' class='invisible'><code>TooManyStrings</code></span></span><div class='docblock'><p>More string parameters are present in the file than this crate knows how to interpret.</p>
-</div><span id='variant.InvalidLength' class='variant'><span id='InvalidLength.v' class='invisible'><code>InvalidLength</code></span></span><div class='docblock'><p>The length of some field was not &gt;= -1.</p>
-</div><span id='variant.NamesMissingNull' class='variant'><span id='NamesMissingNull.v' class='invisible'><code>NamesMissingNull</code></span></span><div class='docblock'><p>The names table was missing a trailing null terminator.</p>
-</div><span id='variant.StringsMissingNull' class='variant'><span id='StringsMissingNull.v' class='invisible'><code>StringsMissingNull</code></span></span><div class='docblock'><p>The strings table was missing a trailing null terminator.</p>
+</div><span id="variant.ShortNames" class="variant small-section-header"><a href="#variant.ShortNames" class="anchor field"></a><span id='ShortNames.v' class='invisible'><code>ShortNames</code></span></span><div class='docblock'><p>The names section of the file was empty</p>
+</div><span id="variant.TooManyBools" class="variant small-section-header"><a href="#variant.TooManyBools" class="anchor field"></a><span id='TooManyBools.v' class='invisible'><code>TooManyBools</code></span></span><div class='docblock'><p>More boolean parameters are present in the file than this crate knows how to interpret.</p>
+</div><span id="variant.TooManyNumbers" class="variant small-section-header"><a href="#variant.TooManyNumbers" class="anchor field"></a><span id='TooManyNumbers.v' class='invisible'><code>TooManyNumbers</code></span></span><div class='docblock'><p>More number parameters are present in the file than this crate knows how to interpret.</p>
+</div><span id="variant.TooManyStrings" class="variant small-section-header"><a href="#variant.TooManyStrings" class="anchor field"></a><span id='TooManyStrings.v' class='invisible'><code>TooManyStrings</code></span></span><div class='docblock'><p>More string parameters are present in the file than this crate knows how to interpret.</p>
+</div><span id="variant.InvalidLength" class="variant small-section-header"><a href="#variant.InvalidLength" class="anchor field"></a><span id='InvalidLength.v' class='invisible'><code>InvalidLength</code></span></span><div class='docblock'><p>The length of some field was not &gt;= -1.</p>
+</div><span id="variant.NamesMissingNull" class="variant small-section-header"><a href="#variant.NamesMissingNull" class="anchor field"></a><span id='NamesMissingNull.v' class='invisible'><code>NamesMissingNull</code></span></span><div class='docblock'><p>The names table was missing a trailing null terminator.</p>
+</div><span id="variant.StringsMissingNull" class="variant small-section-header"><a href="#variant.StringsMissingNull" class="anchor field"></a><span id='StringsMissingNull.v' class='invisible'><code>StringsMissingNull</code></span></span><div class='docblock'><p>The strings table was missing a trailing null terminator.</p>
 </div>
             <h2 id='implementations' class='small-section-header'>
               Trait Implementations<a href='#implementations' class='anchor'></a>

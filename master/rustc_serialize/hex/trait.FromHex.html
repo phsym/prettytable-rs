@@ -29,7 +29,7 @@
 
     <nav class="sidebar">
         <a href='../../rustc_serialize/index.html'><img src='https://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png' alt='logo' width='100'></a>
-        <p class='location'>Trait FromHex</p><div class="block items"><ul><li><a href="#required-methods">Required Methods</a></li><li><a href="#implementors">Implementors</a></li></ul></div><p class='location'><a href='../index.html'>rustc_serialize</a>::<wbr><a href='index.html'>hex</a></p><script>window.sidebarCurrent = {name: 'FromHex', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Trait FromHex</p><div class="block items"><ul><li><a href="#required-methods">Required Methods</a></li><li><a href="#foreign-impls">Implementations on Foreign Types</a></li><li><a href="#implementors">Implementors</a></li></ul></div><p class='location'><a href='../index.html'>rustc_serialize</a>::<wbr><a href='index.html'>hex</a></p><script>window.sidebarCurrent = {name: 'FromHex', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -60,13 +60,40 @@
         <h3 id='tymethod.from_hex' class='method'><span id='from_hex.v' class='invisible'><code>fn <a href='#tymethod.from_hex' class='fnname'>from_hex</a>(&amp;self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>&gt;, <a class="enum" href="../../rustc_serialize/hex/enum.FromHexError.html" title="enum rustc_serialize::hex::FromHexError">FromHexError</a>&gt;</code></span></h3><div class='docblock'><p>Converts the value of <code>self</code>, interpreted as hexadecimal encoded data,
 into an owned vector of bytes, returning the vector.</p>
 </div></div>
+                <h2 id='foreign-impls' class='section-header'>
+                  Implementations on Foreign Types<a href='#foreign-impls' class='anchor'></a>
+                </h2>
+            <h3 id='impl-FromHex' class='impl'><span class='in-band'><code>impl <a class="trait" href="../../rustc_serialize/hex/trait.FromHex.html" title="trait rustc_serialize::hex::FromHex">FromHex</a> for <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a></code><a href='#impl-FromHex' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/rustc_serialize/hex.rs.html#103-162' title='goto source code'>[src]</a></span></h3>
+<span class='docblock autohide'><div class='impl-items'><h4 id='method.from_hex' class="method"><span id='from_hex.v-1' class='invisible'><code>fn <a href='#method.from_hex' class='fnname'>from_hex</a>(&amp;self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>&gt;, <a class="enum" href="../../rustc_serialize/hex/enum.FromHexError.html" title="enum rustc_serialize::hex::FromHexError">FromHexError</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/rustc_serialize/hex.rs.html#127-161' title='goto source code'>[src]</a></span></h4>
+<div class='docblock'><p>Convert any hexadecimal encoded string (literal, <code>@</code>, <code>&amp;</code>, or <code>~</code>)
+to the byte values it encodes.</p>
+
+<p>You can use the <code>String::from_utf8</code> function to turn a
+<code>Vec&lt;u8&gt;</code> into a string with characters corresponding to those values.</p>
+
+<h1 id='example' class='section-header'><a href='#example'>Example</a></h1>
+<p>This converts a string literal to hexadecimal and back.</p>
+
+<pre class="rust rust-example-rendered">
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">rustc_serialize</span>;
+<span class="kw">use</span> <span class="ident">rustc_serialize</span>::<span class="ident">hex</span>::{<span class="ident">FromHex</span>, <span class="ident">ToHex</span>};
+
+<span class="kw">fn</span> <span class="ident">main</span> () {
+    <span class="kw">let</span> <span class="ident">hello_str</span> <span class="op">=</span> <span class="string">&quot;Hello, World&quot;</span>.<span class="ident">as_bytes</span>().<span class="ident">to_hex</span>();
+    <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">hello_str</span>);
+    <span class="kw">let</span> <span class="ident">bytes</span> <span class="op">=</span> <span class="ident">hello_str</span>.<span class="ident">from_hex</span>().<span class="ident">unwrap</span>();
+    <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;{:?}&quot;</span>, <span class="ident">bytes</span>);
+    <span class="kw">let</span> <span class="ident">result_str</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">from_utf8</span>(<span class="ident">bytes</span>).<span class="ident">unwrap</span>();
+    <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">result_str</span>);
+}</pre>
+</div></div></span><h3 id='impl-FromHex-1' class='impl'><span class='in-band'><code>impl&lt;'a, T:&nbsp;?<a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a> + <a class="trait" href="../../rustc_serialize/hex/trait.FromHex.html" title="trait rustc_serialize::hex::FromHex">FromHex</a>&gt; <a class="trait" href="../../rustc_serialize/hex/trait.FromHex.html" title="trait rustc_serialize::hex::FromHex">FromHex</a> for <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;'a </a>T</code><a href='#impl-FromHex-1' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/rustc_serialize/hex.rs.html#164-168' title='goto source code'>[src]</a></span></h3>
+<span class='docblock autohide'><div class='impl-items'><h4 id='method.from_hex-1' class="method"><span id='from_hex.v-2' class='invisible'><code>fn <a href='#method.from_hex' class='fnname'>from_hex</a>(&amp;self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>&gt;, <a class="enum" href="../../rustc_serialize/hex/enum.FromHexError.html" title="enum rustc_serialize::hex::FromHexError">FromHexError</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/rustc_serialize/hex.rs.html#165-167' title='goto source code'>[src]</a></span></h4>
+</div></span>
         <h2 id='implementors' class='small-section-header'>
           Implementors<a href='#implementors' class='anchor'></a>
         </h2>
         <ul class='item-list' id='implementors-list'>
-    <li><code>impl FromHex for <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a></code></li>
-<li><code>impl&lt;'a, T:&nbsp;?<a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a> + <a class="trait" href="../../rustc_serialize/hex/trait.FromHex.html" title="trait rustc_serialize::hex::FromHex">FromHex</a>&gt; FromHex for <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;'a </a>T</code></li>
-</ul><script type="text/javascript" async
+    </ul><script type="text/javascript" async
                          src="../../implementors/rustc_serialize/hex/trait.FromHex.js">
                  </script></section>
     <section id='search' class="content hidden"></section>
