@@ -245,6 +245,7 @@ macro_rules! row {
     (($($out:tt)*); $style:ident -> $value:expr) => (vec![$($out)* cell!($style -> $value)]);
     (($($out:tt)*); $style:ident -> $value:expr, $($n: tt)*) => (row!(($($out)* cell!($style -> $value),); $($n)*));
 
+    ($($content:expr), *) => ($crate::row::Row::new(vec![$(cell!($content)), *])); // This line may not be needed starting from Rust 1.20
     ($style:ident => $($content:expr), *) => ($crate::row::Row::new(vec![$(cell!($style -> $content)), *]));
     ($style:ident => $($content:expr,) *) => ($crate::row::Row::new(vec![$(cell!($style -> $content)), *]));
     ($($content:tt)*) => ($crate::row::Row::new(row!((); $($content)*)));

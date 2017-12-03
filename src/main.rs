@@ -1,3 +1,4 @@
+// #![feature(trace_macros)]
 #[macro_use]
 extern crate prettytable;
 extern crate term;
@@ -8,7 +9,7 @@ use prettytable::format::*;
 
 use term::{Attr, color};
 
-//trace_macros!(true);
+// trace_macros!(true);
 
 #[allow(dead_code)]
 fn main() {
