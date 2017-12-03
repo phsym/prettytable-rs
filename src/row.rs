@@ -239,13 +239,14 @@ impl<'a> IntoIterator for &'a mut Row {
 /// For details about style specifier syntax, check doc for [`Cell::style_spec`](cell/struct.Cell.html#method.style_spec) method
 #[macro_export]
 macro_rules! row {
+    (($($out:tt)*);) => (vec![$($out)*]);
     (($($out:tt)*); $value:expr) => (vec![$($out)* cell!($value)]);
     (($($out:tt)*); $value:expr, $($n:tt)*) => (row!(($($out)* cell!($value),); $($n)*));
     (($($out:tt)*); $style:ident -> $value:expr) => (vec![$($out)* cell!($style -> $value)]);
     (($($out:tt)*); $style:ident -> $value:expr, $($n: tt)*) => (row!(($($out)* cell!($style -> $value),); $($n)*));
 
-    ($($content:expr), *) => ($crate::row::Row::new(vec![$(cell!($content)), *]));
     ($style:ident => $($content:expr), *) => ($crate::row::Row::new(vec![$(cell!($style -> $content)), *]));
+    ($style:ident => $($content:expr,) *) => ($crate::row::Row::new(vec![$(cell!($style -> $content)), *]));
     ($($content:tt)*) => ($crate::row::Row::new(row!((); $($content)*)));
 }
 

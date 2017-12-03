@@ -1,4 +1,3 @@
-//#![feature(trace_macros)]
 #[macro_use]
 extern crate prettytable;
 extern crate term;
