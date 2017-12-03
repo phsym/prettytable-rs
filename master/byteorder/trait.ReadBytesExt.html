@@ -48,7 +48,7 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../src/byteorder/io.rs.html#25-887' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../src/byteorder/io.rs.html#24-962' title='goto source code'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait ReadBytesExt: <a class="trait" href="https://doc.rust-lang.org/nightly/std/io/trait.Read.html" title="trait std::io::Read">Read</a> {
     fn <a href='#method.read_u8' class='fnname'>read_u8</a>(&amp;mut self) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/std/io/error/type.Result.html" title="type std::io::error::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>&gt; { ... }
 <div class='item-spacer'></div>    fn <a href='#method.read_i8' class='fnname'>read_i8</a>(&amp;mut self) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/std/io/error/type.Result.html" title="type std::io::error::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i8.html">i8</a>&gt; { ... }
@@ -70,8 +70,10 @@
 <div class='item-spacer'></div>    fn <a href='#method.read_i16_into' class='fnname'>read_i16_into</a>&lt;T:&nbsp;<a class="trait" href="../byteorder/trait.ByteOrder.html" title="trait byteorder::ByteOrder">ByteOrder</a>&gt;(&amp;mut self, dst: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;mut [</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i16.html">i16</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/std/io/error/type.Result.html" title="type std::io::error::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt; { ... }
 <div class='item-spacer'></div>    fn <a href='#method.read_i32_into' class='fnname'>read_i32_into</a>&lt;T:&nbsp;<a class="trait" href="../byteorder/trait.ByteOrder.html" title="trait byteorder::ByteOrder">ByteOrder</a>&gt;(&amp;mut self, dst: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;mut [</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/std/io/error/type.Result.html" title="type std::io::error::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt; { ... }
 <div class='item-spacer'></div>    fn <a href='#method.read_i64_into' class='fnname'>read_i64_into</a>&lt;T:&nbsp;<a class="trait" href="../byteorder/trait.ByteOrder.html" title="trait byteorder::ByteOrder">ByteOrder</a>&gt;(&amp;mut self, dst: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;mut [</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i64.html">i64</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/std/io/error/type.Result.html" title="type std::io::error::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt; { ... }
-<div class='item-spacer'></div>    unsafe fn <a href='#method.read_f32_into_unchecked' class='fnname'>read_f32_into_unchecked</a>&lt;T:&nbsp;<a class="trait" href="../byteorder/trait.ByteOrder.html" title="trait byteorder::ByteOrder">ByteOrder</a>&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;mut self, <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dst: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;mut [</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a><br>&nbsp;&nbsp;&nbsp;&nbsp;) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/std/io/error/type.Result.html" title="type std::io::error::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt; { ... }
-<div class='item-spacer'></div>    unsafe fn <a href='#method.read_f64_into_unchecked' class='fnname'>read_f64_into_unchecked</a>&lt;T:&nbsp;<a class="trait" href="../byteorder/trait.ByteOrder.html" title="trait byteorder::ByteOrder">ByteOrder</a>&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;mut self, <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dst: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;mut [</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a><br>&nbsp;&nbsp;&nbsp;&nbsp;) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/std/io/error/type.Result.html" title="type std::io::error::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt; { ... }
+<div class='item-spacer'></div>    fn <a href='#method.read_f32_into' class='fnname'>read_f32_into</a>&lt;T:&nbsp;<a class="trait" href="../byteorder/trait.ByteOrder.html" title="trait byteorder::ByteOrder">ByteOrder</a>&gt;(&amp;mut self, dst: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;mut [</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/std/io/error/type.Result.html" title="type std::io::error::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt; { ... }
+<div class='item-spacer'></div>    fn <a href='#method.read_f32_into_unchecked' class='fnname'>read_f32_into_unchecked</a>&lt;T:&nbsp;<a class="trait" href="../byteorder/trait.ByteOrder.html" title="trait byteorder::ByteOrder">ByteOrder</a>&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;mut self, <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dst: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;mut [</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a><br>&nbsp;&nbsp;&nbsp;&nbsp;) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/std/io/error/type.Result.html" title="type std::io::error::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt; { ... }
+<div class='item-spacer'></div>    fn <a href='#method.read_f64_into' class='fnname'>read_f64_into</a>&lt;T:&nbsp;<a class="trait" href="../byteorder/trait.ByteOrder.html" title="trait byteorder::ByteOrder">ByteOrder</a>&gt;(&amp;mut self, dst: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;mut [</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/std/io/error/type.Result.html" title="type std::io::error::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt; { ... }
+<div class='item-spacer'></div>    fn <a href='#method.read_f64_into_unchecked' class='fnname'>read_f64_into_unchecked</a>&lt;T:&nbsp;<a class="trait" href="../byteorder/trait.ByteOrder.html" title="trait byteorder::ByteOrder">ByteOrder</a>&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;mut self, <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dst: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;mut [</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a><br>&nbsp;&nbsp;&nbsp;&nbsp;) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/std/io/error/type.Result.html" title="type std::io::error::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt; { ... }
 }</pre><div class='docblock'><p>Extends <code>Read</code> with methods for reading numbers. (For <code>std::io</code>.)</p>
 
 <p>Most of the methods defined here have an unconstrained type parameter that
@@ -435,16 +437,11 @@ If an error is returned, the contents of <code>dst</code> are unspecified.</p>
 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">dst</span> <span class="op">=</span> [<span class="number">0</span>; <span class="number">2</span>];
 <span class="ident">rdr</span>.<span class="ident">read_i64_into</span>::<span class="op">&lt;</span><span class="ident">BigEndian</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">dst</span>).<span class="ident">unwrap</span>();
 <span class="macro">assert_eq</span><span class="macro">!</span>([<span class="number">517</span>, <span class="number">768</span>], <span class="ident">dst</span>);</pre>
-</div><h3 id='method.read_f32_into_unchecked' class='method'><span id='read_f32_into_unchecked.v' class='invisible'><code>unsafe fn <a href='#method.read_f32_into_unchecked' class='fnname'>read_f32_into_unchecked</a>&lt;T:&nbsp;<a class="trait" href="../byteorder/trait.ByteOrder.html" title="trait byteorder::ByteOrder">ByteOrder</a>&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;mut self, <br>&nbsp;&nbsp;&nbsp;&nbsp;dst: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;mut [</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a><br>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/std/io/error/type.Result.html" title="type std::io::error::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt;</code></span></h3><div class='docblock'><p>Reads a sequence of IEEE754 single-precision (4 bytes) floating
+</div><h3 id='method.read_f32_into' class='method'><span id='read_f32_into.v' class='invisible'><code>fn <a href='#method.read_f32_into' class='fnname'>read_f32_into</a>&lt;T:&nbsp;<a class="trait" href="../byteorder/trait.ByteOrder.html" title="trait byteorder::ByteOrder">ByteOrder</a>&gt;(&amp;mut self, dst: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;mut [</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/std/io/error/type.Result.html" title="type std::io::error::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt;</code></span></h3><div class='docblock'><p>Reads a sequence of IEEE754 single-precision (4 bytes) floating
 point numbers from the underlying reader.</p>
 
 <p>The given buffer is either filled completely or an error is returned.
 If an error is returned, the contents of <code>dst</code> are unspecified.</p>
-
-<h1 id='safety' class='section-header'><a href='#safety'>Safety</a></h1>
-<p>This method is unsafe because there are no guarantees made about the
-floating point values. In particular, this method does not check for
-signaling NaNs, which may result in undefined behavior.</p>
 
 <h1 id='errors-20' class='section-header'><a href='#errors-20'>Errors</a></h1>
 <p>This method returns the same errors as <a href="https://doc.rust-lang.org/std/io/trait.Read.html#method.read_exact"><code>Read::read_exact</code></a>.</p>
@@ -464,25 +461,48 @@ from a <code>Read</code>:</p>
     <span class="number">0x3f</span>, <span class="number">0x80</span>, <span class="number">0x00</span>, <span class="number">0x00</span>,
 ]);
 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">dst</span> <span class="op">=</span> [<span class="number">0.0</span>; <span class="number">2</span>];
-<span class="kw">unsafe</span> {
-    <span class="ident">rdr</span>.<span class="ident">read_f32_into_unchecked</span>::<span class="op">&lt;</span><span class="ident">BigEndian</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">dst</span>).<span class="ident">unwrap</span>();
-}
+<span class="ident">rdr</span>.<span class="ident">read_f32_into</span>::<span class="op">&lt;</span><span class="ident">BigEndian</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">dst</span>).<span class="ident">unwrap</span>();
 <span class="macro">assert_eq</span><span class="macro">!</span>([<span class="ident">f32</span>::<span class="ident">consts</span>::<span class="ident">PI</span>, <span class="number">1.0</span>], <span class="ident">dst</span>);</pre>
-</div><h3 id='method.read_f64_into_unchecked' class='method'><span id='read_f64_into_unchecked.v' class='invisible'><code>unsafe fn <a href='#method.read_f64_into_unchecked' class='fnname'>read_f64_into_unchecked</a>&lt;T:&nbsp;<a class="trait" href="../byteorder/trait.ByteOrder.html" title="trait byteorder::ByteOrder">ByteOrder</a>&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;mut self, <br>&nbsp;&nbsp;&nbsp;&nbsp;dst: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;mut [</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a><br>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/std/io/error/type.Result.html" title="type std::io::error::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt;</code></span></h3><div class='docblock'><p>Reads a sequence of IEEE754 double-precision (8 bytes) floating
+</div><h3 id='method.read_f32_into_unchecked' class='method'><span id='read_f32_into_unchecked.v' class='invisible'><code>fn <a href='#method.read_f32_into_unchecked' class='fnname'>read_f32_into_unchecked</a>&lt;T:&nbsp;<a class="trait" href="../byteorder/trait.ByteOrder.html" title="trait byteorder::ByteOrder">ByteOrder</a>&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;mut self, <br>&nbsp;&nbsp;&nbsp;&nbsp;dst: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;mut [</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a><br>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/std/io/error/type.Result.html" title="type std::io::error::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt;</code></span></h3><div class='docblock'><p><strong>DEPRECATED</strong>.</p>
+
+<p>This method is deprecated. Use <code>read_f32_into</code> instead.</p>
+
+<p>Reads a sequence of IEEE754 single-precision (4 bytes) floating
 point numbers from the underlying reader.</p>
 
 <p>The given buffer is either filled completely or an error is returned.
 If an error is returned, the contents of <code>dst</code> are unspecified.</p>
 
-<h1 id='safety-1' class='section-header'><a href='#safety-1'>Safety</a></h1>
-<p>This method is unsafe because there are no guarantees made about the
-floating point values. In particular, this method does not check for
-signaling NaNs, which may result in undefined behavior.</p>
-
 <h1 id='errors-21' class='section-header'><a href='#errors-21'>Errors</a></h1>
 <p>This method returns the same errors as <a href="https://doc.rust-lang.org/std/io/trait.Read.html#method.read_exact"><code>Read::read_exact</code></a>.</p>
 
 <h1 id='examples-22' class='section-header'><a href='#examples-22'>Examples</a></h1>
+<p>Read a sequence of big-endian single-precision floating point number
+from a <code>Read</code>:</p>
+
+<pre class="rust rust-example-rendered">
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">f32</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>::<span class="ident">Cursor</span>;
+
+<span class="kw">use</span> <span class="ident">byteorder</span>::{<span class="ident">BigEndian</span>, <span class="ident">ReadBytesExt</span>};
+
+<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rdr</span> <span class="op">=</span> <span class="ident">Cursor</span>::<span class="ident">new</span>(<span class="macro">vec</span><span class="macro">!</span>[
+    <span class="number">0x40</span>, <span class="number">0x49</span>, <span class="number">0x0f</span>, <span class="number">0xdb</span>,
+    <span class="number">0x3f</span>, <span class="number">0x80</span>, <span class="number">0x00</span>, <span class="number">0x00</span>,
+]);
+<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">dst</span> <span class="op">=</span> [<span class="number">0.0</span>; <span class="number">2</span>];
+<span class="ident">rdr</span>.<span class="ident">read_f32_into_unchecked</span>::<span class="op">&lt;</span><span class="ident">BigEndian</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">dst</span>).<span class="ident">unwrap</span>();
+<span class="macro">assert_eq</span><span class="macro">!</span>([<span class="ident">f32</span>::<span class="ident">consts</span>::<span class="ident">PI</span>, <span class="number">1.0</span>], <span class="ident">dst</span>);</pre>
+</div><h3 id='method.read_f64_into' class='method'><span id='read_f64_into.v' class='invisible'><code>fn <a href='#method.read_f64_into' class='fnname'>read_f64_into</a>&lt;T:&nbsp;<a class="trait" href="../byteorder/trait.ByteOrder.html" title="trait byteorder::ByteOrder">ByteOrder</a>&gt;(&amp;mut self, dst: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;mut [</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/std/io/error/type.Result.html" title="type std::io::error::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt;</code></span></h3><div class='docblock'><p>Reads a sequence of IEEE754 double-precision (8 bytes) floating
+point numbers from the underlying reader.</p>
+
+<p>The given buffer is either filled completely or an error is returned.
+If an error is returned, the contents of <code>dst</code> are unspecified.</p>
+
+<h1 id='errors-22' class='section-header'><a href='#errors-22'>Errors</a></h1>
+<p>This method returns the same errors as <a href="https://doc.rust-lang.org/std/io/trait.Read.html#method.read_exact"><code>Read::read_exact</code></a>.</p>
+
+<h1 id='examples-23' class='section-header'><a href='#examples-23'>Examples</a></h1>
 <p>Read a sequence of big-endian single-precision floating point number
 from a <code>Read</code>:</p>
 
@@ -497,9 +517,42 @@ from a <code>Read</code>:</p>
     <span class="number">0x3f</span>, <span class="number">0xF0</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>,
 ]);
 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">dst</span> <span class="op">=</span> [<span class="number">0.0</span>; <span class="number">2</span>];
-<span class="kw">unsafe</span> {
-    <span class="ident">rdr</span>.<span class="ident">read_f64_into_unchecked</span>::<span class="op">&lt;</span><span class="ident">BigEndian</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">dst</span>).<span class="ident">unwrap</span>();
-}
+<span class="ident">rdr</span>.<span class="ident">read_f64_into</span>::<span class="op">&lt;</span><span class="ident">BigEndian</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">dst</span>).<span class="ident">unwrap</span>();
+<span class="macro">assert_eq</span><span class="macro">!</span>([<span class="ident">f64</span>::<span class="ident">consts</span>::<span class="ident">PI</span>, <span class="number">1.0</span>], <span class="ident">dst</span>);</pre>
+</div><h3 id='method.read_f64_into_unchecked' class='method'><span id='read_f64_into_unchecked.v' class='invisible'><code>fn <a href='#method.read_f64_into_unchecked' class='fnname'>read_f64_into_unchecked</a>&lt;T:&nbsp;<a class="trait" href="../byteorder/trait.ByteOrder.html" title="trait byteorder::ByteOrder">ByteOrder</a>&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;mut self, <br>&nbsp;&nbsp;&nbsp;&nbsp;dst: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;mut [</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a><br>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/std/io/error/type.Result.html" title="type std::io::error::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt;</code></span></h3><div class='docblock'><p><strong>DEPRECATED</strong>.</p>
+
+<p>This method is deprecated. Use <code>read_f64_into</code> instead.</p>
+
+<p>Reads a sequence of IEEE754 double-precision (8 bytes) floating
+point numbers from the underlying reader.</p>
+
+<p>The given buffer is either filled completely or an error is returned.
+If an error is returned, the contents of <code>dst</code> are unspecified.</p>
+
+<h1 id='safety' class='section-header'><a href='#safety'>Safety</a></h1>
+<p>This method is unsafe because there are no guarantees made about the
+floating point values. In particular, this method does not check for
+signaling NaNs, which may result in undefined behavior.</p>
+
+<h1 id='errors-23' class='section-header'><a href='#errors-23'>Errors</a></h1>
+<p>This method returns the same errors as <a href="https://doc.rust-lang.org/std/io/trait.Read.html#method.read_exact"><code>Read::read_exact</code></a>.</p>
+
+<h1 id='examples-24' class='section-header'><a href='#examples-24'>Examples</a></h1>
+<p>Read a sequence of big-endian single-precision floating point number
+from a <code>Read</code>:</p>
+
+<pre class="rust rust-example-rendered">
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">f64</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>::<span class="ident">Cursor</span>;
+
+<span class="kw">use</span> <span class="ident">byteorder</span>::{<span class="ident">BigEndian</span>, <span class="ident">ReadBytesExt</span>};
+
+<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rdr</span> <span class="op">=</span> <span class="ident">Cursor</span>::<span class="ident">new</span>(<span class="macro">vec</span><span class="macro">!</span>[
+    <span class="number">0x40</span>, <span class="number">0x09</span>, <span class="number">0x21</span>, <span class="number">0xfb</span>, <span class="number">0x54</span>, <span class="number">0x44</span>, <span class="number">0x2d</span>, <span class="number">0x18</span>,
+    <span class="number">0x3f</span>, <span class="number">0xF0</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>,
+]);
+<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">dst</span> <span class="op">=</span> [<span class="number">0.0</span>; <span class="number">2</span>];
+<span class="ident">rdr</span>.<span class="ident">read_f64_into_unchecked</span>::<span class="op">&lt;</span><span class="ident">BigEndian</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">dst</span>).<span class="ident">unwrap</span>();
 <span class="macro">assert_eq</span><span class="macro">!</span>([<span class="ident">f64</span>::<span class="ident">consts</span>::<span class="ident">PI</span>, <span class="number">1.0</span>], <span class="ident">dst</span>);</pre>
 </div></div>
         <h2 id='implementors' class='small-section-header'>
