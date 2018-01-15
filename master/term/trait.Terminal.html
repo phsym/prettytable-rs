@@ -29,7 +29,7 @@
 
     <nav class="sidebar">
         <a href='../term/index.html'><img src='https://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png' alt='logo' width='100'></a>
-        <p class='location'>Trait Terminal</p><div class="block items"><ul><li><a href="#associated-types">Associated Types</a></li><li><a href="#required-methods">Required Methods</a></li><li><a href="#implementors">Implementors</a></li></ul></div><p class='location'><a href='index.html'>term</a></p><script>window.sidebarCurrent = {name: 'Terminal', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Trait Terminal</p><div class="block items"><a class="sidebar-title" href="#associated-types">Associated Types</a><div class="sidebar-links"><a href="#associatedtype.Output">Output</a></div><a class="sidebar-title" href="#required-methods">Required Methods</a><div class="sidebar-links"><a href="#tymethod.fg">fg</a><a href="#tymethod.bg">bg</a><a href="#tymethod.attr">attr</a><a href="#tymethod.supports_attr">supports_attr</a><a href="#tymethod.reset">reset</a><a href="#tymethod.supports_reset">supports_reset</a><a href="#tymethod.supports_color">supports_color</a><a href="#tymethod.cursor_up">cursor_up</a><a href="#tymethod.delete_line">delete_line</a><a href="#tymethod.carriage_return">carriage_return</a><a href="#tymethod.get_ref">get_ref</a><a href="#tymethod.get_mut">get_mut</a><a href="#tymethod.into_inner">into_inner</a></div><a class="sidebar-title" href="#implementors">Implementors</a></div><p class='location'><a href='index.html'>term</a></p><script>window.sidebarCurrent = {name: 'Terminal', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -51,16 +51,16 @@
                </span><a class='srclink' href='../src/term/lib.rs.html#327-401' title='goto source code'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait Terminal: <a class="trait" href="https://doc.rust-lang.org/nightly/std/io/trait.Write.html" title="trait std::io::Write">Write</a> {
     type <a href='#associatedtype.Output' class="type">Output</a>: <a class="trait" href="https://doc.rust-lang.org/nightly/std/io/trait.Write.html" title="trait std::io::Write">Write</a>;
-    fn <a href='#tymethod.fg' class='fnname'>fg</a>(&amp;mut self, color: <a class="type" href="../term/color/type.Color.html" title="type term::color::Color">Color</a>) -&gt; <a class="type" href="../term/type.Result.html" title="type term::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt;;
-<div class='item-spacer'></div>    fn <a href='#tymethod.bg' class='fnname'>bg</a>(&amp;mut self, color: <a class="type" href="../term/color/type.Color.html" title="type term::color::Color">Color</a>) -&gt; <a class="type" href="../term/type.Result.html" title="type term::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt;;
-<div class='item-spacer'></div>    fn <a href='#tymethod.attr' class='fnname'>attr</a>(&amp;mut self, attr: <a class="enum" href="../term/enum.Attr.html" title="enum term::Attr">Attr</a>) -&gt; <a class="type" href="../term/type.Result.html" title="type term::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt;;
+    fn <a href='#tymethod.fg' class='fnname'>fg</a>(&amp;mut self, color: <a class="type" href="../term/color/type.Color.html" title="type term::color::Color">Color</a>) -&gt; <a class="type" href="../term/type.Result.html" title="type term::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>&gt;;
+<div class='item-spacer'></div>    fn <a href='#tymethod.bg' class='fnname'>bg</a>(&amp;mut self, color: <a class="type" href="../term/color/type.Color.html" title="type term::color::Color">Color</a>) -&gt; <a class="type" href="../term/type.Result.html" title="type term::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>&gt;;
+<div class='item-spacer'></div>    fn <a href='#tymethod.attr' class='fnname'>attr</a>(&amp;mut self, attr: <a class="enum" href="../term/enum.Attr.html" title="enum term::Attr">Attr</a>) -&gt; <a class="type" href="../term/type.Result.html" title="type term::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>&gt;;
 <div class='item-spacer'></div>    fn <a href='#tymethod.supports_attr' class='fnname'>supports_attr</a>(&amp;self, attr: <a class="enum" href="../term/enum.Attr.html" title="enum term::Attr">Attr</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>;
-<div class='item-spacer'></div>    fn <a href='#tymethod.reset' class='fnname'>reset</a>(&amp;mut self) -&gt; <a class="type" href="../term/type.Result.html" title="type term::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt;;
+<div class='item-spacer'></div>    fn <a href='#tymethod.reset' class='fnname'>reset</a>(&amp;mut self) -&gt; <a class="type" href="../term/type.Result.html" title="type term::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>&gt;;
 <div class='item-spacer'></div>    fn <a href='#tymethod.supports_reset' class='fnname'>supports_reset</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>;
 <div class='item-spacer'></div>    fn <a href='#tymethod.supports_color' class='fnname'>supports_color</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>;
-<div class='item-spacer'></div>    fn <a href='#tymethod.cursor_up' class='fnname'>cursor_up</a>(&amp;mut self) -&gt; <a class="type" href="../term/type.Result.html" title="type term::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt;;
-<div class='item-spacer'></div>    fn <a href='#tymethod.delete_line' class='fnname'>delete_line</a>(&amp;mut self) -&gt; <a class="type" href="../term/type.Result.html" title="type term::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt;;
-<div class='item-spacer'></div>    fn <a href='#tymethod.carriage_return' class='fnname'>carriage_return</a>(&amp;mut self) -&gt; <a class="type" href="../term/type.Result.html" title="type term::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt;;
+<div class='item-spacer'></div>    fn <a href='#tymethod.cursor_up' class='fnname'>cursor_up</a>(&amp;mut self) -&gt; <a class="type" href="../term/type.Result.html" title="type term::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>&gt;;
+<div class='item-spacer'></div>    fn <a href='#tymethod.delete_line' class='fnname'>delete_line</a>(&amp;mut self) -&gt; <a class="type" href="../term/type.Result.html" title="type term::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>&gt;;
+<div class='item-spacer'></div>    fn <a href='#tymethod.carriage_return' class='fnname'>carriage_return</a>(&amp;mut self) -&gt; <a class="type" href="../term/type.Result.html" title="type term::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>&gt;;
 <div class='item-spacer'></div>    fn <a href='#tymethod.get_ref' class='fnname'>get_ref</a>(&amp;self) -&gt; &amp;Self::<a class="type" href="../term/trait.Terminal.html#associatedtype.Output" title="type term::Terminal::Output">Output</a>;
 <div class='item-spacer'></div>    fn <a href='#tymethod.get_mut' class='fnname'>get_mut</a>(&amp;mut self) -&gt; &amp;mut Self::<a class="type" href="../term/trait.Terminal.html#associatedtype.Output" title="type term::Terminal::Output">Output</a>;
 <div class='item-spacer'></div>    fn <a href='#tymethod.into_inner' class='fnname'>into_inner</a>(self) -&gt; Self::<a class="type" href="../term/trait.Terminal.html#associatedtype.Output" title="type term::Terminal::Output">Output</a><br>&nbsp;&nbsp;&nbsp; <span class="where">where<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Self: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a></span>;
@@ -77,25 +77,25 @@
               Required Methods<a href='#required-methods' class='anchor'></a>
             </h2>
             <div class='methods'>
-        <h3 id='tymethod.fg' class='method'><span id='fg.v' class='invisible'><code>fn <a href='#tymethod.fg' class='fnname'>fg</a>(&amp;mut self, color: <a class="type" href="../term/color/type.Color.html" title="type term::color::Color">Color</a>) -&gt; <a class="type" href="../term/type.Result.html" title="type term::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt;</code></span></h3><div class='docblock'><p>Sets the foreground color to the given color.</p>
+        <h3 id='tymethod.fg' class='method'><span id='fg.v' class='invisible'><code>fn <a href='#tymethod.fg' class='fnname'>fg</a>(&amp;mut self, color: <a class="type" href="../term/color/type.Color.html" title="type term::color::Color">Color</a>) -&gt; <a class="type" href="../term/type.Result.html" title="type term::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>&gt;</code></span></h3><div class='docblock'><p>Sets the foreground color to the given color.</p>
 
 <p>If the color is a bright color, but the terminal only supports 8 colors,
 the corresponding normal color will be used instead.</p>
 
 <p>Returns <code>Ok(())</code> if the color change code was sent to the terminal, or <code>Err(e)</code> if there
 was an error.</p>
-</div><h3 id='tymethod.bg' class='method'><span id='bg.v' class='invisible'><code>fn <a href='#tymethod.bg' class='fnname'>bg</a>(&amp;mut self, color: <a class="type" href="../term/color/type.Color.html" title="type term::color::Color">Color</a>) -&gt; <a class="type" href="../term/type.Result.html" title="type term::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt;</code></span></h3><div class='docblock'><p>Sets the background color to the given color.</p>
+</div><h3 id='tymethod.bg' class='method'><span id='bg.v' class='invisible'><code>fn <a href='#tymethod.bg' class='fnname'>bg</a>(&amp;mut self, color: <a class="type" href="../term/color/type.Color.html" title="type term::color::Color">Color</a>) -&gt; <a class="type" href="../term/type.Result.html" title="type term::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>&gt;</code></span></h3><div class='docblock'><p>Sets the background color to the given color.</p>
 
 <p>If the color is a bright color, but the terminal only supports 8 colors,
 the corresponding normal color will be used instead.</p>
 
 <p>Returns <code>Ok(())</code> if the color change code was sent to the terminal, or <code>Err(e)</code> if there
 was an error.</p>
-</div><h3 id='tymethod.attr' class='method'><span id='attr.v' class='invisible'><code>fn <a href='#tymethod.attr' class='fnname'>attr</a>(&amp;mut self, attr: <a class="enum" href="../term/enum.Attr.html" title="enum term::Attr">Attr</a>) -&gt; <a class="type" href="../term/type.Result.html" title="type term::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt;</code></span></h3><div class='docblock'><p>Sets the given terminal attribute, if supported.  Returns <code>Ok(())</code> if the attribute is
+</div><h3 id='tymethod.attr' class='method'><span id='attr.v' class='invisible'><code>fn <a href='#tymethod.attr' class='fnname'>attr</a>(&amp;mut self, attr: <a class="enum" href="../term/enum.Attr.html" title="enum term::Attr">Attr</a>) -&gt; <a class="type" href="../term/type.Result.html" title="type term::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>&gt;</code></span></h3><div class='docblock'><p>Sets the given terminal attribute, if supported.  Returns <code>Ok(())</code> if the attribute is
 supported and was sent to the terminal, or <code>Err(e)</code> if there was an error or the attribute
 wasn&#39;t supported.</p>
 </div><h3 id='tymethod.supports_attr' class='method'><span id='supports_attr.v' class='invisible'><code>fn <a href='#tymethod.supports_attr' class='fnname'>supports_attr</a>(&amp;self, attr: <a class="enum" href="../term/enum.Attr.html" title="enum term::Attr">Attr</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span></h3><div class='docblock'><p>Returns whether the given terminal attribute is supported.</p>
-</div><h3 id='tymethod.reset' class='method'><span id='reset.v' class='invisible'><code>fn <a href='#tymethod.reset' class='fnname'>reset</a>(&amp;mut self) -&gt; <a class="type" href="../term/type.Result.html" title="type term::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt;</code></span></h3><div class='docblock'><p>Resets all terminal attributes and colors to their defaults.</p>
+</div><h3 id='tymethod.reset' class='method'><span id='reset.v' class='invisible'><code>fn <a href='#tymethod.reset' class='fnname'>reset</a>(&amp;mut self) -&gt; <a class="type" href="../term/type.Result.html" title="type term::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>&gt;</code></span></h3><div class='docblock'><p>Resets all terminal attributes and colors to their defaults.</p>
 
 <p>Returns <code>Ok(())</code> if the reset code was printed, or <code>Err(e)</code> if there was an error.</p>
 
@@ -109,14 +109,14 @@ calling reset.</p>
 
 <p>If this function returns <code>true</code>, <code>bg</code>, <code>fg</code>, and <code>reset</code> will never
 return <code>Err(Error::NotSupported)</code>.</p>
-</div><h3 id='tymethod.cursor_up' class='method'><span id='cursor_up.v' class='invisible'><code>fn <a href='#tymethod.cursor_up' class='fnname'>cursor_up</a>(&amp;mut self) -&gt; <a class="type" href="../term/type.Result.html" title="type term::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt;</code></span></h3><div class='docblock'><p>Moves the cursor up one line.</p>
+</div><h3 id='tymethod.cursor_up' class='method'><span id='cursor_up.v' class='invisible'><code>fn <a href='#tymethod.cursor_up' class='fnname'>cursor_up</a>(&amp;mut self) -&gt; <a class="type" href="../term/type.Result.html" title="type term::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>&gt;</code></span></h3><div class='docblock'><p>Moves the cursor up one line.</p>
 
 <p>Returns <code>Ok(())</code> if the cursor movement code was printed, or <code>Err(e)</code> if there was an
 error.</p>
-</div><h3 id='tymethod.delete_line' class='method'><span id='delete_line.v' class='invisible'><code>fn <a href='#tymethod.delete_line' class='fnname'>delete_line</a>(&amp;mut self) -&gt; <a class="type" href="../term/type.Result.html" title="type term::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt;</code></span></h3><div class='docblock'><p>Deletes the text from the cursor location to the end of the line.</p>
+</div><h3 id='tymethod.delete_line' class='method'><span id='delete_line.v' class='invisible'><code>fn <a href='#tymethod.delete_line' class='fnname'>delete_line</a>(&amp;mut self) -&gt; <a class="type" href="../term/type.Result.html" title="type term::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>&gt;</code></span></h3><div class='docblock'><p>Deletes the text from the cursor location to the end of the line.</p>
 
 <p>Returns <code>Ok(())</code> if the deletion code was printed, or <code>Err(e)</code> if there was an error.</p>
-</div><h3 id='tymethod.carriage_return' class='method'><span id='carriage_return.v' class='invisible'><code>fn <a href='#tymethod.carriage_return' class='fnname'>carriage_return</a>(&amp;mut self) -&gt; <a class="type" href="../term/type.Result.html" title="type term::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt;</code></span></h3><div class='docblock'><p>Moves the cursor to the left edge of the current line.</p>
+</div><h3 id='tymethod.carriage_return' class='method'><span id='carriage_return.v' class='invisible'><code>fn <a href='#tymethod.carriage_return' class='fnname'>carriage_return</a>(&amp;mut self) -&gt; <a class="type" href="../term/type.Result.html" title="type term::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>&gt;</code></span></h3><div class='docblock'><p>Moves the cursor to the left edge of the current line.</p>
 
 <p>Returns <code>Ok(true)</code> if the deletion code was printed, or <code>Err(e)</code> if there was an error.</p>
 </div><h3 id='tymethod.get_ref' class='method'><span id='get_ref.v' class='invisible'><code>fn <a href='#tymethod.get_ref' class='fnname'>get_ref</a>(&amp;self) -&gt; &amp;Self::<a class="type" href="../term/trait.Terminal.html#associatedtype.Output" title="type term::Terminal::Output">Output</a></code></span></h3><div class='docblock'><p>Gets an immutable reference to the stream inside</p>
@@ -147,13 +147,15 @@ error.</p>
                     <dd>Show this help dialog</dd>
                     <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
+                    <dt style="width:31px;">+ / -</dt>
                     <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>
