@@ -7,7 +7,7 @@ use encode_unicode::Utf8Char;
 use super::utils::NEWLINE;
 
 /// Alignment for cell's content
-#[derive(Clone, Debug, PartialEq, Copy)]
+#[derive(Clone, Debug, PartialEq, Copy, Hash)]
 pub enum Alignment {
     /// Align left
     LEFT,
@@ -18,7 +18,7 @@ pub enum Alignment {
 }
 
 /// Position of a line separator in a table
-#[derive(Clone, Debug, PartialEq, Copy)]
+#[derive(Clone, Debug, PartialEq, Copy, Hash)]
 pub enum LinePosition {
     /// Table's border on top
     Top,
@@ -32,7 +32,7 @@ pub enum LinePosition {
 }
 
 /// Position of a column separator in a row
-#[derive(Clone, Debug, PartialEq, Copy)]
+#[derive(Clone, Debug, PartialEq, Copy, Hash)]
 pub enum ColumnPosition {
     /// Left table's border
     Left,
@@ -43,7 +43,7 @@ pub enum ColumnPosition {
 }
 
 /// Contains the character used for printing a line separator
-#[derive(Clone, Debug, Copy)]
+#[derive(Clone, Debug, Copy, Hash)]
 pub struct LineSeparator {
     /// Line separator
     line: char,
@@ -113,7 +113,7 @@ impl Default for LineSeparator {
 }
 
 /// Contains the table formatting rules
-#[derive(Clone, Debug, Copy)]
+#[derive(Clone, Debug, Copy, Hash)]
 pub struct TableFormat {
     /// Optional column separator character
     csep: Option<char>,

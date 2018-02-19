@@ -11,7 +11,7 @@ use super::cell::Cell;
 use super::format::{TableFormat, ColumnPosition};
 
 /// Represent a table row made of cells
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Hash)]
 pub struct Row {
     cells: Vec<Cell>,
 }

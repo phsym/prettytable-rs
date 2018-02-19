@@ -36,7 +36,7 @@ use format::{TableFormat, LinePosition, consts};
 use utils::StringWriter;
 
 /// An owned printable table
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Hash)]
 pub struct Table {
     format: Box<TableFormat>,
     titles: Box<Option<Row>>,
@@ -62,7 +62,7 @@ pub struct Table {
 /// # }
 /// ```
 ///
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Hash)]
 pub struct TableSlice<'a> {
     format: &'a TableFormat,
     titles: &'a Option<Row>,
