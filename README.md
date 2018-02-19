@@ -10,7 +10,7 @@
 
 A formatted and aligned table printer library for [Rust](https://www.rust-lang.org).
 
-*Copyright &copy; 2017 Pierre-Henri Symoneaux*
+*Copyright &copy; 2018 Pierre-Henri Symoneaux*
 
 > THIS SOFTWARE IS DISTRIBUTED WITHOUT ANY WARRANTY <br>
 > Check LICENSE.txt file for more information. <br>
