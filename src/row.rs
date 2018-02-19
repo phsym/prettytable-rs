@@ -2,6 +2,7 @@
 use std::io::{Write, Error};
 use std::iter::FromIterator;
 use std::slice::{Iter, IterMut};
+// use std::vec::IntoIter;
 use std::ops::{Index, IndexMut};
 
 use term::Terminal;
@@ -11,7 +12,7 @@ use super::cell::Cell;
 use super::format::{TableFormat, ColumnPosition};
 
 /// Represent a table row made of cells
-#[derive(Clone, Debug, Hash)]
+#[derive(Clone, Debug, Hash, PartialEq, Eq)]
 pub struct Row {
     cells: Vec<Cell>,
 }
@@ -207,6 +208,14 @@ impl<'a> IntoIterator for &'a Row {
     }
 }
 
+// impl IntoIterator for Row {
+//     type Item = Cell;
+//     type IntoIter = IntoIter<Cell>;
+//     fn into_iter(self) -> Self::IntoIter {
+//         self.cells.into_iter()
+//     }
+// }
+
 impl<'a> IntoIterator for &'a mut Row {
     type Item = &'a mut Cell;
     type IntoIter = IterMut<'a, Cell>;
@@ -214,6 +223,18 @@ impl<'a> IntoIterator for &'a mut Row {
         self.iter_mut()
     }
 }
+
+impl <S: ToString> Extend<S> for Row {
+    fn extend<T: IntoIterator<Item=S>>(&mut self, iter: T) {
+        self.cells.extend(iter.into_iter().map(|s| Cell::new(&s.to_string())));
+    }
+}
+
+// impl <S: Into<Cell>> Extend<S> for Row {
+//     fn extend<T: IntoIterator<Item=S>>(&mut self, iter: T) {
+//         self.cells.extend(iter.into_iter().map(|s| s.into()));
+//     }
+// }
 
 /// This macro simplifies `Row` creation
 ///
@@ -304,5 +325,15 @@ mod tests {
         assert_eq!(row.len(), 2);
         assert_eq!(row.get_cell(0).unwrap().get_content(), "foo");
         assert_eq!(row.get_cell(1).unwrap().get_content(), "foobar");
+    }
+
+    #[test]
+    fn extend_row() {
+        let mut row = Row::from(vec!["foo", "bar", "foobar"]);
+        row.extend(vec!["A", "B", "C"]);
+        assert_eq!(row.len(), 6);
+        assert_eq!(row.get_cell(3).unwrap().get_content(), "A");
+        assert_eq!(row.get_cell(4).unwrap().get_content(), "B");
+        assert_eq!(row.get_cell(5).unwrap().get_content(), "C");
     }
 }
