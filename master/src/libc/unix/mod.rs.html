@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/libc-0.2.36/src/unix/mod.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/libc-0.2.37/src/unix/mod.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>mod.rs.html -- source</title>
@@ -988,6 +988,10 @@
 <span id="942">942</span>
 <span id="943">943</span>
 <span id="944">944</span>
+<span id="945">945</span>
+<span id="946">946</span>
+<span id="947">947</span>
+<span id="948">948</span>
 </pre><pre class="rust ">
 <span class="doccomment">//! Definitions found commonly among almost all Unix derivatives</span>
 <span class="doccomment">//!</span>
@@ -1181,6 +1185,7 @@
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SIG_IGN</span>: <span class="ident">sighandler_t</span> <span class="op">=</span> <span class="number">1</span> <span class="kw">as</span> <span class="ident">sighandler_t</span>;
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SIG_ERR</span>: <span class="ident">sighandler_t</span> <span class="op">=</span> <span class="op">!</span><span class="number">0</span> <span class="kw">as</span> <span class="ident">sighandler_t</span>;
 
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">DT_UNKNOWN</span>: <span class="ident">u8</span> <span class="op">=</span> <span class="number">0</span>;
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">DT_FIFO</span>: <span class="ident">u8</span> <span class="op">=</span> <span class="number">1</span>;
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">DT_CHR</span>: <span class="ident">u8</span> <span class="op">=</span> <span class="number">2</span>;
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">DT_DIR</span>: <span class="ident">u8</span> <span class="op">=</span> <span class="number">4</span>;
@@ -1266,7 +1271,7 @@
     } <span class="kw">else</span> <span class="kw">if</span> <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;use_std&quot;</span>)]</span> {
         <span class="comment">// cargo build, don&#39;t pull in anything extra as the libstd dep</span>
         <span class="comment">// already pulls in all libs.</span>
-    } <span class="kw">else</span> <span class="kw">if</span> <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">all</span>(<span class="ident">target_env</span> <span class="op">=</span> <span class="string">&quot;musl&quot;</span>, <span class="ident">not</span>(<span class="ident">target_arch</span> <span class="op">=</span> <span class="string">&quot;mips&quot;</span>))))]</span> {
+    } <span class="kw">else</span> <span class="kw">if</span> <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_env</span> <span class="op">=</span> <span class="string">&quot;musl&quot;</span>)]</span> {
         <span class="attribute">#[<span class="ident">link</span>(<span class="ident">name</span> <span class="op">=</span> <span class="string">&quot;c&quot;</span>, <span class="ident">kind</span> <span class="op">=</span> <span class="string">&quot;static&quot;</span>, <span class="ident">cfg</span>(<span class="ident">target_feature</span> <span class="op">=</span> <span class="string">&quot;crt-static&quot;</span>))]</span>
         <span class="attribute">#[<span class="ident">link</span>(<span class="ident">name</span> <span class="op">=</span> <span class="string">&quot;c&quot;</span>, <span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_feature</span> <span class="op">=</span> <span class="string">&quot;crt-static&quot;</span>)))]</span>
         <span class="kw">extern</span> {}
@@ -1553,6 +1558,9 @@
     <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">all</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;macos&quot;</span>, <span class="ident">target_arch</span> <span class="op">=</span> <span class="string">&quot;x86&quot;</span>),
                    <span class="ident">link_name</span> <span class="op">=</span> <span class="string">&quot;kill$UNIX2003&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">kill</span>(<span class="ident">pid</span>: <span class="ident">pid_t</span>, <span class="ident">sig</span>: ::<span class="ident">c_int</span>) <span class="op">-&gt;</span> ::<span class="ident">c_int</span>;
+    <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">all</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;macos&quot;</span>, <span class="ident">target_arch</span> <span class="op">=</span> <span class="string">&quot;x86&quot;</span>),
+               <span class="ident">link_name</span> <span class="op">=</span> <span class="string">&quot;killpg$UNIX2003&quot;</span>)]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">killpg</span>(<span class="ident">pgrp</span>: <span class="ident">pid_t</span>, <span class="ident">sig</span>: ::<span class="ident">c_int</span>) <span class="op">-&gt;</span> ::<span class="ident">c_int</span>;
 
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mlock</span>(<span class="ident">addr</span>: <span class="kw-2">*</span><span class="kw">const</span> ::<span class="ident">c_void</span>, <span class="ident">len</span>: ::<span class="ident">size_t</span>) <span class="op">-&gt;</span> ::<span class="ident">c_int</span>;
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">munlock</span>(<span class="ident">addr</span>: <span class="kw-2">*</span><span class="kw">const</span> ::<span class="ident">c_void</span>, <span class="ident">len</span>: ::<span class="ident">size_t</span>) <span class="op">-&gt;</span> ::<span class="ident">c_int</span>;

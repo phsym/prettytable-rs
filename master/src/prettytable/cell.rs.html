@@ -456,7 +456,7 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// Once created, a cell&#39;s content cannot be modified.</span>
 <span class="doccomment">/// The cell would have to be replaced by another one</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Debug</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">Hash</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Cell</span> {
     <span class="ident">content</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
     <span class="ident">width</span>: <span class="ident">usize</span>,

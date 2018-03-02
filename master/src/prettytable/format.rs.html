@@ -564,7 +564,7 @@
 <span class="kw">use</span> <span class="kw">super</span>::<span class="ident">utils</span>::<span class="ident">NEWLINE</span>;
 
 <span class="doccomment">/// Alignment for cell&#39;s content</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">Copy</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">Copy</span>, <span class="ident">Hash</span>, <span class="ident">Eq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Alignment</span> {
     <span class="doccomment">/// Align left</span>
     <span class="ident">LEFT</span>,
@@ -575,7 +575,7 @@
 }
 
 <span class="doccomment">/// Position of a line separator in a table</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">Copy</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">Copy</span>, <span class="ident">Hash</span>, <span class="ident">Eq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">LinePosition</span> {
     <span class="doccomment">/// Table&#39;s border on top</span>
     <span class="ident">Top</span>,
@@ -589,7 +589,7 @@
 }
 
 <span class="doccomment">/// Position of a column separator in a row</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">Copy</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">Copy</span>, <span class="ident">Hash</span>, <span class="ident">Eq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">ColumnPosition</span> {
     <span class="doccomment">/// Left table&#39;s border</span>
     <span class="ident">Left</span>,
@@ -600,7 +600,7 @@
 }
 
 <span class="doccomment">/// Contains the character used for printing a line separator</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">Copy</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">Copy</span>, <span class="ident">Hash</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">LineSeparator</span> {
     <span class="doccomment">/// Line separator</span>
     <span class="ident">line</span>: <span class="ident">char</span>,
@@ -670,7 +670,7 @@
 }
 
 <span class="doccomment">/// Contains the table formatting rules</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">Copy</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">Copy</span>, <span class="ident">Hash</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">TableFormat</span> {
     <span class="doccomment">/// Optional column separator character</span>
     <span class="ident">csep</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">char</span><span class="op">&gt;</span>,
