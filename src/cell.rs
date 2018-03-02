@@ -11,7 +11,7 @@ use super::utils::print_align;
 ///
 /// Once created, a cell's content cannot be modified.
 /// The cell would have to be replaced by another one
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Hash, PartialEq, Eq)]
 pub struct Cell {
     content: Vec<String>,
     width: usize,

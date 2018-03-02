@@ -36,7 +36,7 @@ use format::{TableFormat, LinePosition, consts};
 use utils::StringWriter;
 
 /// An owned printable table
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Hash, PartialEq, Eq)]
 pub struct Table {
     format: Box<TableFormat>,
     titles: Box<Option<Row>>,
@@ -62,7 +62,7 @@ pub struct Table {
 /// # }
 /// ```
 ///
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Hash, PartialEq, Eq)]
 pub struct TableSlice<'a> {
     format: &'a TableFormat,
     titles: &'a Option<Row>,
@@ -473,6 +473,14 @@ impl<B: ToString, A: IntoIterator<Item = B>> FromIterator<A> for Table {
     }
 }
 
+impl FromIterator<Row> for Table {
+    fn from_iter<T>(iterator: T) -> Table
+        where T: IntoIterator<Item = Row>
+    {
+        Self::init(iterator.into_iter().collect())
+    }
+}
+
 impl<T, A, B> From<T> for Table
     where B: ToString,
           A: IntoIterator<Item = B>,
@@ -496,6 +504,20 @@ impl<'a> IntoIterator for &'a mut Table {
     type IntoIter = IterMut<'a, Row>;
     fn into_iter(self) -> Self::IntoIter {
         self.row_iter_mut()
+    }
+}
+
+// impl IntoIterator for Table {
+//     type Item = Row;
+//     type IntoIter = std::vec::IntoIter<Self::Item>;
+//     fn into_iter(self) -> Self::IntoIter {
+//         self.rows.into_iter()
+//     }
+// }
+
+impl <A: Into<Row>> Extend<A> for Table {
+    fn extend<T: IntoIterator<Item=A>>(&mut self, iter: T) {
+        self.rows.extend(iter.into_iter().map(|r| r.into()));
     }
 }
 
@@ -989,6 +1011,17 @@ mod tests {
                                .to_string()
                                .replace("\r\n", "\n"),
                        test_table().to_string().replace("\r\n", "\n"));
+        }
+
+        #[test]
+        fn extend_table() {
+            let mut table = Table::new();
+            table.add_row(Row::new(vec![Cell::new("ABC"), Cell::new("DEFG"), Cell::new("HIJKLMN")]));
+            table.extend(vec![vec!["A", "B", "C"]]);
+            let t2 = table.clone();
+            table.extend(t2.rows);
+            assert_eq!(table.get_row(1).unwrap().get_cell(2).unwrap().get_content(), "C");
+            assert_eq!(table.get_row(2).unwrap().get_cell(1).unwrap().get_content(), "DEFG");
         }
     }
 }
