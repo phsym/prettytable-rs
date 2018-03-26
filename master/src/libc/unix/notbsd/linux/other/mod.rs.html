@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/libc-0.2.37/src/unix/notbsd/linux/other/mod.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/libc-0.2.40/src/unix/notbsd/linux/other/mod.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>mod.rs.html -- source</title>
@@ -931,6 +931,19 @@
 <span id="885">885</span>
 <span id="886">886</span>
 <span id="887">887</span>
+<span id="888">888</span>
+<span id="889">889</span>
+<span id="890">890</span>
+<span id="891">891</span>
+<span id="892">892</span>
+<span id="893">893</span>
+<span id="894">894</span>
+<span id="895">895</span>
+<span id="896">896</span>
+<span id="897">897</span>
+<span id="898">898</span>
+<span id="899">899</span>
+<span id="900">900</span>
 </pre><pre class="rust ">
 <span class="kw">pub</span> <span class="kw">type</span> <span class="ident">__priority_which_t</span> <span class="op">=</span> ::<span class="ident">c_uint</span>;
 
@@ -1801,6 +1814,19 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mallinfo</span>() <span class="op">-&gt;</span> ::<span class="ident">mallinfo</span>;
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">malloc_usable_size</span>(<span class="ident">ptr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> ::<span class="ident">c_void</span>) <span class="op">-&gt;</span> ::<span class="ident">size_t</span>;
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">getauxval</span>(<span class="ident">type_</span>: ::<span class="ident">c_ulong</span>) <span class="op">-&gt;</span> ::<span class="ident">c_ulong</span>;
+    <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;netbsd&quot;</span>, <span class="ident">link_name</span> <span class="op">=</span> <span class="string">&quot;__getpwent_r50&quot;</span>)]</span>
+    <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;solaris&quot;</span>, <span class="ident">link_name</span> <span class="op">=</span> <span class="string">&quot;__posix_getpwent_r&quot;</span>)]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">getpwent_r</span>(<span class="ident">pwd</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> ::<span class="ident">unix</span>::<span class="ident">notbsd</span>::<span class="ident">linux</span>::<span class="ident">passwd</span>,
+                      <span class="ident">buf</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> ::<span class="ident">c_char</span>,
+                      <span class="ident">buflen</span>: ::<span class="ident">size_t</span>,
+                      <span class="ident">result</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="kw-2">*</span><span class="kw-2">mut</span> ::<span class="ident">unix</span>::<span class="ident">notbsd</span>
+                                        ::<span class="ident">linux</span>::<span class="ident">passwd</span>) <span class="op">-&gt;</span> ::<span class="ident">c_int</span>;
+    <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;netbsd&quot;</span>, <span class="ident">link_name</span> <span class="op">=</span> <span class="string">&quot;__getgrent_r50&quot;</span>)]</span>
+    <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;solaris&quot;</span>, <span class="ident">link_name</span> <span class="op">=</span> <span class="string">&quot;__posix_getgrent_r&quot;</span>)]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">getgrent_r</span>(<span class="ident">grp</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> ::<span class="ident">group</span>,
+                      <span class="ident">buf</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> ::<span class="ident">c_char</span>,
+                      <span class="ident">buflen</span>: ::<span class="ident">size_t</span>,
+                      <span class="ident">result</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="kw-2">*</span><span class="kw-2">mut</span> ::<span class="ident">group</span>) <span class="op">-&gt;</span> ::<span class="ident">c_int</span>;
 }
 
 <span class="macro">cfg_if</span><span class="macro">!</span> {

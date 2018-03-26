@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/libc-0.2.37/src/unix/notbsd/linux/mod.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/libc-0.2.40/src/unix/notbsd/linux/mod.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>mod.rs.html -- source</title>
@@ -1997,6 +1997,10 @@
 <span id="1951">1951</span>
 <span id="1952">1952</span>
 <span id="1953">1953</span>
+<span id="1954">1954</span>
+<span id="1955">1955</span>
+<span id="1956">1956</span>
+<span id="1957">1957</span>
 </pre><pre class="rust ">
 <span class="doccomment">//! Linux-specific definitions for linux-like values</span>
 
@@ -3468,9 +3472,13 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">setpwent</span>();
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">endpwent</span>();
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">getpwent</span>() <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">passwd</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">setgrent</span>();
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">endgrent</span>();
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">getgrent</span>() <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> ::<span class="ident">group</span>;
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">setspent</span>();
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">endspent</span>();
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">getspent</span>() <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">spwd</span>;
+
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">getspnam</span>(<span class="ident">__name</span>: <span class="kw-2">*</span><span class="kw">const</span> ::<span class="ident">c_char</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">spwd</span>;
 
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">shm_open</span>(<span class="ident">name</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>, <span class="ident">oflag</span>: ::<span class="ident">c_int</span>,
