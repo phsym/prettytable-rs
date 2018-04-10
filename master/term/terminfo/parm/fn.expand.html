@@ -10,8 +10,11 @@
     <title>term::terminfo::parm::expand - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../../main.css" id="themeStyle">
+    <script src="../../../storage.js"></script>
     
 
     <link rel="shortcut icon" href="https://doc.rust-lang.org/favicon.ico">
@@ -33,6 +36,13 @@
         <p class='location'><a href='../../index.html'>term</a>::<wbr><a href='../index.html'>terminfo</a>::<wbr><a href='index.html'>parm</a></p><script>window.sidebarCurrent = {name: 'expand', ty: 'fn', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -51,14 +61,12 @@
                    </a>
                </span><a class='srclink' href='../../../src/term/terminfo/parm.rs.html#136-454' title='goto source code'>[src]</a></span></h1>
 <pre class='rust fn'>pub fn expand(<br>&nbsp;&nbsp;&nbsp;&nbsp;cap: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;params: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[</a><a class="enum" href="../../../term/terminfo/parm/enum.Param.html" title="enum term::terminfo::parm::Param">Param</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;vars: &amp;mut <a class="struct" href="../../../term/terminfo/parm/struct.Variables.html" title="struct term::terminfo::parm::Variables">Variables</a><br>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>&gt;, <a class="enum" href="../../../term/terminfo/parm/enum.Error.html" title="enum term::terminfo::parm::Error">Error</a>&gt;</pre><div class='docblock'><p>Expand a parameterized capability</p>
-
-<h1 id='arguments' class='section-header'><a href='#arguments'>Arguments</a></h1>
+<h1 id="arguments" class="section-header"><a href="#arguments">Arguments</a></h1>
 <ul>
 <li><code>cap</code>    - string to expand</li>
 <li><code>params</code> - vector of params for %p1 etc</li>
 <li><code>vars</code>   - Variables struct for %Pa etc</li>
 </ul>
-
 <p>To be compatible with ncurses, <code>vars</code> should be the same between calls to <code>expand</code> for
 multiple capabilities for the same terminal.</p>
 </div></section>
@@ -74,20 +82,22 @@ multiple capabilities for the same terminal.</p>
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

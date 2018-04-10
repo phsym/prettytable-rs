@@ -10,8 +10,11 @@
     <title>csv::index::Indexed - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <script src="../../storage.js"></script>
     
 
     
@@ -33,6 +36,13 @@
         <p class='location'>Struct Indexed</p><div class="sidebar-elems"><div class="block items"><a class="sidebar-title" href="#methods">Methods</a><div class="sidebar-links"><a href="#method.open">open</a><a href="#method.seek">seek</a><a href="#method.count">count</a></div><a class="sidebar-title" href="#deref-methods">Methods from Deref&lt;Target=Reader&lt;R&gt;&gt;</a><div class="sidebar-links"><a href="#method.done">done</a><a href="#method.byte_offset">byte_offset</a></div><a class="sidebar-title" href="#implementations">Trait Implementations</a><div class="sidebar-links"><a href="#impl-Deref">Deref</a><a href="#impl-DerefMut">DerefMut</a></div></div><p class='location'><a href='../index.html'>csv</a>::<wbr><a href='index.html'>index</a></p><script>window.sidebarCurrent = {name: 'Indexed', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -51,12 +61,10 @@
                    </a>
                </span><a class='srclink' href='../../src/csv/index/mod.rs.html#60-64' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct Indexed&lt;R, I&gt; { /* fields omitted */ }</pre><div class='docblock'><p>A type for representing CSV data with a basic record index.</p>
-
 <p>The index is a sequence of 64 bit (8 bytes) integers, where each integer
 corresponds to the <em>byte offset</em> of the start of the corresponding record
 in the CSV data. This allows one to skip to any record in the CSV data
 and read it instantly.</p>
-
 <p>Note that this type derefs to a <code>&amp;mut csv::Reader&lt;R&gt;</code>.</p>
 </div>
                     <h2 id='methods' class='small-section-header'>
@@ -65,18 +73,14 @@ and read it instantly.</p>
                 <h3 id='impl' class='impl'><span class='in-band'><code>impl&lt;R, I&gt; <a class="struct" href="../../csv/index/struct.Indexed.html" title="struct csv::index::Indexed">Indexed</a>&lt;R, I&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;R: <a class="trait" href="https://doc.rust-lang.org/nightly/std/io/trait.Read.html" title="trait std::io::Read">Read</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/std/io/trait.Seek.html" title="trait std::io::Seek">Seek</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;I: <a class="trait" href="https://doc.rust-lang.org/nightly/std/io/trait.Read.html" title="trait std::io::Read">Read</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/std/io/trait.Seek.html" title="trait std::io::Seek">Seek</a>,&nbsp;</span></code><a href='#impl' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/csv/index/mod.rs.html#75-127' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.open' class="method"><span id='open.v' class='invisible'><code>pub fn <a href='#method.open' class='fnname'>open</a>(rdr: <a class="struct" href="../../csv/struct.Reader.html" title="struct csv::Reader">Reader</a>&lt;R&gt;, idx: I) -&gt; <a class="type" href="../../csv/type.Result.html" title="type csv::Result">Result</a>&lt;<a class="struct" href="../../csv/index/struct.Indexed.html" title="struct csv::index::Indexed">Indexed</a>&lt;R, I&gt;&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/csv/index/mod.rs.html#82-94' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Opens a new index corresponding to the CSV reader given.</p>
-
 <p>If the CSV reader has headers enabled, they are read first.</p>
-
 <p>Note that there are no checks in place to make sure the index
 accurately represents the CSV reader given.</p>
 </div><h4 id='method.seek' class="method"><span id='seek.v' class='invisible'><code>pub fn <a href='#method.seek' class='fnname'>seek</a>(&amp;mut self, i: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a>) -&gt; <a class="type" href="../../csv/type.Result.html" title="type csv::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/csv/index/mod.rs.html#104-121' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Seeks to <code>i</code>th record.</p>
-
 <p>This uses zero-based indexing, so seeking to the <code>0</code>th record will read
 the first record. (The first record may not be the first written row
 in the CSV data if the underlying reader has headers enabled.)</p>
-
 <p>An error is returned if the index given is greater than or equal to the
 number of records in the index.</p>
 </div><h4 id='method.count' class="method"><span id='count.v' class='invisible'><code>pub fn <a href='#method.count' class='fnname'>count</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/csv/index/mod.rs.html#124-126' title='goto source code'>[src]</a></span></h4>
@@ -87,19 +91,16 @@ number of records in the index.</p>
                     </h2>
                 <div class='impl-items'></div><div class='impl-items'></div><div class='impl-items'></div><div class='impl-items'><h4 id='method.decode' class="method"><div class="important-traits"><div class='tooltip'>ⓘ<span class='tooltiptext'>Important traits for <a class="struct" href="../../csv/struct.DecodedRecords.html" title="struct csv::DecodedRecords">DecodedRecords</a>&lt;'a, R, D&gt;</span></div><div class="content hidden"><h3 class="important">Important traits for <a class="struct" href="../../csv/struct.DecodedRecords.html" title="struct csv::DecodedRecords">DecodedRecords</a>&lt;'a, R, D&gt;</h3><code class="content"><span class="where fmt-newline">impl&lt;'a, R, D&gt; <a class="trait" href="https://doc.rust-lang.org/nightly/core/iter/iterator/trait.Iterator.html" title="trait core::iter::iterator::Iterator">Iterator</a> for <a class="struct" href="../../csv/struct.DecodedRecords.html" title="struct csv::DecodedRecords">DecodedRecords</a>&lt;'a, R, D&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;R: <a class="trait" href="https://doc.rust-lang.org/nightly/std/io/trait.Read.html" title="trait std::io::Read">Read</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;D: <a class="trait" href="../../rustc_serialize/serialize/trait.Decodable.html" title="trait rustc_serialize::serialize::Decodable">Decodable</a>,&nbsp;</span></span><span class="where fmt-newline">    type <a href='https://doc.rust-lang.org/nightly/core/iter/iterator/trait.Iterator.html#associatedtype.Item' class="type">Item</a> = <a class="type" href="../../csv/type.Result.html" title="type csv::Result">Result</a>&lt;D&gt;;</span></code></div></div><span id='decode.v' class='invisible'><code>pub fn <a href='#method.decode' class='fnname'>decode</a>&lt;'a, D:&nbsp;<a class="trait" href="../../rustc_serialize/serialize/trait.Decodable.html" title="trait rustc_serialize::serialize::Decodable">Decodable</a>&gt;(&amp;'a mut self) -&gt; <a class="struct" href="../../csv/struct.DecodedRecords.html" title="struct csv::DecodedRecords">DecodedRecords</a>&lt;'a, R, D&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/csv/reader.rs.html#279-284' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Uses type-based decoding to read a single record from CSV data.</p>
-
 <p>The type that is being decoded into should correspond to <em>one full
 CSV record</em>. A tuple, struct or <code>Vec</code> fit this category. A tuple,
 struct or <code>Vec</code> should consist of primitive types like integers,
 floats, characters and strings which map to single fields. If a field
 cannot be decoded into the type requested, an error is returned.</p>
-
 <p>Enums are also supported in a limited way. Namely, its variants must
 have exactly <code>1</code> parameter each. Each variant decodes based on its
 constituent type and variants are tried in the order that they appear
 in their <code>enum</code> definition. See below for examples.</p>
-
-<h3 id='examples' class='section-header'><a href='#examples'>Examples</a></h3>
+<h3 id="examples" class="section-header"><a href="#examples">Examples</a></h3>
 <p>This example shows how to decode records into a struct. (Note that
 currently, the <em>names</em> of the struct members are irrelevant.)</p>
 
@@ -120,9 +121,8 @@ currently, the <em>names</em> of the struct members are irrelevant.)</p>
 
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">rows</span>[<span class="number">0</span>].<span class="ident">dist</span>, <span class="number">1</span>);
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">rows</span>[<span class="number">1</span>].<span class="ident">dist</span>, <span class="number">2</span>);</pre>
-
 <p>We can get a little crazier with custon enum types or <code>Option</code> types.
-An <code>Option</code> type in particular is useful when a column doesn&#39;t contain
+An <code>Option</code> type in particular is useful when a column doesn't contain
 valid data in every record (whether it be empty or malformed).</p>
 
 <pre class="rust rust-example-rendered">
@@ -150,7 +150,6 @@ valid data in every record (whether it be empty or malformed).</p>
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">rows</span>[<span class="number">1</span>].<span class="ident">dist</span>, <span class="prelude-val">None</span>);
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">rows</span>[<span class="number">0</span>].<span class="ident">dist2</span>, <span class="ident">Number</span>::<span class="ident">Integer</span>(<span class="number">1</span>));
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">rows</span>[<span class="number">1</span>].<span class="ident">dist2</span>, <span class="ident">Number</span>::<span class="ident">Float</span>(<span class="number">1.5</span>));</pre>
-
 <p>Finally, as a special case, a tuple/struct/<code>Vec</code> can be used as the
 &quot;tail&quot; of another tuple/struct/<code>Vec</code> to capture all remaining fields:</p>
 
@@ -170,17 +169,17 @@ valid data in every record (whether it be empty or malformed).</p>
 
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">rows</span>[<span class="number">0</span>].<span class="ident">attrs</span>, <span class="macro">vec</span><span class="macro">!</span>[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]);
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">rows</span>[<span class="number">1</span>].<span class="ident">attrs</span>, <span class="macro">vec</span><span class="macro">!</span>[<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>]);</pre>
-
 <p>If a tuple/struct/<code>Vec</code> appears any where other than the &quot;tail&quot; of a
-record, then the behavior is undefined. (You&#39;ll likely get a runtime
+record, then the behavior is undefined. (You'll likely get a runtime
 error. I believe this is a limitation of the current decoding machinery
-in the <code>serialize</code> crate.)
-```</p>
+in the <code>serialize</code> crate.)</p>
+
+<pre class="rust rust-example-rendered">
+</pre>
 </div><h4 id='method.records' class="method"><div class="important-traits"><div class='tooltip'>ⓘ<span class='tooltiptext'>Important traits for <a class="struct" href="../../csv/struct.StringRecords.html" title="struct csv::StringRecords">StringRecords</a>&lt;'a, R&gt;</span></div><div class="content hidden"><h3 class="important">Important traits for <a class="struct" href="../../csv/struct.StringRecords.html" title="struct csv::StringRecords">StringRecords</a>&lt;'a, R&gt;</h3><code class="content"><span class="where fmt-newline">impl&lt;'a, R&gt; <a class="trait" href="https://doc.rust-lang.org/nightly/core/iter/iterator/trait.Iterator.html" title="trait core::iter::iterator::Iterator">Iterator</a> for <a class="struct" href="../../csv/struct.StringRecords.html" title="struct csv::StringRecords">StringRecords</a>&lt;'a, R&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;R: <a class="trait" href="https://doc.rust-lang.org/nightly/std/io/trait.Read.html" title="trait std::io::Read">Read</a>,&nbsp;</span></span><span class="where fmt-newline">    type <a href='https://doc.rust-lang.org/nightly/core/iter/iterator/trait.Iterator.html#associatedtype.Item' class="type">Item</a> = <a class="type" href="../../csv/type.Result.html" title="type csv::Result">Result</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>&gt;&gt;;</span></code></div></div><span id='records.v' class='invisible'><code>pub fn <a href='#method.records' class='fnname'>records</a>&lt;'a&gt;(&amp;'a mut self) -&gt; <a class="struct" href="../../csv/struct.StringRecords.html" title="struct csv::StringRecords">StringRecords</a>&lt;'a, R&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/csv/reader.rs.html#307-309' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Returns an iterator of records in the CSV data where each field is
 a <code>String</code>.</p>
-
-<h3 id='example' class='section-header'><a href='#example'>Example</a></h3>
+<h3 id="example" class="section-header"><a href="#example">Example</a></h3>
 <p>This is your standard CSV interface with no type decoding magic.</p>
 
 <pre class="rust rust-example-rendered">
@@ -198,11 +197,9 @@ chocolate,refile,7&quot;</span>;
 }</pre>
 </div><h4 id='method.headers' class="method"><span id='headers.v' class='invisible'><code>pub fn <a href='#method.headers' class='fnname'>headers</a>(&amp;mut self) -&gt; <a class="type" href="../../csv/type.Result.html" title="type csv::Result">Result</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>&gt;&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/csv/reader.rs.html#352-354' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Returns a <em>copy</em> of the first record in the CSV data as strings.</p>
-
 <p>This method may be called at any time and regardless of whether
 <code>no_headers</code> is set or not.</p>
-
-<h3 id='example-1' class='section-header'><a href='#example-1'>Example</a></h3>
+<h3 id="example-1" class="section-header"><a href="#example-1">Example</a></h3>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rdr</span> <span class="op">=</span> <span class="ident">csv</span>::<span class="ident">Reader</span>::<span class="ident">from_string</span>(<span class="string">&quot;a,b,c\n1,2,3&quot;</span>);
 
@@ -215,7 +212,6 @@ chocolate,refile,7&quot;</span>;
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">headers1</span>, <span class="macro">vec</span><span class="macro">!</span>[<span class="ident">s</span>(<span class="string">&quot;a&quot;</span>), <span class="ident">s</span>(<span class="string">&quot;b&quot;</span>), <span class="ident">s</span>(<span class="string">&quot;c&quot;</span>)]);
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">rows</span>.<span class="ident">len</span>(), <span class="number">1</span>);
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">rows</span>[<span class="number">0</span>], <span class="macro">vec</span><span class="macro">!</span>[<span class="ident">s</span>(<span class="string">&quot;1&quot;</span>), <span class="ident">s</span>(<span class="string">&quot;2&quot;</span>), <span class="ident">s</span>(<span class="string">&quot;3&quot;</span>)]);</pre>
-
 <p>Note that if <code>no_headers</code> is called on the CSV reader, the rows
 returned in this example include the first record:</p>
 
@@ -244,12 +240,10 @@ of <code>String</code>s.</p>
 </div><h4 id='method.done' class="method"><span id='done.v' class='invisible'><code>pub fn <a href='#method.done' class='fnname'>done</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/csv/reader.rs.html#583-585' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Returns <code>true</code> if the CSV parser has reached its final state. When
 this method returns <code>true</code>, all iterators will always return <code>None</code>.</p>
-
 <p>This is not needed in typical usage since the record iterators will
 stop for you when the parser completes. This method is useful when
-you&#39;re accessing the parser&#39;s lowest-level iterator.</p>
-
-<h3 id='example-2' class='section-header'><a href='#example-2'>Example</a></h3>
+you're accessing the parser's lowest-level iterator.</p>
+<h3 id="example-2" class="section-header"><a href="#example-2">Example</a></h3>
 <p>This is the <em>fastest</em> way to compute the number of records in CSV data
 using this crate. (It is fast because it does not allocate space for
 every field.)</p>
@@ -281,20 +275,16 @@ chocolate,refile,7&quot;</span>;
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">count</span>, <span class="number">5</span>);</pre>
 </div><h4 id='method.next_bytes' class="method"><span id='next_bytes.v' class='invisible'><code>pub fn <a href='#method.next_bytes' class='fnname'>next_bytes</a>(&amp;mut self) -&gt; <a class="enum" href="../../csv/enum.NextField.html" title="enum csv::NextField">NextField</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">[</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/csv/reader.rs.html#622-717' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>An iterator over fields in the current record.</p>
-
 <p>This provides low level access to CSV records as raw byte slices.
 Namely, no allocation is performed. Unlike other iterators in this
 crate, this yields <em>fields</em> instead of records. Notably, this cannot
 implement the <code>Iterator</code> trait safely. As such, it cannot be used with
 a <code>for</code> loop.</p>
-
 <p>See the documentation for the <code>NextField</code> type on how the iterator
 works.</p>
-
-<p>This iterator always returns all records (i.e., it won&#39;t skip the
+<p>This iterator always returns all records (i.e., it won't skip the
 header row).</p>
-
-<h3 id='example-3' class='section-header'><a href='#example-3'>Example</a></h3>
+<h3 id="example-3" class="section-header"><a href="#example-3">Example</a></h3>
 <p>This method is most useful when used in conjunction with the the
 <code>done</code> method:</p>
 
@@ -320,17 +310,13 @@ a Unicode string in place.</p>
 <div class='docblock'><p>Returns the byte offset at which the current record started.</p>
 </div></div><div class='impl-items'><h4 id='method.seek-1' class="method"><span id='seek.v-1' class='invisible'><code>pub fn <a href='#method.seek-1' class='fnname'>seek</a>(&amp;mut self, pos: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a>) -&gt; <a class="type" href="../../csv/type.Result.html" title="type csv::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/csv/reader.rs.html#870-881' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Seeks the underlying reader to the file cursor specified.</p>
-
 <p>This comes with several caveats:</p>
-
 <ul>
 <li>The existing buffer is dropped and a new one is created.</li>
-<li>If you seek to a position other than the start of a record, you&#39;ll
+<li>If you seek to a position other than the start of a record, you'll
 probably get an incorrect parse. (This is <em>not</em> unsafe.)</li>
 </ul>
-
 <p>Mostly, this is intended for use with the <code>index</code> sub module.</p>
-
 <p>Note that if <code>pos</code> is equivalent to the current <em>parsed</em> byte offset,
 then no seeking is performed. (In this case, <code>seek</code> is a no-op.)</p>
 </div></div>
@@ -358,20 +344,22 @@ then no seeking is performed. (In this case, <code>seek</code> is a no-op.)</p>
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

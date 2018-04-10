@@ -10,8 +10,11 @@
     <title>prettytable::row - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../main.css">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../dark.css">
+    <link rel="stylesheet" type="text/css" href="../main.css" id="themeStyle">
+    <script src="../storage.js"></script>
     
 
     
@@ -33,6 +36,13 @@
         <p class='location'><a href='index.html'>prettytable</a></p><script>window.sidebarCurrent = {name: 'row', ty: 'macro', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -63,10 +73,8 @@
     ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">content</span>:<span class="ident">tt</span>)<span class="kw-2">*</span>) <span class="op">=&gt;</span> { ... };
 }</pre>
 <div class='docblock'><p>This macro simplifies <code>Row</code> creation</p>
-
 <p>The syntax support style spec</p>
-
-<h1 id='example' class='section-header'><a href='#example'>Example</a></h1>
+<h1 id="example" class="section-header"><a href="#example">Example</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="comment">// Create a normal row</span>
 <span class="kw">let</span> <span class="ident">row1</span> <span class="op">=</span> <span class="macro">row</span><span class="macro">!</span>[<span class="string">&quot;Element 1&quot;</span>, <span class="string">&quot;Element 2&quot;</span>, <span class="string">&quot;Element 3&quot;</span>];
@@ -76,7 +84,6 @@
 <span class="comment">// Create a row with first cell in blue, second one in red, and last one with default style</span>
 <span class="kw">let</span> <span class="ident">row3</span> <span class="op">=</span> <span class="macro">row</span><span class="macro">!</span>[<span class="ident">Fb</span><span class="op">-&gt;</span><span class="string">&quot;blue&quot;</span>, <span class="ident">Fr</span><span class="op">-&gt;</span><span class="string">&quot;red&quot;</span>, <span class="string">&quot;normal&quot;</span>];
 <span class="comment">// Do something with rows</span></pre>
-
 <p>For details about style specifier syntax, check doc for <a href="cell/struct.Cell.html#method.style_spec"><code>Cell::style_spec</code></a> method</p>
 </div></section>
     <section id='search' class="content hidden"></section>
@@ -91,20 +98,22 @@
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

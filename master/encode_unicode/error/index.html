@@ -10,8 +10,11 @@
     <title>encode_unicode::error - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <script src="../../storage.js"></script>
     
 
     
@@ -33,6 +36,13 @@
         <p class='location'>Module error</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li></ul></div><p class='location'><a href='../index.html'>encode_unicode</a></p><script>window.sidebarCurrent = {name: 'error', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -58,7 +68,8 @@
                                   title='struct encode_unicode::error::InvalidUtf16FirstUnit'>InvalidUtf16FirstUnit</a></td>
                            <td class='docblock-short'>
                                 <p>Cannot tell wether an <code>u16</code> needs an extra unit,
-because it&#39;s a trailing surrogate itself.</p>
+because it's a trailing surrogate itself.</p>
+
                            </td>
                        </tr></table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
 <table>
@@ -67,6 +78,7 @@ because it&#39;s a trailing surrogate itself.</p>
                                   title='enum encode_unicode::error::FromStrError'>FromStrError</a></td>
                            <td class='docblock-short'>
                                 <p>Reasons why <code>Utf8Char::from_str()</code> failed.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -74,6 +86,7 @@ because it&#39;s a trailing surrogate itself.</p>
                                   title='enum encode_unicode::error::InvalidCodepoint'>InvalidCodepoint</a></td>
                            <td class='docblock-short'>
                                 <p>Reasons why an <code>u32</code> is not a valid UTF codepoint.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -82,13 +95,15 @@ because it&#39;s a trailing surrogate itself.</p>
                            <td class='docblock-short'>
                                 <p>Reasons why a byte sequence is not valid UTF-8, excluding invalid codepoint.
 In sinking precedence.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class="enum" href="enum.InvalidUtf16Slice.html"
                                   title='enum encode_unicode::error::InvalidUtf16Slice'>InvalidUtf16Slice</a></td>
                            <td class='docblock-short'>
-                                <p>Reasons why a slice of <code>u16</code>s doesn&#39;t start with valid UTF-16.</p>
+                                <p>Reasons why a slice of <code>u16</code>s doesn't start with valid UTF-16.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -96,6 +111,7 @@ In sinking precedence.</p>
                                   title='enum encode_unicode::error::InvalidUtf16Tuple'>InvalidUtf16Tuple</a></td>
                            <td class='docblock-short'>
                                 <p>Reasons why one or two <code>u16</code>s are not valid UTF-16, in sinking precedence.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -103,6 +119,7 @@ In sinking precedence.</p>
                                   title='enum encode_unicode::error::InvalidUtf8Array'>InvalidUtf8Array</a></td>
                            <td class='docblock-short'>
                                 <p>Reasons why a byte array is not valid UTF-8, in sinking precedence.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -110,6 +127,7 @@ In sinking precedence.</p>
                                   title='enum encode_unicode::error::InvalidUtf8FirstByte'>InvalidUtf8FirstByte</a></td>
                            <td class='docblock-short'>
                                 <p>Reasons why a byte is not the start of a UTF-8 codepoint.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -117,6 +135,7 @@ In sinking precedence.</p>
                                   title='enum encode_unicode::error::InvalidUtf8Slice'>InvalidUtf8Slice</a></td>
                            <td class='docblock-short'>
                                 <p>Reasons why a byte slice is not valid UTF-8, in sinking precedence.</p>
+
                            </td>
                        </tr></table></section>
     <section id='search' class="content hidden"></section>
@@ -131,20 +150,22 @@ In sinking precedence.</p>
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

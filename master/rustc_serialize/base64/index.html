@@ -10,8 +10,11 @@
     <title>rustc_serialize::base64 - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <script src="../../storage.js"></script>
     
 
     <link rel="shortcut icon" href="https://www.rust-lang.org/favicon.ico">
@@ -30,9 +33,16 @@
     <nav class="sidebar">
         <div class="sidebar-menu">&#9776;</div>
         <a href='../../rustc_serialize/index.html'><img src='https://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png' alt='logo' width='100'></a>
-        <p class='location'>Module base64</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#reexports">Reexports</a></li><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#statics">Statics</a></li><li><a href="#traits">Traits</a></li></ul></div><p class='location'><a href='../index.html'>rustc_serialize</a></p><script>window.sidebarCurrent = {name: 'base64', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script></div>
+        <p class='location'>Module base64</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#reexports">Re-exports</a></li><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#statics">Statics</a></li><li><a href="#traits">Traits</a></li></ul></div><p class='location'><a href='../index.html'>rustc_serialize</a></p><script>window.sidebarCurrent = {name: 'base64', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -51,7 +61,7 @@
                    </a>
                </span><a class='srclink' href='../../src/rustc_serialize/base64.rs.html#13-489' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>Base64 binary-to-text encoding</p>
-</div><h2 id='reexports' class='section-header'><a href="#reexports">Reexports</a></h2>
+</div><h2 id='reexports' class='section-header'><a href="#reexports">Re-exports</a></h2>
 <table><tr><td><code>pub use self::<a class="enum" href="../../rustc_serialize/base64/enum.FromBase64Error.html" title="enum rustc_serialize::base64::FromBase64Error">FromBase64Error</a>::*;</code></td></tr><tr><td><code>pub use self::<a class="enum" href="../../rustc_serialize/base64/enum.CharacterSet.html" title="enum rustc_serialize::base64::CharacterSet">CharacterSet</a>::*;</code></td></tr></table><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
                        <tr class=' module-item'>
@@ -59,6 +69,7 @@
                                   title='struct rustc_serialize::base64::Config'>Config</a></td>
                            <td class='docblock-short'>
                                 <p>Contains configuration parameters for <code>to_base64</code>.</p>
+
                            </td>
                        </tr></table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
 <table>
@@ -67,6 +78,7 @@
                                   title='enum rustc_serialize::base64::CharacterSet'>CharacterSet</a></td>
                            <td class='docblock-short'>
                                 <p>Available encoding character sets</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -74,6 +86,7 @@
                                   title='enum rustc_serialize::base64::FromBase64Error'>FromBase64Error</a></td>
                            <td class='docblock-short'>
                                 <p>Errors that can occur when decoding a base64 encoded string</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -81,6 +94,7 @@
                                   title='enum rustc_serialize::base64::Newline'>Newline</a></td>
                            <td class='docblock-short'>
                                 <p>Available newline types</p>
+
                            </td>
                        </tr></table><h2 id='statics' class='section-header'><a href="#statics">Statics</a></h2>
 <table>
@@ -89,6 +103,7 @@
                                   title='static rustc_serialize::base64::MIME'>MIME</a></td>
                            <td class='docblock-short'>
                                 <p>Configuration for RFC 2045 MIME base64 encoding</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -96,6 +111,7 @@
                                   title='static rustc_serialize::base64::STANDARD'>STANDARD</a></td>
                            <td class='docblock-short'>
                                 <p>Configuration for RFC 4648 standard base64 encoding</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -103,6 +119,7 @@
                                   title='static rustc_serialize::base64::URL_SAFE'>URL_SAFE</a></td>
                            <td class='docblock-short'>
                                 <p>Configuration for RFC 4648 base64url encoding</p>
+
                            </td>
                        </tr></table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
 <table>
@@ -111,6 +128,7 @@
                                   title='trait rustc_serialize::base64::FromBase64'>FromBase64</a></td>
                            <td class='docblock-short'>
                                 <p>A trait for converting from base64 encoded values.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -118,6 +136,7 @@
                                   title='trait rustc_serialize::base64::ToBase64'>ToBase64</a></td>
                            <td class='docblock-short'>
                                 <p>A trait for converting a value to base64 encoding.</p>
+
                            </td>
                        </tr></table></section>
     <section id='search' class="content hidden"></section>
@@ -132,20 +151,22 @@
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

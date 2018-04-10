@@ -10,8 +10,11 @@
     <title>csv - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../main.css">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../dark.css">
+    <link rel="stylesheet" type="text/css" href="../main.css" id="themeStyle">
+    <script src="../storage.js"></script>
     
 
     
@@ -33,6 +36,13 @@
         <p class='location'>Crate csv</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#modules">Modules</a></li><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#traits">Traits</a></li><li><a href="#types">Type Definitions</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'csv', ty: 'mod', relpath: '../'};</script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -53,7 +63,6 @@
 <div class='docblock'><p>This crate provides a streaming CSV (comma separated values) writer and
 reader that works with the <code>serialize</code> crate to do type based encoding
 and decoding. There are two primary goals of this project:</p>
-
 <ol>
 <li>The default mode of parsing should <em>just work</em>. This means the parser
 will bias toward providing <em>a</em> parse over a <em>correct</em> parse (with
@@ -61,8 +70,7 @@ respect to RFC 4180).</li>
 <li>Convenient to use by default, but when performance is needed, the
 API will provide an escape hatch.</li>
 </ol>
-
-<h2 id='simple-example' class='section-header'><a href='#simple-example'>Simple example</a></h2>
+<h2 id="simple-example" class="section-header"><a href="#simple-example">Simple example</a></h2>
 <p>This shows how you can decode records into Rust types. This saves a ton
 of boiler plate, e.g., converting strings to numeric types.</p>
 
@@ -79,7 +87,6 @@ chocolate,refile,7&quot;</span>;
     <span class="kw">let</span> (<span class="ident">n1</span>, <span class="ident">n2</span>, <span class="ident">dist</span>): (<span class="ident">String</span>, <span class="ident">String</span>, <span class="ident">u32</span>) <span class="op">=</span> <span class="ident">row</span>.<span class="ident">unwrap</span>();
     <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;{}, {}: {}&quot;</span>, <span class="ident">n1</span>, <span class="ident">n2</span>, <span class="ident">dist</span>);
 }</pre>
-
 <p>If you just want a <code>Vec</code> of all the records, then you can use the
 <code>collect</code> method defined on iterators:</p>
 
@@ -96,26 +103,21 @@ chocolate,refile,7&quot;</span>;
 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rdr</span> <span class="op">=</span> <span class="ident">csv</span>::<span class="ident">Reader</span>::<span class="ident">from_string</span>(<span class="ident">data</span>).<span class="ident">has_headers</span>(<span class="bool-val">false</span>);
 <span class="kw">let</span> <span class="ident">rows</span> <span class="op">=</span> <span class="ident">rdr</span>.<span class="ident">decode</span>().<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">csv</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Row</span><span class="op">&gt;&gt;</span><span class="op">&gt;</span>().<span class="ident">unwrap</span>();
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">rows</span>.<span class="ident">len</span>(), <span class="number">5</span>);</pre>
-
 <p>Please see the <code>Reader</code> type for more documentation and examples.</p>
-
-<h2 id='iteratoring-over-records' class='section-header'><a href='#iteratoring-over-records'>Iteratoring over records</a></h2>
+<h2 id="iteratoring-over-records" class="section-header"><a href="#iteratoring-over-records">Iteratoring over records</a></h2>
 <p>This crate exposes <strong>4</strong> distinct ways of iterating over CSV records. In
 the majority of use cases, you should use the <code>decode</code> method as shown
 above because it is the most convenient. But other types of iterators are
 exposed for when you need them.</p>
-
 <p>The iterators listed below are presented in order of performance. The first
 (type based decoding) is the slowest and the last (zero allocation) is the
 fastest. There is clear evidence of this claim in the benchmarks. (Just
 run <code>cargo bench</code>.)</p>
-
-<h3 id='decoded-records' class='section-header'><a href='#decoded-records'>Decoded records</a></h3>
+<h3 id="decoded-records" class="section-header"><a href="#decoded-records">Decoded records</a></h3>
 <p>As shown above. This uses type based decoding on each record.</p>
-
-<h3 id='string-records' class='section-header'><a href='#string-records'>String records</a></h3>
+<h3 id="string-records" class="section-header"><a href="#string-records">String records</a></h3>
 <p>Yields each record as a <code>Vec&lt;String&gt;</code>. Namely, this assumes that all CSV
-data is UTF-8 encoded. This is the standard CSV interface that you&#39;ve
+data is UTF-8 encoded. This is the standard CSV interface that you've
 probably come to expect from using other CSV parsers.</p>
 
 <pre class="rust rust-example-rendered">
@@ -130,8 +132,7 @@ chocolate,refile,7&quot;</span>;
 <span class="kw">for</span> <span class="ident">row</span> <span class="kw">in</span> <span class="ident">rdr</span>.<span class="ident">records</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">r</span><span class="op">|</span> <span class="ident">r</span>.<span class="ident">unwrap</span>()) {
     <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;{:?}&quot;</span>, <span class="ident">row</span>);
 }</pre>
-
-<h3 id='byte-string-records' class='section-header'><a href='#byte-string-records'>Byte string records</a></h3>
+<h3 id="byte-string-records" class="section-header"><a href="#byte-string-records">Byte string records</a></h3>
 <p>Yields each record as a <code>Vec&lt;ByteString&gt;</code>. Namely, this allows reading CSV
 data that is not UTF-8 encoded (or improperly encoded!).</p>
 
@@ -144,15 +145,13 @@ chocolate,refile,7&quot;</span>;
 <span class="kw">for</span> <span class="ident">row</span> <span class="kw">in</span> <span class="ident">rdr</span>.<span class="ident">byte_records</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">r</span><span class="op">|</span> <span class="ident">r</span>.<span class="ident">unwrap</span>()) {
     <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;{:?}&quot;</span>, <span class="ident">row</span>);
 }</pre>
-
-<h3 id='byte-slice-records' class='section-header'><a href='#byte-slice-records'>Byte slice records</a></h3>
+<h3 id="byte-slice-records" class="section-header"><a href="#byte-slice-records">Byte slice records</a></h3>
 <p>This iterator is defined on the <code>Reader</code> type itself and yields <em>fields</em>
 instead of records (unlike the other iterators). Each field is a <code>&amp;[u8]</code>.
 No allocation is performed during parsing (unlike the other iterators,
 which at least allocate a <code>Vec&lt;u8&gt;</code> for each field and a <code>Vec&lt;_&gt;</code> for each
-record). Since no allocation is performed, this &quot;iterator&quot; doesn&#39;t actually
+record). Since no allocation is performed, this &quot;iterator&quot; doesn't actually
 implement the <code>Iterator</code> trait (since it cannot be done safely).</p>
-
 <p>This is the lowest level interface and should only be used when you need
 the performance.</p>
 
@@ -171,31 +170,25 @@ chocolate,refile,7&quot;</span>;
     }
     <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;&quot;</span>);
 }</pre>
-
 <p>There is more explanation for how this iterator interface works on the
 <code>Reader</code> type.</p>
-
-<h2 id='indexing' class='section-header'><a href='#indexing'>Indexing</a></h2>
-<p>This crate has experimental support for CSV record indexing. It&#39;s very
+<h2 id="indexing" class="section-header"><a href="#indexing">Indexing</a></h2>
+<p>This crate has experimental support for CSV record indexing. It's very
 simplistic, but once the index is created, you can seek a <code>csv::Reader</code>
 to any record instantly. See the
 <a href="/rustdoc/csv/index/index.html"><code>csv::index</code></a>
 sub-module for more details and examples.</p>
-
-<h2 id='compliance-with-rfc-4180' class='section-header'><a href='#compliance-with-rfc-4180'>Compliance with RFC 4180</a></h2>
+<h2 id="compliance-with-rfc-4180" class="section-header"><a href="#compliance-with-rfc-4180">Compliance with RFC 4180</a></h2>
 <p><a href="http://tools.ietf.org/html/rfc4180">RFC 4180</a> seems to the closest thing
 to an official specification for CSV. Currently, the parser in this crate
 will read a strict superset of RFC 4180 while the writer will always write
 CSV data that conforms to RFC 4180 (unless configured to do otherwise).
 This approach was taken because CSV data is commonly malformed and there is
 nothing worse than trying to read busted CSV data with a library that says
-it can&#39;t do it.</p>
-
+it can't do it.</p>
 <p>With that said, a &quot;strict&quot; mode may be added that will only read CSV data
 that conforms to RFC 4180.</p>
-
 <p>Here are a few notes on compatibility with RFC 4180:</p>
-
 <ul>
 <li>Both CRLF and LF line endings are supported. This is seamless in the
 parser. By default, the encoder uses LF line endings but can be
@@ -226,6 +219,7 @@ while providing an outlet to use byte strings.</li>
                                   title='mod csv::index'>index</a></td>
                            <td class='docblock-short'>
                                 <p>This sub-module provides experimental CSV record indexing.</p>
+
                            </td>
                        </tr></table><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
@@ -234,6 +228,7 @@ while providing an outlet to use byte strings.</li>
                                   title='struct csv::ByteRecords'>ByteRecords</a></td>
                            <td class='docblock-short'>
                                 <p>An iterator of <code>ByteString</code> records.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -241,6 +236,7 @@ while providing an outlet to use byte strings.</li>
                                   title='struct csv::Decoded'>Decoded</a></td>
                            <td class='docblock-short'>
                                 <p>A record to be decoded.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -248,6 +244,7 @@ while providing an outlet to use byte strings.</li>
                                   title='struct csv::DecodedRecords'>DecodedRecords</a></td>
                            <td class='docblock-short'>
                                 <p>An iterator of decoded records.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -255,6 +252,7 @@ while providing an outlet to use byte strings.</li>
                                   title='struct csv::Encoded'>Encoded</a></td>
                            <td class='docblock-short'>
                                 <p>A record to be encoded.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -262,6 +260,7 @@ while providing an outlet to use byte strings.</li>
                                   title='struct csv::LocatableError'>LocatableError</a></td>
                            <td class='docblock-short'>
                                 <p>An error tagged with a location at which it occurred.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -269,6 +268,7 @@ while providing an outlet to use byte strings.</li>
                                   title='struct csv::Reader'>Reader</a></td>
                            <td class='docblock-short'>
                                 <p>A CSV reader.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -276,6 +276,7 @@ while providing an outlet to use byte strings.</li>
                                   title='struct csv::StringRecords'>StringRecords</a></td>
                            <td class='docblock-short'>
                                 <p>An iterator of <code>String</code> records.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -283,6 +284,7 @@ while providing an outlet to use byte strings.</li>
                                   title='struct csv::Writer'>Writer</a></td>
                            <td class='docblock-short'>
                                 <p>A CSV writer.</p>
+
                            </td>
                        </tr></table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
 <table>
@@ -291,6 +293,7 @@ while providing an outlet to use byte strings.</li>
                                   title='enum csv::Error'>Error</a></td>
                            <td class='docblock-short'>
                                 <p>An error produced by an operation on CSV data.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -298,6 +301,7 @@ while providing an outlet to use byte strings.</li>
                                   title='enum csv::NextField'>NextField</a></td>
                            <td class='docblock-short'>
                                 <p>NextField is the result of parsing a single CSV field.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -305,6 +309,7 @@ while providing an outlet to use byte strings.</li>
                                   title='enum csv::ParseError'>ParseError</a></td>
                            <td class='docblock-short'>
                                 <p>A description of a CSV parse error.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -312,6 +317,7 @@ while providing an outlet to use byte strings.</li>
                                   title='enum csv::QuoteStyle'>QuoteStyle</a></td>
                            <td class='docblock-short'>
                                 <p>The quoting style to use when writing CSV data.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -319,6 +325,7 @@ while providing an outlet to use byte strings.</li>
                                   title='enum csv::RecordTerminator'>RecordTerminator</a></td>
                            <td class='docblock-short'>
                                 <p>A record terminator.</p>
+
                            </td>
                        </tr></table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
 <table>
@@ -327,6 +334,7 @@ while providing an outlet to use byte strings.</li>
                                   title='trait csv::BorrowBytes'>BorrowBytes</a></td>
                            <td class='docblock-short'>
                                 <p>A trait that permits borrowing byte vectors.</p>
+
                            </td>
                        </tr></table><h2 id='types' class='section-header'><a href="#types">Type Definitions</a></h2>
 <table>
@@ -335,6 +343,7 @@ while providing an outlet to use byte strings.</li>
                                   title='type csv::ByteString'>ByteString</a></td>
                            <td class='docblock-short'>
                                 <p>A convenience type for referring to a plain byte string.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -343,6 +352,7 @@ while providing an outlet to use byte strings.</li>
                            <td class='docblock-short'>
                                 <p>A convenience type for representing the result of most CSV reader/writer
 operations.</p>
+
                            </td>
                        </tr></table></section>
     <section id='search' class="content hidden"></section>
@@ -357,20 +367,22 @@ operations.</p>
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

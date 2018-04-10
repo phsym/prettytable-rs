@@ -10,8 +10,11 @@
     <title>prettytable - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../main.css">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../dark.css">
+    <link rel="stylesheet" type="text/css" href="../main.css" id="themeStyle">
+    <script src="../storage.js"></script>
     
 
     
@@ -33,6 +36,13 @@
         <p class='location'>Crate prettytable</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#modules">Modules</a></li><li><a href="#macros">Macros</a></li><li><a href="#structs">Structs</a></li><li><a href="#traits">Traits</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'prettytable', ty: 'mod', relpath: '../'};</script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -58,6 +68,7 @@
                                   title='mod prettytable::cell'>cell</a></td>
                            <td class='docblock-short'>
                                 <p>This module contains definition of table/row cells stuff</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -65,6 +76,7 @@
                                   title='mod prettytable::format'>format</a></td>
                            <td class='docblock-short'>
                                 <p>Define table formatting utilities</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -72,6 +84,7 @@
                                   title='mod prettytable::row'>row</a></td>
                            <td class='docblock-short'>
                                 <p>This module contains definition of table rows stuff</p>
+
                            </td>
                        </tr></table><h2 id='macros' class='section-header'><a href="#macros">Macros</a></h2>
 <table>
@@ -80,6 +93,7 @@
                                   title='macro prettytable::cell'>cell</a></td>
                            <td class='docblock-short'>
                                 <p>This macro simplifies <code>Cell</code> creation</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -87,6 +101,7 @@
                                   title='macro prettytable::ptable'>ptable</a></td>
                            <td class='docblock-short'>
                                 <p>Create a table with <code>table!</code> macro, print it to standard output, then return this table for future usage.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -94,6 +109,7 @@
                                   title='macro prettytable::row'>row</a></td>
                            <td class='docblock-short'>
                                 <p>This macro simplifies <code>Row</code> creation</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -101,6 +117,7 @@
                                   title='macro prettytable::table'>table</a></td>
                            <td class='docblock-short'>
                                 <p>Create a table filled with some values</p>
+
                            </td>
                        </tr></table><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
@@ -109,6 +126,7 @@
                                   title='struct prettytable::ColumnIter'>ColumnIter</a></td>
                            <td class='docblock-short'>
                                 <p>Iterator over immutable cells in a column</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -116,6 +134,7 @@
                                   title='struct prettytable::ColumnIterMut'>ColumnIterMut</a></td>
                            <td class='docblock-short'>
                                 <p>Iterator over mutable cells in a column</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -123,6 +142,7 @@
                                   title='struct prettytable::Table'>Table</a></td>
                            <td class='docblock-short'>
                                 <p>An owned printable table</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -131,6 +151,7 @@
                            <td class='docblock-short'>
                                 <p>A borrowed immutable <code>Table</code> slice
 A <code>TableSlice</code> is obtained by slicing a <code>Table</code> with the <code>Slice::slice</code> method.</p>
+
                            </td>
                        </tr></table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
 <table>
@@ -139,6 +160,7 @@ A <code>TableSlice</code> is obtained by slicing a <code>Table</code> with the <
                                   title='trait prettytable::Slice'>Slice</a></td>
                            <td class='docblock-short'>
                                 <p>Trait implemented by types which can be sliced</p>
+
                            </td>
                        </tr></table></section>
     <section id='search' class="content hidden"></section>
@@ -153,20 +175,22 @@ A <code>TableSlice</code> is obtained by slicing a <code>Table</code> with the <
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

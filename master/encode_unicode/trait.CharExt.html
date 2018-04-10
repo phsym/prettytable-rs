@@ -10,8 +10,11 @@
     <title>encode_unicode::CharExt - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../main.css">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../dark.css">
+    <link rel="stylesheet" type="text/css" href="../main.css" id="themeStyle">
+    <script src="../storage.js"></script>
     
 
     
@@ -33,6 +36,13 @@
         <p class='location'>Trait CharExt</p><div class="sidebar-elems"><div class="block items"><a class="sidebar-title" href="#required-methods">Required Methods</a><div class="sidebar-links"><a href="#tymethod.to_utf8">to_utf8</a><a href="#tymethod.to_utf16">to_utf16</a><a href="#tymethod.iter_utf8_bytes">iter_utf8_bytes</a><a href="#tymethod.iter_utf16_units">iter_utf16_units</a><a href="#tymethod.to_utf8_array">to_utf8_array</a><a href="#tymethod.to_utf16_tuple">to_utf16_tuple</a><a href="#tymethod.from_utf8_slice_start">from_utf8_slice_start</a><a href="#tymethod.from_utf16_slice_start">from_utf16_slice_start</a><a href="#tymethod.from_utf8_array">from_utf8_array</a><a href="#tymethod.from_utf16_tuple">from_utf16_tuple</a><a href="#tymethod.from_utf8_exact_slice_unchecked">from_utf8_exact_slice_unchecked</a><a href="#tymethod.from_utf16_tuple_unchecked">from_utf16_tuple_unchecked</a><a href="#tymethod.from_u32_detailed">from_u32_detailed</a></div><a class="sidebar-title" href="#foreign-impls">Implementations on Foreign Types</a><div class="sidebar-links"><a href="#impl-CharExt">char</a></div><a class="sidebar-title" href="#implementors">Implementors</a></div><p class='location'><a href='index.html'>encode_unicode</a></p><script>window.sidebarCurrent = {name: 'CharExt', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -71,24 +81,19 @@
             </h2>
             <div class='methods'>
         <h3 id='tymethod.to_utf8' class='method'><span id='to_utf8.v' class='invisible'><code>fn <a href='#tymethod.to_utf8' class='fnname'>to_utf8</a>(self) -&gt; <a class="struct" href="../encode_unicode/struct.Utf8Char.html" title="struct encode_unicode::Utf8Char">Utf8Char</a></code></span></h3><div class='docblock'><p>Get the UTF-8 representation of this codepoint.</p>
-
 <p><code>Utf8Char</code> is to <code>[u8;4]</code> what <code>char</code> is to <code>u32</code>:
 a restricted type that cannot be mutated internally.</p>
 </div><h3 id='tymethod.to_utf16' class='method'><span id='to_utf16.v' class='invisible'><code>fn <a href='#tymethod.to_utf16' class='fnname'>to_utf16</a>(self) -&gt; <a class="struct" href="../encode_unicode/struct.Utf16Char.html" title="struct encode_unicode::Utf16Char">Utf16Char</a></code></span></h3><div class='docblock'><p>Get the UTF-16 representation of this codepoint.</p>
-
 <p><code>Utf16Char</code> is to <code>[u16;2]</code> what <code>char</code> is to <code>u32</code>:
 a restricted type that cannot be mutated internally.</p>
 </div><div class="important-traits"><div class='tooltip'>ⓘ<span class='tooltiptext'>Important traits for <a class="struct" href="../encode_unicode/struct.Utf8Iterator.html" title="struct encode_unicode::Utf8Iterator">Utf8Iterator</a></span></div><div class="content hidden"><h3 class="important">Important traits for <a class="struct" href="../encode_unicode/struct.Utf8Iterator.html" title="struct encode_unicode::Utf8Iterator">Utf8Iterator</a></h3><code class="content"><span class="where fmt-newline">impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/iter/iterator/trait.Iterator.html" title="trait core::iter::iterator::Iterator">Iterator</a> for <a class="struct" href="../encode_unicode/struct.Utf8Iterator.html" title="struct encode_unicode::Utf8Iterator">Utf8Iterator</a></span><span class="where fmt-newline">    type <a href='https://doc.rust-lang.org/nightly/core/iter/iterator/trait.Iterator.html#associatedtype.Item' class="type">Item</a> = <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>;</span><span class="where fmt-newline">impl <a class="trait" href="https://doc.rust-lang.org/nightly/std/io/trait.Read.html" title="trait std::io::Read">Read</a> for <a class="struct" href="../encode_unicode/struct.Utf8Iterator.html" title="struct encode_unicode::Utf8Iterator">Utf8Iterator</a></span></code></div></div><h3 id='tymethod.iter_utf8_bytes' class='method'><span id='iter_utf8_bytes.v' class='invisible'><code>fn <a href='#tymethod.iter_utf8_bytes' class='fnname'>iter_utf8_bytes</a>(self) -&gt; <a class="struct" href="../encode_unicode/struct.Utf8Iterator.html" title="struct encode_unicode::Utf8Iterator">Utf8Iterator</a></code></span></h3><div class='docblock'><p>Iterate over or <a href="https://doc.rust-lang.org/std/io/trait.Read.html">read</a>
 the one to four bytes in the UTF-8 representation of this codepoint.</p>
-
 <p>An identical alternative to the unstable <code>char.encode_utf8()</code>.
 That method somehow still exist on stable, so I have to use a different name.</p>
 </div><div class="important-traits"><div class='tooltip'>ⓘ<span class='tooltiptext'>Important traits for <a class="struct" href="../encode_unicode/struct.Utf16Iterator.html" title="struct encode_unicode::Utf16Iterator">Utf16Iterator</a></span></div><div class="content hidden"><h3 class="important">Important traits for <a class="struct" href="../encode_unicode/struct.Utf16Iterator.html" title="struct encode_unicode::Utf16Iterator">Utf16Iterator</a></h3><code class="content"><span class="where fmt-newline">impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/iter/iterator/trait.Iterator.html" title="trait core::iter::iterator::Iterator">Iterator</a> for <a class="struct" href="../encode_unicode/struct.Utf16Iterator.html" title="struct encode_unicode::Utf16Iterator">Utf16Iterator</a></span><span class="where fmt-newline">    type <a href='https://doc.rust-lang.org/nightly/core/iter/iterator/trait.Iterator.html#associatedtype.Item' class="type">Item</a> = <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u16.html">u16</a>;</span></code></div></div><h3 id='tymethod.iter_utf16_units' class='method'><span id='iter_utf16_units.v' class='invisible'><code>fn <a href='#tymethod.iter_utf16_units' class='fnname'>iter_utf16_units</a>(self) -&gt; <a class="struct" href="../encode_unicode/struct.Utf16Iterator.html" title="struct encode_unicode::Utf16Iterator">Utf16Iterator</a></code></span></h3><div class='docblock'><p>Iterate over the one or two units in the UTF-16 representation of this codepoint.</p>
-
 <p>An identical alternative to the unstable <code>char.encode_utf16()</code>.
 That method somehow still exist on stable, so I have to use a different name.</p>
 </div><h3 id='tymethod.to_utf8_array' class='method'><span id='to_utf8_array.v' class='invisible'><code>fn <a href='#tymethod.to_utf8_array' class='fnname'>to_utf8_array</a>(self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">(</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.array.html">[</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.array.html">; 4]</a>, <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">)</a></code></span></h3><div class='docblock'><p>Convert this char to an UTF-8 array and lenght,</p>
-
 <p>The returned array is left-aligned with unused bytes set to zero,
 and the usize is how many bytes are used.</p>
 </div><h3 id='tymethod.to_utf16_tuple' class='method'><span id='to_utf16_tuple.v' class='invisible'><code>fn <a href='#tymethod.to_utf16_tuple' class='fnname'>to_utf16_tuple</a>(self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">(</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u16.html">u16</a>, <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u16.html">u16</a>&gt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">)</a></code></span></h3><div class='docblock'><p>Convert this char to UTF-16.
@@ -101,16 +106,16 @@ and also return how many units were used.</p>
 </div><h3 id='tymethod.from_utf16_tuple' class='method'><span id='from_utf16_tuple.v' class='invisible'><code>fn <a href='#tymethod.from_utf16_tuple' class='fnname'>from_utf16_tuple</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;utf16: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">(</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u16.html">u16</a>, <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u16.html">u16</a>&gt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">)</a><br>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;Self, <a class="enum" href="../encode_unicode/error/enum.InvalidUtf16Tuple.html" title="enum encode_unicode::error::InvalidUtf16Tuple">InvalidUtf16Tuple</a>&gt;</code></span></h3><div class='docblock'><p>Convert a UTF-16 pair as returned from <code>.to_utf16_tuple()</code> into a <code>char</code>.</p>
 </div><h3 id='tymethod.from_utf8_exact_slice_unchecked' class='method'><span id='from_utf8_exact_slice_unchecked.v' class='invisible'><code>unsafe fn <a href='#tymethod.from_utf8_exact_slice_unchecked' class='fnname'>from_utf8_exact_slice_unchecked</a>(src: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>) -&gt; Self</code></span></h3><div class='docblock'><p>Convert an UTF-8 sequence into a char.
 The length of the slice is the length of the sequence, should be 1,2,3 or 4.</p>
-
-<h1 id='panics' class='section-header'><a href='#panics'>Panics</a></h1>
+<h1 id="panics" class="section-header"><a href="#panics">Panics</a></h1>
 <p>If the slice is empty</p>
 </div><h3 id='tymethod.from_utf16_tuple_unchecked' class='method'><span id='from_utf16_tuple_unchecked.v' class='invisible'><code>unsafe fn <a href='#tymethod.from_utf16_tuple_unchecked' class='fnname'>from_utf16_tuple_unchecked</a>(utf16: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">(</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u16.html">u16</a>, <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u16.html">u16</a>&gt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">)</a>) -&gt; Self</code></span></h3><div class='docblock'><p>Convert a UTF-16 tuple as returned from <code>.to_utf16_tuple()</code> into a <code>char</code>.</p>
 </div><h3 id='tymethod.from_u32_detailed' class='method'><span id='from_u32_detailed.v' class='invisible'><code>fn <a href='#tymethod.from_u32_detailed' class='fnname'>from_u32_detailed</a>(c: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;Self, <a class="enum" href="../encode_unicode/error/enum.InvalidCodepoint.html" title="enum encode_unicode::error::InvalidCodepoint">InvalidCodepoint</a>&gt;</code></span></h3><div class='docblock'><p>Perform some extra validations compared to <code>char::from_u32_unchecked()</code></p>
-
-<h1 id='errors' class='section-header'><a href='#errors'>Errors</a></h1>
-<p>This function will return an error if
-* the value is greater than 0x10ffff
-* the value is between 0xd800 and 0xdfff (inclusive)</p>
+<h1 id="errors" class="section-header"><a href="#errors">Errors</a></h1>
+<p>This function will return an error if</p>
+<ul>
+<li>the value is greater than 0x10ffff</li>
+<li>the value is between 0xd800 and 0xdfff (inclusive)</li>
+</ul>
 </div></div>
                 <h2 id='foreign-impls' class='small-section-header'>
                   Implementations on Foreign Types<a href='#foreign-impls' class='anchor'></a>
@@ -149,20 +154,22 @@ The length of the slice is the length of the sequence, should be 1,2,3 or 4.</p>
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

@@ -10,8 +10,11 @@
     <title>csv::Writer - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../main.css">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../dark.css">
+    <link rel="stylesheet" type="text/css" href="../main.css" id="themeStyle">
+    <script src="../storage.js"></script>
     
 
     
@@ -33,6 +36,13 @@
         <p class='location'>Struct Writer</p><div class="sidebar-elems"><div class="block items"><a class="sidebar-title" href="#methods">Methods</a><div class="sidebar-links"><a href="#method.from_file">from_file</a><a href="#method.from_writer">from_writer</a><a href="#method.from_buffer">from_buffer</a><a href="#method.from_memory">from_memory</a><a href="#method.as_string">as_string</a><a href="#method.as_bytes">as_bytes</a><a href="#method.into_string">into_string</a><a href="#method.into_bytes">into_bytes</a><a href="#method.encode">encode</a><a href="#method.write">write</a><a href="#method.flush">flush</a><a href="#method.delimiter">delimiter</a><a href="#method.flexible">flexible</a><a href="#method.record_terminator">record_terminator</a><a href="#method.quote_style">quote_style</a><a href="#method.quote">quote</a><a href="#method.escape">escape</a><a href="#method.double_quote">double_quote</a></div></div><p class='location'><a href='index.html'>csv</a></p><script>window.sidebarCurrent = {name: 'Writer', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -51,25 +61,21 @@
                    </a>
                </span><a class='srclink' href='../src/csv/writer.rs.html#68-78' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct Writer&lt;W:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/std/io/trait.Write.html" title="trait std::io::Write">Write</a>&gt; { /* fields omitted */ }</pre><div class='docblock'><p>A CSV writer.</p>
-
 <p>This writer provides a convenient interface for encoding CSV data. While
 creating CSV data is much easier than parsing it, having a writer can
 be convenient because it can handle quoting for you automatically.
 Moreover, this particular writer supports <code>Encodable</code> types, which makes
 it easy to write your custom types as CSV records.</p>
-
 <p>All CSV data produced by this writer, with default options, conforms with
 <a href="http://tools.ietf.org/html/rfc4180">RFC 4180</a>. (If certain options like
 flexible record lengths are enabled, then compliance with RFC 4180 cannot
 be guaranteed.)</p>
-
 <p>One slight deviation is that records with a single empty field are always
 encoded as <code>&quot;&quot;</code>. This ensures that the record is not skipped since some
 CSV parsers will ignore consecutive record terminators (like the one in
 this crate).</p>
-
-<h3 id='example' class='section-header'><a href='#example'>Example</a></h3>
-<p>Here&#39;s an example that encodes word pairs and their edit distances:</p>
+<h3 id="example" class="section-header"><a href="#example">Example</a></h3>
+<p>Here's an example that encodes word pairs and their edit distances:</p>
 
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class="ident">records</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[
@@ -92,17 +98,14 @@ this crate).</p>
                 <h3 id='impl' class='impl'><span class='in-band'><code>impl <a class="struct" href="../csv/struct.Writer.html" title="struct csv::Writer">Writer</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/std/fs/struct.File.html" title="struct std::fs::File">File</a>&gt;</code><a href='#impl' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/csv/writer.rs.html#80-88' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.from_file' class="method"><span id='from_file.v' class='invisible'><code>pub fn <a href='#method.from_file' class='fnname'>from_file</a>&lt;P:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html" title="trait core::convert::AsRef">AsRef</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/std/path/struct.Path.html" title="struct std::path::Path">Path</a>&gt;&gt;(path: P) -&gt; <a class="type" href="../csv/type.Result.html" title="type csv::Result">Result</a>&lt;<a class="struct" href="../csv/struct.Writer.html" title="struct csv::Writer">Writer</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/std/fs/struct.File.html" title="struct std::fs::File">File</a>&gt;&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/csv/writer.rs.html#85-87' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Creates a new <code>Writer</code> that writes CSV data to the file path given.</p>
-
 <p>The file is created if it does not already exist and is truncated
 otherwise.</p>
 </div></div><h3 id='impl-1' class='impl'><span class='in-band'><code>impl&lt;W:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/std/io/trait.Write.html" title="trait std::io::Write">Write</a>&gt; <a class="struct" href="../csv/struct.Writer.html" title="struct csv::Writer">Writer</a>&lt;W&gt;</code><a href='#impl-1' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/csv/writer.rs.html#91-117' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.from_writer' class="method"><span id='from_writer.v' class='invisible'><code>pub fn <a href='#method.from_writer' class='fnname'>from_writer</a>(w: W) -&gt; <a class="struct" href="../csv/struct.Writer.html" title="struct csv::Writer">Writer</a>&lt;W&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/csv/writer.rs.html#95-97' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Creates a new CSV writer that writes to the <code>io::Write</code> given.</p>
-
 <p>Note that the writer is buffered for you automatically.</p>
 </div><h4 id='method.from_buffer' class="method"><span id='from_buffer.v' class='invisible'><code>pub fn <a href='#method.from_buffer' class='fnname'>from_buffer</a>(buf: <a class="struct" href="https://doc.rust-lang.org/nightly/std/io/buffered/struct.BufWriter.html" title="struct std::io::buffered::BufWriter">BufWriter</a>&lt;W&gt;) -&gt; <a class="struct" href="../csv/struct.Writer.html" title="struct csv::Writer">Writer</a>&lt;W&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/csv/writer.rs.html#104-116' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Creates a new CSV writer that writes to the buffer given.</p>
-
 <p>This lets you specify your own buffered writer (e.g., use a different
 capacity). All other constructors wrap the writer given in a buffer
 with default capacity.</p>
@@ -122,15 +125,13 @@ cumulative CSV data.</p>
 </div></div><h3 id='impl-3' class='impl'><span class='in-band'><code>impl&lt;W:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/std/io/trait.Write.html" title="trait std::io::Write">Write</a>&gt; <a class="struct" href="../csv/struct.Writer.html" title="struct csv::Writer">Writer</a>&lt;W&gt;</code><a href='#impl-3' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/csv/writer.rs.html#167-291' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.encode' class="method"><span id='encode.v' class='invisible'><code>pub fn <a href='#method.encode' class='fnname'>encode</a>&lt;E&gt;(&amp;mut self, e: E) -&gt; <a class="type" href="../csv/type.Result.html" title="type csv::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;E: <a class="trait" href="../rustc_serialize/serialize/trait.Encodable.html" title="trait rustc_serialize::serialize::Encodable">Encodable</a>,&nbsp;</span></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/csv/writer.rs.html#208-212' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Writes a record by encoding any <code>Encodable</code> value.</p>
-
 <p>This is the most convenient way to write CSV data. Most Rust types
 map to CSV data in a straight forward way. A vector is just a sequence
 of fields. Similarly for a struct. Enumerations of zero or one
 arguments are supported too. (Enums with zero arguments encode to their
 name, while enums of one argument encode to their constituent value.)
 Option types are also supported (<code>None</code> encodes to an empty field).</p>
-
-<h3 id='example-1' class='section-header'><a href='#example-1'>Example</a></h3>
+<h3 id="example-1" class="section-header"><a href="#example-1">Example</a></h3>
 <p>This example encodes word pairs that may or may not have their
 edit distances computed.</p>
 
@@ -158,15 +159,12 @@ edit distances computed.</p>
            <span class="string">&quot;sticker,mortals,\nbribed,personae,7\n&quot;</span>);</pre>
 </div><h4 id='method.write' class="method"><span id='write.v' class='invisible'><code>pub fn <a href='#method.write' class='fnname'>write</a>&lt;'a, I&gt;(&amp;mut self, r: I) -&gt; <a class="type" href="../csv/type.Result.html" title="type csv::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;I: <a class="trait" href="https://doc.rust-lang.org/nightly/core/iter/iterator/trait.Iterator.html" title="trait core::iter::iterator::Iterator">Iterator</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;I as <a class="trait" href="https://doc.rust-lang.org/nightly/core/iter/iterator/trait.Iterator.html" title="trait core::iter::iterator::Iterator">Iterator</a>&gt;::<a class="type" href="https://doc.rust-lang.org/nightly/core/iter/iterator/trait.Iterator.html#associatedtype.Item" title="type core::iter::iterator::Iterator::Item">Item</a>: <a class="trait" href="../csv/trait.BorrowBytes.html" title="trait csv::BorrowBytes">BorrowBytes</a>,&nbsp;</span></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/csv/writer.rs.html#253-256' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Writes a record of strings (Unicode or raw bytes).</p>
-
 <p>This is meant to be the standard method provided by most CSV writers.
 That is, it writes a record of strings---no more and no less.</p>
-
 <p>This method accepts an iterator of <em>fields</em> for a single record. Each
 field must satisfy <code>BorrowBytes</code>, which allows the caller to control
 allocation.</p>
-
-<h3 id='example-2' class='section-header'><a href='#example-2'>Example</a></h3>
+<h3 id="example-2" class="section-header"><a href="#example-2">Example</a></h3>
 <p>This shows how to write string records.</p>
 
 <pre class="rust rust-example-rendered">
@@ -183,9 +181,8 @@ allocation.</p>
     <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">wtr</span>.<span class="ident">write</span>(<span class="ident">record</span>.<span class="ident">into_iter</span>());
     <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">result</span>.<span class="ident">is_ok</span>());
 }</pre>
-
 <p>This shows how to write records that do not correspond to a valid UTF-8
-encoding. (Note the use of Rust&#39;s byte string syntax!)</p>
+encoding. (Note the use of Rust's byte string syntax!)</p>
 
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">wtr</span> <span class="op">=</span> <span class="ident">csv</span>::<span class="ident">Writer</span>::<span class="ident">from_memory</span>();
@@ -198,52 +195,40 @@ encoding. (Note the use of Rust&#39;s byte string syntax!)</p>
 </div></div><h3 id='impl-4' class='impl'><span class='in-band'><code>impl&lt;W:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/std/io/trait.Write.html" title="trait std::io::Write">Write</a>&gt; <a class="struct" href="../csv/struct.Writer.html" title="struct csv::Writer">Writer</a>&lt;W&gt;</code><a href='#impl-4' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/csv/writer.rs.html#293-371' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.delimiter' class="method"><span id='delimiter.v' class='invisible'><code>pub fn <a href='#method.delimiter' class='fnname'>delimiter</a>(self, delimiter: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>) -&gt; <a class="struct" href="../csv/struct.Writer.html" title="struct csv::Writer">Writer</a>&lt;W&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/csv/writer.rs.html#301-304' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>The delimiter to use when writing CSV data.</p>
-
 <p>Since the CSV writer is meant to be mostly encoding agnostic, you must
 specify the delimiter as a single ASCII byte. For example, to write
-tab-delimited data, you would use <code>b&#39;\t&#39;</code>.</p>
-
-<p>The default value is <code>b&#39;,&#39;</code>.</p>
+tab-delimited data, you would use <code>b'\t'</code>.</p>
+<p>The default value is <code>b','</code>.</p>
 </div><h4 id='method.flexible' class="method"><span id='flexible.v' class='invisible'><code>pub fn <a href='#method.flexible' class='fnname'>flexible</a>(self, yes: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>) -&gt; <a class="struct" href="../csv/struct.Writer.html" title="struct csv::Writer">Writer</a>&lt;W&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/csv/writer.rs.html#312-315' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Whether to allow flexible length records when writing CSV data.</p>
-
 <p>When this is set to <code>true</code>, records in the CSV data can have different
 lengths. By default, this is disabled, which will cause the CSV writer
 to return an error if it tries to write a record that has a different
 length than other records it has already written.</p>
 </div><h4 id='method.record_terminator' class="method"><span id='record_terminator.v' class='invisible'><code>pub fn <a href='#method.record_terminator' class='fnname'>record_terminator</a>(self, term: <a class="enum" href="../csv/enum.RecordTerminator.html" title="enum csv::RecordTerminator">RecordTerminator</a>) -&gt; <a class="struct" href="../csv/struct.Writer.html" title="struct csv::Writer">Writer</a>&lt;W&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/csv/writer.rs.html#321-324' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Sets the record terminator to use when writing CSV data.</p>
-
-<p>By default, this is <code>RecordTerminator::Any(b&#39;\n&#39;)</code>. If you want to
+<p>By default, this is <code>RecordTerminator::Any(b'\n')</code>. If you want to
 use CRLF (<code>\r\n</code>) line endings, then use <code>RecordTerminator:CRLF</code>.</p>
 </div><h4 id='method.quote_style' class="method"><span id='quote_style.v' class='invisible'><code>pub fn <a href='#method.quote_style' class='fnname'>quote_style</a>(self, style: <a class="enum" href="../csv/enum.QuoteStyle.html" title="enum csv::QuoteStyle">QuoteStyle</a>) -&gt; <a class="struct" href="../csv/struct.Writer.html" title="struct csv::Writer">Writer</a>&lt;W&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/csv/writer.rs.html#330-333' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Set the quoting style to use when writing CSV data.</p>
-
 <p>By default, this is set to <code>QuoteStyle::Necessary</code>, which will only
 use quotes when they are necessary to preserve the integrity of data.</p>
 </div><h4 id='method.quote' class="method"><span id='quote.v' class='invisible'><code>pub fn <a href='#method.quote' class='fnname'>quote</a>(self, quote: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>) -&gt; <a class="struct" href="../csv/struct.Writer.html" title="struct csv::Writer">Writer</a>&lt;W&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/csv/writer.rs.html#342-345' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Set the quote character to use when writing CSV data.</p>
-
 <p>Since the CSV parser is meant to be mostly encoding agnostic, you must
 specify the quote as a single ASCII byte. For example, to write
-single quoted data, you would use <code>b&#39;\&#39;&#39;</code>.</p>
-
-<p>The default value is <code>b&#39;&quot;&#39;</code>.</p>
+single quoted data, you would use <code>b'\''</code>.</p>
+<p>The default value is <code>b'&quot;'</code>.</p>
 </div><h4 id='method.escape' class="method"><span id='escape.v' class='invisible'><code>pub fn <a href='#method.escape' class='fnname'>escape</a>(self, escape: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>) -&gt; <a class="struct" href="../csv/struct.Writer.html" title="struct csv::Writer">Writer</a>&lt;W&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/csv/writer.rs.html#355-358' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Set the escape character to use when writing CSV data.</p>
-
 <p>This is only used when <code>double_quote</code> is set to <code>false</code>.</p>
-
 <p>Since the CSV parser is meant to be mostly encoding agnostic, you must
 specify the escape as a single ASCII byte.</p>
-
-<p>The default value is <code>b&#39;\\&#39;</code>.</p>
+<p>The default value is <code>b'\\'</code>.</p>
 </div><h4 id='method.double_quote' class="method"><span id='double_quote.v' class='invisible'><code>pub fn <a href='#method.double_quote' class='fnname'>double_quote</a>(self, yes: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>) -&gt; <a class="struct" href="../csv/struct.Writer.html" title="struct csv::Writer">Writer</a>&lt;W&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/csv/writer.rs.html#367-370' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Set the quoting escape mechanism.</p>
-
 <p>When enabled (which is the default), quotes are escaped by doubling
 them. e.g., <code>&quot;</code> escapes to <code>&quot;&quot;</code>.</p>
-
 <p>When disabled, quotes are escaped with the escape character (which
 is <code>\\</code> by default).</p>
 </div></div></section>
@@ -259,20 +244,22 @@ is <code>\\</code> by default).</p>
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

@@ -10,8 +10,11 @@
     <title>rustc_serialize::base64::FromBase64 - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <script src="../../storage.js"></script>
     
 
     <link rel="shortcut icon" href="https://www.rust-lang.org/favicon.ico">
@@ -33,6 +36,13 @@
         <p class='location'>Trait FromBase64</p><div class="sidebar-elems"><div class="block items"><a class="sidebar-title" href="#required-methods">Required Methods</a><div class="sidebar-links"><a href="#tymethod.from_base64">from_base64</a></div><a class="sidebar-title" href="#foreign-impls">Implementations on Foreign Types</a><div class="sidebar-links"><a href="#impl-FromBase64">str</a><a href="#impl-FromBase64">[u8]</a><a href="#impl-FromBase64">&amp;&#39;a T</a></div><a class="sidebar-title" href="#implementors">Implementors</a></div><p class='location'><a href='../index.html'>rustc_serialize</a>::<wbr><a href='index.html'>base64</a></p><script>window.sidebarCurrent = {name: 'FromBase64', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -68,11 +78,9 @@ an owned vector of bytes, returning the vector.</p>
 <span class='docblock autohide'><div class='impl-items'><h4 id='method.from_base64' class="method"><span id='from_base64.v-1' class='invisible'><code>fn <a href='#method.from_base64' class='fnname'>from_base64</a>(&amp;self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>&gt;, <a class="enum" href="../../rustc_serialize/base64/enum.FromBase64Error.html" title="enum rustc_serialize::base64::FromBase64Error">FromBase64Error</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/rustc_serialize/base64.rs.html#269-271' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Convert any base64 encoded string (literal, <code>@</code>, <code>&amp;</code>, or <code>~</code>)
 to the byte values it encodes.</p>
-
 <p>You can use the <code>String::from_utf8</code> function to turn a <code>Vec&lt;u8&gt;</code> into a
 string with characters corresponding to those values.</p>
-
-<h1 id='example' class='section-header'><a href='#example'>Example</a></h1>
+<h1 id="example" class="section-header"><a href="#example">Example</a></h1>
 <p>This converts a string literal to base64 and back.</p>
 
 <pre class="rust rust-example-rendered">
@@ -114,20 +122,22 @@ string with characters corresponding to those values.</p>
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

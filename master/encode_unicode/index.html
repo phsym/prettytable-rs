@@ -10,8 +10,11 @@
     <title>encode_unicode - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../main.css">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../dark.css">
+    <link rel="stylesheet" type="text/css" href="../main.css" id="themeStyle">
+    <script src="../storage.js"></script>
     
 
     
@@ -33,6 +36,13 @@
         <p class='location'>Crate encode_unicode</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#modules">Modules</a></li><li><a href="#structs">Structs</a></li><li><a href="#traits">Traits</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'encode_unicode', ty: 'mod', relpath: '../'};</script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -51,29 +61,28 @@
                    </a>
                </span><a class='srclink' href='../src/encode_unicode/lib.rs.html#10-71' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>Miscellaneous UTF-8 and UTF-16 types and methods.</p>
-
-<h1 id='optional-features' class='section-header'><a href='#optional-features'>Optional features:</a></h1>
+<h1 id="optional-features" class="section-header"><a href="#optional-features">Optional features:</a></h1>
 <ul>
-<li><p><code>#![no_std]</code>-mode: There are a few differences:</p>
-
+<li>
+<p><code>#![no_std]</code>-mode: There are a few differences:</p>
 <ul>
-<li><code>AsciiExt</code> doesn&#39;t exist, but <code>is_ascii()</code> is made available as an inherent impl.</li>
-<li><code>Error</code> doesn&#39;t exist, but <code>description()</code> is made available as an inherent impl.</li>
+<li><code>AsciiExt</code> doesn't exist, but <code>is_ascii()</code> is made available as an inherent impl.</li>
+<li><code>Error</code> doesn't exist, but <code>description()</code> is made available as an inherent impl.</li>
 <li><code>Extend</code>/<code>FromIterator</code>-implementations for <code>String</code>/<code>Vec&lt;u8&gt;</code>/<code>Vec&lt;u16&gt;</code>.</li>
-<li>There is no <code>io</code>, so <code>Utf8Iterator</code> doesn&#39;t implement <code>Read</code>.</li>
+<li>There is no <code>io</code>, so <code>Utf8Iterator</code> doesn't implement <code>Read</code>.</li>
 </ul>
-
 <p>This feature is enabled by setting <code>default-features=false</code> in <code>Cargo.toml</code>:
-<code>encode_unicode = {version=&quot;0.3&quot;, default-features=false}</code></p></li>
-<li><p>Integration with the <a href="https://tomprogrammer.github.io/rust-ascii/ascii/index.html">ascii</a> crate:<br>
+<code>encode_unicode = {version=&quot;0.3&quot;, default-features=false}</code></p>
+</li>
+<li>
+<p>Integration with the <a href="https://tomprogrammer.github.io/rust-ascii/ascii/index.html">ascii</a> crate:<br />
 Convert <code>Utf8Char</code> and <code>Utf16Char</code> to and from
-<a href="https://tomprogrammer.github.io/rust-ascii/ascii/enum.AsciiChar.html">ascii::<code>AsciiChar</code></a>.</p></li>
+<a href="https://tomprogrammer.github.io/rust-ascii/ascii/enum.AsciiChar.html">ascii::<code>AsciiChar</code></a>.</p>
+</li>
 </ul>
-
 <p>The minimum supported version of Rust is 1.15,
 older versions might work, but also break in a minor update.</p>
-
-<p><a href="https://crates.io/crates/encode_unicode">crates.io page</a><br>
+<p><a href="https://crates.io/crates/encode_unicode">crates.io page</a><br />
 <a href="https://github.com/tormol/encode_unicode">githab repository</a></p>
 </div><h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
 <table>
@@ -82,6 +91,7 @@ older versions might work, but also break in a minor update.</p>
                                   title='mod encode_unicode::error'>error</a></td>
                            <td class='docblock-short'>
                                 <p>Errors returned by various conversion methods in this crate.</p>
+
                            </td>
                        </tr></table><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
@@ -90,6 +100,7 @@ older versions might work, but also break in a minor update.</p>
                                   title='struct encode_unicode::Utf16Char'>Utf16Char</a></td>
                            <td class='docblock-short'>
                                 <p>An unicode codepoint stored as UTF-16.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -97,6 +108,7 @@ older versions might work, but also break in a minor update.</p>
                                   title='struct encode_unicode::Utf16Iterator'>Utf16Iterator</a></td>
                            <td class='docblock-short'>
                                 <p>Iterate over the units of the UTF-16 representation of a codepoint.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -104,6 +116,7 @@ older versions might work, but also break in a minor update.</p>
                                   title='struct encode_unicode::Utf8Char'>Utf8Char</a></td>
                            <td class='docblock-short'>
                                 <p>An unicode codepoint stored as UTF-8.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -111,6 +124,7 @@ older versions might work, but also break in a minor update.</p>
                                   title='struct encode_unicode::Utf8Iterator'>Utf8Iterator</a></td>
                            <td class='docblock-short'>
                                 <p>Read or iterate over the bytes of the UTF-8 representation of a codepoint.</p>
+
                            </td>
                        </tr></table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
 <table>
@@ -119,6 +133,7 @@ older versions might work, but also break in a minor update.</p>
                                   title='trait encode_unicode::CharExt'>CharExt</a></td>
                            <td class='docblock-short'>
                                 <p>Extension trait for <code>char</code> that adds methods for converting to and from UTF-8 or UTF-16.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -126,6 +141,7 @@ older versions might work, but also break in a minor update.</p>
                                   title='trait encode_unicode::U16UtfExt'>U16UtfExt</a></td>
                            <td class='docblock-short'>
                                 <p>Methods for working with <code>u16</code>s as UTF-16 units.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -133,6 +149,7 @@ older versions might work, but also break in a minor update.</p>
                                   title='trait encode_unicode::U8UtfExt'>U8UtfExt</a></td>
                            <td class='docblock-short'>
                                 <p>Methods for working with <code>u8</code>s as UTF-8 bytes.</p>
+
                            </td>
                        </tr></table></section>
     <section id='search' class="content hidden"></section>
@@ -147,20 +164,22 @@ older versions might work, but also break in a minor update.</p>
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

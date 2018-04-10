@@ -10,8 +10,11 @@
     <title>prettytable::format - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <script src="../../storage.js"></script>
     
 
     
@@ -33,6 +36,13 @@
         <p class='location'>Module format</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#modules">Modules</a></li><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li></ul></div><p class='location'><a href='../index.html'>prettytable</a></p><script>window.sidebarCurrent = {name: 'format', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -59,6 +69,7 @@
                            <td class='docblock-short'>
                                 <p>Predifined formats. Those constants are lazily evaluated when
 the corresponding struct is dereferenced</p>
+
                            </td>
                        </tr></table><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
@@ -67,6 +78,7 @@ the corresponding struct is dereferenced</p>
                                   title='struct prettytable::format::FormatBuilder'>FormatBuilder</a></td>
                            <td class='docblock-short'>
                                 <p>A builder to create a <code>TableFormat</code></p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -74,6 +86,7 @@ the corresponding struct is dereferenced</p>
                                   title='struct prettytable::format::LineSeparator'>LineSeparator</a></td>
                            <td class='docblock-short'>
                                 <p>Contains the character used for printing a line separator</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -81,6 +94,7 @@ the corresponding struct is dereferenced</p>
                                   title='struct prettytable::format::TableFormat'>TableFormat</a></td>
                            <td class='docblock-short'>
                                 <p>Contains the table formatting rules</p>
+
                            </td>
                        </tr></table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
 <table>
@@ -88,7 +102,8 @@ the corresponding struct is dereferenced</p>
                            <td><a class="enum" href="enum.Alignment.html"
                                   title='enum prettytable::format::Alignment'>Alignment</a></td>
                            <td class='docblock-short'>
-                                <p>Alignment for cell&#39;s content</p>
+                                <p>Alignment for cell's content</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -96,6 +111,7 @@ the corresponding struct is dereferenced</p>
                                   title='enum prettytable::format::ColumnPosition'>ColumnPosition</a></td>
                            <td class='docblock-short'>
                                 <p>Position of a column separator in a row</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -103,6 +119,7 @@ the corresponding struct is dereferenced</p>
                                   title='enum prettytable::format::LinePosition'>LinePosition</a></td>
                            <td class='docblock-short'>
                                 <p>Position of a line separator in a table</p>
+
                            </td>
                        </tr></table></section>
     <section id='search' class="content hidden"></section>
@@ -117,20 +134,22 @@ the corresponding struct is dereferenced</p>
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

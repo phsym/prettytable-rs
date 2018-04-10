@@ -10,8 +10,11 @@
     <title>prettytable::format::consts - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../../main.css" id="themeStyle">
+    <script src="../../../storage.js"></script>
     
 
     
@@ -33,6 +36,13 @@
         <p class='location'>Module consts</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#structs">Structs</a></li></ul></div><p class='location'><a href='../../index.html'>prettytable</a>::<wbr><a href='../index.html'>format</a></p><script>window.sidebarCurrent = {name: 'consts', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -59,6 +69,7 @@ the corresponding struct is dereferenced</p>
                                   title='struct prettytable::format::consts::FORMAT_BORDERS_ONLY'>FORMAT_BORDERS_ONLY</a></td>
                            <td class='docblock-short'>
                                 <p>Format for a table with only external borders and title separator</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -66,6 +77,7 @@ the corresponding struct is dereferenced</p>
                                   title='struct prettytable::format::consts::FORMAT_CLEAN'>FORMAT_CLEAN</a></td>
                            <td class='docblock-short'>
                                 <p>Format for printing a table without any separators (only alignment)</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -73,6 +85,7 @@ the corresponding struct is dereferenced</p>
                                   title='struct prettytable::format::consts::FORMAT_DEFAULT'>FORMAT_DEFAULT</a></td>
                            <td class='docblock-short'>
                                 <p>Default table format</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -80,6 +93,7 @@ the corresponding struct is dereferenced</p>
                                   title='struct prettytable::format::consts::FORMAT_NO_BORDER'>FORMAT_NO_BORDER</a></td>
                            <td class='docblock-short'>
                                 <p>A table with no external border</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -87,6 +101,7 @@ the corresponding struct is dereferenced</p>
                                   title='struct prettytable::format::consts::FORMAT_NO_BORDER_LINE_SEPARATOR'>FORMAT_NO_BORDER_LINE_SEPARATOR</a></td>
                            <td class='docblock-short'>
                                 <p>A table with no external border and no line separation</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -94,6 +109,7 @@ the corresponding struct is dereferenced</p>
                                   title='struct prettytable::format::consts::FORMAT_NO_COLSEP'>FORMAT_NO_COLSEP</a></td>
                            <td class='docblock-short'>
                                 <p>No column separator</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -101,6 +117,7 @@ the corresponding struct is dereferenced</p>
                                   title='struct prettytable::format::consts::FORMAT_NO_LINESEP'>FORMAT_NO_LINESEP</a></td>
                            <td class='docblock-short'>
                                 <p>With no line or title separator</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -108,6 +125,7 @@ the corresponding struct is dereferenced</p>
                                   title='struct prettytable::format::consts::FORMAT_NO_LINESEP_WITH_TITLE'>FORMAT_NO_LINESEP_WITH_TITLE</a></td>
                            <td class='docblock-short'>
                                 <p>With no line separator, but with title separator</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -115,6 +133,7 @@ the corresponding struct is dereferenced</p>
                                   title='struct prettytable::format::consts::FORMAT_NO_TITLE'>FORMAT_NO_TITLE</a></td>
                            <td class='docblock-short'>
                                 <p>Similar to <code>FORMAT_DEFAULT</code> but without special separator after title line</p>
+
                            </td>
                        </tr></table></section>
     <section id='search' class="content hidden"></section>
@@ -129,20 +148,22 @@ the corresponding struct is dereferenced</p>
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 
