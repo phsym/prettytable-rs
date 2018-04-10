@@ -3,7 +3,7 @@
 use std::io::{Write, Error};
 use std::string::ToString;
 use unicode_width::UnicodeWidthStr;
-use term::{Attr, Terminal, color};
+use super::{Attr, Terminal, color};
 use super::format::Alignment;
 use super::utils::print_align;
 

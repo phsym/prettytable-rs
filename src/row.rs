@@ -5,7 +5,7 @@ use std::slice::{Iter, IterMut};
 // use std::vec::IntoIter;
 use std::ops::{Index, IndexMut};
 
-use term::Terminal;
+use super::Terminal;
 
 use super::utils::NEWLINE;
 use super::cell::Cell;
