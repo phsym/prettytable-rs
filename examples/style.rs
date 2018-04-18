@@ -1,6 +1,5 @@
 #[macro_use]
 extern crate prettytable;
-extern crate term;
 use prettytable::Table;
 use prettytable::row::Row;
 use prettytable::cell::Cell;

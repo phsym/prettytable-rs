@@ -1,13 +1,11 @@
 // #![feature(trace_macros)]
 #[macro_use]
 extern crate prettytable;
-extern crate term;
 use prettytable::Table;
 use prettytable::row::Row;
 use prettytable::cell::Cell;
 use prettytable::format::*;
-
-use term::{Attr, color};
+use prettytable::{Attr, color};
 
 // trace_macros!(true);
 

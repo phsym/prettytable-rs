@@ -39,8 +39,7 @@ Include the library as a dependency to your project by adding the following line
 prettytable-rs = "^0.6"
 ```
 
-The library requires at least `rust v1.9.0` in order to build,
-while `master` branch only builds starting from `rust v1.13.0`
+The library requires at least `rust v1.18.0`.
 
 ## Basic usage
 
@@ -146,12 +145,11 @@ Rows may have different numbers of cells. The table will automatically adapt to 
 
 Tables can have a styled output with background and foreground colors, bold and italic as configurable settings, thanks to the `term` crate.
 
-`term` style attributes can be used
+`term` style attributes are reexported
 
 - directly:
   ```rust
-  extern crate term;
-  use term::{Attr, color};
+  use prettytable::{Attr, color};
 
   /* ... */
 
