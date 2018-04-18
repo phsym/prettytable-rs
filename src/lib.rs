@@ -23,7 +23,8 @@ use std::slice::{Iter, IterMut};
 use std::ops::{Index, IndexMut};
 use std::mem::transmute;
 
-use term::{Terminal, stdout};
+pub use term::{Attr, color};
+pub(crate) use term::{Terminal, stdout};
 
 pub mod cell;
 pub mod row;

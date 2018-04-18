@@ -5,7 +5,7 @@ use prettytable::Table;
 use prettytable::row::Row;
 use prettytable::cell::Cell;
 
-use term::{Attr, color};
+use prettytable::{Attr, color};
 
 #[allow(dead_code)]
 fn main() {
