@@ -1081,6 +1081,7 @@
 <span id="1025">1025</span>
 <span id="1026">1026</span>
 <span id="1027">1027</span>
+<span id="1028">1028</span>
 </pre><pre class="rust ">
 <span class="attribute">#![<span class="ident">warn</span>(<span class="ident">missing_docs</span>,
         <span class="ident">unused_extern_crates</span>,
@@ -1107,7 +1108,8 @@
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ops</span>::{<span class="ident">Index</span>, <span class="ident">IndexMut</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">mem</span>::<span class="ident">transmute</span>;
 
-<span class="kw">use</span> <span class="ident">term</span>::{<span class="ident">Terminal</span>, <span class="ident">stdout</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">term</span>::{<span class="ident">Attr</span>, <span class="ident">color</span>};
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use</span> <span class="ident">term</span>::{<span class="ident">Terminal</span>, <span class="ident">stdout</span>};
 
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">cell</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">row</span>;
