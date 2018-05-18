@@ -176,6 +176,16 @@ impl TableFormat {
         self.rborder = Some(border);
     }
 
+    /// Set the character used for left table border
+    pub fn left_border(&mut self, border: char) {
+        self.lborder = Some(border);
+    }
+
+    /// Set the character used for right table border
+    pub fn right_border(&mut self, border: char) {
+        self.rborder = Some(border);
+    }
+
     /// Set a line separator
     pub fn separator(&mut self, what: LinePosition, separator: LineSeparator) {
         *match what {
@@ -292,6 +302,18 @@ impl FormatBuilder {
     /// Set the character used for table borders
     pub fn borders(mut self, border: char) -> Self {
         self.format.borders(border);
+        self
+    }
+
+    /// Set the character used for left table border
+    pub fn left_border(mut self, border: char) -> Self {
+        self.format.left_border(border);
+        self
+    }
+
+    /// Set the character used for right table border
+    pub fn right_border(mut self, border: char) -> Self {
+        self.format.right_border(border);
         self
     }
 
