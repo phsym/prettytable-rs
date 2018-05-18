@@ -57,7 +57,7 @@ pub fn print_align<T: Write + ?Sized>(out: &mut T,
                                       size: usize,
                                       skip_right_fill: bool)
                                       -> Result<(), Error> {
-    let text_len = UnicodeWidthStr::width(text);
+    let text_len = display_width(text);
     let mut nfill = if text_len < size { size - text_len } else { 0 };
     let n = match align {
         Alignment::LEFT => 0,
@@ -73,6 +73,36 @@ pub fn print_align<T: Write + ?Sized>(out: &mut T,
         out.write_all(&vec![fill as u8; nfill])?;
     }
     Ok(())
+}
+
+/// Return the display width of a unicode string.
+/// This functions takes ANSI-escaped color codes into account.
+pub fn display_width(text: &str) -> usize {
+    let width = UnicodeWidthStr::width(text);
+    let mut state = 0;
+    let mut hidden = 0;
+
+    for c in text.chars() {
+        state = match (state, c) {
+            (0, '\u{1b}') => 1,
+            (1, '[') => 2,
+            (1, _) => 0,
+            (2, 'm') => 3,
+            _ => state,
+        };
+
+        // We don't count escape characters as hidden as
+        // UnicodeWidthStr::width already considers them.
+        if state > 1 {
+            hidden += 1;
+        }
+
+        if state == 3 {
+            state = 0;
+        }
+    }
+
+    width - hidden
 }
 
 #[cfg(test)]
