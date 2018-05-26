@@ -10,10 +10,11 @@
     <title>prettytable::table - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css"
+          id="mainThemeStyle">
     
     <link rel="stylesheet" type="text/css" href="../dark.css">
-    <link rel="stylesheet" type="text/css" href="../main.css" id="themeStyle">
+    <link rel="stylesheet" type="text/css" href="../light.css" id="themeStyle">
     <script src="../storage.js"></script>
     
 
@@ -33,7 +34,7 @@
     <nav class="sidebar">
         <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'><a href='index.html'>prettytable</a></p><script>window.sidebarCurrent = {name: 'table', ty: 'macro', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <div class="sidebar-elems"><p class='location'><a href='index.html'>prettytable</a></p><script>window.sidebarCurrent = {name: 'table', ty: 'macro', relpath: ''};</script><script defer src="sidebar-items.js"></script></div>
     </nav>
 
     <div class="theme-picker">
@@ -54,17 +55,15 @@
         </form>
     </nav>
 
-    <section id='main' class="content">
-<h1 class='fqn'><span class='in-band'>Macro <a href='index.html'>prettytable</a>::<wbr><a class="macro" href=''>table</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content"><h1 class='fqn'><span class='in-band'>Macro <a href='index.html'>prettytable</a>::<wbr><a class="macro" href=''>table</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../src/prettytable/lib.rs.html#621-625' title='goto source code'>[src]</a></span></h1>
-<pre class="rust macro">
+               </span><a class='srclink' href='../src/prettytable/lib.rs.html#621-625' title='goto source code'>[src]</a></span></h1><div class="docblock type-decl"><pre class="rust macro">
 <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">table</span> {
     ($([$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">content</span>:<span class="ident">tt</span>)<span class="kw-2">*</span>]), <span class="kw-2">*</span>) <span class="op">=&gt;</span> { ... };
 }</pre>
-<div class='docblock'><p>Create a table filled with some values</p>
+</div><div class='docblock'><p>Create a table filled with some values</p>
 <p>All the arguments used for elements must implement the <code>std::string::ToString</code> trait</p>
 <h1 id="syntax" class="section-header"><a href="#syntax">Syntax</a></h1>
 <pre><code class="language-text">table!([Element1_ row1, Element2_ row1, ...], [Element1_row2, ...], ...);

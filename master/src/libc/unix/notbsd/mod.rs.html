@@ -4,16 +4,17 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/libc-0.2.40/src/unix/notbsd/mod.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/libc-0.2.41/src/unix/notbsd/mod.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>mod.rs.html -- source</title>
 
     <link rel="stylesheet" type="text/css" href="../../../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../../../rustdoc.css" id="mainThemeStyle">
+    <link rel="stylesheet" type="text/css" href="../../../../rustdoc.css"
+          id="mainThemeStyle">
     
     <link rel="stylesheet" type="text/css" href="../../../../dark.css">
-    <link rel="stylesheet" type="text/css" href="../../../../main.css" id="themeStyle">
+    <link rel="stylesheet" type="text/css" href="../../../../light.css" id="themeStyle">
     <script src="../../../../storage.js"></script>
     
 
@@ -1070,6 +1071,15 @@
 <span id="1014">1014</span>
 <span id="1015">1015</span>
 <span id="1016">1016</span>
+<span id="1017">1017</span>
+<span id="1018">1018</span>
+<span id="1019">1019</span>
+<span id="1020">1020</span>
+<span id="1021">1021</span>
+<span id="1022">1022</span>
+<span id="1023">1023</span>
+<span id="1024">1024</span>
+<span id="1025">1025</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">dox</span>::<span class="ident">mem</span>;
 
@@ -1249,6 +1259,12 @@
         <span class="ident">__unused1</span>: [::<span class="ident">c_int</span>; <span class="number">11</span>],
         <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;32&quot;</span>)]</span>
         <span class="ident">__unused1</span>: [::<span class="ident">c_int</span>; <span class="number">12</span>]
+    }
+
+    <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">in_pktinfo</span> {
+        <span class="kw">pub</span> <span class="ident">ipi_ifindex</span>: ::<span class="ident">c_int</span>,
+        <span class="kw">pub</span> <span class="ident">ipi_spec_dst</span>: ::<span class="ident">in_addr</span>,
+        <span class="kw">pub</span> <span class="ident">ipi_addr</span>: ::<span class="ident">in_addr</span>,
     }
 }
 
@@ -1646,6 +1662,7 @@
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IP_MULTICAST_LOOP</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">34</span>;
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IP_TTL</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">2</span>;
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IP_HDRINCL</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">3</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IP_PKTINFO</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">8</span>;
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IP_ADD_MEMBERSHIP</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">35</span>;
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IP_DROP_MEMBERSHIP</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">36</span>;
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IP_TRANSPARENT</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">19</span>;
@@ -1656,6 +1673,8 @@
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IPV6_ADD_MEMBERSHIP</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">20</span>;
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IPV6_DROP_MEMBERSHIP</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">21</span>;
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IPV6_V6ONLY</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">26</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IPV6_RECVPKTINFO</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">49</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IPV6_PKTINFO</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">50</span>;
 
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">TCP_NODELAY</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">1</span>;
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">TCP_MAXSEG</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">2</span>;

@@ -10,10 +10,11 @@
     <title>term::terminfo::parm::expand - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle">
+    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css"
+          id="mainThemeStyle">
     
     <link rel="stylesheet" type="text/css" href="../../../dark.css">
-    <link rel="stylesheet" type="text/css" href="../../../main.css" id="themeStyle">
+    <link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle">
     <script src="../../../storage.js"></script>
     
 
@@ -33,7 +34,7 @@
     <nav class="sidebar">
         <div class="sidebar-menu">&#9776;</div>
         <a href='../../../term/index.html'><img src='https://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png' alt='logo' width='100'></a>
-        <p class='location'><a href='../../index.html'>term</a>::<wbr><a href='../index.html'>terminfo</a>::<wbr><a href='index.html'>parm</a></p><script>window.sidebarCurrent = {name: 'expand', ty: 'fn', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <div class="sidebar-elems"><p class='location'><a href='../../index.html'>term</a>::<wbr><a href='../index.html'>terminfo</a>::<wbr><a href='index.html'>parm</a></p><script>window.sidebarCurrent = {name: 'expand', ty: 'fn', relpath: ''};</script><script defer src="sidebar-items.js"></script></div>
     </nav>
 
     <div class="theme-picker">
@@ -54,13 +55,11 @@
         </form>
     </nav>
 
-    <section id='main' class="content">
-<h1 class='fqn'><span class='in-band'>Function <a href='../../index.html'>term</a>::<wbr><a href='../index.html'>terminfo</a>::<wbr><a href='index.html'>parm</a>::<wbr><a class="fn" href=''>expand</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content"><h1 class='fqn'><span class='in-band'>Function <a href='../../index.html'>term</a>::<wbr><a href='../index.html'>terminfo</a>::<wbr><a href='index.html'>parm</a>::<wbr><a class="fn" href=''>expand</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../../src/term/terminfo/parm.rs.html#136-454' title='goto source code'>[src]</a></span></h1>
-<pre class='rust fn'>pub fn expand(<br>&nbsp;&nbsp;&nbsp;&nbsp;cap: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;params: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[</a><a class="enum" href="../../../term/terminfo/parm/enum.Param.html" title="enum term::terminfo::parm::Param">Param</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;vars: &amp;mut <a class="struct" href="../../../term/terminfo/parm/struct.Variables.html" title="struct term::terminfo::parm::Variables">Variables</a><br>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>&gt;, <a class="enum" href="../../../term/terminfo/parm/enum.Error.html" title="enum term::terminfo::parm::Error">Error</a>&gt;</pre><div class='docblock'><p>Expand a parameterized capability</p>
+               </span><a class='srclink' href='../../../src/term/terminfo/parm.rs.html#136-454' title='goto source code'>[src]</a></span></h1><pre class='rust fn'>pub fn expand(<br>&nbsp;&nbsp;&nbsp;&nbsp;cap: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;params: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[</a><a class="enum" href="../../../term/terminfo/parm/enum.Param.html" title="enum term::terminfo::parm::Param">Param</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;vars: &amp;mut <a class="struct" href="../../../term/terminfo/parm/struct.Variables.html" title="struct term::terminfo::parm::Variables">Variables</a><br>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>&gt;, <a class="enum" href="../../../term/terminfo/parm/enum.Error.html" title="enum term::terminfo::parm::Error">Error</a>&gt;</pre><div class='docblock'><p>Expand a parameterized capability</p>
 <h1 id="arguments" class="section-header"><a href="#arguments">Arguments</a></h1>
 <ul>
 <li><code>cap</code>    - string to expand</li>

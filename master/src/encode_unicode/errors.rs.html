@@ -10,10 +10,11 @@
     <title>errors.rs.html -- source</title>
 
     <link rel="stylesheet" type="text/css" href="../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css"
+          id="mainThemeStyle">
     
     <link rel="stylesheet" type="text/css" href="../../dark.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle">
     <script src="../../storage.js"></script>
     
 
@@ -336,7 +337,7 @@
 <span class="doccomment">/// because it&#39;s a trailing surrogate itself.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>,<span class="ident">Copy</span>, <span class="ident">Debug</span>, <span class="ident">PartialEq</span>,<span class="ident">Eq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">InvalidUtf16FirstUnit</span>;
-<span class="macro">description</span><span class="macro">!</span>{<span class="ident">InvalidUtf16FirstUnit</span>, <span class="op">|</span>_<span class="op">|</span> <span class="string">&quot;Is a trailing surrogate&quot;</span> }
+<span class="macro">description</span><span class="macro">!</span>{<span class="ident">InvalidUtf16FirstUnit</span>, <span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="string">&quot;Is a trailing surrogate&quot;</span> }
 
 
 <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">simple</span> {(<span class="attribute">#[<span class="macro-nonterminal">$</span><span class="macro-nonterminal">tydoc</span>:<span class="ident">meta</span>]</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">err</span>:<span class="ident">ident</span>  {
@@ -451,7 +452,7 @@
         <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>,  <span class="ident">fmtr</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
             <span class="kw">match</span> (<span class="self">self</span>.<span class="ident">cause</span>(), <span class="macro-nonterminal">$</span><span class="macro-nonterminal">use_cause</span>) {
                 (<span class="prelude-val">Some</span>(<span class="ident">d</span>),<span class="bool-val">true</span>) <span class="op">=&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">fmtr</span>, <span class="string">&quot;{}: {}&quot;</span>, <span class="self">self</span>.<span class="ident">description</span>(), <span class="ident">d</span>),
-                        _      <span class="op">=&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">fmtr</span>, <span class="string">&quot;{}&quot;</span>, <span class="self">self</span>.<span class="ident">description</span>()),
+                        <span class="kw">_</span>      <span class="op">=&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">fmtr</span>, <span class="string">&quot;{}&quot;</span>, <span class="self">self</span>.<span class="ident">description</span>()),
             }
         }
     }
@@ -480,10 +481,10 @@
         <span class="ident">FirstByte</span>(<span class="ident">TooLongSeqence</span>) <span class="op">=&gt;</span> <span class="string">&quot;the first byte is greater than 239 (UTF-8 seqences cannot be longer than four bytes)&quot;</span>,
         <span class="ident">FirstByte</span>(<span class="ident">ContinuationByte</span>) <span class="op">=&gt;</span> <span class="string">&quot;the first byte is a continuation of a previous sequence&quot;</span>,
         <span class="ident">OverLong</span> <span class="op">=&gt;</span> <span class="string">&quot;the seqence contains too many zeros and could be shorter&quot;</span>,
-        <span class="ident">NotAContinuationByte</span>(_) <span class="op">=&gt;</span> <span class="string">&quot;the sequence is too short&quot;</span>,
+        <span class="ident">NotAContinuationByte</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="string">&quot;the sequence is too short&quot;</span>,
     } <span class="op">=&gt;</span> <span class="bool-val">false</span> <span class="op">=&gt;</span> {
         <span class="ident">FirstByte</span>(<span class="kw-2">ref</span> <span class="ident">cause</span>) <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">cause</span>),
-        _ <span class="op">=&gt;</span> <span class="prelude-val">None</span>,
+        <span class="kw">_</span> <span class="op">=&gt;</span> <span class="prelude-val">None</span>,
     }<span class="doccomment">/// Returns `Some` if the error is a `InvalidUtf8FirstByte`.</span>
 }
 
@@ -500,8 +501,8 @@
         <span class="ident">InvalidUtf8</span> <span class="op">=&gt;</span> <span class="ident">InvalidUtf8Array</span>::<span class="ident">Utf8</span>,
         <span class="ident">InvalidCodepoint</span> <span class="op">=&gt;</span> <span class="ident">InvalidUtf8Array</span>::<span class="ident">Codepoint</span>,
     } {
-        <span class="ident">InvalidUtf8Array</span>::<span class="ident">Utf8</span>(_) <span class="op">=&gt;</span> <span class="string">&quot;the seqence is invalid UTF-8&quot;</span>,
-        <span class="ident">InvalidUtf8Array</span>::<span class="ident">Codepoint</span>(_) <span class="op">=&gt;</span> <span class="string">&quot;the encoded codepoint is invalid&quot;</span>,
+        <span class="ident">InvalidUtf8Array</span>::<span class="ident">Utf8</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="string">&quot;the seqence is invalid UTF-8&quot;</span>,
+        <span class="ident">InvalidUtf8Array</span>::<span class="ident">Codepoint</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="string">&quot;the encoded codepoint is invalid&quot;</span>,
     } <span class="op">=&gt;</span> <span class="bool-val">true</span> <span class="op">=&gt;</span> {
         <span class="ident">InvalidUtf8Array</span>::<span class="ident">Utf8</span>(<span class="kw-2">ref</span> <span class="ident">u</span>) <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">u</span>),
         <span class="ident">InvalidUtf8Array</span>::<span class="ident">Codepoint</span>(<span class="kw-2">ref</span> <span class="ident">c</span>) <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">c</span>),
@@ -523,14 +524,14 @@
         <span class="ident">InvalidUtf8</span> <span class="op">=&gt;</span> <span class="ident">InvalidUtf8Slice</span>::<span class="ident">Utf8</span>,
         <span class="ident">InvalidCodepoint</span> <span class="op">=&gt;</span> <span class="ident">InvalidUtf8Slice</span>::<span class="ident">Codepoint</span>,
     } {
-        <span class="ident">InvalidUtf8Slice</span>::<span class="ident">Utf8</span>(_) <span class="op">=&gt;</span> <span class="string">&quot;the seqence is invalid UTF-8&quot;</span>,
-        <span class="ident">InvalidUtf8Slice</span>::<span class="ident">Codepoint</span>(_) <span class="op">=&gt;</span> <span class="string">&quot;the encoded codepoint is invalid&quot;</span>,
+        <span class="ident">InvalidUtf8Slice</span>::<span class="ident">Utf8</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="string">&quot;the seqence is invalid UTF-8&quot;</span>,
+        <span class="ident">InvalidUtf8Slice</span>::<span class="ident">Codepoint</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="string">&quot;the encoded codepoint is invalid&quot;</span>,
         <span class="ident">InvalidUtf8Slice</span>::<span class="ident">TooShort</span>(<span class="number">0</span>) <span class="op">=&gt;</span> <span class="string">&quot;the slice is empty&quot;</span>,
-        <span class="ident">InvalidUtf8Slice</span>::<span class="ident">TooShort</span>(_) <span class="op">=&gt;</span> <span class="string">&quot;the slice is shorter than the seqence&quot;</span>,
+        <span class="ident">InvalidUtf8Slice</span>::<span class="ident">TooShort</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="string">&quot;the slice is shorter than the seqence&quot;</span>,
     } <span class="op">=&gt;</span> <span class="bool-val">true</span> <span class="op">=&gt;</span> {
         <span class="ident">InvalidUtf8Slice</span>::<span class="ident">Utf8</span>(<span class="kw-2">ref</span> <span class="ident">u</span>) <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">u</span>),
         <span class="ident">InvalidUtf8Slice</span>::<span class="ident">Codepoint</span>(<span class="kw-2">ref</span> <span class="ident">c</span>) <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">c</span>),
-        <span class="ident">InvalidUtf8Slice</span>::<span class="ident">TooShort</span>(_) <span class="op">=&gt;</span> <span class="prelude-val">None</span>,
+        <span class="ident">InvalidUtf8Slice</span>::<span class="ident">TooShort</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="prelude-val">None</span>,
     }
 }
 </pre>

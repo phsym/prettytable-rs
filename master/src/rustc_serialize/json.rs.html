@@ -10,10 +10,11 @@
     <title>json.rs.html -- source</title>
 
     <link rel="stylesheet" type="text/css" href="../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css"
+          id="mainThemeStyle">
     
     <link rel="stylesheet" type="text/css" href="../../dark.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle">
     <script src="../../storage.js"></script>
     
 
@@ -4368,8 +4369,8 @@
         <span class="kw">match</span> (<span class="self">self</span>, <span class="ident">other</span>) {
             (<span class="kw-2">&amp;</span><span class="ident">SyntaxError</span>(<span class="ident">msg0</span>, <span class="ident">line0</span>, <span class="ident">col0</span>), <span class="kw-2">&amp;</span><span class="ident">SyntaxError</span>(<span class="ident">msg1</span>, <span class="ident">line1</span>, <span class="ident">col1</span>)) <span class="op">=&gt;</span>
                 <span class="ident">msg0</span> <span class="op">==</span> <span class="ident">msg1</span> <span class="op">&amp;&amp;</span> <span class="ident">line0</span> <span class="op">==</span> <span class="ident">line1</span> <span class="op">&amp;&amp;</span> <span class="ident">col0</span> <span class="op">==</span> <span class="ident">col1</span>,
-            (<span class="kw-2">&amp;</span><span class="ident">IoError</span>(_), _) <span class="op">=&gt;</span> <span class="bool-val">false</span>,
-            (_, <span class="kw-2">&amp;</span><span class="ident">IoError</span>(_)) <span class="op">=&gt;</span> <span class="bool-val">false</span>,
+            (<span class="kw-2">&amp;</span><span class="ident">IoError</span>(<span class="kw">_</span>), <span class="kw">_</span>) <span class="op">=&gt;</span> <span class="bool-val">false</span>,
+            (<span class="kw">_</span>, <span class="kw-2">&amp;</span><span class="ident">IoError</span>(<span class="kw">_</span>)) <span class="op">=&gt;</span> <span class="bool-val">false</span>,
         }
     }
 }
@@ -4396,9 +4397,9 @@
 <span class="kw">impl</span> <span class="ident">PartialEq</span> <span class="kw">for</span> <span class="ident">EncoderError</span> {
     <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">EncoderError</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
         <span class="kw">match</span> (<span class="kw-2">*</span><span class="self">self</span>, <span class="kw-2">*</span><span class="ident">other</span>) {
-            (<span class="ident">EncoderError</span>::<span class="ident">FmtError</span>(_), <span class="ident">EncoderError</span>::<span class="ident">FmtError</span>(_)) <span class="op">=&gt;</span> <span class="bool-val">true</span>,
+            (<span class="ident">EncoderError</span>::<span class="ident">FmtError</span>(<span class="kw">_</span>), <span class="ident">EncoderError</span>::<span class="ident">FmtError</span>(<span class="kw">_</span>)) <span class="op">=&gt;</span> <span class="bool-val">true</span>,
             (<span class="ident">EncoderError</span>::<span class="ident">BadHashmapKey</span>, <span class="ident">EncoderError</span>::<span class="ident">BadHashmapKey</span>) <span class="op">=&gt;</span> <span class="bool-val">true</span>,
-            _ <span class="op">=&gt;</span> <span class="bool-val">false</span>,
+            <span class="kw">_</span> <span class="op">=&gt;</span> <span class="bool-val">false</span>,
         }
     }
 }
@@ -4463,7 +4464,7 @@
     <span class="kw">fn</span> <span class="ident">cause</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">StdError</span><span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
             <span class="ident">DecoderError</span>::<span class="ident">ParseError</span>(<span class="kw-2">ref</span> <span class="ident">e</span>) <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">e</span>),
-            _ <span class="op">=&gt;</span> <span class="prelude-val">None</span>,
+            <span class="kw">_</span> <span class="op">=&gt;</span> <span class="prelude-val">None</span>,
         }
     }
 }
@@ -4555,7 +4556,7 @@
             <span class="string">b&#39;\x1e&#39;</span> <span class="op">=&gt;</span> <span class="string">&quot;\\u001e&quot;</span>,
             <span class="string">b&#39;\x1f&#39;</span> <span class="op">=&gt;</span> <span class="string">&quot;\\u001f&quot;</span>,
             <span class="string">b&#39;\x7f&#39;</span> <span class="op">=&gt;</span> <span class="string">&quot;\\u007f&quot;</span>,
-            _ <span class="op">=&gt;</span> { <span class="kw">continue</span>; }
+            <span class="kw">_</span> <span class="op">=&gt;</span> { <span class="kw">continue</span>; }
         };
 
         <span class="kw">if</span> <span class="ident">start</span> <span class="op">&lt;</span> <span class="ident">i</span> {
@@ -4577,7 +4578,7 @@
 
 <span class="kw">fn</span> <span class="ident">escape_char</span>(<span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Write</span>, <span class="ident">v</span>: <span class="ident">char</span>) <span class="op">-&gt;</span> <span class="ident">EncodeResult</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buf</span> <span class="op">=</span> [<span class="number">0</span>; <span class="number">4</span>];
-    <span class="kw">let</span> _ <span class="op">=</span> <span class="macro">write</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">buf</span>[..], <span class="string">&quot;{}&quot;</span>, <span class="ident">v</span>);
+    <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="macro">write</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">buf</span>[..], <span class="string">&quot;{}&quot;</span>, <span class="ident">v</span>);
     <span class="kw">let</span> <span class="ident">buf</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">str</span>::<span class="ident">from_utf8_unchecked</span>(<span class="kw-2">&amp;</span><span class="ident">buf</span>[..<span class="ident">v</span>.<span class="ident">len_utf8</span>()]) };
     <span class="ident">escape_str</span>(<span class="ident">writer</span>, <span class="ident">buf</span>)
 }
@@ -4602,7 +4603,7 @@
 
     <span class="kw">match</span> <span class="ident">v</span>.<span class="ident">classify</span>() {
         <span class="ident">Nan</span> <span class="op">|</span> <span class="ident">Infinite</span> <span class="op">=&gt;</span> <span class="string">&quot;null&quot;</span>.<span class="ident">to_string</span>(),
-        _ <span class="op">=&gt;</span> {
+        <span class="kw">_</span> <span class="op">=&gt;</span> {
             <span class="kw">let</span> <span class="ident">s</span> <span class="op">=</span> <span class="ident">v</span>.<span class="ident">to_string</span>();
             <span class="kw">if</span> <span class="ident">s</span>.<span class="ident">contains</span>(<span class="string">&quot;.&quot;</span>) {<span class="ident">s</span>} <span class="kw">else</span> {<span class="ident">s</span> <span class="op">+</span> <span class="string">&quot;.0&quot;</span>}
         }
@@ -4800,7 +4801,7 @@
     }
 
     <span class="kw">fn</span> <span class="ident">emit_enum_struct_variant_field</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
-                                         _: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+                                         <span class="kw">_</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
                                          <span class="ident">idx</span>: <span class="ident">usize</span>,
                                          <span class="ident">f</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="ident">EncodeResult</span><span class="op">&lt;</span>()<span class="op">&gt;</span> <span class="kw">where</span>
         <span class="ident">F</span>: <span class="ident">FnOnce</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Encoder</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">EncodeResult</span><span class="op">&lt;</span>()<span class="op">&gt;</span>,
@@ -4810,7 +4811,7 @@
     }
 
 
-    <span class="kw">fn</span> <span class="ident">emit_struct</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, _: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">len</span>: <span class="ident">usize</span>, <span class="ident">f</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="ident">EncodeResult</span><span class="op">&lt;</span>()<span class="op">&gt;</span> <span class="kw">where</span>
+    <span class="kw">fn</span> <span class="ident">emit_struct</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="kw">_</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">len</span>: <span class="ident">usize</span>, <span class="ident">f</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="ident">EncodeResult</span><span class="op">&lt;</span>()<span class="op">&gt;</span> <span class="kw">where</span>
         <span class="ident">F</span>: <span class="ident">FnOnce</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Encoder</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">EncodeResult</span><span class="op">&lt;</span>()<span class="op">&gt;</span>,
     {
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">is_emitting_map_key</span> { <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">EncoderError</span>::<span class="ident">BadHashmapKey</span>); }
@@ -4865,7 +4866,7 @@
         <span class="self">self</span>.<span class="ident">emit_seq_elt</span>(<span class="ident">idx</span>, <span class="ident">f</span>)
     }
 
-    <span class="kw">fn</span> <span class="ident">emit_tuple_struct</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, _: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">len</span>: <span class="ident">usize</span>, <span class="ident">f</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="ident">EncodeResult</span><span class="op">&lt;</span>()<span class="op">&gt;</span> <span class="kw">where</span>
+    <span class="kw">fn</span> <span class="ident">emit_tuple_struct</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="kw">_</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">len</span>: <span class="ident">usize</span>, <span class="ident">f</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="ident">EncodeResult</span><span class="op">&lt;</span>()<span class="op">&gt;</span> <span class="kw">where</span>
         <span class="ident">F</span>: <span class="ident">FnOnce</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Encoder</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">EncodeResult</span><span class="op">&lt;</span>()<span class="op">&gt;</span>,
     {
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">is_emitting_map_key</span> { <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">EncoderError</span>::<span class="ident">BadHashmapKey</span>); }
@@ -5020,7 +5021,7 @@
         };
         <span class="kw">let</span> <span class="ident">s</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">str</span>::<span class="ident">from_utf8</span>(<span class="kw-2">&amp;</span><span class="ident">contents</span>).<span class="ident">ok</span>() {
             <span class="prelude-val">Some</span>(<span class="ident">s</span>) <span class="op">=&gt;</span> <span class="ident">s</span>,
-            _       <span class="op">=&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">SyntaxError</span>(<span class="ident">NotUtf8</span>, <span class="number">0</span>, <span class="number">0</span>))
+            <span class="kw">_</span>       <span class="op">=&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">SyntaxError</span>(<span class="ident">NotUtf8</span>, <span class="number">0</span>, <span class="number">0</span>))
         };
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">builder</span> <span class="op">=</span> <span class="ident">Builder</span>::<span class="ident">new</span>(<span class="ident">s</span>.<span class="ident">chars</span>());
         <span class="ident">builder</span>.<span class="ident">build</span>()
@@ -5043,7 +5044,7 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">find</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>, <span class="ident">key</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Json</span><span class="op">&gt;</span>{
         <span class="kw">match</span> <span class="self">self</span> {
             <span class="kw-2">&amp;</span><span class="ident">Json</span>::<span class="ident">Object</span>(<span class="kw-2">ref</span> <span class="ident">map</span>) <span class="op">=&gt;</span> <span class="ident">map</span>.<span class="ident">get</span>(<span class="ident">key</span>),
-            _ <span class="op">=&gt;</span> <span class="prelude-val">None</span>
+            <span class="kw">_</span> <span class="op">=&gt;</span> <span class="prelude-val">None</span>
         }
     }
 
@@ -5070,17 +5071,17 @@
                 <span class="kw">match</span> <span class="ident">map</span>.<span class="ident">get</span>(<span class="ident">key</span>) {
                     <span class="prelude-val">Some</span>(<span class="ident">json_value</span>) <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">json_value</span>),
                     <span class="prelude-val">None</span> <span class="op">=&gt;</span> {
-                        <span class="kw">for</span> (_, <span class="ident">v</span>) <span class="kw">in</span> <span class="ident">map</span>.<span class="ident">iter</span>() {
+                        <span class="kw">for</span> (<span class="kw">_</span>, <span class="ident">v</span>) <span class="kw">in</span> <span class="ident">map</span>.<span class="ident">iter</span>() {
                             <span class="kw">match</span> <span class="ident">v</span>.<span class="ident">search</span>(<span class="ident">key</span>) {
                                 <span class="ident">x</span> <span class="kw">if</span> <span class="ident">x</span>.<span class="ident">is_some</span>() <span class="op">=&gt;</span> <span class="kw">return</span> <span class="ident">x</span>,
-                                _ <span class="op">=&gt;</span> ()
+                                <span class="kw">_</span> <span class="op">=&gt;</span> ()
                             }
                         }
                         <span class="prelude-val">None</span>
                     }
                 }
             },
-            _ <span class="op">=&gt;</span> <span class="prelude-val">None</span>
+            <span class="kw">_</span> <span class="op">=&gt;</span> <span class="prelude-val">None</span>
         }
     }
 
@@ -5094,7 +5095,7 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_object</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Object</span><span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="self">self</span> {
             <span class="kw-2">&amp;</span><span class="ident">Json</span>::<span class="ident">Object</span>(<span class="kw-2">ref</span> <span class="ident">map</span>) <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">map</span>),
-            _ <span class="op">=&gt;</span> <span class="prelude-val">None</span>
+            <span class="kw">_</span> <span class="op">=&gt;</span> <span class="prelude-val">None</span>
         }
     }
 
@@ -5103,7 +5104,7 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_object_mut</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="ident">Object</span><span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="self">self</span> {
             <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Json</span>::<span class="ident">Object</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">map</span>) <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">map</span>),
-            _ <span class="op">=&gt;</span> <span class="prelude-val">None</span>
+            <span class="kw">_</span> <span class="op">=&gt;</span> <span class="prelude-val">None</span>
         }
     }
 
@@ -5112,7 +5113,7 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">into_object</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Object</span><span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="self">self</span> {
             <span class="ident">Json</span>::<span class="ident">Object</span>(<span class="ident">map</span>) <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">map</span>),
-            _ <span class="op">=&gt;</span> <span class="prelude-val">None</span>
+            <span class="kw">_</span> <span class="op">=&gt;</span> <span class="prelude-val">None</span>
         }
     }
 
@@ -5126,7 +5127,7 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_array</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Array</span><span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="self">self</span> {
             <span class="kw-2">&amp;</span><span class="ident">Json</span>::<span class="ident">Array</span>(<span class="kw-2">ref</span> <span class="ident">array</span>) <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="ident">array</span>),
-            _ <span class="op">=&gt;</span> <span class="prelude-val">None</span>
+            <span class="kw">_</span> <span class="op">=&gt;</span> <span class="prelude-val">None</span>
         }
     }
 
@@ -5135,7 +5136,7 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_array_mut</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="ident">Array</span><span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="self">self</span> {
             <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Json</span>::<span class="ident">Array</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">list</span>) <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">list</span>),
-            _ <span class="op">=&gt;</span> <span class="prelude-val">None</span>
+            <span class="kw">_</span> <span class="op">=&gt;</span> <span class="prelude-val">None</span>
         }
     }
 
@@ -5144,7 +5145,7 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">into_array</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Array</span><span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="self">self</span> {
             <span class="ident">Json</span>::<span class="ident">Array</span>(<span class="ident">array</span>) <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">array</span>),
-            _ <span class="op">=&gt;</span> <span class="prelude-val">None</span>
+            <span class="kw">_</span> <span class="op">=&gt;</span> <span class="prelude-val">None</span>
         }
     }
 
@@ -5158,39 +5159,39 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_string</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span><span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
             <span class="ident">Json</span>::<span class="ident">String</span>(<span class="kw-2">ref</span> <span class="ident">s</span>) <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="ident">s</span>),
-            _ <span class="op">=&gt;</span> <span class="prelude-val">None</span>
+            <span class="kw">_</span> <span class="op">=&gt;</span> <span class="prelude-val">None</span>
         }
     }
 
     <span class="doccomment">/// Returns true if the Json value is a Number. Returns false otherwise.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_number</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
         <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
-            <span class="ident">Json</span>::<span class="ident">I64</span>(_) <span class="op">|</span> <span class="ident">Json</span>::<span class="ident">U64</span>(_) <span class="op">|</span> <span class="ident">Json</span>::<span class="ident">F64</span>(_) <span class="op">=&gt;</span> <span class="bool-val">true</span>,
-            _ <span class="op">=&gt;</span> <span class="bool-val">false</span>,
+            <span class="ident">Json</span>::<span class="ident">I64</span>(<span class="kw">_</span>) <span class="op">|</span> <span class="ident">Json</span>::<span class="ident">U64</span>(<span class="kw">_</span>) <span class="op">|</span> <span class="ident">Json</span>::<span class="ident">F64</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="bool-val">true</span>,
+            <span class="kw">_</span> <span class="op">=&gt;</span> <span class="bool-val">false</span>,
         }
     }
 
     <span class="doccomment">/// Returns true if the Json value is a i64. Returns false otherwise.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_i64</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
         <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
-            <span class="ident">Json</span>::<span class="ident">I64</span>(_) <span class="op">=&gt;</span> <span class="bool-val">true</span>,
-            _ <span class="op">=&gt;</span> <span class="bool-val">false</span>,
+            <span class="ident">Json</span>::<span class="ident">I64</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="bool-val">true</span>,
+            <span class="kw">_</span> <span class="op">=&gt;</span> <span class="bool-val">false</span>,
         }
     }
 
     <span class="doccomment">/// Returns true if the Json value is a u64. Returns false otherwise.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_u64</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
         <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
-            <span class="ident">Json</span>::<span class="ident">U64</span>(_) <span class="op">=&gt;</span> <span class="bool-val">true</span>,
-            _ <span class="op">=&gt;</span> <span class="bool-val">false</span>,
+            <span class="ident">Json</span>::<span class="ident">U64</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="bool-val">true</span>,
+            <span class="kw">_</span> <span class="op">=&gt;</span> <span class="bool-val">false</span>,
         }
     }
 
     <span class="doccomment">/// Returns true if the Json value is a f64. Returns false otherwise.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_f64</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
         <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
-            <span class="ident">Json</span>::<span class="ident">F64</span>(_) <span class="op">=&gt;</span> <span class="bool-val">true</span>,
-            _ <span class="op">=&gt;</span> <span class="bool-val">false</span>,
+            <span class="ident">Json</span>::<span class="ident">F64</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="bool-val">true</span>,
+            <span class="kw">_</span> <span class="op">=&gt;</span> <span class="bool-val">false</span>,
         }
     }
 
@@ -5201,7 +5202,7 @@
             <span class="ident">Json</span>::<span class="ident">I64</span>(<span class="ident">n</span>) <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">n</span>),
             <span class="ident">Json</span>::<span class="ident">U64</span>(<span class="ident">n</span>) <span class="kw">if</span> <span class="ident">n</span> <span class="op">&gt;=</span> <span class="ident">i64</span>::<span class="ident">MAX</span> <span class="kw">as</span> <span class="ident">u64</span> <span class="op">=&gt;</span> <span class="prelude-val">None</span>,
             <span class="ident">Json</span>::<span class="ident">U64</span>(<span class="ident">n</span>) <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">n</span> <span class="kw">as</span> <span class="ident">i64</span>),
-            _ <span class="op">=&gt;</span> <span class="prelude-val">None</span>
+            <span class="kw">_</span> <span class="op">=&gt;</span> <span class="prelude-val">None</span>
         }
     }
 
@@ -5211,7 +5212,7 @@
         <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
             <span class="ident">Json</span>::<span class="ident">I64</span>(<span class="ident">n</span>) <span class="kw">if</span> <span class="ident">n</span> <span class="op">&gt;=</span> <span class="number">0</span> <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">n</span> <span class="kw">as</span> <span class="ident">u64</span>),
             <span class="ident">Json</span>::<span class="ident">U64</span>(<span class="ident">n</span>) <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">n</span>),
-            _ <span class="op">=&gt;</span> <span class="prelude-val">None</span>
+            <span class="kw">_</span> <span class="op">=&gt;</span> <span class="prelude-val">None</span>
         }
     }
 
@@ -5222,7 +5223,7 @@
             <span class="ident">Json</span>::<span class="ident">I64</span>(<span class="ident">n</span>) <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">n</span> <span class="kw">as</span> <span class="ident">f64</span>),
             <span class="ident">Json</span>::<span class="ident">U64</span>(<span class="ident">n</span>) <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">n</span> <span class="kw">as</span> <span class="ident">f64</span>),
             <span class="ident">Json</span>::<span class="ident">F64</span>(<span class="ident">n</span>) <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">n</span>),
-            _ <span class="op">=&gt;</span> <span class="prelude-val">None</span>
+            <span class="kw">_</span> <span class="op">=&gt;</span> <span class="prelude-val">None</span>
         }
     }
 
@@ -5236,7 +5237,7 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_boolean</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="self">self</span> {
             <span class="kw-2">&amp;</span><span class="ident">Json</span>::<span class="ident">Boolean</span>(<span class="ident">b</span>) <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">b</span>),
-            _ <span class="op">=&gt;</span> <span class="prelude-val">None</span>
+            <span class="kw">_</span> <span class="op">=&gt;</span> <span class="prelude-val">None</span>
         }
     }
 
@@ -5250,7 +5251,7 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_null</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="self">self</span> {
             <span class="kw-2">&amp;</span><span class="ident">Json</span>::<span class="ident">Null</span> <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(()),
-            _ <span class="op">=&gt;</span> <span class="prelude-val">None</span>
+            <span class="kw">_</span> <span class="op">=&gt;</span> <span class="prelude-val">None</span>
         }
     }
 }
@@ -5269,7 +5270,7 @@
     <span class="kw">fn</span> <span class="ident">index</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>, <span class="ident">idx</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Json</span> {
         <span class="kw">match</span> <span class="self">self</span> {
             <span class="kw-2">&amp;</span><span class="ident">Json</span>::<span class="ident">Array</span>(<span class="kw-2">ref</span> <span class="ident">v</span>) <span class="op">=&gt;</span> <span class="kw-2">&amp;</span><span class="ident">v</span>[<span class="ident">idx</span>],
-            _ <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;can only index Json with usize if it is an array&quot;</span>)
+            <span class="kw">_</span> <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;can only index Json with usize if it is an array&quot;</span>)
         }
     }
 }
@@ -5417,11 +5418,11 @@
     <span class="kw">fn</span> <span class="ident">pop</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
         <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="self">self</span>.<span class="ident">is_empty</span>());
         <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">stack</span>.<span class="ident">last</span>().<span class="ident">unwrap</span>() {
-            <span class="ident">InternalKey</span>(_, <span class="ident">sz</span>) <span class="op">=&gt;</span> {
+            <span class="ident">InternalKey</span>(<span class="kw">_</span>, <span class="ident">sz</span>) <span class="op">=&gt;</span> {
                 <span class="kw">let</span> <span class="ident">new_size</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">str_buffer</span>.<span class="ident">len</span>() <span class="op">-</span> <span class="ident">sz</span> <span class="kw">as</span> <span class="ident">usize</span>;
                 <span class="self">self</span>.<span class="ident">str_buffer</span>.<span class="ident">truncate</span>(<span class="ident">new_size</span>);
             }
-            <span class="ident">InternalIndex</span>(_) <span class="op">=&gt;</span> {}
+            <span class="ident">InternalIndex</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> {}
         }
         <span class="self">self</span>.<span class="ident">stack</span>.<span class="ident">pop</span>();
     }
@@ -5430,8 +5431,8 @@
     <span class="kw">fn</span> <span class="ident">last_is_index</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">is_empty</span>() { <span class="kw">return</span> <span class="bool-val">false</span>; }
         <span class="kw">return</span> <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">stack</span>.<span class="ident">last</span>().<span class="ident">unwrap</span>() {
-            <span class="ident">InternalIndex</span>(_) <span class="op">=&gt;</span> <span class="bool-val">true</span>,
-            _ <span class="op">=&gt;</span> <span class="bool-val">false</span>,
+            <span class="ident">InternalIndex</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="bool-val">true</span>,
+            <span class="kw">_</span> <span class="op">=&gt;</span> <span class="bool-val">false</span>,
         }
     }
 
@@ -5440,7 +5441,7 @@
         <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">stack</span>.<span class="ident">len</span>();
         <span class="kw">let</span> <span class="ident">idx</span> <span class="op">=</span> <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">stack</span>.<span class="ident">last</span>().<span class="ident">unwrap</span>() {
             <span class="ident">InternalIndex</span>(<span class="ident">i</span>) <span class="op">=&gt;</span> { <span class="ident">i</span> <span class="op">+</span> <span class="number">1</span> }
-            _ <span class="op">=&gt;</span> { <span class="macro">panic</span><span class="macro">!</span>(); }
+            <span class="kw">_</span> <span class="op">=&gt;</span> { <span class="macro">panic</span><span class="macro">!</span>(); }
         };
         <span class="self">self</span>.<span class="ident">stack</span>[<span class="ident">len</span> <span class="op">-</span> <span class="number">1</span>] <span class="op">=</span> <span class="ident">InternalIndex</span>(<span class="ident">idx</span>);
     }
@@ -5597,7 +5598,7 @@
                 <span class="comment">// A leading &#39;0&#39; must be the only digit before the decimal point.</span>
                 <span class="kw">match</span> <span class="self">self</span>.<span class="ident">ch_or_null</span>() {
                     <span class="string">&#39;0&#39;</span> ... <span class="string">&#39;9&#39;</span> <span class="op">=&gt;</span> <span class="kw">return</span> <span class="self">self</span>.<span class="ident">error</span>(<span class="ident">InvalidNumber</span>),
-                    _ <span class="op">=&gt;</span> ()
+                    <span class="kw">_</span> <span class="op">=&gt;</span> ()
                 }
             },
             <span class="string">&#39;1&#39;</span> ... <span class="string">&#39;9&#39;</span> <span class="op">=&gt;</span> {
@@ -5617,11 +5618,11 @@
 
                             <span class="self">self</span>.<span class="ident">bump</span>();
                         }
-                        _ <span class="op">=&gt;</span> <span class="kw">break</span>,
+                        <span class="kw">_</span> <span class="op">=&gt;</span> <span class="kw">break</span>,
                     }
                 }
             }
-            _ <span class="op">=&gt;</span> <span class="kw">return</span> <span class="self">self</span>.<span class="ident">error</span>(<span class="ident">InvalidNumber</span>),
+            <span class="kw">_</span> <span class="op">=&gt;</span> <span class="kw">return</span> <span class="self">self</span>.<span class="ident">error</span>(<span class="ident">InvalidNumber</span>),
         }
 
         <span class="prelude-val">Ok</span>(<span class="ident">accum</span>)
@@ -5633,7 +5634,7 @@
         <span class="comment">// Make sure a digit follows the decimal place.</span>
         <span class="kw">match</span> <span class="self">self</span>.<span class="ident">ch_or_null</span>() {
             <span class="string">&#39;0&#39;</span> ... <span class="string">&#39;9&#39;</span> <span class="op">=&gt;</span> (),
-             _ <span class="op">=&gt;</span> <span class="kw">return</span> <span class="self">self</span>.<span class="ident">error</span>(<span class="ident">InvalidNumber</span>)
+             <span class="kw">_</span> <span class="op">=&gt;</span> <span class="kw">return</span> <span class="self">self</span>.<span class="ident">error</span>(<span class="ident">InvalidNumber</span>)
         }
 
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">dec</span> <span class="op">=</span> <span class="number">1.0</span>;
@@ -5645,7 +5646,7 @@
                     <span class="ident">frac</span> <span class="op">+=</span> (((<span class="ident">c</span> <span class="kw">as</span> <span class="ident">isize</span>) <span class="op">-</span> (<span class="string">&#39;0&#39;</span> <span class="kw">as</span> <span class="ident">isize</span>)) <span class="kw">as</span> <span class="ident">f64</span>) <span class="op">*</span> <span class="ident">dec</span>;
                     <span class="self">self</span>.<span class="ident">bump</span>();
                 }
-                _ <span class="op">=&gt;</span> <span class="kw">break</span>,
+                <span class="kw">_</span> <span class="op">=&gt;</span> <span class="kw">break</span>,
             }
         }
 
@@ -5670,7 +5671,7 @@
         <span class="comment">// Make sure a digit follows the exponent place.</span>
         <span class="kw">match</span> <span class="self">self</span>.<span class="ident">ch_or_null</span>() {
             <span class="string">&#39;0&#39;</span> ... <span class="string">&#39;9&#39;</span> <span class="op">=&gt;</span> (),
-            _ <span class="op">=&gt;</span> <span class="kw">return</span> <span class="self">self</span>.<span class="ident">error</span>(<span class="ident">InvalidNumber</span>)
+            <span class="kw">_</span> <span class="op">=&gt;</span> <span class="kw">return</span> <span class="self">self</span>.<span class="ident">error</span>(<span class="ident">InvalidNumber</span>)
         }
         <span class="kw">while</span> <span class="op">!</span><span class="self">self</span>.<span class="ident">eof</span>() {
             <span class="kw">match</span> <span class="self">self</span>.<span class="ident">ch_or_null</span>() {
@@ -5680,7 +5681,7 @@
 
                     <span class="self">self</span>.<span class="ident">bump</span>();
                 }
-                _ <span class="op">=&gt;</span> <span class="kw">break</span>
+                <span class="kw">_</span> <span class="op">=&gt;</span> <span class="kw">break</span>
             }
         }
 
@@ -5703,7 +5704,7 @@
                 <span class="ident">c</span> @ <span class="string">&#39;0&#39;</span> ... <span class="string">&#39;9&#39;</span> <span class="op">=&gt;</span> <span class="ident">n</span> <span class="op">*</span> <span class="number">16</span> <span class="op">+</span> ((<span class="ident">c</span> <span class="kw">as</span> <span class="ident">u16</span>) <span class="op">-</span> (<span class="string">&#39;0&#39;</span> <span class="kw">as</span> <span class="ident">u16</span>)),
                 <span class="ident">c</span> @ <span class="string">&#39;a&#39;</span> ... <span class="string">&#39;f&#39;</span> <span class="op">=&gt;</span> <span class="ident">n</span> <span class="op">*</span> <span class="number">16</span> <span class="op">+</span> (<span class="number">10</span> <span class="op">+</span> (<span class="ident">c</span> <span class="kw">as</span> <span class="ident">u16</span>) <span class="op">-</span> (<span class="string">&#39;a&#39;</span> <span class="kw">as</span> <span class="ident">u16</span>)),
                 <span class="ident">c</span> @ <span class="string">&#39;A&#39;</span> ... <span class="string">&#39;F&#39;</span> <span class="op">=&gt;</span> <span class="ident">n</span> <span class="op">*</span> <span class="number">16</span> <span class="op">+</span> (<span class="number">10</span> <span class="op">+</span> (<span class="ident">c</span> <span class="kw">as</span> <span class="ident">u16</span>) <span class="op">-</span> (<span class="string">&#39;A&#39;</span> <span class="kw">as</span> <span class="ident">u16</span>)),
-                _ <span class="op">=&gt;</span> <span class="kw">return</span> <span class="self">self</span>.<span class="ident">error</span>(<span class="ident">InvalidEscape</span>)
+                <span class="kw">_</span> <span class="op">=&gt;</span> <span class="kw">return</span> <span class="self">self</span>.<span class="ident">error</span>(<span class="ident">InvalidEscape</span>)
             };
 
             <span class="ident">i</span> <span class="op">+=</span> <span class="number">1</span>;
@@ -5742,7 +5743,7 @@
                         <span class="ident">n1</span> @ <span class="number">0xD800</span> ... <span class="number">0xDBFF</span> <span class="op">=&gt;</span> {
                             <span class="kw">match</span> (<span class="self">self</span>.<span class="ident">next_char</span>(), <span class="self">self</span>.<span class="ident">next_char</span>()) {
                                 (<span class="prelude-val">Some</span>(<span class="string">&#39;\\&#39;</span>), <span class="prelude-val">Some</span>(<span class="string">&#39;u&#39;</span>)) <span class="op">=&gt;</span> (),
-                                _ <span class="op">=&gt;</span> <span class="kw">return</span> <span class="self">self</span>.<span class="ident">error</span>(<span class="ident">UnexpectedEndOfHexEscape</span>),
+                                <span class="kw">_</span> <span class="op">=&gt;</span> <span class="kw">return</span> <span class="self">self</span>.<span class="ident">error</span>(<span class="ident">UnexpectedEndOfHexEscape</span>),
                             }
 
                             <span class="kw">let</span> <span class="ident">n2</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">decode_hex_escape</span>());
@@ -5759,7 +5760,7 @@
                             <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="kw">return</span> <span class="self">self</span>.<span class="ident">error</span>(<span class="ident">InvalidUnicodeCodePoint</span>),
                         },
                     },
-                    _ <span class="op">=&gt;</span> <span class="kw">return</span> <span class="self">self</span>.<span class="ident">error</span>(<span class="ident">InvalidEscape</span>),
+                    <span class="kw">_</span> <span class="op">=&gt;</span> <span class="kw">return</span> <span class="self">self</span>.<span class="ident">error</span>(<span class="ident">InvalidEscape</span>),
                 }
                 <span class="ident">escape</span> <span class="op">=</span> <span class="bool-val">false</span>;
             } <span class="kw">else</span> <span class="kw">if</span> <span class="self">self</span>.<span class="ident">ch_is</span>(<span class="string">&#39;\\&#39;</span>) {
@@ -5820,7 +5821,7 @@
                         <span class="kw">return</span> <span class="self">self</span>.<span class="ident">parse_object_end</span>();
                     }
                 }
-                _ <span class="op">=&gt;</span> {
+                <span class="kw">_</span> <span class="op">=&gt;</span> {
                     <span class="kw">return</span> <span class="self">self</span>.<span class="ident">error_event</span>(<span class="ident">InvalidSyntax</span>);
                 }
             }
@@ -5830,10 +5831,10 @@
     <span class="kw">fn</span> <span class="ident">parse_start</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">JsonEvent</span> {
         <span class="kw">let</span> <span class="ident">val</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">parse_value</span>();
         <span class="self">self</span>.<span class="ident">state</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">val</span> {
-            <span class="ident">Error</span>(_) <span class="op">=&gt;</span> <span class="ident">ParseFinished</span>,
+            <span class="ident">Error</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="ident">ParseFinished</span>,
             <span class="ident">ArrayStart</span> <span class="op">=&gt;</span> <span class="ident">ParseArray</span>(<span class="bool-val">true</span>),
             <span class="ident">ObjectStart</span> <span class="op">=&gt;</span> <span class="ident">ParseObject</span>(<span class="bool-val">true</span>),
-            _ <span class="op">=&gt;</span> <span class="ident">ParseBeforeFinish</span>,
+            <span class="kw">_</span> <span class="op">=&gt;</span> <span class="ident">ParseBeforeFinish</span>,
         };
         <span class="kw">return</span> <span class="ident">val</span>;
     }
@@ -5859,10 +5860,10 @@
             }
             <span class="kw">let</span> <span class="ident">val</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">parse_value</span>();
             <span class="self">self</span>.<span class="ident">state</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">val</span> {
-                <span class="ident">Error</span>(_) <span class="op">=&gt;</span> <span class="ident">ParseFinished</span>,
+                <span class="ident">Error</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="ident">ParseFinished</span>,
                 <span class="ident">ArrayStart</span> <span class="op">=&gt;</span> <span class="ident">ParseArray</span>(<span class="bool-val">true</span>),
                 <span class="ident">ObjectStart</span> <span class="op">=&gt;</span> <span class="ident">ParseObject</span>(<span class="bool-val">true</span>),
-                _ <span class="op">=&gt;</span> <span class="ident">ParseArrayComma</span>,
+                <span class="kw">_</span> <span class="op">=&gt;</span> <span class="ident">ParseArrayComma</span>,
             };
             <span class="ident">val</span>
         }
@@ -5937,10 +5938,10 @@
         <span class="kw">let</span> <span class="ident">val</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">parse_value</span>();
 
         <span class="self">self</span>.<span class="ident">state</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">val</span> {
-            <span class="ident">Error</span>(_) <span class="op">=&gt;</span> <span class="ident">ParseFinished</span>,
+            <span class="ident">Error</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="ident">ParseFinished</span>,
             <span class="ident">ArrayStart</span> <span class="op">=&gt;</span> <span class="ident">ParseArray</span>(<span class="bool-val">true</span>),
             <span class="ident">ObjectStart</span> <span class="op">=&gt;</span> <span class="ident">ParseObject</span>(<span class="bool-val">true</span>),
-            _ <span class="op">=&gt;</span> <span class="ident">ParseObjectComma</span>,
+            <span class="kw">_</span> <span class="op">=&gt;</span> <span class="ident">ParseObjectComma</span>,
         };
         <span class="kw">return</span> <span class="ident">val</span>;
     }
@@ -5982,7 +5983,7 @@
                 <span class="self">self</span>.<span class="ident">bump</span>();
                 <span class="ident">ObjectStart</span>
             }
-            _ <span class="op">=&gt;</span> { <span class="self">self</span>.<span class="ident">error_event</span>(<span class="ident">InvalidSyntax</span>) }
+            <span class="kw">_</span> <span class="op">=&gt;</span> { <span class="self">self</span>.<span class="ident">error_event</span>(<span class="ident">InvalidSyntax</span>) }
         }
     }
 
@@ -6021,7 +6022,7 @@
         <span class="kw">match</span> <span class="self">self</span>.<span class="ident">token</span>.<span class="ident">take</span>() {
             <span class="prelude-val">None</span> <span class="op">=&gt;</span> {}
             <span class="prelude-val">Some</span>(<span class="ident">Error</span>(<span class="ident">e</span>)) <span class="op">=&gt;</span> { <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">e</span>); }
-            _ <span class="op">=&gt;</span> { <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">SyntaxError</span>(<span class="ident">InvalidSyntax</span>, <span class="self">self</span>.<span class="ident">parser</span>.<span class="ident">line</span>, <span class="self">self</span>.<span class="ident">parser</span>.<span class="ident">col</span>)); }
+            <span class="kw">_</span> <span class="op">=&gt;</span> { <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">SyntaxError</span>(<span class="ident">InvalidSyntax</span>, <span class="self">self</span>.<span class="ident">parser</span>.<span class="ident">line</span>, <span class="self">self</span>.<span class="ident">parser</span>.<span class="ident">col</span>)); }
         }
         <span class="ident">result</span>
     }
@@ -6081,7 +6082,7 @@
             }
             <span class="kw">let</span> <span class="ident">key</span> <span class="op">=</span> <span class="kw">match</span> <span class="self">self</span>.<span class="ident">parser</span>.<span class="ident">stack</span>().<span class="ident">top</span>() {
                 <span class="prelude-val">Some</span>(<span class="ident">StackElement</span>::<span class="ident">Key</span>(<span class="ident">k</span>)) <span class="op">=&gt;</span> { <span class="ident">k</span>.<span class="ident">to_string</span>() }
-                _ <span class="op">=&gt;</span> { <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;invalid state&quot;</span>); }
+                <span class="kw">_</span> <span class="op">=&gt;</span> { <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;invalid state&quot;</span>); }
             };
             <span class="kw">match</span> <span class="self">self</span>.<span class="ident">build_value</span>() {
                 <span class="prelude-val">Ok</span>(<span class="ident">value</span>) <span class="op">=&gt;</span> { <span class="ident">values</span>.<span class="ident">insert</span>(<span class="ident">key</span>, <span class="ident">value</span>); }
@@ -6161,7 +6162,7 @@
                 <span class="comment">// is going to have a string here, as per JSON spec.</span>
                 <span class="ident">Json</span>::<span class="ident">String</span>(<span class="ident">s</span>) <span class="op">=&gt;</span> <span class="kw">match</span> <span class="ident">s</span>.<span class="ident">parse</span>() {
                     <span class="prelude-val">Ok</span>(<span class="ident">f</span>)  <span class="op">=&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">f</span>),
-                    <span class="prelude-val">Err</span>(_) <span class="op">=&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">ExpectedError</span>(<span class="string">&quot;Number&quot;</span>.<span class="ident">to_string</span>(), <span class="ident">s</span>)),
+                    <span class="prelude-val">Err</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">ExpectedError</span>(<span class="string">&quot;Number&quot;</span>.<span class="ident">to_string</span>(), <span class="ident">s</span>)),
                 },
                 <span class="ident">value</span> <span class="op">=&gt;</span> {
                     <span class="prelude-val">Err</span>(<span class="ident">ExpectedError</span>(<span class="string">&quot;Number&quot;</span>.<span class="ident">to_string</span>(), <span class="ident">value</span>.<span class="ident">to_string</span>()))
@@ -6203,7 +6204,7 @@
                 <span class="comment">// is going to have a string here, as per JSON spec.</span>
                 <span class="kw">match</span> <span class="ident">s</span>.<span class="ident">parse</span>() {
                     <span class="prelude-val">Ok</span>(<span class="ident">f</span>)  <span class="op">=&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">f</span>),
-                    <span class="prelude-val">Err</span>(_) <span class="op">=&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">ExpectedError</span>(<span class="string">&quot;Number&quot;</span>.<span class="ident">to_string</span>(), <span class="ident">s</span>)),
+                    <span class="prelude-val">Err</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">ExpectedError</span>(<span class="string">&quot;Number&quot;</span>.<span class="ident">to_string</span>(), <span class="ident">s</span>)),
                 }
             },
             <span class="ident">Json</span>::<span class="ident">Null</span> <span class="op">=&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">f64</span>::<span class="ident">NAN</span>),
@@ -6222,7 +6223,7 @@
             <span class="kw">match</span> (<span class="ident">it</span>.<span class="ident">next</span>(), <span class="ident">it</span>.<span class="ident">next</span>()) {
                 <span class="comment">// exactly one character</span>
                 (<span class="prelude-val">Some</span>(<span class="ident">c</span>), <span class="prelude-val">None</span>) <span class="op">=&gt;</span> <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="ident">c</span>),
-                _ <span class="op">=&gt;</span> ()
+                <span class="kw">_</span> <span class="op">=&gt;</span> ()
             }
         }
         <span class="prelude-val">Err</span>(<span class="ident">ExpectedError</span>(<span class="string">&quot;single character string&quot;</span>.<span class="ident">to_string</span>(), <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">s</span>)))
@@ -6327,7 +6328,7 @@
                 <span class="self">self</span>.<span class="ident">stack</span>.<span class="ident">push</span>(<span class="ident">Json</span>::<span class="ident">Null</span>);
                 <span class="kw">match</span> <span class="ident">f</span>(<span class="self">self</span>) {
                     <span class="prelude-val">Ok</span>(<span class="ident">x</span>) <span class="op">=&gt;</span> <span class="ident">x</span>,
-                    <span class="prelude-val">Err</span>(_) <span class="op">=&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">MissingFieldError</span>(<span class="ident">name</span>.<span class="ident">to_string</span>())),
+                    <span class="prelude-val">Err</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">MissingFieldError</span>(<span class="ident">name</span>.<span class="ident">to_string</span>())),
                 }
             },
             <span class="prelude-val">Some</span>(<span class="ident">json</span>) <span class="op">=&gt;</span> {
@@ -6471,7 +6472,7 @@
 
         <span class="kw">match</span> <span class="self">self</span>.<span class="ident">classify</span>() {
             <span class="ident">Nan</span> <span class="op">|</span> <span class="ident">Infinite</span> <span class="op">=&gt;</span> <span class="ident">Json</span>::<span class="ident">Null</span>,
-            _                  <span class="op">=&gt;</span> <span class="ident">Json</span>::<span class="ident">F64</span>(<span class="kw-2">*</span><span class="self">self</span>)
+            <span class="kw">_</span>                  <span class="op">=&gt;</span> <span class="ident">Json</span>::<span class="ident">F64</span>(<span class="kw-2">*</span><span class="self">self</span>)
         }
     }
 }
@@ -6568,8 +6569,8 @@
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="ident">Write</span> <span class="kw">for</span> <span class="ident">FormatShim</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span><span class="op">&gt;</span> {
     <span class="kw">fn</span> <span class="ident">write_str</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
         <span class="kw">match</span> <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">write_str</span>(<span class="ident">s</span>) {
-            <span class="prelude-val">Ok</span>(_) <span class="op">=&gt;</span> <span class="prelude-val">Ok</span>(()),
-            <span class="prelude-val">Err</span>(_) <span class="op">=&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">fmt</span>::<span class="ident">Error</span>)
+            <span class="prelude-val">Ok</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="prelude-val">Ok</span>(()),
+            <span class="prelude-val">Err</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">fmt</span>::<span class="ident">Error</span>)
         }
     }
 }
@@ -6580,8 +6581,8 @@
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">shim</span> <span class="op">=</span> <span class="ident">FormatShim</span> { <span class="ident">inner</span>: <span class="ident">f</span> };
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">encoder</span> <span class="op">=</span> <span class="ident">Encoder</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">shim</span>);
         <span class="kw">match</span> <span class="self">self</span>.<span class="ident">encode</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">encoder</span>) {
-            <span class="prelude-val">Ok</span>(_) <span class="op">=&gt;</span> <span class="prelude-val">Ok</span>(()),
-            <span class="prelude-val">Err</span>(_) <span class="op">=&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">fmt</span>::<span class="ident">Error</span>)
+            <span class="prelude-val">Ok</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="prelude-val">Ok</span>(()),
+            <span class="prelude-val">Err</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">fmt</span>::<span class="ident">Error</span>)
         }
     }
 }
@@ -6592,8 +6593,8 @@
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">shim</span> <span class="op">=</span> <span class="ident">FormatShim</span> { <span class="ident">inner</span>: <span class="ident">f</span> };
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">encoder</span> <span class="op">=</span> <span class="ident">Encoder</span>::<span class="ident">new_pretty</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">shim</span>);
         <span class="kw">match</span> <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">encode</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">encoder</span>) {
-            <span class="prelude-val">Ok</span>(_) <span class="op">=&gt;</span> <span class="prelude-val">Ok</span>(()),
-            <span class="prelude-val">Err</span>(_) <span class="op">=&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">fmt</span>::<span class="ident">Error</span>)
+            <span class="prelude-val">Ok</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="prelude-val">Ok</span>(()),
+            <span class="prelude-val">Err</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">fmt</span>::<span class="ident">Error</span>)
         }
     }
 }
@@ -6604,8 +6605,8 @@
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">shim</span> <span class="op">=</span> <span class="ident">FormatShim</span> { <span class="ident">inner</span>: <span class="ident">f</span> };
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">encoder</span> <span class="op">=</span> <span class="ident">Encoder</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">shim</span>);
         <span class="kw">match</span> <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">encode</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">encoder</span>) {
-            <span class="prelude-val">Ok</span>(_) <span class="op">=&gt;</span> <span class="prelude-val">Ok</span>(()),
-            <span class="prelude-val">Err</span>(_) <span class="op">=&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">fmt</span>::<span class="ident">Error</span>)
+            <span class="prelude-val">Ok</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="prelude-val">Ok</span>(()),
+            <span class="prelude-val">Err</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">fmt</span>::<span class="ident">Error</span>)
         }
     }
 }
@@ -6625,11 +6626,11 @@
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">encoder</span> <span class="op">=</span> <span class="ident">Encoder</span>::<span class="ident">new_pretty</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">shim</span>);
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">n</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">indent</span> {
             <span class="comment">// unwrap cannot panic for pretty encoders</span>
-            <span class="kw">let</span> _ <span class="op">=</span> <span class="ident">encoder</span>.<span class="ident">set_indent</span>(<span class="ident">n</span>);
+            <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">encoder</span>.<span class="ident">set_indent</span>(<span class="ident">n</span>);
         }
         <span class="kw">match</span> <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">encode</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">encoder</span>) {
-            <span class="prelude-val">Ok</span>(_) <span class="op">=&gt;</span> <span class="prelude-val">Ok</span>(()),
-            <span class="prelude-val">Err</span>(_) <span class="op">=&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">fmt</span>::<span class="ident">Error</span>)
+            <span class="prelude-val">Ok</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="prelude-val">Ok</span>(()),
+            <span class="prelude-val">Err</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">fmt</span>::<span class="ident">Error</span>)
         }
     }
 }
@@ -7053,7 +7054,7 @@
         <span class="kw">let</span> <span class="ident">res</span>: <span class="ident">DecodeResult</span><span class="op">&lt;</span><span class="ident">i64</span><span class="op">&gt;</span> <span class="op">=</span> <span class="kw">super</span>::<span class="ident">decode</span>(<span class="string">&quot;765.25252&quot;</span>);
         <span class="kw">match</span> <span class="ident">res</span> {
             <span class="prelude-val">Ok</span>(..) <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;expected an error&quot;</span>),
-            <span class="prelude-val">Err</span>(<span class="ident">ExpectedError</span>(<span class="kw-2">ref</span> <span class="ident">s</span>, _)) <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">s</span>, <span class="string">&quot;Integer&quot;</span>),
+            <span class="prelude-val">Err</span>(<span class="ident">ExpectedError</span>(<span class="kw-2">ref</span> <span class="ident">s</span>, <span class="kw">_</span>)) <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">s</span>, <span class="string">&quot;Integer&quot;</span>),
             <span class="prelude-val">Err</span>(..) <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;expected an &#39;expected integer&#39; error&quot;</span>),
         }
     }
@@ -7313,7 +7314,7 @@
             <span class="prelude-val">Ok</span>(<span class="ident">json</span>) <span class="op">=&gt;</span> <span class="ident">Decodable</span>::<span class="ident">decode</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Decoder</span>::<span class="ident">new</span>(<span class="ident">json</span>))
         };
         <span class="kw">match</span> <span class="ident">res</span> {
-            <span class="prelude-val">Ok</span>(_) <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;`{:?}` parsed &amp; decoded ok, expecting error `{:?}`&quot;</span>,
+            <span class="prelude-val">Ok</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;`{:?}` parsed &amp; decoded ok, expecting error `{:?}`&quot;</span>,
                               <span class="ident">to_parse</span>, <span class="ident">expected</span>),
             <span class="prelude-val">Err</span>(<span class="ident">ParseError</span>(<span class="ident">e</span>)) <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;`{}` is not valid json: {:?}&quot;</span>,
                                            <span class="ident">to_parse</span>, <span class="ident">e</span>),
@@ -7522,8 +7523,8 @@
         <span class="ident">hm</span>.<span class="ident">insert</span>(<span class="number">1</span>, <span class="bool-val">true</span>);
         <span class="kw">let</span> <span class="ident">json_str</span> <span class="op">=</span> <span class="kw">super</span>::<span class="ident">as_pretty_json</span>(<span class="kw-2">&amp;</span><span class="ident">hm</span>).<span class="ident">to_string</span>();
         <span class="kw">match</span> <span class="ident">Json</span>::<span class="ident">from_str</span>(<span class="kw-2">&amp;</span><span class="ident">json_str</span>) {
-            <span class="prelude-val">Err</span>(_) <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Unable to parse json_str: {}&quot;</span>, <span class="ident">json_str</span>),
-            _ <span class="op">=&gt;</span> {} <span class="comment">// it parsed and we are good to go</span>
+            <span class="prelude-val">Err</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Unable to parse json_str: {}&quot;</span>, <span class="ident">json_str</span>),
+            <span class="kw">_</span> <span class="op">=&gt;</span> {} <span class="comment">// it parsed and we are good to go</span>
         }
     }
 
@@ -7539,8 +7540,8 @@
         <span class="ident">hm</span>.<span class="ident">insert</span>(<span class="number">1</span>, <span class="bool-val">true</span>);
         <span class="kw">let</span> <span class="ident">json_str</span> <span class="op">=</span> <span class="kw">super</span>::<span class="ident">as_pretty_json</span>(<span class="kw-2">&amp;</span><span class="ident">hm</span>).<span class="ident">to_string</span>();
         <span class="kw">match</span> <span class="ident">Json</span>::<span class="ident">from_str</span>(<span class="kw-2">&amp;</span><span class="ident">json_str</span>) {
-            <span class="prelude-val">Err</span>(_) <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Unable to parse json_str: {}&quot;</span>, <span class="ident">json_str</span>),
-            _ <span class="op">=&gt;</span> {} <span class="comment">// it parsed and we are good to go</span>
+            <span class="prelude-val">Err</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Unable to parse json_str: {}&quot;</span>, <span class="ident">json_str</span>),
+            <span class="kw">_</span> <span class="op">=&gt;</span> {} <span class="comment">// it parsed and we are good to go</span>
         }
     }
 
@@ -7599,7 +7600,7 @@
         <span class="kw">use</span> <span class="ident">Decodable</span>;
         <span class="kw">let</span> <span class="ident">json_str</span> <span class="op">=</span> <span class="string">&quot;{\&quot;1\&quot;:true}&quot;</span>;
         <span class="kw">let</span> <span class="ident">json_obj</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">Json</span>::<span class="ident">from_str</span>(<span class="ident">json_str</span>) {
-            <span class="prelude-val">Err</span>(_) <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Unable to parse json_str: {}&quot;</span>, <span class="ident">json_str</span>),
+            <span class="prelude-val">Err</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Unable to parse json_str: {}&quot;</span>, <span class="ident">json_str</span>),
             <span class="prelude-val">Ok</span>(<span class="ident">o</span>) <span class="op">=&gt;</span> <span class="ident">o</span>
         };
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">decoder</span> <span class="op">=</span> <span class="ident">Decoder</span>::<span class="ident">new</span>(<span class="ident">json_obj</span>);
@@ -7620,7 +7621,7 @@
         <span class="ident">map</span>.<span class="ident">insert</span>(<span class="ident">Enum</span>::<span class="ident">Foo</span>, <span class="number">0</span>);
         <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">json</span>::<span class="ident">encode</span>(<span class="kw-2">&amp;</span><span class="ident">map</span>).<span class="ident">unwrap</span>();
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">result</span>, <span class="string">r#&quot;{&quot;Foo&quot;:0}&quot;#</span>);
-        <span class="kw">let</span> <span class="ident">decoded</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">Enum</span>, _<span class="op">&gt;</span> <span class="op">=</span> <span class="ident">json</span>::<span class="ident">decode</span>(<span class="kw-2">&amp;</span><span class="ident">result</span>).<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">decoded</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">Enum</span>, <span class="kw">_</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">json</span>::<span class="ident">decode</span>(<span class="kw-2">&amp;</span><span class="ident">result</span>).<span class="ident">unwrap</span>();
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">map</span>, <span class="ident">decoded</span>);
     }
 
@@ -7630,7 +7631,7 @@
         <span class="kw">use</span> <span class="ident">Decodable</span>;
         <span class="kw">let</span> <span class="ident">json_str</span> <span class="op">=</span> <span class="string">&quot;{\&quot;a\&quot;:true}&quot;</span>;
         <span class="kw">let</span> <span class="ident">json_obj</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">Json</span>::<span class="ident">from_str</span>(<span class="ident">json_str</span>) {
-            <span class="prelude-val">Err</span>(_) <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Unable to parse json_str: {}&quot;</span>, <span class="ident">json_str</span>),
+            <span class="prelude-val">Err</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Unable to parse json_str: {}&quot;</span>, <span class="ident">json_str</span>),
             <span class="prelude-val">Ok</span>(<span class="ident">o</span>) <span class="op">=&gt;</span> <span class="ident">o</span>
         };
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">decoder</span> <span class="op">=</span> <span class="ident">Decoder</span>::<span class="ident">new</span>(<span class="ident">json_obj</span>);
@@ -7994,7 +7995,7 @@
         <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">hm</span>.<span class="ident">encode</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">encoder</span>);
         <span class="kw">match</span> <span class="ident">result</span>.<span class="ident">err</span>().<span class="ident">unwrap</span>() {
             <span class="ident">EncoderError</span>::<span class="ident">BadHashmapKey</span> <span class="op">=&gt;</span> (),
-            _ <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;expected bad hash map key&quot;</span>)
+            <span class="kw">_</span> <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;expected bad hash map key&quot;</span>)
         }
     }
 
@@ -8023,7 +8024,7 @@
             <span class="ident">Variant</span>(<span class="ident">i32</span>)
         }
         <span class="kw">let</span> <span class="ident">serialized</span> <span class="op">=</span> <span class="string">&quot;{\&quot;variant\&quot;: \&quot;Variant\&quot;, \&quot;fields\&quot;: []}&quot;</span>;
-        <span class="kw">let</span> <span class="ident">r</span>: <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">ChatEvent</span>, _<span class="op">&gt;</span> <span class="op">=</span> <span class="ident">json</span>::<span class="ident">decode</span>(<span class="ident">serialized</span>);
+        <span class="kw">let</span> <span class="ident">r</span>: <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">ChatEvent</span>, <span class="kw">_</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">json</span>::<span class="ident">decode</span>(<span class="ident">serialized</span>);
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">r</span>.<span class="ident">unwrap_err</span>() <span class="op">==</span> <span class="ident">EOF</span>);
     }
 
@@ -8049,7 +8050,7 @@
     <span class="kw">fn</span> <span class="ident">test_unexpected_token</span>() {
         <span class="kw">match</span> <span class="ident">Json</span>::<span class="ident">from_str</span>(<span class="string">&quot;{\&quot;\&quot;:\&quot;\&quot;,\&quot;\&quot;:{\&quot;\&quot;:\&quot;\&quot;,\&quot;\&quot;:[{\&quot;\&quot;:\&quot;\&quot;,}}}&quot;</span>) {
             <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">e</span>, <span class="ident">SyntaxError</span>(<span class="ident">InvalidSyntax</span>, <span class="number">1</span>, <span class="number">32</span>)),
-            _ <span class="op">=&gt;</span> ()
+            <span class="kw">_</span> <span class="op">=&gt;</span> ()
         };
     }
 }

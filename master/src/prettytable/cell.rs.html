@@ -10,10 +10,11 @@
     <title>cell.rs.html -- source</title>
 
     <link rel="stylesheet" type="text/css" href="../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css"
+          id="mainThemeStyle">
     
     <link rel="stylesheet" type="text/css" href="../../dark.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle">
     <script src="../../storage.js"></script>
     
 
@@ -581,7 +582,7 @@
                     <span class="string">&#39;W&#39;</span> <span class="op">=&gt;</span> <span class="ident">color</span>::<span class="ident">BRIGHT_WHITE</span>,
                     <span class="string">&#39;d&#39;</span> <span class="op">=&gt;</span> <span class="ident">color</span>::<span class="ident">BLACK</span>,
                     <span class="string">&#39;D&#39;</span> <span class="op">=&gt;</span> <span class="ident">color</span>::<span class="ident">BRIGHT_BLACK</span>,
-                    _ <span class="op">=&gt;</span> {
+                    <span class="kw">_</span> <span class="op">=&gt;</span> {
                         <span class="comment">// Silently ignore unknown tags</span>
                         <span class="ident">foreground</span> <span class="op">=</span> <span class="bool-val">false</span>;
                         <span class="ident">background</span> <span class="op">=</span> <span class="bool-val">false</span>;
@@ -605,7 +606,7 @@
                     <span class="string">&#39;c&#39;</span> <span class="op">=&gt;</span> <span class="self">self</span>.<span class="ident">align</span>(<span class="ident">Alignment</span>::<span class="ident">CENTER</span>),
                     <span class="string">&#39;l&#39;</span> <span class="op">=&gt;</span> <span class="self">self</span>.<span class="ident">align</span>(<span class="ident">Alignment</span>::<span class="ident">LEFT</span>),
                     <span class="string">&#39;r&#39;</span> <span class="op">=&gt;</span> <span class="self">self</span>.<span class="ident">align</span>(<span class="ident">Alignment</span>::<span class="ident">RIGHT</span>),
-                    _ <span class="op">=&gt;</span> { <span class="comment">/* Silently ignore unknown tags */</span> }
+                    <span class="kw">_</span> <span class="op">=&gt;</span> { <span class="comment">/* Silently ignore unknown tags */</span> }
                 }
             }
         }
@@ -669,7 +670,7 @@
 <span class="kw">fn</span> <span class="ident">term_error_to_io_error</span>(<span class="ident">te</span>: ::<span class="ident">term</span>::<span class="ident">Error</span>) <span class="op">-&gt;</span> <span class="ident">Error</span> {
     <span class="kw">match</span> <span class="ident">te</span> {
         ::<span class="ident">term</span>::<span class="ident">Error</span>::<span class="ident">Io</span>(<span class="ident">why</span>) <span class="op">=&gt;</span> <span class="ident">why</span>,
-        _ <span class="op">=&gt;</span> <span class="ident">Error</span>::<span class="ident">new</span>(::<span class="ident">std</span>::<span class="ident">io</span>::<span class="ident">ErrorKind</span>::<span class="ident">Other</span>, <span class="ident">te</span>),
+        <span class="kw">_</span> <span class="op">=&gt;</span> <span class="ident">Error</span>::<span class="ident">new</span>(::<span class="ident">std</span>::<span class="ident">io</span>::<span class="ident">ErrorKind</span>::<span class="ident">Other</span>, <span class="ident">te</span>),
     }
 }
 
@@ -750,7 +751,7 @@
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">ascii_cell</span>.<span class="ident">get_width</span>(), <span class="number">5</span>);
 
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">out</span> <span class="op">=</span> <span class="ident">StringWriter</span>::<span class="ident">new</span>();
-        <span class="kw">let</span> _ <span class="op">=</span> <span class="ident">ascii_cell</span>.<span class="ident">print</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">out</span>, <span class="number">0</span>, <span class="number">10</span>, <span class="bool-val">false</span>);
+        <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">ascii_cell</span>.<span class="ident">print</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">out</span>, <span class="number">0</span>, <span class="number">10</span>, <span class="bool-val">false</span>);
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">out</span>.<span class="ident">as_string</span>(), <span class="string">&quot;hello     &quot;</span>);
     }
 
@@ -760,7 +761,7 @@
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">unicode_cell</span>.<span class="ident">get_width</span>(), <span class="number">6</span>);
 
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">out</span> <span class="op">=</span> <span class="ident">StringWriter</span>::<span class="ident">new</span>();
-        <span class="kw">let</span> _ <span class="op">=</span> <span class="ident">unicode_cell</span>.<span class="ident">print</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">out</span>, <span class="number">0</span>, <span class="number">10</span>, <span class="bool-val">false</span>);
+        <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">unicode_cell</span>.<span class="ident">print</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">out</span>, <span class="number">0</span>, <span class="number">10</span>, <span class="bool-val">false</span>);
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">out</span>.<span class="ident">as_string</span>(), <span class="string">&quot;привет    &quot;</span>);
     }
 
@@ -769,7 +770,7 @@
         <span class="kw">let</span> <span class="ident">unicode_cell</span> <span class="op">=</span> <span class="ident">Cell</span>::<span class="ident">new</span>(<span class="string">&quot;由系统自动更新&quot;</span>);
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">unicode_cell</span>.<span class="ident">get_width</span>(), <span class="number">14</span>);
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">out</span> <span class="op">=</span> <span class="ident">StringWriter</span>::<span class="ident">new</span>();
-        <span class="kw">let</span> _ <span class="op">=</span> <span class="ident">unicode_cell</span>.<span class="ident">print</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">out</span>, <span class="number">0</span>, <span class="number">20</span>, <span class="bool-val">false</span>);
+        <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">unicode_cell</span>.<span class="ident">print</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">out</span>, <span class="number">0</span>, <span class="number">20</span>, <span class="bool-val">false</span>);
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">out</span>.<span class="ident">as_string</span>(), <span class="string">&quot;由系统自动更新      &quot;</span>);
     }
 
@@ -777,7 +778,7 @@
     <span class="kw">fn</span> <span class="ident">align_left</span>() {
         <span class="kw">let</span> <span class="ident">cell</span> <span class="op">=</span> <span class="ident">Cell</span>::<span class="ident">new_align</span>(<span class="string">&quot;test&quot;</span>, <span class="ident">Alignment</span>::<span class="ident">LEFT</span>);
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">out</span> <span class="op">=</span> <span class="ident">StringWriter</span>::<span class="ident">new</span>();
-        <span class="kw">let</span> _ <span class="op">=</span> <span class="ident">cell</span>.<span class="ident">print</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">out</span>, <span class="number">0</span>, <span class="number">10</span>, <span class="bool-val">false</span>);
+        <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">cell</span>.<span class="ident">print</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">out</span>, <span class="number">0</span>, <span class="number">10</span>, <span class="bool-val">false</span>);
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">out</span>.<span class="ident">as_string</span>(), <span class="string">&quot;test      &quot;</span>);
     }
 
@@ -785,7 +786,7 @@
     <span class="kw">fn</span> <span class="ident">align_center</span>() {
         <span class="kw">let</span> <span class="ident">cell</span> <span class="op">=</span> <span class="ident">Cell</span>::<span class="ident">new_align</span>(<span class="string">&quot;test&quot;</span>, <span class="ident">Alignment</span>::<span class="ident">CENTER</span>);
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">out</span> <span class="op">=</span> <span class="ident">StringWriter</span>::<span class="ident">new</span>();
-        <span class="kw">let</span> _ <span class="op">=</span> <span class="ident">cell</span>.<span class="ident">print</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">out</span>, <span class="number">0</span>, <span class="number">10</span>, <span class="bool-val">false</span>);
+        <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">cell</span>.<span class="ident">print</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">out</span>, <span class="number">0</span>, <span class="number">10</span>, <span class="bool-val">false</span>);
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">out</span>.<span class="ident">as_string</span>(), <span class="string">&quot;   test   &quot;</span>);
     }
 
@@ -793,7 +794,7 @@
     <span class="kw">fn</span> <span class="ident">align_right</span>() {
         <span class="kw">let</span> <span class="ident">cell</span> <span class="op">=</span> <span class="ident">Cell</span>::<span class="ident">new_align</span>(<span class="string">&quot;test&quot;</span>, <span class="ident">Alignment</span>::<span class="ident">RIGHT</span>);
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">out</span> <span class="op">=</span> <span class="ident">StringWriter</span>::<span class="ident">new</span>();
-        <span class="kw">let</span> _ <span class="op">=</span> <span class="ident">cell</span>.<span class="ident">print</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">out</span>, <span class="number">0</span>, <span class="number">10</span>, <span class="bool-val">false</span>);
+        <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">cell</span>.<span class="ident">print</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">out</span>, <span class="number">0</span>, <span class="number">10</span>, <span class="bool-val">false</span>);
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">out</span>.<span class="ident">as_string</span>(), <span class="string">&quot;      test&quot;</span>);
     }
 

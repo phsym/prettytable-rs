@@ -10,10 +10,11 @@
     <title>reader.rs.html -- source</title>
 
     <link rel="stylesheet" type="text/css" href="../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css"
+          id="mainThemeStyle">
     
     <link rel="stylesheet" type="text/css" href="../../dark.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle">
     <script src="../../storage.js"></script>
     
 
@@ -1121,7 +1122,7 @@
     <span class="kw">fn</span> <span class="ident">is_crlf</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
         <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
             <span class="ident">RecordTerminator</span>::<span class="ident">CRLF</span> <span class="op">=&gt;</span> <span class="bool-val">true</span>,
-            <span class="ident">RecordTerminator</span>::<span class="ident">Any</span>(_) <span class="op">=&gt;</span> <span class="bool-val">false</span>,
+            <span class="ident">RecordTerminator</span>::<span class="ident">Any</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="bool-val">false</span>,
         }
     }
 }
@@ -1823,7 +1824,7 @@
             <span class="ident">NextField</span>::<span class="ident">Data</span>(<span class="ident">bytes</span>) <span class="op">=&gt;</span> {
                 <span class="kw">match</span> <span class="ident">str</span>::<span class="ident">from_utf8</span>(<span class="ident">bytes</span>) {
                     <span class="prelude-val">Ok</span>(<span class="ident">s</span>) <span class="op">=&gt;</span> <span class="ident">NextField</span>::<span class="ident">Data</span>(<span class="ident">s</span>),
-                    <span class="prelude-val">Err</span>(_) <span class="op">=&gt;</span> <span class="ident">NextField</span>::<span class="ident">Error</span>(<span class="ident">Error</span>::<span class="ident">Parse</span>(<span class="ident">LocatableError</span> {
+                    <span class="prelude-val">Err</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="ident">NextField</span>::<span class="ident">Error</span>(<span class="ident">Error</span>::<span class="ident">Parse</span>(<span class="ident">LocatableError</span> {
                         <span class="ident">record</span>: <span class="ident">record</span>,
                         <span class="ident">field</span>: <span class="ident">field</span>,
                         <span class="ident">err</span>: <span class="ident">ParseError</span>::<span class="ident">InvalidUtf8</span>,

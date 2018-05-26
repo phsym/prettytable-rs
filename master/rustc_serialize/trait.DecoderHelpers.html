@@ -10,10 +10,11 @@
     <title>rustc_serialize::DecoderHelpers - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css"
+          id="mainThemeStyle">
     
     <link rel="stylesheet" type="text/css" href="../dark.css">
-    <link rel="stylesheet" type="text/css" href="../main.css" id="themeStyle">
+    <link rel="stylesheet" type="text/css" href="../light.css" id="themeStyle">
     <script src="../storage.js"></script>
     
 
@@ -54,15 +55,13 @@
         </form>
     </nav>
 
-    <section id='main' class="content">
-<h1 class='fqn'><span class='in-band'>Trait <a href='index.html'>rustc_serialize</a>::<wbr><a class="trait" href=''>DecoderHelpers</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content"><h1 class='fqn'><span class='in-band'>Trait <a href='index.html'>rustc_serialize</a>::<wbr><a class="trait" href=''>DecoderHelpers</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../src/rustc_serialize/serialize.rs.html#1515-1548' title='goto source code'>[src]</a></span></h1>
-<pre class='rust trait'>pub trait DecoderHelpers: <a class="trait" href="../rustc_serialize/trait.Decoder.html" title="trait rustc_serialize::Decoder">Decoder</a> {
+               </span><a class='srclink' href='../src/rustc_serialize/serialize.rs.html#1515-1548' title='goto source code'>[src]</a></span></h1><div class="docblock type-decl"><pre class='rust trait'>pub trait DecoderHelpers: <a class="trait" href="../rustc_serialize/trait.Decoder.html" title="trait rustc_serialize::Decoder">Decoder</a> {
     fn <a href='#tymethod.read_to_vec' class='fnname'>read_to_vec</a>&lt;T, F&gt;(&amp;mut self, f: F) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;T&gt;, Self::<a class="type" href="../rustc_serialize/trait.Decoder.html#associatedtype.Error" title="type rustc_serialize::Decoder::Error">Error</a>&gt;<br>&nbsp;&nbsp;&nbsp; <span class="where">where<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;F: <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/function/trait.FnMut.html" title="trait core::ops::function::FnMut">FnMut</a>(<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;mut </a>Self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;T, Self::<a class="type" href="../rustc_serialize/trait.Decoder.html#associatedtype.Error" title="type rustc_serialize::Decoder::Error">Error</a>&gt;</span>;
-}</pre><div class='docblock'><p>Trait with helper functions for implementing <code>Decodable</code>.</p>
+}</pre></div><div class='docblock'><p>Trait with helper functions for implementing <code>Decodable</code>.</p>
 <p>This trait is implemented for everything that implements <code>Decoder</code>.
 <code>Decodable</code> implementations can make use of it to make their implementations
 easier.</p>
@@ -101,8 +100,8 @@ deserializing such sequences easier by wrapping the calls to
           Implementors<a href='#implementors' class='anchor'></a>
         </h2>
         <ul class='item-list' id='implementors-list'>
-    <li><div class='out-of-band'><a class='srclink' href='../src/rustc_serialize/serialize.rs.html#1550-1562' title='goto source code'>[src]</a></div><code>impl&lt;D:&nbsp;<a class="trait" href="../rustc_serialize/trait.Decoder.html" title="trait rustc_serialize::Decoder">Decoder</a>&gt; DecoderHelpers for D</code></li>
-</ul><script type="text/javascript" async
+    <li><table class='table-display'><tbody><tr><td><code>impl&lt;D:&nbsp;<a class="trait" href="../rustc_serialize/trait.Decoder.html" title="trait rustc_serialize::Decoder">Decoder</a>&gt; DecoderHelpers for D</code><td><div class='out-of-band'><a class='srclink' href='../src/rustc_serialize/serialize.rs.html#1550-1562' title='goto source code'>[src]</a></div></td></tr></tbody></table></li>
+</ul><script type="text/javascript">window.inlined_types=new Set([]);</script><script type="text/javascript" async
                          src="../implementors/rustc_serialize/trait.DecoderHelpers.js">
                  </script></section>
     <section id='search' class="content hidden"></section>

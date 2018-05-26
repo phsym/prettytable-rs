@@ -10,10 +10,11 @@
     <title>base64.rs.html -- source</title>
 
     <link rel="stylesheet" type="text/css" href="../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css"
+          id="mainThemeStyle">
     
     <link rel="stylesheet" type="text/css" href="../../dark.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle">
     <script src="../../storage.js"></script>
     
 
@@ -722,7 +723,7 @@
                     <span class="ident">write</span>(<span class="ident">enc</span>((<span class="ident">n</span> <span class="op">&gt;&gt;</span> <span class="number">12</span>) <span class="op">&amp;</span> <span class="number">63</span>));
                     <span class="ident">write</span>(<span class="ident">enc</span>((<span class="ident">n</span> <span class="op">&gt;&gt;</span> <span class="number">6</span> ) <span class="op">&amp;</span> <span class="number">63</span>));
                 }
-                _ <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Algebra is broken, please alert the math police&quot;</span>)
+                <span class="kw">_</span> <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Algebra is broken, please alert the math police&quot;</span>)
             }
         }
 
@@ -772,7 +773,7 @@
 <span class="kw">impl</span> <span class="ident">error</span>::<span class="ident">Error</span> <span class="kw">for</span> <span class="ident">FromBase64Error</span> {
     <span class="kw">fn</span> <span class="ident">description</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
         <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
-            <span class="ident">InvalidBase64Byte</span>(_, _) <span class="op">=&gt;</span> <span class="string">&quot;invalid character&quot;</span>,
+            <span class="ident">InvalidBase64Byte</span>(<span class="kw">_</span>, <span class="kw">_</span>) <span class="op">=&gt;</span> <span class="string">&quot;invalid character&quot;</span>,
             <span class="ident">InvalidBase64Length</span> <span class="op">=&gt;</span> <span class="string">&quot;invalid length&quot;</span>,
         }
     }
@@ -831,8 +832,8 @@
                     <span class="ident">NEWLINE_CODE</span> <span class="op">=&gt;</span> <span class="kw">continue</span>,
                     <span class="ident">EQUALS_CODE</span> <span class="op">=&gt;</span> <span class="kw">break</span>,
                     <span class="ident">INVALID_CODE</span> <span class="op">=&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">InvalidBase64Byte</span>(
-                            <span class="kw-2">*</span><span class="ident">byte</span>, (<span class="ident">byte</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> _ <span class="kw">as</span> <span class="ident">usize</span>) <span class="op">-</span> <span class="self">self</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="ident">usize</span>)),
-                    _ <span class="op">=&gt;</span> <span class="macro">unreachable</span><span class="macro">!</span>(),
+                            <span class="kw-2">*</span><span class="ident">byte</span>, (<span class="ident">byte</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="kw">_</span> <span class="kw">as</span> <span class="ident">usize</span>) <span class="op">-</span> <span class="self">self</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="ident">usize</span>)),
+                    <span class="kw">_</span> <span class="op">=&gt;</span> <span class="macro">unreachable</span><span class="macro">!</span>(),
                 }
             }
             <span class="ident">buf</span> <span class="op">=</span> (<span class="ident">buf</span> <span class="op">|</span> <span class="ident">code</span> <span class="kw">as</span> <span class="ident">u32</span>) <span class="op">&lt;&lt;</span> <span class="number">6</span>;
@@ -848,8 +849,8 @@
         <span class="kw">for</span> <span class="ident">byte</span> <span class="kw">in</span> <span class="ident">it</span> {
             <span class="kw">match</span> <span class="kw-2">*</span><span class="ident">byte</span> {
                 <span class="string">b&#39;=&#39;</span> <span class="op">|</span> <span class="string">b&#39;\r&#39;</span> <span class="op">|</span> <span class="string">b&#39;\n&#39;</span> <span class="op">=&gt;</span> <span class="kw">continue</span>,
-                _ <span class="op">=&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">InvalidBase64Byte</span>(
-                        <span class="kw-2">*</span><span class="ident">byte</span>, (<span class="ident">byte</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> _ <span class="kw">as</span> <span class="ident">usize</span>) <span class="op">-</span> <span class="self">self</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="ident">usize</span>)),
+                <span class="kw">_</span> <span class="op">=&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">InvalidBase64Byte</span>(
+                        <span class="kw-2">*</span><span class="ident">byte</span>, (<span class="ident">byte</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="kw">_</span> <span class="kw">as</span> <span class="ident">usize</span>) <span class="op">-</span> <span class="self">self</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="ident">usize</span>)),
             }
         }
 
@@ -862,7 +863,7 @@
                 <span class="ident">r</span>.<span class="ident">push</span>((<span class="ident">buf</span> <span class="op">&gt;&gt;</span> <span class="number">8</span> ) <span class="kw">as</span> <span class="ident">u8</span>);
             }
             <span class="number">0</span> <span class="op">=&gt;</span> (),
-            _ <span class="op">=&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">InvalidBase64Length</span>),
+            <span class="kw">_</span> <span class="op">=&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">InvalidBase64Length</span>),
         }
 
         <span class="prelude-val">Ok</span>(<span class="ident">r</span>)
@@ -1022,10 +1023,10 @@
     <span class="kw">fn</span> <span class="ident">test_base64_random</span>() {
         <span class="kw">use</span> <span class="ident">rand</span>::{<span class="ident">thread_rng</span>, <span class="ident">Rng</span>};
 
-        <span class="kw">for</span> _ <span class="kw">in</span> <span class="number">0</span>..<span class="number">1000</span> {
+        <span class="kw">for</span> <span class="kw">_</span> <span class="kw">in</span> <span class="number">0</span>..<span class="number">1000</span> {
             <span class="kw">let</span> <span class="ident">times</span> <span class="op">=</span> <span class="ident">thread_rng</span>().<span class="ident">gen_range</span>(<span class="number">1</span>, <span class="number">100</span>);
             <span class="kw">let</span> <span class="ident">v</span> <span class="op">=</span> <span class="ident">thread_rng</span>().<span class="ident">gen_iter</span>::<span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>().<span class="ident">take</span>(<span class="ident">times</span>)
-                                .<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span>_<span class="op">&gt;&gt;</span>();
+                                .<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;&gt;</span>();
             <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">v</span>.<span class="ident">to_base64</span>(<span class="ident">STANDARD</span>)
                         .<span class="ident">from_base64</span>()
                         .<span class="ident">unwrap</span>(),

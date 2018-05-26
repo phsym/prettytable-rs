@@ -10,10 +10,11 @@
     <title>term::Terminal - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css"
+          id="mainThemeStyle">
     
     <link rel="stylesheet" type="text/css" href="../dark.css">
-    <link rel="stylesheet" type="text/css" href="../main.css" id="themeStyle">
+    <link rel="stylesheet" type="text/css" href="../light.css" id="themeStyle">
     <script src="../storage.js"></script>
     
 
@@ -54,13 +55,11 @@
         </form>
     </nav>
 
-    <section id='main' class="content">
-<h1 class='fqn'><span class='in-band'>Trait <a href='index.html'>term</a>::<wbr><a class="trait" href=''>Terminal</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content"><h1 class='fqn'><span class='in-band'>Trait <a href='index.html'>term</a>::<wbr><a class="trait" href=''>Terminal</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../src/term/lib.rs.html#319-395' title='goto source code'>[src]</a></span></h1>
-<pre class='rust trait'>pub trait Terminal: <a class="trait" href="https://doc.rust-lang.org/nightly/std/io/trait.Write.html" title="trait std::io::Write">Write</a> {
+               </span><a class='srclink' href='../src/term/lib.rs.html#319-395' title='goto source code'>[src]</a></span></h1><div class="docblock type-decl"><pre class='rust trait'>pub trait Terminal: <a class="trait" href="https://doc.rust-lang.org/nightly/std/io/trait.Write.html" title="trait std::io::Write">Write</a> {
     type <a href='#associatedtype.Output' class="type">Output</a>: <a class="trait" href="https://doc.rust-lang.org/nightly/std/io/trait.Write.html" title="trait std::io::Write">Write</a>;
     fn <a href='#tymethod.fg' class='fnname'>fg</a>(&amp;mut self, color: <a class="type" href="../term/color/type.Color.html" title="type term::color::Color">Color</a>) -&gt; <a class="type" href="../term/type.Result.html" title="type term::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>&gt;;
 <div class='item-spacer'></div>    fn <a href='#tymethod.bg' class='fnname'>bg</a>(&amp;mut self, color: <a class="type" href="../term/color/type.Color.html" title="type term::color::Color">Color</a>) -&gt; <a class="type" href="../term/type.Result.html" title="type term::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>&gt;;
@@ -75,7 +74,7 @@
 <div class='item-spacer'></div>    fn <a href='#tymethod.get_ref' class='fnname'>get_ref</a>(&amp;self) -&gt; &amp;Self::<a class="type" href="../term/trait.Terminal.html#associatedtype.Output" title="type term::Terminal::Output">Output</a>;
 <div class='item-spacer'></div>    fn <a href='#tymethod.get_mut' class='fnname'>get_mut</a>(&amp;mut self) -&gt; &amp;mut Self::<a class="type" href="../term/trait.Terminal.html#associatedtype.Output" title="type term::Terminal::Output">Output</a>;
 <div class='item-spacer'></div>    fn <a href='#tymethod.into_inner' class='fnname'>into_inner</a>(self) -&gt; Self::<a class="type" href="../term/trait.Terminal.html#associatedtype.Output" title="type term::Terminal::Output">Output</a><br>&nbsp;&nbsp;&nbsp; <span class="where">where<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Self: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a></span>;
-}</pre><div class='docblock'><p>A terminal with similar capabilities to an ANSI Terminal
+}</pre></div><div class='docblock'><p>A terminal with similar capabilities to an ANSI Terminal
 (foreground/background colors etc).</p>
 </div>
             <h2 id='associated-types' class='small-section-header'>
@@ -127,8 +126,8 @@ error.</p>
           Implementors<a href='#implementors' class='anchor'></a>
         </h2>
         <ul class='item-list' id='implementors-list'>
-    <li><div class='out-of-band'><a class='srclink' href='../src/term/terminfo/mod.rs.html#269-347' title='goto source code'>[src]</a></div><code>impl&lt;T:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/std/io/trait.Write.html" title="trait std::io::Write">Write</a>&gt; Terminal for <a class="struct" href="../term/terminfo/struct.TerminfoTerminal.html" title="struct term::terminfo::TerminfoTerminal">TerminfoTerminal</a>&lt;T&gt;<span class="where fmt-newline">  type <a href='#associatedtype.Output' class="type">Output</a> = T;</span></code></li>
-</ul><script type="text/javascript" async
+    <li><table class='table-display'><tbody><tr><td><code>impl&lt;T:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/std/io/trait.Write.html" title="trait std::io::Write">Write</a>&gt; Terminal for <a class="struct" href="../term/terminfo/struct.TerminfoTerminal.html" title="struct term::terminfo::TerminfoTerminal">TerminfoTerminal</a>&lt;T&gt;<span class="where fmt-newline">  type <a href='#associatedtype.Output' class="type">Output</a> = T;</span></code><td><div class='out-of-band'><a class='srclink' href='../src/term/terminfo/mod.rs.html#269-347' title='goto source code'>[src]</a></div></td></tr></tbody></table></li>
+</ul><script type="text/javascript">window.inlined_types=new Set([]);</script><script type="text/javascript" async
                          src="../implementors/term/trait.Terminal.js">
                  </script></section>
     <section id='search' class="content hidden"></section>

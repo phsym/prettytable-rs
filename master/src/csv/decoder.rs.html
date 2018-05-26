@@ -10,10 +10,11 @@
     <title>decoder.rs.html -- source</title>
 
     <link rel="stylesheet" type="text/css" href="../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css"
+          id="mainThemeStyle">
     
     <link rel="stylesheet" type="text/css" href="../../dark.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle">
     <script src="../../storage.js"></script>
     
 
@@ -315,7 +316,7 @@
         <span class="kw">let</span> <span class="ident">s</span> <span class="op">=</span> <span class="ident">s</span>.<span class="ident">trim</span>();
         <span class="kw">match</span> <span class="ident">FromStr</span>::<span class="ident">from_str</span>(<span class="ident">s</span>) {
             <span class="prelude-val">Ok</span>(<span class="ident">t</span>) <span class="op">=&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">t</span>),
-            <span class="prelude-val">Err</span>(_) <span class="op">=&gt;</span> <span class="self">self</span>.<span class="ident">err</span>(<span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;Failed converting &#39;{}&#39; from str.&quot;</span>, <span class="ident">s</span>)),
+            <span class="prelude-val">Err</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="self">self</span>.<span class="ident">err</span>(<span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;Failed converting &#39;{}&#39; from str.&quot;</span>, <span class="ident">s</span>)),
         }
     }
 
@@ -364,7 +365,7 @@
     <span class="kw">fn</span> <span class="ident">read_str</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">pop_string</span>()
     }
-    <span class="kw">fn</span> <span class="ident">read_enum</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, _: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">f</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">read_enum</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="kw">_</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">f</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
             <span class="kw">where</span> <span class="ident">F</span>: <span class="ident">FnOnce</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Decoded</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
         <span class="ident">f</span>(<span class="self">self</span>)
     }
@@ -376,13 +377,13 @@
             <span class="self">self</span>.<span class="ident">push_string</span>(<span class="ident">cur</span>.<span class="ident">clone</span>());
             <span class="kw">match</span> <span class="ident">f</span>(<span class="self">self</span>, <span class="ident">i</span>) {
                 <span class="prelude-val">Ok</span>(<span class="ident">v</span>) <span class="op">=&gt;</span> <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="ident">v</span>),
-                <span class="prelude-val">Err</span>(_) <span class="op">=&gt;</span> { <span class="self">self</span>.<span class="ident">push_string</span>(<span class="ident">cur</span>); }
+                <span class="prelude-val">Err</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> { <span class="self">self</span>.<span class="ident">push_string</span>(<span class="ident">cur</span>); }
             }
         }
         <span class="self">self</span>.<span class="ident">err</span>(<span class="macro">format</span><span class="macro">!</span>(
             <span class="string">&quot;Could not load value into any variant in {:?}&quot;</span>, <span class="ident">names</span>))
     }
-    <span class="kw">fn</span> <span class="ident">read_enum_variant_arg</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, _: <span class="ident">usize</span>, <span class="ident">f</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">read_enum_variant_arg</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="kw">_</span>: <span class="ident">usize</span>, <span class="ident">f</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
             <span class="kw">where</span> <span class="ident">F</span>: <span class="ident">FnOnce</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Decoded</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
         <span class="ident">f</span>(<span class="self">self</span>)
     }
@@ -391,7 +392,7 @@
             <span class="kw">where</span> <span class="ident">F</span>: <span class="ident">FnMut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Decoded</span>, <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">read_enum_variant</span>(<span class="ident">names</span>, <span class="ident">f</span>)
     }
-    <span class="kw">fn</span> <span class="ident">read_enum_struct_variant_field</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, _: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+    <span class="kw">fn</span> <span class="ident">read_enum_struct_variant_field</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="kw">_</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
                                             <span class="ident">f_idx</span>: <span class="ident">usize</span>, <span class="ident">f</span>: <span class="ident">F</span>)
                                            <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
             <span class="kw">where</span> <span class="ident">F</span>: <span class="ident">FnOnce</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Decoded</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
@@ -407,25 +408,25 @@
         }
         <span class="ident">f</span>(<span class="self">self</span>)
     }
-    <span class="kw">fn</span> <span class="ident">read_struct_field</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, _: <span class="kw-2">&amp;</span><span class="ident">str</span>, _: <span class="ident">usize</span>, <span class="ident">f</span>: <span class="ident">F</span>)
+    <span class="kw">fn</span> <span class="ident">read_struct_field</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="kw">_</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="kw">_</span>: <span class="ident">usize</span>, <span class="ident">f</span>: <span class="ident">F</span>)
                               <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
             <span class="kw">where</span> <span class="ident">F</span>: <span class="ident">FnOnce</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Decoded</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
         <span class="ident">f</span>(<span class="self">self</span>)
     }
-    <span class="kw">fn</span> <span class="ident">read_tuple</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, _: <span class="ident">usize</span>, <span class="ident">f</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">read_tuple</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="kw">_</span>: <span class="ident">usize</span>, <span class="ident">f</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
             <span class="kw">where</span> <span class="ident">F</span>: <span class="ident">FnOnce</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Decoded</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
         <span class="ident">f</span>(<span class="self">self</span>)
     }
-    <span class="kw">fn</span> <span class="ident">read_tuple_arg</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, _: <span class="ident">usize</span>, <span class="ident">f</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">read_tuple_arg</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="kw">_</span>: <span class="ident">usize</span>, <span class="ident">f</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
             <span class="kw">where</span> <span class="ident">F</span>: <span class="ident">FnOnce</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Decoded</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
         <span class="ident">f</span>(<span class="self">self</span>)
     }
-    <span class="kw">fn</span> <span class="ident">read_tuple_struct</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, _: <span class="kw-2">&amp;</span><span class="ident">str</span>, _: <span class="ident">usize</span>, _: <span class="ident">F</span>)
+    <span class="kw">fn</span> <span class="ident">read_tuple_struct</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="kw">_</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="kw">_</span>: <span class="ident">usize</span>, <span class="kw">_</span>: <span class="ident">F</span>)
                               <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
             <span class="kw">where</span> <span class="ident">F</span>: <span class="ident">FnOnce</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Decoded</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
         <span class="macro">unimplemented</span><span class="macro">!</span>()
     }
-    <span class="kw">fn</span> <span class="ident">read_tuple_struct_arg</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, _: <span class="ident">usize</span>, _: <span class="ident">F</span>)
+    <span class="kw">fn</span> <span class="ident">read_tuple_struct_arg</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="kw">_</span>: <span class="ident">usize</span>, <span class="kw">_</span>: <span class="ident">F</span>)
                                   <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
             <span class="kw">where</span> <span class="ident">F</span>: <span class="ident">FnOnce</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Decoded</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
         <span class="macro">unimplemented</span><span class="macro">!</span>()
@@ -439,7 +440,7 @@
             <span class="self">self</span>.<span class="ident">push_string</span>(<span class="ident">s</span>);
             <span class="kw">match</span> <span class="ident">f</span>(<span class="self">self</span>, <span class="bool-val">true</span>) {
                 <span class="prelude-val">Ok</span>(<span class="ident">v</span>) <span class="op">=&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">v</span>),
-                <span class="prelude-val">Err</span>(_) <span class="op">=&gt;</span> <span class="ident">f</span>(<span class="self">self</span>, <span class="bool-val">false</span>),
+                <span class="prelude-val">Err</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="ident">f</span>(<span class="self">self</span>, <span class="bool-val">false</span>),
             }
         }
     }
@@ -448,19 +449,19 @@
         <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">len</span>();
         <span class="ident">f</span>(<span class="self">self</span>, <span class="ident">len</span>)
     }
-    <span class="kw">fn</span> <span class="ident">read_seq_elt</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, _: <span class="ident">usize</span>, <span class="ident">f</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">read_seq_elt</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="kw">_</span>: <span class="ident">usize</span>, <span class="ident">f</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
             <span class="kw">where</span> <span class="ident">F</span>: <span class="ident">FnOnce</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Decoded</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
         <span class="ident">f</span>(<span class="self">self</span>)
     }
-    <span class="kw">fn</span> <span class="ident">read_map</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, _: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">read_map</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="kw">_</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
             <span class="kw">where</span> <span class="ident">F</span>: <span class="ident">FnOnce</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Decoded</span>, <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
         <span class="macro">unimplemented</span><span class="macro">!</span>()
     }
-    <span class="kw">fn</span> <span class="ident">read_map_elt_key</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, _: <span class="ident">usize</span>, _: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">read_map_elt_key</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="kw">_</span>: <span class="ident">usize</span>, <span class="kw">_</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
             <span class="kw">where</span> <span class="ident">F</span>: <span class="ident">FnOnce</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Decoded</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
         <span class="macro">unimplemented</span><span class="macro">!</span>()
     }
-    <span class="kw">fn</span> <span class="ident">read_map_elt_val</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, _: <span class="ident">usize</span>, _: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">read_map_elt_val</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="kw">_</span>: <span class="ident">usize</span>, <span class="kw">_</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
             <span class="kw">where</span> <span class="ident">F</span>: <span class="ident">FnOnce</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Decoded</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
         <span class="macro">unimplemented</span><span class="macro">!</span>()
     }

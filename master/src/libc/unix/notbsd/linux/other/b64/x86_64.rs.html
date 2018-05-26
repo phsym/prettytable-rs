@@ -4,16 +4,17 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/libc-0.2.40/src/unix/notbsd/linux/other/b64/x86_64.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/libc-0.2.41/src/unix/notbsd/linux/other/b64/x86_64.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>x86_64.rs.html -- source</title>
 
     <link rel="stylesheet" type="text/css" href="../../../../../../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../../../../../../rustdoc.css" id="mainThemeStyle">
+    <link rel="stylesheet" type="text/css" href="../../../../../../../rustdoc.css"
+          id="mainThemeStyle">
     
     <link rel="stylesheet" type="text/css" href="../../../../../../../dark.css">
-    <link rel="stylesheet" type="text/css" href="../../../../../../../main.css" id="themeStyle">
+    <link rel="stylesheet" type="text/css" href="../../../../../../../light.css" id="themeStyle">
     <script src="../../../../../../../storage.js"></script>
     
 
@@ -710,6 +711,10 @@
 <span id="654">654</span>
 <span id="655">655</span>
 <span id="656">656</span>
+<span id="657">657</span>
+<span id="658">658</span>
+<span id="659">659</span>
+<span id="660">660</span>
 </pre><pre class="rust ">
 <span class="doccomment">//! x86_64-specific definitions for 64-bit linux-like values</span>
 
@@ -1139,6 +1144,10 @@
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">F_SETOWN</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">8</span>;
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">F_SETLK</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">6</span>;
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">F_SETLKW</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">7</span>;
+
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">F_RDLCK</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">F_WRLCK</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">1</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">F_UNLCK</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">2</span>;
 
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SFD_NONBLOCK</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x0800</span>;
 

@@ -10,10 +10,11 @@
     <title>rustc_serialize::json - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css"
+          id="mainThemeStyle">
     
     <link rel="stylesheet" type="text/css" href="../../dark.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle">
     <script src="../../storage.js"></script>
     
 
@@ -54,13 +55,11 @@
         </form>
     </nav>
 
-    <section id='main' class="content">
-<h1 class='fqn'><span class='in-band'>Module <a href='../index.html'>rustc_serialize</a>::<wbr><a class="mod" href=''>json</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content"><h1 class='fqn'><span class='in-band'>Module <a href='../index.html'>rustc_serialize</a>::<wbr><a class="mod" href=''>json</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../src/rustc_serialize/json.rs.html#14-3999' title='goto source code'>[src]</a></span></h1>
-<div class='docblock'><p>JSON parsing and serialization</p>
+               </span><a class='srclink' href='../../src/rustc_serialize/json.rs.html#14-3999' title='goto source code'>[src]</a></span></h1><div class='docblock'><p>JSON parsing and serialization</p>
 <h1 id="what-is-json" class="section-header"><a href="#what-is-json">What is JSON?</a></h1>
 <p>JSON (JavaScript Object Notation) is a way to write data in Javascript.
 Like XML, it allows encoding structured data in a text format that can be
@@ -247,7 +246,7 @@ which is required for custom mappings.</p>
         <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;{}: {}&quot;</span>, <span class="ident">key</span>, <span class="kw">match</span> <span class="kw-2">*</span><span class="ident">value</span> {
             <span class="ident">Json</span>::<span class="ident">U64</span>(<span class="ident">v</span>) <span class="op">=&gt;</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{} (u64)&quot;</span>, <span class="ident">v</span>),
             <span class="ident">Json</span>::<span class="ident">String</span>(<span class="kw-2">ref</span> <span class="ident">v</span>) <span class="op">=&gt;</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{} (string)&quot;</span>, <span class="ident">v</span>),
-            _ <span class="op">=&gt;</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;other&quot;</span>)
+            <span class="kw">_</span> <span class="op">=&gt;</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;other&quot;</span>)
         });
     }
     <span class="comment">// bar: baz (string)</span>

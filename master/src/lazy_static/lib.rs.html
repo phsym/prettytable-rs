@@ -10,10 +10,11 @@
     <title>lib.rs.html -- source</title>
 
     <link rel="stylesheet" type="text/css" href="../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css"
+          id="mainThemeStyle">
     
     <link rel="stylesheet" type="text/css" href="../../dark.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle">
     <script src="../../storage.js"></script>
     
 
@@ -432,7 +433,7 @@ no guarantees can be made about them in regard to SemVer stability.
         }
         <span class="kw">impl</span> <span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">LazyStatic</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">N</span> {
             <span class="kw">fn</span> <span class="ident">initialize</span>(<span class="ident">lazy</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) {
-                <span class="kw">let</span> _ <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="kw-2">*</span><span class="ident">lazy</span>;
+                <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="kw-2">*</span><span class="ident">lazy</span>;
             }
         }
     };

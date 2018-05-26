@@ -10,10 +10,11 @@
     <title>csv::index::create_index - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css"
+          id="mainThemeStyle">
     
     <link rel="stylesheet" type="text/css" href="../../dark.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle">
     <script src="../../storage.js"></script>
     
 
@@ -33,7 +34,7 @@
     <nav class="sidebar">
         <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'><a href='../index.html'>csv</a>::<wbr><a href='index.html'>index</a></p><script>window.sidebarCurrent = {name: 'create_index', ty: 'fn', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <div class="sidebar-elems"><p class='location'><a href='../index.html'>csv</a>::<wbr><a href='index.html'>index</a></p><script>window.sidebarCurrent = {name: 'create_index', ty: 'fn', relpath: ''};</script><script defer src="sidebar-items.js"></script></div>
     </nav>
 
     <div class="theme-picker">
@@ -54,13 +55,11 @@
         </form>
     </nav>
 
-    <section id='main' class="content">
-<h1 class='fqn'><span class='in-band'>Function <a href='../index.html'>csv</a>::<wbr><a href='index.html'>index</a>::<wbr><a class="fn" href=''>create_index</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content"><h1 class='fqn'><span class='in-band'>Function <a href='../index.html'>csv</a>::<wbr><a href='index.html'>index</a>::<wbr><a class="fn" href=''>create_index</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../src/csv/index/mod.rs.html#132-149' title='goto source code'>[src]</a></span></h1>
-<pre class='rust fn'>pub fn create_index&lt;R, W&gt;(rdr: <a class="struct" href="../../csv/struct.Reader.html" title="struct csv::Reader">Reader</a>&lt;R&gt;, wtr: W) -&gt; <a class="type" href="../../csv/type.Result.html" title="type csv::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;R: <a class="trait" href="https://doc.rust-lang.org/nightly/std/io/trait.Read.html" title="trait std::io::Read">Read</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/std/io/trait.Seek.html" title="trait std::io::Seek">Seek</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;W: <a class="trait" href="https://doc.rust-lang.org/nightly/std/io/trait.Write.html" title="trait std::io::Write">Write</a>,&nbsp;</span></pre><div class='docblock'><p>Creates a new index for the given CSV reader.</p>
+               </span><a class='srclink' href='../../src/csv/index/mod.rs.html#132-149' title='goto source code'>[src]</a></span></h1><pre class='rust fn'>pub fn create_index&lt;R, W&gt;(rdr: <a class="struct" href="../../csv/struct.Reader.html" title="struct csv::Reader">Reader</a>&lt;R&gt;, wtr: W) -&gt; <a class="type" href="../../csv/type.Result.html" title="type csv::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;R: <a class="trait" href="https://doc.rust-lang.org/nightly/std/io/trait.Read.html" title="trait std::io::Read">Read</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/std/io/trait.Seek.html" title="trait std::io::Seek">Seek</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;W: <a class="trait" href="https://doc.rust-lang.org/nightly/std/io/trait.Write.html" title="trait std::io::Write">Write</a>,&nbsp;</span></pre><div class='docblock'><p>Creates a new index for the given CSV reader.</p>
 <p>The CSV data is read from <code>rdr</code> and the index is written to <code>wtr</code>.</p>
 </div></section>
     <section id='search' class="content hidden"></section>
