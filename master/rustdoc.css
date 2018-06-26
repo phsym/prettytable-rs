@@ -533,6 +533,9 @@ a {
 	left: -5px;
 }
 .small-section-header > .anchor {
+	left: -20px;
+}
+.small-section-header > .anchor:not(.field) {
 	left: -28px;
 }
 .anchor:before {
@@ -545,8 +548,16 @@ a {
 
 .block a.current.crate { font-weight: 500; }
 
+.search-container {
+	position: relative;
+}
+.search-container > .top-button {
+	position: absolute;
+	right: 0;
+	top: 10px;
+}
 .search-input {
-	width: 100%;
+	width: calc(100% - 34px);
 	/* Override Normalize.css: we have margins and do
 	 not want to overflow - the `moz` attribute is necessary
 	 until Firefox 29, too early to drop at this point */
@@ -1221,7 +1232,14 @@ kbd {
 	outline: none;
 }
 
-#theme-picker {
+#settings-menu {
+	position: absolute;
+	right: 0;
+	top: 10px;
+	outline: none;
+}
+
+#theme-picker, #settings-menu {
 	padding: 4px;
 	width: 27px;
 	height: 29px;
@@ -1290,4 +1308,22 @@ kbd {
 	position: relative;
 	font-size: 19px;
 	display: block;
+}
+
+#main > ul {
+	padding-left: 10px;
+}
+#main > ul > li {
+	list-style: none;
+}
+#all-types {
+	text-align: center;
+	border: 1px solid;
+	margin: 0 10px;
+	margin-bottom: 10px;
+	display: block;
+	border-radius: 7px;
+}
+#all-types > p {
+	margin: 5px 0;
 }
