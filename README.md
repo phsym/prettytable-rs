@@ -360,7 +360,7 @@ table.to_csv_writer(writer)?;
 ```
 
 ## Note on line endings
-By default, the library prints tables with platform specific line ending. Thin means on Windows,
+By default, the library prints tables with platform specific line ending. This means on Windows,
 newlines will be rendered with `\r\n` while on other platforms they will be rendered with `\n`.
 Since `v0.6.3`, platform specific line endings are activated though the default feature `win_crlf`, which can be deactivated.
 When this feature is deactivated (for instance with the `--no-default-features` flag in cargo), line endings will be rendered with `\n`
