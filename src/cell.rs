@@ -2,9 +2,9 @@
 
 use std::io::{Write, Error};
 use std::string::ToString;
-use unicode_width::UnicodeWidthStr;
 use super::{Attr, Terminal, color};
 use super::format::Alignment;
+use super::utils::display_width;
 use super::utils::print_align;
 
 /// Represent a table cell containing a string.
@@ -26,7 +26,7 @@ impl Cell {
         let content: Vec<String> = string.lines().map(|x| x.to_string()).collect();
         let mut width = 0;
         for cont in &content {
-            let l = UnicodeWidthStr::width(&cont[..]);
+            let l = display_width(&cont[..]);
             if l > width {
                 width = l;
             }
