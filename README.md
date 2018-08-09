@@ -36,10 +36,10 @@ Include the library as a dependency to your project by adding the following line
 
 ```toml
 [dependencies]
-prettytable-rs = "^0.6"
+prettytable-rs = "^0.7"
 ```
 
-The library requires at least `rust v1.18.0`.
+The library requires at least `rust v1.20.0`.
 
 ## Basic usage
 
