@@ -508,6 +508,28 @@
 <span id="508">508</span>
 <span id="509">509</span>
 <span id="510">510</span>
+<span id="511">511</span>
+<span id="512">512</span>
+<span id="513">513</span>
+<span id="514">514</span>
+<span id="515">515</span>
+<span id="516">516</span>
+<span id="517">517</span>
+<span id="518">518</span>
+<span id="519">519</span>
+<span id="520">520</span>
+<span id="521">521</span>
+<span id="522">522</span>
+<span id="523">523</span>
+<span id="524">524</span>
+<span id="525">525</span>
+<span id="526">526</span>
+<span id="527">527</span>
+<span id="528">528</span>
+<span id="529">529</span>
+<span id="530">530</span>
+<span id="531">531</span>
+<span id="532">532</span>
 </pre><pre class="rust ">
 <span class="doccomment">//! Define table formatting utilities</span>
 
@@ -687,6 +709,16 @@
         <span class="self">self</span>.<span class="ident">rborder</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">border</span>);
     }
 
+    <span class="doccomment">/// Set the character used for left table border</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">left_border</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">border</span>: <span class="ident">char</span>) {
+        <span class="self">self</span>.<span class="ident">lborder</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">border</span>);
+    }
+
+    <span class="doccomment">/// Set the character used for right table border</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">right_border</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">border</span>: <span class="ident">char</span>) {
+        <span class="self">self</span>.<span class="ident">rborder</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">border</span>);
+    }
+
     <span class="doccomment">/// Set a line separator</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">separator</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">what</span>: <span class="ident">LinePosition</span>, <span class="ident">separator</span>: <span class="ident">LineSeparator</span>) {
         <span class="kw-2">*</span><span class="kw">match</span> <span class="ident">what</span> {
@@ -803,6 +835,18 @@
     <span class="doccomment">/// Set the character used for table borders</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">borders</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">border</span>: <span class="ident">char</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">format</span>.<span class="ident">borders</span>(<span class="ident">border</span>);
+        <span class="self">self</span>
+    }
+
+    <span class="doccomment">/// Set the character used for left table border</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">left_border</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">border</span>: <span class="ident">char</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">format</span>.<span class="ident">left_border</span>(<span class="ident">border</span>);
+        <span class="self">self</span>
+    }
+
+    <span class="doccomment">/// Set the character used for right table border</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">right_border</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">border</span>: <span class="ident">char</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">format</span>.<span class="ident">right_border</span>(<span class="ident">border</span>);
         <span class="self">self</span>
     }
 
