@@ -269,13 +269,14 @@ Configurable settings include:
 - Junctions
 - Column separators
 - Line separators
+- Titles (using `table.set_titles()`)
 
 To do this, either:
 - create a new `TableFormat` object, then call setters until you get the desired configuration;
 - or use the convenient `FormatBuilder` and Builder pattern, shown below
 
 ```rust
-let mut table = /* Initialize table */;
+let mut table = Table::new();
 let format = format::FormatBuilder::new()
     .column_separator('|')
     .borders('|')
@@ -285,6 +286,10 @@ let format = format::FormatBuilder::new()
     .padding(1, 1)
     .build();
 table.set_format(format);
+
+table.set_titles(row!["Title 1", "Title 2"]);
+table.add_row(row!["Value 1", "Value 2"]);
+table.add_row(row!["Value three", "Value four"]);
 ```
 
 The code above will make the table look like
@@ -300,6 +305,8 @@ For convenience, several formats are predefined in `prettytable::format::consts`
 
 Some formats and their respective outputs:
 - ```rust
+  use prettytable::format;
+
   table.set_format(*format::consts::FORMAT_NO_LINESEP_WITH_TITLE);
   ```
   ```
@@ -311,6 +318,8 @@ Some formats and their respective outputs:
   +-------------+------------+
   ```
 - ```rust
+  use prettytable::format;
+
   table.set_format(*format::consts::FORMAT_NO_BORDER_LINE_SEPARATOR);
   ```
   ```
