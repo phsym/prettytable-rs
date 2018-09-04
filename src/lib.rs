@@ -215,10 +215,10 @@ impl<'a> TableSlice<'a> {
                                    mut writer: csv::Writer<W>)
                                    -> csv::Result<csv::Writer<W>> {
         for title in self.titles {
-            writer.write(title.iter().map(|c| c.get_content()))?;
+            writer.write_record(title.iter().map(|c| c.get_content()))?;
         }
         for row in self.rows {
-            writer.write(row.iter().map(|c| c.get_content()))?;
+            writer.write_record(row.iter().map(|c| c.get_content()))?;
         }
 
         writer.flush()?;
@@ -254,7 +254,10 @@ impl Table {
     /// For more customisability use `from_csv()`
     #[cfg(feature = "csv")]
     pub fn from_csv_string(csv_s: &str) -> csv::Result<Table> {
-        Ok(Table::from_csv(&mut csv::Reader::from_string(csv_s).has_headers(false)))
+        Ok(Table::from_csv(
+            &mut csv::ReaderBuilder::new()
+                .has_headers(false)
+                .from_reader(csv_s.as_bytes())))
     }
 
     /// Create a table from a CSV file
@@ -262,7 +265,10 @@ impl Table {
     /// For more customisability use `from_csv()`
     #[cfg(feature = "csv")]
     pub fn from_csv_file<P: AsRef<Path>>(csv_p: P) -> csv::Result<Table> {
-        Ok(Table::from_csv(&mut csv::Reader::from_file(csv_p)?.has_headers(false)))
+        Ok(Table::from_csv(
+            &mut csv::ReaderBuilder::new()
+                .has_headers(false)
+                .from_path(csv_p)?))
     }
 
     /// Create a table from a CSV reader
@@ -1056,19 +1062,32 @@ mod tests {
 
         #[test]
         fn to() {
-            assert_eq!(test_table().to_csv(Vec::new()).unwrap().as_string(), CSV_S);
+            assert_eq!(
+                String::from_utf8(
+                    test_table()
+                        .to_csv(Vec::new())
+                        .unwrap()
+                        .into_inner()
+                        .unwrap()
+                    ).unwrap(),
+                    CSV_S);
         }
 
         #[test]
         fn trans() {
-            assert_eq!(Table::from_csv_string(test_table()
-                                                  .to_csv(Vec::new())
-                                                  .unwrap()
-                                                  .as_string())
-                               .unwrap()
-                               .to_string()
-                               .replace("\r\n", "\n"),
-                       test_table().to_string().replace("\r\n", "\n"));
+            assert_eq!(
+                Table::from_csv_string(
+                    &String::from_utf8(
+                        test_table()
+                            .to_csv(Vec::new())
+                            .unwrap()
+                            .into_inner()
+                            .unwrap()
+                    ).unwrap()
+                ).unwrap()
+                .to_string()
+                .replace("\r\n", "\n"),
+                test_table().to_string().replace("\r\n", "\n"));
         }
 
         #[test]

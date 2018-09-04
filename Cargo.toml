@@ -34,4 +34,4 @@ term = "^0.5"
 lazy_static = "1"
 atty = "^0.2"
 encode_unicode = "^0.3"
-csv = { version = "0.15", optional = true }
+csv = { version = "1", optional = true }

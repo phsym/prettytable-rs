@@ -25,7 +25,8 @@ fn main() {
     table.printstd();
 
     println!("");
-    println!("{}", table.to_csv(Vec::new()).unwrap().into_string());
+    println!("{}",
+        String::from_utf8(table.to_csv(Vec::new()).unwrap().into_inner().unwrap()).unwrap());
 }
 
 #[cfg(not(feature = "csv"))]
