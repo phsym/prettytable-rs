@@ -1083,6 +1083,25 @@
 <span id="1083">1083</span>
 <span id="1084">1084</span>
 <span id="1085">1085</span>
+<span id="1086">1086</span>
+<span id="1087">1087</span>
+<span id="1088">1088</span>
+<span id="1089">1089</span>
+<span id="1090">1090</span>
+<span id="1091">1091</span>
+<span id="1092">1092</span>
+<span id="1093">1093</span>
+<span id="1094">1094</span>
+<span id="1095">1095</span>
+<span id="1096">1096</span>
+<span id="1097">1097</span>
+<span id="1098">1098</span>
+<span id="1099">1099</span>
+<span id="1100">1100</span>
+<span id="1101">1101</span>
+<span id="1102">1102</span>
+<span id="1103">1103</span>
+<span id="1104">1104</span>
 </pre><pre class="rust ">
 <span class="attribute">#![<span class="ident">warn</span>(<span class="ident">missing_docs</span>,
         <span class="ident">unused_extern_crates</span>,
@@ -1301,10 +1320,10 @@
                                    <span class="kw-2">mut</span> <span class="ident">writer</span>: <span class="ident">csv</span>::<span class="ident">Writer</span><span class="op">&lt;</span><span class="ident">W</span><span class="op">&gt;</span>)
                                    <span class="op">-&gt;</span> <span class="ident">csv</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">csv</span>::<span class="ident">Writer</span><span class="op">&lt;</span><span class="ident">W</span><span class="op">&gt;&gt;</span> {
         <span class="kw">for</span> <span class="ident">title</span> <span class="kw">in</span> <span class="self">self</span>.<span class="ident">titles</span> {
-            <span class="ident">writer</span>.<span class="ident">write</span>(<span class="ident">title</span>.<span class="ident">iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">c</span><span class="op">|</span> <span class="ident">c</span>.<span class="ident">get_content</span>()))<span class="question-mark">?</span>;
+            <span class="ident">writer</span>.<span class="ident">write_record</span>(<span class="ident">title</span>.<span class="ident">iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">c</span><span class="op">|</span> <span class="ident">c</span>.<span class="ident">get_content</span>()))<span class="question-mark">?</span>;
         }
         <span class="kw">for</span> <span class="ident">row</span> <span class="kw">in</span> <span class="self">self</span>.<span class="ident">rows</span> {
-            <span class="ident">writer</span>.<span class="ident">write</span>(<span class="ident">row</span>.<span class="ident">iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">c</span><span class="op">|</span> <span class="ident">c</span>.<span class="ident">get_content</span>()))<span class="question-mark">?</span>;
+            <span class="ident">writer</span>.<span class="ident">write_record</span>(<span class="ident">row</span>.<span class="ident">iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">c</span><span class="op">|</span> <span class="ident">c</span>.<span class="ident">get_content</span>()))<span class="question-mark">?</span>;
         }
 
         <span class="ident">writer</span>.<span class="ident">flush</span>()<span class="question-mark">?</span>;
@@ -1340,7 +1359,10 @@
     <span class="doccomment">/// For more customisability use `from_csv()`</span>
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;csv&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_csv_string</span>(<span class="ident">csv_s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="ident">csv</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Table</span><span class="op">&gt;</span> {
-        <span class="prelude-val">Ok</span>(<span class="ident">Table</span>::<span class="ident">from_csv</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">csv</span>::<span class="ident">Reader</span>::<span class="ident">from_string</span>(<span class="ident">csv_s</span>).<span class="ident">has_headers</span>(<span class="bool-val">false</span>)))
+        <span class="prelude-val">Ok</span>(<span class="ident">Table</span>::<span class="ident">from_csv</span>(
+            <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">csv</span>::<span class="ident">ReaderBuilder</span>::<span class="ident">new</span>()
+                .<span class="ident">has_headers</span>(<span class="bool-val">false</span>)
+                .<span class="ident">from_reader</span>(<span class="ident">csv_s</span>.<span class="ident">as_bytes</span>())))
     }
 
     <span class="doccomment">/// Create a table from a CSV file</span>
@@ -1348,7 +1370,10 @@
     <span class="doccomment">/// For more customisability use `from_csv()`</span>
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;csv&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_csv_file</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">Path</span><span class="op">&gt;&gt;</span>(<span class="ident">csv_p</span>: <span class="ident">P</span>) <span class="op">-&gt;</span> <span class="ident">csv</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Table</span><span class="op">&gt;</span> {
-        <span class="prelude-val">Ok</span>(<span class="ident">Table</span>::<span class="ident">from_csv</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">csv</span>::<span class="ident">Reader</span>::<span class="ident">from_file</span>(<span class="ident">csv_p</span>)<span class="question-mark">?</span>.<span class="ident">has_headers</span>(<span class="bool-val">false</span>)))
+        <span class="prelude-val">Ok</span>(<span class="ident">Table</span>::<span class="ident">from_csv</span>(
+            <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">csv</span>::<span class="ident">ReaderBuilder</span>::<span class="ident">new</span>()
+                .<span class="ident">has_headers</span>(<span class="bool-val">false</span>)
+                .<span class="ident">from_path</span>(<span class="ident">csv_p</span>)<span class="question-mark">?</span>))
     }
 
     <span class="doccomment">/// Create a table from a CSV reader</span>
@@ -2142,19 +2167,32 @@
 
         <span class="attribute">#[<span class="ident">test</span>]</span>
         <span class="kw">fn</span> <span class="ident">to</span>() {
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">test_table</span>().<span class="ident">to_csv</span>(<span class="ident">Vec</span>::<span class="ident">new</span>()).<span class="ident">unwrap</span>().<span class="ident">as_string</span>(), <span class="ident">CSV_S</span>);
+            <span class="macro">assert_eq</span><span class="macro">!</span>(
+                <span class="ident">String</span>::<span class="ident">from_utf8</span>(
+                    <span class="ident">test_table</span>()
+                        .<span class="ident">to_csv</span>(<span class="ident">Vec</span>::<span class="ident">new</span>())
+                        .<span class="ident">unwrap</span>()
+                        .<span class="ident">into_inner</span>()
+                        .<span class="ident">unwrap</span>()
+                    ).<span class="ident">unwrap</span>(),
+                    <span class="ident">CSV_S</span>);
         }
 
         <span class="attribute">#[<span class="ident">test</span>]</span>
         <span class="kw">fn</span> <span class="ident">trans</span>() {
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Table</span>::<span class="ident">from_csv_string</span>(<span class="ident">test_table</span>()
-                                                  .<span class="ident">to_csv</span>(<span class="ident">Vec</span>::<span class="ident">new</span>())
-                                                  .<span class="ident">unwrap</span>()
-                                                  .<span class="ident">as_string</span>())
-                               .<span class="ident">unwrap</span>()
-                               .<span class="ident">to_string</span>()
-                               .<span class="ident">replace</span>(<span class="string">&quot;\r\n&quot;</span>, <span class="string">&quot;\n&quot;</span>),
-                       <span class="ident">test_table</span>().<span class="ident">to_string</span>().<span class="ident">replace</span>(<span class="string">&quot;\r\n&quot;</span>, <span class="string">&quot;\n&quot;</span>));
+            <span class="macro">assert_eq</span><span class="macro">!</span>(
+                <span class="ident">Table</span>::<span class="ident">from_csv_string</span>(
+                    <span class="kw-2">&amp;</span><span class="ident">String</span>::<span class="ident">from_utf8</span>(
+                        <span class="ident">test_table</span>()
+                            .<span class="ident">to_csv</span>(<span class="ident">Vec</span>::<span class="ident">new</span>())
+                            .<span class="ident">unwrap</span>()
+                            .<span class="ident">into_inner</span>()
+                            .<span class="ident">unwrap</span>()
+                    ).<span class="ident">unwrap</span>()
+                ).<span class="ident">unwrap</span>()
+                .<span class="ident">to_string</span>()
+                .<span class="ident">replace</span>(<span class="string">&quot;\r\n&quot;</span>, <span class="string">&quot;\n&quot;</span>),
+                <span class="ident">test_table</span>().<span class="ident">to_string</span>().<span class="ident">replace</span>(<span class="string">&quot;\r\n&quot;</span>, <span class="string">&quot;\n&quot;</span>));
         }
 
         <span class="attribute">#[<span class="ident">test</span>]</span>

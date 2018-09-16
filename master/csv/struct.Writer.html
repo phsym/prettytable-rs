@@ -1,154 +1,341 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="API documentation for the Rust `Writer` struct in crate `csv`."><meta name="keywords" content="rust, rustlang, rust-lang, Writer"><title>csv::Writer - Rust</title><link rel="stylesheet" type="text/css" href="../normalize.css"><link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../dark.css"><link rel="stylesheet" type="text/css" href="../light.css" id="themeStyle"><script src="../storage.js"></script></head><body class="rustdoc struct"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><p class='location'>Struct Writer</p><div class="sidebar-elems"><div class="block items"><a class="sidebar-title" href="#methods">Methods</a><div class="sidebar-links"><a href="#method.from_file">from_file</a><a href="#method.from_writer">from_writer</a><a href="#method.from_buffer">from_buffer</a><a href="#method.from_memory">from_memory</a><a href="#method.as_string">as_string</a><a href="#method.as_bytes">as_bytes</a><a href="#method.into_string">into_string</a><a href="#method.into_bytes">into_bytes</a><a href="#method.encode">encode</a><a href="#method.write">write</a><a href="#method.flush">flush</a><a href="#method.delimiter">delimiter</a><a href="#method.flexible">flexible</a><a href="#method.record_terminator">record_terminator</a><a href="#method.quote_style">quote_style</a><a href="#method.quote">quote</a><a href="#method.escape">escape</a><a href="#method.double_quote">double_quote</a></div><a class="sidebar-title" href="#synthetic-implementations">Auto Trait Implementations</a><div class="sidebar-links"><a href="#impl-Send">Send</a><a href="#impl-Sync">Sync</a></div></div><p class='location'><a href='index.html'>csv</a></p><script>window.sidebarCurrent = {name: 'Writer', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><input class="search-input" name="search" autocomplete="off" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><a id="settings-menu" href="../settings.html"><img src="../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class='fqn'><span class='in-band'>Struct <a href='index.html'>csv</a>::<wbr><a class="struct" href=''>Writer</a></span><span class='out-of-band'><span id='render-detail'><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class='inner'>&#x2212;</span>]</a></span><a class='srclink' href='../src/csv/writer.rs.html#68-78' title='goto source code'>[src]</a></span></h1><div class="docblock type-decl"><pre class='rust struct'>pub struct Writer&lt;W:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/std/io/trait.Write.html" title="trait std::io::Write">Write</a>&gt; { /* fields omitted */ }</pre></div><div class='docblock'><p>A CSV writer.</p>
-<p>This writer provides a convenient interface for encoding CSV data. While
-creating CSV data is much easier than parsing it, having a writer can
-be convenient because it can handle quoting for you automatically.
-Moreover, this particular writer supports <code>Encodable</code> types, which makes
-it easy to write your custom types as CSV records.</p>
-<p>All CSV data produced by this writer, with default options, conforms with
-<a href="http://tools.ietf.org/html/rfc4180">RFC 4180</a>. (If certain options like
-flexible record lengths are enabled, then compliance with RFC 4180 cannot
-be guaranteed.)</p>
-<p>One slight deviation is that records with a single empty field are always
-encoded as <code>&quot;&quot;</code>. This ensures that the record is not skipped since some
-CSV parsers will ignore consecutive record terminators (like the one in
-this crate).</p>
-<h3 id="example" class="section-header"><a href="#example">Example</a></h3>
-<p>Here's an example that encodes word pairs and their edit distances:</p>
-
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="API documentation for the Rust `Writer` struct in crate `csv`."><meta name="keywords" content="rust, rustlang, rust-lang, Writer"><title>csv::Writer - Rust</title><link rel="stylesheet" type="text/css" href="../normalize.css"><link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../dark.css"><link rel="stylesheet" type="text/css" href="../light.css" id="themeStyle"><script src="../storage.js"></script></head><body class="rustdoc struct"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><p class='location'>Struct Writer</p><div class="sidebar-elems"><div class="block items"><a class="sidebar-title" href="#methods">Methods</a><div class="sidebar-links"><a href="#method.from_path">from_path</a><a href="#method.from_writer">from_writer</a><a href="#method.serialize">serialize</a><a href="#method.write_record">write_record</a><a href="#method.write_byte_record">write_byte_record</a><a href="#method.write_field">write_field</a><a href="#method.flush">flush</a><a href="#method.into_inner">into_inner</a></div><a class="sidebar-title" href="#implementations">Trait Implementations</a><div class="sidebar-links"><a href="#impl-Debug">Debug</a><a href="#impl-Drop">Drop</a></div><a class="sidebar-title" href="#synthetic-implementations">Auto Trait Implementations</a><div class="sidebar-links"><a href="#impl-Send">Send</a><a href="#impl-Sync">Sync</a></div></div><p class='location'><a href='index.html'>csv</a></p><script>window.sidebarCurrent = {name: 'Writer', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><input class="search-input" name="search" autocomplete="off" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><a id="settings-menu" href="../settings.html"><img src="../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class='fqn'><span class='in-band'>Struct <a href='index.html'>csv</a>::<wbr><a class="struct" href=''>Writer</a></span><span class='out-of-band'><span id='render-detail'><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class='inner'>&#x2212;</span>]</a></span><a class='srclink' href='../src/csv/writer.rs.html#546-551' title='goto source code'>[src]</a></span></h1><div class="docblock type-decl"><pre class='rust struct'>pub struct Writer&lt;W:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/std/io/trait.Write.html" title="trait std::io::Write">Write</a>&gt; { /* fields omitted */ }</pre></div><div class='docblock'><p>A already configured CSV writer.</p>
+<p>A CSV writer takes as input Rust values and writes those values in a valid
+CSV format as output.</p>
+<p>While CSV writing is considerably easier than parsing CSV, a proper writer
+will do a number of things for you:</p>
+<ol>
+<li>Quote fields when necessary.</li>
+<li>Check that all records have the same number of fields.</li>
+<li>Write records with a single empty field correctly.</li>
+<li>Automatically serialize normal Rust types to CSV records. When that
+type is a struct, a header row is automatically written corresponding
+to the fields of that struct.</li>
+<li>Use buffering intelligently and otherwise avoid allocation. (This means
+that callers should not do their own buffering.)</li>
+</ol>
+<p>All of the above can be configured using a
+<a href="struct.WriterBuilder.html"><code>WriterBuilder</code></a>.
+However, a <code>Writer</code> has a couple of convenience constructors (<code>from_path</code>
+and <code>from_writer</code>) that use the default configuration.</p>
+<p>Note that the default configuration of a <code>Writer</code> uses <code>\n</code> for record
+terminators instead of <code>\r\n</code> as specified by RFC 4180. Use the
+<code>terminator</code> method on <code>WriterBuilder</code> to set the terminator to <code>\r\n</code> if
+it's desired.</p>
+</div><h2 id='methods' class='small-section-header'>Methods<a href='#methods' class='anchor'></a></h2><h3 id='impl' class='impl'><span class='in-band'><table class='table-display'><tbody><tr><td><code>impl <a class="struct" href="../csv/struct.Writer.html" title="struct csv::Writer">Writer</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/std/fs/struct.File.html" title="struct std::fs::File">File</a>&gt;</code><a href='#impl' class='anchor'></a></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/csv/writer.rs.html#607-634' title='goto source code'>[src]</a></span></td></tr></tbody></table></h3><div class='impl-items'><h4 id='method.from_path' class="method"><span id='from_path.v' class='invisible'><table class='table-display'><tbody><tr><td><code>pub fn <a href='#method.from_path' class='fnname'>from_path</a>&lt;P:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html" title="trait core::convert::AsRef">AsRef</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/std/path/struct.Path.html" title="struct std::path::Path">Path</a>&gt;&gt;(path: P) -&gt; <a class="type" href="../csv/type.Result.html" title="type csv::Result">Result</a>&lt;<a class="struct" href="../csv/struct.Writer.html" title="struct csv::Writer">Writer</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/std/fs/struct.File.html" title="struct std::fs::File">File</a>&gt;&gt;</code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/csv/writer.rs.html#631-633' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>Build a CSV writer with a default configuration that writes data to the
+given file path. The file is truncated if it already exists.</p>
+<p>If there was a problem opening the file at the given path, then this
+returns the corresponding error.</p>
+<h1 id="example" class="section-header"><a href="#example">Example</a></h1>
 <pre class="rust rust-example-rendered">
-<span class="kw">let</span> <span class="ident">records</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[
-    (<span class="string">&quot;sticker&quot;</span>, <span class="string">&quot;mortals&quot;</span>, <span class="number">7</span>),
-    (<span class="string">&quot;bribed&quot;</span>, <span class="string">&quot;personae&quot;</span>, <span class="number">7</span>),
-    (<span class="string">&quot;wobbling&quot;</span>, <span class="string">&quot;poncing&quot;</span>, <span class="number">4</span>),
-    (<span class="string">&quot;interposed&quot;</span>, <span class="string">&quot;emmett&quot;</span>, <span class="number">9</span>),
-    (<span class="string">&quot;chocolate&quot;</span>, <span class="string">&quot;refile&quot;</span>, <span class="number">7</span>),
-];
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">csv</span>;
 
-<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">wtr</span> <span class="op">=</span> <span class="ident">csv</span>::<span class="ident">Writer</span>::<span class="ident">from_memory</span>();
-<span class="kw">for</span> <span class="ident">record</span> <span class="kw">in</span> <span class="ident">records</span>.<span class="ident">into_iter</span>() {
-    <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">wtr</span>.<span class="ident">encode</span>(<span class="ident">record</span>);
-    <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">result</span>.<span class="ident">is_ok</span>());
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>::<span class="ident">Error</span>;
+<span class="kw">use</span> <span class="ident">csv</span>::<span class="ident">Writer</span>;
+
+<span class="kw">fn</span> <span class="ident">example</span>() <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">Error</span><span class="op">&gt;&gt;</span> {
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">wtr</span> <span class="op">=</span> <span class="ident">Writer</span>::<span class="ident">from_path</span>(<span class="string">&quot;foo.csv&quot;</span>)<span class="question-mark">?</span>;
+    <span class="ident">wtr</span>.<span class="ident">write_record</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>, <span class="string">&quot;c&quot;</span>])<span class="question-mark">?</span>;
+    <span class="ident">wtr</span>.<span class="ident">write_record</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;x&quot;</span>, <span class="string">&quot;y&quot;</span>, <span class="string">&quot;z&quot;</span>])<span class="question-mark">?</span>;
+    <span class="ident">wtr</span>.<span class="ident">flush</span>()<span class="question-mark">?</span>;
+    <span class="prelude-val">Ok</span>(())
 }</pre>
-</div>
-                    <h2 id='methods' class='small-section-header'>
-                      Methods<a href='#methods' class='anchor'></a>
-                    </h2>
-                <h3 id='impl' class='impl'><span class='in-band'><table class='table-display'><tbody><tr><td><code>impl <a class="struct" href="../csv/struct.Writer.html" title="struct csv::Writer">Writer</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/std/fs/struct.File.html" title="struct std::fs::File">File</a>&gt;</code><a href='#impl' class='anchor'></a></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/csv/writer.rs.html#80-88' title='goto source code'>[src]</a></span></td></tr></tbody></table></h3><div class='impl-items'><h4 id='method.from_file' class="method"><span id='from_file.v' class='invisible'><table class='table-display'><tbody><tr><td><code>pub fn <a href='#method.from_file' class='fnname'>from_file</a>&lt;P:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html" title="trait core::convert::AsRef">AsRef</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/std/path/struct.Path.html" title="struct std::path::Path">Path</a>&gt;&gt;(path: P) -&gt; <a class="type" href="../csv/type.Result.html" title="type csv::Result">Result</a>&lt;<a class="struct" href="../csv/struct.Writer.html" title="struct csv::Writer">Writer</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/std/fs/struct.File.html" title="struct std::fs::File">File</a>&gt;&gt;</code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/csv/writer.rs.html#85-87' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>Creates a new <code>Writer</code> that writes CSV data to the file path given.</p>
-<p>The file is created if it does not already exist and is truncated
-otherwise.</p>
-</div></div><h3 id='impl-1' class='impl'><span class='in-band'><table class='table-display'><tbody><tr><td><code>impl&lt;W:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/std/io/trait.Write.html" title="trait std::io::Write">Write</a>&gt; <a class="struct" href="../csv/struct.Writer.html" title="struct csv::Writer">Writer</a>&lt;W&gt;</code><a href='#impl-1' class='anchor'></a></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/csv/writer.rs.html#91-117' title='goto source code'>[src]</a></span></td></tr></tbody></table></h3><div class='impl-items'><h4 id='method.from_writer' class="method"><span id='from_writer.v' class='invisible'><table class='table-display'><tbody><tr><td><code>pub fn <a href='#method.from_writer' class='fnname'>from_writer</a>(w: W) -&gt; <a class="struct" href="../csv/struct.Writer.html" title="struct csv::Writer">Writer</a>&lt;W&gt;</code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/csv/writer.rs.html#95-97' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>Creates a new CSV writer that writes to the <code>io::Write</code> given.</p>
-<p>Note that the writer is buffered for you automatically.</p>
-</div><h4 id='method.from_buffer' class="method"><span id='from_buffer.v' class='invisible'><table class='table-display'><tbody><tr><td><code>pub fn <a href='#method.from_buffer' class='fnname'>from_buffer</a>(buf: <a class="struct" href="https://doc.rust-lang.org/nightly/std/io/buffered/struct.BufWriter.html" title="struct std::io::buffered::BufWriter">BufWriter</a>&lt;W&gt;) -&gt; <a class="struct" href="../csv/struct.Writer.html" title="struct csv::Writer">Writer</a>&lt;W&gt;</code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/csv/writer.rs.html#104-116' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>Creates a new CSV writer that writes to the buffer given.</p>
-<p>This lets you specify your own buffered writer (e.g., use a different
-capacity). All other constructors wrap the writer given in a buffer
-with default capacity.</p>
-</div></div><h3 id='impl-2' class='impl'><span class='in-band'><table class='table-display'><tbody><tr><td><code>impl <a class="struct" href="../csv/struct.Writer.html" title="struct csv::Writer">Writer</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>&gt;&gt;</code><a href='#impl-2' class='anchor'></a></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/csv/writer.rs.html#119-165' title='goto source code'>[src]</a></span></td></tr></tbody></table></h3><div class='impl-items'><h4 id='method.from_memory' class="method"><span id='from_memory.v' class='invisible'><table class='table-display'><tbody><tr><td><code>pub fn <a href='#method.from_memory' class='fnname'>from_memory</a>() -&gt; <a class="struct" href="../csv/struct.Writer.html" title="struct csv::Writer">Writer</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>&gt;&gt;</code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/csv/writer.rs.html#123-125' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>Creates a new CSV writer that writes to an in memory buffer. At any
-time, <code>as_string</code> or <code>as_bytes</code> can be called to retrieve the
-cumulative CSV data.</p>
-</div><h4 id='method.as_string' class="method"><span id='as_string.v' class='invisible'><table class='table-display'><tbody><tr><td><code>pub fn <a href='#method.as_string' class='fnname'>as_string</a>&lt;'r&gt;(&amp;'r mut self) -&gt; &amp;'r <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a></code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/csv/writer.rs.html#128-137' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>Returns the written CSV data as a string.</p>
-</div><h4 id='method.as_bytes' class="method"><span id='as_bytes.v' class='invisible'><table class='table-display'><tbody><tr><td><code>pub fn <a href='#method.as_bytes' class='fnname'>as_bytes</a>&lt;'r&gt;(&amp;'r mut self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;'r [</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a></code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/csv/writer.rs.html#140-146' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>Returns the encoded CSV data as raw bytes.</p>
-</div><h4 id='method.into_string' class="method"><span id='into_string.v' class='invisible'><table class='table-display'><tbody><tr><td><code>pub fn <a href='#method.into_string' class='fnname'>into_string</a>(self) -&gt; <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a></code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/csv/writer.rs.html#149-154' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>Convert the Writer into a string of written CSV data</p>
-</div><h4 id='method.into_bytes' class="method"><span id='into_bytes.v' class='invisible'><table class='table-display'><tbody><tr><td><code>pub fn <a href='#method.into_bytes' class='fnname'>into_bytes</a>(self) -&gt; <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>&gt;</code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/csv/writer.rs.html#157-164' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>Convert the Writer into a vector of encoded CSV bytes.</p>
-</div></div><h3 id='impl-3' class='impl'><span class='in-band'><table class='table-display'><tbody><tr><td><code>impl&lt;W:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/std/io/trait.Write.html" title="trait std::io::Write">Write</a>&gt; <a class="struct" href="../csv/struct.Writer.html" title="struct csv::Writer">Writer</a>&lt;W&gt;</code><a href='#impl-3' class='anchor'></a></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/csv/writer.rs.html#167-291' title='goto source code'>[src]</a></span></td></tr></tbody></table></h3><div class='impl-items'><h4 id='method.encode' class="method"><span id='encode.v' class='invisible'><table class='table-display'><tbody><tr><td><code>pub fn <a href='#method.encode' class='fnname'>encode</a>&lt;E&gt;(&amp;mut self, e: E) -&gt; <a class="type" href="../csv/type.Result.html" title="type csv::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;E: <a class="trait" href="../rustc_serialize/serialize/trait.Encodable.html" title="trait rustc_serialize::serialize::Encodable">Encodable</a>,&nbsp;</span></code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/csv/writer.rs.html#208-212' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>Writes a record by encoding any <code>Encodable</code> value.</p>
-<p>This is the most convenient way to write CSV data. Most Rust types
-map to CSV data in a straight forward way. A vector is just a sequence
-of fields. Similarly for a struct. Enumerations of zero or one
-arguments are supported too. (Enums with zero arguments encode to their
-name, while enums of one argument encode to their constituent value.)
-Option types are also supported (<code>None</code> encodes to an empty field).</p>
-<h3 id="example-1" class="section-header"><a href="#example-1">Example</a></h3>
-<p>This example encodes word pairs that may or may not have their
-edit distances computed.</p>
+</div></div><h3 id='impl-1' class='impl'><span class='in-band'><table class='table-display'><tbody><tr><td><code>impl&lt;W:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/std/io/trait.Write.html" title="trait std::io::Write">Write</a>&gt; <a class="struct" href="../csv/struct.Writer.html" title="struct csv::Writer">Writer</a>&lt;W&gt;</code><a href='#impl-1' class='anchor'></a></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/csv/writer.rs.html#636-1187' title='goto source code'>[src]</a></span></td></tr></tbody></table></h3><div class='impl-items'><h4 id='method.from_writer' class="method"><span id='from_writer.v' class='invisible'><table class='table-display'><tbody><tr><td><code>pub fn <a href='#method.from_writer' class='fnname'>from_writer</a>(wtr: W) -&gt; <a class="struct" href="../csv/struct.Writer.html" title="struct csv::Writer">Writer</a>&lt;W&gt;</code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/csv/writer.rs.html#686-688' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>Build a CSV writer with a default configuration that writes data to
+<code>wtr</code>.</p>
+<p>Note that the CSV writer is buffered automatically, so you should not
+wrap <code>wtr</code> in a buffered writer like <code>io::BufWriter</code>.</p>
+<h1 id="example-1" class="section-header"><a href="#example-1">Example</a></h1>
+<pre class="rust rust-example-rendered">
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">csv</span>;
+
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>::<span class="ident">Error</span>;
+<span class="kw">use</span> <span class="ident">csv</span>::<span class="ident">Writer</span>;
+
+<span class="kw">fn</span> <span class="ident">example</span>() <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">Error</span><span class="op">&gt;&gt;</span> {
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">wtr</span> <span class="op">=</span> <span class="ident">Writer</span>::<span class="ident">from_writer</span>(<span class="macro">vec</span><span class="macro">!</span>[]);
+    <span class="ident">wtr</span>.<span class="ident">write_record</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>, <span class="string">&quot;c&quot;</span>])<span class="question-mark">?</span>;
+    <span class="ident">wtr</span>.<span class="ident">write_record</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;x&quot;</span>, <span class="string">&quot;y&quot;</span>, <span class="string">&quot;z&quot;</span>])<span class="question-mark">?</span>;
+
+    <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">from_utf8</span>(<span class="ident">wtr</span>.<span class="ident">into_inner</span>()<span class="question-mark">?</span>)<span class="question-mark">?</span>;
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">data</span>, <span class="string">&quot;a,b,c\nx,y,z\n&quot;</span>);
+    <span class="prelude-val">Ok</span>(())
+}</pre>
+</div><h4 id='method.serialize' class="method"><span id='serialize.v' class='invisible'><table class='table-display'><tbody><tr><td><code>pub fn <a href='#method.serialize' class='fnname'>serialize</a>&lt;S:&nbsp;<a class="trait" href="../serde/ser/trait.Serialize.html" title="trait serde::ser::Serialize">Serialize</a>&gt;(&amp;mut self, record: S) -&gt; <a class="type" href="../csv/type.Result.html" title="type csv::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>&gt;</code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/csv/writer.rs.html#904-917' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>Serialize a single record using Serde.</p>
+<h1 id="example-2" class="section-header"><a href="#example-2">Example</a></h1>
+<p>This shows how to serialize normal Rust structs as CSV records. The
+fields of the struct are used to write a header row automatically.
+(Writing the header row automatically can be disabled by building the
+CSV writer with a <a href="struct.WriterBuilder.html"><code>WriterBuilder</code></a> and
+calling the <code>has_headers</code> method.)</p>
 
 <pre class="rust rust-example-rendered">
-<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">rustc_serialize</span>;
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">csv</span>;
+<span class="attribute">#[<span class="ident">macro_use</span>]</span>
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">serde_derive</span>;
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">RustcEncodable</span>)]</span>
-<span class="kw">struct</span> <span class="ident">Distance</span> {
-    <span class="ident">name1</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>,
-    <span class="ident">name2</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>,
-    <span class="ident">dist</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>,
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>::<span class="ident">Error</span>;
+<span class="kw">use</span> <span class="ident">csv</span>::<span class="ident">Writer</span>;
+
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize</span>)]</span>
+<span class="kw">struct</span> <span class="ident">Row</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="ident">city</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>,
+    <span class="ident">country</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>,
+    <span class="comment">// Serde allows us to name our headers exactly,</span>
+    <span class="comment">// even if they don&#39;t match our struct field names.</span>
+    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;popcount&quot;</span>)]</span>
+    <span class="ident">population</span>: <span class="ident">u64</span>,
 }
 
-<span class="kw">let</span> <span class="ident">records</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[
-    <span class="ident">Distance</span> { <span class="ident">name1</span>: <span class="string">&quot;sticker&quot;</span>, <span class="ident">name2</span>: <span class="string">&quot;mortals&quot;</span>, <span class="ident">dist</span>: <span class="prelude-val">None</span> },
-    <span class="ident">Distance</span> { <span class="ident">name1</span>: <span class="string">&quot;bribed&quot;</span>, <span class="ident">name2</span>: <span class="string">&quot;personae&quot;</span>, <span class="ident">dist</span>: <span class="prelude-val">Some</span>(<span class="number">7</span>) },
-];
+<span class="kw">fn</span> <span class="ident">example</span>() <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">Error</span><span class="op">&gt;&gt;</span> {
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">wtr</span> <span class="op">=</span> <span class="ident">Writer</span>::<span class="ident">from_writer</span>(<span class="macro">vec</span><span class="macro">!</span>[]);
+    <span class="ident">wtr</span>.<span class="ident">serialize</span>(<span class="ident">Row</span> {
+        <span class="ident">city</span>: <span class="string">&quot;Boston&quot;</span>,
+        <span class="ident">country</span>: <span class="string">&quot;United States&quot;</span>,
+        <span class="ident">population</span>: <span class="number">4628910</span>,
+    })<span class="question-mark">?</span>;
+    <span class="ident">wtr</span>.<span class="ident">serialize</span>(<span class="ident">Row</span> {
+        <span class="ident">city</span>: <span class="string">&quot;Concord&quot;</span>,
+        <span class="ident">country</span>: <span class="string">&quot;United States&quot;</span>,
+        <span class="ident">population</span>: <span class="number">42695</span>,
+    })<span class="question-mark">?</span>;
 
-<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">wtr</span> <span class="op">=</span> <span class="ident">csv</span>::<span class="ident">Writer</span>::<span class="ident">from_memory</span>();
-<span class="kw">for</span> <span class="ident">record</span> <span class="kw">in</span> <span class="ident">records</span>.<span class="ident">into_iter</span>() {
-    <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">wtr</span>.<span class="ident">encode</span>(<span class="ident">record</span>);
-    <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">result</span>.<span class="ident">is_ok</span>());
-}
-<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">wtr</span>.<span class="ident">as_string</span>(),
-           <span class="string">&quot;sticker,mortals,\nbribed,personae,7\n&quot;</span>);</pre>
-</div><h4 id='method.write' class="method"><span id='write.v' class='invisible'><table class='table-display'><tbody><tr><td><code>pub fn <a href='#method.write' class='fnname'>write</a>&lt;'a, I&gt;(&amp;mut self, r: I) -&gt; <a class="type" href="../csv/type.Result.html" title="type csv::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;I: <a class="trait" href="https://doc.rust-lang.org/nightly/core/iter/iterator/trait.Iterator.html" title="trait core::iter::iterator::Iterator">Iterator</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;I as <a class="trait" href="https://doc.rust-lang.org/nightly/core/iter/iterator/trait.Iterator.html" title="trait core::iter::iterator::Iterator">Iterator</a>&gt;::<a class="type" href="https://doc.rust-lang.org/nightly/core/iter/iterator/trait.Iterator.html#associatedtype.Item" title="type core::iter::iterator::Iterator::Item">Item</a>: <a class="trait" href="../csv/trait.BorrowBytes.html" title="trait csv::BorrowBytes">BorrowBytes</a>,&nbsp;</span></code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/csv/writer.rs.html#253-256' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>Writes a record of strings (Unicode or raw bytes).</p>
-<p>This is meant to be the standard method provided by most CSV writers.
-That is, it writes a record of strings---no more and no less.</p>
-<p>This method accepts an iterator of <em>fields</em> for a single record. Each
-field must satisfy <code>BorrowBytes</code>, which allows the caller to control
-allocation.</p>
-<h3 id="example-2" class="section-header"><a href="#example-2">Example</a></h3>
-<p>This shows how to write string records.</p>
-
-<pre class="rust rust-example-rendered">
-<span class="kw">let</span> <span class="ident">records</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[
-    <span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;sticker&quot;</span>, <span class="string">&quot;mortals&quot;</span>, <span class="string">&quot;7&quot;</span>],
-    <span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;bribed&quot;</span>, <span class="string">&quot;personae&quot;</span>, <span class="string">&quot;7&quot;</span>],
-    <span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;wobbling&quot;</span>, <span class="string">&quot;poncing&quot;</span>, <span class="string">&quot;4&quot;</span>],
-    <span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;interposed&quot;</span>, <span class="string">&quot;emmett&quot;</span>, <span class="string">&quot;9&quot;</span>],
-    <span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;chocolate&quot;</span>, <span class="string">&quot;refile&quot;</span>, <span class="string">&quot;7&quot;</span>],
-];
-
-<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">wtr</span> <span class="op">=</span> <span class="ident">csv</span>::<span class="ident">Writer</span>::<span class="ident">from_memory</span>();
-<span class="kw">for</span> <span class="ident">record</span> <span class="kw">in</span> <span class="ident">records</span>.<span class="ident">into_iter</span>() {
-    <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">wtr</span>.<span class="ident">write</span>(<span class="ident">record</span>.<span class="ident">into_iter</span>());
-    <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">result</span>.<span class="ident">is_ok</span>());
+    <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">from_utf8</span>(<span class="ident">wtr</span>.<span class="ident">into_inner</span>()<span class="question-mark">?</span>)<span class="question-mark">?</span>;
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">data</span>, <span class="string">&quot;\
+city,country,popcount
+Boston,United States,4628910
+Concord,United States,42695
+&quot;</span>);
+    <span class="prelude-val">Ok</span>(())
 }</pre>
-<p>This shows how to write records that do not correspond to a valid UTF-8
-encoding. (Note the use of Rust's byte string syntax!)</p>
+<h1 id="rules" class="section-header"><a href="#rules">Rules</a></h1>
+<p>The behavior of <code>serialize</code> is fairly simple:</p>
+<ol>
+<li>
+<p>Nested containers (tuples, <code>Vec</code>s, structs, etc.) are always
+flattened (depth-first order).</p>
+</li>
+<li>
+<p>If <code>has_headers</code> is <code>true</code> and the type contains field names, then
+a header row is automatically generated.</p>
+</li>
+</ol>
+<p>However, some container types cannot be serialized, and if
+<code>has_headers</code> is <code>true</code>, there are some additional restrictions on the
+types that can be serialized. See below for details.</p>
+<p>For the purpose of this section, Rust types can be divided into three
+categories: scalars, non-struct containers, and structs.</p>
+<h2 id="scalars" class="section-header"><a href="#scalars">Scalars</a></h2>
+<p>Single values with no field names are written like the following. Note
+that some of the outputs may be quoted, according to the selected
+quoting style.</p>
+<table><thead><tr><th> Name </th><th> Example Type </th><th> Example Value </th><th> Output </th></tr></thead><tbody>
+<tr><td> boolean </td><td> <code>bool</code> </td><td> <code>true</code> </td><td> <code>true</code> </td></tr>
+<tr><td> integers </td><td> <code>i8</code>, <code>i16</code>, <code>i32</code>, <code>i64</code>, <code>u8</code>, <code>u16</code>, <code>u32</code>, <code>u64</code> </td><td> <code>5</code> </td><td> <code>5</code> </td></tr>
+<tr><td> floats </td><td> <code>f32</code>, <code>f64</code> </td><td> <code>3.14</code> </td><td> <code>3.14</code> </td></tr>
+<tr><td> character </td><td> <code>char</code> </td><td> <code>'☃'</code> </td><td> <code>☃</code> </td></tr>
+<tr><td> string </td><td> <code>&amp;str</code> </td><td> <code>&quot;hi&quot;</code> </td><td> <code>hi</code> </td></tr>
+<tr><td> bytes </td><td> <code>&amp;[u8]</code> </td><td> <code>b&quot;hi&quot;[..]</code> </td><td> <code>hi</code> </td></tr>
+<tr><td> option </td><td> <code>Option</code> </td><td> <code>None</code> </td><td> <em>empty</em> </td></tr>
+<tr><td> option </td><td>          </td><td> <code>Some(5)</code> </td><td> <code>5</code> </td></tr>
+<tr><td> unit </td><td> <code>()</code> </td><td> <code>()</code> </td><td> <em>empty</em> </td></tr>
+<tr><td> unit struct </td><td> <code>struct Foo;</code> </td><td> <code>Foo</code> </td><td> <code>Foo</code> </td></tr>
+<tr><td> unit enum variant </td><td> <code>enum E { A, B }</code> </td><td> <code>E::A</code> </td><td> <code>A</code> </td></tr>
+<tr><td> newtype struct </td><td> <code>struct Foo(u8);</code> </td><td> <code>Foo(5)</code> </td><td> <code>5</code> </td></tr>
+<tr><td> newtype enum variant </td><td> <code>enum E { A(u8) }</code> </td><td> <code>E::A(5)</code> </td><td> <code>5</code> </td></tr>
+</tbody></table>
+<p>Note that this table includes simple structs and enums. For example, to
+serialize a field from either an integer or a float type, one can do
+this:</p>
 
 <pre class="rust rust-example-rendered">
-<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">wtr</span> <span class="op">=</span> <span class="ident">csv</span>::<span class="ident">Writer</span>::<span class="ident">from_memory</span>();
-<span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">wtr</span>.<span class="ident">write</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="kw-2">&amp;</span><span class="string">b&quot;\xff&quot;</span>[..], <span class="kw-2">&amp;</span><span class="string">b&quot;\x00&quot;</span>[..]].<span class="ident">into_iter</span>());
-<span class="macro">assert</span><span class="macro">!</span>(<span class="ident">result</span>.<span class="ident">is_ok</span>());
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">csv</span>;
+<span class="attribute">#[<span class="ident">macro_use</span>]</span>
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">serde_derive</span>;
 
-<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">wtr</span>.<span class="ident">as_bytes</span>(), <span class="string">b&quot;\xff,\x00\n&quot;</span>);</pre>
-</div><h4 id='method.flush' class="method"><span id='flush.v' class='invisible'><table class='table-display'><tbody><tr><td><code>pub fn <a href='#method.flush' class='fnname'>flush</a>(&amp;mut self) -&gt; <a class="type" href="../csv/type.Result.html" title="type csv::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>&gt;</code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/csv/writer.rs.html#288-290' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>Flushes the underlying buffer.</p>
-</div></div><h3 id='impl-4' class='impl'><span class='in-band'><table class='table-display'><tbody><tr><td><code>impl&lt;W:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/std/io/trait.Write.html" title="trait std::io::Write">Write</a>&gt; <a class="struct" href="../csv/struct.Writer.html" title="struct csv::Writer">Writer</a>&lt;W&gt;</code><a href='#impl-4' class='anchor'></a></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/csv/writer.rs.html#293-371' title='goto source code'>[src]</a></span></td></tr></tbody></table></h3><div class='impl-items'><h4 id='method.delimiter' class="method"><span id='delimiter.v' class='invisible'><table class='table-display'><tbody><tr><td><code>pub fn <a href='#method.delimiter' class='fnname'>delimiter</a>(self, delimiter: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>) -&gt; <a class="struct" href="../csv/struct.Writer.html" title="struct csv::Writer">Writer</a>&lt;W&gt;</code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/csv/writer.rs.html#301-304' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>The delimiter to use when writing CSV data.</p>
-<p>Since the CSV writer is meant to be mostly encoding agnostic, you must
-specify the delimiter as a single ASCII byte. For example, to write
-tab-delimited data, you would use <code>b'\t'</code>.</p>
-<p>The default value is <code>b','</code>.</p>
-</div><h4 id='method.flexible' class="method"><span id='flexible.v' class='invisible'><table class='table-display'><tbody><tr><td><code>pub fn <a href='#method.flexible' class='fnname'>flexible</a>(self, yes: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>) -&gt; <a class="struct" href="../csv/struct.Writer.html" title="struct csv::Writer">Writer</a>&lt;W&gt;</code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/csv/writer.rs.html#312-315' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>Whether to allow flexible length records when writing CSV data.</p>
-<p>When this is set to <code>true</code>, records in the CSV data can have different
-lengths. By default, this is disabled, which will cause the CSV writer
-to return an error if it tries to write a record that has a different
-length than other records it has already written.</p>
-</div><h4 id='method.record_terminator' class="method"><span id='record_terminator.v' class='invisible'><table class='table-display'><tbody><tr><td><code>pub fn <a href='#method.record_terminator' class='fnname'>record_terminator</a>(self, term: <a class="enum" href="../csv/enum.RecordTerminator.html" title="enum csv::RecordTerminator">RecordTerminator</a>) -&gt; <a class="struct" href="../csv/struct.Writer.html" title="struct csv::Writer">Writer</a>&lt;W&gt;</code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/csv/writer.rs.html#321-324' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>Sets the record terminator to use when writing CSV data.</p>
-<p>By default, this is <code>RecordTerminator::Any(b'\n')</code>. If you want to
-use CRLF (<code>\r\n</code>) line endings, then use <code>RecordTerminator:CRLF</code>.</p>
-</div><h4 id='method.quote_style' class="method"><span id='quote_style.v' class='invisible'><table class='table-display'><tbody><tr><td><code>pub fn <a href='#method.quote_style' class='fnname'>quote_style</a>(self, style: <a class="enum" href="../csv/enum.QuoteStyle.html" title="enum csv::QuoteStyle">QuoteStyle</a>) -&gt; <a class="struct" href="../csv/struct.Writer.html" title="struct csv::Writer">Writer</a>&lt;W&gt;</code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/csv/writer.rs.html#330-333' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>Set the quoting style to use when writing CSV data.</p>
-<p>By default, this is set to <code>QuoteStyle::Necessary</code>, which will only
-use quotes when they are necessary to preserve the integrity of data.</p>
-</div><h4 id='method.quote' class="method"><span id='quote.v' class='invisible'><table class='table-display'><tbody><tr><td><code>pub fn <a href='#method.quote' class='fnname'>quote</a>(self, quote: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>) -&gt; <a class="struct" href="../csv/struct.Writer.html" title="struct csv::Writer">Writer</a>&lt;W&gt;</code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/csv/writer.rs.html#342-345' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>Set the quote character to use when writing CSV data.</p>
-<p>Since the CSV parser is meant to be mostly encoding agnostic, you must
-specify the quote as a single ASCII byte. For example, to write
-single quoted data, you would use <code>b'\''</code>.</p>
-<p>The default value is <code>b'&quot;'</code>.</p>
-</div><h4 id='method.escape' class="method"><span id='escape.v' class='invisible'><table class='table-display'><tbody><tr><td><code>pub fn <a href='#method.escape' class='fnname'>escape</a>(self, escape: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>) -&gt; <a class="struct" href="../csv/struct.Writer.html" title="struct csv::Writer">Writer</a>&lt;W&gt;</code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/csv/writer.rs.html#355-358' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>Set the escape character to use when writing CSV data.</p>
-<p>This is only used when <code>double_quote</code> is set to <code>false</code>.</p>
-<p>Since the CSV parser is meant to be mostly encoding agnostic, you must
-specify the escape as a single ASCII byte.</p>
-<p>The default value is <code>b'\\'</code>.</p>
-</div><h4 id='method.double_quote' class="method"><span id='double_quote.v' class='invisible'><table class='table-display'><tbody><tr><td><code>pub fn <a href='#method.double_quote' class='fnname'>double_quote</a>(self, yes: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>) -&gt; <a class="struct" href="../csv/struct.Writer.html" title="struct csv::Writer">Writer</a>&lt;W&gt;</code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/csv/writer.rs.html#367-370' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>Set the quoting escape mechanism.</p>
-<p>When enabled (which is the default), quotes are escaped by doubling
-them. e.g., <code>&quot;</code> escapes to <code>&quot;&quot;</code>.</p>
-<p>When disabled, quotes are escaped with the escape character (which
-is <code>\\</code> by default).</p>
-</div></div>
-                <h2 id='synthetic-implementations' class='small-section-header'>
-                  Auto Trait Implementations<a href='#synthetic-implementations' class='anchor'></a>
-                </h2>
-                <div id='synthetic-implementations-list'>
-            <h3 id='impl-Send' class='impl'><span class='in-band'><table class='table-display'><tbody><tr><td><code>impl&lt;W&gt; <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Send.html" title="trait core::marker::Send">Send</a> for <a class="struct" href="../csv/struct.Writer.html" title="struct csv::Writer">Writer</a>&lt;W&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;W: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Send.html" title="trait core::marker::Send">Send</a>,&nbsp;</span></code><a href='#impl-Send' class='anchor'></a></span></td><td><span class='out-of-band'></span></td></tr></tbody></table></h3><div class='impl-items'></div><h3 id='impl-Sync' class='impl'><span class='in-band'><table class='table-display'><tbody><tr><td><code>impl&lt;W&gt; <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sync.html" title="trait core::marker::Sync">Sync</a> for <a class="struct" href="../csv/struct.Writer.html" title="struct csv::Writer">Writer</a>&lt;W&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;W: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sync.html" title="trait core::marker::Sync">Sync</a>,&nbsp;</span></code><a href='#impl-Sync' class='anchor'></a></span></td><td><span class='out-of-band'></span></td></tr></tbody></table></h3><div class='impl-items'></div></div></section><section id="search" class="content hidden"></section><section class="footer"></section><aside id="help" class="hidden"><div><h1 class="hidden">Help</h1><div class="shortcuts"><h2>Keyboard Shortcuts</h2><dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd><dt><kbd>S</kbd></dt><dd>Focus the search field</dd><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd><dt><kbd>↹</kbd></dt><dd>Switch tab</dd><dt><kbd>&#9166;</kbd></dt><dd>Go to active search result</dd><dt><kbd>+</kbd></dt><dd>Expand all sections</dd><dt><kbd>-</kbd></dt><dd>Collapse all sections</dd></dl></div><div class="infos"><h2>Search Tricks</h2><p>Prefix searches with a type followed by a colon (e.g. <code>fn:</code>) to restrict the search to a given type.</p><p>Accepted types are: <code>fn</code>, <code>mod</code>, <code>struct</code>, <code>enum</code>, <code>trait</code>, <code>type</code>, <code>macro</code>, and <code>const</code>.</p><p>Search functions by type signature (e.g. <code>vec -> usize</code> or <code>* -> vec</code>)</p><p>Search multiple things at once by splitting your query with comma (e.g. <code>str,u8</code> or <code>String,struct:Vec,test</code>)</p></div></div></aside><script>window.rootPath = "../";window.currentCrate = "csv";</script><script src="../aliases.js"></script><script src="../main.js"></script><script defer src="../search-index.js"></script></body></html>
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>::<span class="ident">Error</span>;
+<span class="kw">use</span> <span class="ident">csv</span>::<span class="ident">Writer</span>;
+
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize</span>)]</span>
+<span class="kw">struct</span> <span class="ident">Row</span> {
+    <span class="ident">label</span>: <span class="ident">String</span>,
+    <span class="ident">value</span>: <span class="ident">Value</span>,
+}
+
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize</span>)]</span>
+<span class="kw">enum</span> <span class="ident">Value</span> {
+    <span class="ident">Integer</span>(<span class="ident">i64</span>),
+    <span class="ident">Float</span>(<span class="ident">f64</span>),
+}
+
+<span class="kw">fn</span> <span class="ident">example</span>() <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">Error</span><span class="op">&gt;&gt;</span> {
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">wtr</span> <span class="op">=</span> <span class="ident">Writer</span>::<span class="ident">from_writer</span>(<span class="macro">vec</span><span class="macro">!</span>[]);
+    <span class="ident">wtr</span>.<span class="ident">serialize</span>(<span class="ident">Row</span> {
+        <span class="ident">label</span>: <span class="string">&quot;foo&quot;</span>.<span class="ident">to_string</span>(),
+        <span class="ident">value</span>: <span class="ident">Value</span>::<span class="ident">Integer</span>(<span class="number">3</span>),
+    })<span class="question-mark">?</span>;
+    <span class="ident">wtr</span>.<span class="ident">serialize</span>(<span class="ident">Row</span> {
+        <span class="ident">label</span>: <span class="string">&quot;bar&quot;</span>.<span class="ident">to_string</span>(),
+        <span class="ident">value</span>: <span class="ident">Value</span>::<span class="ident">Float</span>(<span class="number">3.14</span>),
+    })<span class="question-mark">?</span>;
+
+    <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">from_utf8</span>(<span class="ident">wtr</span>.<span class="ident">into_inner</span>()<span class="question-mark">?</span>)<span class="question-mark">?</span>;
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">data</span>, <span class="string">&quot;\
+label,value
+foo,3
+bar,3.14
+&quot;</span>);
+    <span class="prelude-val">Ok</span>(())
+}</pre>
+<h2 id="non-struct-containers" class="section-header"><a href="#non-struct-containers">Non-Struct Containers</a></h2>
+<p>Nested containers are flattened to their scalar components, with the
+exeption of a few types that are not allowed:</p>
+<table><thead><tr><th> Name </th><th> Example Type </th><th> Example Value </th><th> Output </th></tr></thead><tbody>
+<tr><td> sequence </td><td> <code>Vec&lt;u8&gt;</code> </td><td> <code>vec![1, 2, 3]</code> </td><td> <code>1,2,3</code> </td></tr>
+<tr><td> tuple </td><td> <code>(u8, bool)</code> </td><td> <code>(5, true)</code> </td><td> <code>5,true</code> </td></tr>
+<tr><td> tuple struct </td><td> <code>Foo(u8, bool)</code> </td><td> <code>Foo(5, true)</code> </td><td> <code>5,true</code> </td></tr>
+<tr><td> tuple enum variant </td><td> <code>enum E { A(u8, bool) }</code> </td><td> <code>E::A(5, true)</code> </td><td> <em>error</em> </td></tr>
+<tr><td> struct enum variant </td><td> <code>enum E { V { a: u8, b: bool } }</code> </td><td> <code>E::V { a: 5, b: true }</code> </td><td> <em>error</em> </td></tr>
+<tr><td> map </td><td> <code>BTreeMap&lt;K, V&gt;</code> </td><td> <code>BTreeMap::new()</code> </td><td> <em>error</em> </td></tr>
+</tbody></table>
+<h2 id="structs" class="section-header"><a href="#structs">Structs</a></h2>
+<p>Like the other containers, structs are flattened to their scalar
+components:</p>
+<table><thead><tr><th> Name </th><th> Example Type </th><th> Example Value </th><th> Output </th></tr></thead><tbody>
+<tr><td> struct </td><td> <code>struct Foo { a: u8, b: bool }</code> </td><td> <code>Foo { a: 5, b: true }</code> </td><td> <code>5,true</code> </td></tr>
+</tbody></table>
+<p>If <code>has_headers</code> is <code>false</code>, then there are no additional restrictions;
+types can be nested arbitrarily. For example:</p>
+
+<pre class="rust rust-example-rendered">
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">csv</span>;
+<span class="attribute">#[<span class="ident">macro_use</span>]</span>
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">serde_derive</span>;
+
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>::<span class="ident">Error</span>;
+<span class="kw">use</span> <span class="ident">csv</span>::<span class="ident">WriterBuilder</span>;
+
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize</span>)]</span>
+<span class="kw">struct</span> <span class="ident">Row</span> {
+    <span class="ident">label</span>: <span class="ident">String</span>,
+    <span class="ident">values</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>,
+}
+
+<span class="kw">fn</span> <span class="ident">example</span>() <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">Error</span><span class="op">&gt;&gt;</span> {
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">wtr</span> <span class="op">=</span> <span class="ident">WriterBuilder</span>::<span class="ident">new</span>()
+        .<span class="ident">has_headers</span>(<span class="bool-val">false</span>)
+        .<span class="ident">from_writer</span>(<span class="macro">vec</span><span class="macro">!</span>[]);
+    <span class="ident">wtr</span>.<span class="ident">serialize</span>(<span class="ident">Row</span> {
+        <span class="ident">label</span>: <span class="string">&quot;foo&quot;</span>.<span class="ident">to_string</span>(),
+        <span class="ident">values</span>: <span class="macro">vec</span><span class="macro">!</span>[<span class="number">1.1234</span>, <span class="number">2.5678</span>, <span class="number">3.14</span>],
+    })<span class="question-mark">?</span>;
+
+    <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">from_utf8</span>(<span class="ident">wtr</span>.<span class="ident">into_inner</span>()<span class="question-mark">?</span>)<span class="question-mark">?</span>;
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">data</span>, <span class="string">&quot;\
+foo,1.1234,2.5678,3.14
+&quot;</span>);
+    <span class="prelude-val">Ok</span>(())
+}</pre>
+<p>However, if <code>has_headers</code> were enabled in the above example, then
+serialization would return an error. Speficially, when <code>has_headers</code> is
+<code>true</code>, there are two restrictions:</p>
+<ol>
+<li>
+<p>Named field values in structs must be scalars.</p>
+</li>
+<li>
+<p>All scalars must be named field values in structs.</p>
+</li>
+</ol>
+<p>Other than these two restrictions, types can be nested arbitrarily.
+Here are a few examples:</p>
+<table><thead><tr><th> Value </th><th> Header </th><th> Record </th></tr></thead><tbody>
+<tr><td> <code>(Foo { x: 5, y: 6 }, Bar { z: true })</code> </td><td> <code>x,y,z</code> </td><td> <code>5,6,true</code> </td></tr>
+<tr><td> <code>vec![Foo { x: 5, y: 6 }, Foo { x: 7, y: 8 }]</code> </td><td> <code>x,y,x,y</code> </td><td> <code>5,6,7,8</code> </td></tr>
+<tr><td> <code>(Foo { x: 5, y: 6 }, vec![Bar { z: Baz(true) }])</code> </td><td> <code>x,y,z</code> </td><td> <code>5,6,true</code> </td></tr>
+<tr><td> <code>Foo { x: 5, y: (6, 7) }</code> </td><td> <em>error: restriction 1</em> </td><td> <code>5,6,7</code> </td></tr>
+<tr><td> <code>(5, Foo { x: 6, y: 7 }</code> </td><td> <em>error: restriction 2</em> </td><td> <code>5,6,7</code> </td></tr>
+<tr><td> <code>(Foo { x: 5, y: 6 }, true)</code> </td><td> <em>error: restriction 2</em> </td><td> <code>5,6,true</code> </td></tr>
+</tbody></table>
+</div><h4 id='method.write_record' class="method"><span id='write_record.v' class='invisible'><table class='table-display'><tbody><tr><td><code>pub fn <a href='#method.write_record' class='fnname'>write_record</a>&lt;I, T&gt;(&amp;mut self, record: I) -&gt; <a class="type" href="../csv/type.Result.html" title="type csv::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;I: <a class="trait" href="https://doc.rust-lang.org/nightly/core/iter/traits/trait.IntoIterator.html" title="trait core::iter::traits::IntoIterator">IntoIterator</a>&lt;Item = T&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html" title="trait core::convert::AsRef">AsRef</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">[</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>&gt;,&nbsp;</span></code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/csv/writer.rs.html#947-954' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>Write a single record.</p>
+<p>This method accepts something that can be turned into an iterator that
+yields elements that can be represented by a <code>&amp;[u8]</code>.</p>
+<p>This may be called with an empty iterator, which will cause a record
+terminator to be written. If no fields had been written, then a single
+empty field is written before the terminator.</p>
+<h1 id="example-3" class="section-header"><a href="#example-3">Example</a></h1>
+<pre class="rust rust-example-rendered">
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">csv</span>;
+
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>::<span class="ident">Error</span>;
+<span class="kw">use</span> <span class="ident">csv</span>::<span class="ident">Writer</span>;
+
+<span class="kw">fn</span> <span class="ident">example</span>() <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">Error</span><span class="op">&gt;&gt;</span> {
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">wtr</span> <span class="op">=</span> <span class="ident">Writer</span>::<span class="ident">from_writer</span>(<span class="macro">vec</span><span class="macro">!</span>[]);
+    <span class="ident">wtr</span>.<span class="ident">write_record</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>, <span class="string">&quot;c&quot;</span>])<span class="question-mark">?</span>;
+    <span class="ident">wtr</span>.<span class="ident">write_record</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;x&quot;</span>, <span class="string">&quot;y&quot;</span>, <span class="string">&quot;z&quot;</span>])<span class="question-mark">?</span>;
+
+    <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">from_utf8</span>(<span class="ident">wtr</span>.<span class="ident">into_inner</span>()<span class="question-mark">?</span>)<span class="question-mark">?</span>;
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">data</span>, <span class="string">&quot;a,b,c\nx,y,z\n&quot;</span>);
+    <span class="prelude-val">Ok</span>(())
+}</pre>
+</div><h4 id='method.write_byte_record' class="method"><span id='write_byte_record.v' class='invisible'><table class='table-display'><tbody><tr><td><code>pub fn <a href='#method.write_byte_record' class='fnname'>write_byte_record</a>(&amp;mut self, record: &amp;<a class="struct" href="../csv/struct.ByteRecord.html" title="struct csv::ByteRecord">ByteRecord</a>) -&gt; <a class="type" href="../csv/type.Result.html" title="type csv::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>&gt;</code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/csv/writer.rs.html#989-1042' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>Write a single <code>ByteRecord</code>.</p>
+<p>This method accepts a borrowed <code>ByteRecord</code> and writes its contents
+to the underlying writer.</p>
+<p>This is similar to <code>write_record</code> except that it specifically requires
+a <code>ByteRecord</code>. This permits the writer to possibly write the record
+more quickly than the more generic <code>write_record</code>.</p>
+<p>This may be called with an empty record, which will cause a record
+terminator to be written. If no fields had been written, then a single
+empty field is written before the terminator.</p>
+<h1 id="example-4" class="section-header"><a href="#example-4">Example</a></h1>
+<pre class="rust rust-example-rendered">
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">csv</span>;
+
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>::<span class="ident">Error</span>;
+<span class="kw">use</span> <span class="ident">csv</span>::{<span class="ident">ByteRecord</span>, <span class="ident">Writer</span>};
+
+<span class="kw">fn</span> <span class="ident">example</span>() <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">Error</span><span class="op">&gt;&gt;</span> {
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">wtr</span> <span class="op">=</span> <span class="ident">Writer</span>::<span class="ident">from_writer</span>(<span class="macro">vec</span><span class="macro">!</span>[]);
+    <span class="ident">wtr</span>.<span class="ident">write_byte_record</span>(<span class="kw-2">&amp;</span><span class="ident">ByteRecord</span>::<span class="ident">from</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>, <span class="string">&quot;c&quot;</span>][..]))<span class="question-mark">?</span>;
+    <span class="ident">wtr</span>.<span class="ident">write_byte_record</span>(<span class="kw-2">&amp;</span><span class="ident">ByteRecord</span>::<span class="ident">from</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;x&quot;</span>, <span class="string">&quot;y&quot;</span>, <span class="string">&quot;z&quot;</span>][..]))<span class="question-mark">?</span>;
+
+    <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">from_utf8</span>(<span class="ident">wtr</span>.<span class="ident">into_inner</span>()<span class="question-mark">?</span>)<span class="question-mark">?</span>;
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">data</span>, <span class="string">&quot;a,b,c\nx,y,z\n&quot;</span>);
+    <span class="prelude-val">Ok</span>(())
+}</pre>
+</div><h4 id='method.write_field' class="method"><span id='write_field.v' class='invisible'><table class='table-display'><tbody><tr><td><code>pub fn <a href='#method.write_field' class='fnname'>write_field</a>&lt;T:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html" title="trait core::convert::AsRef">AsRef</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">[</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>&gt;&gt;(&amp;mut self, field: T) -&gt; <a class="type" href="../csv/type.Result.html" title="type csv::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>&gt;</code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/csv/writer.rs.html#1078-1080' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>Write a single field.</p>
+<p>One should prefer using <code>write_record</code> over this method. It is provided
+for cases where writing a field at a time is more convenient than
+writing a record at a time.</p>
+<p>Note that if this API is used, <code>write_record</code> should be called with an
+empty iterator to write a record terminator.</p>
+<h1 id="example-5" class="section-header"><a href="#example-5">Example</a></h1>
+<pre class="rust rust-example-rendered">
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">csv</span>;
+
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>::<span class="ident">Error</span>;
+<span class="kw">use</span> <span class="ident">csv</span>::<span class="ident">Writer</span>;
+
+<span class="kw">fn</span> <span class="ident">example</span>() <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">Error</span><span class="op">&gt;&gt;</span> {
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">wtr</span> <span class="op">=</span> <span class="ident">Writer</span>::<span class="ident">from_writer</span>(<span class="macro">vec</span><span class="macro">!</span>[]);
+    <span class="ident">wtr</span>.<span class="ident">write_field</span>(<span class="string">&quot;a&quot;</span>)<span class="question-mark">?</span>;
+    <span class="ident">wtr</span>.<span class="ident">write_field</span>(<span class="string">&quot;b&quot;</span>)<span class="question-mark">?</span>;
+    <span class="ident">wtr</span>.<span class="ident">write_field</span>(<span class="string">&quot;c&quot;</span>)<span class="question-mark">?</span>;
+    <span class="ident">wtr</span>.<span class="ident">write_record</span>(<span class="prelude-val">None</span>::<span class="op">&lt;</span><span class="kw-2">&amp;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>)<span class="question-mark">?</span>;
+    <span class="ident">wtr</span>.<span class="ident">write_field</span>(<span class="string">&quot;x&quot;</span>)<span class="question-mark">?</span>;
+    <span class="ident">wtr</span>.<span class="ident">write_field</span>(<span class="string">&quot;y&quot;</span>)<span class="question-mark">?</span>;
+    <span class="ident">wtr</span>.<span class="ident">write_field</span>(<span class="string">&quot;z&quot;</span>)<span class="question-mark">?</span>;
+    <span class="ident">wtr</span>.<span class="ident">write_record</span>(<span class="prelude-val">None</span>::<span class="op">&lt;</span><span class="kw-2">&amp;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>)<span class="question-mark">?</span>;
+
+    <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">from_utf8</span>(<span class="ident">wtr</span>.<span class="ident">into_inner</span>()<span class="question-mark">?</span>)<span class="question-mark">?</span>;
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">data</span>, <span class="string">&quot;a,b,c\nx,y,z\n&quot;</span>);
+    <span class="prelude-val">Ok</span>(())
+}</pre>
+</div><h4 id='method.flush' class="method"><span id='flush.v' class='invisible'><table class='table-display'><tbody><tr><td><code>pub fn <a href='#method.flush' class='fnname'>flush</a>(&amp;mut self) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/std/io/error/type.Result.html" title="type std::io::error::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>&gt;</code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/csv/writer.rs.html#1098-1106' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>Flush the contents of the internal buffer to the underlying writer.</p>
+<p>If there was a problem writing to the underlying writer, then an error
+is returned.</p>
+<p>Note that this also flushes the underlying writer.</p>
+</div><h4 id='method.into_inner' class="method"><span id='into_inner.v' class='invisible'><table class='table-display'><tbody><tr><td><code>pub fn <a href='#method.into_inner' class='fnname'>into_inner</a>(self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;W, <a class="struct" href="../csv/struct.IntoInnerError.html" title="struct csv::IntoInnerError">IntoInnerError</a>&lt;<a class="struct" href="../csv/struct.Writer.html" title="struct csv::Writer">Writer</a>&lt;W&gt;&gt;&gt;</code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/csv/writer.rs.html#1110-1117' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>Flush the contents of the internal buffer and return the underlying
+writer.</p>
+</div></div><h2 id='implementations' class='small-section-header'>Trait Implementations<a href='#implementations' class='anchor'></a></h2><div id='implementations-list'><h3 id='impl-Debug' class='impl'><span class='in-band'><table class='table-display'><tbody><tr><td><code>impl&lt;W:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/std/io/trait.Write.html" title="trait std::io::Write">Write</a>&gt; <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a> for <a class="struct" href="../csv/struct.Writer.html" title="struct csv::Writer">Writer</a>&lt;W&gt;</code><a href='#impl-Debug' class='anchor'></a></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/csv/writer.rs.html#545' title='goto source code'>[src]</a></span></td></tr></tbody></table></h3><div class='impl-items'><h4 id='method.fmt' class="method"><span id='fmt.v' class='invisible'><table class='table-display'><tbody><tr><td><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, f: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html" title="struct core::fmt::Formatter">Formatter</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html" title="type core::fmt::Result">Result</a></code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/csv/writer.rs.html#545' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>Formats the value using the given formatter. <a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt">Read more</a></p>
+</div></div><h3 id='impl-Drop' class='impl'><span class='in-band'><table class='table-display'><tbody><tr><td><code>impl&lt;W:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/std/io/trait.Write.html" title="trait std::io::Write">Write</a>&gt; <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/drop/trait.Drop.html" title="trait core::ops::drop::Drop">Drop</a> for <a class="struct" href="../csv/struct.Writer.html" title="struct csv::Writer">Writer</a>&lt;W&gt;</code><a href='#impl-Drop' class='anchor'></a></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/csv/writer.rs.html#599-605' title='goto source code'>[src]</a></span></td></tr></tbody></table></h3><div class='impl-items'><h4 id='method.drop' class="method"><span id='drop.v' class='invisible'><table class='table-display'><tbody><tr><td><code>fn <a href='https://doc.rust-lang.org/nightly/core/ops/drop/trait.Drop.html#tymethod.drop' class='fnname'>drop</a>(&amp;mut self)</code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/csv/writer.rs.html#600-604' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>Executes the destructor for this type. <a href="https://doc.rust-lang.org/nightly/core/ops/drop/trait.Drop.html#tymethod.drop">Read more</a></p>
+</div></div></div><h2 id='synthetic-implementations' class='small-section-header'>Auto Trait Implementations<a href='#synthetic-implementations' class='anchor'></a></h2><div id='synthetic-implementations-list'><h3 id='impl-Send' class='impl'><span class='in-band'><table class='table-display'><tbody><tr><td><code>impl&lt;W&gt; <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Send.html" title="trait core::marker::Send">Send</a> for <a class="struct" href="../csv/struct.Writer.html" title="struct csv::Writer">Writer</a>&lt;W&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;W: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Send.html" title="trait core::marker::Send">Send</a>,&nbsp;</span></code><a href='#impl-Send' class='anchor'></a></span></td><td><span class='out-of-band'></span></td></tr></tbody></table></h3><div class='impl-items'></div><h3 id='impl-Sync' class='impl'><span class='in-band'><table class='table-display'><tbody><tr><td><code>impl&lt;W&gt; <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sync.html" title="trait core::marker::Sync">Sync</a> for <a class="struct" href="../csv/struct.Writer.html" title="struct csv::Writer">Writer</a>&lt;W&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;W: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sync.html" title="trait core::marker::Sync">Sync</a>,&nbsp;</span></code><a href='#impl-Sync' class='anchor'></a></span></td><td><span class='out-of-band'></span></td></tr></tbody></table></h3><div class='impl-items'></div></div></section><section id="search" class="content hidden"></section><section class="footer"></section><aside id="help" class="hidden"><div><h1 class="hidden">Help</h1><div class="shortcuts"><h2>Keyboard Shortcuts</h2><dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd><dt><kbd>S</kbd></dt><dd>Focus the search field</dd><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd><dt><kbd>↹</kbd></dt><dd>Switch tab</dd><dt><kbd>&#9166;</kbd></dt><dd>Go to active search result</dd><dt><kbd>+</kbd></dt><dd>Expand all sections</dd><dt><kbd>-</kbd></dt><dd>Collapse all sections</dd></dl></div><div class="infos"><h2>Search Tricks</h2><p>Prefix searches with a type followed by a colon (e.g. <code>fn:</code>) to restrict the search to a given type.</p><p>Accepted types are: <code>fn</code>, <code>mod</code>, <code>struct</code>, <code>enum</code>, <code>trait</code>, <code>type</code>, <code>macro</code>, and <code>const</code>.</p><p>Search functions by type signature (e.g. <code>vec -> usize</code> or <code>* -> vec</code>)</p><p>Search multiple things at once by splitting your query with comma (e.g. <code>str,u8</code> or <code>String,struct:Vec,test</code>)</p></div></div></aside><script>window.rootPath = "../";window.currentCrate = "csv";</script><script src="../aliases.js"></script><script src="../main.js"></script><script defer src="../search-index.js"></script></body></html>

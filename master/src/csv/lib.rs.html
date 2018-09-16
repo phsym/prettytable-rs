@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/csv-0.15.0/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><input class="search-input" name="search" autocomplete="off" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/csv-1.0.1/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><input class="search-input" name="search" autocomplete="off" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -323,331 +323,455 @@
 <span id="323">323</span>
 <span id="324">324</span>
 <span id="325">325</span>
+<span id="326">326</span>
+<span id="327">327</span>
+<span id="328">328</span>
+<span id="329">329</span>
+<span id="330">330</span>
+<span id="331">331</span>
+<span id="332">332</span>
+<span id="333">333</span>
+<span id="334">334</span>
+<span id="335">335</span>
+<span id="336">336</span>
+<span id="337">337</span>
+<span id="338">338</span>
+<span id="339">339</span>
+<span id="340">340</span>
+<span id="341">341</span>
+<span id="342">342</span>
+<span id="343">343</span>
+<span id="344">344</span>
+<span id="345">345</span>
+<span id="346">346</span>
+<span id="347">347</span>
+<span id="348">348</span>
+<span id="349">349</span>
+<span id="350">350</span>
+<span id="351">351</span>
+<span id="352">352</span>
+<span id="353">353</span>
+<span id="354">354</span>
+<span id="355">355</span>
+<span id="356">356</span>
+<span id="357">357</span>
+<span id="358">358</span>
+<span id="359">359</span>
+<span id="360">360</span>
+<span id="361">361</span>
+<span id="362">362</span>
+<span id="363">363</span>
+<span id="364">364</span>
+<span id="365">365</span>
+<span id="366">366</span>
+<span id="367">367</span>
+<span id="368">368</span>
+<span id="369">369</span>
+<span id="370">370</span>
+<span id="371">371</span>
+<span id="372">372</span>
+<span id="373">373</span>
+<span id="374">374</span>
+<span id="375">375</span>
+<span id="376">376</span>
+<span id="377">377</span>
+<span id="378">378</span>
+<span id="379">379</span>
+<span id="380">380</span>
+<span id="381">381</span>
+<span id="382">382</span>
+<span id="383">383</span>
+<span id="384">384</span>
+<span id="385">385</span>
+<span id="386">386</span>
+<span id="387">387</span>
 </pre><pre class="rust ">
-<span class="doccomment">//! This crate provides a streaming CSV (comma separated values) writer and</span>
-<span class="doccomment">//! reader that works with the `serialize` crate to do type based encoding</span>
-<span class="doccomment">//! and decoding. There are two primary goals of this project:</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! 1. The default mode of parsing should *just work*. This means the parser</span>
-<span class="doccomment">//!    will bias toward providing *a* parse over a *correct* parse (with</span>
-<span class="doccomment">//!    respect to RFC 4180).</span>
-<span class="doccomment">//! 2. Convenient to use by default, but when performance is needed, the</span>
-<span class="doccomment">//!    API will provide an escape hatch.</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! ## Simple example</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! This shows how you can decode records into Rust types. This saves a ton</span>
-<span class="doccomment">//! of boiler plate, e.g., converting strings to numeric types.</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! ```rust</span>
-<span class="doccomment">//! let data = &quot;</span>
-<span class="doccomment">//! sticker,mortals,7</span>
-<span class="doccomment">//! bribed,personae,7</span>
-<span class="doccomment">//! wobbling,poncing,4</span>
-<span class="doccomment">//! interposed,emmett,9</span>
-<span class="doccomment">//! chocolate,refile,7&quot;;</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! let mut rdr = csv::Reader::from_string(data).has_headers(false);</span>
-<span class="doccomment">//! for row in rdr.decode() {</span>
-<span class="doccomment">//!     let (n1, n2, dist): (String, String, u32) = row.unwrap();</span>
-<span class="doccomment">//!     println!(&quot;{}, {}: {}&quot;, n1, n2, dist);</span>
-<span class="doccomment">//! }</span>
-<span class="doccomment">//! ```</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! If you just want a `Vec` of all the records, then you can use the</span>
-<span class="doccomment">//! `collect` method defined on iterators:</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! ```rust</span>
-<span class="doccomment">//! let data = &quot;</span>
-<span class="doccomment">//! sticker,mortals,7</span>
-<span class="doccomment">//! bribed,personae,7</span>
-<span class="doccomment">//! wobbling,poncing,4</span>
-<span class="doccomment">//! interposed,emmett,9</span>
-<span class="doccomment">//! chocolate,refile,7&quot;;</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! type Row = (String, String, u32);</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! let mut rdr = csv::Reader::from_string(data).has_headers(false);</span>
-<span class="doccomment">//! let rows = rdr.decode().collect::&lt;csv::Result&lt;Vec&lt;Row&gt;&gt;&gt;().unwrap();</span>
-<span class="doccomment">//! assert_eq!(rows.len(), 5);</span>
-<span class="doccomment">//! ```</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! Please see the `Reader` type for more documentation and examples.</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! ## Iteratoring over records</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! This crate exposes **4** distinct ways of iterating over CSV records. In</span>
-<span class="doccomment">//! the majority of use cases, you should use the `decode` method as shown</span>
-<span class="doccomment">//! above because it is the most convenient. But other types of iterators are</span>
-<span class="doccomment">//! exposed for when you need them.</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! The iterators listed below are presented in order of performance. The first</span>
-<span class="doccomment">//! (type based decoding) is the slowest and the last (zero allocation) is the</span>
-<span class="doccomment">//! fastest. There is clear evidence of this claim in the benchmarks. (Just</span>
-<span class="doccomment">//! run `cargo bench`.)</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! ### Decoded records</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! As shown above. This uses type based decoding on each record.</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! ### String records</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! Yields each record as a `Vec&lt;String&gt;`. Namely, this assumes that all CSV</span>
-<span class="doccomment">//! data is UTF-8 encoded. This is the standard CSV interface that you&#39;ve</span>
-<span class="doccomment">//! probably come to expect from using other CSV parsers.</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! ```rust</span>
-<span class="doccomment">//! let data = &quot;</span>
-<span class="doccomment">//! sticker,mortals,7</span>
-<span class="doccomment">//! bribed,personae,7</span>
-<span class="doccomment">//! wobbling,poncing,4</span>
-<span class="doccomment">//! interposed,emmett,9</span>
-<span class="doccomment">//! chocolate,refile,7&quot;;</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! let mut rdr = csv::Reader::from_string(data).has_headers(false);</span>
-<span class="doccomment">//! for row in rdr.records().map(|r| r.unwrap()) {</span>
-<span class="doccomment">//!     println!(&quot;{:?}&quot;, row);</span>
-<span class="doccomment">//! }</span>
-<span class="doccomment">//! ```</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! ### Byte string records</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! Yields each record as a `Vec&lt;ByteString&gt;`. Namely, this allows reading CSV</span>
-<span class="doccomment">//! data that is not UTF-8 encoded (or improperly encoded!).</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! ```rust</span>
-<span class="doccomment">//! let data = b&quot;</span>
-<span class="doccomment">//! sti\xffcker,mortals,7</span>
-<span class="doccomment">//! chocolate,refile,7&quot;;</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! let mut rdr = csv::Reader::from_bytes(&amp;data[..]).has_headers(false);</span>
-<span class="doccomment">//! for row in rdr.byte_records().map(|r| r.unwrap()) {</span>
-<span class="doccomment">//!     println!(&quot;{:?}&quot;, row);</span>
-<span class="doccomment">//! }</span>
-<span class="doccomment">//! ```</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! ### Byte slice records</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! This iterator is defined on the `Reader` type itself and yields *fields*</span>
-<span class="doccomment">//! instead of records (unlike the other iterators). Each field is a `&amp;[u8]`.</span>
-<span class="doccomment">//! No allocation is performed during parsing (unlike the other iterators,</span>
-<span class="doccomment">//! which at least allocate a `Vec&lt;u8&gt;` for each field and a `Vec&lt;_&gt;` for each</span>
-<span class="doccomment">//! record). Since no allocation is performed, this &quot;iterator&quot; doesn&#39;t actually</span>
-<span class="doccomment">//! implement the `Iterator` trait (since it cannot be done safely).</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! This is the lowest level interface and should only be used when you need</span>
-<span class="doccomment">//! the performance.</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! ```rust</span>
-<span class="doccomment">//! let data = &quot;</span>
-<span class="doccomment">//! sticker,mortals,7</span>
-<span class="doccomment">//! bribed,personae,7</span>
-<span class="doccomment">//! wobbling,poncing,4</span>
-<span class="doccomment">//! interposed,emmett,9</span>
-<span class="doccomment">//! chocolate,refile,7&quot;;</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! let mut rdr = csv::Reader::from_string(data);</span>
-<span class="doccomment">//! while !rdr.done() {</span>
-<span class="doccomment">//!     while let Some(r) = rdr.next_bytes().into_iter_result() {</span>
-<span class="doccomment">//!         print!(&quot;{:?} &quot;, r.unwrap());</span>
-<span class="doccomment">//!     }</span>
-<span class="doccomment">//!     println!(&quot;&quot;);</span>
-<span class="doccomment">//! }</span>
-<span class="doccomment">//! ```</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! There is more explanation for how this iterator interface works on the</span>
-<span class="doccomment">//! `Reader` type.</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! ## Indexing</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! This crate has experimental support for CSV record indexing. It&#39;s very</span>
-<span class="doccomment">//! simplistic, but once the index is created, you can seek a `csv::Reader`</span>
-<span class="doccomment">//! to any record instantly. See the</span>
-<span class="doccomment">//! [`csv::index`](/rustdoc/csv/index/index.html)</span>
-<span class="doccomment">//! sub-module for more details and examples.</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! ## Compliance with RFC 4180</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! [RFC 4180](http://tools.ietf.org/html/rfc4180) seems to the closest thing</span>
-<span class="doccomment">//! to an official specification for CSV. Currently, the parser in this crate</span>
-<span class="doccomment">//! will read a strict superset of RFC 4180 while the writer will always write</span>
-<span class="doccomment">//! CSV data that conforms to RFC 4180 (unless configured to do otherwise).</span>
-<span class="doccomment">//! This approach was taken because CSV data is commonly malformed and there is</span>
-<span class="doccomment">//! nothing worse than trying to read busted CSV data with a library that says</span>
-<span class="doccomment">//! it can&#39;t do it.</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! With that said, a &quot;strict&quot; mode may be added that will only read CSV data</span>
-<span class="doccomment">//! that conforms to RFC 4180.</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! Here are a few notes on compatibility with RFC 4180:</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//!   * Both CRLF and LF line endings are supported. This is seamless in the</span>
-<span class="doccomment">//!     parser. By default, the encoder uses LF line endings but can be</span>
-<span class="doccomment">//!     instructed to use CRLF with the `crlf` method.</span>
-<span class="doccomment">//!   * The first record is read as a &quot;header&quot; by default, but this can be</span>
-<span class="doccomment">//!     disabled by calling `has_headers(false)` before reading any records.</span>
-<span class="doccomment">//!     (N.B. The encoder has no explicit support for headers. Simply encode a</span>
-<span class="doccomment">//!     vector of strings instead.)</span>
-<span class="doccomment">//!   * By default, the delimiter is a comma, but it can be changed to any</span>
-<span class="doccomment">//!     **ASCII** byte character with the `delimiter` method (for either</span>
-<span class="doccomment">//!     writing or reading).</span>
-<span class="doccomment">//!   * By default, both the writer and reader will enforce the invariant</span>
-<span class="doccomment">//!     that all records are the same length. (This is what RFC 4180 demands.)</span>
-<span class="doccomment">//!     If a record with a different length is found, an error is returned.</span>
-<span class="doccomment">//!     This behavior may be turned off by calling `flexible` with `true`.</span>
-<span class="doccomment">//!   * Empty lines (that do not include other whitespace) are ignored</span>
-<span class="doccomment">//!     by the parser.</span>
-<span class="doccomment">//!   * This crates parses CSV data at the *byte* level, which means all</span>
-<span class="doccomment">//!     delimiter and quote characters must be ASCII. While unfortunate, this</span>
-<span class="doccomment">//!     means that CSV data that is not UTF-8 encoded can be parsed. In</span>
-<span class="doccomment">//!     general, the writer and reader API biases toward using Unicode strings</span>
-<span class="doccomment">//!     while providing an outlet to use byte strings.</span>
+<span class="doccomment">/*!
+The `csv` crate provides a fast and flexible CSV reader and writer, with
+support for Serde.
 
-<span class="attribute">#![<span class="ident">crate_name</span> <span class="op">=</span> <span class="string">&quot;csv&quot;</span>]</span>
-<span class="attribute">#![<span class="ident">doc</span>(<span class="ident">html_root_url</span> <span class="op">=</span> <span class="string">&quot;http://burntsushi.net/rustdoc/csv&quot;</span>)]</span>
+The [tutorial](tutorial/index.html) is a good place to start if you&#39;re new to
+Rust.
+
+The [cookbook](cookbook/index.html) will give you a variety of complete Rust
+programs that do CSV reading and writing.
+
+# Brief overview
+
+**If you&#39;re new to Rust**, you might find the
+[tutorial](tutorial/index.html)
+to be a good place to start.
+
+The primary types in this crate are
+[`Reader`](struct.Reader.html)
+and
+[`Writer`](struct.Writer.html),
+for reading and writing CSV data respectively.
+Correspondingly, to support CSV data with custom field or record delimiters
+(among many other things), you should use either a
+[`ReaderBuilder`](struct.ReaderBuilder.html)
+or a
+[`WriterBuilder`](struct.WriterBuilder.html),
+depending on whether you&#39;re reading or writing CSV data.
+
+Unless you&#39;re using Serde, the standard CSV record types are
+[`StringRecord`](struct.StringRecord.html)
+and
+[`ByteRecord`](struct.ByteRecord.html).
+`StringRecord` should be used when you know your data to be valid UTF-8.
+For data that may be invalid UTF-8, `ByteRecord` is suitable.
+
+Finally, the set of errors is described by the
+[`Error`](enum.Error.html)
+type.
+
+The rest of the types in this crate mostly correspond to more detailed errors,
+position information, configuration knobs or iterator types.
+
+# Setup
+
+Add this to your `Cargo.toml`:
+
+```toml
+[dependencies]
+csv = &quot;1&quot;
+```
+
+and this to your crate root:
+
+```rust
+extern crate csv;
+```
+
+If you want to use Serde&#39;s custom derive functionality on your custom structs,
+then add this to your `[dependencies]` section of `Cargo.toml`:
+
+```toml
+[dependencies]
+serde = &quot;1&quot;
+serde_derive = &quot;1&quot;
+```
+
+and this to your crate root:
+
+```ignore
+extern crate serde;
+#[macro_use]
+extern crate serde_derive;
+```
+
+# Example
+
+This example shows how to read CSV data from stdin and print each record to
+stdout.
+
+There are more examples in the [cookbook](cookbook/index.html).
+
+```no_run
+extern crate csv;
+
+use std::error::Error;
+use std::io;
+use std::process;
+
+fn example() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {
+    // Build the CSV reader and iterate over each record.
+    let mut rdr = csv::Reader::from_reader(io::stdin());
+    for result in rdr.records() {
+        // The iterator yields Result&lt;StringRecord, Error&gt;, so we check the
+        // error here.
+        let record = result?;
+        println!(&quot;{:?}&quot;, record);
+    }
+    Ok(())
+}
+
+fn main() {
+    if let Err(err) = example() {
+        println!(&quot;error running example: {}&quot;, err);
+        process::exit(1);
+    }
+}
+```
+
+The above example can be run like so:
+
+```ignore
+$ git clone git://github.com/BurntSushi/rust-csv
+$ cd rust-csv
+$ cargo run --example cookbook-read-basic &lt; examples/data/smallpop.csv
+```
+
+# Example with Serde
+
+This example shows how to read CSV data from stdin into your own custom struct.
+By default, the member names of the struct are matched with the values in the
+header record of your CSV data.
+
+```no_run
+extern crate csv;
+#[macro_use]
+extern crate serde_derive;
+
+use std::error::Error;
+use std::io;
+use std::process;
+
+#[derive(Debug,Deserialize)]
+struct Record {
+    city: String,
+    region: String,
+    country: String,
+    population: Option&lt;u64&gt;,
+}
+
+fn example() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {
+    let mut rdr = csv::Reader::from_reader(io::stdin());
+    for result in rdr.deserialize() {
+        // Notice that we need to provide a type hint for automatic
+        // deserialization.
+        let record: Record = result?;
+        println!(&quot;{:?}&quot;, record);
+    }
+    Ok(())
+}
+
+fn main() {
+    if let Err(err) = example() {
+        println!(&quot;error running example: {}&quot;, err);
+        process::exit(1);
+    }
+}
+```
+
+The above example can be run like so:
+
+```ignore
+$ git clone git://github.com/BurntSushi/rust-csv
+$ cd rust-csv
+$ cargo run --example cookbook-read-serde &lt; examples/data/smallpop.csv
+```
+
+*/</span>
 
 <span class="attribute">#![<span class="ident">deny</span>(<span class="ident">missing_docs</span>)]</span>
 
-<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">byteorder</span>;
-<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">memchr</span>;
-<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">rustc_serialize</span>;
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">csv_core</span>;
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">serde</span>;
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">serde_bytes</span>;
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
+<span class="attribute">#[<span class="ident">macro_use</span>]</span>
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">serde_derive</span>;
 
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>::<span class="ident">Error</span> <span class="kw">as</span> <span class="ident">StdError</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">result</span>;
 
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">borrow_bytes</span>::<span class="ident">BorrowBytes</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">encoder</span>::<span class="ident">Encoded</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">decoder</span>::<span class="ident">Decoded</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">reader</span>::{
-    <span class="ident">Reader</span>, <span class="ident">DecodedRecords</span>, <span class="ident">StringRecords</span>, <span class="ident">ByteRecords</span>, <span class="ident">NextField</span>,
-    <span class="ident">RecordTerminator</span>,
+<span class="kw">use</span> <span class="ident">serde</span>::{<span class="ident">Deserialize</span>, <span class="ident">Deserializer</span>};
+
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">byte_record</span>::{<span class="ident">ByteRecord</span>, <span class="ident">ByteRecordIter</span>, <span class="ident">Position</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">deserializer</span>::{<span class="ident">DeserializeError</span>, <span class="ident">DeserializeErrorKind</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">error</span>::{
+    <span class="ident">Error</span>, <span class="ident">ErrorKind</span>, <span class="ident">FromUtf8Error</span>, <span class="ident">IntoInnerError</span>, <span class="prelude-ty">Result</span>, <span class="ident">Utf8Error</span>,
 };
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">writer</span>::{<span class="ident">Writer</span>, <span class="ident">QuoteStyle</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">reader</span>::{
+    <span class="ident">Reader</span>, <span class="ident">ReaderBuilder</span>,
+    <span class="ident">DeserializeRecordsIntoIter</span>, <span class="ident">DeserializeRecordsIter</span>,
+    <span class="ident">StringRecordsIntoIter</span>, <span class="ident">StringRecordsIter</span>,
+    <span class="ident">ByteRecordsIntoIter</span>, <span class="ident">ByteRecordsIter</span>,
+};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">string_record</span>::{<span class="ident">StringRecord</span>, <span class="ident">StringRecordIter</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">writer</span>::{<span class="ident">Writer</span>, <span class="ident">WriterBuilder</span>};
 
-<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">lg</span> {
-    ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">tt</span>:<span class="ident">tt</span>)<span class="kw-2">*</span>) <span class="op">=&gt;</span> ({
-        <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>::<span class="ident">Write</span>;
-        <span class="macro">writeln</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> ::<span class="ident">std</span>::<span class="ident">io</span>::<span class="ident">stderr</span>(), $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">tt</span>)<span class="kw-2">*</span>).<span class="ident">unwrap</span>();
-    });
-}
-
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">index</span>;
-
-<span class="kw">mod</span> <span class="ident">borrow_bytes</span>;
-<span class="kw">mod</span> <span class="ident">encoder</span>;
-<span class="kw">mod</span> <span class="ident">decoder</span>;
+<span class="kw">mod</span> <span class="ident">byte_record</span>;
+<span class="kw">mod</span> <span class="ident">deserializer</span>;
+<span class="kw">mod</span> <span class="ident">error</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">cookbook</span>;
 <span class="kw">mod</span> <span class="ident">reader</span>;
+<span class="kw">mod</span> <span class="ident">serializer</span>;
+<span class="kw">mod</span> <span class="ident">string_record</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">tutorial</span>;
 <span class="kw">mod</span> <span class="ident">writer</span>;
 
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
-<span class="kw">mod</span> <span class="ident">tests</span>;
-
-<span class="doccomment">/// A convenience type for representing the result of most CSV reader/writer</span>
-<span class="doccomment">/// operations.</span>
-<span class="kw">pub</span> <span class="kw">type</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">result</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">Error</span><span class="op">&gt;</span>;
-
-<span class="doccomment">/// A convenience type for referring to a plain byte string.</span>
-<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">ByteString</span> <span class="op">=</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>;
-
-<span class="doccomment">/// An error produced by an operation on CSV data.</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
-<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Error</span> {
-    <span class="doccomment">/// An error reported by the type-based encoder.</span>
-    <span class="ident">Encode</span>(<span class="ident">String</span>),
-    <span class="doccomment">/// An error reported by the type-based decoder.</span>
-    <span class="ident">Decode</span>(<span class="ident">String</span>),
-    <span class="doccomment">/// An error reported by the CSV parser.</span>
-    <span class="ident">Parse</span>(<span class="ident">LocatableError</span><span class="op">&lt;</span><span class="ident">ParseError</span><span class="op">&gt;</span>),
-    <span class="doccomment">/// An error originating from reading or writing to the underlying buffer.</span>
-    <span class="ident">Io</span>(<span class="ident">io</span>::<span class="ident">Error</span>),
-    <span class="doccomment">/// An error originating from using a CSV index.</span>
-    <span class="ident">Index</span>(<span class="ident">String</span>),
-}
-
-<span class="doccomment">/// An error tagged with a location at which it occurred.</span>
+<span class="doccomment">/// The quoting style to use when writing CSV data.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Debug</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">LocatableError</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
-    <span class="doccomment">/// The record number (starting at 1).</span>
-    <span class="kw">pub</span> <span class="ident">record</span>: <span class="ident">u64</span>,
-    <span class="doccomment">/// The field number (starting at 1).</span>
-    <span class="kw">pub</span> <span class="ident">field</span>: <span class="ident">u64</span>,
-    <span class="doccomment">/// The error.</span>
-    <span class="kw">pub</span> <span class="ident">err</span>: <span class="ident">T</span>,
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">QuoteStyle</span> {
+    <span class="doccomment">/// This puts quotes around every field. Always.</span>
+    <span class="ident">Always</span>,
+    <span class="doccomment">/// This puts quotes around fields only when necessary.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// They are necessary when fields contain a quote, delimiter or record</span>
+    <span class="doccomment">/// terminator. Quotes are also necessary when writing an empty record</span>
+    <span class="doccomment">/// (which is indistinguishable from a record with one empty field).</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This is the default.</span>
+    <span class="ident">Necessary</span>,
+    <span class="doccomment">/// This puts quotes around all fields that are non-numeric. Namely, when</span>
+    <span class="doccomment">/// writing a field that does not parse as a valid float or integer, then</span>
+    <span class="doccomment">/// quotes will be used even if they aren&#39;t strictly necessary.</span>
+    <span class="ident">NonNumeric</span>,
+    <span class="doccomment">/// This *never* writes quotes, even if it would produce invalid CSV data.</span>
+    <span class="ident">Never</span>,
+    <span class="doccomment">/// Hints that destructuring should not be exhaustive.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This enum may grow additional variants, so this makes sure clients</span>
+    <span class="doccomment">/// don&#39;t count on exhaustive matching. (Otherwise, adding a new variant</span>
+    <span class="doccomment">/// could break existing code.)</span>
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
+    <span class="ident">__Nonexhaustive</span>,
 }
 
-<span class="doccomment">/// A description of a CSV parse error.</span>
+<span class="kw">impl</span> <span class="ident">QuoteStyle</span> {
+    <span class="kw">fn</span> <span class="ident">to_core</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">csv_core</span>::<span class="ident">QuoteStyle</span> {
+        <span class="kw">match</span> <span class="self">self</span> {
+            <span class="ident">QuoteStyle</span>::<span class="ident">Always</span> <span class="op">=&gt;</span> <span class="ident">csv_core</span>::<span class="ident">QuoteStyle</span>::<span class="ident">Always</span>,
+            <span class="ident">QuoteStyle</span>::<span class="ident">Necessary</span> <span class="op">=&gt;</span> <span class="ident">csv_core</span>::<span class="ident">QuoteStyle</span>::<span class="ident">Necessary</span>,
+            <span class="ident">QuoteStyle</span>::<span class="ident">NonNumeric</span> <span class="op">=&gt;</span> <span class="ident">csv_core</span>::<span class="ident">QuoteStyle</span>::<span class="ident">NonNumeric</span>,
+            <span class="ident">QuoteStyle</span>::<span class="ident">Never</span> <span class="op">=&gt;</span> <span class="ident">csv_core</span>::<span class="ident">QuoteStyle</span>::<span class="ident">Never</span>,
+            <span class="kw">_</span> <span class="op">=&gt;</span> <span class="macro">unreachable</span><span class="macro">!</span>(),
+        }
+    }
+}
+
+<span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">QuoteStyle</span> {
+    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-&gt;</span> <span class="ident">QuoteStyle</span> {
+        <span class="ident">QuoteStyle</span>::<span class="ident">Necessary</span>
+    }
+}
+
+<span class="doccomment">/// A record terminator.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Use this to specify the record terminator while parsing CSV. The default is</span>
+<span class="doccomment">/// CRLF, which treats `\r`, `\n` or `\r\n` as a single record terminator.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Debug</span>)]</span>
-<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">ParseError</span> {
-    <span class="doccomment">/// A record was found that has a different size than other records.</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Terminator</span> {
+    <span class="doccomment">/// Parses `\r`, `\n` or `\r\n` as a single record terminator.</span>
+    <span class="ident">CRLF</span>,
+    <span class="doccomment">/// Parses the byte given as a record terminator.</span>
+    <span class="ident">Any</span>(<span class="ident">u8</span>),
+    <span class="doccomment">/// Hints that destructuring should not be exhaustive.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// This is only reported when `flexible` is set to `false` on the</span>
-    <span class="doccomment">/// corresponding CSV reader/writer.</span>
-    <span class="ident">UnequalLengths</span> {
-        <span class="doccomment">/// Expected a record with this many fields.</span>
-        <span class="ident">expected</span>: <span class="ident">u64</span>,
-        <span class="doccomment">/// Got a record with this many fields.</span>
-        <span class="ident">got</span>: <span class="ident">u64</span>,
-    },
-    <span class="doccomment">/// An error occurred when trying to convert a field to a Unicode string.</span>
+    <span class="doccomment">/// This enum may grow additional variants, so this makes sure clients</span>
+    <span class="doccomment">/// don&#39;t count on exhaustive matching. (Otherwise, adding a new variant</span>
+    <span class="doccomment">/// could break existing code.)</span>
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
+    <span class="ident">__Nonexhaustive</span>,
+}
+
+<span class="kw">impl</span> <span class="ident">Terminator</span> {
+    <span class="doccomment">/// Convert this to the csv_core type of the same name.</span>
+    <span class="kw">fn</span> <span class="ident">to_core</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">csv_core</span>::<span class="ident">Terminator</span> {
+        <span class="kw">match</span> <span class="self">self</span> {
+            <span class="ident">Terminator</span>::<span class="ident">CRLF</span> <span class="op">=&gt;</span> <span class="ident">csv_core</span>::<span class="ident">Terminator</span>::<span class="ident">CRLF</span>,
+            <span class="ident">Terminator</span>::<span class="ident">Any</span>(<span class="ident">b</span>) <span class="op">=&gt;</span> <span class="ident">csv_core</span>::<span class="ident">Terminator</span>::<span class="ident">Any</span>(<span class="ident">b</span>),
+            <span class="kw">_</span> <span class="op">=&gt;</span> <span class="macro">unreachable</span><span class="macro">!</span>(),
+        }
+    }
+}
+
+<span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">Terminator</span> {
+    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-&gt;</span> <span class="ident">Terminator</span> {
+        <span class="ident">Terminator</span>::<span class="ident">CRLF</span>
+    }
+}
+
+<span class="doccomment">/// The whitespace preservation behaviour when reading CSV data.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Debug</span>, <span class="ident">PartialEq</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Trim</span> {
+    <span class="doccomment">/// Preserves fields and headers. This is the default.</span>
+    <span class="prelude-val">None</span>,
+    <span class="doccomment">/// Trim whitespace from headers.</span>
+    <span class="ident">Headers</span>,
+    <span class="doccomment">/// Trim whitespace from fields, but not headers.</span>
+    <span class="ident">Fields</span>,
+    <span class="doccomment">/// Trim whitespace from fields and headers.</span>
+    <span class="ident">All</span>,
+    <span class="doccomment">/// Hints that destructuring should not be exhaustive.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// TODO: Include the real Utf8Error, but it is not stabilized yet.</span>
-    <span class="ident">InvalidUtf8</span>,
+    <span class="doccomment">/// This enum may grow additional variants, so this makes sure clients</span>
+    <span class="doccomment">/// don&#39;t count on exhaustive matching. (Otherwise, adding a new variant</span>
+    <span class="doccomment">/// could break existing code.)</span>
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
+    <span class="ident">__Nonexhaustive</span>,
 }
 
-<span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">Error</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
-        <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
-            <span class="ident">Error</span>::<span class="ident">Encode</span>(<span class="kw-2">ref</span> <span class="ident">msg</span>) <span class="op">=&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;CSV encode error: {}&quot;</span>, <span class="ident">msg</span>),
-            <span class="ident">Error</span>::<span class="ident">Decode</span>(<span class="kw-2">ref</span> <span class="ident">msg</span>) <span class="op">=&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;CSV decode error: {}&quot;</span>, <span class="ident">msg</span>),
-            <span class="ident">Error</span>::<span class="ident">Parse</span>(<span class="kw-2">ref</span> <span class="ident">err</span>) <span class="op">=&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;{}&quot;</span>, <span class="ident">err</span>),
-            <span class="ident">Error</span>::<span class="ident">Io</span>(<span class="kw-2">ref</span> <span class="ident">err</span>) <span class="op">=&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;{}&quot;</span>, <span class="ident">err</span>),
-            <span class="ident">Error</span>::<span class="ident">Index</span>(<span class="kw-2">ref</span> <span class="ident">msg</span>) <span class="op">=&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;CSV index error: {}&quot;</span>, <span class="ident">msg</span>),
-        }
+<span class="kw">impl</span> <span class="ident">Trim</span> {
+    <span class="kw">fn</span> <span class="ident">should_trim_fields</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="self">self</span> <span class="op">==</span> <span class="kw-2">&amp;</span><span class="ident">Trim</span>::<span class="ident">Fields</span> <span class="op">||</span> <span class="self">self</span> <span class="op">==</span> <span class="kw-2">&amp;</span><span class="ident">Trim</span>::<span class="ident">All</span>
+    }
+
+    <span class="kw">fn</span> <span class="ident">should_trim_headers</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="self">self</span> <span class="op">==</span> <span class="kw-2">&amp;</span><span class="ident">Trim</span>::<span class="ident">Headers</span> <span class="op">||</span> <span class="self">self</span> <span class="op">==</span> <span class="kw-2">&amp;</span><span class="ident">Trim</span>::<span class="ident">All</span>
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">fmt</span>::<span class="ident">Display</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">LocatableError</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
-        <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;CSV error (at record {}, field {}): {}&quot;</span>,
-               <span class="self">self</span>.<span class="ident">record</span>, <span class="self">self</span>.<span class="ident">field</span>, <span class="self">self</span>.<span class="ident">err</span>)
+<span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">Trim</span> {
+    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-&gt;</span> <span class="ident">Trim</span> {
+        <span class="ident">Trim</span>::<span class="prelude-val">None</span>
     }
 }
 
-<span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">ParseError</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
-        <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
-            <span class="ident">ParseError</span>::<span class="ident">UnequalLengths</span> { <span class="ident">expected</span>, <span class="ident">got</span> } <span class="op">=&gt;</span>
-                <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;First record has length {}, but found record \
-                           with length {}.&quot;</span>, <span class="ident">expected</span>, <span class="ident">got</span>),
-            <span class="ident">ParseError</span>::<span class="ident">InvalidUtf8</span> <span class="op">=&gt;</span>
-                <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Invalid UTF8 encoding.&quot;</span>),
-        }
-    }
-}
-
-<span class="kw">impl</span> <span class="ident">StdError</span> <span class="kw">for</span> <span class="ident">Error</span> {
-    <span class="kw">fn</span> <span class="ident">description</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
-        <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
-            <span class="ident">Error</span>::<span class="ident">Encode</span>(..) <span class="op">=&gt;</span> <span class="string">&quot;CSV encoding error&quot;</span>,
-            <span class="ident">Error</span>::<span class="ident">Decode</span>(..) <span class="op">=&gt;</span> <span class="string">&quot;CSV decoding error&quot;</span>,
-            <span class="ident">Error</span>::<span class="ident">Parse</span>(..) <span class="op">=&gt;</span> <span class="string">&quot;CSV parse error&quot;</span>,
-            <span class="ident">Error</span>::<span class="ident">Io</span>(..) <span class="op">=&gt;</span> <span class="string">&quot;CSV IO error&quot;</span>,
-            <span class="ident">Error</span>::<span class="ident">Index</span>(..) <span class="op">=&gt;</span> <span class="string">&quot;CSV indexing error&quot;</span>,
-        }
-    }
-
-    <span class="kw">fn</span> <span class="ident">cause</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">StdError</span><span class="op">&gt;</span> {
-        <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
-            <span class="ident">Error</span>::<span class="ident">Io</span>(<span class="kw-2">ref</span> <span class="ident">err</span>) <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">err</span>),
-            <span class="kw">_</span> <span class="op">=&gt;</span> <span class="prelude-val">None</span>,
-        }
-    }
-}
-
-<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">io</span>::<span class="ident">Error</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Error</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">err</span>: <span class="ident">io</span>::<span class="ident">Error</span>) <span class="op">-&gt;</span> <span class="ident">Error</span> { <span class="ident">Error</span>::<span class="ident">Io</span>(<span class="ident">err</span>) }
+<span class="doccomment">/// A custom Serde deserializer for possibly invalid `Option&lt;T&gt;` fields.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// When deserializing CSV data, it is sometimes desirable to simply ignore</span>
+<span class="doccomment">/// fields with invalid data. For example, there might be a field that is</span>
+<span class="doccomment">/// usually a number, but will occasionally contain garbage data that causes</span>
+<span class="doccomment">/// number parsing to fail.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// You might be inclined to use, say, `Option&lt;i32&gt;` for fields such at this.</span>
+<span class="doccomment">/// By default, however, `Option&lt;i32&gt;` will either capture *empty* fields with</span>
+<span class="doccomment">/// `None` or valid numeric fields with `Some(the_number)`. If the field is</span>
+<span class="doccomment">/// non-empty and not a valid number, then deserialization will return an error</span>
+<span class="doccomment">/// instead of using `None`.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// This function allows you to override this default behavior. Namely, if</span>
+<span class="doccomment">/// `Option&lt;T&gt;` is deserialized with non-empty but invalid data, then the value</span>
+<span class="doccomment">/// will be `None` and the error will be ignored.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// # Example</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// This example shows how to parse CSV records with numerical data, even if</span>
+<span class="doccomment">/// some numerical data is absent or invalid. Without the</span>
+<span class="doccomment">/// `serde(deserialize_with = &quot;...&quot;)` annotations, this example would return</span>
+<span class="doccomment">/// an error.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// ```</span>
+<span class="doccomment">/// extern crate csv;</span>
+<span class="doccomment">/// #[macro_use]</span>
+<span class="doccomment">/// extern crate serde_derive;</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// use std::error::Error;</span>
+<span class="doccomment">/// use csv::Reader;</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// #[derive(Debug, Deserialize, Eq, PartialEq)]</span>
+<span class="doccomment">/// struct Row {</span>
+<span class="doccomment">///     #[serde(deserialize_with = &quot;csv::invalid_option&quot;)]</span>
+<span class="doccomment">///     a: Option&lt;i32&gt;,</span>
+<span class="doccomment">///     #[serde(deserialize_with = &quot;csv::invalid_option&quot;)]</span>
+<span class="doccomment">///     b: Option&lt;i32&gt;,</span>
+<span class="doccomment">///     #[serde(deserialize_with = &quot;csv::invalid_option&quot;)]</span>
+<span class="doccomment">///     c: Option&lt;i32&gt;,</span>
+<span class="doccomment">/// }</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// # fn main() { example().unwrap(); }</span>
+<span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {</span>
+<span class="doccomment">///     let data = &quot;\</span>
+<span class="doccomment">/// a,b,c</span>
+<span class="doccomment">/// 5,\&quot;\&quot;,xyz</span>
+<span class="doccomment">/// &quot;;</span>
+<span class="doccomment">///     let mut rdr = Reader::from_reader(data.as_bytes());</span>
+<span class="doccomment">///     if let Some(result) = rdr.deserialize().next() {</span>
+<span class="doccomment">///         let record: Row = result?;</span>
+<span class="doccomment">///         assert_eq!(record, Row { a: Some(5), b: None, c: None });</span>
+<span class="doccomment">///         Ok(())</span>
+<span class="doccomment">///     } else {</span>
+<span class="doccomment">///         Err(From::from(&quot;expected at least one record but got none&quot;))</span>
+<span class="doccomment">///     }</span>
+<span class="doccomment">/// }</span>
+<span class="doccomment">/// ```</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">invalid_option</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span>, <span class="ident">D</span>, <span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">de</span>: <span class="ident">D</span>) <span class="op">-&gt;</span> <span class="ident">result</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>, <span class="ident">D</span>::<span class="ident">Error</span><span class="op">&gt;</span>
+    <span class="kw">where</span> <span class="ident">D</span>: <span class="ident">Deserializer</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>: <span class="ident">Deserialize</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span>
+{
+    <span class="prelude-ty">Option</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>::<span class="ident">deserialize</span>(<span class="ident">de</span>).<span class="ident">or_else</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>))
 }
 </pre>
 </section><section id="search" class="content hidden"></section><section class="footer"></section><aside id="help" class="hidden"><div><h1 class="hidden">Help</h1><div class="shortcuts"><h2>Keyboard Shortcuts</h2><dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd><dt><kbd>S</kbd></dt><dd>Focus the search field</dd><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd><dt><kbd>↹</kbd></dt><dd>Switch tab</dd><dt><kbd>&#9166;</kbd></dt><dd>Go to active search result</dd><dt><kbd>+</kbd></dt><dd>Expand all sections</dd><dt><kbd>-</kbd></dt><dd>Collapse all sections</dd></dl></div><div class="infos"><h2>Search Tricks</h2><p>Prefix searches with a type followed by a colon (e.g. <code>fn:</code>) to restrict the search to a given type.</p><p>Accepted types are: <code>fn</code>, <code>mod</code>, <code>struct</code>, <code>enum</code>, <code>trait</code>, <code>type</code>, <code>macro</code>, and <code>const</code>.</p><p>Search functions by type signature (e.g. <code>vec -> usize</code> or <code>* -> vec</code>)</p><p>Search multiple things at once by splitting your query with comma (e.g. <code>str,u8</code> or <code>String,struct:Vec,test</code>)</p></div></div></aside><script>window.rootPath = "../../";window.currentCrate = "csv";</script><script src="../../aliases.js"></script><script src="../../main.js"></script><script defer src="../../search-index.js"></script></body></html>
