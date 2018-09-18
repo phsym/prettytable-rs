@@ -28,9 +28,17 @@ impl Row {
         Self::new(vec![Cell::default(); 0])
     }
 
+    /// Count the number of column required in the table grid.
+    /// It takes into account horizontal spanning of cells. For
+    /// example, a cell with an hspan of 3 will add 3 column to the grid
+    pub fn column_count(&self) -> usize {
+        self.cells.iter().map(|c| c.get_hspan()).sum()
+    }
+
     /// Get the number of cells in this row
     pub fn len(&self) -> usize {
         self.cells.len()
+        // self.cells.iter().map(|c| c.get_hspan()).sum()
     }
 
     /// Check if the row is empty (has no cell)
@@ -52,11 +60,31 @@ impl Row {
 
     /// Get the minimum width required by the cell in the column `column`.
     /// Return 0 if the cell does not exist in this row
-    pub fn get_cell_width(&self, column: usize) -> usize {
-        self.cells
-            .get(column)
-            .map(|cell| cell.get_width())
-            .unwrap_or(0)
+    pub fn get_column_width(&self, column: usize, format: &TableFormat) -> usize {
+        let mut i = 0;
+        for c in &self.cells {
+            if i + c.get_hspan()-1 >= column {
+                if c.get_hspan() == 1 {
+                    return c.get_width();
+                }
+                let (lp, rp) = format.get_padding();
+                let sep = format.get_column_separator(ColumnPosition::Intern).map(|_| 1).unwrap_or_default();
+                let rem = lp + rp +sep;
+                let mut w = c.get_width();
+                if w > rem {
+                    w -= rem;
+                } else {
+                    w = 0;
+                }
+                return (w as f64 / c.get_hspan() as f64).ceil() as usize;
+            }
+            i += c.get_hspan();
+        }
+        0
+        // self.cells
+        //     .get(column)
+        //     .map(|cell| cell.get_width())
+        //     .unwrap_or(0)
     }
 
     /// Get the cell at index `idx`
@@ -69,12 +97,12 @@ impl Row {
         self.cells.get_mut(idx)
     }
 
-    /// Set the `cell` in the row at the given `column`
-    pub fn set_cell(&mut self, cell: Cell, column: usize) -> Result<(), &str> {
-        if column >= self.len() {
+    /// Set the `cell` in the row at the given `idx` index
+    pub fn set_cell(&mut self, cell: Cell, idx: usize) -> Result<(), &str> {
+        if idx >= self.len() {
             return Err("Cannot find cell");
         }
-        self.cells[column] = cell;
+        self.cells[idx] = cell;
         Ok(())
     }
 
@@ -124,18 +152,31 @@ impl Row {
             out.write_all(&vec![b' '; format.get_indent()])?;
             format.print_column_separator(out, ColumnPosition::Left)?;
             let (lp, rp) = format.get_padding();
-            for j in 0..col_width.len() {
-                out.write_all(&vec![b' '; lp])?;
+            let mut j = 0;
+            let mut hspan = 0; // The additional offset caused by cell's horizontal spanning
+            while j+hspan < col_width.len() {
+                out.write_all(&vec![b' '; lp])?; // Left padding
+                // skip_r_fill skip filling the end of the last cell if there's no character
+                // delimiting the end of the table
                 let skip_r_fill = (j == col_width.len() - 1) &&
                                   format.get_column_separator(ColumnPosition::Right).is_none();
                 match self.get_cell(j) {
-                    Some(c) => f(c, out, i, col_width[j], skip_r_fill)?,
-                    None => f(&Cell::default(), out, i, col_width[j], skip_r_fill)?,
+                    Some(c) => {
+                        // In case of horizontal spanning, width is the sum of all spanned columns' width
+                        let mut w = col_width[j+hspan..j+hspan+c.get_hspan()].iter().sum();
+                        let real_span = c.get_hspan()-1;
+                        w += real_span * (lp + rp) + real_span * format.get_column_separator(ColumnPosition::Intern).map(|_| 1).unwrap_or_default();
+                        // Print cell content
+                        f(c, out, i, w, skip_r_fill)?;
+                        hspan += real_span; // Add span to offset
+                    },
+                    None => f(&Cell::default(), out, i, col_width[j+hspan], skip_r_fill)?,
                 };
-                out.write_all(&vec![b' '; rp])?;
-                if j < col_width.len() - 1 {
+                out.write_all(&vec![b' '; rp])?; // Right padding
+                if j+hspan < col_width.len() - 1 {
                     format.print_column_separator(out, ColumnPosition::Intern)?;
                 }
+                j+=1;
             }
             format.print_column_separator(out, ColumnPosition::Right)?;
             out.write_all(NEWLINE)?;
