@@ -1102,6 +1102,28 @@
 <span id="1102">1102</span>
 <span id="1103">1103</span>
 <span id="1104">1104</span>
+<span id="1105">1105</span>
+<span id="1106">1106</span>
+<span id="1107">1107</span>
+<span id="1108">1108</span>
+<span id="1109">1109</span>
+<span id="1110">1110</span>
+<span id="1111">1111</span>
+<span id="1112">1112</span>
+<span id="1113">1113</span>
+<span id="1114">1114</span>
+<span id="1115">1115</span>
+<span id="1116">1116</span>
+<span id="1117">1117</span>
+<span id="1118">1118</span>
+<span id="1119">1119</span>
+<span id="1120">1120</span>
+<span id="1121">1121</span>
+<span id="1122">1122</span>
+<span id="1123">1123</span>
+<span id="1124">1124</span>
+<span id="1125">1125</span>
+<span id="1126">1126</span>
 </pre><pre class="rust ">
 <span class="attribute">#![<span class="ident">warn</span>(<span class="ident">missing_docs</span>,
         <span class="ident">unused_extern_crates</span>,
@@ -1180,7 +1202,7 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_column_num</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">cnum</span> <span class="op">=</span> <span class="number">0</span>;
         <span class="kw">for</span> <span class="ident">r</span> <span class="kw">in</span> <span class="self">self</span>.<span class="ident">rows</span> {
-            <span class="kw">let</span> <span class="ident">l</span> <span class="op">=</span> <span class="ident">r</span>.<span class="ident">len</span>();
+            <span class="kw">let</span> <span class="ident">l</span> <span class="op">=</span> <span class="ident">r</span>.<span class="ident">column_count</span>();
             <span class="kw">if</span> <span class="ident">l</span> <span class="op">&gt;</span> <span class="ident">cnum</span> {
                 <span class="ident">cnum</span> <span class="op">=</span> <span class="ident">l</span>;
             }
@@ -1207,11 +1229,11 @@
     <span class="doccomment">/// Return 0 if the column does not exists;</span>
     <span class="kw">fn</span> <span class="ident">get_column_width</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">col_idx</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">width</span> <span class="op">=</span> <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">titles</span> {
-            <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">t</span>) <span class="op">=&gt;</span> <span class="ident">t</span>.<span class="ident">get_cell_width</span>(<span class="ident">col_idx</span>),
+            <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">t</span>) <span class="op">=&gt;</span> <span class="ident">t</span>.<span class="ident">get_column_width</span>(<span class="ident">col_idx</span>, <span class="self">self</span>.<span class="ident">format</span>),
             <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="number">0</span>,
         };
         <span class="kw">for</span> <span class="ident">r</span> <span class="kw">in</span> <span class="self">self</span>.<span class="ident">rows</span> {
-            <span class="kw">let</span> <span class="ident">l</span> <span class="op">=</span> <span class="ident">r</span>.<span class="ident">get_cell_width</span>(<span class="ident">col_idx</span>);
+            <span class="kw">let</span> <span class="ident">l</span> <span class="op">=</span> <span class="ident">r</span>.<span class="ident">get_column_width</span>(<span class="ident">col_idx</span>, <span class="self">self</span>.<span class="ident">format</span>);
             <span class="kw">if</span> <span class="ident">l</span> <span class="op">&gt;</span> <span class="ident">width</span> {
                 <span class="ident">width</span> <span class="op">=</span> <span class="ident">l</span>;
             }
@@ -1225,6 +1247,7 @@
         <span class="kw">let</span> <span class="ident">colnum</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">get_column_num</span>();
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">col_width</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[<span class="number">0usize</span>; <span class="ident">colnum</span>];
         <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">colnum</span> {
+            <span class="comment">// TODO: calling &quot;get_column_width()&quot; in a loop is inefficient</span>
             <span class="ident">col_width</span>[<span class="ident">i</span>] <span class="op">=</span> <span class="self">self</span>.<span class="ident">get_column_width</span>(<span class="ident">i</span>);
         }
         <span class="ident">col_width</span>
@@ -2128,6 +2151,27 @@
 | Value 1     | Value 2    |
 | Value three | Value four |
 +-------------+------------+
+&quot;</span>;
+        <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">out</span>);
+        <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;____&quot;</span>);
+        <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">table</span>.<span class="ident">to_string</span>().<span class="ident">replace</span>(<span class="string">&quot;\r\n&quot;</span>,<span class="string">&quot;\n&quot;</span>));
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">out</span>, <span class="ident">table</span>.<span class="ident">to_string</span>().<span class="ident">replace</span>(<span class="string">&quot;\r\n&quot;</span>,<span class="string">&quot;\n&quot;</span>));
+    }
+
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">test_horizontal_span</span>() {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">table</span> <span class="op">=</span> <span class="ident">Table</span>::<span class="ident">new</span>();
+        <span class="ident">table</span>.<span class="ident">set_titles</span>(<span class="ident">Row</span>::<span class="ident">new</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="ident">Cell</span>::<span class="ident">new</span>(<span class="string">&quot;t1&quot;</span>), <span class="ident">Cell</span>::<span class="ident">new</span>(<span class="string">&quot;t2&quot;</span>).<span class="ident">with_hspan</span>(<span class="number">2</span>)]));
+        <span class="ident">table</span>.<span class="ident">add_row</span>(<span class="ident">Row</span>::<span class="ident">new</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="ident">Cell</span>::<span class="ident">new</span>(<span class="string">&quot;a&quot;</span>), <span class="ident">Cell</span>::<span class="ident">new</span>(<span class="string">&quot;bc&quot;</span>), <span class="ident">Cell</span>::<span class="ident">new</span>(<span class="string">&quot;def&quot;</span>)]));
+        <span class="ident">table</span>.<span class="ident">add_row</span>(<span class="ident">Row</span>::<span class="ident">new</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="ident">Cell</span>::<span class="ident">new</span>(<span class="string">&quot;def&quot;</span>).<span class="ident">style_spec</span>(<span class="string">&quot;H02c&quot;</span>), <span class="ident">Cell</span>::<span class="ident">new</span>(<span class="string">&quot;a&quot;</span>)]));
+        <span class="kw">let</span> <span class="ident">out</span> <span class="op">=</span> <span class="string">&quot;\
++----+----+-----+
+| t1 | t2       |
++====+====+=====+
+| a  | bc | def |
++----+----+-----+
+|   def   | a   |
++----+----+-----+
 &quot;</span>;
         <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">out</span>);
         <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;____&quot;</span>);

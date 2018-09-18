@@ -396,15 +396,60 @@
 <span id="396">396</span>
 <span id="397">397</span>
 <span id="398">398</span>
+<span id="399">399</span>
+<span id="400">400</span>
+<span id="401">401</span>
+<span id="402">402</span>
+<span id="403">403</span>
+<span id="404">404</span>
+<span id="405">405</span>
+<span id="406">406</span>
+<span id="407">407</span>
+<span id="408">408</span>
+<span id="409">409</span>
+<span id="410">410</span>
+<span id="411">411</span>
+<span id="412">412</span>
+<span id="413">413</span>
+<span id="414">414</span>
+<span id="415">415</span>
+<span id="416">416</span>
+<span id="417">417</span>
+<span id="418">418</span>
+<span id="419">419</span>
+<span id="420">420</span>
+<span id="421">421</span>
+<span id="422">422</span>
+<span id="423">423</span>
+<span id="424">424</span>
+<span id="425">425</span>
+<span id="426">426</span>
+<span id="427">427</span>
+<span id="428">428</span>
+<span id="429">429</span>
+<span id="430">430</span>
+<span id="431">431</span>
+<span id="432">432</span>
+<span id="433">433</span>
+<span id="434">434</span>
+<span id="435">435</span>
+<span id="436">436</span>
+<span id="437">437</span>
+<span id="438">438</span>
+<span id="439">439</span>
+<span id="440">440</span>
+<span id="441">441</span>
+<span id="442">442</span>
 </pre><pre class="rust ">
 <span class="doccomment">//! This module contains definition of table/row cells stuff</span>
 
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>::{<span class="ident">Write</span>, <span class="ident">Error</span>};
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">string</span>::<span class="ident">ToString</span>;
-<span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">Attr</span>, <span class="ident">Terminal</span>, <span class="ident">color</span>};
 <span class="kw">use</span> <span class="kw">super</span>::<span class="ident">format</span>::<span class="ident">Alignment</span>;
 <span class="kw">use</span> <span class="kw">super</span>::<span class="ident">utils</span>::<span class="ident">display_width</span>;
 <span class="kw">use</span> <span class="kw">super</span>::<span class="ident">utils</span>::<span class="ident">print_align</span>;
+<span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">color</span>, <span class="ident">Attr</span>, <span class="ident">Terminal</span>};
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>::{<span class="ident">Error</span>, <span class="ident">Write</span>};
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">string</span>::<span class="ident">ToString</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">str</span>::<span class="ident">FromStr</span>;
 
 <span class="doccomment">/// Represent a table cell containing a string.</span>
 <span class="doccomment">///</span>
@@ -416,6 +461,7 @@
     <span class="ident">width</span>: <span class="ident">usize</span>,
     <span class="ident">align</span>: <span class="ident">Alignment</span>,
     <span class="ident">style</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Attr</span><span class="op">&gt;</span>,
+    <span class="ident">hspan</span>: <span class="ident">usize</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">Cell</span> {
@@ -435,6 +481,7 @@
             <span class="ident">width</span>: <span class="ident">width</span>,
             <span class="ident">align</span>: <span class="ident">align</span>,
             <span class="ident">style</span>: <span class="ident">Vec</span>::<span class="ident">new</span>(),
+            <span class="ident">hspan</span>: <span class="number">1</span>,
         }
     }
 
@@ -457,6 +504,12 @@
     <span class="doccomment">/// Add a style attribute to the cell. Can be chained</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_style</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">attr</span>: <span class="ident">Attr</span>) <span class="op">-&gt;</span> <span class="ident">Cell</span> {
         <span class="self">self</span>.<span class="ident">style</span>(<span class="ident">attr</span>);
+        <span class="self">self</span>
+    }
+
+    <span class="doccomment">/// Add horizontal spanning to the cell</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_hspan</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">hspan</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">Cell</span> {
+        <span class="self">self</span>.<span class="ident">set_hspan</span>(<span class="ident">hspan</span>);
         <span class="self">self</span>
     }
 
@@ -506,7 +559,8 @@
         <span class="self">self</span>.<span class="ident">reset_style</span>();
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">foreground</span> <span class="op">=</span> <span class="bool-val">false</span>;
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">background</span> <span class="op">=</span> <span class="bool-val">false</span>;
-        <span class="kw">for</span> <span class="ident">c</span> <span class="kw">in</span> <span class="ident">spec</span>.<span class="ident">chars</span>() {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">it</span> <span class="op">=</span> <span class="ident">spec</span>.<span class="ident">chars</span>().<span class="ident">peekable</span>();
+        <span class="kw">while</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">c</span>) <span class="op">=</span> <span class="ident">it</span>.<span class="ident">next</span>() {
             <span class="kw">if</span> <span class="ident">foreground</span> <span class="op">||</span> <span class="ident">background</span> {
                 <span class="kw">let</span> <span class="ident">color</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">c</span> {
                     <span class="string">&#39;r&#39;</span> <span class="op">=&gt;</span> <span class="ident">color</span>::<span class="ident">RED</span>,
@@ -549,6 +603,14 @@
                     <span class="string">&#39;c&#39;</span> <span class="op">=&gt;</span> <span class="self">self</span>.<span class="ident">align</span>(<span class="ident">Alignment</span>::<span class="ident">CENTER</span>),
                     <span class="string">&#39;l&#39;</span> <span class="op">=&gt;</span> <span class="self">self</span>.<span class="ident">align</span>(<span class="ident">Alignment</span>::<span class="ident">LEFT</span>),
                     <span class="string">&#39;r&#39;</span> <span class="op">=&gt;</span> <span class="self">self</span>.<span class="ident">align</span>(<span class="ident">Alignment</span>::<span class="ident">RIGHT</span>),
+                    <span class="string">&#39;H&#39;</span> <span class="op">=&gt;</span> {
+                        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">span_s</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">new</span>();
+                        <span class="kw">while</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="string">&#39;0&#39;</span>..=<span class="string">&#39;9&#39;</span>) <span class="op">=</span> <span class="ident">it</span>.<span class="ident">peek</span>() {
+                            <span class="ident">span_s</span>.<span class="ident">push</span>(<span class="ident">it</span>.<span class="ident">next</span>().<span class="ident">unwrap</span>());
+                        }
+                        <span class="kw">let</span> <span class="ident">span</span> <span class="op">=</span> <span class="ident">usize</span>::<span class="ident">from_str</span>(<span class="kw-2">&amp;</span><span class="ident">span_s</span>).<span class="ident">unwrap</span>();
+                        <span class="self">self</span>.<span class="ident">set_hspan</span>(<span class="ident">span</span>);
+                    }
                     <span class="kw">_</span> <span class="op">=&gt;</span> { <span class="comment">/* Silently ignore unknown tags */</span> }
                 }
             }
@@ -566,6 +628,16 @@
         <span class="self">self</span>.<span class="ident">width</span>
     }
 
+    <span class="doccomment">/// Set horizontal span for this cell (must be &gt; 0)</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_hspan</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">hspan</span>: <span class="ident">usize</span>) {
+        <span class="self">self</span>.<span class="ident">hspan</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">hspan</span> <span class="op">&lt;=</span> <span class="number">0</span> {<span class="number">1</span>} <span class="kw">else</span> {<span class="ident">hspan</span>};
+    }
+
+    <span class="doccomment">/// Get horizontal span of this cell (&gt; 0)</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_hspan</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+        <span class="self">self</span>.<span class="ident">hspan</span>
+    }
+
     <span class="doccomment">/// Return a copy of the full string contained in the cell</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_content</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">String</span> {
         <span class="self">self</span>.<span class="ident">content</span>.<span class="ident">join</span>(<span class="string">&quot;\n&quot;</span>)
@@ -575,36 +647,38 @@
     <span class="doccomment">/// `idx` is the line index to print. `col_width` is the column width used to</span>
     <span class="doccomment">/// fill the cells with blanks so it fits in the table.</span>
     <span class="doccomment">/// If `ìdx` is higher than this cell&#39;s height, it will print empty content</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">print</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Write</span> <span class="op">+</span> <span class="question-mark">?</span><span class="ident">Sized</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>,
-                                    <span class="ident">out</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">T</span>,
-                                    <span class="ident">idx</span>: <span class="ident">usize</span>,
-                                    <span class="ident">col_width</span>: <span class="ident">usize</span>,
-                                    <span class="ident">skip_right_fill</span>: <span class="ident">bool</span>)
-                                    <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">print</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Write</span> <span class="op">+</span> <span class="question-mark">?</span><span class="ident">Sized</span><span class="op">&gt;</span>(
+        <span class="kw-2">&amp;</span><span class="self">self</span>,
+        <span class="ident">out</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">T</span>,
+        <span class="ident">idx</span>: <span class="ident">usize</span>,
+        <span class="ident">col_width</span>: <span class="ident">usize</span>,
+        <span class="ident">skip_right_fill</span>: <span class="ident">bool</span>,
+    ) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">c</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">content</span>.<span class="ident">get</span>(<span class="ident">idx</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">s</span><span class="op">|</span> <span class="ident">s</span>.<span class="ident">as_ref</span>()).<span class="ident">unwrap_or</span>(<span class="string">&quot;&quot;</span>);
         <span class="ident">print_align</span>(<span class="ident">out</span>, <span class="self">self</span>.<span class="ident">align</span>, <span class="ident">c</span>, <span class="string">&#39; &#39;</span>, <span class="ident">col_width</span>, <span class="ident">skip_right_fill</span>)
     }
 
     <span class="doccomment">/// Apply style then call `print` to print the cell into a terminal</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">print_term</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Terminal</span> <span class="op">+</span> <span class="question-mark">?</span><span class="ident">Sized</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>,
-                                            <span class="ident">out</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">T</span>,
-                                            <span class="ident">idx</span>: <span class="ident">usize</span>,
-                                            <span class="ident">col_width</span>: <span class="ident">usize</span>,
-                                            <span class="ident">skip_right_fill</span>: <span class="ident">bool</span>)
-                                            <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">print_term</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Terminal</span> <span class="op">+</span> <span class="question-mark">?</span><span class="ident">Sized</span><span class="op">&gt;</span>(
+        <span class="kw-2">&amp;</span><span class="self">self</span>,
+        <span class="ident">out</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">T</span>,
+        <span class="ident">idx</span>: <span class="ident">usize</span>,
+        <span class="ident">col_width</span>: <span class="ident">usize</span>,
+        <span class="ident">skip_right_fill</span>: <span class="ident">bool</span>,
+    ) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="kw">for</span> <span class="ident">a</span> <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">style</span> {
             <span class="kw">match</span> <span class="ident">out</span>.<span class="ident">attr</span>(<span class="kw-2">*</span><span class="ident">a</span>) {
-                <span class="prelude-val">Ok</span>(..) <span class="op">|</span>
-                <span class="prelude-val">Err</span>(::<span class="ident">term</span>::<span class="ident">Error</span>::<span class="ident">NotSupported</span>) <span class="op">|</span>
-                <span class="prelude-val">Err</span>(::<span class="ident">term</span>::<span class="ident">Error</span>::<span class="ident">ColorOutOfRange</span>) <span class="op">=&gt;</span> (), <span class="comment">// Ignore unsupported atrributes</span>
+                <span class="prelude-val">Ok</span>(..) <span class="op">|</span> <span class="prelude-val">Err</span>(::<span class="ident">term</span>::<span class="ident">Error</span>::<span class="ident">NotSupported</span>) <span class="op">|</span> <span class="prelude-val">Err</span>(::<span class="ident">term</span>::<span class="ident">Error</span>::<span class="ident">ColorOutOfRange</span>) <span class="op">=&gt;</span> {
+                    ()
+                } <span class="comment">// Ignore unsupported atrributes</span>
                 <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">term_error_to_io_error</span>(<span class="ident">e</span>)),
             };
         }
         <span class="self">self</span>.<span class="ident">print</span>(<span class="ident">out</span>, <span class="ident">idx</span>, <span class="ident">col_width</span>, <span class="ident">skip_right_fill</span>)<span class="question-mark">?</span>;
         <span class="kw">match</span> <span class="ident">out</span>.<span class="ident">reset</span>() {
-            <span class="prelude-val">Ok</span>(..) <span class="op">|</span>
-            <span class="prelude-val">Err</span>(::<span class="ident">term</span>::<span class="ident">Error</span>::<span class="ident">NotSupported</span>) <span class="op">|</span>
-            <span class="prelude-val">Err</span>(::<span class="ident">term</span>::<span class="ident">Error</span>::<span class="ident">ColorOutOfRange</span>) <span class="op">=&gt;</span> <span class="prelude-val">Ok</span>(()),
+            <span class="prelude-val">Ok</span>(..) <span class="op">|</span> <span class="prelude-val">Err</span>(::<span class="ident">term</span>::<span class="ident">Error</span>::<span class="ident">NotSupported</span>) <span class="op">|</span> <span class="prelude-val">Err</span>(::<span class="ident">term</span>::<span class="ident">Error</span>::<span class="ident">ColorOutOfRange</span>) <span class="op">=&gt;</span> {
+                <span class="prelude-val">Ok</span>(())
+            }
             <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">term_error_to_io_error</span>(<span class="ident">e</span>)),
         }
     }
@@ -637,6 +711,7 @@
             <span class="ident">width</span>: <span class="number">0</span>,
             <span class="ident">align</span>: <span class="ident">Alignment</span>::<span class="ident">LEFT</span>,
             <span class="ident">style</span>: <span class="ident">Vec</span>::<span class="ident">new</span>(),
+            <span class="ident">hspan</span>: <span class="number">1</span>,
         }
     }
 }
@@ -670,17 +745,23 @@
 <span class="doccomment">/// ```</span>
 <span class="attribute">#[<span class="ident">macro_export</span>]</span>
 <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">cell</span> {
-    () <span class="op">=&gt;</span> (<span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">cell</span>::<span class="ident">Cell</span>::<span class="ident">default</span>());
-    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">value</span>:<span class="ident">expr</span>) <span class="op">=&gt;</span> (<span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">cell</span>::<span class="ident">Cell</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">value</span>.<span class="ident">to_string</span>()));
-    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">style</span>:<span class="ident">ident</span> <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">value</span>:<span class="ident">expr</span>) <span class="op">=&gt;</span> (<span class="macro">cell</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">value</span>).<span class="ident">style_spec</span>(<span class="macro">stringify</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">style</span>)));
+    () <span class="op">=&gt;</span> {
+        <span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">cell</span>::<span class="ident">Cell</span>::<span class="ident">default</span>()
+    };
+    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">value</span>:<span class="ident">expr</span>) <span class="op">=&gt;</span> {
+        <span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">cell</span>::<span class="ident">Cell</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">value</span>.<span class="ident">to_string</span>())
+    };
+    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">style</span>:<span class="ident">ident</span> <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">value</span>:<span class="ident">expr</span>) <span class="op">=&gt;</span> {
+        <span class="macro">cell</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">value</span>).<span class="ident">style_spec</span>(<span class="macro">stringify</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">style</span>))
+    };
 }
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">mod</span> <span class="ident">tests</span> {
     <span class="kw">use</span> <span class="ident">cell</span>::<span class="ident">Cell</span>;
-    <span class="kw">use</span> <span class="ident">utils</span>::<span class="ident">StringWriter</span>;
     <span class="kw">use</span> <span class="ident">format</span>::<span class="ident">Alignment</span>;
-    <span class="kw">use</span> <span class="ident">term</span>::{<span class="ident">Attr</span>, <span class="ident">color</span>};
+    <span class="kw">use</span> <span class="ident">term</span>::{<span class="ident">color</span>, <span class="ident">Attr</span>};
+    <span class="kw">use</span> <span class="ident">utils</span>::<span class="ident">StringWriter</span>;
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">get_content</span>() {
@@ -749,14 +830,18 @@
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">cell</span>.<span class="ident">style</span>.<span class="ident">contains</span>(<span class="kw-2">&amp;</span><span class="ident">Attr</span>::<span class="ident">Italic</span>(<span class="bool-val">true</span>)));
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">cell</span>.<span class="ident">style</span>.<span class="ident">contains</span>(<span class="kw-2">&amp;</span><span class="ident">Attr</span>::<span class="ident">Bold</span>));
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">cell</span>.<span class="ident">style</span>.<span class="ident">contains</span>(<span class="kw-2">&amp;</span><span class="ident">Attr</span>::<span class="ident">ForegroundColor</span>(<span class="ident">color</span>::<span class="ident">RED</span>)));
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">cell</span>.<span class="ident">style</span>
-                    .<span class="ident">contains</span>(<span class="kw-2">&amp;</span><span class="ident">Attr</span>::<span class="ident">BackgroundColor</span>(<span class="ident">color</span>::<span class="ident">BRIGHT_BLUE</span>)));
+        <span class="macro">assert</span><span class="macro">!</span>(
+            <span class="ident">cell</span>.<span class="ident">style</span>
+                .<span class="ident">contains</span>(<span class="kw-2">&amp;</span><span class="ident">Attr</span>::<span class="ident">BackgroundColor</span>(<span class="ident">color</span>::<span class="ident">BRIGHT_BLUE</span>))
+        );
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">cell</span>.<span class="ident">align</span>, <span class="ident">Alignment</span>::<span class="ident">CENTER</span>);
 
         <span class="ident">cell</span> <span class="op">=</span> <span class="ident">cell</span>.<span class="ident">style_spec</span>(<span class="string">&quot;FDBwr&quot;</span>);
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">cell</span>.<span class="ident">style</span>.<span class="ident">len</span>(), <span class="number">2</span>);
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">cell</span>.<span class="ident">style</span>
-                    .<span class="ident">contains</span>(<span class="kw-2">&amp;</span><span class="ident">Attr</span>::<span class="ident">ForegroundColor</span>(<span class="ident">color</span>::<span class="ident">BRIGHT_BLACK</span>)));
+        <span class="macro">assert</span><span class="macro">!</span>(
+            <span class="ident">cell</span>.<span class="ident">style</span>
+                .<span class="ident">contains</span>(<span class="kw-2">&amp;</span><span class="ident">Attr</span>::<span class="ident">ForegroundColor</span>(<span class="ident">color</span>::<span class="ident">BRIGHT_BLACK</span>))
+        );
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">cell</span>.<span class="ident">style</span>.<span class="ident">contains</span>(<span class="kw-2">&amp;</span><span class="ident">Attr</span>::<span class="ident">BackgroundColor</span>(<span class="ident">color</span>::<span class="ident">WHITE</span>)));
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">cell</span>.<span class="ident">align</span>, <span class="ident">Alignment</span>::<span class="ident">RIGHT</span>);
 
@@ -767,6 +852,9 @@
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">cell</span>.<span class="ident">style</span>.<span class="ident">len</span>(), <span class="number">1</span>);
         <span class="ident">cell</span> <span class="op">=</span> <span class="ident">cell</span>.<span class="ident">style_spec</span>(<span class="string">&quot;zzz&quot;</span>);
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">cell</span>.<span class="ident">style</span>.<span class="ident">is_empty</span>());
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">cell</span>.<span class="ident">get_hspan</span>(), <span class="number">1</span>);
+        <span class="ident">cell</span> <span class="op">=</span> <span class="ident">cell</span>.<span class="ident">style_spec</span>(<span class="string">&quot;FDBwH03r&quot;</span>);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">cell</span>.<span class="ident">get_hspan</span>(), <span class="number">3</span>);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>

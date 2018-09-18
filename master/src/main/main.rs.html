@@ -66,7 +66,7 @@
 <span class="kw">fn</span> <span class="ident">main</span>() {
     <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="macro">table</span><span class="macro">!</span>();
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">table</span> <span class="op">=</span> <span class="ident">Table</span>::<span class="ident">new</span>();
-    <span class="ident">table</span>.<span class="ident">add_row</span>(<span class="macro">row</span><span class="macro">!</span>[<span class="ident">FrByb</span><span class="op">-&gt;</span><span class="string">&quot;ABC&quot;</span>, <span class="string">&quot;DEFG&quot;</span>, <span class="string">&quot;HIJKLMN&quot;</span>]);
+    <span class="ident">table</span>.<span class="ident">add_row</span>(<span class="macro">row</span><span class="macro">!</span>[<span class="ident">FrByH2b</span><span class="op">-&gt;</span><span class="string">&quot;This is a long spanning cell&quot;</span>, <span class="string">&quot;DEFG&quot;</span>, <span class="string">&quot;HIJKLMN&quot;</span>]);
     <span class="ident">table</span>.<span class="ident">add_row</span>(<span class="macro">row</span><span class="macro">!</span>[<span class="string">&quot;foobar&quot;</span>, <span class="string">&quot;bar&quot;</span>, <span class="string">&quot;foo&quot;</span>]);
     <span class="ident">table</span>.<span class="ident">add_row</span>(<span class="macro">row</span><span class="macro">!</span>[]);
     <span class="comment">// Add style to a full row</span>
@@ -74,7 +74,7 @@
     <span class="ident">table</span>.<span class="ident">add_row</span>(<span class="ident">Row</span>::<span class="ident">new</span>(<span class="macro">vec</span><span class="macro">!</span>[
             <span class="ident">Cell</span>::<span class="ident">new</span>(<span class="string">&quot;foobar2&quot;</span>),
             <span class="comment">// Create a cell with a red foreground color</span>
-            <span class="ident">Cell</span>::<span class="ident">new</span>(<span class="string">&quot;bar2&quot;</span>).<span class="ident">with_style</span>(<span class="ident">Attr</span>::<span class="ident">ForegroundColor</span>(<span class="ident">color</span>::<span class="ident">RED</span>)),
+            <span class="ident">Cell</span>::<span class="ident">new_align</span>(<span class="string">&quot;bar2&quot;</span>, <span class="ident">Alignment</span>::<span class="ident">CENTER</span>).<span class="ident">with_style</span>(<span class="ident">Attr</span>::<span class="ident">ForegroundColor</span>(<span class="ident">color</span>::<span class="ident">RED</span>)).<span class="ident">with_hspan</span>(<span class="number">2</span>),
             <span class="comment">// Create a cell with red foreground color, yellow background color, with bold characters</span>
             <span class="ident">Cell</span>::<span class="ident">new</span>(<span class="string">&quot;foo2&quot;</span>).<span class="ident">style_spec</span>(<span class="string">&quot;FrByb&quot;</span>)])
         );
