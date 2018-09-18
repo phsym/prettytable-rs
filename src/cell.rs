@@ -1,11 +1,12 @@
 //! This module contains definition of table/row cells stuff
 
-use std::io::{Write, Error};
-use std::string::ToString;
-use super::{Attr, Terminal, color};
 use super::format::Alignment;
 use super::utils::display_width;
 use super::utils::print_align;
+use super::{color, Attr, Terminal};
+use std::io::{Error, Write};
+use std::string::ToString;
+use std::str::FromStr;
 
 /// Represent a table cell containing a string.
 ///
@@ -17,6 +18,7 @@ pub struct Cell {
     width: usize,
     align: Alignment,
     style: Vec<Attr>,
+    hspan: usize,
 }
 
 impl Cell {
@@ -36,6 +38,7 @@ impl Cell {
             width: width,
             align: align,
             style: Vec::new(),
+            hspan: 1,
         }
     }
 
@@ -58,6 +61,12 @@ impl Cell {
     /// Add a style attribute to the cell. Can be chained
     pub fn with_style(mut self, attr: Attr) -> Cell {
         self.style(attr);
+        self
+    }
+
+    /// Add horizontal spanning to the cell
+    pub fn with_hspan(mut self, hspan: usize) -> Cell {
+        self.set_hspan(hspan);
         self
     }
 
@@ -107,7 +116,8 @@ impl Cell {
         self.reset_style();
         let mut foreground = false;
         let mut background = false;
-        for c in spec.chars() {
+        let mut it = spec.chars().peekable();
+        while let Some(c) = it.next() {
             if foreground || background {
                 let color = match c {
                     'r' => color::RED,
@@ -150,6 +160,14 @@ impl Cell {
                     'c' => self.align(Alignment::CENTER),
                     'l' => self.align(Alignment::LEFT),
                     'r' => self.align(Alignment::RIGHT),
+                    'H' => {
+                        let mut span_s = String::new();
+                        while let Some('0'..='9') = it.peek() {
+                            span_s.push(it.next().unwrap());
+                        }
+                        let span = usize::from_str(&span_s).unwrap();
+                        self.set_hspan(span);
+                    }
                     _ => { /* Silently ignore unknown tags */ }
                 }
             }
@@ -167,6 +185,16 @@ impl Cell {
         self.width
     }
 
+    /// Set horizontal span for this cell (must be > 0)
+    pub fn set_hspan(&mut self, hspan: usize) {
+        self.hspan = if hspan <= 0 {1} else {hspan};
+    }
+
+    /// Get horizontal span of this cell (> 0)
+    pub fn get_hspan(&self) -> usize {
+        self.hspan
+    }
+
     /// Return a copy of the full string contained in the cell
     pub fn get_content(&self) -> String {
         self.content.join("\n")
@@ -176,36 +204,38 @@ impl Cell {
     /// `idx` is the line index to print. `col_width` is the column width used to
     /// fill the cells with blanks so it fits in the table.
     /// If `ìdx` is higher than this cell's height, it will print empty content
-    pub fn print<T: Write + ?Sized>(&self,
-                                    out: &mut T,
-                                    idx: usize,
-                                    col_width: usize,
-                                    skip_right_fill: bool)
-                                    -> Result<(), Error> {
+    pub fn print<T: Write + ?Sized>(
+        &self,
+        out: &mut T,
+        idx: usize,
+        col_width: usize,
+        skip_right_fill: bool,
+    ) -> Result<(), Error> {
         let c = self.content.get(idx).map(|s| s.as_ref()).unwrap_or("");
         print_align(out, self.align, c, ' ', col_width, skip_right_fill)
     }
 
     /// Apply style then call `print` to print the cell into a terminal
-    pub fn print_term<T: Terminal + ?Sized>(&self,
-                                            out: &mut T,
-                                            idx: usize,
-                                            col_width: usize,
-                                            skip_right_fill: bool)
-                                            -> Result<(), Error> {
+    pub fn print_term<T: Terminal + ?Sized>(
+        &self,
+        out: &mut T,
+        idx: usize,
+        col_width: usize,
+        skip_right_fill: bool,
+    ) -> Result<(), Error> {
         for a in &self.style {
             match out.attr(*a) {
-                Ok(..) |
-                Err(::term::Error::NotSupported) |
-                Err(::term::Error::ColorOutOfRange) => (), // Ignore unsupported atrributes
+                Ok(..) | Err(::term::Error::NotSupported) | Err(::term::Error::ColorOutOfRange) => {
+                    ()
+                } // Ignore unsupported atrributes
                 Err(e) => return Err(term_error_to_io_error(e)),
             };
         }
         self.print(out, idx, col_width, skip_right_fill)?;
         match out.reset() {
-            Ok(..) |
-            Err(::term::Error::NotSupported) |
-            Err(::term::Error::ColorOutOfRange) => Ok(()),
+            Ok(..) | Err(::term::Error::NotSupported) | Err(::term::Error::ColorOutOfRange) => {
+                Ok(())
+            }
             Err(e) => Err(term_error_to_io_error(e)),
         }
     }
@@ -238,6 +268,7 @@ impl Default for Cell {
             width: 0,
             align: Alignment::LEFT,
             style: Vec::new(),
+            hspan: 1,
         }
     }
 }
@@ -271,17 +302,23 @@ impl Default for Cell {
 /// ```
 #[macro_export]
 macro_rules! cell {
-    () => ($crate::cell::Cell::default());
-    ($value:expr) => ($crate::cell::Cell::new(&$value.to_string()));
-    ($style:ident -> $value:expr) => (cell!($value).style_spec(stringify!($style)));
+    () => {
+        $crate::cell::Cell::default()
+    };
+    ($value:expr) => {
+        $crate::cell::Cell::new(&$value.to_string())
+    };
+    ($style:ident -> $value:expr) => {
+        cell!($value).style_spec(stringify!($style))
+    };
 }
 
 #[cfg(test)]
 mod tests {
     use cell::Cell;
-    use utils::StringWriter;
     use format::Alignment;
-    use term::{Attr, color};
+    use term::{color, Attr};
+    use utils::StringWriter;
 
     #[test]
     fn get_content() {
@@ -350,14 +387,18 @@ mod tests {
         assert!(cell.style.contains(&Attr::Italic(true)));
         assert!(cell.style.contains(&Attr::Bold));
         assert!(cell.style.contains(&Attr::ForegroundColor(color::RED)));
-        assert!(cell.style
-                    .contains(&Attr::BackgroundColor(color::BRIGHT_BLUE)));
+        assert!(
+            cell.style
+                .contains(&Attr::BackgroundColor(color::BRIGHT_BLUE))
+        );
         assert_eq!(cell.align, Alignment::CENTER);
 
         cell = cell.style_spec("FDBwr");
         assert_eq!(cell.style.len(), 2);
-        assert!(cell.style
-                    .contains(&Attr::ForegroundColor(color::BRIGHT_BLACK)));
+        assert!(
+            cell.style
+                .contains(&Attr::ForegroundColor(color::BRIGHT_BLACK))
+        );
         assert!(cell.style.contains(&Attr::BackgroundColor(color::WHITE)));
         assert_eq!(cell.align, Alignment::RIGHT);
 
@@ -368,6 +409,9 @@ mod tests {
         assert_eq!(cell.style.len(), 1);
         cell = cell.style_spec("zzz");
         assert!(cell.style.is_empty());
+        assert_eq!(cell.get_hspan(), 1);
+        cell = cell.style_spec("FDBwH03r");
+        assert_eq!(cell.get_hspan(), 3);
     }
 
     #[test]

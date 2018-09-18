@@ -75,7 +75,7 @@ impl<'a> TableSlice<'a> {
     pub fn get_column_num(&self) -> usize {
         let mut cnum = 0;
         for r in self.rows {
-            let l = r.len();
+            let l = r.column_count();
             if l > cnum {
                 cnum = l;
             }
@@ -102,11 +102,11 @@ impl<'a> TableSlice<'a> {
     /// Return 0 if the column does not exists;
     fn get_column_width(&self, col_idx: usize) -> usize {
         let mut width = match *self.titles {
-            Some(ref t) => t.get_cell_width(col_idx),
+            Some(ref t) => t.get_column_width(col_idx, self.format),
             None => 0,
         };
         for r in self.rows {
-            let l = r.get_cell_width(col_idx);
+            let l = r.get_column_width(col_idx, self.format);
             if l > width {
                 width = l;
             }
@@ -120,6 +120,7 @@ impl<'a> TableSlice<'a> {
         let colnum = self.get_column_num();
         let mut col_width = vec![0usize; colnum];
         for i in 0..colnum {
+            // TODO: calling "get_column_width()" in a loop is inefficient
             col_width[i] = self.get_column_width(i);
         }
         col_width
@@ -1023,6 +1024,27 @@ mod tests {
 | Value 1     | Value 2    |
 | Value three | Value four |
 +-------------+------------+
+";
+        println!("{}", out);
+        println!("____");
+        println!("{}", table.to_string().replace("\r\n","\n"));
+        assert_eq!(out, table.to_string().replace("\r\n","\n"));
+    }
+
+    #[test]
+    fn test_horizontal_span() {
+        let mut table = Table::new();
+        table.set_titles(Row::new(vec![Cell::new("t1"), Cell::new("t2").with_hspan(2)]));
+        table.add_row(Row::new(vec![Cell::new("a"), Cell::new("bc"), Cell::new("def")]));
+        table.add_row(Row::new(vec![Cell::new("def").style_spec("H02c"), Cell::new("a")]));
+        let out = "\
++----+----+-----+
+| t1 | t2       |
++====+====+=====+
+| a  | bc | def |
++----+----+-----+
+|   def   | a   |
++----+----+-----+
 ";
         println!("{}", out);
         println!("____");

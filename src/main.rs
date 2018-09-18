@@ -13,7 +13,7 @@ use prettytable::{Attr, color};
 fn main() {
     let _ = table!();
     let mut table = Table::new();
-    table.add_row(row![FrByb->"ABC", "DEFG", "HIJKLMN"]);
+    table.add_row(row![FrByH2b->"This is a long spanning cell", "DEFG", "HIJKLMN"]);
     table.add_row(row!["foobar", "bar", "foo"]);
     table.add_row(row![]);
     // Add style to a full row
@@ -21,7 +21,7 @@ fn main() {
     table.add_row(Row::new(vec![
             Cell::new("foobar2"),
             // Create a cell with a red foreground color
-            Cell::new("bar2").with_style(Attr::ForegroundColor(color::RED)),
+            Cell::new_align("bar2", Alignment::CENTER).with_style(Attr::ForegroundColor(color::RED)).with_hspan(2),
             // Create a cell with red foreground color, yellow background color, with bold characters
             Cell::new("foo2").style_spec("FrByb")])
         );

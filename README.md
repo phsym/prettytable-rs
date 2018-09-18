@@ -39,7 +39,7 @@ Include the library as a dependency to your project by adding the following line
 prettytable-rs = "^0.7"
 ```
 
-The library requires at least `rust v1.20.0`.
+The library requires at least `rust v1.26.0`.
 
 ## Basic usage
 
@@ -143,7 +143,7 @@ Rows may have different numbers of cells. The table will automatically adapt to 
 
 ## Do it with style!
 
-Tables can have a styled output with background and foreground colors, bold and italic as configurable settings, thanks to the `term` crate.
+Tables can have a styled output with background and foreground colors, bold and italic as configurable settings, thanks to the `term` crate. Alignment in cells can also be set (Left, Right, Center), and a cell can span accross multiple columns.
 
 `term` style attributes are reexported
 
@@ -155,35 +155,37 @@ Tables can have a styled output with background and foreground colors, bold and 
 
   table.add_row(Row::new(vec![
       Cell::new("foobar")
-          .with_style(Attr::Bold),
-          .with_style(Attr::ForegroundColor(color::GREEN))
+          .with_style(Attr::Bold)
+          .with_style(Attr::ForegroundColor(color::GREEN)),
       Cell::new("bar")
-          .with_style(Attr::BackgroundColor(color::RED)),
-          .with_style(Attr::Italic(true)),
-      Cell::new("foo")]));
+          .with_style(Attr::BackgroundColor(color::RED))
+          .with_style(Attr::Italic(true))
+          .with_hspan(2),
+      Cell::new("foo")
+      ]));
   ```
 
 - through style strings:
   ```rust
   table.add_row(Row::new(vec![
       Cell::new("foobar").style_spec("bFg"),
-      Cell::new("bar").style_spec("Bri"),
+      Cell::new("bar").style_spec("BriH2"),
       Cell::new("foo")]));
   ```
 
 - using `row!` macro:
   ```rust
-  table.add_row(row![bFg->"foobar", Bri->"bar", "foo"]);
+  table.add_row(row![bFg->"foobar", BriH2->"bar", "foo"]);
   ```
 
 - using `table!` macro (this one creates a new table, unlike previous examples):
   ```rust
-  table!([bFg->"foobar", Bri->"bar", "foo"]);
+  table!([bFg->"foobar", BriH2->"bar", "foo"]);
   ```
 
 Here
 - **bFg** means **bold**, **F**oreground: **g**reen,
-- **Bri** means **B**ackground: **r**ed, **i**talic.
+- **BriH2** means **B**ackground: **r**ed, **i**talic, **H**orizontal span of **2**.
 
 Another example: **FrBybc** means **F**oreground: **r**ed, **B**ackground: **y**ellow, **b**old, **c**enter.
 
@@ -214,6 +216,7 @@ All cases of styling cells in macros:
 
 * **F** : **F**oreground (must be followed by a color specifier)
 * **B** : **B**ackground (must be followed by a color specifier)
+* **H** : **H**orizontal span (must be followed by a number)
 * **b** : **b**old
 * **i** : **i**talic
 * **u** : **u**nderline
@@ -375,6 +378,6 @@ Since `v0.6.3`, platform specific line endings are activated though the default 
 When this feature is deactivated (for instance with the `--no-default-features` flag in cargo), line endings will be rendered with `\n`
 on any platform.
 
-This customization capability will probably move to Formatting API in `v0.7`.
+This customization capability will probably move to Formatting API in a future release.
 
 Additional examples are provided in the documentation and in [examples](./examples/) directory.
