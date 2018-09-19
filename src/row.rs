@@ -31,6 +31,7 @@ impl Row {
     /// Count the number of column required in the table grid.
     /// It takes into account horizontal spanning of cells. For
     /// example, a cell with an hspan of 3 will add 3 column to the grid
+    #[deprecated(since="0.8.0", note="Will become private in future release. See [issue #87](https://github.com/phsym/prettytable-rs/issues/87)")]
     pub fn column_count(&self) -> usize {
         self.cells.iter().map(|c| c.get_hspan()).sum()
     }
@@ -47,6 +48,7 @@ impl Row {
     }
 
     /// Get the height of this row
+    #[deprecated(since="0.8.0", note="Will become private in future release. See [issue #87](https://github.com/phsym/prettytable-rs/issues/87)")]
     pub fn get_height(&self) -> usize {
         let mut height = 1; // Minimum height must be 1 to print empty rows
         for cell in &self.cells {
@@ -60,6 +62,7 @@ impl Row {
 
     /// Get the minimum width required by the cell in the column `column`.
     /// Return 0 if the cell does not exist in this row
+    #[deprecated(since="0.8.0", note="Will become private in future release. See [issue #87](https://github.com/phsym/prettytable-rs/issues/87)")]
     pub fn get_column_width(&self, column: usize, format: &TableFormat) -> usize {
         let mut i = 0;
         for c in &self.cells {
@@ -186,6 +189,7 @@ impl Row {
 
     /// Print the row to `out`, with `separator` as column separator, and `col_width`
     /// specifying the width of each columns
+    #[deprecated(since="0.8.0", note="Will become private in future release. See [issue #87](https://github.com/phsym/prettytable-rs/issues/87)")]
     pub fn print<T: Write + ?Sized>(&self,
                                     out: &mut T,
                                     format: &TableFormat,
@@ -196,6 +200,7 @@ impl Row {
 
     /// Print the row to terminal `out`, with `separator` as column separator, and `col_width`
     /// specifying the width of each columns. Apply style when needed
+    #[deprecated(since="0.8.0", note="Will become private in future release. See [issue #87](https://github.com/phsym/prettytable-rs/issues/87)")]
     pub fn print_term<T: Terminal + ?Sized>(&self,
                                             out: &mut T,
                                             format: &TableFormat,

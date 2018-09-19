@@ -68,7 +68,7 @@ impl LineSeparator {
     }
 
     /// Print a full line separator to `out`. `col_width` is a slice containing the width of each column
-    #[deprecated(since = "0.6.7", note = "function will be removed. See [issue #57](https://github.com/phsym/prettytable-rs/pull/57).")]
+    #[deprecated(since = "0.6.7", note = "function will become private. See [issue #57](https://github.com/phsym/prettytable-rs/pull/57) and [issue #87](https://github.com/phsym/prettytable-rs/issues/87).")]
     pub fn print<T: Write + ?Sized>(&self,
                                     out: &mut T,
                                     col_width: &[usize],
@@ -228,6 +228,7 @@ impl TableFormat {
     }
 
     /// Print a full line separator to `out`. `col_width` is a slice containing the width of each column
+    #[deprecated(since="0.8.0", note="Will become private in future release. See [issue #87](https://github.com/phsym/prettytable-rs/issues/87)")]
     pub fn print_line_separator<T: Write + ?Sized>(&self,
                                                    out: &mut T,
                                                    col_width: &[usize],
@@ -259,6 +260,7 @@ impl TableFormat {
     }
 
     /// Print a column separator or a table border
+    #[deprecated(since="0.8.0", note="Will become private in future release. See [issue #87](https://github.com/phsym/prettytable-rs/issues/87)")]
     pub fn print_column_separator<T: Write + ?Sized>(&self,
                                                      out: &mut T,
                                                      pos: ColumnPosition)

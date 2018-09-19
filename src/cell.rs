@@ -176,11 +176,13 @@ impl Cell {
     }
 
     /// Return the height of the cell
+    #[deprecated(since="0.8.0", note="Will become private in future release. See [issue #87](https://github.com/phsym/prettytable-rs/issues/87)")]
     pub fn get_height(&self) -> usize {
         self.content.len()
     }
 
     /// Return the width of the cell
+    #[deprecated(since="0.8.0", note="Will become private in future release. See [issue #87](https://github.com/phsym/prettytable-rs/issues/87)")]
     pub fn get_width(&self) -> usize {
         self.width
     }
@@ -204,6 +206,7 @@ impl Cell {
     /// `idx` is the line index to print. `col_width` is the column width used to
     /// fill the cells with blanks so it fits in the table.
     /// If `ìdx` is higher than this cell's height, it will print empty content
+    #[deprecated(since="0.8.0", note="Will become private in future release. See [issue #87](https://github.com/phsym/prettytable-rs/issues/87)")]
     pub fn print<T: Write + ?Sized>(
         &self,
         out: &mut T,
@@ -216,6 +219,7 @@ impl Cell {
     }
 
     /// Apply style then call `print` to print the cell into a terminal
+    #[deprecated(since="0.8.0", note="Will become private in future release. See [issue #87](https://github.com/phsym/prettytable-rs/issues/87)")]
     pub fn print_term<T: Terminal + ?Sized>(
         &self,
         out: &mut T,
