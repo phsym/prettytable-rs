@@ -1124,6 +1124,8 @@
 <span id="1124">1124</span>
 <span id="1125">1125</span>
 <span id="1126">1126</span>
+<span id="1127">1127</span>
+<span id="1128">1128</span>
 </pre><pre class="rust ">
 <span class="attribute">#![<span class="ident">warn</span>(<span class="ident">missing_docs</span>,
         <span class="ident">unused_extern_crates</span>,
@@ -1199,6 +1201,7 @@
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">TableSlice</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Compute and return the number of column</span>
+    <span class="attribute">#[<span class="ident">deprecated</span>(<span class="ident">since</span><span class="op">=</span><span class="string">&quot;0.8.0&quot;</span>, <span class="ident">note</span><span class="op">=</span><span class="string">&quot;Will become private in future release. See [issue #87](https://github.com/phsym/prettytable-rs/issues/87)&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_column_num</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">cnum</span> <span class="op">=</span> <span class="number">0</span>;
         <span class="kw">for</span> <span class="ident">r</span> <span class="kw">in</span> <span class="self">self</span>.<span class="ident">rows</span> {
@@ -1424,6 +1427,7 @@
     }
 
     <span class="doccomment">/// Compute and return the number of column</span>
+    <span class="attribute">#[<span class="ident">deprecated</span>(<span class="ident">since</span><span class="op">=</span><span class="string">&quot;0.8.0&quot;</span>, <span class="ident">note</span><span class="op">=</span><span class="string">&quot;Will become private in future release. See [issue #87](https://github.com/phsym/prettytable-rs/issues/87)&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_column_num</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
         <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">get_column_num</span>()
     }

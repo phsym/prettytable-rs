@@ -440,6 +440,10 @@
 <span id="440">440</span>
 <span id="441">441</span>
 <span id="442">442</span>
+<span id="443">443</span>
+<span id="444">444</span>
+<span id="445">445</span>
+<span id="446">446</span>
 </pre><pre class="rust ">
 <span class="doccomment">//! This module contains definition of table/row cells stuff</span>
 
@@ -619,11 +623,13 @@
     }
 
     <span class="doccomment">/// Return the height of the cell</span>
+    <span class="attribute">#[<span class="ident">deprecated</span>(<span class="ident">since</span><span class="op">=</span><span class="string">&quot;0.8.0&quot;</span>, <span class="ident">note</span><span class="op">=</span><span class="string">&quot;Will become private in future release. See [issue #87](https://github.com/phsym/prettytable-rs/issues/87)&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_height</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
         <span class="self">self</span>.<span class="ident">content</span>.<span class="ident">len</span>()
     }
 
     <span class="doccomment">/// Return the width of the cell</span>
+    <span class="attribute">#[<span class="ident">deprecated</span>(<span class="ident">since</span><span class="op">=</span><span class="string">&quot;0.8.0&quot;</span>, <span class="ident">note</span><span class="op">=</span><span class="string">&quot;Will become private in future release. See [issue #87](https://github.com/phsym/prettytable-rs/issues/87)&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_width</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
         <span class="self">self</span>.<span class="ident">width</span>
     }
@@ -647,6 +653,7 @@
     <span class="doccomment">/// `idx` is the line index to print. `col_width` is the column width used to</span>
     <span class="doccomment">/// fill the cells with blanks so it fits in the table.</span>
     <span class="doccomment">/// If `ìdx` is higher than this cell&#39;s height, it will print empty content</span>
+    <span class="attribute">#[<span class="ident">deprecated</span>(<span class="ident">since</span><span class="op">=</span><span class="string">&quot;0.8.0&quot;</span>, <span class="ident">note</span><span class="op">=</span><span class="string">&quot;Will become private in future release. See [issue #87](https://github.com/phsym/prettytable-rs/issues/87)&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">print</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Write</span> <span class="op">+</span> <span class="question-mark">?</span><span class="ident">Sized</span><span class="op">&gt;</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">out</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">T</span>,
@@ -659,6 +666,7 @@
     }
 
     <span class="doccomment">/// Apply style then call `print` to print the cell into a terminal</span>
+    <span class="attribute">#[<span class="ident">deprecated</span>(<span class="ident">since</span><span class="op">=</span><span class="string">&quot;0.8.0&quot;</span>, <span class="ident">note</span><span class="op">=</span><span class="string">&quot;Will become private in future release. See [issue #87](https://github.com/phsym/prettytable-rs/issues/87)&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">print_term</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Terminal</span> <span class="op">+</span> <span class="question-mark">?</span><span class="ident">Sized</span><span class="op">&gt;</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">out</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">T</span>,
