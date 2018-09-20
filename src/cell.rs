@@ -87,6 +87,7 @@ impl Cell {
     ///
     /// * **F** : **F**oreground (must be followed by a color specifier)
     /// * **B** : **B**ackground (must be followed by a color specifier)
+    /// * **H** : **H**orizontal span (must be followed by a number)
     /// * **b** : **b**old
     /// * **i** : **i**talic
     /// * **u** : **u**nderline
