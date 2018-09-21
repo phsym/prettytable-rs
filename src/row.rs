@@ -8,7 +8,7 @@ use std::ops::{Index, IndexMut};
 use super::Terminal;
 
 use super::utils::NEWLINE;
-use super::cell::Cell;
+use super::Cell;
 use super::format::{TableFormat, ColumnPosition};
 
 /// Represent a table row made of cells
@@ -312,16 +312,16 @@ macro_rules! row {
     (($($out:tt)*); $style:ident -> $value:expr) => (vec![$($out)* cell!($style -> $value)]);
     (($($out:tt)*); $style:ident -> $value:expr, $($n: tt)*) => (row!(($($out)* cell!($style -> $value),); $($n)*));
 
-    ($($content:expr), *) => ($crate::row::Row::new(vec![$(cell!($content)), *])); // This line may not be needed starting from Rust 1.20
-    ($style:ident => $($content:expr), *) => ($crate::row::Row::new(vec![$(cell!($style -> $content)), *]));
-    ($style:ident => $($content:expr,) *) => ($crate::row::Row::new(vec![$(cell!($style -> $content)), *]));
-    ($($content:tt)*) => ($crate::row::Row::new(row!((); $($content)*)));
+    ($($content:expr), *) => ($crate::Row::new(vec![$(cell!($content)), *])); // This line may not be needed starting from Rust 1.20
+    ($style:ident => $($content:expr), *) => ($crate::Row::new(vec![$(cell!($style -> $content)), *]));
+    ($style:ident => $($content:expr,) *) => ($crate::Row::new(vec![$(cell!($style -> $content)), *]));
+    ($($content:tt)*) => ($crate::Row::new(row!((); $($content)*)));
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
-    use cell::Cell;
+    use Cell;
 
     #[test]
     fn row_default_empty() {

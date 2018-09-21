@@ -47,9 +47,7 @@ Start using it like this:
 
 ```rust
 #[macro_use] extern crate prettytable;
-use prettytable::Table;
-use prettytable::row::Row;
-use prettytable::cell::Cell;
+use prettytable::{Table, Row, Cell};
 
 fn main() {
     // Create the table
