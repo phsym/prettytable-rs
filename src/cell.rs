@@ -288,7 +288,7 @@ impl Default for Cell {
 /// or
 ///
 /// ```text
-/// cell!(spec:value);
+/// cell!(spec->value);
 /// ```
 /// Value must implement the `std::string::ToString` trait
 ///

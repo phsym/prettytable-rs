@@ -6,8 +6,6 @@
 extern crate unicode_width;
 extern crate term;
 extern crate atty;
-#[cfg(feature = "csv")]
-extern crate csv;
 #[macro_use]
 extern crate lazy_static;
 extern crate encode_unicode;
@@ -30,6 +28,13 @@ pub mod cell;
 pub mod row;
 pub mod format;
 mod utils;
+
+/// Reexported types for CSV Read/Write
+#[cfg(feature = "csv")]
+pub mod csv {
+    extern crate csv;
+    pub use self::csv::{Reader, Writer, Result, ReaderBuilder};
+}
 
 use row::Row;
 use cell::Cell;
