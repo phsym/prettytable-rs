@@ -1,14 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="API documentation for the Rust `prettytable` crate."><meta name="keywords" content="rust, rustlang, rust-lang, prettytable"><title>prettytable - Rust</title><link rel="stylesheet" type="text/css" href="../normalize.css"><link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../dark.css"><link rel="stylesheet" type="text/css" href="../light.css" id="themeStyle"><script src="../storage.js"></script></head><body class="rustdoc mod"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><p class='location'>Crate prettytable</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#modules">Modules</a></li><li><a href="#macros">Macros</a></li><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#traits">Traits</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'prettytable', ty: 'mod', relpath: '../'};</script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><input class="search-input" name="search" autocomplete="off" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><a id="settings-menu" href="../settings.html"><img src="../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class='fqn'><span class='in-band'>Crate <a class="mod" href=''>prettytable</a></span><span class='out-of-band'><span id='render-detail'><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class='inner'>&#x2212;</span>]</a></span><a class='srclink' href='../src/prettytable/lib.rs.html#1-1133' title='goto source code'>[src]</a></span></h1><div class='docblock'><p>A formatted and aligned table printer written in rust</p>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="API documentation for the Rust `prettytable` crate."><meta name="keywords" content="rust, rustlang, rust-lang, prettytable"><title>prettytable - Rust</title><link rel="stylesheet" type="text/css" href="../normalize.css"><link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../dark.css"><link rel="stylesheet" type="text/css" href="../light.css" id="themeStyle"><script src="../storage.js"></script></head><body class="rustdoc mod"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><p class='location'>Crate prettytable</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#modules">Modules</a></li><li><a href="#macros">Macros</a></li><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#traits">Traits</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'prettytable', ty: 'mod', relpath: '../'};</script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><input class="search-input" name="search" autocomplete="off" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><a id="settings-menu" href="../settings.html"><img src="../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class='fqn'><span class='in-band'>Crate <a class="mod" href=''>prettytable</a></span><span class='out-of-band'><span id='render-detail'><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class='inner'>&#x2212;</span>]</a></span><a class='srclink' href='../src/prettytable/lib.rs.html#1-980' title='goto source code'>[src]</a></span></h1><div class='docblock'><p>A formatted and aligned table printer written in rust</p>
 </div><h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
 <table>
-                       <tr class=' module-item'>
-                           <td><a class="mod" href="cell/index.html"
-                                  title='mod prettytable::cell'>cell</a></td>
-                           <td class='docblock-short'>
-                                <p>This module contains definition of table/row cells stuff</p>
-
-                           </td>
-                       </tr>
                        <tr class=' module-item'>
                            <td><a class="mod" href="color/index.html"
                                   title='mod prettytable::color'>color</a></td>
@@ -21,7 +13,7 @@
                            <td><a class="mod" href="csv/index.html"
                                   title='mod prettytable::csv'>csv</a></td>
                            <td class='docblock-short'>
-                                <p>Reexported types for CSV Read/Write</p>
+                                <p>CSV impl and reexported types</p>
 
                            </td>
                        </tr>
@@ -30,14 +22,6 @@
                                   title='mod prettytable::format'>format</a></td>
                            <td class='docblock-short'>
                                 <p>Define table formatting utilities</p>
-
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="mod" href="row/index.html"
-                                  title='mod prettytable::row'>row</a></td>
-                           <td class='docblock-short'>
-                                <p>This module contains definition of table rows stuff</p>
 
                            </td>
                        </tr></table><h2 id='macros' class='section-header'><a href="#macros">Macros</a></h2>
@@ -76,6 +60,14 @@
                        </tr></table><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
                        <tr class=' module-item'>
+                           <td><a class="struct" href="struct.Cell.html"
+                                  title='struct prettytable::Cell'>Cell</a></td>
+                           <td class='docblock-short'>
+                                <p>Represent a table cell containing a string.</p>
+
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
                            <td><a class="struct" href="struct.ColumnIter.html"
                                   title='struct prettytable::ColumnIter'>ColumnIter</a></td>
                            <td class='docblock-short'>
@@ -88,6 +80,14 @@
                                   title='struct prettytable::ColumnIterMut'>ColumnIterMut</a></td>
                            <td class='docblock-short'>
                                 <p>Iterator over mutable cells in a column</p>
+
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.Row.html"
+                                  title='struct prettytable::Row'>Row</a></td>
+                           <td class='docblock-short'>
+                                <p>Represent a table row made of cells</p>
 
                            </td>
                        </tr>

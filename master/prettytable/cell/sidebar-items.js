@@ -1,1 +1,0 @@
-initSidebarItems({"struct":[["Cell","Represent a table cell containing a string."]]});
