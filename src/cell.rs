@@ -308,10 +308,10 @@ impl Default for Cell {
 #[macro_export]
 macro_rules! cell {
     () => {
-        $crate::cell::Cell::default()
+        $crate::Cell::default()
     };
     ($value:expr) => {
-        $crate::cell::Cell::new(&$value.to_string())
+        $crate::Cell::new(&$value.to_string())
     };
     ($style:ident -> $value:expr) => {
         cell!($value).style_spec(stringify!($style))
@@ -320,7 +320,7 @@ macro_rules! cell {
 
 #[cfg(test)]
 mod tests {
-    use cell::Cell;
+    use Cell;
     use format::Alignment;
     use term::{color, Attr};
     use utils::StringWriter;
