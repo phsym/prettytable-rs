@@ -67,26 +67,16 @@ impl LineSeparator {
         }
     }
 
-    /// Print a full line separator to `out`. `col_width` is a slice containing the width of each column
-    #[deprecated(since = "0.6.7", note = "function will become private. See [issue #57](https://github.com/phsym/prettytable-rs/pull/57) and [issue #87](https://github.com/phsym/prettytable-rs/issues/87).")]
-    pub fn print<T: Write + ?Sized>(&self,
-                                    out: &mut T,
-                                    col_width: &[usize],
-                                    colsep: bool,
-                                    lborder: bool,
-                                    rborder: bool)
-                                    -> Result<(), Error> {
-        self._print(out, col_width, (1, 1), colsep, lborder, rborder)
-    }
-
-    fn _print<T: Write + ?Sized>(&self,
+    /// Print a full line separator to `out`. `col_width` is a slice containing the width of each column.
+    /// Returns the number of printed lines
+    fn print<T: Write + ?Sized>(&self,
                                  out: &mut T,
                                  col_width: &[usize],
                                  padding: (usize, usize),
                                  colsep: bool,
                                  lborder: bool,
                                  rborder: bool)
-                                 -> Result<(), Error> {
+                                 -> Result<usize, Error> {
         if lborder {
             out.write_all(Utf8Char::from(self.ljunc).as_bytes())?;
         }
@@ -102,7 +92,8 @@ impl LineSeparator {
         if rborder {
             out.write_all(Utf8Char::from(self.rjunc).as_bytes())?;
         }
-        out.write_all(NEWLINE)
+        out.write_all(NEWLINE)?;
+        Ok(1)
     }
 }
 
@@ -227,25 +218,26 @@ impl TableFormat {
         self.indent
     }
 
-    /// Print a full line separator to `out`. `col_width` is a slice containing the width of each column
+    /// Print a full line separator to `out`. `col_width` is a slice containing the width of each column.
+    /// Returns the number of printed lines
     #[deprecated(since="0.8.0", note="Will become private in future release. See [issue #87](https://github.com/phsym/prettytable-rs/issues/87)")]
     pub fn print_line_separator<T: Write + ?Sized>(&self,
                                                    out: &mut T,
                                                    col_width: &[usize],
                                                    pos: LinePosition)
-                                                   -> Result<(), Error> {
+                                                   -> Result<usize, Error> {
         match *self.get_sep_for_line(pos) {
             Some(ref l) => {
                 //TODO: Wrap this into dedicated function one day
                 out.write_all(&vec![b' '; self.get_indent()])?;
-                l._print(out,
+                l.print(out,
                          col_width,
                          self.get_padding(),
                          self.csep.is_some(),
                          self.lborder.is_some(),
                          self.rborder.is_some())
             }
-            None => Ok(()),
+            None => Ok(0),
         }
     }
 
