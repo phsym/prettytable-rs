@@ -1,5 +1,7 @@
 #[macro_use]
 extern crate prettytable;
+extern crate term;
+
 use prettytable::Table;
 
 use std::io;
@@ -16,24 +18,28 @@ fn main() {
         [EMPTY, EMPTY, EMPTY],
         [EMPTY, EMPTY, EMPTY]
     ];
-    table.printstd();
+    let mut height = table.printstd();
     let stdin = io::stdin();
     let mut stdout = io::stdout();
     let mut current = CROSS;
+    let mut terminal = term::stdout().unwrap();
     loop {
         let mut line = String::new();
         print!("{} plays > ", current);
+        height += 1;
         stdout.flush().unwrap();
         stdin.read_line(&mut line).expect("Cannot read input");
         let i = match usize::from_str(line.trim()) {
             Ok(i) => i,
             _ => {
                 println!("Bad input");
+                height += 1;
                 continue;
             }
         };
         if i < 1 || i > 9 {
             println!("Bad input, should be between 1 and 9");
+            height += 1;
             continue;
         }
         let x = (i - 1) % 3;
@@ -42,11 +48,16 @@ fn main() {
             let row = table.get_mut_row(y).unwrap();
             if row.get_cell(x).unwrap().to_string() != EMPTY {
                 println!("There's already someone there");
+                height += 1;
                 continue;
             }
             row.set_cell(cell!(current), x).unwrap();
         }
-        table.printstd();
+        for _ in 0..height {
+            terminal.cursor_up().unwrap();
+            terminal.delete_line().unwrap();
+        }
+        height = table.printstd();
         if check(&table) {
             return;
         }
