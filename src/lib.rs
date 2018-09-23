@@ -578,7 +578,7 @@ mod tests {
     use Row;
     use Cell;
     use format;
-    use format::consts::{FORMAT_DEFAULT, FORMAT_NO_LINESEP, FORMAT_NO_COLSEP, FORMAT_CLEAN};
+    use format::consts::{FORMAT_DEFAULT, FORMAT_NO_LINESEP, FORMAT_NO_COLSEP, FORMAT_CLEAN, FORMAT_BOX_CHARS};
 
     #[test]
     fn table() {
@@ -862,26 +862,7 @@ mod tests {
     #[test]
     fn test_unicode_separators() {
         let mut table = Table::new();
-        table.set_format(format::FormatBuilder::new()
-                             .column_separator('│')
-                             .borders('│')
-                             .separators(&[format::LinePosition::Top],
-                                         format::LineSeparator::new('─',
-                                                                    '┬',
-                                                                    '┌',
-                                                                    '┐'))
-                             .separators(&[format::LinePosition::Intern],
-                                         format::LineSeparator::new('─',
-                                                                    '┼',
-                                                                    '├',
-                                                                    '┤'))
-                             .separators(&[format::LinePosition::Bottom],
-                                         format::LineSeparator::new('─',
-                                                                    '┴',
-                                                                    '└',
-                                                                    '┘'))
-                             .padding(1, 1)
-                             .build());
+        table.set_format(*FORMAT_BOX_CHARS);
         table.add_row(Row::new(vec![Cell::new("1"), Cell::new("1"), Cell::new("1")]));
         table.add_row(Row::new(vec![Cell::new("2"), Cell::new("2"), Cell::new("2")]));
         table.set_titles(Row::new(vec![Cell::new("t1"), Cell::new("t2"), Cell::new("t3")]));
