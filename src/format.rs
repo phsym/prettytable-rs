@@ -522,5 +522,38 @@ pub mod consts {
                                                                     .separator(LinePosition::Title, *MINUS_PLUS_SEP)
                                                                     .column_separator('|')
                                                                     .build();
+
+        /// A table with borders and delimiters made with box characters
+        /// 
+        /// # Example
+        /// ```text
+        /// ┌────┬────┬────┐
+        /// │ t1 │ t2 │ t3 │
+        /// ├────┼────┼────┤
+        /// │ 1  │ 1  │ 1  │
+        /// ├────┼────┼────┤
+        /// │ 2  │ 2  │ 2  │
+        /// └────┴────┴────┘
+        /// ```
+        pub static ref FORMAT_BOX_CHARS: TableFormat = FormatBuilder::new()
+                             .column_separator('│')
+                             .borders('│')
+                             .separators(&[LinePosition::Top],
+                                         LineSeparator::new('─',
+                                                            '┬',
+                                                            '┌',
+                                                            '┐'))
+                             .separators(&[LinePosition::Intern],
+                                         LineSeparator::new('─',
+                                                            '┼',
+                                                            '├',
+                                                            '┤'))
+                             .separators(&[LinePosition::Bottom],
+                                         LineSeparator::new('─',
+                                                            '┴',
+                                                            '└',
+                                                            '┘'))
+                             .padding(1, 1)
+                             .build();
     }
 }
