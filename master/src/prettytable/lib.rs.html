@@ -959,6 +959,36 @@
 <span id="959">959</span>
 <span id="960">960</span>
 <span id="961">961</span>
+<span id="962">962</span>
+<span id="963">963</span>
+<span id="964">964</span>
+<span id="965">965</span>
+<span id="966">966</span>
+<span id="967">967</span>
+<span id="968">968</span>
+<span id="969">969</span>
+<span id="970">970</span>
+<span id="971">971</span>
+<span id="972">972</span>
+<span id="973">973</span>
+<span id="974">974</span>
+<span id="975">975</span>
+<span id="976">976</span>
+<span id="977">977</span>
+<span id="978">978</span>
+<span id="979">979</span>
+<span id="980">980</span>
+<span id="981">981</span>
+<span id="982">982</span>
+<span id="983">983</span>
+<span id="984">984</span>
+<span id="985">985</span>
+<span id="986">986</span>
+<span id="987">987</span>
+<span id="988">988</span>
+<span id="989">989</span>
+<span id="990">990</span>
+<span id="991">991</span>
 </pre><pre class="rust ">
 <span class="attribute">#![<span class="ident">warn</span>(<span class="ident">missing_docs</span>,
         <span class="ident">unused_extern_crates</span>,
@@ -1097,39 +1127,43 @@
     }
 
     <span class="doccomment">/// Internal only</span>
-    <span class="kw">fn</span> <span class="ident">__print</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Write</span> <span class="op">+</span> <span class="question-mark">?</span><span class="ident">Sized</span>, <span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">out</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">T</span>, <span class="ident">f</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span>
-        <span class="kw">where</span> <span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">Row</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">T</span>, <span class="kw-2">&amp;</span><span class="ident">TableFormat</span>, <span class="kw-2">&amp;</span>[<span class="ident">usize</span>]) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">__print</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Write</span> <span class="op">+</span> <span class="question-mark">?</span><span class="ident">Sized</span>, <span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">out</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">T</span>, <span class="ident">f</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">Error</span><span class="op">&gt;</span>
+        <span class="kw">where</span> <span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">Row</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">T</span>, <span class="kw-2">&amp;</span><span class="ident">TableFormat</span>, <span class="kw-2">&amp;</span>[<span class="ident">usize</span>]) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">Error</span><span class="op">&gt;</span>
     {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">height</span> <span class="op">=</span> <span class="number">0</span>;
         <span class="comment">// Compute columns width</span>
         <span class="kw">let</span> <span class="ident">col_width</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">get_all_column_width</span>();
-        <span class="self">self</span>.<span class="ident">format</span>
+        <span class="ident">height</span> <span class="op">+=</span> <span class="self">self</span>.<span class="ident">format</span>
             .<span class="ident">print_line_separator</span>(<span class="ident">out</span>, <span class="kw-2">&amp;</span><span class="ident">col_width</span>, <span class="ident">LinePosition</span>::<span class="ident">Top</span>)<span class="question-mark">?</span>;
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">t</span>) <span class="op">=</span> <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">titles</span> {
-            <span class="ident">f</span>(<span class="ident">t</span>, <span class="ident">out</span>, <span class="self">self</span>.<span class="ident">format</span>, <span class="kw-2">&amp;</span><span class="ident">col_width</span>)<span class="question-mark">?</span>;
-            <span class="self">self</span>.<span class="ident">format</span>
+            <span class="ident">height</span> <span class="op">+=</span> <span class="ident">f</span>(<span class="ident">t</span>, <span class="ident">out</span>, <span class="self">self</span>.<span class="ident">format</span>, <span class="kw-2">&amp;</span><span class="ident">col_width</span>)<span class="question-mark">?</span>;
+            <span class="ident">height</span> <span class="op">+=</span> <span class="self">self</span>.<span class="ident">format</span>
                 .<span class="ident">print_line_separator</span>(<span class="ident">out</span>, <span class="kw-2">&amp;</span><span class="ident">col_width</span>, <span class="ident">LinePosition</span>::<span class="ident">Title</span>)<span class="question-mark">?</span>;
         }
         <span class="comment">// Print rows</span>
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">iter</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">rows</span>.<span class="ident">into_iter</span>().<span class="ident">peekable</span>();
         <span class="kw">while</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">r</span>) <span class="op">=</span> <span class="ident">iter</span>.<span class="ident">next</span>() {
-            <span class="ident">f</span>(<span class="ident">r</span>, <span class="ident">out</span>, <span class="self">self</span>.<span class="ident">format</span>, <span class="kw-2">&amp;</span><span class="ident">col_width</span>)<span class="question-mark">?</span>;
+            <span class="ident">height</span> <span class="op">+=</span> <span class="ident">f</span>(<span class="ident">r</span>, <span class="ident">out</span>, <span class="self">self</span>.<span class="ident">format</span>, <span class="kw-2">&amp;</span><span class="ident">col_width</span>)<span class="question-mark">?</span>;
             <span class="kw">if</span> <span class="ident">iter</span>.<span class="ident">peek</span>().<span class="ident">is_some</span>() {
-                <span class="self">self</span>.<span class="ident">format</span>
+                <span class="ident">height</span> <span class="op">+=</span> <span class="self">self</span>.<span class="ident">format</span>
                     .<span class="ident">print_line_separator</span>(<span class="ident">out</span>, <span class="kw-2">&amp;</span><span class="ident">col_width</span>, <span class="ident">LinePosition</span>::<span class="ident">Intern</span>)<span class="question-mark">?</span>;
             }
         }
-        <span class="self">self</span>.<span class="ident">format</span>
+        <span class="ident">height</span> <span class="op">+=</span> <span class="self">self</span>.<span class="ident">format</span>
             .<span class="ident">print_line_separator</span>(<span class="ident">out</span>, <span class="kw-2">&amp;</span><span class="ident">col_width</span>, <span class="ident">LinePosition</span>::<span class="ident">Bottom</span>)<span class="question-mark">?</span>;
-        <span class="ident">out</span>.<span class="ident">flush</span>()
+        <span class="ident">out</span>.<span class="ident">flush</span>()<span class="question-mark">?</span>;
+        <span class="prelude-val">Ok</span>(<span class="ident">height</span>)
     }
 
-    <span class="doccomment">/// Print the table to `out`</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">print</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Write</span> <span class="op">+</span> <span class="question-mark">?</span><span class="ident">Sized</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">out</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Print the table to `out` and returns the number of</span>
+    <span class="doccomment">/// line printed, or an error</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">print</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Write</span> <span class="op">+</span> <span class="question-mark">?</span><span class="ident">Sized</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">out</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">__print</span>(<span class="ident">out</span>, <span class="ident">Row</span>::<span class="ident">print</span>)
     }
 
-    <span class="doccomment">/// Print the table to terminal `out`, applying styles when needed</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">print_term</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Terminal</span> <span class="op">+</span> <span class="question-mark">?</span><span class="ident">Sized</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">out</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Print the table to terminal `out`, applying styles when needed and returns the number of</span>
+    <span class="doccomment">/// line printed, or an error</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">print_term</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Terminal</span> <span class="op">+</span> <span class="question-mark">?</span><span class="ident">Sized</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">out</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">__print</span>(<span class="ident">out</span>, <span class="ident">Row</span>::<span class="ident">print_term</span>)
     }
 
@@ -1139,15 +1173,18 @@
     <span class="doccomment">/// output is redirected to a file, or piped to another program, the output is considered</span>
     <span class="doccomment">/// as not beeing tty, and ANSI escape characters won&#39;t be displayed unless `force colorize`</span>
     <span class="doccomment">/// is set to `true`.</span>
+    <span class="doccomment">/// # Returns</span>
+    <span class="doccomment">/// The number of lines printed</span>
     <span class="doccomment">/// # Panic</span>
     <span class="doccomment">/// Panic if writing to standard output fails</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">print_tty</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">force_colorize</span>: <span class="ident">bool</span>) {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">print_tty</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">force_colorize</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
         <span class="kw">let</span> <span class="ident">r</span> <span class="op">=</span> <span class="kw">match</span> (<span class="ident">stdout</span>(), <span class="ident">atty</span>::<span class="ident">is</span>(<span class="ident">atty</span>::<span class="ident">Stream</span>::<span class="ident">Stdout</span>) <span class="op">||</span> <span class="ident">force_colorize</span>) {
             (<span class="prelude-val">Some</span>(<span class="kw-2">mut</span> <span class="ident">o</span>), <span class="bool-val">true</span>) <span class="op">=&gt;</span> <span class="self">self</span>.<span class="ident">print_term</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw-2">*</span><span class="ident">o</span>),
             <span class="kw">_</span> <span class="op">=&gt;</span> <span class="self">self</span>.<span class="ident">print</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">io</span>::<span class="ident">stdout</span>()),
         };
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=</span> <span class="ident">r</span> {
-            <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Cannot print table to standard output : {}&quot;</span>, <span class="ident">e</span>);
+        <span class="kw">match</span> <span class="ident">r</span> {
+            <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Cannot print table to standard output : {}&quot;</span>, <span class="ident">e</span>),
+            <span class="prelude-val">Ok</span>(<span class="ident">height</span>) <span class="op">=&gt;</span> <span class="ident">height</span>
         }
     }
 
@@ -1156,10 +1193,12 @@
     <span class="doccomment">/// to another program, no color will be displayed.</span>
     <span class="doccomment">/// To force colors rendering, use `print_tty()` method.</span>
     <span class="doccomment">/// Calling `printstd()` is equivalent to calling `print_tty(false)`</span>
+    <span class="doccomment">/// # Returns</span>
+    <span class="doccomment">/// The number of lines printed</span>
     <span class="doccomment">/// # Panic</span>
     <span class="doccomment">/// Panic if writing to standard output fails</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">printstd</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) {
-        <span class="self">self</span>.<span class="ident">print_tty</span>(<span class="bool-val">false</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">printstd</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+        <span class="self">self</span>.<span class="ident">print_tty</span>(<span class="bool-val">false</span>)
     }
 }
 
@@ -1290,13 +1329,15 @@
         <span class="self">self</span>.<span class="ident">rows</span>.<span class="ident">iter_mut</span>()
     }
 
-    <span class="doccomment">/// Print the table to `out`</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">print</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Write</span> <span class="op">+</span> <span class="question-mark">?</span><span class="ident">Sized</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">out</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Print the table to `out` and returns the number</span>
+    <span class="doccomment">/// of lines printed, or an error</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">print</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Write</span> <span class="op">+</span> <span class="question-mark">?</span><span class="ident">Sized</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">out</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">print</span>(<span class="ident">out</span>)
     }
 
-    <span class="doccomment">/// Print the table to terminal `out`, applying styles when needed</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">print_term</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Terminal</span> <span class="op">+</span> <span class="question-mark">?</span><span class="ident">Sized</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">out</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Print the table to terminal `out`, applying styles when needed and returns the number</span>
+    <span class="doccomment">/// of lines printed, or an error</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">print_term</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Terminal</span> <span class="op">+</span> <span class="question-mark">?</span><span class="ident">Sized</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">out</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">print_term</span>(<span class="ident">out</span>)
     }
 
@@ -1306,10 +1347,12 @@
     <span class="doccomment">/// output is redirected to a file, or piped to another program, the output is considered</span>
     <span class="doccomment">/// as not beeing tty, and ANSI escape characters won&#39;t be displayed unless `force colorize`</span>
     <span class="doccomment">/// is set to `true`.</span>
+    <span class="doccomment">/// # Returns</span>
+    <span class="doccomment">/// The number of lines printed</span>
     <span class="doccomment">/// # Panic</span>
     <span class="doccomment">/// Panic if writing to standard output fails</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">print_tty</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">force_colorize</span>: <span class="ident">bool</span>) {
-        <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">print_tty</span>(<span class="ident">force_colorize</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">print_tty</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">force_colorize</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+        <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">print_tty</span>(<span class="ident">force_colorize</span>)
     }
 
     <span class="doccomment">/// Print the table to standard output. Colors won&#39;t be displayed unless</span>
@@ -1317,10 +1360,12 @@
     <span class="doccomment">/// to another program, no color will be displayed.</span>
     <span class="doccomment">/// To force colors rendering, use `print_tty()` method.</span>
     <span class="doccomment">/// Calling `printstd()` is equivalent to calling `print_tty(false)`</span>
+    <span class="doccomment">/// # Returns</span>
+    <span class="doccomment">/// The number of lines printed</span>
     <span class="doccomment">/// # Panic</span>
     <span class="doccomment">/// Panic if writing to standard output fails</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">printstd</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) {
-        <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">printstd</span>();
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">printstd</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+        <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">printstd</span>()
     }
 
 }
@@ -1541,6 +1586,7 @@
     <span class="kw">use</span> <span class="ident">Cell</span>;
     <span class="kw">use</span> <span class="ident">format</span>;
     <span class="kw">use</span> <span class="ident">format</span>::<span class="ident">consts</span>::{<span class="ident">FORMAT_DEFAULT</span>, <span class="ident">FORMAT_NO_LINESEP</span>, <span class="ident">FORMAT_NO_COLSEP</span>, <span class="ident">FORMAT_CLEAN</span>, <span class="ident">FORMAT_BOX_CHARS</span>};
+    <span class="kw">use</span> <span class="ident">utils</span>::<span class="ident">StringWriter</span>;
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">table</span>() {
@@ -1558,6 +1604,7 @@
 +-----+----+-----+
 &quot;</span>;
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">table</span>.<span class="ident">to_string</span>().<span class="ident">replace</span>(<span class="string">&quot;\r\n&quot;</span>, <span class="string">&quot;\n&quot;</span>), <span class="ident">out</span>);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="number">7</span>, <span class="ident">table</span>.<span class="ident">print</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">StringWriter</span>::<span class="ident">new</span>()).<span class="ident">unwrap</span>());
         <span class="ident">table</span>.<span class="ident">unset_titles</span>();
         <span class="kw">let</span> <span class="ident">out</span> <span class="op">=</span> <span class="string">&quot;\
 +-----+----+-----+
@@ -1567,6 +1614,7 @@
 +-----+----+-----+
 &quot;</span>;
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">table</span>.<span class="ident">to_string</span>().<span class="ident">replace</span>(<span class="string">&quot;\r\n&quot;</span>, <span class="string">&quot;\n&quot;</span>), <span class="ident">out</span>);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="number">5</span>, <span class="ident">table</span>.<span class="ident">print</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">StringWriter</span>::<span class="ident">new</span>()).<span class="ident">unwrap</span>());
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
@@ -1590,6 +1638,7 @@
 +-----+--------+-----+
 &quot;</span>;
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">table</span>.<span class="ident">to_string</span>().<span class="ident">replace</span>(<span class="string">&quot;\r\n&quot;</span>, <span class="string">&quot;\n&quot;</span>), <span class="ident">out</span>);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="number">7</span>, <span class="ident">table</span>.<span class="ident">print</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">StringWriter</span>::<span class="ident">new</span>()).<span class="ident">unwrap</span>());
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
@@ -1694,6 +1743,7 @@
 +-----+--------+-----+
 &quot;</span>;
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">table</span>.<span class="ident">to_string</span>().<span class="ident">replace</span>(<span class="string">&quot;\r\n&quot;</span>, <span class="string">&quot;\n&quot;</span>), <span class="ident">out</span>);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="number">5</span>, <span class="ident">table</span>.<span class="ident">print</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">StringWriter</span>::<span class="ident">new</span>()).<span class="ident">unwrap</span>());
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
@@ -1721,6 +1771,7 @@
         <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;____&quot;</span>);
         <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">table</span>.<span class="ident">to_string</span>().<span class="ident">replace</span>(<span class="string">&quot;\r\n&quot;</span>, <span class="string">&quot;\n&quot;</span>));
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">table</span>.<span class="ident">to_string</span>().<span class="ident">replace</span>(<span class="string">&quot;\r\n&quot;</span>, <span class="string">&quot;\n&quot;</span>), <span class="ident">out</span>);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="number">7</span>, <span class="ident">table</span>.<span class="ident">print</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">StringWriter</span>::<span class="ident">new</span>()).<span class="ident">unwrap</span>());
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
@@ -1744,6 +1795,7 @@
         <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;____&quot;</span>);
         <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">table</span>.<span class="ident">to_string</span>().<span class="ident">replace</span>(<span class="string">&quot;\r\n&quot;</span>, <span class="string">&quot;\n&quot;</span>));
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">out</span>, <span class="ident">table</span>.<span class="ident">to_string</span>().<span class="ident">replace</span>(<span class="string">&quot;\r\n&quot;</span>, <span class="string">&quot;\n&quot;</span>));
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="number">3</span>, <span class="ident">table</span>.<span class="ident">print</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">StringWriter</span>::<span class="ident">new</span>()).<span class="ident">unwrap</span>());
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
@@ -1773,6 +1825,7 @@
         <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;____&quot;</span>);
         <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">table</span>.<span class="ident">to_string</span>().<span class="ident">replace</span>(<span class="string">&quot;\r\n&quot;</span>, <span class="string">&quot;\n&quot;</span>));
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">out</span>, <span class="ident">table</span>.<span class="ident">to_string</span>().<span class="ident">replace</span>(<span class="string">&quot;\r\n&quot;</span>, <span class="string">&quot;\n&quot;</span>));
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="number">7</span>, <span class="ident">table</span>.<span class="ident">print</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">StringWriter</span>::<span class="ident">new</span>()).<span class="ident">unwrap</span>());
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
@@ -1791,6 +1844,7 @@
         +-----+----+-----+
 &quot;</span>;
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">table</span>.<span class="ident">to_string</span>().<span class="ident">replace</span>(<span class="string">&quot;\r\n&quot;</span>, <span class="string">&quot;\n&quot;</span>), <span class="ident">out</span>);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="number">7</span>, <span class="ident">table</span>.<span class="ident">print</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">StringWriter</span>::<span class="ident">new</span>()).<span class="ident">unwrap</span>());
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
@@ -1818,7 +1872,9 @@
         <span class="kw">let</span> <span class="ident">slice</span> <span class="op">=</span> <span class="ident">slice</span>.<span class="ident">slice</span>(<span class="number">1</span>..);
         <span class="kw">let</span> <span class="ident">slice</span> <span class="op">=</span> <span class="ident">slice</span>.<span class="ident">slice</span>(..<span class="number">3</span>);
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">out</span>, <span class="ident">slice</span>.<span class="ident">to_string</span>().<span class="ident">replace</span>(<span class="string">&quot;\r\n&quot;</span>, <span class="string">&quot;\n&quot;</span>));
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="number">9</span>, <span class="ident">slice</span>.<span class="ident">print</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">StringWriter</span>::<span class="ident">new</span>()).<span class="ident">unwrap</span>());
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">out</span>, <span class="ident">table</span>.<span class="ident">slice</span>(<span class="number">1</span>..<span class="number">4</span>).<span class="ident">to_string</span>().<span class="ident">replace</span>(<span class="string">&quot;\r\n&quot;</span>, <span class="string">&quot;\n&quot;</span>));
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="number">9</span>, <span class="ident">table</span>.<span class="ident">slice</span>(<span class="number">1</span>..<span class="number">4</span>).<span class="ident">print</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">StringWriter</span>::<span class="ident">new</span>()).<span class="ident">unwrap</span>());
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
@@ -1841,6 +1897,7 @@
         <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;____&quot;</span>);
         <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">table</span>.<span class="ident">to_string</span>().<span class="ident">replace</span>(<span class="string">&quot;\r\n&quot;</span>, <span class="string">&quot;\n&quot;</span>));
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">out</span>, <span class="ident">table</span>.<span class="ident">to_string</span>().<span class="ident">replace</span>(<span class="string">&quot;\r\n&quot;</span>, <span class="string">&quot;\n&quot;</span>));
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="number">7</span>, <span class="ident">table</span>.<span class="ident">print</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">StringWriter</span>::<span class="ident">new</span>()).<span class="ident">unwrap</span>());
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
@@ -1875,6 +1932,7 @@
         <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;____&quot;</span>);
         <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">table</span>.<span class="ident">to_string</span>().<span class="ident">replace</span>(<span class="string">&quot;\r\n&quot;</span>,<span class="string">&quot;\n&quot;</span>));
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">out</span>, <span class="ident">table</span>.<span class="ident">to_string</span>().<span class="ident">replace</span>(<span class="string">&quot;\r\n&quot;</span>,<span class="string">&quot;\n&quot;</span>));
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="number">5</span>, <span class="ident">table</span>.<span class="ident">print</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">StringWriter</span>::<span class="ident">new</span>()).<span class="ident">unwrap</span>());
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
@@ -1898,6 +1956,7 @@
         <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;____&quot;</span>);
         <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">table</span>.<span class="ident">to_string</span>().<span class="ident">replace</span>(<span class="string">&quot;\r\n&quot;</span>,<span class="string">&quot;\n&quot;</span>));
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">out</span>, <span class="ident">table</span>.<span class="ident">to_string</span>().<span class="ident">replace</span>(<span class="string">&quot;\r\n&quot;</span>,<span class="string">&quot;\n&quot;</span>));
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="number">6</span>, <span class="ident">table</span>.<span class="ident">print</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">StringWriter</span>::<span class="ident">new</span>()).<span class="ident">unwrap</span>());
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
@@ -1919,6 +1978,7 @@
         <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;____&quot;</span>);
         <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">table</span>.<span class="ident">to_string</span>().<span class="ident">replace</span>(<span class="string">&quot;\r\n&quot;</span>,<span class="string">&quot;\n&quot;</span>));
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">out</span>, <span class="ident">table</span>.<span class="ident">to_string</span>().<span class="ident">replace</span>(<span class="string">&quot;\r\n&quot;</span>,<span class="string">&quot;\n&quot;</span>));
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="number">7</span>, <span class="ident">table</span>.<span class="ident">print</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">StringWriter</span>::<span class="ident">new</span>()).<span class="ident">unwrap</span>());
     }
 }
 </pre>
