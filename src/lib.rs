@@ -135,39 +135,43 @@ impl<'a> TableSlice<'a> {
     }
 
     /// Internal only
-    fn __print<T: Write + ?Sized, F>(&self, out: &mut T, f: F) -> Result<(), Error>
-        where F: Fn(&Row, &mut T, &TableFormat, &[usize]) -> Result<(), Error>
+    fn __print<T: Write + ?Sized, F>(&self, out: &mut T, f: F) -> Result<usize, Error>
+        where F: Fn(&Row, &mut T, &TableFormat, &[usize]) -> Result<usize, Error>
     {
+        let mut height = 0;
         // Compute columns width
         let col_width = self.get_all_column_width();
-        self.format
+        height += self.format
             .print_line_separator(out, &col_width, LinePosition::Top)?;
         if let Some(ref t) = *self.titles {
-            f(t, out, self.format, &col_width)?;
-            self.format
+            height += f(t, out, self.format, &col_width)?;
+            height += self.format
                 .print_line_separator(out, &col_width, LinePosition::Title)?;
         }
         // Print rows
         let mut iter = self.rows.into_iter().peekable();
         while let Some(r) = iter.next() {
-            f(r, out, self.format, &col_width)?;
+            height += f(r, out, self.format, &col_width)?;
             if iter.peek().is_some() {
-                self.format
+                height += self.format
                     .print_line_separator(out, &col_width, LinePosition::Intern)?;
             }
         }
-        self.format
+        height += self.format
             .print_line_separator(out, &col_width, LinePosition::Bottom)?;
-        out.flush()
+        out.flush()?;
+        Ok(height)
     }
 
-    /// Print the table to `out`
-    pub fn print<T: Write + ?Sized>(&self, out: &mut T) -> Result<(), Error> {
+    /// Print the table to `out` and returns the number of
+    /// line printed, or an error
+    pub fn print<T: Write + ?Sized>(&self, out: &mut T) -> Result<usize, Error> {
         self.__print(out, Row::print)
     }
 
-    /// Print the table to terminal `out`, applying styles when needed
-    pub fn print_term<T: Terminal + ?Sized>(&self, out: &mut T) -> Result<(), Error> {
+    /// Print the table to terminal `out`, applying styles when needed and returns the number of
+    /// line printed, or an error
+    pub fn print_term<T: Terminal + ?Sized>(&self, out: &mut T) -> Result<usize, Error> {
         self.__print(out, Row::print_term)
     }
 
@@ -177,15 +181,18 @@ impl<'a> TableSlice<'a> {
     /// output is redirected to a file, or piped to another program, the output is considered
     /// as not beeing tty, and ANSI escape characters won't be displayed unless `force colorize`
     /// is set to `true`.
+    /// # Returns
+    /// The number of lines printed
     /// # Panic
     /// Panic if writing to standard output fails
-    pub fn print_tty(&self, force_colorize: bool) {
+    pub fn print_tty(&self, force_colorize: bool) -> usize {
         let r = match (stdout(), atty::is(atty::Stream::Stdout) || force_colorize) {
             (Some(mut o), true) => self.print_term(&mut *o),
             _ => self.print(&mut io::stdout()),
         };
-        if let Err(e) = r {
-            panic!("Cannot print table to standard output : {}", e);
+        match r {
+            Err(e) => panic!("Cannot print table to standard output : {}", e),
+            Ok(height) => height
         }
     }
 
@@ -194,10 +201,12 @@ impl<'a> TableSlice<'a> {
     /// to another program, no color will be displayed.
     /// To force colors rendering, use `print_tty()` method.
     /// Calling `printstd()` is equivalent to calling `print_tty(false)`
+    /// # Returns
+    /// The number of lines printed
     /// # Panic
     /// Panic if writing to standard output fails
-    pub fn printstd(&self) {
-        self.print_tty(false);
+    pub fn printstd(&self) -> usize {
+        self.print_tty(false)
     }
 }
 
@@ -328,13 +337,15 @@ impl Table {
         self.rows.iter_mut()
     }
 
-    /// Print the table to `out`
-    pub fn print<T: Write + ?Sized>(&self, out: &mut T) -> Result<(), Error> {
+    /// Print the table to `out` and returns the number
+    /// of lines printed, or an error
+    pub fn print<T: Write + ?Sized>(&self, out: &mut T) -> Result<usize, Error> {
         self.as_ref().print(out)
     }
 
-    /// Print the table to terminal `out`, applying styles when needed
-    pub fn print_term<T: Terminal + ?Sized>(&self, out: &mut T) -> Result<(), Error> {
+    /// Print the table to terminal `out`, applying styles when needed and returns the number
+    /// of lines printed, or an error
+    pub fn print_term<T: Terminal + ?Sized>(&self, out: &mut T) -> Result<usize, Error> {
         self.as_ref().print_term(out)
     }
 
@@ -344,10 +355,12 @@ impl Table {
     /// output is redirected to a file, or piped to another program, the output is considered
     /// as not beeing tty, and ANSI escape characters won't be displayed unless `force colorize`
     /// is set to `true`.
+    /// # Returns
+    /// The number of lines printed
     /// # Panic
     /// Panic if writing to standard output fails
-    pub fn print_tty(&self, force_colorize: bool) {
-        self.as_ref().print_tty(force_colorize);
+    pub fn print_tty(&self, force_colorize: bool) -> usize {
+        self.as_ref().print_tty(force_colorize)
     }
 
     /// Print the table to standard output. Colors won't be displayed unless
@@ -355,10 +368,12 @@ impl Table {
     /// to another program, no color will be displayed.
     /// To force colors rendering, use `print_tty()` method.
     /// Calling `printstd()` is equivalent to calling `print_tty(false)`
+    /// # Returns
+    /// The number of lines printed
     /// # Panic
     /// Panic if writing to standard output fails
-    pub fn printstd(&self) {
-        self.as_ref().printstd();
+    pub fn printstd(&self) -> usize {
+        self.as_ref().printstd()
     }
 
 }
@@ -579,6 +594,7 @@ mod tests {
     use Cell;
     use format;
     use format::consts::{FORMAT_DEFAULT, FORMAT_NO_LINESEP, FORMAT_NO_COLSEP, FORMAT_CLEAN, FORMAT_BOX_CHARS};
+    use utils::StringWriter;
 
     #[test]
     fn table() {
@@ -596,6 +612,7 @@ mod tests {
 +-----+----+-----+
 ";
         assert_eq!(table.to_string().replace("\r\n", "\n"), out);
+        assert_eq!(7, table.print(&mut StringWriter::new()).unwrap());
         table.unset_titles();
         let out = "\
 +-----+----+-----+
@@ -605,6 +622,7 @@ mod tests {
 +-----+----+-----+
 ";
         assert_eq!(table.to_string().replace("\r\n", "\n"), out);
+        assert_eq!(5, table.print(&mut StringWriter::new()).unwrap());
     }
 
     #[test]
@@ -628,6 +646,7 @@ mod tests {
 +-----+--------+-----+
 ";
         assert_eq!(table.to_string().replace("\r\n", "\n"), out);
+        assert_eq!(7, table.print(&mut StringWriter::new()).unwrap());
     }
 
     #[test]
@@ -732,6 +751,7 @@ mod tests {
 +-----+--------+-----+
 ";
         assert_eq!(table.to_string().replace("\r\n", "\n"), out);
+        assert_eq!(5, table.print(&mut StringWriter::new()).unwrap());
     }
 
     #[test]
@@ -759,6 +779,7 @@ mod tests {
         println!("____");
         println!("{}", table.to_string().replace("\r\n", "\n"));
         assert_eq!(table.to_string().replace("\r\n", "\n"), out);
+        assert_eq!(7, table.print(&mut StringWriter::new()).unwrap());
     }
 
     #[test]
@@ -782,6 +803,7 @@ mod tests {
         println!("____");
         println!("{}", table.to_string().replace("\r\n", "\n"));
         assert_eq!(out, table.to_string().replace("\r\n", "\n"));
+        assert_eq!(3, table.print(&mut StringWriter::new()).unwrap());
     }
 
     #[test]
@@ -811,6 +833,7 @@ mod tests {
         println!("____");
         println!("{}", table.to_string().replace("\r\n", "\n"));
         assert_eq!(out, table.to_string().replace("\r\n", "\n"));
+        assert_eq!(7, table.print(&mut StringWriter::new()).unwrap());
     }
 
     #[test]
@@ -829,6 +852,7 @@ mod tests {
         +-----+----+-----+
 ";
         assert_eq!(table.to_string().replace("\r\n", "\n"), out);
+        assert_eq!(7, table.print(&mut StringWriter::new()).unwrap());
     }
 
     #[test]
@@ -856,7 +880,9 @@ mod tests {
         let slice = slice.slice(1..);
         let slice = slice.slice(..3);
         assert_eq!(out, slice.to_string().replace("\r\n", "\n"));
+        assert_eq!(9, slice.print(&mut StringWriter::new()).unwrap());
         assert_eq!(out, table.slice(1..4).to_string().replace("\r\n", "\n"));
+        assert_eq!(9, table.slice(1..4).print(&mut StringWriter::new()).unwrap());
     }
 
     #[test]
@@ -879,6 +905,7 @@ mod tests {
         println!("____");
         println!("{}", table.to_string().replace("\r\n", "\n"));
         assert_eq!(out, table.to_string().replace("\r\n", "\n"));
+        assert_eq!(7, table.print(&mut StringWriter::new()).unwrap());
     }
 
     #[test]
@@ -913,6 +940,7 @@ mod tests {
         println!("____");
         println!("{}", table.to_string().replace("\r\n","\n"));
         assert_eq!(out, table.to_string().replace("\r\n","\n"));
+        assert_eq!(5, table.print(&mut StringWriter::new()).unwrap());
     }
 
     #[test]
@@ -936,6 +964,7 @@ mod tests {
         println!("____");
         println!("{}", table.to_string().replace("\r\n","\n"));
         assert_eq!(out, table.to_string().replace("\r\n","\n"));
+        assert_eq!(6, table.print(&mut StringWriter::new()).unwrap());
     }
 
     #[test]
@@ -957,5 +986,6 @@ mod tests {
         println!("____");
         println!("{}", table.to_string().replace("\r\n","\n"));
         assert_eq!(out, table.to_string().replace("\r\n","\n"));
+        assert_eq!(7, table.print(&mut StringWriter::new()).unwrap());
     }
 }

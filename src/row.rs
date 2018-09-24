@@ -147,10 +147,11 @@ impl Row {
                                      format: &TableFormat,
                                      col_width: &[usize],
                                      f: F)
-                                     -> Result<(), Error>
+                                     -> Result<usize, Error>
         where F: Fn(&Cell, &mut T, usize, usize, bool) -> Result<(), Error>
     {
-        for i in 0..self.get_height() {
+        let height = self.get_height();
+        for i in 0..height {
             //TODO: Wrap this into dedicated function one day
             out.write_all(&vec![b' '; format.get_indent()])?;
             format.print_column_separator(out, ColumnPosition::Left)?;
@@ -184,28 +185,28 @@ impl Row {
             format.print_column_separator(out, ColumnPosition::Right)?;
             out.write_all(NEWLINE)?;
         }
-        Ok(())
+        Ok(height)
     }
 
     /// Print the row to `out`, with `separator` as column separator, and `col_width`
-    /// specifying the width of each columns
+    /// specifying the width of each columns. Returns the number of printed lines
     #[deprecated(since="0.8.0", note="Will become private in future release. See [issue #87](https://github.com/phsym/prettytable-rs/issues/87)")]
     pub fn print<T: Write + ?Sized>(&self,
                                     out: &mut T,
                                     format: &TableFormat,
                                     col_width: &[usize])
-                                    -> Result<(), Error> {
+                                    -> Result<usize, Error> {
         self.__print(out, format, col_width, Cell::print)
     }
 
     /// Print the row to terminal `out`, with `separator` as column separator, and `col_width`
-    /// specifying the width of each columns. Apply style when needed
+    /// specifying the width of each columns. Apply style when needed. returns the number of printed lines
     #[deprecated(since="0.8.0", note="Will become private in future release. See [issue #87](https://github.com/phsym/prettytable-rs/issues/87)")]
     pub fn print_term<T: Terminal + ?Sized>(&self,
                                             out: &mut T,
                                             format: &TableFormat,
                                             col_width: &[usize])
-                                            -> Result<(), Error> {
+                                            -> Result<usize, Error> {
         self.__print(out, format, col_width, Cell::print_term)
     }
 }
