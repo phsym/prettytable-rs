@@ -594,6 +594,7 @@ mod tests {
     use Cell;
     use format;
     use format::consts::{FORMAT_DEFAULT, FORMAT_NO_LINESEP, FORMAT_NO_COLSEP, FORMAT_CLEAN};
+    use utils::StringWriter;
 
     #[test]
     fn table() {
@@ -611,6 +612,7 @@ mod tests {
 +-----+----+-----+
 ";
         assert_eq!(table.to_string().replace("\r\n", "\n"), out);
+        assert_eq!(7, table.print(&mut StringWriter::new()).unwrap());
         table.unset_titles();
         let out = "\
 +-----+----+-----+
@@ -620,6 +622,7 @@ mod tests {
 +-----+----+-----+
 ";
         assert_eq!(table.to_string().replace("\r\n", "\n"), out);
+        assert_eq!(5, table.print(&mut StringWriter::new()).unwrap());
     }
 
     #[test]
@@ -643,6 +646,7 @@ mod tests {
 +-----+--------+-----+
 ";
         assert_eq!(table.to_string().replace("\r\n", "\n"), out);
+        assert_eq!(7, table.print(&mut StringWriter::new()).unwrap());
     }
 
     #[test]
@@ -747,6 +751,7 @@ mod tests {
 +-----+--------+-----+
 ";
         assert_eq!(table.to_string().replace("\r\n", "\n"), out);
+        assert_eq!(5, table.print(&mut StringWriter::new()).unwrap());
     }
 
     #[test]
@@ -774,6 +779,7 @@ mod tests {
         println!("____");
         println!("{}", table.to_string().replace("\r\n", "\n"));
         assert_eq!(table.to_string().replace("\r\n", "\n"), out);
+        assert_eq!(7, table.print(&mut StringWriter::new()).unwrap());
     }
 
     #[test]
@@ -797,6 +803,7 @@ mod tests {
         println!("____");
         println!("{}", table.to_string().replace("\r\n", "\n"));
         assert_eq!(out, table.to_string().replace("\r\n", "\n"));
+        assert_eq!(3, table.print(&mut StringWriter::new()).unwrap());
     }
 
     #[test]
@@ -826,6 +833,7 @@ mod tests {
         println!("____");
         println!("{}", table.to_string().replace("\r\n", "\n"));
         assert_eq!(out, table.to_string().replace("\r\n", "\n"));
+        assert_eq!(7, table.print(&mut StringWriter::new()).unwrap());
     }
 
     #[test]
@@ -844,6 +852,7 @@ mod tests {
         +-----+----+-----+
 ";
         assert_eq!(table.to_string().replace("\r\n", "\n"), out);
+        assert_eq!(7, table.print(&mut StringWriter::new()).unwrap());
     }
 
     #[test]
@@ -871,7 +880,9 @@ mod tests {
         let slice = slice.slice(1..);
         let slice = slice.slice(..3);
         assert_eq!(out, slice.to_string().replace("\r\n", "\n"));
+        assert_eq!(9, slice.print(&mut StringWriter::new()).unwrap());
         assert_eq!(out, table.slice(1..4).to_string().replace("\r\n", "\n"));
+        assert_eq!(9, table.slice(1..4).print(&mut StringWriter::new()).unwrap());
     }
 
     #[test]
@@ -913,6 +924,7 @@ mod tests {
         println!("____");
         println!("{}", table.to_string().replace("\r\n", "\n"));
         assert_eq!(out, table.to_string().replace("\r\n", "\n"));
+        assert_eq!(7, table.print(&mut StringWriter::new()).unwrap());
     }
 
     #[test]
@@ -947,6 +959,7 @@ mod tests {
         println!("____");
         println!("{}", table.to_string().replace("\r\n","\n"));
         assert_eq!(out, table.to_string().replace("\r\n","\n"));
+        assert_eq!(5, table.print(&mut StringWriter::new()).unwrap());
     }
 
     #[test]
@@ -970,6 +983,7 @@ mod tests {
         println!("____");
         println!("{}", table.to_string().replace("\r\n","\n"));
         assert_eq!(out, table.to_string().replace("\r\n","\n"));
+        assert_eq!(6, table.print(&mut StringWriter::new()).unwrap());
     }
 
     #[test]
@@ -991,5 +1005,6 @@ mod tests {
         println!("____");
         println!("{}", table.to_string().replace("\r\n","\n"));
         assert_eq!(out, table.to_string().replace("\r\n","\n"));
+        assert_eq!(7, table.print(&mut StringWriter::new()).unwrap());
     }
 }
