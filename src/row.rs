@@ -84,10 +84,6 @@ impl Row {
             i += c.get_hspan();
         }
         0
-        // self.cells
-        //     .get(column)
-        //     .map(|cell| cell.get_width())
-        //     .unwrap_or(0)
     }
 
     /// Get the cell at index `idx`
