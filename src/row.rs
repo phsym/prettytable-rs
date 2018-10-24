@@ -66,7 +66,7 @@ impl Row {
     pub fn get_column_width(&self, column: usize, format: &TableFormat) -> usize {
         let mut i = 0;
         for c in &self.cells {
-            if i + c.get_hspan()-1 >= column {
+            if i + c.get_hspan() > column {
                 if c.get_hspan() == 1 {
                     return c.get_width();
                 }
