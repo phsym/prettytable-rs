@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/encode_unicode-0.3.2/src/utf8_char.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>utf8_char.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><input class="search-input" name="search" autocomplete="off" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/encode_unicode-0.3.5/src/utf8_char.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>utf8_char.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><input class="search-input" name="search" autocomplete="off" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -376,8 +376,276 @@
 <span id="376">376</span>
 <span id="377">377</span>
 <span id="378">378</span>
+<span id="379">379</span>
+<span id="380">380</span>
+<span id="381">381</span>
+<span id="382">382</span>
+<span id="383">383</span>
+<span id="384">384</span>
+<span id="385">385</span>
+<span id="386">386</span>
+<span id="387">387</span>
+<span id="388">388</span>
+<span id="389">389</span>
+<span id="390">390</span>
+<span id="391">391</span>
+<span id="392">392</span>
+<span id="393">393</span>
+<span id="394">394</span>
+<span id="395">395</span>
+<span id="396">396</span>
+<span id="397">397</span>
+<span id="398">398</span>
+<span id="399">399</span>
+<span id="400">400</span>
+<span id="401">401</span>
+<span id="402">402</span>
+<span id="403">403</span>
+<span id="404">404</span>
+<span id="405">405</span>
+<span id="406">406</span>
+<span id="407">407</span>
+<span id="408">408</span>
+<span id="409">409</span>
+<span id="410">410</span>
+<span id="411">411</span>
+<span id="412">412</span>
+<span id="413">413</span>
+<span id="414">414</span>
+<span id="415">415</span>
+<span id="416">416</span>
+<span id="417">417</span>
+<span id="418">418</span>
+<span id="419">419</span>
+<span id="420">420</span>
+<span id="421">421</span>
+<span id="422">422</span>
+<span id="423">423</span>
+<span id="424">424</span>
+<span id="425">425</span>
+<span id="426">426</span>
+<span id="427">427</span>
+<span id="428">428</span>
+<span id="429">429</span>
+<span id="430">430</span>
+<span id="431">431</span>
+<span id="432">432</span>
+<span id="433">433</span>
+<span id="434">434</span>
+<span id="435">435</span>
+<span id="436">436</span>
+<span id="437">437</span>
+<span id="438">438</span>
+<span id="439">439</span>
+<span id="440">440</span>
+<span id="441">441</span>
+<span id="442">442</span>
+<span id="443">443</span>
+<span id="444">444</span>
+<span id="445">445</span>
+<span id="446">446</span>
+<span id="447">447</span>
+<span id="448">448</span>
+<span id="449">449</span>
+<span id="450">450</span>
+<span id="451">451</span>
+<span id="452">452</span>
+<span id="453">453</span>
+<span id="454">454</span>
+<span id="455">455</span>
+<span id="456">456</span>
+<span id="457">457</span>
+<span id="458">458</span>
+<span id="459">459</span>
+<span id="460">460</span>
+<span id="461">461</span>
+<span id="462">462</span>
+<span id="463">463</span>
+<span id="464">464</span>
+<span id="465">465</span>
+<span id="466">466</span>
+<span id="467">467</span>
+<span id="468">468</span>
+<span id="469">469</span>
+<span id="470">470</span>
+<span id="471">471</span>
+<span id="472">472</span>
+<span id="473">473</span>
+<span id="474">474</span>
+<span id="475">475</span>
+<span id="476">476</span>
+<span id="477">477</span>
+<span id="478">478</span>
+<span id="479">479</span>
+<span id="480">480</span>
+<span id="481">481</span>
+<span id="482">482</span>
+<span id="483">483</span>
+<span id="484">484</span>
+<span id="485">485</span>
+<span id="486">486</span>
+<span id="487">487</span>
+<span id="488">488</span>
+<span id="489">489</span>
+<span id="490">490</span>
+<span id="491">491</span>
+<span id="492">492</span>
+<span id="493">493</span>
+<span id="494">494</span>
+<span id="495">495</span>
+<span id="496">496</span>
+<span id="497">497</span>
+<span id="498">498</span>
+<span id="499">499</span>
+<span id="500">500</span>
+<span id="501">501</span>
+<span id="502">502</span>
+<span id="503">503</span>
+<span id="504">504</span>
+<span id="505">505</span>
+<span id="506">506</span>
+<span id="507">507</span>
+<span id="508">508</span>
+<span id="509">509</span>
+<span id="510">510</span>
+<span id="511">511</span>
+<span id="512">512</span>
+<span id="513">513</span>
+<span id="514">514</span>
+<span id="515">515</span>
+<span id="516">516</span>
+<span id="517">517</span>
+<span id="518">518</span>
+<span id="519">519</span>
+<span id="520">520</span>
+<span id="521">521</span>
+<span id="522">522</span>
+<span id="523">523</span>
+<span id="524">524</span>
+<span id="525">525</span>
+<span id="526">526</span>
+<span id="527">527</span>
+<span id="528">528</span>
+<span id="529">529</span>
+<span id="530">530</span>
+<span id="531">531</span>
+<span id="532">532</span>
+<span id="533">533</span>
+<span id="534">534</span>
+<span id="535">535</span>
+<span id="536">536</span>
+<span id="537">537</span>
+<span id="538">538</span>
+<span id="539">539</span>
+<span id="540">540</span>
+<span id="541">541</span>
+<span id="542">542</span>
+<span id="543">543</span>
+<span id="544">544</span>
+<span id="545">545</span>
+<span id="546">546</span>
+<span id="547">547</span>
+<span id="548">548</span>
+<span id="549">549</span>
+<span id="550">550</span>
+<span id="551">551</span>
+<span id="552">552</span>
+<span id="553">553</span>
+<span id="554">554</span>
+<span id="555">555</span>
+<span id="556">556</span>
+<span id="557">557</span>
+<span id="558">558</span>
+<span id="559">559</span>
+<span id="560">560</span>
+<span id="561">561</span>
+<span id="562">562</span>
+<span id="563">563</span>
+<span id="564">564</span>
+<span id="565">565</span>
+<span id="566">566</span>
+<span id="567">567</span>
+<span id="568">568</span>
+<span id="569">569</span>
+<span id="570">570</span>
+<span id="571">571</span>
+<span id="572">572</span>
+<span id="573">573</span>
+<span id="574">574</span>
+<span id="575">575</span>
+<span id="576">576</span>
+<span id="577">577</span>
+<span id="578">578</span>
+<span id="579">579</span>
+<span id="580">580</span>
+<span id="581">581</span>
+<span id="582">582</span>
+<span id="583">583</span>
+<span id="584">584</span>
+<span id="585">585</span>
+<span id="586">586</span>
+<span id="587">587</span>
+<span id="588">588</span>
+<span id="589">589</span>
+<span id="590">590</span>
+<span id="591">591</span>
+<span id="592">592</span>
+<span id="593">593</span>
+<span id="594">594</span>
+<span id="595">595</span>
+<span id="596">596</span>
+<span id="597">597</span>
+<span id="598">598</span>
+<span id="599">599</span>
+<span id="600">600</span>
+<span id="601">601</span>
+<span id="602">602</span>
+<span id="603">603</span>
+<span id="604">604</span>
+<span id="605">605</span>
+<span id="606">606</span>
+<span id="607">607</span>
+<span id="608">608</span>
+<span id="609">609</span>
+<span id="610">610</span>
+<span id="611">611</span>
+<span id="612">612</span>
+<span id="613">613</span>
+<span id="614">614</span>
+<span id="615">615</span>
+<span id="616">616</span>
+<span id="617">617</span>
+<span id="618">618</span>
+<span id="619">619</span>
+<span id="620">620</span>
+<span id="621">621</span>
+<span id="622">622</span>
+<span id="623">623</span>
+<span id="624">624</span>
+<span id="625">625</span>
+<span id="626">626</span>
+<span id="627">627</span>
+<span id="628">628</span>
+<span id="629">629</span>
+<span id="630">630</span>
+<span id="631">631</span>
+<span id="632">632</span>
+<span id="633">633</span>
+<span id="634">634</span>
+<span id="635">635</span>
+<span id="636">636</span>
+<span id="637">637</span>
+<span id="638">638</span>
+<span id="639">639</span>
+<span id="640">640</span>
+<span id="641">641</span>
+<span id="642">642</span>
+<span id="643">643</span>
+<span id="644">644</span>
+<span id="645">645</span>
+<span id="646">646</span>
 </pre><pre class="rust ">
-<span class="comment">/* Copyright 2016 Torbjørn Birch Moltu
+<span class="comment">/* Copyright 2016 The encode_unicode Developers
  *
  * Licensed under the Apache License, Version 2.0, &lt;LICENSE-APACHE or
  * http://apache.org/licenses/LICENSE-2.0&gt; or the MIT license &lt;LICENSE-MIT or
@@ -385,14 +653,13 @@
  * copied, modified, or distributed except according to those terms.
  */</span>
 
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">errors</span>::<span class="ident">FromStrError</span>;
-<span class="kw">use</span> <span class="ident">error</span>::{<span class="ident">InvalidUtf8Slice</span>,<span class="ident">InvalidUtf8Array</span>};
-<span class="kw">use</span> <span class="ident">Utf8Iterator</span>;
-<span class="kw">use</span> <span class="ident">CharExt</span>;
-<span class="kw">use</span> <span class="ident">U8UtfExt</span>;
-<span class="kw">use</span> <span class="ident">Utf16Char</span>;
+<span class="kw">use</span> <span class="ident">errors</span>::{<span class="ident">FromStrError</span>, <span class="ident">EmptyStrError</span>, <span class="ident">NonAsciiError</span>, <span class="ident">InvalidUtf8Slice</span>, <span class="ident">InvalidUtf8Array</span>};
+<span class="kw">use</span> <span class="ident">utf8_iterators</span>::<span class="ident">Utf8Iterator</span>;
+<span class="kw">use</span> <span class="ident">traits</span>::{<span class="ident">CharExt</span>, <span class="ident">U8UtfExt</span>};
+<span class="kw">use</span> <span class="ident">utf16_char</span>::<span class="ident">Utf16Char</span>;
 <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">core</span>;
 <span class="kw">use</span> <span class="self">self</span>::<span class="ident">core</span>::{<span class="ident">hash</span>, <span class="ident">fmt</span>, <span class="ident">str</span>, <span class="ident">ptr</span>};
+<span class="kw">use</span> <span class="self">self</span>::<span class="ident">core</span>::<span class="ident">cmp</span>::<span class="ident">Ordering</span>;
 <span class="kw">use</span> <span class="self">self</span>::<span class="ident">core</span>::<span class="ident">borrow</span>::<span class="ident">Borrow</span>;
 <span class="kw">use</span> <span class="self">self</span>::<span class="ident">core</span>::<span class="ident">ops</span>::<span class="ident">Deref</span>;
 <span class="kw">use</span> <span class="self">self</span>::<span class="ident">core</span>::<span class="ident">mem</span>::<span class="ident">transmute</span>;
@@ -431,7 +698,22 @@
 <span class="comment">/////////////////////</span>
 <span class="kw">impl</span> <span class="ident">str</span>::<span class="ident">FromStr</span> <span class="kw">for</span> <span class="ident">Utf8Char</span> {
     <span class="kw">type</span> <span class="prelude-val">Err</span> <span class="op">=</span> <span class="ident">FromStrError</span>;
-    <span class="doccomment">/// The string must contain exactly one codepoint</span>
+    <span class="doccomment">/// Create an `Utf8Char` from a string slice.</span>
+    <span class="doccomment">/// The string must contain exactly one codepoint.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Examples</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// use encode_unicode::error::FromStrError::*;</span>
+    <span class="doccomment">/// use encode_unicode::Utf8Char;</span>
+    <span class="doccomment">/// use std::str::FromStr;</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// assert_eq!(Utf8Char::from_str(&quot;a&quot;), Ok(Utf8Char::from(&#39;a&#39;)));</span>
+    <span class="doccomment">/// assert_eq!(Utf8Char::from_str(&quot;🂠&quot;), Ok(Utf8Char::from(&#39;🂠&#39;)));</span>
+    <span class="doccomment">/// assert_eq!(Utf8Char::from_str(&quot;&quot;), Err(Empty));</span>
+    <span class="doccomment">/// assert_eq!(Utf8Char::from_str(&quot;ab&quot;), Err(MultipleCodepoints));</span>
+    <span class="doccomment">/// assert_eq!(Utf8Char::from_str(&quot;é&quot;), Err(MultipleCodepoints));// &#39;e&#39;+u301 combining mark</span>
+    <span class="doccomment">/// ```</span>
     <span class="kw">fn</span> <span class="ident">from_str</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">FromStrError</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="ident">s</span>.<span class="ident">is_empty</span>() {
             <span class="prelude-val">Err</span>(<span class="ident">FromStrError</span>::<span class="ident">Empty</span>)
@@ -491,36 +773,65 @@
         <span class="ident">Utf8Iterator</span>::<span class="ident">from</span>(<span class="self">self</span>)
     }
 }
+
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span><span class="op">=</span><span class="string">&quot;std&quot;</span>)]</span>
 <span class="kw">impl</span> <span class="ident">Extend</span><span class="op">&lt;</span><span class="ident">Utf8Char</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">extend</span><span class="op">&lt;</span><span class="ident">I</span>:<span class="ident">IntoIterator</span><span class="op">&lt;</span><span class="ident">Item</span><span class="op">=</span><span class="ident">Utf8Char</span><span class="op">&gt;&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">iter</span>: <span class="ident">I</span>) {
+    <span class="kw">fn</span> <span class="ident">extend</span><span class="op">&lt;</span><span class="ident">I</span>:<span class="ident">IntoIterator</span><span class="op">&lt;</span><span class="ident">Item</span><span class="op">=</span><span class="ident">Utf8Char</span><span class="op">&gt;&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,  <span class="ident">iter</span>: <span class="ident">I</span>) {
         <span class="kw">let</span> <span class="ident">iter</span> <span class="op">=</span> <span class="ident">iter</span>.<span class="ident">into_iter</span>();
         <span class="self">self</span>.<span class="ident">reserve</span>(<span class="ident">iter</span>.<span class="ident">size_hint</span>().<span class="number">0</span>);
         <span class="kw">for</span> <span class="ident">u8c</span> <span class="kw">in</span> <span class="ident">iter</span> {
-            <span class="self">self</span>.<span class="ident">extend_from_slice</span>(<span class="ident">u8c</span>.<span class="ident">as_bytes</span>());
+            <span class="comment">// twice as fast as self.extend_from_slice(u8c.as_bytes());</span>
+            <span class="self">self</span>.<span class="ident">push</span>(<span class="ident">u8c</span>.<span class="ident">bytes</span>[<span class="number">0</span>]);
+            <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="ident">extra</span> <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="ident">u8c</span>.<span class="ident">bytes</span>[<span class="number">1</span>..] {
+                <span class="kw">if</span> <span class="ident">extra</span> <span class="op">!=</span> <span class="number">0</span> {
+                    <span class="self">self</span>.<span class="ident">push</span>(<span class="ident">extra</span>);
+                }
+            }
         }
     }
 }
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span><span class="op">=</span><span class="string">&quot;std&quot;</span>)]</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Extend</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Utf8Char</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">extend</span><span class="op">&lt;</span><span class="ident">I</span>:<span class="ident">IntoIterator</span><span class="op">&lt;</span><span class="ident">Item</span><span class="op">=</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Utf8Char</span><span class="op">&gt;&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,  <span class="ident">iter</span>: <span class="ident">I</span>) {
+        <span class="self">self</span>.<span class="ident">extend</span>(<span class="ident">iter</span>.<span class="ident">into_iter</span>().<span class="ident">cloned</span>())
+    }
+}
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span><span class="op">=</span><span class="string">&quot;std&quot;</span>)]</span>
 <span class="kw">impl</span> <span class="ident">Extend</span><span class="op">&lt;</span><span class="ident">Utf8Char</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">String</span> {
-    <span class="kw">fn</span> <span class="ident">extend</span><span class="op">&lt;</span><span class="ident">I</span>:<span class="ident">IntoIterator</span><span class="op">&lt;</span><span class="ident">Item</span><span class="op">=</span><span class="ident">Utf8Char</span><span class="op">&gt;&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">iter</span>: <span class="ident">I</span>) {
+    <span class="kw">fn</span> <span class="ident">extend</span><span class="op">&lt;</span><span class="ident">I</span>:<span class="ident">IntoIterator</span><span class="op">&lt;</span><span class="ident">Item</span><span class="op">=</span><span class="ident">Utf8Char</span><span class="op">&gt;&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,  <span class="ident">iter</span>: <span class="ident">I</span>) {
         <span class="kw">unsafe</span> { <span class="self">self</span>.<span class="ident">as_mut_vec</span>().<span class="ident">extend</span>(<span class="ident">iter</span>) }
+    }
+}
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span><span class="op">=</span><span class="string">&quot;std&quot;</span>)]</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Extend</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Utf8Char</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">String</span> {
+    <span class="kw">fn</span> <span class="ident">extend</span><span class="op">&lt;</span><span class="ident">I</span>:<span class="ident">IntoIterator</span><span class="op">&lt;</span><span class="ident">Item</span><span class="op">=</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Utf8Char</span><span class="op">&gt;&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,  <span class="ident">iter</span>: <span class="ident">I</span>) {
+        <span class="self">self</span>.<span class="ident">extend</span>(<span class="ident">iter</span>.<span class="ident">into_iter</span>().<span class="ident">cloned</span>())
+    }
+}
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span><span class="op">=</span><span class="string">&quot;std&quot;</span>)]</span>
+<span class="kw">impl</span> <span class="ident">FromIterator</span><span class="op">&lt;</span><span class="ident">Utf8Char</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">String</span> {
+    <span class="kw">fn</span> <span class="ident">from_iter</span><span class="op">&lt;</span><span class="ident">I</span>:<span class="ident">IntoIterator</span><span class="op">&lt;</span><span class="ident">Item</span><span class="op">=</span><span class="ident">Utf8Char</span><span class="op">&gt;&gt;</span>(<span class="ident">iter</span>: <span class="ident">I</span>) <span class="op">-&gt;</span> <span class="ident">String</span> {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">string</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">new</span>();
+        <span class="ident">string</span>.<span class="ident">extend</span>(<span class="ident">iter</span>);
+        <span class="kw">return</span> <span class="ident">string</span>;
+    }
+}
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span><span class="op">=</span><span class="string">&quot;std&quot;</span>)]</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">FromIterator</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Utf8Char</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">String</span> {
+    <span class="kw">fn</span> <span class="ident">from_iter</span><span class="op">&lt;</span><span class="ident">I</span>:<span class="ident">IntoIterator</span><span class="op">&lt;</span><span class="ident">Item</span><span class="op">=</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Utf8Char</span><span class="op">&gt;&gt;</span>(<span class="ident">iter</span>: <span class="ident">I</span>) <span class="op">-&gt;</span> <span class="ident">String</span> {
+        <span class="ident">iter</span>.<span class="ident">into_iter</span>().<span class="ident">cloned</span>().<span class="ident">collect</span>()
     }
 }
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span><span class="op">=</span><span class="string">&quot;std&quot;</span>)]</span>
 <span class="kw">impl</span> <span class="ident">FromIterator</span><span class="op">&lt;</span><span class="ident">Utf8Char</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span> {
     <span class="kw">fn</span> <span class="ident">from_iter</span><span class="op">&lt;</span><span class="ident">I</span>:<span class="ident">IntoIterator</span><span class="op">&lt;</span><span class="ident">Item</span><span class="op">=</span><span class="ident">Utf8Char</span><span class="op">&gt;&gt;</span>(<span class="ident">iter</span>: <span class="ident">I</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">vec</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">new</span>();
-        <span class="ident">vec</span>.<span class="ident">extend</span>(<span class="ident">iter</span>);
-        <span class="kw">return</span> <span class="ident">vec</span>;
+        <span class="ident">iter</span>.<span class="ident">into_iter</span>().<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>().<span class="ident">into_bytes</span>()
     }
 }
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span><span class="op">=</span><span class="string">&quot;std&quot;</span>)]</span>
-<span class="kw">impl</span> <span class="ident">FromIterator</span><span class="op">&lt;</span><span class="ident">Utf8Char</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">String</span> {
-    <span class="kw">fn</span> <span class="ident">from_iter</span><span class="op">&lt;</span><span class="ident">I</span>:<span class="ident">IntoIterator</span><span class="op">&lt;</span><span class="ident">Item</span><span class="op">=</span><span class="ident">Utf8Char</span><span class="op">&gt;&gt;</span>(<span class="ident">iter</span>: <span class="ident">I</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">string</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">new</span>();
-        <span class="ident">string</span>.<span class="ident">extend</span>(<span class="ident">iter</span>);
-        <span class="kw">return</span> <span class="ident">string</span>;
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">FromIterator</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Utf8Char</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">from_iter</span><span class="op">&lt;</span><span class="ident">I</span>:<span class="ident">IntoIterator</span><span class="op">&lt;</span><span class="ident">Item</span><span class="op">=</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Utf8Char</span><span class="op">&gt;&gt;</span>(<span class="ident">iter</span>: <span class="ident">I</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="ident">iter</span>.<span class="ident">into_iter</span>().<span class="ident">cloned</span>().<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>().<span class="ident">into_bytes</span>()
     }
 }
 
@@ -627,54 +938,277 @@
 }
 
 
+  <span class="comment">////////////////////////////////</span>
+ <span class="comment">//Comparisons with other types//</span>
+<span class="comment">////////////////////////////////</span>
+<span class="kw">impl</span> <span class="ident">PartialEq</span><span class="op">&lt;</span><span class="ident">char</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Utf8Char</span> {
+    <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>,  <span class="ident">u32c</span>: <span class="kw-2">&amp;</span><span class="ident">char</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="kw-2">*</span><span class="self">self</span> <span class="op">==</span> <span class="ident">Utf8Char</span>::<span class="ident">from</span>(<span class="kw-2">*</span><span class="ident">u32c</span>)
+    }
+}
+<span class="kw">impl</span> <span class="ident">PartialEq</span><span class="op">&lt;</span><span class="ident">Utf8Char</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">char</span> {
+    <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>,  <span class="ident">u8c</span>: <span class="kw-2">&amp;</span><span class="ident">Utf8Char</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="ident">Utf8Char</span>::<span class="ident">from</span>(<span class="kw-2">*</span><span class="self">self</span>) <span class="op">==</span> <span class="kw-2">*</span><span class="ident">u8c</span>
+    }
+}
+<span class="kw">impl</span> <span class="ident">PartialOrd</span><span class="op">&lt;</span><span class="ident">char</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Utf8Char</span> {
+    <span class="kw">fn</span> <span class="ident">partial_cmp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>,  <span class="ident">u32c</span>: <span class="kw-2">&amp;</span><span class="ident">char</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Ordering</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">partial_cmp</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>::<span class="ident">from</span>(<span class="kw-2">*</span><span class="ident">u32c</span>))
+    }
+}
+<span class="kw">impl</span> <span class="ident">PartialOrd</span><span class="op">&lt;</span><span class="ident">Utf8Char</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">char</span> {
+    <span class="kw">fn</span> <span class="ident">partial_cmp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>,  <span class="ident">u8c</span>: <span class="kw-2">&amp;</span><span class="ident">Utf8Char</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Ordering</span><span class="op">&gt;</span> {
+        <span class="ident">Utf8Char</span>::<span class="ident">from</span>(<span class="kw-2">*</span><span class="self">self</span>).<span class="ident">partial_cmp</span>(<span class="ident">u8c</span>)
+    }
+}
+
+<span class="kw">impl</span> <span class="ident">PartialEq</span><span class="op">&lt;</span><span class="ident">Utf16Char</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Utf8Char</span> {
+    <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>,  <span class="ident">u16c</span>: <span class="kw-2">&amp;</span><span class="ident">Utf16Char</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="kw-2">*</span><span class="self">self</span> <span class="op">==</span> <span class="self">Self</span>::<span class="ident">from</span>(<span class="kw-2">*</span><span class="ident">u16c</span>)
+    }
+}
+<span class="kw">impl</span> <span class="ident">PartialOrd</span><span class="op">&lt;</span><span class="ident">Utf16Char</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Utf8Char</span> {
+    <span class="kw">fn</span> <span class="ident">partial_cmp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>,  <span class="ident">u16c</span>: <span class="kw-2">&amp;</span><span class="ident">Utf16Char</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Ordering</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">partial_cmp</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>::<span class="ident">from</span>(<span class="kw-2">*</span><span class="ident">u16c</span>))
+    }
+}
+<span class="comment">// The other direction is implemented in utf16_char.rs</span>
+
+<span class="doccomment">/// Only considers the byte equal if both it and the `Utf8Char` represents ASCII characters.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// There is no impl in the opposite direction, as this should only be used to</span>
+<span class="doccomment">/// compare `Utf8Char`s against constants.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// # Examples</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// ```</span>
+<span class="doccomment">/// # use encode_unicode::Utf8Char;</span>
+<span class="doccomment">/// assert!(Utf8Char::from(&#39;8&#39;) == b&#39;8&#39;);</span>
+<span class="doccomment">/// assert!(Utf8Char::from_array([0xf1,0x80,0x80,0x80]).unwrap() != 0xf1);</span>
+<span class="doccomment">/// assert!(Utf8Char::from(&#39;\u{ff}&#39;) != 0xff);</span>
+<span class="doccomment">/// assert!(Utf8Char::from(&#39;\u{80}&#39;) != 0x80);</span>
+<span class="doccomment">/// ```</span>
+<span class="kw">impl</span> <span class="ident">PartialEq</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Utf8Char</span> {
+    <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>,  <span class="ident">byte</span>: <span class="kw-2">&amp;</span><span class="ident">u8</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="self">self</span>.<span class="ident">bytes</span>[<span class="number">0</span>] <span class="op">==</span> <span class="kw-2">*</span><span class="ident">byte</span>  <span class="op">&amp;&amp;</span>  <span class="self">self</span>.<span class="ident">bytes</span>[<span class="number">1</span>] <span class="op">==</span> <span class="number">0</span>
+    }
+}
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;ascii&quot;</span>)]</span>
+<span class="doccomment">/// `Utf8Char`s that are not ASCII never compare equal.</span>
+<span class="kw">impl</span> <span class="ident">PartialEq</span><span class="op">&lt;</span><span class="ident">AsciiChar</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Utf8Char</span> {
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>,  <span class="ident">ascii</span>: <span class="kw-2">&amp;</span><span class="ident">AsciiChar</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="self">self</span>.<span class="ident">bytes</span>[<span class="number">0</span>] <span class="op">==</span> <span class="kw-2">*</span><span class="ident">ascii</span> <span class="kw">as</span> <span class="ident">u8</span>
+    }
+}
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;ascii&quot;</span>)]</span>
+<span class="doccomment">/// `Utf8Char`s that are not ASCII never compare equal.</span>
+<span class="kw">impl</span> <span class="ident">PartialEq</span><span class="op">&lt;</span><span class="ident">Utf8Char</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">AsciiChar</span> {
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>,  <span class="ident">u8c</span>: <span class="kw-2">&amp;</span><span class="ident">Utf8Char</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="ident">u8c</span> <span class="op">==</span> <span class="self">self</span>
+    }
+}
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;ascii&quot;</span>)]</span>
+<span class="doccomment">/// `Utf8Char`s that are not ASCII always compare greater.</span>
+<span class="kw">impl</span> <span class="ident">PartialOrd</span><span class="op">&lt;</span><span class="ident">AsciiChar</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Utf8Char</span> {
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">partial_cmp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>,  <span class="ident">ascii</span>: <span class="kw-2">&amp;</span><span class="ident">AsciiChar</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Ordering</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">bytes</span>[<span class="number">0</span>].<span class="ident">partial_cmp</span>(<span class="ident">ascii</span>)
+    }
+}
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;ascii&quot;</span>)]</span>
+<span class="doccomment">/// `Utf8Char`s that are not ASCII always compare greater.</span>
+<span class="kw">impl</span> <span class="ident">PartialOrd</span><span class="op">&lt;</span><span class="ident">Utf8Char</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">AsciiChar</span> {
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">partial_cmp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>,  <span class="ident">u8c</span>: <span class="kw-2">&amp;</span><span class="ident">Utf8Char</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Ordering</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">partial_cmp</span>(<span class="kw-2">&amp;</span><span class="ident">u8c</span>.<span class="ident">bytes</span>[<span class="number">0</span>])
+    }
+}
+
+
   <span class="comment">///////////////////////////////////////////////////////</span>
  <span class="comment">//pub impls that should be together for nicer rustdoc//</span>
 <span class="comment">///////////////////////////////////////////////////////</span>
 <span class="kw">impl</span> <span class="ident">Utf8Char</span> {
-    <span class="doccomment">/// Validate the first codepoint in an UTF-8 slice and return it as an `Utf8Char`.</span>
-    <span class="doccomment">/// Also returns how many bytes were needed.</span>
+    <span class="doccomment">/// Create an `Utf8Char` from the first codepoint in a `str`.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// If it&#39;s a `str` and you know it contains only one codepoint,</span>
-    <span class="doccomment">/// use `.from_str()` to skip UTF-8 validation.</span>
+    <span class="doccomment">/// Returns an error if the `str` is empty.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Examples</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// use encode_unicode::Utf8Char;</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// assert_eq!(Utf8Char::from_str_start(&quot;a&quot;), Ok((Utf8Char::from(&#39;a&#39;),1)));</span>
+    <span class="doccomment">/// assert_eq!(Utf8Char::from_str_start(&quot;ab&quot;), Ok((Utf8Char::from(&#39;a&#39;),1)));</span>
+    <span class="doccomment">/// assert_eq!(Utf8Char::from_str_start(&quot;🂠 &quot;), Ok((Utf8Char::from(&#39;🂠&#39;),4)));</span>
+    <span class="doccomment">/// assert_eq!(Utf8Char::from_str_start(&quot;é&quot;), Ok((Utf8Char::from(&#39;e&#39;),1)));// &#39;e&#39;+u301 combining mark</span>
+    <span class="doccomment">/// assert!(Utf8Char::from_str_start(&quot;&quot;).is_err());</span>
+    <span class="doccomment">/// ```</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_str_start</span>(<span class="ident">src</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(<span class="self">Self</span>,<span class="ident">usize</span>),<span class="ident">EmptyStrError</span><span class="op">&gt;</span> {
+        <span class="kw">unsafe</span> {
+            <span class="kw">if</span> <span class="ident">src</span>.<span class="ident">is_empty</span>() {
+                <span class="prelude-val">Err</span>(<span class="ident">EmptyStrError</span>)
+            } <span class="kw">else</span> {
+                <span class="prelude-val">Ok</span>(<span class="ident">Utf8Char</span>::<span class="ident">from_slice_start_unchecked</span>(<span class="ident">src</span>.<span class="ident">as_bytes</span>()))
+            }
+        }
+    }
+    <span class="doccomment">/// Create an `Utf8Char` of the first codepoint in an UTF-8 slice.  </span>
+    <span class="doccomment">/// Also returns the length of the UTF-8 sequence for the codepoint.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// If the slice is from a `str`, use `::from_str_start()` to skip UTF-8 validation.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Errors</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Returns an `Err` if the slice is empty, doesn&#39;t start with a valid</span>
+    <span class="doccomment">/// UTF-8 sequence or is too short for the sequence.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Examples</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// use encode_unicode::Utf8Char;</span>
+    <span class="doccomment">/// use encode_unicode::error::InvalidUtf8Slice::*;</span>
+    <span class="doccomment">/// use encode_unicode::error::InvalidUtf8::*;</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// assert_eq!(Utf8Char::from_slice_start(&amp;[b&#39;A&#39;, b&#39;B&#39;, b&#39;C&#39;]), Ok((Utf8Char::from(&#39;A&#39;),1)));</span>
+    <span class="doccomment">/// assert_eq!(Utf8Char::from_slice_start(&amp;[0xdd, 0xbb]), Ok((Utf8Char::from(&#39;\u{77b}&#39;),2)));</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// assert_eq!(Utf8Char::from_slice_start(&amp;[]), Err(TooShort(1)));</span>
+    <span class="doccomment">/// assert_eq!(Utf8Char::from_slice_start(&amp;[0xf0, 0x99]), Err(TooShort(4)));</span>
+    <span class="doccomment">/// assert_eq!(Utf8Char::from_slice_start(&amp;[0xee, b&#39;F&#39;, 0x80]), Err(Utf8(NotAContinuationByte(1))));</span>
+    <span class="doccomment">/// assert_eq!(Utf8Char::from_slice_start(&amp;[0xee, 0x99, 0x0f]), Err(Utf8(NotAContinuationByte(2))));</span>
+    <span class="doccomment">/// ```</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_slice_start</span>(<span class="ident">src</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(<span class="self">Self</span>,<span class="ident">usize</span>),<span class="ident">InvalidUtf8Slice</span><span class="op">&gt;</span> {
         <span class="ident">char</span>::<span class="ident">from_utf8_slice_start</span>(<span class="ident">src</span>).<span class="ident">map</span>(<span class="op">|</span>(<span class="kw">_</span>,<span class="ident">len</span>)<span class="op">|</span> {
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">bytes</span> <span class="op">=</span> [<span class="number">0</span>; <span class="number">4</span>];
             <span class="ident">bytes</span>[..<span class="ident">len</span>].<span class="ident">copy_from_slice</span>(<span class="kw-2">&amp;</span><span class="ident">src</span>[..<span class="ident">len</span>]);
-            (<span class="ident">Utf8Char</span>{<span class="ident">bytes</span>: <span class="ident">bytes</span>}, <span class="ident">len</span>)
+            (<span class="ident">Utf8Char</span>{ <span class="ident">bytes</span>: <span class="ident">bytes</span> }, <span class="ident">len</span>)
         })
     }
     <span class="doccomment">/// A `from_slice_start()` that doesn&#39;t validate the codepoint.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Safety</span>
+    <span class="doccomment">///</span>
     <span class="doccomment">/// The slice must be non-empty and start with a valid UTF-8 codepoint.  </span>
-    <span class="doccomment">/// Invalid or incomplete values might cause buffer overflows and overreads.</span>
+    <span class="doccomment">/// Invalid or incomplete values might cause reads of uninitalized memory.</span>
     <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_slice_start_unchecked</span>(<span class="ident">src</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-&gt;</span> (<span class="self">Self</span>,<span class="ident">usize</span>) {
         <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="number">1</span><span class="op">+</span><span class="ident">src</span>.<span class="ident">get_unchecked</span>(<span class="number">0</span>).<span class="ident">extra_utf8_bytes_unchecked</span>();
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">bytes</span> <span class="op">=</span> [<span class="number">0</span>; <span class="number">4</span>];
         <span class="ident">ptr</span>::<span class="ident">copy_nonoverlapping</span>(<span class="ident">src</span>.<span class="ident">as_ptr</span>(), <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">bytes</span>[<span class="number">0</span>] <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">u8</span>, <span class="ident">len</span>);
         (<span class="ident">Utf8Char</span>{ <span class="ident">bytes</span>: <span class="ident">bytes</span> }, <span class="ident">len</span>)
     }
-    <span class="doccomment">/// Validate the array and store it.</span>
+    <span class="doccomment">/// Create an `Utf8Char` from a byte array after validating it.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// The codepoint must start at the first byte.  </span>
+    <span class="doccomment">/// Unused bytes are set to zero by this function and so can be anything.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Errors</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Returns an `Err` if the array doesn&#39;t start with a valid UTF-8 sequence.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Examples</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// use encode_unicode::Utf8Char;</span>
+    <span class="doccomment">/// use encode_unicode::error::InvalidUtf8Array::*;</span>
+    <span class="doccomment">/// use encode_unicode::error::InvalidUtf8::*;</span>
+    <span class="doccomment">/// use encode_unicode::error::InvalidCodepoint::*;</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// assert_eq!(Utf8Char::from_array([b&#39;A&#39;, 0, 0, 0]), Ok(Utf8Char::from(&#39;A&#39;)));</span>
+    <span class="doccomment">/// assert_eq!(Utf8Char::from_array([0xf4, 0x8b, 0xbb, 0xbb]), Ok(Utf8Char::from(&#39;\u{10befb}&#39;)));</span>
+    <span class="doccomment">/// assert_eq!(Utf8Char::from_array([b&#39;A&#39;, b&#39;B&#39;, b&#39;C&#39;, b&#39;D&#39;]), Ok(Utf8Char::from(&#39;A&#39;)));</span>
+    <span class="doccomment">/// assert_eq!(Utf8Char::from_array([0, 0, 0xcc, 0xbb]), Ok(Utf8Char::from(&#39;\0&#39;)));</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// assert_eq!(Utf8Char::from_array([0xef, b&#39;F&#39;, 0x80, 0x80]), Err(Utf8(NotAContinuationByte(1))));</span>
+    <span class="doccomment">/// assert_eq!(Utf8Char::from_array([0xc1, 0x80, 0, 0]), Err(Utf8(OverLong)));</span>
+    <span class="doccomment">/// assert_eq!(Utf8Char::from_array([0xf7, 0xaa, 0x99, 0x88]), Err(Codepoint(TooHigh)));</span>
+    <span class="doccomment">/// ```</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_array</span>(<span class="ident">utf8</span>: [<span class="ident">u8</span>;<span class="number">4</span>]) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>,<span class="ident">InvalidUtf8Array</span><span class="op">&gt;</span> {
         <span class="kw">unsafe</span> {
+            <span class="comment">// perform all validation</span>
             <span class="macro">try</span><span class="macro">!</span>(<span class="ident">char</span>::<span class="ident">from_utf8_array</span>(<span class="ident">utf8</span>));
             <span class="kw">let</span> <span class="ident">extra</span> <span class="op">=</span> <span class="ident">utf8</span>[<span class="number">0</span>].<span class="ident">extra_utf8_bytes_unchecked</span>() <span class="kw">as</span> <span class="ident">u32</span>;
+            <span class="comment">// zero unused bytes in one operation by transmuting the arrary to</span>
+            <span class="comment">// u32, apply an endian-corrected mask and transmute back</span>
             <span class="kw">let</span> <span class="ident">mask</span> <span class="op">=</span> <span class="ident">u32</span>::<span class="ident">from_le</span>(<span class="number">0xff_ff_ff_ff</span> <span class="op">&gt;&gt;</span> <span class="number">8</span><span class="kw-2">*</span>(<span class="number">3</span><span class="op">-</span><span class="ident">extra</span>));
             <span class="kw">let</span> <span class="ident">unused_zeroed</span> <span class="op">=</span> <span class="ident">mask</span>  <span class="op">&amp;</span>  <span class="ident">transmute</span>::<span class="op">&lt;</span><span class="kw">_</span>,<span class="ident">u32</span><span class="op">&gt;</span>(<span class="ident">utf8</span>);
             <span class="prelude-val">Ok</span>(<span class="ident">Utf8Char</span>{ <span class="ident">bytes</span>: <span class="ident">transmute</span>(<span class="ident">unused_zeroed</span>) })
         }
     }
-    <span class="doccomment">/// Unused bytes must be zero</span>
+    <span class="doccomment">/// Zero-cost constructor.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Safety</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Must represent a valid codepoint,</span>
+    <span class="doccomment">/// starting at the first byte with the unused zeroed.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_array_unchecked</span>(<span class="ident">utf8</span>: [<span class="ident">u8</span>;<span class="number">4</span>]) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">Utf8Char</span>{ <span class="ident">bytes</span>: <span class="ident">utf8</span> }
     }
-
-    <span class="doccomment">/// Result is 1...4 and identical to `.as_ref().len()` or</span>
-    <span class="doccomment">/// `.as_char().len_utf8()`.</span>
-    <span class="doccomment">/// There is no .is_emty() because this type is never empty.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">len</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
-        <span class="self">self</span>.<span class="ident">bytes</span>[<span class="number">0</span>].<span class="ident">extra_utf8_bytes_unchecked</span>() <span class="op">+</span> <span class="number">1</span>
+    <span class="doccomment">/// Create an `Utf8Char` from a single byte.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// The byte must be an ASCII character.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Errors</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Returns `NonAsciiError` if the byte greater than 127.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Examples</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// # use encode_unicode::Utf8Char;</span>
+    <span class="doccomment">/// assert_eq!(Utf8Char::from_ascii(b&#39;a&#39;).unwrap(), &#39;a&#39;);</span>
+    <span class="doccomment">/// assert!(Utf8Char::from_ascii(128).is_err());</span>
+    <span class="doccomment">/// ```</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_ascii</span>(<span class="ident">ascii</span>: <span class="ident">u8</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>,<span class="ident">NonAsciiError</span><span class="op">&gt;</span> {
+        <span class="kw">if</span> <span class="ident">ascii</span> <span class="kw">as</span> <span class="ident">i8</span> <span class="op">&gt;=</span> <span class="number">0</span> {
+            <span class="prelude-val">Ok</span>(<span class="ident">Utf8Char</span>{ <span class="ident">bytes</span>: [<span class="ident">ascii</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>] })
+        } <span class="kw">else</span> {
+            <span class="prelude-val">Err</span>(<span class="ident">NonAsciiError</span>)
+        }
     }
+    <span class="doccomment">/// Create an `Utf8Char` from a single byte without checking that it&#39;s a</span>
+    <span class="doccomment">/// valid codepoint on its own, which is only true for ASCII characters.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Safety</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// The byte must be less than 128.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_ascii_unchecked</span>(<span class="ident">ascii</span>: <span class="ident">u8</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="ident">Utf8Char</span>{ <span class="ident">bytes</span>: [<span class="ident">ascii</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>] }
+    }
+
+    <span class="doccomment">/// The number of bytes this character needs.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Is between 1 and 4 (inclusive) and identical to `.as_ref().len()` or</span>
+    <span class="doccomment">/// `.as_char().len_utf8()`.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">len</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+        <span class="comment">// Invariants of the extra bytes enambles algorithms that</span>
+        <span class="comment">// `u8.extra_utf8_bytes_unchecked()` cannot use.</span>
+        <span class="comment">// Some of them turned out to require fewer x86 instructions:</span>
+
+        <span class="comment">// Exploits that unused bytes are zero and calculates the number of</span>
+        <span class="comment">// trailing zero bytes.</span>
+        <span class="comment">// Setting a bit in the first byte prevents the function from returning</span>
+        <span class="comment">// 0 for &#39;\0&#39; (which has 32 leading zeros).</span>
+        <span class="comment">// trailing and leading is swapped below to optimize for little-endian</span>
+        <span class="comment">// architectures.</span>
+        (<span class="number">4</span> <span class="op">-</span> (<span class="ident">u32</span>::<span class="ident">to_le</span>(<span class="kw">unsafe</span>{<span class="ident">transmute</span>(<span class="self">self</span>.<span class="ident">bytes</span>)})<span class="op">|</span><span class="number">1</span>).<span class="ident">leading_zeros</span>()<span class="op">/</span><span class="number">8</span>) <span class="kw">as</span> <span class="ident">usize</span>
+
+        <span class="comment">// Exploits that the extra bytes have their most significant bit set if</span>
+        <span class="comment">// in use.</span>
+        <span class="comment">// Takes fewer instructions than the one above if popcnt can be used,</span>
+        <span class="comment">// (which it cannot by default,</span>
+        <span class="comment">//  set RUSTFLAGS=&#39;-C target-cpu=native&#39; to enable)</span>
+        <span class="comment">//let all: u32 = unsafe{transmute(self.bytes)};</span>
+        <span class="comment">//let msb_mask = u32::from_be(0x00808080);</span>
+        <span class="comment">//let add_one = u32::from_be(0x80000000);</span>
+        <span class="comment">//((all &amp; msb_mask) | add_one).count_ones() as usize</span>
+    }
+    <span class="comment">// There is no .is_emty() because this type is never empty.</span>
 
     <span class="doccomment">/// Checks that the codepoint is an ASCII character.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_ascii</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
@@ -735,6 +1269,7 @@
     <span class="doccomment">/// and then returns the number of bytes written.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Panics</span>
+    <span class="doccomment">///</span>
     <span class="doccomment">/// Will panic the buffer is too small;</span>
     <span class="doccomment">/// You can get the required length from `.len()`,</span>
     <span class="doccomment">/// but a buffer of length four is always large enough.</span>
@@ -750,7 +1285,8 @@
         (<span class="self">self</span>.<span class="ident">bytes</span>, <span class="self">self</span>.<span class="ident">len</span>())
     }
     <span class="doccomment">/// Return a `str` view of the array the codepoint is stored as.</span>
-    <span class="doccomment">/// Ns an unambiguous version of `.as_ref()`.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Is an unambiguous version of `.as_ref()`.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_str</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
         <span class="self">self</span>.<span class="ident">deref</span>()
     }

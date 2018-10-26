@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/encode_unicode-0.3.2/src/errors.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>errors.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><input class="search-input" name="search" autocomplete="off" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/encode_unicode-0.3.5/src/errors.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>errors.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><input class="search-input" name="search" autocomplete="off" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -237,8 +237,50 @@
 <span id="237">237</span>
 <span id="238">238</span>
 <span id="239">239</span>
+<span id="240">240</span>
+<span id="241">241</span>
+<span id="242">242</span>
+<span id="243">243</span>
+<span id="244">244</span>
+<span id="245">245</span>
+<span id="246">246</span>
+<span id="247">247</span>
+<span id="248">248</span>
+<span id="249">249</span>
+<span id="250">250</span>
+<span id="251">251</span>
+<span id="252">252</span>
+<span id="253">253</span>
+<span id="254">254</span>
+<span id="255">255</span>
+<span id="256">256</span>
+<span id="257">257</span>
+<span id="258">258</span>
+<span id="259">259</span>
+<span id="260">260</span>
+<span id="261">261</span>
+<span id="262">262</span>
+<span id="263">263</span>
+<span id="264">264</span>
+<span id="265">265</span>
+<span id="266">266</span>
+<span id="267">267</span>
+<span id="268">268</span>
+<span id="269">269</span>
+<span id="270">270</span>
+<span id="271">271</span>
+<span id="272">272</span>
+<span id="273">273</span>
+<span id="274">274</span>
+<span id="275">275</span>
+<span id="276">276</span>
+<span id="277">277</span>
+<span id="278">278</span>
+<span id="279">279</span>
+<span id="280">280</span>
+<span id="281">281</span>
 </pre><pre class="rust ">
-<span class="comment">/* Copyright 2016 Torbjørn Birch Moltu
+<span class="comment">/* Copyright 2016 The encode_unicode Developers
  *
  * Licensed under the Apache License, Version 2.0, &lt;LICENSE-APACHE or
  * http://apache.org/licenses/LICENSE-2.0&gt; or the MIT license &lt;LICENSE-MIT or
@@ -247,12 +289,13 @@
  */</span>
 
 
-<span class="doccomment">//! Boilerplatey error enums</span>
+<span class="doccomment">//! Boilerplatey error types</span>
 
 <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">core</span>;
 <span class="kw">use</span> <span class="self">self</span>::<span class="ident">core</span>::<span class="ident">fmt</span>::{<span class="self">self</span>,<span class="ident">Display</span>,<span class="ident">Formatter</span>};
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span><span class="op">=</span><span class="string">&quot;std&quot;</span>)]</span>
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>::<span class="ident">Error</span>;
+
 
 <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">description</span> {(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">err</span>:<span class="ident">ty</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">desc</span>:<span class="ident">expr</span>) <span class="op">=&gt;</span> {
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">feature</span><span class="op">=</span><span class="string">&quot;std&quot;</span>))]</span>
@@ -276,11 +319,40 @@
 }}
 
 
-<span class="doccomment">/// Cannot tell whether an `u16` needs an extra unit,</span>
-<span class="doccomment">/// because it&#39;s a trailing surrogate itself.</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>,<span class="ident">Copy</span>, <span class="ident">Debug</span>, <span class="ident">PartialEq</span>,<span class="ident">Eq</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">InvalidUtf16FirstUnit</span>;
-<span class="macro">description</span><span class="macro">!</span>{<span class="ident">InvalidUtf16FirstUnit</span>, <span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="string">&quot;Is a trailing surrogate&quot;</span> }
+<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">single_cause</span> {(<span class="attribute">#[<span class="macro-nonterminal">$</span><span class="macro-nonterminal">doc1</span>:<span class="ident">meta</span>]</span> <span class="attribute">#[<span class="macro-nonterminal">$</span><span class="macro-nonterminal">doc2</span>:<span class="ident">meta</span>]</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">err</span>:<span class="ident">ident</span> <span class="op">=&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">desc</span>:<span class="ident">expr</span>) <span class="op">=&gt;</span> {
+    <span class="comment">// Rust 1.15 doesn&#39;t understand $(#[$doc:meta])* $:ident</span>
+    <span class="attribute">#[<span class="macro-nonterminal">$</span><span class="macro-nonterminal">doc1</span>]</span>
+    <span class="attribute">#[<span class="macro-nonterminal">$</span><span class="macro-nonterminal">doc2</span>]</span>
+    <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>,<span class="ident">Copy</span>, <span class="ident">Debug</span>, <span class="ident">PartialEq</span>,<span class="ident">Eq</span>)]</span>
+    <span class="kw">pub</span> <span class="kw">struct</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">err</span>;
+    <span class="macro">description</span><span class="macro">!</span>{<span class="macro-nonterminal">$</span><span class="macro-nonterminal">err</span>, <span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">desc</span> }
+}}
+
+
+<span class="macro">single_cause</span><span class="macro">!</span>{
+    <span class="doccomment">/// Cannot tell whether an `u16` needs an extra unit,</span>
+    <span class="doccomment">/// because it&#39;s a trailing surrogate itself.</span>
+    <span class="ident">InvalidUtf16FirstUnit</span> <span class="op">=&gt;</span> <span class="string">&quot;is a trailing surrogate&quot;</span>
+}
+
+<span class="macro">single_cause</span><span class="macro">!</span>{
+    <span class="doccomment">/// Cannot create an `Utf8Char` or `Utf16Char` from the first codepoint of a str,</span>
+    <span class="doccomment">/// because there are none.</span>
+    <span class="ident">EmptyStrError</span> <span class="op">=&gt;</span> <span class="string">&quot;is empty&quot;</span>
+}
+
+<span class="macro">single_cause</span><span class="macro">!</span>{
+    <span class="doccomment">/// Cannot create an `Utf8Char` from a standalone `u8`</span>
+    <span class="doccomment">/// that is not an ASCII character.</span>
+    <span class="ident">NonAsciiError</span> <span class="op">=&gt;</span> <span class="string">&quot;is not an ASCII character&quot;</span>
+}
+
+<span class="macro">single_cause</span><span class="macro">!</span>{
+    <span class="doccomment">/// Cannot create an `Utf16Char` from a standalone `u16` that is not a</span>
+    <span class="doccomment">/// codepoint in the basic multilingual plane, but part of a suurrogate pair.</span>
+    <span class="ident">NonBMPError</span> <span class="op">=&gt;</span> <span class="string">&quot;is not a codepoint in the basic multilingual plane&quot;</span>
+}
+
 
 
 <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">simple</span> {(<span class="attribute">#[<span class="macro-nonterminal">$</span><span class="macro-nonterminal">tydoc</span>:<span class="ident">meta</span>]</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">err</span>:<span class="ident">ident</span>  {
@@ -328,6 +400,7 @@
         ::<span class="ident">InvalidSecond</span> <span class="op">=&gt;</span> <span class="string">&quot;the required second unit is not a trailing / low surrogate&quot;</span>,
     }}
 
+
 <span class="macro">simple</span><span class="macro">!</span>{<span class="doccomment">/// Reasons why a slice of `u16`s doesn&#39;t start with valid UTF-16.</span>
     <span class="ident">InvalidUtf16Slice</span> {
         <span class="doccomment">/// The slice is empty.</span>
@@ -340,14 +413,25 @@
         ::<span class="ident">SecondNotLowSurrogate</span> <span class="op">=&gt;</span> <span class="string">&quot;the required second unit is not a trailing surrogate&quot;</span>,
     }}
 
+<span class="macro">simple</span><span class="macro">!</span>{<span class="doccomment">/// Types of invalid sequences encountered by `Utf16CharParser`.</span>
+    <span class="ident">Utf16PairError</span> {
+        <span class="doccomment">/// A trailing surrogate was not preceeded by a leading surrogate.</span>
+        ::<span class="ident">UnexpectedTrailingSurrogate</span> <span class="op">=&gt;</span> <span class="string">&quot;a trailing surrogate was not preceeded by a leading surrogate&quot;</span>,
+        <span class="doccomment">/// A leading surrogate was followed by an unit that was not a trailing surrogate.</span>
+        ::<span class="ident">UnmatchedLeadingSurrogate</span> <span class="op">=&gt;</span> <span class="string">&quot;a leading surrogate was followed by an unit that was not a trailing surrogate&quot;</span>,
+        <span class="doccomment">/// A trailing surrogate was expected when the end was reached.</span>
+        ::<span class="ident">Incomplete</span> <span class="op">=&gt;</span> <span class="string">&quot;a trailing surrogate was expected when the end was reached&quot;</span>,
+    }}
 
-<span class="macro">simple</span><span class="macro">!</span>{<span class="doccomment">/// Reasons why `Utf8Char::from_str()` failed.</span>
+
+<span class="macro">simple</span><span class="macro">!</span>{<span class="doccomment">/// Reasons why `Utf8Char::from_str()` or `Utf16Char::from_str()` failed.</span>
     <span class="ident">FromStrError</span> {
-        <span class="doccomment">/// `Utf8Char` cannot store more than a single codepoint.</span>
+        <span class="doccomment">/// `Utf8Char` or `Utf16Char` cannot store more than a single codepoint.</span>
         ::<span class="ident">MultipleCodepoints</span> <span class="op">=&gt;</span> <span class="string">&quot;has more than one codepoint&quot;</span>,
-        <span class="doccomment">/// `Utf8Char` cannot be empty.</span>
+        <span class="doccomment">/// `Utf8Char` or `Utf16Char` cannot be empty.</span>
         ::<span class="ident">Empty</span> <span class="op">=&gt;</span> <span class="string">&quot;is empty&quot;</span>,
     }}
+
 
 <span class="macro">simple</span><span class="macro">!</span>{<span class="doccomment">/// Reasons why a byte is not the start of a UTF-8 codepoint.</span>
     <span class="ident">InvalidUtf8FirstByte</span> {
@@ -408,7 +492,7 @@
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">InvalidUtf8</span> {
     <span class="doccomment">/// Something is wrong with the first byte.</span>
     <span class="ident">FirstByte</span>(<span class="ident">InvalidUtf8FirstByte</span>),
-    <span class="doccomment">/// Thee byte at index 1...3 should be a continuation byte,</span>
+    <span class="doccomment">/// The byte at index 1...3 should be a continuation byte,</span>
     <span class="doccomment">/// but dosesn&#39;t fit the pattern 0b10xx_xxxx.</span>
     <span class="ident">NotAContinuationByte</span>(<span class="ident">usize</span>),
     <span class="doccomment">/// There are too many leading zeros: it could be a byte shorter.</span>
@@ -469,7 +553,7 @@
     } {
         <span class="ident">InvalidUtf8Slice</span>::<span class="ident">Utf8</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="string">&quot;the sequence is invalid UTF-8&quot;</span>,
         <span class="ident">InvalidUtf8Slice</span>::<span class="ident">Codepoint</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="string">&quot;the encoded codepoint is invalid&quot;</span>,
-        <span class="ident">InvalidUtf8Slice</span>::<span class="ident">TooShort</span>(<span class="number">0</span>) <span class="op">=&gt;</span> <span class="string">&quot;the slice is empty&quot;</span>,
+        <span class="ident">InvalidUtf8Slice</span>::<span class="ident">TooShort</span>(<span class="number">1</span>) <span class="op">=&gt;</span> <span class="string">&quot;the slice is empty&quot;</span>,
         <span class="ident">InvalidUtf8Slice</span>::<span class="ident">TooShort</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="string">&quot;the slice is shorter than the sequence&quot;</span>,
     } <span class="op">=&gt;</span> <span class="bool-val">true</span> <span class="op">=&gt;</span> {
         <span class="ident">InvalidUtf8Slice</span>::<span class="ident">Utf8</span>(<span class="kw-2">ref</span> <span class="ident">u</span>) <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">u</span>),

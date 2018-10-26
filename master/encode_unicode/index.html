@@ -1,16 +1,15 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="API documentation for the Rust `encode_unicode` crate."><meta name="keywords" content="rust, rustlang, rust-lang, encode_unicode"><title>encode_unicode - Rust</title><link rel="stylesheet" type="text/css" href="../normalize.css"><link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../dark.css"><link rel="stylesheet" type="text/css" href="../light.css" id="themeStyle"><script src="../storage.js"></script></head><body class="rustdoc mod"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><p class='location'>Crate encode_unicode</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#modules">Modules</a></li><li><a href="#structs">Structs</a></li><li><a href="#traits">Traits</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'encode_unicode', ty: 'mod', relpath: '../'};</script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><input class="search-input" name="search" autocomplete="off" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><a id="settings-menu" href="../settings.html"><img src="../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class='fqn'><span class='in-band'>Crate <a class="mod" href=''>encode_unicode</a></span><span class='out-of-band'><span id='render-detail'><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class='inner'>&#x2212;</span>]</a></span><a class='srclink' href='../src/encode_unicode/lib.rs.html#10-72' title='goto source code'>[src]</a></span></h1><div class='docblock'><p>Miscellaneous UTF-8 and UTF-16 types and methods.</p>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="API documentation for the Rust `encode_unicode` crate."><meta name="keywords" content="rust, rustlang, rust-lang, encode_unicode"><title>encode_unicode - Rust</title><link rel="stylesheet" type="text/css" href="../normalize.css"><link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../dark.css"><link rel="stylesheet" type="text/css" href="../light.css" id="themeStyle"><script src="../storage.js"></script></head><body class="rustdoc mod"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><p class='location'>Crate encode_unicode</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#modules">Modules</a></li><li><a href="#structs">Structs</a></li><li><a href="#traits">Traits</a></li><li><a href="#functions">Functions</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'encode_unicode', ty: 'mod', relpath: '../'};</script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><input class="search-input" name="search" autocomplete="off" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><a id="settings-menu" href="../settings.html"><img src="../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class='fqn'><span class='out-of-band'><span id='render-detail'><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class='inner'>&#x2212;</span>]</a></span><a class='srclink' href='../src/encode_unicode/lib.rs.html#10-78' title='goto source code'>[src]</a></span><span class='in-band'>Crate <a class="mod" href=''>encode_unicode</a></span></h1><div class='docblock'><p>Miscellaneous UTF-8 and UTF-16 types and methods.</p>
 <h1 id="optional-features" class="section-header"><a href="#optional-features">Optional features:</a></h1>
 <ul>
 <li>
 <p><code>#![no_std]</code>-mode: There are a few differences:</p>
 <ul>
-<li><code>AsciiExt</code> doesn't exist, but <code>is_ascii()</code> is made available as an inherent impl.</li>
 <li><code>Error</code> doesn't exist, but <code>description()</code> is made available as an inherent impl.</li>
 <li><code>Extend</code>/<code>FromIterator</code>-implementations for <code>String</code>/<code>Vec&lt;u8&gt;</code>/<code>Vec&lt;u16&gt;</code> are missing.</li>
-<li>There is no <code>io</code>, so <code>Utf8Iterator</code> doesn't implement <code>Read</code>.</li>
+<li>There is no <code>io</code>, so <code>Utf8Iterator</code> and <code>Utf8CharSplitter</code> doesn't implement <code>Read</code>.</li>
 </ul>
 <p>This feature is enabled by setting <code>default-features=false</code> in <code>Cargo.toml</code>:
-<code>encode_unicode = {version=&quot;0.3&quot;, default-features=false}</code></p>
+<code>encode_unicode = {version=&quot;0.3.4&quot;, default-features=false}</code></p>
 </li>
 <li>
 <p>Integration with the <a href="https://tomprogrammer.github.io/rust-ascii/ascii/index.html">ascii</a> crate:<br />
@@ -31,24 +30,16 @@ older versions might work now but can break with a minor update.</p>
                                 <p>Errors returned by various conversion methods in this crate.</p>
 
                            </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="mod" href="iterator/index.html"
+                                  title='mod encode_unicode::iterator'>iterator</a></td>
+                           <td class='docblock-short'>
+                                <p>Iterator types that you should rarely need to name</p>
+
+                           </td>
                        </tr></table><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
-                       <tr class=' module-item'>
-                           <td><a class="struct" href="struct.Utf16Char.html"
-                                  title='struct encode_unicode::Utf16Char'>Utf16Char</a></td>
-                           <td class='docblock-short'>
-                                <p>An unicode codepoint stored as UTF-16.</p>
-
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="struct" href="struct.Utf16Iterator.html"
-                                  title='struct encode_unicode::Utf16Iterator'>Utf16Iterator</a></td>
-                           <td class='docblock-short'>
-                                <p>Iterate over the units of the UTF-16 representation of a codepoint.</p>
-
-                           </td>
-                       </tr>
                        <tr class=' module-item'>
                            <td><a class="struct" href="struct.Utf8Char.html"
                                   title='struct encode_unicode::Utf8Char'>Utf8Char</a></td>
@@ -64,6 +55,22 @@ older versions might work now but can break with a minor update.</p>
                                 <p>Read or iterate over the bytes of the UTF-8 representation of a codepoint.</p>
 
                            </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.Utf16Char.html"
+                                  title='struct encode_unicode::Utf16Char'>Utf16Char</a></td>
+                           <td class='docblock-short'>
+                                <p>An unicode codepoint stored as UTF-16.</p>
+
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.Utf16Iterator.html"
+                                  title='struct encode_unicode::Utf16Iterator'>Utf16Iterator</a></td>
+                           <td class='docblock-short'>
+                                <p>Iterate over the units of the UTF-16 representation of a codepoint.</p>
+
+                           </td>
                        </tr></table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
 <table>
                        <tr class=' module-item'>
@@ -75,10 +82,26 @@ older versions might work now but can break with a minor update.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class="trait" href="trait.U16UtfExt.html"
-                                  title='trait encode_unicode::U16UtfExt'>U16UtfExt</a></td>
+                           <td><a class="trait" href="trait.IterExt.html"
+                                  title='trait encode_unicode::IterExt'>IterExt</a></td>
                            <td class='docblock-short'>
-                                <p>Methods for working with <code>u16</code>s as UTF-16 units.</p>
+                                <p>Iterator methods that convert between <code>u8</code>s and <code>Utf8Char</code> or <code>u16</code>s and <code>Utf16Char</code></p>
+
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="trait" href="trait.SliceExt.html"
+                                  title='trait encode_unicode::SliceExt'>SliceExt</a></td>
+                           <td class='docblock-short'>
+                                <p>Methods for iterating over <code>u8</code> and <code>u16</code> slices as UTF-8 or UTF-16 characters.</p>
+
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="trait" href="trait.StrExt.html"
+                                  title='trait encode_unicode::StrExt'>StrExt</a></td>
+                           <td class='docblock-short'>
+                                <p>Adds <code>.utf8chars()</code> and <code>.utf16chars()</code> iterator constructors to <code>&amp;str</code>.</p>
 
                            </td>
                        </tr>
@@ -87,6 +110,37 @@ older versions might work now but can break with a minor update.</p>
                                   title='trait encode_unicode::U8UtfExt'>U8UtfExt</a></td>
                            <td class='docblock-short'>
                                 <p>Methods for working with <code>u8</code>s as UTF-8 bytes.</p>
+
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="trait" href="trait.U16UtfExt.html"
+                                  title='trait encode_unicode::U16UtfExt'>U16UtfExt</a></td>
+                           <td class='docblock-short'>
+                                <p>Methods for working with <code>u16</code>s as UTF-16 units.</p>
+
+                           </td>
+                       </tr></table><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.iter_bytes.html"
+                                  title='fn encode_unicode::iter_bytes'>iter_bytes</a></td>
+                           <td class='docblock-short'>
+                                <p>Converts an iterator of <code>Utf8Char</code> (or <code>&amp;Utf8Char</code>)
+to an iterator of <code>u8</code>s.<br />
+Is equivalent to calling <code>.flat_map()</code> on the original iterator,
+but the returned iterator is ~40% faster.</p>
+
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.iter_units.html"
+                                  title='fn encode_unicode::iter_units'>iter_units</a></td>
+                           <td class='docblock-short'>
+                                <p>Converts an iterator of <code>Utf16Char</code> (or <code>&amp;Utf16Char</code>)
+to an iterator of <code>u16</code>s.<br />
+Is equivalent to calling <code>.flat_map()</code> on the original iterator,
+but the returned iterator is about twice as fast.</p>
 
                            </td>
                        </tr></table></section><section id="search" class="content hidden"></section><section class="footer"></section><aside id="help" class="hidden"><div><h1 class="hidden">Help</h1><div class="shortcuts"><h2>Keyboard Shortcuts</h2><dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd><dt><kbd>S</kbd></dt><dd>Focus the search field</dd><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd><dt><kbd>↹</kbd></dt><dd>Switch tab</dd><dt><kbd>&#9166;</kbd></dt><dd>Go to active search result</dd><dt><kbd>+</kbd></dt><dd>Expand all sections</dd><dt><kbd>-</kbd></dt><dd>Collapse all sections</dd></dl></div><div class="infos"><h2>Search Tricks</h2><p>Prefix searches with a type followed by a colon (e.g. <code>fn:</code>) to restrict the search to a given type.</p><p>Accepted types are: <code>fn</code>, <code>mod</code>, <code>struct</code>, <code>enum</code>, <code>trait</code>, <code>type</code>, <code>macro</code>, and <code>const</code>.</p><p>Search functions by type signature (e.g. <code>vec -> usize</code> or <code>* -> vec</code>)</p><p>Search multiple things at once by splitting your query with comma (e.g. <code>str,u8</code> or <code>String,struct:Vec,test</code>)</p></div></div></aside><script>window.rootPath = "../";window.currentCrate = "encode_unicode";</script><script src="../aliases.js"></script><script src="../main.js"></script><script defer src="../search-index.js"></script></body></html>
