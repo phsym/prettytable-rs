@@ -15,7 +15,6 @@ use std::fmt;
 use std::iter::{FromIterator, IntoIterator};
 use std::slice::{Iter, IterMut};
 use std::ops::{Index, IndexMut};
-use std::mem::transmute;
 
 pub use term::{Attr, color};
 pub(crate) use term::{Terminal, stdout};
@@ -502,7 +501,7 @@ impl<'a> AsRef<TableSlice<'a>> for Table {
             // All this is a bit hacky. Let's try to find something else
             let s = &mut *((self as *const Table) as *mut Table);
             s.rows.shrink_to_fit();
-            transmute(self)
+            &*(self as *const Table as *const TableSlice<'a>)
         }
     }
 }

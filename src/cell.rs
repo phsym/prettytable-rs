@@ -190,7 +190,7 @@ impl Cell {
 
     /// Set horizontal span for this cell (must be > 0)
     pub fn set_hspan(&mut self, hspan: usize) {
-        self.hspan = if hspan <= 0 {1} else {hspan};
+        self.hspan = if hspan == 0 {1} else {hspan};
     }
 
     /// Get horizontal span of this cell (> 0)
