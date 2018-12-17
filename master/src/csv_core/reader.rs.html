@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/csv-core-0.1.4/src/reader.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>reader.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><input class="search-input" name="search" autocomplete="off" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/csv-core-0.1.5/src/reader.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>reader.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
 <span id="2">   2</span>
 <span id="3">   3</span>
 <span id="4">   4</span>
@@ -1895,6 +1895,10 @@
 <span id="1895">1895</span>
 <span id="1896">1896</span>
 <span id="1897">1897</span>
+<span id="1898">1898</span>
+<span id="1899">1899</span>
+<span id="1900">1900</span>
+<span id="1901">1901</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">fmt</span>;
 
@@ -2888,6 +2892,8 @@
             <span class="ident">StartRecord</span> <span class="op">=&gt;</span> {
                 <span class="kw">if</span> <span class="self">self</span>.<span class="ident">term</span>.<span class="ident">equals</span>(<span class="ident">c</span>) {
                     (<span class="ident">StartRecord</span>, <span class="ident">NfaInputAction</span>::<span class="ident">Discard</span>)
+                } <span class="kw">else</span> <span class="kw">if</span> <span class="self">self</span>.<span class="ident">comment</span> <span class="op">==</span> <span class="prelude-val">Some</span>(<span class="ident">c</span>) {
+                    (<span class="ident">InComment</span>, <span class="ident">NfaInputAction</span>::<span class="ident">Discard</span>)
                 } <span class="kw">else</span> {
                     (<span class="ident">StartField</span>, <span class="ident">NfaInputAction</span>::<span class="ident">Epsilon</span>)
                 }
@@ -2902,8 +2908,6 @@
                     (<span class="ident">EndFieldDelim</span>, <span class="ident">NfaInputAction</span>::<span class="ident">Discard</span>)
                 } <span class="kw">else</span> <span class="kw">if</span> <span class="self">self</span>.<span class="ident">term</span>.<span class="ident">equals</span>(<span class="ident">c</span>) {
                     (<span class="ident">EndFieldTerm</span>, <span class="ident">NfaInputAction</span>::<span class="ident">Epsilon</span>)
-                } <span class="kw">else</span> <span class="kw">if</span> <span class="self">self</span>.<span class="ident">comment</span> <span class="op">==</span> <span class="prelude-val">Some</span>(<span class="ident">c</span>) {
-                    (<span class="ident">InComment</span>, <span class="ident">NfaInputAction</span>::<span class="ident">Discard</span>)
                 } <span class="kw">else</span> {
                     (<span class="ident">InField</span>, <span class="ident">NfaInputAction</span>::<span class="ident">CopyToOutput</span>)
                 }
@@ -3521,6 +3525,10 @@
         <span class="string">&quot;foo\n# hi\nbar\n&quot;</span>,
         <span class="macro">csv</span><span class="macro">!</span>[[<span class="string">&quot;foo&quot;</span>], [<span class="string">&quot;# hi&quot;</span>], [<span class="string">&quot;bar&quot;</span>]],
         <span class="op">|</span><span class="ident">b</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ReaderBuilder</span><span class="op">|</span> { <span class="ident">b</span>.<span class="ident">comment</span>(<span class="prelude-val">Some</span>(<span class="string">b&#39;\n&#39;</span>)); });
+    <span class="macro">parses_to</span><span class="macro">!</span>(<span class="ident">comment_4</span>, <span class="string">&quot;foo,b#ar,baz&quot;</span>, <span class="macro">csv</span><span class="macro">!</span>[[<span class="string">&quot;foo&quot;</span>, <span class="string">&quot;b#ar&quot;</span>, <span class="string">&quot;baz&quot;</span>]],
+               <span class="op">|</span><span class="ident">b</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ReaderBuilder</span><span class="op">|</span> { <span class="ident">b</span>.<span class="ident">comment</span>(<span class="prelude-val">Some</span>(<span class="string">b&#39;#&#39;</span>)); });
+    <span class="macro">parses_to</span><span class="macro">!</span>(<span class="ident">comment_5</span>, <span class="string">&quot;foo,#bar,baz&quot;</span>, <span class="macro">csv</span><span class="macro">!</span>[[<span class="string">&quot;foo&quot;</span>, <span class="string">&quot;#bar&quot;</span>, <span class="string">&quot;baz&quot;</span>]],
+               <span class="op">|</span><span class="ident">b</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ReaderBuilder</span><span class="op">|</span> { <span class="ident">b</span>.<span class="ident">comment</span>(<span class="prelude-val">Some</span>(<span class="string">b&#39;#&#39;</span>)); });
 
     <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">assert_read</span> {
         (

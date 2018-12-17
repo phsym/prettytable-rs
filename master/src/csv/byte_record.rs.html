@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/csv-1.0.2/src/byte_record.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>byte_record.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><input class="search-input" name="search" autocomplete="off" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/csv-1.0.5/src/byte_record.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>byte_record.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
 <span id="2">   2</span>
 <span id="3">   3</span>
 <span id="4">   4</span>
@@ -1139,6 +1139,36 @@
 <span id="1139">1139</span>
 <span id="1140">1140</span>
 <span id="1141">1141</span>
+<span id="1142">1142</span>
+<span id="1143">1143</span>
+<span id="1144">1144</span>
+<span id="1145">1145</span>
+<span id="1146">1146</span>
+<span id="1147">1147</span>
+<span id="1148">1148</span>
+<span id="1149">1149</span>
+<span id="1150">1150</span>
+<span id="1151">1151</span>
+<span id="1152">1152</span>
+<span id="1153">1153</span>
+<span id="1154">1154</span>
+<span id="1155">1155</span>
+<span id="1156">1156</span>
+<span id="1157">1157</span>
+<span id="1158">1158</span>
+<span id="1159">1159</span>
+<span id="1160">1160</span>
+<span id="1161">1161</span>
+<span id="1162">1162</span>
+<span id="1163">1163</span>
+<span id="1164">1164</span>
+<span id="1165">1165</span>
+<span id="1166">1166</span>
+<span id="1167">1167</span>
+<span id="1168">1168</span>
+<span id="1169">1169</span>
+<span id="1170">1170</span>
+<span id="1171">1171</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ascii</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">cmp</span>;
@@ -1236,7 +1266,13 @@
 <span class="doccomment">/// it.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// If you are using the Serde (de)serialization APIs, then you probably never</span>
-<span class="doccomment">/// need to interact with a `ByteRecord` or a `StringRecord`.</span>
+<span class="doccomment">/// need to interact with a `ByteRecord` or a `StringRecord`. However, there</span>
+<span class="doccomment">/// are some circumstances in which you might need to use a raw record type</span>
+<span class="doccomment">/// while still using Serde. For example, if you need to deserialize possibly</span>
+<span class="doccomment">/// invalid UTF-8 fields, then you&#39;ll need to first read your record into a</span>
+<span class="doccomment">/// `ByteRecord`, and then use `ByteRecord::deserialize` to run Serde. Another</span>
+<span class="doccomment">/// reason for using the raw record deserialization APIs is if you&#39;re using</span>
+<span class="doccomment">/// Serde to read into borrowed data such as a `&amp;&#39;a str` or a `&amp;&#39;a [u8]`.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// Two `ByteRecord`s are compared on the basis of their field data. Any</span>
 <span class="doccomment">/// position information associated with the records is ignored.</span>
@@ -1245,7 +1281,10 @@
 
 <span class="kw">impl</span> <span class="ident">PartialEq</span> <span class="kw">for</span> <span class="ident">ByteRecord</span> {
     <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">ByteRecord</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
-        <span class="self">self</span>.<span class="ident">as_slice</span>() <span class="op">==</span> <span class="ident">other</span>.<span class="ident">as_slice</span>()
+        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">len</span>() <span class="op">!=</span> <span class="ident">other</span>.<span class="ident">len</span>() {
+            <span class="kw">return</span> <span class="bool-val">false</span>;
+        }
+        <span class="self">self</span>.<span class="ident">iter</span>().<span class="ident">zip</span>(<span class="ident">other</span>.<span class="ident">iter</span>()).<span class="ident">all</span>(<span class="op">|</span><span class="ident">e</span><span class="op">|</span> <span class="ident">e</span>.<span class="number">0</span> <span class="op">==</span> <span class="ident">e</span>.<span class="number">1</span>)
     }
 }
 
@@ -2279,6 +2318,27 @@
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">it</span>.<span class="ident">next</span>(), <span class="prelude-val">Some</span>(<span class="ident">b</span>(<span class="string">&quot;baz&quot;</span>)));
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">it</span>.<span class="ident">next_back</span>(), <span class="prelude-val">None</span>);
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">it</span>.<span class="ident">next</span>(), <span class="prelude-val">None</span>);
+    }
+
+    <span class="comment">// Check that record equality respects field boundaries.</span>
+    <span class="comment">//</span>
+    <span class="comment">// Regression test for #138.</span>
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">eq_field_boundaries</span>() {
+        <span class="kw">let</span> <span class="ident">test1</span> <span class="op">=</span> <span class="ident">ByteRecord</span>::<span class="ident">from</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;12&quot;</span>,<span class="string">&quot;34&quot;</span>]);
+        <span class="kw">let</span> <span class="ident">test2</span> <span class="op">=</span> <span class="ident">ByteRecord</span>::<span class="ident">from</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;123&quot;</span>,<span class="string">&quot;4&quot;</span>]);
+
+        <span class="macro">assert_ne</span><span class="macro">!</span>(<span class="ident">test1</span>, <span class="ident">test2</span>);
+    }
+
+    <span class="comment">// Check that record equality respects number of fields.</span>
+    <span class="comment">//</span>
+    <span class="comment">// Regression test for #138.</span>
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">eq_record_len</span>() {
+        <span class="kw">let</span> <span class="ident">test1</span> <span class="op">=</span> <span class="ident">ByteRecord</span>::<span class="ident">from</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;12&quot;</span>,<span class="string">&quot;34&quot;</span>, <span class="string">&quot;56&quot;</span>]);
+        <span class="kw">let</span> <span class="ident">test2</span> <span class="op">=</span> <span class="ident">ByteRecord</span>::<span class="ident">from</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;12&quot;</span>,<span class="string">&quot;34&quot;</span>]);
+        <span class="macro">assert_ne</span><span class="macro">!</span>(<span class="ident">test1</span>, <span class="ident">test2</span>);
     }
 }
 </pre>
