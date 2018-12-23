@@ -286,6 +286,41 @@ impl Table {
         &mut self.rows[l]
     }
 
+    pub fn add_column<S : AsRef<str>>(&mut self, mut column: Vec<S>) {
+
+        // padds the other rows so the data stays straight
+        if column.len() > self.rows.len() && self.rows.len() > 0 {
+            let difference = column.len() - self.rows.len();
+            let row_width = self.rows[0].len();
+            let mut row = Row::empty();
+            for _ in 0 .. row_width {
+                row.add_cell(Cell::new(""));
+            }
+
+            for _ in 0 .. difference {
+                
+                self.rows.push(row.clone());
+            }
+        }
+
+        // adds the cells
+        if self.rows.len() == 0 {
+            for cell in column.drain(..) {
+                let cell = cell.as_ref();
+                let row = Row::new(vec![Cell::new(cell)]);
+                self.rows.push(row);
+            }
+        } else {
+            let mut i = 0;
+            for cell in column.drain(..) {
+                let cell = cell.as_ref();
+                self.rows[i].add_cell(Cell::new(cell));
+                i += 1;
+            }
+        }
+
+    }
+
     /// Append an empty row in the table. Return a mutable reference to this new row.
     pub fn add_empty_row(&mut self) -> &mut Row {
         self.add_row(Row::default())
