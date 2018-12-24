@@ -305,17 +305,22 @@ impl Table {
 
         // adds the cells
         if self.rows.len() == 0 {
+            // if the table is empty
             for cell in column.drain(..) {
                 let cell = cell.as_ref();
                 let row = Row::new(vec![Cell::new(cell)]);
                 self.rows.push(row);
             }
         } else {
+            // if the table isn't empty
             let mut i = 0;
             for cell in column.drain(..) {
                 let cell = cell.as_ref();
                 self.rows[i].add_cell(Cell::new(cell));
                 i += 1;
+            }
+            for j in i .. self.rows.len() {
+                self.rows[j].add_cell(Cell::new(""));
             }
         }
 
@@ -1021,5 +1026,20 @@ mod tests {
         println!("{}", table.to_string().replace("\r\n","\n"));
         assert_eq!(out, table.to_string().replace("\r\n","\n"));
         assert_eq!(7, table.print(&mut StringWriter::new()).unwrap());
+    }
+
+
+    #[test]
+    fn add_columns() {
+        let mut table = Table::new();
+        table.add_column(vec!["foobar","foobar2"]);
+        table.add_column(vec!["bar","bar2","bar3","bar4","bar5"]);
+        table.add_column(vec!["foo","foo2","foo3"]);
+
+        for i in 0 .. 5 {
+            println!("{}",i);
+            assert_eq!(3, table.get_row(i).unwrap().len());
+        }
+
     }
 }
