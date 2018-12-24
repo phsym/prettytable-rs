@@ -286,7 +286,8 @@ impl Table {
         &mut self.rows[l]
     }
 
-    pub fn add_column<S : AsRef<str>>(&mut self, mut column: Vec<S>) {
+    /// Adding a column to the table.
+    pub fn add_column(&mut self, mut column: Vec<Cell>) {
 
         // padds the other rows so the data stays straight
         if column.len() > self.rows.len() && self.rows.len() > 0 {
@@ -307,16 +308,14 @@ impl Table {
         if self.rows.len() == 0 {
             // if the table is empty
             for cell in column.drain(..) {
-                let cell = cell.as_ref();
-                let row = Row::new(vec![Cell::new(cell)]);
+                let row = Row::new(vec![cell]);
                 self.rows.push(row);
             }
         } else {
             // if the table isn't empty
             let mut i = 0;
             for cell in column.drain(..) {
-                let cell = cell.as_ref();
-                self.rows[i].add_cell(Cell::new(cell));
+                self.rows[i].add_cell(cell);
                 i += 1;
             }
             for j in i .. self.rows.len() {
@@ -623,6 +622,15 @@ macro_rules! ptable {
             tab
         }
     );
+}
+
+/// Creates a column from a list of str or Strings
+macro_rules! column {
+    ($($content:tt),*) => ({
+        let mut vec : Vec<$crate::Cell> = Vec::new();
+        $(vec.push(cell![$content]);)*
+        vec
+    });
 }
 
 #[cfg(test)]
@@ -1031,10 +1039,12 @@ mod tests {
 
     #[test]
     fn add_columns() {
+        #[macro_use] use cell;
+
         let mut table = Table::new();
-        table.add_column(vec!["foobar","foobar2"]);
-        table.add_column(vec!["bar","bar2","bar3","bar4","bar5"]);
-        table.add_column(vec!["foo","foo2","foo3"]);
+        table.add_column(vec![Cell::new("foobar"),Cell::new("foobar2")]);
+        table.add_column(column!["bar","bar2","bar3","bar4","bar5"]);
+        table.add_column(column!["foo","foo2","foo3"]);
 
         for i in 0 .. 5 {
             println!("{}",i);
