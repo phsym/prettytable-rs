@@ -314,7 +314,7 @@ macro_rules! cell {
         $crate::Cell::new(&$value.to_string())
     };
     ($style:ident -> $value:expr) => {
-        cell!($value).style_spec(stringify!($style))
+        $crate::cell!($value).style_spec(stringify!($style))
     };
 }
 

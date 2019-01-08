@@ -567,7 +567,7 @@ impl<'a, T, E> Slice<'a, E> for T
 #[macro_export]
 macro_rules! table {
     ($([$($content:tt)*]), *) => (
-        $crate::Table::init(vec![$(row![$($content)*]), *])
+        $crate::Table::init(vec![$($crate::row![$($content)*]), *])
     );
 }
 
@@ -578,7 +578,7 @@ macro_rules! table {
 macro_rules! ptable {
     ($($content:tt)*) => (
         {
-            let tab = table!($($content)*);
+            let tab = $crate::table!($($content)*);
             tab.printstd();
             tab
         }
