@@ -24,6 +24,9 @@ mod utils;
 #[cfg(feature = "csv")]
 pub mod csv;
 
+#[cfg(feature = "evcxr")]
+pub mod evcxr;
+
 pub use row::Row;
 pub use cell::Cell;
 use format::{TableFormat, LinePosition, consts};

@@ -20,6 +20,7 @@ codecov = { repository = "phsym/prettytable-rs", branch = "master", service = "g
 
 [features]
 default = ["win_crlf", "csv"]
+evcxr = []
 win_crlf = []
 
 [[bin]]
