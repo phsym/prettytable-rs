@@ -1,4 +1,5 @@
 //! Internal only utilities
+use std::fmt;
 use std::io::{Error, ErrorKind, Write};
 use std::str;
 
@@ -103,6 +104,43 @@ pub fn display_width(text: &str) -> usize {
     }
 
     width - hidden
+}
+
+/// Wrapper struct which will emit the HTML-escaped version of the contained
+/// string when passed to a format string.
+pub struct HtmlEscape<'a>(pub &'a str);
+
+impl<'a> fmt::Display for HtmlEscape<'a> {
+    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+        // Because the internet is always right, turns out there's not that many
+        // characters to escape: http://stackoverflow.com/questions/7381974
+        let HtmlEscape(s) = *self;
+        let pile_o_bits = s;
+        let mut last = 0;
+        for (i, ch) in s.bytes().enumerate() {
+            match ch as char {
+                '<' | '>' | '&' | '\'' | '"' => {
+                    fmt.write_str(&pile_o_bits[last.. i])?;
+                    let s = match ch as char {
+                        '>' => "&gt;",
+                        '<' => "&lt;",
+                        '&' => "&amp;",
+                        '\'' => "&#39;",
+                        '"' => "&quot;",
+                        _ => unreachable!()
+                    };
+                    fmt.write_str(s)?;
+                    last = i + 1;
+                }
+                _ => {}
+            }
+        }
+
+        if last < s.len() {
+            fmt.write_str(&pile_o_bits[last..])?;
+        }
+        Ok(())
+    }
 }
 
 #[cfg(test)]
