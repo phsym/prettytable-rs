@@ -9,7 +9,7 @@ the <code>Writer</code> API provides a CSV writer.</p>
 <h1 id="example-reading-csv" class="section-header"><a href="#example-reading-csv">Example: reading CSV</a></h1>
 <p>This example shows how to count the number of fields and records in CSV data.</p>
 
-<pre class="rust rust-example-rendered">
+<div class="example-wrap"><pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class="ident">csv_core</span>::{<span class="ident">Reader</span>, <span class="ident">ReadFieldResult</span>};
 
 <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="string">&quot;
@@ -39,12 +39,12 @@ xxx,yyy,zzz
     }
 }
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="number">3</span>, <span class="ident">count_records</span>);
-<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="number">9</span>, <span class="ident">count_fields</span>);</pre>
+<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="number">9</span>, <span class="ident">count_fields</span>);</pre></div>
 <h1 id="example-writing-csv" class="section-header"><a href="#example-writing-csv">Example: writing CSV</a></h1>
 <p>This example shows how to use the <code>Writer</code> API to write valid CSV data. Proper
 quoting is handled automatically.</p>
 
-<pre class="rust rust-example-rendered">
+<div class="example-wrap"><pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class="ident">csv_core</span>::<span class="ident">Writer</span>;
 
 <span class="comment">// This is where we&#39;ll write out CSV data.</span>
@@ -82,114 +82,23 @@ quoting is handled automatically.</p>
 
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="ident">out</span>[..<span class="ident">nout</span>], <span class="kw-2">&amp;</span><span class="string">b&quot;\
 foo,\&quot;bar,baz\&quot;
-\&quot;a \&quot;\&quot;b\&quot;\&quot; c\&quot;,quux&quot;</span>[..]);</pre>
+\&quot;a \&quot;\&quot;b\&quot;\&quot; c\&quot;,quux&quot;</span>[..]);</pre></div>
 </div><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
-<table>
-                       <tr class=' module-item'>
-                           <td><a class="struct" href="struct.Reader.html"
-                                  title='struct csv_core::Reader'>Reader</a></td>
-                           <td class='docblock-short'>
-                                <p>A pull based CSV reader.</p>
-
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="struct" href="struct.ReaderBuilder.html"
-                                  title='struct csv_core::ReaderBuilder'>ReaderBuilder</a></td>
-                           <td class='docblock-short'>
-                                <p>Builds a CSV reader with various configuration knobs.</p>
-
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="struct" href="struct.Writer.html"
-                                  title='struct csv_core::Writer'>Writer</a></td>
-                           <td class='docblock-short'>
-                                <p>A writer for CSV data.</p>
-
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="struct" href="struct.WriterBuilder.html"
-                                  title='struct csv_core::WriterBuilder'>WriterBuilder</a></td>
-                           <td class='docblock-short'>
-                                <p>A builder for configuring a CSV writer.</p>
-
-                           </td>
-                       </tr></table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
-<table>
-                       <tr class=' module-item'>
-                           <td><a class="enum" href="enum.QuoteStyle.html"
-                                  title='enum csv_core::QuoteStyle'>QuoteStyle</a></td>
-                           <td class='docblock-short'>
-                                <p>The quoting style to use when writing CSV data.</p>
-
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="enum" href="enum.ReadFieldNoCopyResult.html"
-                                  title='enum csv_core::ReadFieldNoCopyResult'>ReadFieldNoCopyResult</a></td>
-                           <td class='docblock-short'>
-                                <p>The result of parsing at most one field from CSV data while ignoring the
+<table><tr class='module-item'><td><a class="struct" href="struct.Reader.html" title='csv_core::Reader struct'>Reader</a></td><td class='docblock-short'><p>A pull based CSV reader.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.ReaderBuilder.html" title='csv_core::ReaderBuilder struct'>ReaderBuilder</a></td><td class='docblock-short'><p>Builds a CSV reader with various configuration knobs.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.Writer.html" title='csv_core::Writer struct'>Writer</a></td><td class='docblock-short'><p>A writer for CSV data.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.WriterBuilder.html" title='csv_core::WriterBuilder struct'>WriterBuilder</a></td><td class='docblock-short'><p>A builder for configuring a CSV writer.</p>
+</td></tr></table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
+<table><tr class='module-item'><td><a class="enum" href="enum.QuoteStyle.html" title='csv_core::QuoteStyle enum'>QuoteStyle</a></td><td class='docblock-short'><p>The quoting style to use when writing CSV data.</p>
+</td></tr><tr class='module-item'><td><a class="enum" href="enum.ReadFieldNoCopyResult.html" title='csv_core::ReadFieldNoCopyResult enum'>ReadFieldNoCopyResult</a></td><td class='docblock-short'><p>The result of parsing at most one field from CSV data while ignoring the
 output.</p>
-
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="enum" href="enum.ReadFieldResult.html"
-                                  title='enum csv_core::ReadFieldResult'>ReadFieldResult</a></td>
-                           <td class='docblock-short'>
-                                <p>The result of parsing at most one field from CSV data.</p>
-
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="enum" href="enum.ReadRecordNoCopyResult.html"
-                                  title='enum csv_core::ReadRecordNoCopyResult'>ReadRecordNoCopyResult</a></td>
-                           <td class='docblock-short'>
-                                <p>The result of parsing at most one record from CSV data while ignoring
+</td></tr><tr class='module-item'><td><a class="enum" href="enum.ReadFieldResult.html" title='csv_core::ReadFieldResult enum'>ReadFieldResult</a></td><td class='docblock-short'><p>The result of parsing at most one field from CSV data.</p>
+</td></tr><tr class='module-item'><td><a class="enum" href="enum.ReadRecordNoCopyResult.html" title='csv_core::ReadRecordNoCopyResult enum'>ReadRecordNoCopyResult</a></td><td class='docblock-short'><p>The result of parsing at most one record from CSV data while ignoring
 output.</p>
-
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="enum" href="enum.ReadRecordResult.html"
-                                  title='enum csv_core::ReadRecordResult'>ReadRecordResult</a></td>
-                           <td class='docblock-short'>
-                                <p>The result of parsing at most one record from CSV data.</p>
-
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="enum" href="enum.Terminator.html"
-                                  title='enum csv_core::Terminator'>Terminator</a></td>
-                           <td class='docblock-short'>
-                                <p>A record terminator.</p>
-
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="enum" href="enum.WriteResult.html"
-                                  title='enum csv_core::WriteResult'>WriteResult</a></td>
-                           <td class='docblock-short'>
-                                <p>The result of writing CSV data.</p>
-
-                           </td>
-                       </tr></table><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
-<table>
-                       <tr class=' module-item'>
-                           <td><a class="fn" href="fn.is_non_numeric.html"
-                                  title='fn csv_core::is_non_numeric'>is_non_numeric</a></td>
-                           <td class='docblock-short'>
-                                <p>Returns true if and only if the given input is non-numeric.</p>
-
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="fn" href="fn.quote.html"
-                                  title='fn csv_core::quote'>quote</a></td>
-                           <td class='docblock-short'>
-                                <p>Escape quotes <code>input</code> and writes the result to <code>output</code>.</p>
-
-                           </td>
-                       </tr></table></section><section id="search" class="content hidden"></section><section class="footer"></section><aside id="help" class="hidden"><div><h1 class="hidden">Help</h1><div class="shortcuts"><h2>Keyboard Shortcuts</h2><dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd><dt><kbd>S</kbd></dt><dd>Focus the search field</dd><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd><dt><kbd>↹</kbd></dt><dd>Switch tab</dd><dt><kbd>&#9166;</kbd></dt><dd>Go to active search result</dd><dt><kbd>+</kbd></dt><dd>Expand all sections</dd><dt><kbd>-</kbd></dt><dd>Collapse all sections</dd></dl></div><div class="infos"><h2>Search Tricks</h2><p>Prefix searches with a type followed by a colon (e.g. <code>fn:</code>) to restrict the search to a given type.</p><p>Accepted types are: <code>fn</code>, <code>mod</code>, <code>struct</code>, <code>enum</code>, <code>trait</code>, <code>type</code>, <code>macro</code>, and <code>const</code>.</p><p>Search functions by type signature (e.g. <code>vec -> usize</code> or <code>* -> vec</code>)</p><p>Search multiple things at once by splitting your query with comma (e.g. <code>str,u8</code> or <code>String,struct:Vec,test</code>)</p></div></div></aside><script>window.rootPath = "../";window.currentCrate = "csv_core";</script><script src="../aliases.js"></script><script src="../main.js"></script><script defer src="../search-index.js"></script></body></html>
+</td></tr><tr class='module-item'><td><a class="enum" href="enum.ReadRecordResult.html" title='csv_core::ReadRecordResult enum'>ReadRecordResult</a></td><td class='docblock-short'><p>The result of parsing at most one record from CSV data.</p>
+</td></tr><tr class='module-item'><td><a class="enum" href="enum.Terminator.html" title='csv_core::Terminator enum'>Terminator</a></td><td class='docblock-short'><p>A record terminator.</p>
+</td></tr><tr class='module-item'><td><a class="enum" href="enum.WriteResult.html" title='csv_core::WriteResult enum'>WriteResult</a></td><td class='docblock-short'><p>The result of writing CSV data.</p>
+</td></tr></table><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
+<table><tr class='module-item'><td><a class="fn" href="fn.is_non_numeric.html" title='csv_core::is_non_numeric fn'>is_non_numeric</a></td><td class='docblock-short'><p>Returns true if and only if the given input is non-numeric.</p>
+</td></tr><tr class='module-item'><td><a class="fn" href="fn.quote.html" title='csv_core::quote fn'>quote</a></td><td class='docblock-short'><p>Escape quotes <code>input</code> and writes the result to <code>output</code>.</p>
+</td></tr></table></section><section id="search" class="content hidden"></section><section class="footer"></section><aside id="help" class="hidden"><div><h1 class="hidden">Help</h1><div class="shortcuts"><h2>Keyboard Shortcuts</h2><dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd><dt><kbd>S</kbd></dt><dd>Focus the search field</dd><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd><dt><kbd>↹</kbd></dt><dd>Switch tab</dd><dt><kbd>&#9166;</kbd></dt><dd>Go to active search result</dd><dt><kbd>+</kbd></dt><dd>Expand all sections</dd><dt><kbd>-</kbd></dt><dd>Collapse all sections</dd></dl></div><div class="infos"><h2>Search Tricks</h2><p>Prefix searches with a type followed by a colon (e.g. <code>fn:</code>) to restrict the search to a given type.</p><p>Accepted types are: <code>fn</code>, <code>mod</code>, <code>struct</code>, <code>enum</code>, <code>trait</code>, <code>type</code>, <code>macro</code>, and <code>const</code>.</p><p>Search functions by type signature (e.g. <code>vec -> usize</code> or <code>* -> vec</code>)</p><p>Search multiple things at once by splitting your query with comma (e.g. <code>str,u8</code> or <code>String,struct:Vec,test</code>)</p></div></div></aside><script>window.rootPath = "../";window.currentCrate = "csv_core";</script><script src="../aliases.js"></script><script src="../main.js"></script><script defer src="../search-index.js"></script></body></html>
