@@ -1,14 +1,13 @@
 var N = null;var sourcesIndex = {};
 sourcesIndex['atty'] = {"name":"","dirs":[],"files":["lib.rs"]};
 sourcesIndex['byteorder'] = {"name":"","dirs":[],"files":["io.rs","lib.rs"]};
-sourcesIndex['cfg_if'] = {"name":"","dirs":[],"files":["lib.rs"]};
 sourcesIndex['csv'] = {"name":"","dirs":[],"files":["byte_record.rs","cookbook.rs","deserializer.rs","error.rs","lib.rs","reader.rs","serializer.rs","string_record.rs","tutorial.rs","writer.rs"]};
 sourcesIndex['csv_core'] = {"name":"","dirs":[],"files":["lib.rs","reader.rs","writer.rs"]};
 sourcesIndex['encode_unicode'] = {"name":"","dirs":[],"files":["decoding_iterators.rs","errors.rs","lib.rs","traits.rs","utf16_char.rs","utf16_iterators.rs","utf8_char.rs","utf8_iterators.rs"]};
 sourcesIndex['lazy_static'] = {"name":"","dirs":[],"files":["inline_lazy.rs","lib.rs"]};
-sourcesIndex['libc'] = {"name":"","dirs":[{"name":"unix","dirs":[{"name":"notbsd","dirs":[{"name":"linux","dirs":[{"name":"other","dirs":[{"name":"b64","dirs":[],"files":["mod.rs","not_x32.rs","x86_64.rs"]}],"files":["mod.rs"]}],"files":["mod.rs"]}],"files":["mod.rs"]}],"files":["mod.rs"]}],"files":["dox.rs","lib.rs","macros.rs"]};
+sourcesIndex['libc'] = {"name":"","dirs":[{"name":"unix","dirs":[{"name":"notbsd","dirs":[{"name":"linux","dirs":[{"name":"other","dirs":[{"name":"b64","dirs":[],"files":["mod.rs","not_x32.rs","x86_64.rs"]}],"files":["align.rs","mod.rs"]}],"files":["align.rs","mod.rs"]}],"files":["mod.rs"]}],"files":["align.rs","mod.rs"]}],"files":["lib.rs","macros.rs"]};
 sourcesIndex['main'] = {"name":"","dirs":[],"files":["main.rs"]};
-sourcesIndex['memchr'] = {"name":"","dirs":[],"files":["c.rs","fallback.rs","iter.rs","lib.rs","naive.rs"]};
+sourcesIndex['memchr'] = {"name":"","dirs":[{"name":"x86","dirs":[],"files":["mod.rs","sse2.rs"]}],"files":["c.rs","fallback.rs","iter.rs","lib.rs","naive.rs"]};
 sourcesIndex['prettytable'] = {"name":"","dirs":[],"files":["cell.rs","csv.rs","format.rs","lib.rs","row.rs","utils.rs"]};
 sourcesIndex['serde'] = {"name":"","dirs":[{"name":"de","dirs":[],"files":["from_primitive.rs","ignored_any.rs","impls.rs","mod.rs","utf8.rs","value.rs"]},{"name":"private","dirs":[],"files":["de.rs","macros.rs","mod.rs","ser.rs"]},{"name":"ser","dirs":[],"files":["impls.rs","impossible.rs","mod.rs"]}],"files":["export.rs","integer128.rs","lib.rs","macros.rs"]};
 sourcesIndex['term'] = {"name":"","dirs":[{"name":"terminfo","dirs":[{"name":"parser","dirs":[],"files":["compiled.rs","names.rs"]}],"files":["mod.rs","parm.rs","searcher.rs"]}],"files":["lib.rs"]};

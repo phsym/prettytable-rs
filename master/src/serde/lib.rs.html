@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/serde-1.0.85/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/serde-1.0.88/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -251,17 +251,6 @@
 <span id="251">251</span>
 <span id="252">252</span>
 <span id="253">253</span>
-<span id="254">254</span>
-<span id="255">255</span>
-<span id="256">256</span>
-<span id="257">257</span>
-<span id="258">258</span>
-<span id="259">259</span>
-<span id="260">260</span>
-<span id="261">261</span>
-<span id="262">262</span>
-<span id="263">263</span>
-<span id="264">264</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! # Serde</span>
 <span class="doccomment">//!</span>
@@ -340,7 +329,7 @@
 <span class="comment">////////////////////////////////////////////////////////////////////////////////</span>
 
 <span class="comment">// Serde types in rustdoc of other crates get linked to here.</span>
-<span class="attribute">#![<span class="ident">doc</span>(<span class="ident">html_root_url</span> <span class="op">=</span> <span class="string">&quot;https://docs.rs/serde/1.0.85&quot;</span>)]</span>
+<span class="attribute">#![<span class="ident">doc</span>(<span class="ident">html_root_url</span> <span class="op">=</span> <span class="string">&quot;https://docs.rs/serde/1.0.88&quot;</span>)]</span>
 <span class="comment">// Support using Serde without the standard library!</span>
 <span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>), <span class="ident">no_std</span>)]</span>
 <span class="comment">// Unstable functionality only if the user asks for it. For tracking and</span>
@@ -351,52 +340,35 @@
 <span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;alloc&quot;</span>, <span class="ident">feature</span>(<span class="ident">alloc</span>))]</span>
 <span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;cargo-clippy&quot;</span>, <span class="ident">allow</span>(<span class="ident">renamed_and_removed_lints</span>))]</span>
 <span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;cargo-clippy&quot;</span>, <span class="ident">deny</span>(<span class="ident">clippy</span>, <span class="ident">clippy_pedantic</span>))]</span>
-<span class="comment">// Ignored clippy lints</span>
+<span class="comment">// Ignored clippy and clippy_pedantic lints</span>
 <span class="attribute">#![<span class="ident">cfg_attr</span>(
     <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;cargo-clippy&quot;</span>,
     <span class="ident">allow</span>(
-        <span class="ident">cast_lossless</span>,
+        <span class="comment">// not available in our oldest supported compiler</span>
         <span class="ident">const_static_lifetime</span>,
-        <span class="ident">doc_markdown</span>,
-        <span class="ident">linkedlist</span>,
-        <span class="ident">needless_pass_by_value</span>,
+        <span class="ident">empty_enum</span>,
         <span class="ident">redundant_field_names</span>,
+        <span class="comment">// integer and float ser/de requires these sorts of casts</span>
+        <span class="ident">cast_possible_truncation</span>,
+        <span class="ident">cast_possible_wrap</span>,
+        <span class="ident">cast_precision_loss</span>,
+        <span class="ident">cast_sign_loss</span>,
+        <span class="comment">// things are often more readable this way</span>
+        <span class="ident">cast_lossless</span>,
+        <span class="ident">module_name_repetitions</span>,
+        <span class="ident">single_match_else</span>,
         <span class="ident">type_complexity</span>,
-        <span class="ident">unreadable_literal</span>,
-        <span class="ident">zero_prefixed_literal</span>
+        <span class="ident">use_self</span>,
+        <span class="ident">zero_prefixed_literal</span>,
+        <span class="comment">// not practical</span>
+        <span class="ident">needless_pass_by_value</span>,
+        <span class="ident">similar_names</span>,
+        <span class="comment">// preference</span>
+        <span class="ident">doc_markdown</span>,
     )
 )]</span>
-<span class="comment">// Ignored clippy_pedantic lints</span>
-<span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;cargo-clippy&quot;</span>, <span class="ident">allow</span>(
-<span class="comment">// integer and float ser/de requires these sorts of casts</span>
-    <span class="ident">cast_possible_truncation</span>,
-    <span class="ident">cast_possible_wrap</span>,
-    <span class="ident">cast_precision_loss</span>,
-    <span class="ident">cast_sign_loss</span>,
-<span class="comment">// simplifies some macros</span>
-    <span class="ident">invalid_upcast_comparisons</span>,
-<span class="comment">// things are often more readable this way</span>
-    <span class="ident">decimal_literal_representation</span>,
-    <span class="ident">module_name_repetitions</span>,
-    <span class="ident">option_unwrap_used</span>,
-    <span class="ident">result_unwrap_used</span>,
-    <span class="ident">shadow_reuse</span>,
-    <span class="ident">single_match_else</span>,
-    <span class="ident">use_self</span>,
-<span class="comment">// not practical</span>
-    <span class="ident">indexing_slicing</span>,
-    <span class="ident">many_single_char_names</span>,
-    <span class="ident">missing_docs_in_private_items</span>,
-    <span class="ident">similar_names</span>,
-<span class="comment">// alternative is not stable</span>
-    <span class="ident">empty_enum</span>,
-    <span class="ident">use_debug</span>,
-))]</span>
-<span class="comment">// Blacklisted Rust lints.</span>
-<span class="comment">//</span>
-<span class="comment">// Compiler bug involving unused_imports:</span>
-<span class="comment">// https://github.com/rust-lang/rust/issues/51661</span>
-<span class="attribute">#![<span class="ident">deny</span>(<span class="ident">missing_docs</span>, <span class="comment">/*unused_imports*/</span>)]</span>
+<span class="comment">// Rustc lints.</span>
+<span class="attribute">#![<span class="ident">deny</span>(<span class="ident">missing_docs</span>, <span class="ident">unused_imports</span>)]</span>
 
 <span class="comment">////////////////////////////////////////////////////////////////////////////////</span>
 
@@ -489,6 +461,12 @@
 
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">range_inclusive</span>)]</span>
     <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">core</span>::<span class="ident">ops</span>::<span class="ident">RangeInclusive</span>;
+
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>, <span class="ident">collections_bound</span>))]</span>
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">Bound</span>;
+
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">ops_bound</span>)]</span>
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">core</span>::<span class="ident">ops</span>::<span class="ident">Bound</span>;
 }
 
 <span class="comment">////////////////////////////////////////////////////////////////////////////////</span>

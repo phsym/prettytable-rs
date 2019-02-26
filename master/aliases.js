@@ -1,7 +1,6 @@
 var ALIASES = {};
 ALIASES['atty'] = {};
 ALIASES['byteorder'] = {};
-ALIASES['cfg_if'] = {};
 ALIASES['csv'] = {};
 ALIASES['csv_core'] = {};
 ALIASES['encode_unicode'] = {};
