@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/csv-1.0.5/src/deserializer.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>deserializer.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/csv-1.0.7/src/deserializer.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>deserializer.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../csv/index.html'><img src='../../rust-logo.png' alt='logo' width='100'></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
 <span id="2">   2</span>
 <span id="3">   3</span>
 <span id="4">   4</span>
@@ -1189,6 +1189,28 @@
 <span id="1189">1189</span>
 <span id="1190">1190</span>
 <span id="1191">1191</span>
+<span id="1192">1192</span>
+<span id="1193">1193</span>
+<span id="1194">1194</span>
+<span id="1195">1195</span>
+<span id="1196">1196</span>
+<span id="1197">1197</span>
+<span id="1198">1198</span>
+<span id="1199">1199</span>
+<span id="1200">1200</span>
+<span id="1201">1201</span>
+<span id="1202">1202</span>
+<span id="1203">1203</span>
+<span id="1204">1204</span>
+<span id="1205">1205</span>
+<span id="1206">1206</span>
+<span id="1207">1207</span>
+<span id="1208">1208</span>
+<span id="1209">1209</span>
+<span id="1210">1210</span>
+<span id="1211">1211</span>
+<span id="1212">1212</span>
+<span id="1213">1213</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>::{<span class="ident">Error</span> <span class="kw">as</span> <span class="ident">StdError</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
@@ -1504,14 +1526,19 @@
 }
 
 <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">deserialize_int</span> {
-    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">method</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">visit</span>:<span class="ident">ident</span>) <span class="op">=&gt;</span> {
+    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">method</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">visit</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">inttype</span>:<span class="ident">ty</span>) <span class="op">=&gt;</span> {
         <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">method</span><span class="op">&lt;</span><span class="ident">V</span>: <span class="ident">Visitor</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;&gt;</span>(
             <span class="self">self</span>,
             <span class="ident">visitor</span>: <span class="ident">V</span>,
         ) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">V</span>::<span class="ident">Value</span>, <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span> {
-            <span class="ident">visitor</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">visit</span>(
-                <span class="self">self</span>.<span class="ident">next_field</span>()<span class="question-mark">?</span>
-                    .<span class="ident">parse</span>().<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">err</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">error</span>(<span class="ident">DEK</span>::<span class="ident">ParseInt</span>(<span class="ident">err</span>)))<span class="question-mark">?</span>)
+            <span class="kw">let</span> <span class="ident">field</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">next_field</span>()<span class="question-mark">?</span>; 
+            <span class="kw">let</span> <span class="ident">num</span> <span class="op">=</span> 
+                <span class="kw">if</span> <span class="ident">field</span>.<span class="ident">starts_with</span>(<span class="string">&quot;0x&quot;</span>) {
+                    <span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">inttype</span><span class="op">&gt;</span>::<span class="ident">from_str_radix</span>(<span class="kw-2">&amp;</span><span class="ident">field</span>[<span class="number">2</span>..], <span class="number">16</span>)
+                } <span class="kw">else</span> {
+                    <span class="ident">field</span>.<span class="ident">parse</span>()
+                };
+            <span class="ident">visitor</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">visit</span>(<span class="ident">num</span>.<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">err</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">error</span>(<span class="ident">DEK</span>::<span class="ident">ParseInt</span>(<span class="ident">err</span>)))<span class="question-mark">?</span>)
         }
     }
 }
@@ -1537,14 +1564,14 @@
                 .<span class="ident">parse</span>().<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">err</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">error</span>(<span class="ident">DEK</span>::<span class="ident">ParseBool</span>(<span class="ident">err</span>)))<span class="question-mark">?</span>)
     }
 
-    <span class="macro">deserialize_int</span><span class="macro">!</span>(<span class="ident">deserialize_u8</span>, <span class="ident">visit_u8</span>);
-    <span class="macro">deserialize_int</span><span class="macro">!</span>(<span class="ident">deserialize_u16</span>, <span class="ident">visit_u16</span>);
-    <span class="macro">deserialize_int</span><span class="macro">!</span>(<span class="ident">deserialize_u32</span>, <span class="ident">visit_u32</span>);
-    <span class="macro">deserialize_int</span><span class="macro">!</span>(<span class="ident">deserialize_u64</span>, <span class="ident">visit_u64</span>);
-    <span class="macro">deserialize_int</span><span class="macro">!</span>(<span class="ident">deserialize_i8</span>, <span class="ident">visit_i8</span>);
-    <span class="macro">deserialize_int</span><span class="macro">!</span>(<span class="ident">deserialize_i16</span>, <span class="ident">visit_i16</span>);
-    <span class="macro">deserialize_int</span><span class="macro">!</span>(<span class="ident">deserialize_i32</span>, <span class="ident">visit_i32</span>);
-    <span class="macro">deserialize_int</span><span class="macro">!</span>(<span class="ident">deserialize_i64</span>, <span class="ident">visit_i64</span>);
+    <span class="macro">deserialize_int</span><span class="macro">!</span>(<span class="ident">deserialize_u8</span>, <span class="ident">visit_u8</span>, <span class="ident">u8</span>);
+    <span class="macro">deserialize_int</span><span class="macro">!</span>(<span class="ident">deserialize_u16</span>, <span class="ident">visit_u16</span>, <span class="ident">u16</span>);
+    <span class="macro">deserialize_int</span><span class="macro">!</span>(<span class="ident">deserialize_u32</span>, <span class="ident">visit_u32</span>, <span class="ident">u32</span>);
+    <span class="macro">deserialize_int</span><span class="macro">!</span>(<span class="ident">deserialize_u64</span>, <span class="ident">visit_u64</span>, <span class="ident">u64</span>);
+    <span class="macro">deserialize_int</span><span class="macro">!</span>(<span class="ident">deserialize_i8</span>, <span class="ident">visit_i8</span>, <span class="ident">i8</span>);
+    <span class="macro">deserialize_int</span><span class="macro">!</span>(<span class="ident">deserialize_i16</span>, <span class="ident">visit_i16</span>, <span class="ident">i16</span>);
+    <span class="macro">deserialize_int</span><span class="macro">!</span>(<span class="ident">deserialize_i32</span>, <span class="ident">visit_i32</span>, <span class="ident">i32</span>);
+    <span class="macro">deserialize_int</span><span class="macro">!</span>(<span class="ident">deserialize_i64</span>, <span class="ident">visit_i64</span>, <span class="ident">i64</span>);
 
     <span class="kw">fn</span> <span class="ident">deserialize_f32</span><span class="op">&lt;</span><span class="ident">V</span>: <span class="ident">Visitor</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;&gt;</span>(
         <span class="self">self</span>,
@@ -2143,6 +2170,23 @@
     <span class="kw">fn</span> <span class="ident">simple_seq</span>() {
         <span class="kw">let</span> <span class="ident">got</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">de</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;1&quot;</span>, <span class="string">&quot;5&quot;</span>, <span class="string">&quot;10&quot;</span>]).<span class="ident">unwrap</span>();
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">got</span>, <span class="macro">vec</span><span class="macro">!</span>[<span class="number">1</span>, <span class="number">5</span>, <span class="number">10</span>]);
+    }
+
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">simple_hex_seq</span>() {
+        <span class="kw">let</span> <span class="ident">got</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">de</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;0x7F&quot;</span>, <span class="string">&quot;0xA9&quot;</span>, <span class="string">&quot;0x10&quot;</span>]).<span class="ident">unwrap</span>();
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">got</span>, <span class="macro">vec</span><span class="macro">!</span>[<span class="number">0x7F</span>, <span class="number">0xA9</span>, <span class="number">0x10</span>]);
+    }
+
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">mixed_hex_seq</span>() {
+        <span class="kw">let</span> <span class="ident">got</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">de</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;0x7F&quot;</span>, <span class="string">&quot;0xA9&quot;</span>, <span class="string">&quot;10&quot;</span>]).<span class="ident">unwrap</span>();
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">got</span>, <span class="macro">vec</span><span class="macro">!</span>[<span class="number">0x7F</span>, <span class="number">0xA9</span>, <span class="number">10</span>]);
+    }
+
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">bad_hex_seq</span>() {
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">de</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;&gt;</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;7F&quot;</span>, <span class="string">&quot;0xA9&quot;</span>, <span class="string">&quot;10&quot;</span>]).<span class="ident">is_err</span>());
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>

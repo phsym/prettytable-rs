@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/libc-0.2.50/src/unix/notbsd/mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../../dark.css"><link rel="stylesheet" type="text/css" href="../../../../light.css" id="themeStyle"><script src="../../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../../noscript.css"></noscript><style type="text/css">#crate-search{background-image:url("../../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../../../settings.html"><img src="../../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/libc-0.2.53/src/unix/notbsd/mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../../dark.css"><link rel="stylesheet" type="text/css" href="../../../../light.css" id="themeStyle"><script src="../../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../../noscript.css"></noscript><link rel="shortcut icon" href="../../../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../../libc/index.html'><img src='../../../../rust-logo.png' alt='logo' width='100'></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../../../settings.html"><img src="../../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
 <span id="2">   2</span>
 <span id="3">   3</span>
 <span id="4">   4</span>
@@ -1427,62 +1427,6 @@
 <span id="1427">1427</span>
 <span id="1428">1428</span>
 <span id="1429">1429</span>
-<span id="1430">1430</span>
-<span id="1431">1431</span>
-<span id="1432">1432</span>
-<span id="1433">1433</span>
-<span id="1434">1434</span>
-<span id="1435">1435</span>
-<span id="1436">1436</span>
-<span id="1437">1437</span>
-<span id="1438">1438</span>
-<span id="1439">1439</span>
-<span id="1440">1440</span>
-<span id="1441">1441</span>
-<span id="1442">1442</span>
-<span id="1443">1443</span>
-<span id="1444">1444</span>
-<span id="1445">1445</span>
-<span id="1446">1446</span>
-<span id="1447">1447</span>
-<span id="1448">1448</span>
-<span id="1449">1449</span>
-<span id="1450">1450</span>
-<span id="1451">1451</span>
-<span id="1452">1452</span>
-<span id="1453">1453</span>
-<span id="1454">1454</span>
-<span id="1455">1455</span>
-<span id="1456">1456</span>
-<span id="1457">1457</span>
-<span id="1458">1458</span>
-<span id="1459">1459</span>
-<span id="1460">1460</span>
-<span id="1461">1461</span>
-<span id="1462">1462</span>
-<span id="1463">1463</span>
-<span id="1464">1464</span>
-<span id="1465">1465</span>
-<span id="1466">1466</span>
-<span id="1467">1467</span>
-<span id="1468">1468</span>
-<span id="1469">1469</span>
-<span id="1470">1470</span>
-<span id="1471">1471</span>
-<span id="1472">1472</span>
-<span id="1473">1473</span>
-<span id="1474">1474</span>
-<span id="1475">1475</span>
-<span id="1476">1476</span>
-<span id="1477">1477</span>
-<span id="1478">1478</span>
-<span id="1479">1479</span>
-<span id="1480">1480</span>
-<span id="1481">1481</span>
-<span id="1482">1482</span>
-<span id="1483">1483</span>
-<span id="1484">1484</span>
-<span id="1485">1485</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">pub</span> <span class="kw">type</span> <span class="ident">sa_family_t</span> <span class="op">=</span> <span class="ident">u16</span>;
 <span class="kw">pub</span> <span class="kw">type</span> <span class="ident">pthread_key_t</span> <span class="op">=</span> ::<span class="ident">c_uint</span>;
@@ -1692,13 +1636,6 @@
         <span class="kw">pub</span> <span class="ident">ar_hln</span>: <span class="ident">u8</span>,
         <span class="kw">pub</span> <span class="ident">ar_pln</span>: <span class="ident">u8</span>,
         <span class="kw">pub</span> <span class="ident">ar_op</span>: <span class="ident">u16</span>,
-    }
-
-    <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">inotify_event</span> {
-        <span class="kw">pub</span> <span class="ident">wd</span>: ::<span class="ident">c_int</span>,
-        <span class="kw">pub</span> <span class="ident">mask</span>: ::<span class="ident">uint32_t</span>,
-        <span class="kw">pub</span> <span class="ident">cookie</span>: ::<span class="ident">uint32_t</span>,
-        <span class="kw">pub</span> <span class="ident">len</span>: ::<span class="ident">uint32_t</span>
     }
 
     <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">mmsghdr</span> {
@@ -2293,7 +2230,6 @@
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IP_ADD_MEMBERSHIP</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">35</span>;
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IP_DROP_MEMBERSHIP</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">36</span>;
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IP_TRANSPARENT</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">19</span>;
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IPV6_FLOWINFO</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">11</span>;
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IPV6_UNICAST_HOPS</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">16</span>;
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IPV6_MULTICAST_IF</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">17</span>;
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IPV6_MULTICAST_HOPS</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">18</span>;
@@ -2301,15 +2237,10 @@
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IPV6_ADD_MEMBERSHIP</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">20</span>;
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IPV6_DROP_MEMBERSHIP</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">21</span>;
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IPV6_V6ONLY</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">26</span>;
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IPV6_FLOWLABEL_MGR</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">32</span>;
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IPV6_FLOWINFO_SEND</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">33</span>;
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IPV6_RECVPKTINFO</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">49</span>;
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IPV6_PKTINFO</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">50</span>;
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IPV6_RECVTCLASS</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">66</span>;
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IPV6_TCLASS</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">67</span>;
-
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IPV6_FLOWINFO_FLOWLABEL</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x000fffff</span>;
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IPV6_FLOWINFO_PRIORITY</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x0ff00000</span>;
 
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">TCP_NODELAY</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">1</span>;
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">TCP_MAXSEG</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">2</span>;
@@ -2653,45 +2584,6 @@
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">ARPHRD_VOID</span>: <span class="ident">u16</span> <span class="op">=</span> <span class="number">0xFFFF</span>;
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">ARPHRD_NONE</span>: <span class="ident">u16</span> <span class="op">=</span> <span class="number">0xFFFE</span>;
 
-<span class="comment">// uapi/linux/inotify.h</span>
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IN_ACCESS</span>:        ::<span class="ident">uint32_t</span> <span class="op">=</span> <span class="number">0x0000_0001</span>;
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IN_MODIFY</span>:        ::<span class="ident">uint32_t</span> <span class="op">=</span> <span class="number">0x0000_0002</span>;
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IN_ATTRIB</span>:        ::<span class="ident">uint32_t</span> <span class="op">=</span> <span class="number">0x0000_0004</span>;
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IN_CLOSE_WRITE</span>:   ::<span class="ident">uint32_t</span> <span class="op">=</span> <span class="number">0x0000_0008</span>;
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IN_CLOSE_NOWRITE</span>: ::<span class="ident">uint32_t</span> <span class="op">=</span> <span class="number">0x0000_0010</span>;
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IN_CLOSE</span>:         ::<span class="ident">uint32_t</span> <span class="op">=</span> (<span class="ident">IN_CLOSE_WRITE</span> <span class="op">|</span> <span class="ident">IN_CLOSE_NOWRITE</span>);
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IN_OPEN</span>:          ::<span class="ident">uint32_t</span> <span class="op">=</span> <span class="number">0x0000_0020</span>;
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IN_MOVED_FROM</span>:    ::<span class="ident">uint32_t</span> <span class="op">=</span> <span class="number">0x0000_0040</span>;
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IN_MOVED_TO</span>:      ::<span class="ident">uint32_t</span> <span class="op">=</span> <span class="number">0x0000_0080</span>;
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IN_MOVE</span>:          ::<span class="ident">uint32_t</span> <span class="op">=</span> (<span class="ident">IN_MOVED_FROM</span> <span class="op">|</span> <span class="ident">IN_MOVED_TO</span>);
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IN_CREATE</span>:        ::<span class="ident">uint32_t</span> <span class="op">=</span> <span class="number">0x0000_0100</span>;
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IN_DELETE</span>:        ::<span class="ident">uint32_t</span> <span class="op">=</span> <span class="number">0x0000_0200</span>;
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IN_DELETE_SELF</span>:   ::<span class="ident">uint32_t</span> <span class="op">=</span> <span class="number">0x0000_0400</span>;
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IN_MOVE_SELF</span>:     ::<span class="ident">uint32_t</span> <span class="op">=</span> <span class="number">0x0000_0800</span>;
-
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IN_UNMOUNT</span>:       ::<span class="ident">uint32_t</span> <span class="op">=</span> <span class="number">0x0000_2000</span>;
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IN_Q_OVERFLOW</span>:    ::<span class="ident">uint32_t</span> <span class="op">=</span> <span class="number">0x0000_4000</span>;
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IN_IGNORED</span>:       ::<span class="ident">uint32_t</span> <span class="op">=</span> <span class="number">0x0000_8000</span>;
-
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IN_ONLYDIR</span>:       ::<span class="ident">uint32_t</span> <span class="op">=</span> <span class="number">0x0100_0000</span>;
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IN_DONT_FOLLOW</span>:   ::<span class="ident">uint32_t</span> <span class="op">=</span> <span class="number">0x0200_0000</span>;
-<span class="comment">// pub const IN_EXCL_UNLINK:   ::uint32_t = 0x0400_0000;</span>
-
-<span class="comment">// pub const IN_MASK_CREATE:   ::uint32_t = 0x1000_0000;</span>
-<span class="comment">// pub const IN_MASK_ADD:      ::uint32_t = 0x2000_0000;</span>
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IN_ISDIR</span>:         ::<span class="ident">uint32_t</span> <span class="op">=</span> <span class="number">0x4000_0000</span>;
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IN_ONESHOT</span>:       ::<span class="ident">uint32_t</span> <span class="op">=</span> <span class="number">0x8000_0000</span>;
-
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IN_ALL_EVENTS</span>:    ::<span class="ident">uint32_t</span> <span class="op">=</span> (
-  <span class="ident">IN_ACCESS</span> <span class="op">|</span> <span class="ident">IN_MODIFY</span> <span class="op">|</span> <span class="ident">IN_ATTRIB</span> <span class="op">|</span> <span class="ident">IN_CLOSE_WRITE</span> <span class="op">|</span>
-  <span class="ident">IN_CLOSE_NOWRITE</span> <span class="op">|</span> <span class="ident">IN_OPEN</span> <span class="op">|</span> <span class="ident">IN_MOVED_FROM</span> <span class="op">|</span>
-  <span class="ident">IN_MOVED_TO</span> <span class="op">|</span> <span class="ident">IN_DELETE</span> <span class="op">|</span> <span class="ident">IN_CREATE</span> <span class="op">|</span> <span class="ident">IN_DELETE_SELF</span> <span class="op">|</span>
-  <span class="ident">IN_MOVE_SELF</span>
-);
-
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IN_CLOEXEC</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="ident">O_CLOEXEC</span>;
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IN_NONBLOCK</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="ident">O_NONBLOCK</span>;
-
 <span class="kw">fn</span> <span class="ident">CMSG_ALIGN</span>(<span class="ident">len</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
     <span class="ident">len</span> <span class="op">+</span> ::<span class="ident">mem</span>::<span class="ident">size_of</span>::<span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>() <span class="op">-</span> <span class="number">1</span> <span class="op">&amp;</span> <span class="op">!</span>(::<span class="ident">mem</span>::<span class="ident">size_of</span>::<span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>() <span class="op">-</span> <span class="number">1</span>)
 }
@@ -2921,6 +2813,11 @@
                 <span class="ident">name</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> ::<span class="ident">c_char</span>,
                 <span class="ident">termp</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">termios</span>,
                 <span class="ident">winp</span>: <span class="kw-2">*</span><span class="kw">const</span> ::<span class="ident">winsize</span>) <span class="op">-&gt;</span> ::<span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">forkpty</span>(<span class="ident">amaster</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> ::<span class="ident">c_int</span>,
+                <span class="ident">name</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> ::<span class="ident">c_char</span>,
+                <span class="ident">termp</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">termios</span>,
+                <span class="ident">winp</span>: <span class="kw-2">*</span><span class="kw">const</span> ::<span class="ident">winsize</span>) <span class="op">-&gt;</span> ::<span class="ident">pid_t</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">login_tty</span>(<span class="ident">fd</span>: ::<span class="ident">c_int</span>) <span class="op">-&gt;</span> ::<span class="ident">c_int</span>;
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">execvpe</span>(<span class="ident">file</span>: <span class="kw-2">*</span><span class="kw">const</span> ::<span class="ident">c_char</span>, <span class="ident">argv</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="kw-2">*</span><span class="kw">const</span> ::<span class="ident">c_char</span>,
                    <span class="ident">envp</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="kw-2">*</span><span class="kw">const</span> ::<span class="ident">c_char</span>) <span class="op">-&gt;</span> ::<span class="ident">c_int</span>;
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">fexecve</span>(<span class="ident">fd</span>: ::<span class="ident">c_int</span>, <span class="ident">argv</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="kw-2">*</span><span class="kw">const</span> ::<span class="ident">c_char</span>,
@@ -2944,11 +2841,6 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">recvmsg</span>(<span class="ident">fd</span>: ::<span class="ident">c_int</span>, <span class="ident">msg</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> ::<span class="ident">msghdr</span>, <span class="ident">flags</span>: ::<span class="ident">c_int</span>)
                    <span class="op">-&gt;</span> ::<span class="ident">ssize_t</span>;
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">uname</span>(<span class="ident">buf</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> ::<span class="ident">utsname</span>) <span class="op">-&gt;</span> ::<span class="ident">c_int</span>;
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">inotify_init</span>() <span class="op">-&gt;</span> ::<span class="ident">c_int</span>;
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">inotify_init1</span>(<span class="ident">flags</span>: ::<span class="ident">c_int</span>) <span class="op">-&gt;</span> ::<span class="ident">c_int</span>;
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">inotify_add_watch</span>(<span class="ident">fd</span>: ::<span class="ident">c_int</span>,
-                             <span class="ident">path</span>: <span class="kw-2">*</span><span class="kw">const</span> ::<span class="ident">c_char</span>,
-                             <span class="ident">mask</span>: ::<span class="ident">uint32_t</span>) <span class="op">-&gt;</span> ::<span class="ident">c_int</span>;
 }
 
 <span class="macro">cfg_if</span><span class="macro">!</span> {
@@ -2965,9 +2857,5 @@
         <span class="comment">// Unknown target_os</span>
     }
 }
-    <span class="comment">// pub fn forkpty(amaster: *mut ::c_int,</span>
-    <span class="comment">//             name: *mut ::c_char,</span>
-    <span class="comment">//             termp: *const termios,</span>
-    <span class="comment">//             winp: *const ::winsize) -&gt; ::pid_t;</span>
 </pre></div>
 </section><section id="search" class="content hidden"></section><section class="footer"></section><aside id="help" class="hidden"><div><h1 class="hidden">Help</h1><div class="shortcuts"><h2>Keyboard Shortcuts</h2><dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd><dt><kbd>S</kbd></dt><dd>Focus the search field</dd><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd><dt><kbd>↹</kbd></dt><dd>Switch tab</dd><dt><kbd>&#9166;</kbd></dt><dd>Go to active search result</dd><dt><kbd>+</kbd></dt><dd>Expand all sections</dd><dt><kbd>-</kbd></dt><dd>Collapse all sections</dd></dl></div><div class="infos"><h2>Search Tricks</h2><p>Prefix searches with a type followed by a colon (e.g., <code>fn:</code>) to restrict the search to a given type.</p><p>Accepted types are: <code>fn</code>, <code>mod</code>, <code>struct</code>, <code>enum</code>, <code>trait</code>, <code>type</code>, <code>macro</code>, and <code>const</code>.</p><p>Search functions by type signature (e.g., <code>vec -> usize</code> or <code>* -> vec</code>)</p><p>Search multiple things at once by splitting your query with comma (e.g., <code>str,u8</code> or <code>String,struct:Vec,test</code>)</p></div></div></aside><script>window.rootPath = "../../../../";window.currentCrate = "libc";</script><script src="../../../../aliases.js"></script><script src="../../../../main.js"></script><script src="../../../../source-script.js"></script><script src="../../../../source-files.js"></script><script defer src="../../../../search-index.js"></script></body></html>
