@@ -24,7 +24,7 @@ A formatted and aligned table printer library for [Rust](https://www.rust-lang.o
     * [List of style specifiers](#user-content-list-of-style-specifiers)
     * [List of color specifiers](#user-content-list-of-color-specifiers)
   * [Slicing](#user-content-slicing)
-  * [Customize your table look and feel](#user-content-customize-your-table-look-and-feel)
+  * [Customize look and feel of a table](#customize-look-and-feel-of-a-table)
   * [CSV import/export](#user-content-csv-importexport)
     * [Importing](#user-content-importing)
     * [Exporting](#user-content-exporting)
