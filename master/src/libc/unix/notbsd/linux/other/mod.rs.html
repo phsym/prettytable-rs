@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/libc-0.2.53/src/unix/notbsd/linux/other/mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../../../../dark.css"><link rel="stylesheet" type="text/css" href="../../../../../../light.css" id="themeStyle"><script src="../../../../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../../../../noscript.css"></noscript><link rel="shortcut icon" href="../../../../../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../../../../libc/index.html'><img src='../../../../../../rust-logo.png' alt='logo' width='100'></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../../../../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../../../../../settings.html"><img src="../../../../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/libc-0.2.55/src/unix/notbsd/linux/other/mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../../../../dark.css"><link rel="stylesheet" type="text/css" href="../../../../../../light.css" id="themeStyle"><script src="../../../../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../../../../noscript.css"></noscript><link rel="shortcut icon" href="../../../../../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../../../../libc/index.html'><img src='../../../../../../rust-logo.png' alt='logo' width='100'></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../../../../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../../../../../settings.html"><img src="../../../../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -1046,6 +1046,12 @@
         <span class="kw">pub</span> <span class="ident">si_signo</span>: ::<span class="ident">c_int</span>,
         <span class="kw">pub</span> <span class="ident">si_errno</span>: ::<span class="ident">c_int</span>,
         <span class="kw">pub</span> <span class="ident">si_code</span>: ::<span class="ident">c_int</span>,
+        <span class="attribute">#[<span class="ident">deprecated</span>(
+            <span class="ident">since</span><span class="op">=</span><span class="string">&quot;0.2.54&quot;</span>,
+            <span class="ident">note</span><span class="op">=</span><span class="string">&quot;Please leave a comment on \
+                https://github.com/rust-lang/libc/pull/1316 if you&#39;re using \
+                this field&quot;</span>
+        )]</span>
         <span class="kw">pub</span> <span class="ident">_pad</span>: [::<span class="ident">c_int</span>; <span class="number">29</span>],
         <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_arch</span> <span class="op">=</span> <span class="string">&quot;x86_64&quot;</span>)]</span>
         <span class="ident">_align</span>: [<span class="ident">u64</span>; <span class="number">0</span>],
@@ -1192,6 +1198,19 @@
     }
 }
 
+<span class="kw">impl</span> <span class="ident">siginfo_t</span> {
+    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">si_addr</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> ::<span class="ident">c_void</span> {
+        <span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+        <span class="kw">struct</span> <span class="ident">siginfo_sigfault</span> {
+            <span class="ident">_si_signo</span>: ::<span class="ident">c_int</span>,
+            <span class="ident">_si_errno</span>: ::<span class="ident">c_int</span>,
+            <span class="ident">_si_code</span>: ::<span class="ident">c_int</span>,
+            <span class="ident">si_addr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> ::<span class="ident">c_void</span>
+        }
+        (<span class="kw-2">*</span>(<span class="self">self</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">siginfo_t</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">siginfo_sigfault</span>)).<span class="ident">si_addr</span>
+    }
+}
+
 <span class="macro">s_no_extra_traits</span><span class="macro">!</span> {
     <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">utmpx</span> {
         <span class="kw">pub</span> <span class="ident">ut_type</span>: ::<span class="ident">c_short</span>,
@@ -1204,23 +1223,19 @@
         <span class="kw">pub</span> <span class="ident">ut_exit</span>: <span class="ident">__exit_status</span>,
 
         <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">target_arch</span> <span class="op">=</span> <span class="string">&quot;aarch64&quot;</span>,
-                  <span class="ident">target_arch</span> <span class="op">=</span> <span class="string">&quot;sparc64&quot;</span>,
                   <span class="ident">all</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;32&quot;</span>,
                       <span class="ident">not</span>(<span class="ident">target_arch</span> <span class="op">=</span> <span class="string">&quot;x86_64&quot;</span>))))]</span>
         <span class="kw">pub</span> <span class="ident">ut_session</span>: ::<span class="ident">c_long</span>,
         <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">target_arch</span> <span class="op">=</span> <span class="string">&quot;aarch64&quot;</span>,
-                  <span class="ident">target_arch</span> <span class="op">=</span> <span class="string">&quot;sparc64&quot;</span>,
                   <span class="ident">all</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;32&quot;</span>,
                       <span class="ident">not</span>(<span class="ident">target_arch</span> <span class="op">=</span> <span class="string">&quot;x86_64&quot;</span>))))]</span>
         <span class="kw">pub</span> <span class="ident">ut_tv</span>: ::<span class="ident">timeval</span>,
 
         <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">any</span>(<span class="ident">target_arch</span> <span class="op">=</span> <span class="string">&quot;aarch64&quot;</span>,
-                      <span class="ident">target_arch</span> <span class="op">=</span> <span class="string">&quot;sparc64&quot;</span>,
                       <span class="ident">all</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;32&quot;</span>,
                           <span class="ident">not</span>(<span class="ident">target_arch</span> <span class="op">=</span> <span class="string">&quot;x86_64&quot;</span>)))))]</span>
         <span class="kw">pub</span> <span class="ident">ut_session</span>: ::<span class="ident">int32_t</span>,
         <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">any</span>(<span class="ident">target_arch</span> <span class="op">=</span> <span class="string">&quot;aarch64&quot;</span>,
-                      <span class="ident">target_arch</span> <span class="op">=</span> <span class="string">&quot;sparc64&quot;</span>,
                       <span class="ident">all</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;32&quot;</span>,
                           <span class="ident">not</span>(<span class="ident">target_arch</span> <span class="op">=</span> <span class="string">&quot;x86_64&quot;</span>)))))]</span>
         <span class="kw">pub</span> <span class="ident">ut_tv</span>: <span class="ident">__timeval</span>,
@@ -1667,23 +1682,10 @@
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NFPROTO_NETDEV</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">5</span>;
 
 <span class="comment">// linux/netfilter/nf_tables.h</span>
-<span class="macro">cfg_if</span><span class="macro">!</span>{
-    <span class="kw">if</span> <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">target_arch</span> <span class="op">=</span> <span class="string">&quot;arm&quot;</span>, <span class="ident">target_arch</span> <span class="op">=</span> <span class="string">&quot;aarch64&quot;</span>))]</span> {
-        <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NFT_TABLE_MAXNAMELEN</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">32</span>;
-        <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NFT_CHAIN_MAXNAMELEN</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">32</span>;
-        <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NFT_SET_MAXNAMELEN</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">32</span>;
-        <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NFT_OBJ_MAXNAMELEN</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">32</span>;
-    } <span class="kw">else</span> <span class="kw">if</span> <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_arch</span> <span class="op">=</span> <span class="string">&quot;sparc64&quot;</span>)]</span> {
-        <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NFT_TABLE_MAXNAMELEN</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">32</span>;
-        <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NFT_CHAIN_MAXNAMELEN</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">32</span>;
-        <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NFT_SET_MAXNAMELEN</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">32</span>;
-    } <span class="kw">else</span> {
-        <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NFT_TABLE_MAXNAMELEN</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">256</span>;
-        <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NFT_CHAIN_MAXNAMELEN</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">256</span>;
-        <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NFT_SET_MAXNAMELEN</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">256</span>;
-        <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NFT_OBJ_MAXNAMELEN</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">256</span>;
-    }
-}
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NFT_TABLE_MAXNAMELEN</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">256</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NFT_CHAIN_MAXNAMELEN</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">256</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NFT_SET_MAXNAMELEN</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">256</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NFT_OBJ_MAXNAMELEN</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">256</span>;
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NFT_USERDATA_MAXLEN</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">256</span>;
 
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NFT_REG_VERDICT</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0</span>;
@@ -1742,11 +1744,9 @@
         <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NFT_MSG_GETOBJ</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">19</span>;
         <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NFT_MSG_DELOBJ</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">20</span>;
         <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NFT_MSG_GETOBJ_RESET</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">21</span>;
-        <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NFT_MSG_MAX</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">22</span>;
-    } <span class="kw">else</span> {
-        <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NFT_MSG_MAX</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">18</span>;
     }
 }
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NFT_MSG_MAX</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">25</span>;
 
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NFT_SET_ANONYMOUS</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x1</span>;
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NFT_SET_CONSTANT</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x2</span>;
