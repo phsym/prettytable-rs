@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/csv-1.0.7/src/cookbook.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>cookbook.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../csv/index.html'><img src='../../rust-logo.png' alt='logo' width='100'></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/csv-1.1.1/src/cookbook.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>cookbook.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../csv/index.html'><div class='logo-container'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -292,18 +292,6 @@
 <span id="292">292</span>
 <span id="293">293</span>
 <span id="294">294</span>
-<span id="295">295</span>
-<span id="296">296</span>
-<span id="297">297</span>
-<span id="298">298</span>
-<span id="299">299</span>
-<span id="300">300</span>
-<span id="301">301</span>
-<span id="302">302</span>
-<span id="303">303</span>
-<span id="304">304</span>
-<span id="305">305</span>
-<span id="306">306</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">/*!
 A cookbook of examples for CSV reading and writing.
@@ -338,13 +326,11 @@ stdout.
 
 ```no_run
 # //cookbook-read-basic.rs
-extern crate csv;
-
 use std::error::Error;
 use std::io;
 use std::process;
 
-fn example() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {
+fn example() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
     // Build the CSV reader and iterate over each record.
     let mut rdr = csv::Reader::from_reader(io::stdin());
     for result in rdr.records() {
@@ -383,17 +369,15 @@ method.
 
 ```no_run
 # //cookbook-read-serde.rs
-extern crate csv;
-#[macro_use]
-extern crate serde_derive;
-
 use std::error::Error;
 use std::io;
 use std::process;
 
+use serde::Deserialize;
+
 // By default, struct field names are deserialized based on the position of
 // a corresponding field in the CSV data&#39;s header record.
-#[derive(Debug,Deserialize)]
+#[derive(Debug, Deserialize)]
 struct Record {
     city: String,
     region: String,
@@ -401,7 +385,7 @@ struct Record {
     population: Option&lt;u64&gt;,
 }
 
-fn example() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {
+fn example() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
     let mut rdr = csv::Reader::from_reader(io::stdin());
     for result in rdr.deserialize() {
         // Notice that we need to provide a type hint for automatic
@@ -435,13 +419,11 @@ by `:` instead of `,`.
 
 ```no_run
 # //cookbook-read-colon.rs
-extern crate csv;
-
 use std::error::Error;
 use std::io;
 use std::process;
 
-fn example() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {
+fn example() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
     let mut rdr = csv::ReaderBuilder::new()
         .delimiter(b&#39;:&#39;)
         .from_reader(io::stdin());
@@ -477,13 +459,11 @@ first record is not skipped. This example shows how to disable that setting.
 
 ```no_run
 # //cookbook-read-no-headers.rs
-extern crate csv;
-
 use std::error::Error;
 use std::io;
 use std::process;
 
-fn example() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {
+fn example() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
     let mut rdr = csv::ReaderBuilder::new()
         .has_headers(false)
         .from_reader(io::stdin());
@@ -516,13 +496,11 @@ This example shows how to write CSV data to stdout.
 
 ```no_run
 # //cookbook-write-basic.rs
-extern crate csv;
-
 use std::error::Error;
 use std::io;
 use std::process;
 
-fn example() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {
+fn example() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
     let mut wtr = csv::Writer::from_writer(io::stdout());
 
     // When writing records without Serde, the header record is written just
@@ -558,13 +536,11 @@ headers are written automatically.
 
 ```no_run
 # //cookbook-write-serde.rs
-extern crate csv;
-#[macro_use]
-extern crate serde_derive;
-
 use std::error::Error;
 use std::io;
 use std::process;
+
+use serde::Serialize;
 
 #[derive(Debug, Serialize)]
 struct Record {
@@ -574,7 +550,7 @@ struct Record {
     population: Option&lt;u64&gt;,
 }
 
-fn example() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {
+fn example() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
     let mut wtr = csv::Writer::from_writer(io::stdout());
 
     // When writing records with Serde using structs, the header row is written

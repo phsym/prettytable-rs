@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/csv-1.0.7/src/tutorial.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>tutorial.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../csv/index.html'><img src='../../rust-logo.png' alt='logo' width='100'></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/csv-1.1.1/src/tutorial.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>tutorial.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../csv/index.html'><div class='logo-container'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
 <span id="2">   2</span>
 <span id="3">   3</span>
 <span id="4">   4</span>
@@ -2518,78 +2518,6 @@
 <span id="2518">2518</span>
 <span id="2519">2519</span>
 <span id="2520">2520</span>
-<span id="2521">2521</span>
-<span id="2522">2522</span>
-<span id="2523">2523</span>
-<span id="2524">2524</span>
-<span id="2525">2525</span>
-<span id="2526">2526</span>
-<span id="2527">2527</span>
-<span id="2528">2528</span>
-<span id="2529">2529</span>
-<span id="2530">2530</span>
-<span id="2531">2531</span>
-<span id="2532">2532</span>
-<span id="2533">2533</span>
-<span id="2534">2534</span>
-<span id="2535">2535</span>
-<span id="2536">2536</span>
-<span id="2537">2537</span>
-<span id="2538">2538</span>
-<span id="2539">2539</span>
-<span id="2540">2540</span>
-<span id="2541">2541</span>
-<span id="2542">2542</span>
-<span id="2543">2543</span>
-<span id="2544">2544</span>
-<span id="2545">2545</span>
-<span id="2546">2546</span>
-<span id="2547">2547</span>
-<span id="2548">2548</span>
-<span id="2549">2549</span>
-<span id="2550">2550</span>
-<span id="2551">2551</span>
-<span id="2552">2552</span>
-<span id="2553">2553</span>
-<span id="2554">2554</span>
-<span id="2555">2555</span>
-<span id="2556">2556</span>
-<span id="2557">2557</span>
-<span id="2558">2558</span>
-<span id="2559">2559</span>
-<span id="2560">2560</span>
-<span id="2561">2561</span>
-<span id="2562">2562</span>
-<span id="2563">2563</span>
-<span id="2564">2564</span>
-<span id="2565">2565</span>
-<span id="2566">2566</span>
-<span id="2567">2567</span>
-<span id="2568">2568</span>
-<span id="2569">2569</span>
-<span id="2570">2570</span>
-<span id="2571">2571</span>
-<span id="2572">2572</span>
-<span id="2573">2573</span>
-<span id="2574">2574</span>
-<span id="2575">2575</span>
-<span id="2576">2576</span>
-<span id="2577">2577</span>
-<span id="2578">2578</span>
-<span id="2579">2579</span>
-<span id="2580">2580</span>
-<span id="2581">2581</span>
-<span id="2582">2582</span>
-<span id="2583">2583</span>
-<span id="2584">2584</span>
-<span id="2585">2585</span>
-<span id="2586">2586</span>
-<span id="2587">2587</span>
-<span id="2588">2588</span>
-<span id="2589">2589</span>
-<span id="2590">2590</span>
-<span id="2591">2591</span>
-<span id="2592">2592</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">/*!
 A tutorial for handling CSV data in Rust.
@@ -2646,7 +2574,7 @@ $ cd csvtutor
 ```
 
 Once inside `csvtutor`, open `Cargo.toml` in your favorite text editor and add
-`csv = &quot;1&quot;` to your `[dependencies]` section. At this point, your
+`csv = &quot;1.1&quot;` to your `[dependencies]` section. At this point, your
 `Cargo.toml` should look something like this:
 
 ```text
@@ -2656,7 +2584,7 @@ version = &quot;0.1.0&quot;
 authors = [&quot;Your Name&quot;]
 
 [dependencies]
-csv = &quot;1&quot;
+csv = &quot;1.1&quot;
 ```
 
 Next, let&#39;s build your project. Since you added the `csv` crate as a
@@ -2682,9 +2610,6 @@ this:
 
 ```no_run
 //tutorial-setup-01.rs
-// This makes the csv crate accessible to your program.
-extern crate csv;
-
 // Import the standard library&#39;s I/O module so we can read from stdin.
 use std::io;
 
@@ -2784,8 +2709,6 @@ its error handling.
 
 ```no_run
 //tutorial-error-01.rs
-extern crate csv;
-
 use std::io;
 
 fn main() {
@@ -2879,8 +2802,6 @@ let&#39;s get rid of the panic and print an error message manually:
 
 ```no_run
 //tutorial-error-02.rs
-extern crate csv;
-
 use std::io;
 use std::process;
 
@@ -2920,8 +2841,6 @@ error, which our `main` function can then inspect and decide what to do with.
 
 ```no_run
 //tutorial-error-03.rs
-extern crate csv;
-
 use std::error::Error;
 use std::io;
 use std::process;
@@ -2933,12 +2852,12 @@ fn main() {
     }
 }
 
-fn run() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {
+fn run() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
     let mut rdr = csv::Reader::from_reader(io::stdin());
     for result in rdr.records() {
         // Examine our Result.
         // If there was no problem, print the record.
-        // Otherwise, convert our error to a Box&lt;Error&gt; and return it.
+        // Otherwise, convert our error to a Box&lt;dyn Error&gt; and return it.
         match result {
             Err(err) =&gt; return Err(From::from(err)),
             Ok(record) =&gt; {
@@ -2950,10 +2869,10 @@ fn run() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {
 }
 ```
 
-Our new function, `run`, has a return type of `Result&lt;(), Box&lt;Error&gt;&gt;`. In
+Our new function, `run`, has a return type of `Result&lt;(), Box&lt;dyn Error&gt;&gt;`. In
 simple terms, this says that `run` either returns nothing when successful, or
-if an error occurred, it returns a `Box&lt;Error&gt;`, which stands for &quot;any kind of
-error.&quot; A `Box&lt;Error&gt;` is hard to inspect if we cared about the specific error
+if an error occurred, it returns a `Box&lt;dyn Error&gt;`, which stands for &quot;any kind of
+error.&quot; A `Box&lt;dyn Error&gt;` is hard to inspect if we cared about the specific error
 that occurred. But for our purposes, all we need to do is gracefully print an
 error message and exit the program.
 
@@ -2962,8 +2881,6 @@ special Rust language feature: the question mark.
 
 ```no_run
 //tutorial-error-04.rs
-extern crate csv;
-
 use std::error::Error;
 use std::io;
 use std::process;
@@ -2975,7 +2892,7 @@ fn main() {
     }
 }
 
-fn run() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {
+fn run() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
     let mut rdr = csv::Reader::from_reader(io::stdin());
     for result in rdr.records() {
         // This is effectively the same code as our `match` in the
@@ -2993,7 +2910,7 @@ ourselves. We will use the `?` heavily throughout this tutorial, and it&#39;s
 important to note that it can **only be used in functions that return
 `Result`.**
 
-We&#39;ll end this section with a word of caution: using `Box&lt;Error&gt;` as our error
+We&#39;ll end this section with a word of caution: using `Box&lt;dyn Error&gt;` as our error
 type is the minimally acceptable thing we can do here. Namely, while it allows
 our program to gracefully handle errors, it makes it hard for callers to
 inspect the specific error condition that occurred. However, since this is a
@@ -3020,15 +2937,13 @@ path argument instead of stdin.
 
 ```no_run
 //tutorial-read-01.rs
-extern crate csv;
-
 use std::env;
 use std::error::Error;
 use std::ffi::OsString;
 use std::fs::File;
 use std::process;
 
-fn run() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {
+fn run() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
     let file_path = get_first_arg()?;
     let file = File::open(file_path)?;
     let mut rdr = csv::Reader::from_reader(file);
@@ -3041,7 +2956,7 @@ fn run() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {
 
 /// Returns the first positional argument sent to this process. If there are no
 /// positional arguments, then this returns an error.
-fn get_first_arg() -&gt; Result&lt;OsString, Box&lt;Error&gt;&gt; {
+fn get_first_arg() -&gt; Result&lt;OsString, Box&lt;dyn Error&gt;&gt; {
     match env::args_os().nth(1) {
         None =&gt; Err(From::from(&quot;expected 1 argument, but got none&quot;)),
         Some(file_path) =&gt; Ok(file_path),
@@ -3130,13 +3045,11 @@ produces terser examples.)
 
 ```no_run
 //tutorial-read-headers-01.rs
-# extern crate csv;
-#
 # use std::error::Error;
 # use std::io;
 # use std::process;
 #
-fn run() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {
+fn run() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
     let mut rdr = csv::ReaderBuilder::new()
         .has_headers(false)
         .from_reader(io::stdin());
@@ -3173,13 +3086,11 @@ method like so:
 
 ```no_run
 //tutorial-read-headers-02.rs
-# extern crate csv;
-#
 # use std::error::Error;
 # use std::io;
 # use std::process;
 #
-fn run() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {
+fn run() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
     let mut rdr = csv::Reader::from_reader(io::stdin());
     {
         // We nest this call in its own scope because of lifetimes.
@@ -3256,13 +3167,11 @@ as seen in the following example:
 
 ```no_run
 //tutorial-read-delimiter-01.rs
-# extern crate csv;
-#
 # use std::error::Error;
 # use std::io;
 # use std::process;
 #
-fn run() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {
+fn run() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
     let mut rdr = csv::ReaderBuilder::new()
         .has_headers(false)
         .delimiter(b&#39;;&#39;)
@@ -3346,13 +3255,11 @@ a lot of manual work. This next example shows how.
 
 ```no_run
 //tutorial-read-serde-01.rs
-# extern crate csv;
-#
 # use std::error::Error;
 # use std::io;
 # use std::process;
 #
-fn run() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {
+fn run() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
     let mut rdr = csv::Reader::from_reader(io::stdin());
     for result in rdr.records() {
         let record = result?;
@@ -3391,8 +3298,6 @@ type: `(String, String, Option&lt;u64&gt;, f64, f64)`.
 
 ```no_run
 //tutorial-read-serde-02.rs
-# extern crate csv;
-#
 # use std::error::Error;
 # use std::io;
 # use std::process;
@@ -3401,7 +3306,7 @@ type: `(String, String, Option&lt;u64&gt;, f64, f64)`.
 // record type.
 type Record = (String, String, Option&lt;u64&gt;, f64, f64);
 
-fn run() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {
+fn run() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
     let mut rdr = csv::Reader::from_reader(io::stdin());
     // Instead of creating an iterator with the `records` method, we create
     // an iterator with the `deserialize` method.
@@ -3446,8 +3351,6 @@ a new `use` statement that imports `HashMap` from the standard library:
 
 ```no_run
 //tutorial-read-serde-03.rs
-# extern crate csv;
-#
 use std::collections::HashMap;
 # use std::error::Error;
 # use std::io;
@@ -3457,7 +3360,7 @@ use std::collections::HashMap;
 // record type.
 type Record = HashMap&lt;String, String&gt;;
 
-fn run() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {
+fn run() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
     let mut rdr = csv::Reader::from_reader(io::stdin());
     for result in rdr.deserialize() {
         let record: Record = result?;
@@ -3487,36 +3390,32 @@ $ ./target/debug/csvtutor &lt; uspop.csv
 
 This method works especially well if you need to read CSV data with header
 records, but whose exact structure isn&#39;t known until your program runs.
-However, in our case, we know the structure of the data in `uspop.csv`.
-In particular, with the `HashMap` approach, we&#39;ve lost the specific types
-we had for each field in the previous example when we deserialized each record
-into a `(String, String, Option&lt;u64&gt;, f64, f64)`. Is there a way to identify
-fields by their corresponding header name *and* assign each field its own
-unique type? The answer is yes, but we&#39;ll need to bring in a new crate called
-`serde_derive` first. You can do that by adding this to the `[dependencies]`
-section of your `Cargo.toml` file:
+However, in our case, we know the structure of the data in `uspop.csv`. In
+particular, with the `HashMap` approach, we&#39;ve lost the specific types we had
+for each field in the previous example when we deserialized each record into a
+`(String, String, Option&lt;u64&gt;, f64, f64)`. Is there a way to identify fields
+by their corresponding header name *and* assign each field its own unique
+type? The answer is yes, but we&#39;ll need to bring in Serde&#39;s `derive` feature
+first. You can do that by adding this to the `[dependencies]` section of your
+`Cargo.toml` file:
 
 ```text
-serde = &quot;1&quot;
-serde_derive = &quot;1&quot;
+serde = { version = &quot;1&quot;, features = [&quot;derive&quot;] }
 ```
 
 With these crates added to our project, we can now define our own custom struct
 that represents our record. We then ask Serde to automatically write the glue
 code required to populate our struct from a CSV record. The next example shows
-how. Don&#39;t miss the new `extern crate` lines!
+how. Don&#39;t miss the new Serde imports!
 
 ```no_run
 //tutorial-read-serde-04.rs
-extern crate csv;
-extern crate serde;
-// This lets us write `#[derive(Deserialize)]`.
-#[macro_use]
-extern crate serde_derive;
-
 use std::error::Error;
 use std::io;
 use std::process;
+
+// This lets us write `#[derive(Deserialize)]`.
+use serde::Deserialize;
 
 // We don&#39;t need to derive `Debug` (which doesn&#39;t require Serde), but it&#39;s a
 // good habit to do it for all your types.
@@ -3533,7 +3432,7 @@ struct Record {
     state: String,
 }
 
-fn run() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {
+fn run() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
     let mut rdr = csv::Reader::from_reader(io::stdin());
     for result in rdr.deserialize() {
         let record: Record = result?;
@@ -3565,14 +3464,13 @@ Record { latitude: 33.7133333, longitude: -87.3886111, population: None, city: &
 Once again, we didn&#39;t need to change our `run` function at all: we&#39;re still
 iterating over records using the `deserialize` iterator that we started with
 in the beginning of this section. The only thing that changed in this example
-was the definition of the `Record` type and a couple new `extern crate`
-statements. Our `Record` type is now a custom struct that we defined instead
-of a type alias, and as a result, Serde doesn&#39;t know how to deserialize it by
-default. However, a special compiler plugin called `serde_derive` is available,
-which will read your struct definition at compile time and generate code that
-will deserialize a CSV record into a `Record` value. To see what happens if you
-leave out the automatic derive, change `#[derive(Debug, Deserialize)]` to
-`#[derive(Debug)]`.
+was the definition of the `Record` type and a new `use` statement. Our `Record`
+type is now a custom struct that we defined instead of a type alias, and as a
+result, Serde doesn&#39;t know how to deserialize it by default. However, a special
+compiler plugin provided by Serde is available, which will read your struct
+definition at compile time and generate code that will deserialize a CSV record
+into a `Record` value. To see what happens if you leave out the automatic
+derive, change `#[derive(Debug, Deserialize)]` to `#[derive(Debug)]`.
 
 One other thing worth mentioning in this example is the use of
 `#[serde(rename_all = &quot;PascalCase&quot;)]`. This directive helps Serde map your
@@ -3650,13 +3548,11 @@ Let&#39;s start by running our program from the previous section:
 
 ```no_run
 //tutorial-read-serde-invalid-01.rs
-# extern crate csv;
-# #[macro_use]
-# extern crate serde_derive;
-#
 # use std::error::Error;
 # use std::io;
 # use std::process;
+#
+# use serde::Deserialize;
 #
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = &quot;PascalCase&quot;)]
@@ -3668,7 +3564,7 @@ struct Record {
     state: String,
 }
 
-fn run() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {
+fn run() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
     let mut rdr = csv::Reader::from_reader(io::stdin());
     for result in rdr.deserialize() {
         let record: Record = result?;
@@ -3721,14 +3617,11 @@ to a `None` value, as shown in this next example:
 
 ```no_run
 //tutorial-read-serde-invalid-02.rs
-# extern crate csv;
-# #[macro_use]
-# extern crate serde_derive;
-#
 # use std::error::Error;
 # use std::io;
 # use std::process;
 #
+# use serde::Deserialize;
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = &quot;PascalCase&quot;)]
 struct Record {
@@ -3740,7 +3633,7 @@ struct Record {
     state: String,
 }
 
-fn run() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {
+fn run() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
     let mut rdr = csv::Reader::from_reader(io::stdin());
     for result in rdr.deserialize() {
         let record: Record = result?;
@@ -3792,13 +3685,11 @@ Let&#39;s start with the most basic example: writing a few CSV records to `stdou
 
 ```no_run
 //tutorial-write-01.rs
-extern crate csv;
-
 use std::error::Error;
 use std::io;
 use std::process;
 
-fn run() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {
+fn run() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
     let mut wtr = csv::Writer::from_writer(io::stdout());
     // Since we&#39;re writing records manually, we must explicitly write our
     // header record. A header record is written the same way that other
@@ -3903,14 +3794,12 @@ of `stdout`:
 
 ```no_run
 //tutorial-write-02.rs
-extern crate csv;
-
 use std::env;
 use std::error::Error;
 use std::ffi::OsString;
 use std::process;
 
-fn run() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {
+fn run() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
     let file_path = get_first_arg()?;
     let mut wtr = csv::Writer::from_path(file_path)?;
 
@@ -3925,7 +3814,7 @@ fn run() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {
 
 /// Returns the first positional argument sent to this process. If there are no
 /// positional arguments, then this returns an error.
-fn get_first_arg() -&gt; Result&lt;OsString, Box&lt;Error&gt;&gt; {
+fn get_first_arg() -&gt; Result&lt;OsString, Box&lt;dyn Error&gt;&gt; {
     match env::args_os().nth(1) {
         None =&gt; Err(From::from(&quot;expected 1 argument, but got none&quot;)),
         Some(file_path) =&gt; Ok(file_path),
@@ -3966,13 +3855,11 @@ Here&#39;s an example:
 
 ```no_run
 //tutorial-write-delimiter-01.rs
-# extern crate csv;
-#
 # use std::error::Error;
 # use std::io;
 # use std::process;
 #
-fn run() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {
+fn run() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
     let mut wtr = csv::WriterBuilder::new()
         .delimiter(b&#39;\t&#39;)
         .quote_style(csv::QuoteStyle::NonNumeric)
@@ -4024,13 +3911,11 @@ As with reading, let&#39;s start by seeing how we can serialize a Rust tuple.
 
 ```no_run
 //tutorial-write-serde-01.rs
-# extern crate csv;
-#
 # use std::error::Error;
 # use std::io;
 # use std::process;
 #
-fn run() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {
+fn run() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
     let mut wtr = csv::Writer::from_writer(io::stdout());
 
     // We still need to write headers manually.
@@ -4081,30 +3966,26 @@ As with reading, we can also serialize custom structs as CSV records. As a
 bonus, the fields in a struct will automatically be written as a header
 record!
 
-To write custom structs as CSV records, we&#39;ll need to make use of the
-`serde_derive` crate again. As in the
+To write custom structs as CSV records, we&#39;ll need to make use of Serde&#39;s
+automatic `derive` feature again. As in the
 [previous section on reading with Serde](#reading-with-serde),
 we&#39;ll need to add a couple crates to our `[dependencies]` section in our
 `Cargo.toml` (if they aren&#39;t already there):
 
 ```text
-serde = &quot;1&quot;
-serde_derive = &quot;1&quot;
+serde = { version = &quot;1&quot;, features = [&quot;derive&quot;] }
 ```
 
-And we&#39;ll also need to add a couple extra `extern crate` statements to our
-code, as shown in the example:
+And we&#39;ll also need to add a new `use` statement to our code, for Serde, as
+shown in the example:
 
 ```no_run
 //tutorial-write-serde-02.rs
-extern crate csv;
-extern crate serde;
-#[macro_use]
-extern crate serde_derive;
-
 use std::error::Error;
 use std::io;
 use std::process;
+
+use serde::Serialize;
 
 // Note that structs can derive both Serialize and Deserialize!
 #[derive(Debug, Serialize)]
@@ -4117,7 +3998,7 @@ struct Record&lt;&#39;a&gt; {
     longitude: f64,
 }
 
-fn run() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {
+fn run() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
     let mut wtr = csv::Writer::from_writer(io::stdout());
 
     wtr.serialize(Record {
@@ -4229,14 +4110,12 @@ rows with a field that matches the query.
 
 ```no_run
 //tutorial-pipeline-search-01.rs
-extern crate csv;
-
 use std::env;
 use std::error::Error;
 use std::io;
 use std::process;
 
-fn run() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {
+fn run() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
     // Get the query from the positional arguments.
     // If one doesn&#39;t exist, return an error.
     let query = match env::args().nth(1) {
@@ -4351,14 +4230,12 @@ change:
 
 ```no_run
 //tutorial-pipeline-search-02.rs
-# extern crate csv;
-#
 # use std::env;
 # use std::error::Error;
 # use std::io;
 # use std::process;
 #
-fn run() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {
+fn run() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
     let query = match env::args().nth(1) {
         None =&gt; return Err(From::from(&quot;expected 1 argument, but got none&quot;)),
         Some(query) =&gt; query,
@@ -4418,23 +4295,19 @@ dependencies to your `Cargo.toml` in your `[dependencies]` section if they
 aren&#39;t already there:
 
 ```text
-serde = &quot;1&quot;
-serde_derive = &quot;1&quot;
+serde = { version = &quot;1&quot;, features = [&quot;derive&quot;] }
 ```
 
 Now here&#39;s the code:
 
 ```no_run
 //tutorial-pipeline-pop-01.rs
-extern crate csv;
-extern crate serde;
-#[macro_use]
-extern crate serde_derive;
-
 use std::env;
 use std::error::Error;
 use std::io;
 use std::process;
+
+use serde::{Deserialize, Serialize};
 
 // Unlike previous examples, we derive both Deserialize and Serialize. This
 // means we&#39;ll be able to automatically deserialize and serialize this type.
@@ -4448,7 +4321,7 @@ struct Record {
     longitude: f64,
 }
 
-fn run() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {
+fn run() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
     // Get the query from the positional arguments.
     // If one doesn&#39;t exist or isn&#39;t an integer, return an error.
     let minimum_pop: u64 = match env::args().nth(1) {
@@ -4562,13 +4435,11 @@ adapting a previous example to count the number of records in
 
 ```no_run
 //tutorial-perf-alloc-01.rs
-extern crate csv;
-
 use std::error::Error;
 use std::io;
 use std::process;
 
-fn run() -&gt; Result&lt;u64, Box&lt;Error&gt;&gt; {
+fn run() -&gt; Result&lt;u64, Box&lt;dyn Error&gt;&gt; {
     let mut rdr = csv::Reader::from_reader(io::stdin());
 
     let mut count = 0;
@@ -4622,13 +4493,11 @@ shown in the next example:
 
 ```no_run
 //tutorial-perf-alloc-02.rs
-# extern crate csv;
-#
 # use std::error::Error;
 # use std::io;
 # use std::process;
 #
-fn run() -&gt; Result&lt;u64, Box&lt;Error&gt;&gt; {
+fn run() -&gt; Result&lt;u64, Box&lt;dyn Error&gt;&gt; {
     let mut rdr = csv::Reader::from_reader(io::stdin());
 
     let mut count = 0;
@@ -4707,13 +4576,11 @@ method.
 
 ```no_run
 //tutorial-perf-alloc-03.rs
-# extern crate csv;
-#
 # use std::error::Error;
 # use std::io;
 # use std::process;
 #
-fn run() -&gt; Result&lt;u64, Box&lt;Error&gt;&gt; {
+fn run() -&gt; Result&lt;u64, Box&lt;dyn Error&gt;&gt; {
     let mut rdr = csv::Reader::from_reader(io::stdin());
     let mut record = csv::ByteRecord::new();
 
@@ -4790,14 +4657,11 @@ example using Serde in a previous section:
 
 ```no_run
 //tutorial-perf-serde-01.rs
-extern crate csv;
-extern crate serde;
-#[macro_use]
-extern crate serde_derive;
-
 use std::error::Error;
 use std::io;
 use std::process;
+
+use serde::Deserialize;
 
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = &quot;PascalCase&quot;)]
@@ -4811,7 +4675,7 @@ struct Record {
     longitude: f64,
 }
 
-fn run() -&gt; Result&lt;u64, Box&lt;Error&gt;&gt; {
+fn run() -&gt; Result&lt;u64, Box&lt;dyn Error&gt;&gt; {
     let mut rdr = csv::Reader::from_reader(io::stdin());
 
     let mut count = 0;
@@ -4862,14 +4726,11 @@ like:
 
 ```no_run
 //tutorial-perf-serde-02.rs
-# extern crate csv;
-# extern crate serde;
-# #[macro_use]
-# extern crate serde_derive;
-#
 # use std::error::Error;
 # use std::io;
 # use std::process;
+#
+# use serde::Deserialize;
 #
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = &quot;PascalCase&quot;)]
@@ -4883,7 +4744,7 @@ struct Record&lt;&#39;a&gt; {
     longitude: f64,
 }
 
-fn run() -&gt; Result&lt;u64, Box&lt;Error&gt;&gt; {
+fn run() -&gt; Result&lt;u64, Box&lt;dyn Error&gt;&gt; {
     let mut rdr = csv::Reader::from_reader(io::stdin());
     let mut raw_record = csv::StringRecord::new();
     let headers = rdr.headers()?.clone();
@@ -4952,14 +4813,11 @@ of `StringRecord`:
 
 ```no_run
 //tutorial-perf-serde-03.rs
-# extern crate csv;
-# extern crate serde;
-# #[macro_use]
-# extern crate serde_derive;
-#
 # use std::error::Error;
 # use std::io;
 # use std::process;
+#
+# use serde::Deserialize;
 #
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = &quot;PascalCase&quot;)]
@@ -4973,7 +4831,7 @@ struct Record&lt;&#39;a&gt; {
     longitude: f64,
 }
 
-fn run() -&gt; Result&lt;u64, Box&lt;Error&gt;&gt; {
+fn run() -&gt; Result&lt;u64, Box&lt;dyn Error&gt;&gt; {
     let mut rdr = csv::Reader::from_reader(io::stdin());
     let mut raw_record = csv::ByteRecord::new();
     let headers = rdr.byte_headers()?.clone();
@@ -5052,8 +4910,6 @@ access to I/O, which would be harder without the standard library.)
 
 ```no_run
 //tutorial-perf-core-01.rs
-extern crate csv_core;
-
 use std::io::{self, Read};
 use std::process;
 

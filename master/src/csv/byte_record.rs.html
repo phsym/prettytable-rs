@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/csv-1.0.7/src/byte_record.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>byte_record.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../csv/index.html'><img src='../../rust-logo.png' alt='logo' width='100'></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/csv-1.1.1/src/byte_record.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>byte_record.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../csv/index.html'><div class='logo-container'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
 <span id="2">   2</span>
 <span id="3">   3</span>
 <span id="4">   4</span>
@@ -1147,115 +1147,19 @@
 <span id="1147">1147</span>
 <span id="1148">1148</span>
 <span id="1149">1149</span>
-<span id="1150">1150</span>
-<span id="1151">1151</span>
-<span id="1152">1152</span>
-<span id="1153">1153</span>
-<span id="1154">1154</span>
-<span id="1155">1155</span>
-<span id="1156">1156</span>
-<span id="1157">1157</span>
-<span id="1158">1158</span>
-<span id="1159">1159</span>
-<span id="1160">1160</span>
-<span id="1161">1161</span>
-<span id="1162">1162</span>
-<span id="1163">1163</span>
-<span id="1164">1164</span>
-<span id="1165">1165</span>
-<span id="1166">1166</span>
-<span id="1167">1167</span>
-<span id="1168">1168</span>
-<span id="1169">1169</span>
-<span id="1170">1170</span>
-<span id="1171">1171</span>
 </pre><div class="example-wrap"><pre class="rust ">
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ascii</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">cmp</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">iter</span>::<span class="ident">FromIterator</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ops</span>::{<span class="self">self</span>, <span class="ident">Range</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">result</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">str</span>;
 
+<span class="kw">use</span> <span class="ident">bstr</span>::{<span class="ident">BString</span>, <span class="ident">ByteSlice</span>};
 <span class="kw">use</span> <span class="ident">serde</span>::<span class="ident">de</span>::<span class="ident">Deserialize</span>;
 
-<span class="kw">use</span> <span class="ident">deserializer</span>::<span class="ident">deserialize_byte_record</span>;
-<span class="kw">use</span> <span class="ident">error</span>::{<span class="prelude-ty">Result</span>, <span class="ident">Utf8Error</span>, <span class="ident">new_utf8_error</span>};
-<span class="kw">use</span> <span class="ident">string_record</span>::<span class="ident">StringRecord</span>;
-
-<span class="doccomment">/// Retrieve the underlying parts of a byte record.</span>
-<span class="attribute">#[<span class="ident">inline</span>]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_parts</span>(
-    <span class="ident">record</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ByteRecord</span>,
-) <span class="op">-&gt;</span> (<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>) {
-    <span class="comment">// TODO(burntsushi): Use `pub(crate)` when it stabilizes.</span>
-    <span class="comment">// (&amp;mut record.fields, &amp;mut record.bounds.ends)</span>
-    <span class="kw">let</span> <span class="ident">inner</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw-2">*</span><span class="ident">record</span>.<span class="number">0</span>;
-    (<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">inner</span>.<span class="ident">fields</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">inner</span>.<span class="ident">bounds</span>.<span class="ident">ends</span>)
-}
-
-<span class="doccomment">/// Set the number of fields in the given record record.</span>
-<span class="attribute">#[<span class="ident">inline</span>]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_len</span>(<span class="ident">record</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ByteRecord</span>, <span class="ident">len</span>: <span class="ident">usize</span>) {
-    <span class="comment">// TODO(burntsushi): Use `pub(crate)` when it stabilizes.</span>
-    <span class="ident">record</span>.<span class="number">0</span>.<span class="ident">bounds</span>.<span class="ident">len</span> <span class="op">=</span> <span class="ident">len</span>;
-}
-
-<span class="doccomment">/// Expand the capacity for storing fields.</span>
-<span class="attribute">#[<span class="ident">inline</span>]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">expand_fields</span>(<span class="ident">record</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ByteRecord</span>) {
-    <span class="comment">// TODO(burntsushi): Use `pub(crate)` when it stabilizes.</span>
-    <span class="kw">let</span> <span class="ident">new_len</span> <span class="op">=</span> <span class="ident">record</span>.<span class="number">0</span>.<span class="ident">fields</span>.<span class="ident">len</span>().<span class="ident">checked_mul</span>(<span class="number">2</span>).<span class="ident">unwrap</span>();
-    <span class="ident">record</span>.<span class="number">0</span>.<span class="ident">fields</span>.<span class="ident">resize</span>(<span class="ident">cmp</span>::<span class="ident">max</span>(<span class="number">4</span>, <span class="ident">new_len</span>), <span class="number">0</span>);
-}
-
-<span class="doccomment">/// Expand the capacity for storing field ending positions.</span>
-<span class="attribute">#[<span class="ident">inline</span>]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">expand_ends</span>(<span class="ident">record</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ByteRecord</span>) {
-    <span class="comment">// TODO(burntsushi): Use `pub(crate)` when it stabilizes.</span>
-    <span class="ident">record</span>.<span class="number">0</span>.<span class="ident">bounds</span>.<span class="ident">expand</span>();
-}
-
-<span class="doccomment">/// Validate the given record as UTF-8.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// If it&#39;s not UTF-8, return an error.</span>
-<span class="attribute">#[<span class="ident">inline</span>]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">validate</span>(<span class="ident">record</span>: <span class="kw-2">&amp;</span><span class="ident">ByteRecord</span>) <span class="op">-&gt;</span> <span class="ident">result</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Utf8Error</span><span class="op">&gt;</span> {
-    <span class="comment">// TODO(burntsushi): Use `pub(crate)` when it stabilizes.</span>
-
-    <span class="comment">// If the entire buffer is ASCII, then we have nothing to fear.</span>
-    <span class="kw">if</span> <span class="ident">record</span>.<span class="number">0</span>.<span class="ident">fields</span>[..<span class="ident">record</span>.<span class="number">0</span>.<span class="ident">bounds</span>.<span class="ident">end</span>()].<span class="ident">iter</span>().<span class="ident">all</span>(<span class="op">|</span><span class="kw-2">&amp;</span><span class="ident">b</span><span class="op">|</span> <span class="ident">b</span> <span class="op">&lt;=</span> <span class="number">0x7F</span>) {
-        <span class="kw">return</span> <span class="prelude-val">Ok</span>(());
-    }
-    <span class="comment">// Otherwise, we must check each field individually to ensure that</span>
-    <span class="comment">// it&#39;s valid UTF-8.</span>
-    <span class="kw">for</span> (<span class="ident">i</span>, <span class="ident">field</span>) <span class="kw">in</span> <span class="ident">record</span>.<span class="ident">iter</span>().<span class="ident">enumerate</span>() {
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=</span> <span class="ident">str</span>::<span class="ident">from_utf8</span>(<span class="ident">field</span>) {
-            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">new_utf8_error</span>(<span class="ident">i</span>, <span class="ident">err</span>.<span class="ident">valid_up_to</span>()));
-        }
-    }
-    <span class="prelude-val">Ok</span>(())
-}
-
-<span class="doccomment">/// Compare the given byte record with the iterator of fields for equality.</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">eq</span><span class="op">&lt;</span><span class="ident">I</span>, <span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">record</span>: <span class="kw-2">&amp;</span><span class="ident">ByteRecord</span>, <span class="ident">other</span>: <span class="ident">I</span>) <span class="op">-&gt;</span> <span class="ident">bool</span>
-    <span class="kw">where</span> <span class="ident">I</span>: <span class="ident">IntoIterator</span><span class="op">&lt;</span><span class="ident">Item</span><span class="op">=</span><span class="ident">T</span><span class="op">&gt;</span>, <span class="ident">T</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>
-{
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">it_record</span> <span class="op">=</span> <span class="ident">record</span>.<span class="ident">iter</span>();
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">it_other</span> <span class="op">=</span> <span class="ident">other</span>.<span class="ident">into_iter</span>();
-    <span class="kw">loop</span> {
-        <span class="kw">match</span> (<span class="ident">it_record</span>.<span class="ident">next</span>(), <span class="ident">it_other</span>.<span class="ident">next</span>()) {
-            (<span class="prelude-val">None</span>, <span class="prelude-val">None</span>) <span class="op">=&gt;</span> <span class="kw">return</span> <span class="bool-val">true</span>,
-            (<span class="prelude-val">None</span>, <span class="prelude-val">Some</span>(<span class="kw">_</span>)) <span class="op">|</span> (<span class="prelude-val">Some</span>(<span class="kw">_</span>), <span class="prelude-val">None</span>) <span class="op">=&gt;</span> <span class="kw">return</span> <span class="bool-val">false</span>,
-            (<span class="prelude-val">Some</span>(<span class="ident">x</span>), <span class="prelude-val">Some</span>(<span class="ident">y</span>)) <span class="op">=&gt;</span> {
-                <span class="kw">if</span> <span class="ident">x</span> <span class="op">!=</span> <span class="ident">y</span>.<span class="ident">as_ref</span>() {
-                    <span class="kw">return</span> <span class="bool-val">false</span>;
-                }
-            }
-        }
-    }
-}
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">deserializer</span>::<span class="ident">deserialize_byte_record</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">error</span>::{<span class="ident">new_utf8_error</span>, <span class="prelude-ty">Result</span>, <span class="ident">Utf8Error</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">string_record</span>::<span class="ident">StringRecord</span>;
 
 <span class="doccomment">/// A single CSV record stored as raw bytes.</span>
 <span class="doccomment">///</span>
@@ -1290,25 +1194,25 @@
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;&gt;</span> <span class="ident">PartialEq</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;&gt;</span> <span class="kw">for</span> <span class="ident">ByteRecord</span> {
     <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
-        <span class="ident">eq</span>(<span class="self">self</span>, <span class="ident">other</span>)
+        <span class="self">self</span>.<span class="ident">iter_eq</span>(<span class="ident">other</span>)
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;&gt;</span> <span class="ident">PartialEq</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">ByteRecord</span> {
     <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
-        <span class="ident">eq</span>(<span class="self">self</span>, <span class="ident">other</span>)
+        <span class="self">self</span>.<span class="ident">iter_eq</span>(<span class="ident">other</span>)
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;&gt;</span> <span class="ident">PartialEq</span><span class="op">&lt;</span>[<span class="ident">T</span>]<span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">ByteRecord</span> {
     <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span>[<span class="ident">T</span>]) <span class="op">-&gt;</span> <span class="ident">bool</span> {
-        <span class="ident">eq</span>(<span class="self">self</span>, <span class="ident">other</span>)
+        <span class="self">self</span>.<span class="ident">iter_eq</span>(<span class="ident">other</span>)
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;&gt;</span> <span class="ident">PartialEq</span><span class="op">&lt;</span>[<span class="ident">T</span>]<span class="op">&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">ByteRecord</span> {
     <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span>[<span class="ident">T</span>]) <span class="op">-&gt;</span> <span class="ident">bool</span> {
-        <span class="ident">eq</span>(<span class="self">self</span>, <span class="ident">other</span>)
+        <span class="self">self</span>.<span class="ident">iter_eq</span>(<span class="ident">other</span>)
     }
 }
 
@@ -1316,11 +1220,7 @@
     <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">fields</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[];
         <span class="kw">for</span> <span class="ident">field</span> <span class="kw">in</span> <span class="self">self</span> {
-            <span class="kw">let</span> <span class="ident">escaped</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">field</span>
-                .<span class="ident">iter</span>()
-                .<span class="ident">flat_map</span>(<span class="op">|</span><span class="kw-2">&amp;</span><span class="ident">b</span><span class="op">|</span> <span class="ident">ascii</span>::<span class="ident">escape_default</span>(<span class="ident">b</span>))
-                .<span class="ident">collect</span>();
-            <span class="ident">fields</span>.<span class="ident">push</span>(<span class="ident">String</span>::<span class="ident">from_utf8</span>(<span class="ident">escaped</span>).<span class="ident">unwrap</span>());
+            <span class="ident">fields</span>.<span class="ident">push</span>(<span class="ident">BString</span>::<span class="ident">from</span>(<span class="ident">field</span>.<span class="ident">to_vec</span>()));
         }
         <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;ByteRecord({:?})&quot;</span>, <span class="ident">fields</span>)
     }
@@ -1410,12 +1310,10 @@
     <span class="doccomment">/// deserialization.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// extern crate csv;</span>
-    <span class="doccomment">/// #[macro_use]</span>
-    <span class="doccomment">/// extern crate serde_derive;</span>
-    <span class="doccomment">///</span>
     <span class="doccomment">/// use std::error::Error;</span>
+    <span class="doccomment">///</span>
     <span class="doccomment">/// use csv::ByteRecord;</span>
+    <span class="doccomment">/// use serde::Deserialize;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// #[derive(Deserialize)]</span>
     <span class="doccomment">/// struct Row&lt;&#39;a&gt; {</span>
@@ -1425,7 +1323,7 @@
     <span class="doccomment">/// }</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # fn main() { example().unwrap() }</span>
-    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {</span>
+    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {</span>
     <span class="doccomment">///     let record = ByteRecord::from(vec![</span>
     <span class="doccomment">///         &quot;Boston&quot;, &quot;United States&quot;, &quot;4628910&quot;,</span>
     <span class="doccomment">///     ]);</span>
@@ -1448,12 +1346,10 @@
     <span class="doccomment">/// types (e.g., `String`) instead of borrowed data types (e.g., `&amp;str`).</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// extern crate csv;</span>
-    <span class="doccomment">/// #[macro_use]</span>
-    <span class="doccomment">/// extern crate serde_derive;</span>
-    <span class="doccomment">///</span>
     <span class="doccomment">/// use std::error::Error;</span>
+    <span class="doccomment">///</span>
     <span class="doccomment">/// use csv::ByteRecord;</span>
+    <span class="doccomment">/// use serde::Deserialize;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// #[derive(Deserialize)]</span>
     <span class="doccomment">/// struct Row {</span>
@@ -1463,7 +1359,7 @@
     <span class="doccomment">/// }</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # fn main() { example().unwrap() }</span>
-    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {</span>
+    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {</span>
     <span class="doccomment">///     // Notice that the fields are not in the same order</span>
     <span class="doccomment">///     // as the fields in the struct!</span>
     <span class="doccomment">///     let header = ByteRecord::from(vec![</span>
@@ -1616,39 +1512,18 @@
     <span class="doccomment">/// assert_eq!(record, vec![&quot;&quot;, &quot;foo&quot;, &quot;bar&quot;, &quot;b a z&quot;]);</span>
     <span class="doccomment">/// ```</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">trim</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">trimmed</span> <span class="op">=</span> <span class="number">0</span>;
-        <span class="kw">for</span> <span class="ident">field</span> <span class="kw">in</span> <span class="number">0</span>..<span class="self">self</span>.<span class="ident">len</span>() {
-            <span class="self">self</span>.<span class="number">0</span>.<span class="ident">bounds</span>.<span class="ident">ends</span>[<span class="ident">field</span>] <span class="op">-=</span> <span class="ident">trimmed</span>;
-            <span class="kw">let</span> <span class="ident">bound</span> <span class="op">=</span> <span class="self">self</span>.<span class="number">0</span>.<span class="ident">bounds</span>.<span class="ident">get</span>(<span class="ident">field</span>).<span class="ident">unwrap</span>();
-            <span class="kw">let</span> <span class="ident">front_space</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">count_leading_whitespace</span>(<span class="ident">bound</span>.<span class="ident">clone</span>());
-            <span class="kw">let</span> <span class="ident">back_space</span> <span class="op">=</span>
-                <span class="kw">if</span> <span class="ident">front_space</span> <span class="op">&lt;</span> <span class="ident">bound</span>.<span class="ident">end</span> <span class="op">-</span> <span class="ident">bound</span>.<span class="ident">start</span> {
-                    <span class="self">self</span>.<span class="ident">count_leading_whitespace</span>(<span class="ident">bound</span>.<span class="ident">clone</span>().<span class="ident">rev</span>())
-                } <span class="kw">else</span> {
-                    <span class="number">0</span>
-                };
-
-            <span class="self">self</span>.<span class="number">0</span>.<span class="ident">fields</span>.<span class="ident">drain</span>(<span class="ident">bound</span>.<span class="ident">end</span> <span class="op">-</span> <span class="ident">back_space</span>..<span class="ident">bound</span>.<span class="ident">end</span>);
-            <span class="self">self</span>.<span class="number">0</span>.<span class="ident">fields</span>.<span class="ident">drain</span>(<span class="ident">bound</span>.<span class="ident">start</span>..<span class="ident">bound</span>.<span class="ident">start</span> <span class="op">+</span> <span class="ident">front_space</span>);
-            <span class="self">self</span>.<span class="number">0</span>.<span class="ident">bounds</span>.<span class="ident">ends</span>[<span class="ident">field</span>] <span class="op">-=</span> <span class="ident">front_space</span> <span class="op">+</span> <span class="ident">back_space</span>;
-            <span class="ident">trimmed</span> <span class="op">+=</span> <span class="ident">front_space</span> <span class="op">+</span> <span class="ident">back_space</span>;
+        <span class="kw">let</span> <span class="ident">length</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">len</span>();
+        <span class="kw">if</span> <span class="ident">length</span> <span class="op">==</span> <span class="number">0</span> {
+            <span class="kw">return</span>;
         }
-    }
-
-    <span class="doccomment">/// Returns amount of leading whitespace starting in the given range.</span>
-    <span class="doccomment">/// Whitespace is not counted past the end of the range.</span>
-    <span class="kw">fn</span> <span class="ident">count_leading_whitespace</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">range</span>: <span class="ident">R</span>) <span class="op">-&gt;</span> <span class="ident">usize</span>
-    <span class="kw">where</span> <span class="ident">R</span>: <span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span><span class="op">=</span><span class="ident">usize</span><span class="op">&gt;</span>
-    {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">count</span> <span class="op">=</span> <span class="number">0</span>;
-        <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="ident">range</span> {
-            <span class="kw">match</span> <span class="self">self</span>.<span class="number">0</span>.<span class="ident">fields</span>[<span class="ident">i</span>] {
-                <span class="string">b&#39;\t&#39;</span> <span class="op">|</span> <span class="string">b&#39;\n&#39;</span> <span class="op">|</span> <span class="string">b&#39;\x0B&#39;</span> <span class="op">|</span> <span class="string">b&#39;\x0C&#39;</span> <span class="op">|</span> <span class="string">b&#39;\r&#39;</span> <span class="op">|</span> <span class="string">b&#39; &#39;</span> <span class="op">=&gt;</span> {}
-                <span class="kw">_</span> <span class="op">=&gt;</span> <span class="kw">break</span>,
-            }
-            <span class="ident">count</span> <span class="op">+=</span> <span class="number">1</span>;
+        <span class="comment">// TODO: We could likely do this in place, but for now, we allocate.</span>
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">trimmed</span> <span class="op">=</span>
+            <span class="ident">ByteRecord</span>::<span class="ident">with_capacity</span>(<span class="self">self</span>.<span class="ident">as_slice</span>().<span class="ident">len</span>(), <span class="self">self</span>.<span class="ident">len</span>());
+        <span class="ident">trimmed</span>.<span class="ident">set_position</span>(<span class="self">self</span>.<span class="ident">position</span>().<span class="ident">cloned</span>());
+        <span class="kw">for</span> <span class="ident">field</span> <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="self">self</span> {
+            <span class="ident">trimmed</span>.<span class="ident">push_field</span>(<span class="ident">field</span>.<span class="ident">trim</span>());
         }
-        <span class="ident">count</span>
+        <span class="kw-2">*</span><span class="self">self</span> <span class="op">=</span> <span class="ident">trimmed</span>;
     }
 
     <span class="doccomment">/// Add a new field to this record.</span>
@@ -1666,7 +1541,7 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">push_field</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">field</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) {
         <span class="kw">let</span> (<span class="ident">s</span>, <span class="ident">e</span>) <span class="op">=</span> (<span class="self">self</span>.<span class="number">0</span>.<span class="ident">bounds</span>.<span class="ident">end</span>(), <span class="self">self</span>.<span class="number">0</span>.<span class="ident">bounds</span>.<span class="ident">end</span>() <span class="op">+</span> <span class="ident">field</span>.<span class="ident">len</span>());
         <span class="kw">while</span> <span class="ident">e</span> <span class="op">&gt;</span> <span class="self">self</span>.<span class="number">0</span>.<span class="ident">fields</span>.<span class="ident">len</span>() {
-            <span class="ident">expand_fields</span>(<span class="self">self</span>);
+            <span class="self">self</span>.<span class="ident">expand_fields</span>();
         }
         <span class="self">self</span>.<span class="number">0</span>.<span class="ident">fields</span>[<span class="ident">s</span>..<span class="ident">e</span>].<span class="ident">copy_from_slice</span>(<span class="ident">field</span>);
         <span class="self">self</span>.<span class="number">0</span>.<span class="ident">bounds</span>.<span class="ident">add</span>(<span class="ident">e</span>);
@@ -1677,13 +1552,12 @@
     <span class="doccomment">/// # Example</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// extern crate csv;</span>
-    <span class="doccomment">///</span>
     <span class="doccomment">/// use std::error::Error;</span>
+    <span class="doccomment">///</span>
     <span class="doccomment">/// use csv::{ByteRecord, ReaderBuilder};</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # fn main() { example().unwrap(); }</span>
-    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {</span>
+    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {</span>
     <span class="doccomment">///     let mut record = ByteRecord::new();</span>
     <span class="doccomment">///     let mut rdr = ReaderBuilder::new()</span>
     <span class="doccomment">///         .has_headers(false)</span>
@@ -1772,6 +1646,72 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_slice</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>.<span class="ident">fields</span>[..<span class="self">self</span>.<span class="number">0</span>.<span class="ident">bounds</span>.<span class="ident">end</span>()]
     }
+
+    <span class="doccomment">/// Retrieve the underlying parts of a byte record.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">as_parts</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> (<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>) {
+        <span class="kw">let</span> <span class="ident">inner</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw-2">*</span><span class="self">self</span>.<span class="number">0</span>;
+        (<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">inner</span>.<span class="ident">fields</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">inner</span>.<span class="ident">bounds</span>.<span class="ident">ends</span>)
+    }
+
+    <span class="doccomment">/// Set the number of fields in the given record record.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">set_len</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">len</span>: <span class="ident">usize</span>) {
+        <span class="self">self</span>.<span class="number">0</span>.<span class="ident">bounds</span>.<span class="ident">len</span> <span class="op">=</span> <span class="ident">len</span>;
+    }
+
+    <span class="doccomment">/// Expand the capacity for storing fields.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">expand_fields</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
+        <span class="kw">let</span> <span class="ident">new_len</span> <span class="op">=</span> <span class="self">self</span>.<span class="number">0</span>.<span class="ident">fields</span>.<span class="ident">len</span>().<span class="ident">checked_mul</span>(<span class="number">2</span>).<span class="ident">unwrap</span>();
+        <span class="self">self</span>.<span class="number">0</span>.<span class="ident">fields</span>.<span class="ident">resize</span>(<span class="ident">cmp</span>::<span class="ident">max</span>(<span class="number">4</span>, <span class="ident">new_len</span>), <span class="number">0</span>);
+    }
+
+    <span class="doccomment">/// Expand the capacity for storing field ending positions.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">expand_ends</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
+        <span class="self">self</span>.<span class="number">0</span>.<span class="ident">bounds</span>.<span class="ident">expand</span>();
+    }
+
+    <span class="doccomment">/// Validate the given record as UTF-8.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// If it&#39;s not UTF-8, return an error.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">validate</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">result</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Utf8Error</span><span class="op">&gt;</span> {
+        <span class="comment">// If the entire buffer is ASCII, then we have nothing to fear.</span>
+        <span class="kw">if</span> <span class="self">self</span>.<span class="number">0</span>.<span class="ident">fields</span>[..<span class="self">self</span>.<span class="number">0</span>.<span class="ident">bounds</span>.<span class="ident">end</span>()].<span class="ident">is_ascii</span>() {
+            <span class="kw">return</span> <span class="prelude-val">Ok</span>(());
+        }
+        <span class="comment">// Otherwise, we must check each field individually to ensure that</span>
+        <span class="comment">// it&#39;s valid UTF-8.</span>
+        <span class="kw">for</span> (<span class="ident">i</span>, <span class="ident">field</span>) <span class="kw">in</span> <span class="self">self</span>.<span class="ident">iter</span>().<span class="ident">enumerate</span>() {
+            <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=</span> <span class="ident">field</span>.<span class="ident">to_str</span>() {
+                <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">new_utf8_error</span>(<span class="ident">i</span>, <span class="ident">err</span>.<span class="ident">valid_up_to</span>()));
+            }
+        }
+        <span class="prelude-val">Ok</span>(())
+    }
+
+    <span class="doccomment">/// Compare the given byte record with the iterator of fields for equality.</span>
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">iter_eq</span><span class="op">&lt;</span><span class="ident">I</span>, <span class="ident">T</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="ident">I</span>) <span class="op">-&gt;</span> <span class="ident">bool</span>
+    <span class="kw">where</span>
+        <span class="ident">I</span>: <span class="ident">IntoIterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">T</span><span class="op">&gt;</span>,
+        <span class="ident">T</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>,
+    {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">it_record</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">iter</span>();
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">it_other</span> <span class="op">=</span> <span class="ident">other</span>.<span class="ident">into_iter</span>();
+        <span class="kw">loop</span> {
+            <span class="kw">match</span> (<span class="ident">it_record</span>.<span class="ident">next</span>(), <span class="ident">it_other</span>.<span class="ident">next</span>()) {
+                (<span class="prelude-val">None</span>, <span class="prelude-val">None</span>) <span class="op">=&gt;</span> <span class="kw">return</span> <span class="bool-val">true</span>,
+                (<span class="prelude-val">None</span>, <span class="prelude-val">Some</span>(<span class="kw">_</span>)) <span class="op">|</span> (<span class="prelude-val">Some</span>(<span class="kw">_</span>), <span class="prelude-val">None</span>) <span class="op">=&gt;</span> <span class="kw">return</span> <span class="bool-val">false</span>,
+                (<span class="prelude-val">Some</span>(<span class="ident">x</span>), <span class="prelude-val">Some</span>(<span class="ident">y</span>)) <span class="op">=&gt;</span> {
+                    <span class="kw">if</span> <span class="ident">x</span> <span class="op">!=</span> <span class="ident">y</span>.<span class="ident">as_ref</span>() {
+                        <span class="kw">return</span> <span class="bool-val">false</span>;
+                    }
+                }
+            }
+        }
+    }
 }
 
 <span class="doccomment">/// A position in CSV data.</span>
@@ -1797,11 +1737,20 @@
     }
 
     <span class="doccomment">/// The byte offset, starting at `0`, of this position.</span>
-    <span class="attribute">#[<span class="ident">inline</span>]</span> <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">byte</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">u64</span> { <span class="self">self</span>.<span class="ident">byte</span> }
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">byte</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">u64</span> {
+        <span class="self">self</span>.<span class="ident">byte</span>
+    }
     <span class="doccomment">/// The line number, starting at `1`, of this position.</span>
-    <span class="attribute">#[<span class="ident">inline</span>]</span> <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">line</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">u64</span> { <span class="self">self</span>.<span class="ident">line</span> }
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">line</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">u64</span> {
+        <span class="self">self</span>.<span class="ident">line</span>
+    }
     <span class="doccomment">/// The record index, starting with the first record at `0`.</span>
-    <span class="attribute">#[<span class="ident">inline</span>]</span> <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">record</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">u64</span> { <span class="self">self</span>.<span class="ident">record</span> }
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">record</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">u64</span> {
+        <span class="self">self</span>.<span class="ident">record</span>
+    }
 
     <span class="doccomment">/// Set the byte offset of this position.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
@@ -1914,12 +1863,16 @@
 <span class="kw">impl</span> <span class="ident">ops</span>::<span class="ident">Index</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">ByteRecord</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> [<span class="ident">u8</span>];
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">index</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">i</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] { <span class="self">self</span>.<span class="ident">get</span>(<span class="ident">i</span>).<span class="ident">unwrap</span>() }
+    <span class="kw">fn</span> <span class="ident">index</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">i</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] {
+        <span class="self">self</span>.<span class="ident">get</span>(<span class="ident">i</span>).<span class="ident">unwrap</span>()
+    }
 }
 
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">StringRecord</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">ByteRecord</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">record</span>: <span class="ident">StringRecord</span>) <span class="op">-&gt;</span> <span class="ident">ByteRecord</span> { <span class="ident">record</span>.<span class="ident">into_byte_record</span>() }
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">record</span>: <span class="ident">StringRecord</span>) <span class="op">-&gt;</span> <span class="ident">ByteRecord</span> {
+        <span class="ident">record</span>.<span class="ident">into_byte_record</span>()
+    }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;&gt;</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;&gt;</span> <span class="kw">for</span> <span class="ident">ByteRecord</span> {
@@ -1938,7 +1891,7 @@
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;&gt;</span> <span class="ident">FromIterator</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">ByteRecord</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">from_iter</span><span class="op">&lt;</span><span class="ident">I</span>: <span class="ident">IntoIterator</span><span class="op">&lt;</span><span class="ident">Item</span><span class="op">=</span><span class="ident">T</span><span class="op">&gt;&gt;</span>(<span class="ident">iter</span>: <span class="ident">I</span>) <span class="op">-&gt;</span> <span class="ident">ByteRecord</span> {
+    <span class="kw">fn</span> <span class="ident">from_iter</span><span class="op">&lt;</span><span class="ident">I</span>: <span class="ident">IntoIterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">T</span><span class="op">&gt;&gt;</span>(<span class="ident">iter</span>: <span class="ident">I</span>) <span class="op">-&gt;</span> <span class="ident">ByteRecord</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">record</span> <span class="op">=</span> <span class="ident">ByteRecord</span>::<span class="ident">new</span>();
         <span class="ident">record</span>.<span class="ident">extend</span>(<span class="ident">iter</span>);
         <span class="ident">record</span>
@@ -1947,7 +1900,7 @@
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;&gt;</span> <span class="ident">Extend</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">ByteRecord</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">extend</span><span class="op">&lt;</span><span class="ident">I</span>: <span class="ident">IntoIterator</span><span class="op">&lt;</span><span class="ident">Item</span><span class="op">=</span><span class="ident">T</span><span class="op">&gt;&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">iter</span>: <span class="ident">I</span>) {
+    <span class="kw">fn</span> <span class="ident">extend</span><span class="op">&lt;</span><span class="ident">I</span>: <span class="ident">IntoIterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">T</span><span class="op">&gt;&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">iter</span>: <span class="ident">I</span>) {
         <span class="kw">for</span> <span class="ident">x</span> <span class="kw">in</span> <span class="ident">iter</span> {
             <span class="self">self</span>.<span class="ident">push_field</span>(<span class="ident">x</span>.<span class="ident">as_ref</span>());
         }
@@ -2024,7 +1977,8 @@
             <span class="prelude-val">None</span>
         } <span class="kw">else</span> {
             <span class="self">self</span>.<span class="ident">i_reverse</span> <span class="op">-=</span> <span class="number">1</span>;
-            <span class="kw">let</span> <span class="ident">start</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">i_reverse</span>
+            <span class="kw">let</span> <span class="ident">start</span> <span class="op">=</span> <span class="self">self</span>
+                .<span class="ident">i_reverse</span>
                 .<span class="ident">checked_sub</span>(<span class="number">1</span>)
                 .<span class="ident">map</span>(<span class="op">|</span><span class="ident">i</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">r</span>.<span class="number">0</span>.<span class="ident">bounds</span>.<span class="ident">ends</span>()[<span class="ident">i</span>])
                 .<span class="ident">unwrap_or</span>(<span class="number">0</span>);
@@ -2037,11 +1991,13 @@
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">mod</span> <span class="ident">tests</span> {
-    <span class="kw">use</span> <span class="ident">string_record</span>::<span class="ident">StringRecord</span>;
+    <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">string_record</span>::<span class="ident">StringRecord</span>;
 
     <span class="kw">use</span> <span class="kw">super</span>::<span class="ident">ByteRecord</span>;
 
-    <span class="kw">fn</span> <span class="ident">b</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] { <span class="ident">s</span>.<span class="ident">as_bytes</span>() }
+    <span class="kw">fn</span> <span class="ident">b</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] {
+        <span class="ident">s</span>.<span class="ident">as_bytes</span>()
+    }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">record_1</span>() {
@@ -2287,9 +2243,8 @@
     <span class="kw">fn</span> <span class="ident">iter</span>() {
         <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;foo&quot;</span>, <span class="string">&quot;bar&quot;</span>, <span class="string">&quot;baz&quot;</span>, <span class="string">&quot;quux&quot;</span>, <span class="string">&quot;wat&quot;</span>];
         <span class="kw">let</span> <span class="ident">rec</span> <span class="op">=</span> <span class="ident">ByteRecord</span>::<span class="ident">from</span>(<span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="ident">data</span>);
-        <span class="kw">let</span> <span class="ident">got</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">rec</span>.<span class="ident">iter</span>()
-            .<span class="ident">map</span>(<span class="op">|</span><span class="ident">x</span><span class="op">|</span> ::<span class="ident">std</span>::<span class="ident">str</span>::<span class="ident">from_utf8</span>(<span class="ident">x</span>).<span class="ident">unwrap</span>())
-            .<span class="ident">collect</span>();
+        <span class="kw">let</span> <span class="ident">got</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> <span class="op">=</span>
+            <span class="ident">rec</span>.<span class="ident">iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">x</span><span class="op">|</span> ::<span class="ident">std</span>::<span class="ident">str</span>::<span class="ident">from_utf8</span>(<span class="ident">x</span>).<span class="ident">unwrap</span>()).<span class="ident">collect</span>();
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">data</span>, <span class="ident">got</span>);
     }
 
@@ -2297,7 +2252,8 @@
     <span class="kw">fn</span> <span class="ident">iter_reverse</span>() {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">data</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;foo&quot;</span>, <span class="string">&quot;bar&quot;</span>, <span class="string">&quot;baz&quot;</span>, <span class="string">&quot;quux&quot;</span>, <span class="string">&quot;wat&quot;</span>];
         <span class="kw">let</span> <span class="ident">rec</span> <span class="op">=</span> <span class="ident">ByteRecord</span>::<span class="ident">from</span>(<span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="ident">data</span>);
-        <span class="kw">let</span> <span class="ident">got</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">rec</span>.<span class="ident">iter</span>()
+        <span class="kw">let</span> <span class="ident">got</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">rec</span>
+            .<span class="ident">iter</span>()
             .<span class="ident">rev</span>()
             .<span class="ident">map</span>(<span class="op">|</span><span class="ident">x</span><span class="op">|</span> ::<span class="ident">std</span>::<span class="ident">str</span>::<span class="ident">from_utf8</span>(<span class="ident">x</span>).<span class="ident">unwrap</span>())
             .<span class="ident">collect</span>();
@@ -2325,8 +2281,8 @@
     <span class="comment">// Regression test for #138.</span>
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">eq_field_boundaries</span>() {
-        <span class="kw">let</span> <span class="ident">test1</span> <span class="op">=</span> <span class="ident">ByteRecord</span>::<span class="ident">from</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;12&quot;</span>,<span class="string">&quot;34&quot;</span>]);
-        <span class="kw">let</span> <span class="ident">test2</span> <span class="op">=</span> <span class="ident">ByteRecord</span>::<span class="ident">from</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;123&quot;</span>,<span class="string">&quot;4&quot;</span>]);
+        <span class="kw">let</span> <span class="ident">test1</span> <span class="op">=</span> <span class="ident">ByteRecord</span>::<span class="ident">from</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;12&quot;</span>, <span class="string">&quot;34&quot;</span>]);
+        <span class="kw">let</span> <span class="ident">test2</span> <span class="op">=</span> <span class="ident">ByteRecord</span>::<span class="ident">from</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;123&quot;</span>, <span class="string">&quot;4&quot;</span>]);
 
         <span class="macro">assert_ne</span><span class="macro">!</span>(<span class="ident">test1</span>, <span class="ident">test2</span>);
     }
@@ -2336,8 +2292,8 @@
     <span class="comment">// Regression test for #138.</span>
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">eq_record_len</span>() {
-        <span class="kw">let</span> <span class="ident">test1</span> <span class="op">=</span> <span class="ident">ByteRecord</span>::<span class="ident">from</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;12&quot;</span>,<span class="string">&quot;34&quot;</span>, <span class="string">&quot;56&quot;</span>]);
-        <span class="kw">let</span> <span class="ident">test2</span> <span class="op">=</span> <span class="ident">ByteRecord</span>::<span class="ident">from</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;12&quot;</span>,<span class="string">&quot;34&quot;</span>]);
+        <span class="kw">let</span> <span class="ident">test1</span> <span class="op">=</span> <span class="ident">ByteRecord</span>::<span class="ident">from</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;12&quot;</span>, <span class="string">&quot;34&quot;</span>, <span class="string">&quot;56&quot;</span>]);
+        <span class="kw">let</span> <span class="ident">test2</span> <span class="op">=</span> <span class="ident">ByteRecord</span>::<span class="ident">from</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;12&quot;</span>, <span class="string">&quot;34&quot;</span>]);
         <span class="macro">assert_ne</span><span class="macro">!</span>(<span class="ident">test1</span>, <span class="ident">test2</span>);
     }
 }

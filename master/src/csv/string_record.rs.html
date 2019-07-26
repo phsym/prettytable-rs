@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/csv-1.0.7/src/string_record.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>string_record.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../csv/index.html'><img src='../../rust-logo.png' alt='logo' width='100'></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/csv-1.1.1/src/string_record.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>string_record.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../csv/index.html'><div class='logo-container'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -824,13 +824,6 @@
 <span id="824">824</span>
 <span id="825">825</span>
 <span id="826">826</span>
-<span id="827">827</span>
-<span id="828">828</span>
-<span id="829">829</span>
-<span id="830">830</span>
-<span id="831">831</span>
-<span id="832">832</span>
-<span id="833">833</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>;
@@ -841,47 +834,10 @@
 
 <span class="kw">use</span> <span class="ident">serde</span>::<span class="ident">de</span>::<span class="ident">Deserialize</span>;
 
-<span class="kw">use</span> <span class="ident">deserializer</span>::<span class="ident">deserialize_string_record</span>;
-<span class="kw">use</span> <span class="ident">error</span>::{<span class="ident">ErrorKind</span>, <span class="ident">FromUtf8Error</span>, <span class="prelude-ty">Result</span>, <span class="ident">new_error</span>, <span class="ident">new_from_utf8_error</span>};
-<span class="kw">use</span> <span class="ident">reader</span>::<span class="ident">Reader</span>;
-<span class="kw">use</span> <span class="ident">byte_record</span>::{<span class="self">self</span>, <span class="ident">ByteRecord</span>, <span class="ident">ByteRecordIter</span>, <span class="ident">Position</span>};
-
-<span class="doccomment">/// A safe function for reading CSV data into a `StringRecord`.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// This relies on the internal representation of `StringRecord`.</span>
-<span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">read</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">io</span>::<span class="ident">Read</span><span class="op">&gt;</span>(
-    <span class="ident">rdr</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>,
-    <span class="ident">record</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">StringRecord</span>,
-) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span> {
-    <span class="comment">// TODO(burntsushi): Define this as a method using `pub(crate)` when that</span>
-    <span class="comment">// stabilizes.</span>
-
-    <span class="comment">// SAFETY: Note that despite the absence of `unsafe` in this function, this</span>
-    <span class="comment">// code is critical to upholding the safety of other `unsafe` blocks in</span>
-    <span class="comment">// this module. Namely, after calling `read_byte_record`, it is possible</span>
-    <span class="comment">// for `record` to contain invalid UTF-8. We check for this in the</span>
-    <span class="comment">// `validate` method, and if it does have invalid UTF-8, we clear the</span>
-    <span class="comment">// record. (It is bad for `record` to contain invalid UTF-8 because other</span>
-    <span class="comment">// accessor methods, like `get`, assume that every field is valid UTF-8.)</span>
-    <span class="kw">let</span> <span class="ident">pos</span> <span class="op">=</span> <span class="ident">rdr</span>.<span class="ident">position</span>().<span class="ident">clone</span>();
-    <span class="kw">let</span> <span class="ident">read_res</span> <span class="op">=</span> <span class="ident">rdr</span>.<span class="ident">read_byte_record</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">record</span>.<span class="number">0</span>);
-    <span class="kw">let</span> <span class="ident">utf8_res</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">byte_record</span>::<span class="ident">validate</span>(<span class="kw-2">&amp;</span><span class="ident">record</span>.<span class="number">0</span>) {
-        <span class="prelude-val">Ok</span>(()) <span class="op">=&gt;</span> <span class="prelude-val">Ok</span>(()),
-        <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=&gt;</span> {
-            <span class="comment">// If this record isn&#39;t valid UTF-8, then completely wipe it.</span>
-            <span class="ident">record</span>.<span class="number">0</span>.<span class="ident">clear</span>();
-            <span class="prelude-val">Err</span>(<span class="ident">err</span>)
-        }
-    };
-    <span class="kw">match</span> (<span class="ident">read_res</span>, <span class="ident">utf8_res</span>) {
-        (<span class="prelude-val">Err</span>(<span class="ident">err</span>), <span class="kw">_</span>) <span class="op">=&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">err</span>),
-        (<span class="prelude-val">Ok</span>(<span class="kw">_</span>), <span class="prelude-val">Err</span>(<span class="ident">err</span>)) <span class="op">=&gt;</span> {
-            <span class="prelude-val">Err</span>(<span class="ident">new_error</span>(<span class="ident">ErrorKind</span>::<span class="ident">Utf8</span> { <span class="ident">pos</span>: <span class="prelude-val">Some</span>(<span class="ident">pos</span>), <span class="ident">err</span>: <span class="ident">err</span> }))
-        }
-        (<span class="prelude-val">Ok</span>(<span class="ident">eof</span>), <span class="prelude-val">Ok</span>(())) <span class="op">=&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">eof</span>),
-    }
-}
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">byte_record</span>::{<span class="ident">ByteRecord</span>, <span class="ident">ByteRecordIter</span>, <span class="ident">Position</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">deserializer</span>::<span class="ident">deserialize_string_record</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">error</span>::{<span class="ident">Error</span>, <span class="ident">ErrorKind</span>, <span class="ident">FromUtf8Error</span>, <span class="prelude-ty">Result</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">reader</span>::<span class="ident">Reader</span>;
 
 <span class="doccomment">/// A single CSV record stored as valid UTF-8 bytes.</span>
 <span class="doccomment">///</span>
@@ -908,31 +864,31 @@
 
 <span class="kw">impl</span> <span class="ident">PartialEq</span> <span class="kw">for</span> <span class="ident">StringRecord</span> {
     <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">StringRecord</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
-        <span class="ident">byte_record</span>::<span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>, <span class="kw-2">&amp;</span><span class="ident">other</span>.<span class="number">0</span>)
+        <span class="self">self</span>.<span class="number">0</span>.<span class="ident">iter_eq</span>(<span class="kw-2">&amp;</span><span class="ident">other</span>.<span class="number">0</span>)
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;&gt;</span> <span class="ident">PartialEq</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;&gt;</span> <span class="kw">for</span> <span class="ident">StringRecord</span> {
     <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
-        <span class="ident">byte_record</span>::<span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>, <span class="ident">other</span>)
+        <span class="self">self</span>.<span class="number">0</span>.<span class="ident">iter_eq</span>(<span class="ident">other</span>)
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;&gt;</span> <span class="ident">PartialEq</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">StringRecord</span> {
     <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
-        <span class="ident">byte_record</span>::<span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>, <span class="ident">other</span>)
+        <span class="self">self</span>.<span class="number">0</span>.<span class="ident">iter_eq</span>(<span class="ident">other</span>)
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;&gt;</span> <span class="ident">PartialEq</span><span class="op">&lt;</span>[<span class="ident">T</span>]<span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">StringRecord</span> {
     <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span>[<span class="ident">T</span>]) <span class="op">-&gt;</span> <span class="ident">bool</span> {
-        <span class="ident">byte_record</span>::<span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>, <span class="ident">other</span>)
+        <span class="self">self</span>.<span class="number">0</span>.<span class="ident">iter_eq</span>(<span class="ident">other</span>)
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;&gt;</span> <span class="ident">PartialEq</span><span class="op">&lt;</span>[<span class="ident">T</span>]<span class="op">&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">StringRecord</span> {
     <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span>[<span class="ident">T</span>]) <span class="op">-&gt;</span> <span class="ident">bool</span> {
-        <span class="ident">byte_record</span>::<span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>, <span class="ident">other</span>)
+        <span class="self">self</span>.<span class="number">0</span>.<span class="ident">iter_eq</span>(<span class="ident">other</span>)
     }
 }
 
@@ -997,13 +953,11 @@
     <span class="doccomment">/// # Example: valid UTF-8</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// extern crate csv;</span>
-    <span class="doccomment">///</span>
     <span class="doccomment">/// use std::error::Error;</span>
     <span class="doccomment">/// use csv::{ByteRecord, StringRecord};</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # fn main() { example().unwrap(); }</span>
-    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {</span>
+    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {</span>
     <span class="doccomment">///     let byte_record = ByteRecord::from(vec![&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]);</span>
     <span class="doccomment">///     let str_record = StringRecord::from_byte_record(byte_record)?;</span>
     <span class="doccomment">///     assert_eq!(str_record.len(), 3);</span>
@@ -1027,9 +981,9 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_byte_record</span>(
         <span class="ident">record</span>: <span class="ident">ByteRecord</span>,
     ) <span class="op">-&gt;</span> <span class="ident">result</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">StringRecord</span>, <span class="ident">FromUtf8Error</span><span class="op">&gt;</span> {
-        <span class="kw">match</span> <span class="ident">byte_record</span>::<span class="ident">validate</span>(<span class="kw-2">&amp;</span><span class="ident">record</span>) {
+        <span class="kw">match</span> <span class="ident">record</span>.<span class="ident">validate</span>() {
             <span class="prelude-val">Ok</span>(()) <span class="op">=&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">StringRecord</span>(<span class="ident">record</span>)),
-            <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">new_from_utf8_error</span>(<span class="ident">record</span>, <span class="ident">err</span>)),
+            <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">FromUtf8Error</span>::<span class="ident">new</span>(<span class="ident">record</span>, <span class="ident">err</span>)),
         }
     }
 
@@ -1065,12 +1019,12 @@
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_byte_record_lossy</span>(<span class="ident">record</span>: <span class="ident">ByteRecord</span>) <span class="op">-&gt;</span> <span class="ident">StringRecord</span> {
         <span class="comment">// If the record is valid UTF-8, then take the easy path.</span>
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(()) <span class="op">=</span> <span class="ident">byte_record</span>::<span class="ident">validate</span>(<span class="kw-2">&amp;</span><span class="ident">record</span>) {
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(()) <span class="op">=</span> <span class="ident">record</span>.<span class="ident">validate</span>() {
             <span class="kw">return</span> <span class="ident">StringRecord</span>(<span class="ident">record</span>);
         }
         <span class="comment">// TODO: We can be faster here. Not sure if it&#39;s worth it.</span>
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">str_record</span> <span class="op">=</span> <span class="ident">StringRecord</span>::<span class="ident">with_capacity</span>(
-            <span class="ident">record</span>.<span class="ident">as_slice</span>().<span class="ident">len</span>(), <span class="ident">record</span>.<span class="ident">len</span>());
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">str_record</span> <span class="op">=</span>
+            <span class="ident">StringRecord</span>::<span class="ident">with_capacity</span>(<span class="ident">record</span>.<span class="ident">as_slice</span>().<span class="ident">len</span>(), <span class="ident">record</span>.<span class="ident">len</span>());
         <span class="kw">for</span> <span class="ident">field</span> <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="ident">record</span> {
             <span class="ident">str_record</span>.<span class="ident">push_field</span>(<span class="kw-2">&amp;</span><span class="ident">String</span>::<span class="ident">from_utf8_lossy</span>(<span class="ident">field</span>));
         }
@@ -1096,12 +1050,10 @@
     <span class="doccomment">/// deserialization.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// extern crate csv;</span>
-    <span class="doccomment">/// #[macro_use]</span>
-    <span class="doccomment">/// extern crate serde_derive;</span>
-    <span class="doccomment">///</span>
     <span class="doccomment">/// use std::error::Error;</span>
+    <span class="doccomment">///</span>
     <span class="doccomment">/// use csv::StringRecord;</span>
+    <span class="doccomment">/// use serde::Deserialize;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// #[derive(Deserialize)]</span>
     <span class="doccomment">/// struct Row&lt;&#39;a&gt; {</span>
@@ -1111,7 +1063,7 @@
     <span class="doccomment">/// }</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # fn main() { example().unwrap() }</span>
-    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {</span>
+    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {</span>
     <span class="doccomment">///     let record = StringRecord::from(vec![</span>
     <span class="doccomment">///         &quot;Boston&quot;, &quot;United States&quot;, &quot;4628910&quot;,</span>
     <span class="doccomment">///     ]);</span>
@@ -1134,12 +1086,10 @@
     <span class="doccomment">/// types (e.g., `String`) instead of borrowed data types (e.g., `&amp;str`).</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// extern crate csv;</span>
-    <span class="doccomment">/// #[macro_use]</span>
-    <span class="doccomment">/// extern crate serde_derive;</span>
-    <span class="doccomment">///</span>
     <span class="doccomment">/// use std::error::Error;</span>
+    <span class="doccomment">///</span>
     <span class="doccomment">/// use csv::StringRecord;</span>
+    <span class="doccomment">/// use serde::Deserialize;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// #[derive(Deserialize)]</span>
     <span class="doccomment">/// struct Row {</span>
@@ -1149,7 +1099,7 @@
     <span class="doccomment">/// }</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # fn main() { example().unwrap() }</span>
-    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {</span>
+    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {</span>
     <span class="doccomment">///     // Notice that the fields are not in the same order</span>
     <span class="doccomment">///     // as the fields in the struct!</span>
     <span class="doccomment">///     let header = StringRecord::from(vec![</span>
@@ -1307,8 +1257,9 @@
             <span class="kw">return</span>;
         }
         <span class="comment">// TODO: We could likely do this in place, but for now, we allocate.</span>
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">trimmed</span> <span class="op">=</span> <span class="ident">StringRecord</span>::<span class="ident">with_capacity</span>(
-            <span class="self">self</span>.<span class="ident">as_slice</span>().<span class="ident">len</span>(), <span class="self">self</span>.<span class="ident">len</span>());
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">trimmed</span> <span class="op">=</span>
+            <span class="ident">StringRecord</span>::<span class="ident">with_capacity</span>(<span class="self">self</span>.<span class="ident">as_slice</span>().<span class="ident">len</span>(), <span class="self">self</span>.<span class="ident">len</span>());
+        <span class="ident">trimmed</span>.<span class="ident">set_position</span>(<span class="self">self</span>.<span class="ident">position</span>().<span class="ident">cloned</span>());
         <span class="kw">for</span> <span class="ident">field</span> <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="self">self</span> {
             <span class="ident">trimmed</span>.<span class="ident">push_field</span>(<span class="ident">field</span>.<span class="ident">trim</span>());
         }
@@ -1336,13 +1287,11 @@
     <span class="doccomment">/// # Example</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// extern crate csv;</span>
-    <span class="doccomment">///</span>
     <span class="doccomment">/// use std::error::Error;</span>
     <span class="doccomment">/// use csv::{StringRecord, ReaderBuilder};</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # fn main() { example().unwrap(); }</span>
-    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {</span>
+    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {</span>
     <span class="doccomment">///     let mut record = StringRecord::new();</span>
     <span class="doccomment">///     let mut rdr = ReaderBuilder::new()</span>
     <span class="doccomment">///         .has_headers(false)</span>
@@ -1485,12 +1434,49 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">into_byte_record</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">ByteRecord</span> {
         <span class="self">self</span>.<span class="number">0</span>
     }
+
+    <span class="doccomment">/// A safe function for reading CSV data into a `StringRecord`.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This relies on the internal representation of `StringRecord`.</span>
+    <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">read</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">io</span>::<span class="ident">Read</span><span class="op">&gt;</span>(
+        <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
+        <span class="ident">rdr</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>,
+    ) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span> {
+        <span class="comment">// SAFETY: Note that despite the absence of `unsafe` in this function,</span>
+        <span class="comment">// this code is critical to upholding the safety of other `unsafe`</span>
+        <span class="comment">// blocks in this module. Namely, after calling `read_byte_record`,</span>
+        <span class="comment">// it is possible for `record` to contain invalid UTF-8. We check for</span>
+        <span class="comment">// this in the `validate` method, and if it does have invalid UTF-8, we</span>
+        <span class="comment">// clear the record. (It is bad for `record` to contain invalid UTF-8</span>
+        <span class="comment">// because other accessor methods, like `get`, assume that every field</span>
+        <span class="comment">// is valid UTF-8.)</span>
+        <span class="kw">let</span> <span class="ident">pos</span> <span class="op">=</span> <span class="ident">rdr</span>.<span class="ident">position</span>().<span class="ident">clone</span>();
+        <span class="kw">let</span> <span class="ident">read_res</span> <span class="op">=</span> <span class="ident">rdr</span>.<span class="ident">read_byte_record</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="number">0</span>);
+        <span class="kw">let</span> <span class="ident">utf8_res</span> <span class="op">=</span> <span class="kw">match</span> <span class="self">self</span>.<span class="number">0</span>.<span class="ident">validate</span>() {
+            <span class="prelude-val">Ok</span>(()) <span class="op">=&gt;</span> <span class="prelude-val">Ok</span>(()),
+            <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=&gt;</span> {
+                <span class="comment">// If this record isn&#39;t valid UTF-8, then completely wipe it.</span>
+                <span class="self">self</span>.<span class="number">0</span>.<span class="ident">clear</span>();
+                <span class="prelude-val">Err</span>(<span class="ident">err</span>)
+            }
+        };
+        <span class="kw">match</span> (<span class="ident">read_res</span>, <span class="ident">utf8_res</span>) {
+            (<span class="prelude-val">Err</span>(<span class="ident">err</span>), <span class="kw">_</span>) <span class="op">=&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">err</span>),
+            (<span class="prelude-val">Ok</span>(<span class="kw">_</span>), <span class="prelude-val">Err</span>(<span class="ident">err</span>)) <span class="op">=&gt;</span> {
+                <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">new</span>(<span class="ident">ErrorKind</span>::<span class="ident">Utf8</span> { <span class="ident">pos</span>: <span class="prelude-val">Some</span>(<span class="ident">pos</span>), <span class="ident">err</span>: <span class="ident">err</span> }))
+            }
+            (<span class="prelude-val">Ok</span>(<span class="ident">eof</span>), <span class="prelude-val">Ok</span>(())) <span class="op">=&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">eof</span>),
+        }
+    }
 }
 
 <span class="kw">impl</span> <span class="ident">ops</span>::<span class="ident">Index</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">StringRecord</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">str</span>;
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">index</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">i</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> { <span class="self">self</span>.<span class="ident">get</span>(<span class="ident">i</span>).<span class="ident">unwrap</span>() }
+    <span class="kw">fn</span> <span class="ident">index</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">i</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
+        <span class="self">self</span>.<span class="ident">get</span>(<span class="ident">i</span>).<span class="ident">unwrap</span>()
+    }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">str</span><span class="op">&gt;&gt;</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;&gt;</span> <span class="kw">for</span> <span class="ident">StringRecord</span> {
@@ -1509,7 +1495,7 @@
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">str</span><span class="op">&gt;&gt;</span> <span class="ident">FromIterator</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">StringRecord</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">from_iter</span><span class="op">&lt;</span><span class="ident">I</span>: <span class="ident">IntoIterator</span><span class="op">&lt;</span><span class="ident">Item</span><span class="op">=</span><span class="ident">T</span><span class="op">&gt;&gt;</span>(<span class="ident">iter</span>: <span class="ident">I</span>) <span class="op">-&gt;</span> <span class="ident">StringRecord</span> {
+    <span class="kw">fn</span> <span class="ident">from_iter</span><span class="op">&lt;</span><span class="ident">I</span>: <span class="ident">IntoIterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">T</span><span class="op">&gt;&gt;</span>(<span class="ident">iter</span>: <span class="ident">I</span>) <span class="op">-&gt;</span> <span class="ident">StringRecord</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">record</span> <span class="op">=</span> <span class="ident">StringRecord</span>::<span class="ident">new</span>();
         <span class="ident">record</span>.<span class="ident">extend</span>(<span class="ident">iter</span>);
         <span class="ident">record</span>
@@ -1518,7 +1504,7 @@
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">str</span><span class="op">&gt;&gt;</span> <span class="ident">Extend</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">StringRecord</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">extend</span><span class="op">&lt;</span><span class="ident">I</span>: <span class="ident">IntoIterator</span><span class="op">&lt;</span><span class="ident">Item</span><span class="op">=</span><span class="ident">T</span><span class="op">&gt;&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">iter</span>: <span class="ident">I</span>) {
+    <span class="kw">fn</span> <span class="ident">extend</span><span class="op">&lt;</span><span class="ident">I</span>: <span class="ident">IntoIterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">T</span><span class="op">&gt;&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">iter</span>: <span class="ident">I</span>) {
         <span class="kw">for</span> <span class="ident">x</span> <span class="kw">in</span> <span class="ident">iter</span> {
             <span class="self">self</span>.<span class="ident">push_field</span>(<span class="ident">x</span>.<span class="ident">as_ref</span>());
         }
@@ -1575,7 +1561,7 @@
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">mod</span> <span class="ident">tests</span> {
-    <span class="kw">use</span> <span class="ident">string_record</span>::<span class="ident">StringRecord</span>;
+    <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">string_record</span>::<span class="ident">StringRecord</span>;
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">trim_front</span>() {
@@ -1649,8 +1635,8 @@
     <span class="comment">// Regression test for #138.</span>
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">eq_field_boundaries</span>() {
-        <span class="kw">let</span> <span class="ident">test1</span> <span class="op">=</span> <span class="ident">StringRecord</span>::<span class="ident">from</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;12&quot;</span>,<span class="string">&quot;34&quot;</span>]);
-        <span class="kw">let</span> <span class="ident">test2</span> <span class="op">=</span> <span class="ident">StringRecord</span>::<span class="ident">from</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;123&quot;</span>,<span class="string">&quot;4&quot;</span>]);
+        <span class="kw">let</span> <span class="ident">test1</span> <span class="op">=</span> <span class="ident">StringRecord</span>::<span class="ident">from</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;12&quot;</span>, <span class="string">&quot;34&quot;</span>]);
+        <span class="kw">let</span> <span class="ident">test2</span> <span class="op">=</span> <span class="ident">StringRecord</span>::<span class="ident">from</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;123&quot;</span>, <span class="string">&quot;4&quot;</span>]);
 
         <span class="macro">assert_ne</span><span class="macro">!</span>(<span class="ident">test1</span>, <span class="ident">test2</span>);
     }
@@ -1660,8 +1646,8 @@
     <span class="comment">// Regression test for #138.</span>
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">eq_record_len</span>() {
-        <span class="kw">let</span> <span class="ident">test1</span> <span class="op">=</span> <span class="ident">StringRecord</span>::<span class="ident">from</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;12&quot;</span>,<span class="string">&quot;34&quot;</span>, <span class="string">&quot;56&quot;</span>]);
-        <span class="kw">let</span> <span class="ident">test2</span> <span class="op">=</span> <span class="ident">StringRecord</span>::<span class="ident">from</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;12&quot;</span>,<span class="string">&quot;34&quot;</span>]);
+        <span class="kw">let</span> <span class="ident">test1</span> <span class="op">=</span> <span class="ident">StringRecord</span>::<span class="ident">from</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;12&quot;</span>, <span class="string">&quot;34&quot;</span>, <span class="string">&quot;56&quot;</span>]);
+        <span class="kw">let</span> <span class="ident">test2</span> <span class="op">=</span> <span class="ident">StringRecord</span>::<span class="ident">from</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;12&quot;</span>, <span class="string">&quot;34&quot;</span>]);
         <span class="macro">assert_ne</span><span class="macro">!</span>(<span class="ident">test1</span>, <span class="ident">test2</span>);
     }
 }

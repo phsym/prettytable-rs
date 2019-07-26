@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/csv-1.0.7/src/deserializer.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>deserializer.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../csv/index.html'><img src='../../rust-logo.png' alt='logo' width='100'></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/csv-1.1.1/src/deserializer.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>deserializer.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../csv/index.html'><div class='logo-container'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
 <span id="2">   2</span>
 <span id="3">   3</span>
 <span id="4">   4</span>
@@ -1211,23 +1211,64 @@
 <span id="1211">1211</span>
 <span id="1212">1212</span>
 <span id="1213">1213</span>
+<span id="1214">1214</span>
+<span id="1215">1215</span>
+<span id="1216">1216</span>
+<span id="1217">1217</span>
+<span id="1218">1218</span>
+<span id="1219">1219</span>
+<span id="1220">1220</span>
+<span id="1221">1221</span>
+<span id="1222">1222</span>
+<span id="1223">1223</span>
+<span id="1224">1224</span>
+<span id="1225">1225</span>
+<span id="1226">1226</span>
+<span id="1227">1227</span>
+<span id="1228">1228</span>
+<span id="1229">1229</span>
+<span id="1230">1230</span>
+<span id="1231">1231</span>
+<span id="1232">1232</span>
+<span id="1233">1233</span>
+<span id="1234">1234</span>
+<span id="1235">1235</span>
+<span id="1236">1236</span>
+<span id="1237">1237</span>
+<span id="1238">1238</span>
+<span id="1239">1239</span>
+<span id="1240">1240</span>
+<span id="1241">1241</span>
+<span id="1242">1242</span>
+<span id="1243">1243</span>
+<span id="1244">1244</span>
+<span id="1245">1245</span>
+<span id="1246">1246</span>
+<span id="1247">1247</span>
+<span id="1248">1248</span>
+<span id="1249">1249</span>
+<span id="1250">1250</span>
+<span id="1251">1251</span>
+<span id="1252">1252</span>
+<span id="1253">1253</span>
 </pre><div class="example-wrap"><pre class="rust ">
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>::{<span class="ident">Error</span> <span class="kw">as</span> <span class="ident">StdError</span>};
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>::<span class="ident">Error</span> <span class="kw">as</span> <span class="ident">StdError</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">iter</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">num</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">str</span>;
 
-<span class="kw">use</span> <span class="ident">serde</span>::<span class="ident">de</span>::{
-    <span class="ident">Deserializer</span>, <span class="ident">DeserializeSeed</span>, <span class="ident">Deserialize</span>, <span class="ident">IntoDeserializer</span>,
-    <span class="ident">Error</span> <span class="kw">as</span> <span class="ident">SerdeError</span>, <span class="ident">Unexpected</span>,
-    <span class="ident">Visitor</span>, <span class="ident">EnumAccess</span>, <span class="ident">VariantAccess</span>, <span class="ident">MapAccess</span>, <span class="ident">SeqAccess</span>,
-};
 <span class="kw">use</span> <span class="ident">serde</span>::<span class="ident">de</span>::<span class="ident">value</span>::<span class="ident">BorrowedBytesDeserializer</span>;
+<span class="kw">use</span> <span class="ident">serde</span>::<span class="ident">de</span>::{
+    <span class="ident">Deserialize</span>, <span class="ident">DeserializeSeed</span>, <span class="ident">Deserializer</span>, <span class="ident">EnumAccess</span>,
+    <span class="ident">Error</span> <span class="kw">as</span> <span class="ident">SerdeError</span>, <span class="ident">IntoDeserializer</span>, <span class="ident">MapAccess</span>, <span class="ident">SeqAccess</span>, <span class="ident">Unexpected</span>,
+    <span class="ident">VariantAccess</span>, <span class="ident">Visitor</span>,
+};
+<span class="kw">use</span> <span class="ident">serde</span>::<span class="ident">serde_if_integer128</span>;
 
-<span class="kw">use</span> <span class="ident">byte_record</span>::{<span class="ident">ByteRecord</span>, <span class="ident">ByteRecordIter</span>};
-<span class="kw">use</span> <span class="ident">error</span>::{<span class="ident">Error</span>, <span class="ident">ErrorKind</span>, <span class="ident">new_error</span>};
-<span class="kw">use</span> <span class="ident">string_record</span>::{<span class="ident">StringRecord</span>, <span class="ident">StringRecordIter</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">byte_record</span>::{<span class="ident">ByteRecord</span>, <span class="ident">ByteRecordIter</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">error</span>::{<span class="ident">Error</span>, <span class="ident">ErrorKind</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">string_record</span>::{<span class="ident">StringRecord</span>, <span class="ident">StringRecordIter</span>};
 
 <span class="kw">use</span> <span class="self">self</span>::<span class="ident">DeserializeErrorKind</span> <span class="kw">as</span> <span class="ident">DEK</span>;
 
@@ -1241,7 +1282,7 @@
         <span class="ident">field</span>: <span class="number">0</span>,
     });
     <span class="ident">D</span>::<span class="ident">deserialize</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">deser</span>).<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">err</span><span class="op">|</span> {
-        <span class="ident">new_error</span>(<span class="ident">ErrorKind</span>::<span class="ident">Deserialize</span> {
+        <span class="ident">Error</span>::<span class="ident">new</span>(<span class="ident">ErrorKind</span>::<span class="ident">Deserialize</span> {
             <span class="ident">pos</span>: <span class="ident">record</span>.<span class="ident">position</span>().<span class="ident">map</span>(<span class="ident">Clone</span>::<span class="ident">clone</span>),
             <span class="ident">err</span>: <span class="ident">err</span>,
         })
@@ -1258,7 +1299,7 @@
         <span class="ident">field</span>: <span class="number">0</span>,
     });
     <span class="ident">D</span>::<span class="ident">deserialize</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">deser</span>).<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">err</span><span class="op">|</span> {
-        <span class="ident">new_error</span>(<span class="ident">ErrorKind</span>::<span class="ident">Deserialize</span> {
+        <span class="ident">Error</span>::<span class="ident">new</span>(<span class="ident">ErrorKind</span>::<span class="ident">Deserialize</span> {
             <span class="ident">pos</span>: <span class="ident">record</span>.<span class="ident">position</span>().<span class="ident">map</span>(<span class="ident">Clone</span>::<span class="ident">clone</span>),
             <span class="ident">err</span>: <span class="ident">err</span>,
         })
@@ -1395,7 +1436,7 @@
             <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">DeserializeError</span> {
                 <span class="ident">field</span>: <span class="prelude-val">None</span>,
                 <span class="ident">kind</span>: <span class="ident">DEK</span>::<span class="ident">UnexpectedEndOfRow</span>,
-            })
+            }),
         }
     }
 
@@ -1422,14 +1463,22 @@
     ) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">V</span>::<span class="ident">Value</span>, <span class="ident">DeserializeError</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">x</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">next_field</span>()<span class="question-mark">?</span>;
         <span class="kw">if</span> <span class="ident">x</span> <span class="op">==</span> <span class="string">&quot;true&quot;</span> {
-            <span class="ident">visitor</span>.<span class="ident">visit_bool</span>(<span class="bool-val">true</span>)
+            <span class="kw">return</span> <span class="ident">visitor</span>.<span class="ident">visit_bool</span>(<span class="bool-val">true</span>);
         } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">x</span> <span class="op">==</span> <span class="string">&quot;false&quot;</span> {
-            <span class="ident">visitor</span>.<span class="ident">visit_bool</span>(<span class="bool-val">false</span>)
-        } <span class="kw">else</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">n</span>) <span class="op">=</span> <span class="ident">try_positive_integer</span>(<span class="ident">x</span>) {
-            <span class="ident">visitor</span>.<span class="ident">visit_u64</span>(<span class="ident">n</span>)
-        } <span class="kw">else</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">n</span>) <span class="op">=</span> <span class="ident">try_negative_integer</span>(<span class="ident">x</span>) {
-            <span class="ident">visitor</span>.<span class="ident">visit_i64</span>(<span class="ident">n</span>)
-        } <span class="kw">else</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">n</span>) <span class="op">=</span> <span class="ident">try_float</span>(<span class="ident">x</span>) {
+            <span class="kw">return</span> <span class="ident">visitor</span>.<span class="ident">visit_bool</span>(<span class="bool-val">false</span>);
+        } <span class="kw">else</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">n</span>) <span class="op">=</span> <span class="ident">try_positive_integer64</span>(<span class="ident">x</span>) {
+            <span class="kw">return</span> <span class="ident">visitor</span>.<span class="ident">visit_u64</span>(<span class="ident">n</span>);
+        } <span class="kw">else</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">n</span>) <span class="op">=</span> <span class="ident">try_negative_integer64</span>(<span class="ident">x</span>) {
+            <span class="kw">return</span> <span class="ident">visitor</span>.<span class="ident">visit_i64</span>(<span class="ident">n</span>);
+        }
+        <span class="macro">serde_if_integer128</span><span class="macro">!</span> {
+            <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">n</span>) <span class="op">=</span> <span class="ident">try_positive_integer128</span>(<span class="ident">x</span>) {
+                <span class="kw">return</span> <span class="ident">visitor</span>.<span class="ident">visit_u128</span>(<span class="ident">n</span>);
+            } <span class="kw">else</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">n</span>) <span class="op">=</span> <span class="ident">try_negative_integer128</span>(<span class="ident">x</span>) {
+                <span class="kw">return</span> <span class="ident">visitor</span>.<span class="ident">visit_i128</span>(<span class="ident">n</span>);
+            }
+        }
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">n</span>) <span class="op">=</span> <span class="ident">try_float</span>(<span class="ident">x</span>) {
             <span class="ident">visitor</span>.<span class="ident">visit_f64</span>(<span class="ident">n</span>)
         } <span class="kw">else</span> {
             <span class="ident">visitor</span>.<span class="ident">visit_str</span>(<span class="ident">x</span>)
@@ -1452,9 +1501,10 @@
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">next_header</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;r</span> <span class="ident">str</span><span class="op">&gt;</span>, <span class="ident">DeserializeError</span><span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="self">self</span>.<span class="ident">next_header_bytes</span>() {
-            <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(<span class="ident">field</span>)) <span class="op">=&gt;</span> <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(<span class="ident">str</span>::<span class="ident">from_utf8</span>(<span class="ident">field</span>).<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">err</span><span class="op">|</span> {
-                <span class="self">self</span>.<span class="ident">error</span>(<span class="ident">DEK</span>::<span class="ident">InvalidUtf8</span>(<span class="ident">err</span>))
-            })<span class="question-mark">?</span>)),
+            <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(<span class="ident">field</span>)) <span class="op">=&gt;</span> <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(
+                <span class="ident">str</span>::<span class="ident">from_utf8</span>(<span class="ident">field</span>)
+                    .<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">err</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">error</span>(<span class="ident">DEK</span>::<span class="ident">InvalidUtf8</span>(<span class="ident">err</span>)))<span class="question-mark">?</span>,
+            )),
             <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>) <span class="op">=&gt;</span> <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>),
             <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">err</span>),
         }
@@ -1470,9 +1520,8 @@
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">next_field</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;r</span> <span class="ident">str</span>, <span class="ident">DeserializeError</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">next_field_bytes</span>().<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">field</span><span class="op">|</span> {
-            <span class="ident">str</span>::<span class="ident">from_utf8</span>(<span class="ident">field</span>).<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">err</span><span class="op">|</span> {
-                <span class="self">self</span>.<span class="ident">error</span>(<span class="ident">DEK</span>::<span class="ident">InvalidUtf8</span>(<span class="ident">err</span>))
-            })
+            <span class="ident">str</span>::<span class="ident">from_utf8</span>(<span class="ident">field</span>)
+                .<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">err</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">error</span>(<span class="ident">DEK</span>::<span class="ident">InvalidUtf8</span>(<span class="ident">err</span>)))
         })
     }
 
@@ -1486,7 +1535,7 @@
             <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">DeserializeError</span> {
                 <span class="ident">field</span>: <span class="prelude-val">None</span>,
                 <span class="ident">kind</span>: <span class="ident">DEK</span>::<span class="ident">UnexpectedEndOfRow</span>,
-            })
+            }),
         }
     }
 
@@ -1508,14 +1557,22 @@
     ) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">V</span>::<span class="ident">Value</span>, <span class="ident">DeserializeError</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">x</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">next_field_bytes</span>()<span class="question-mark">?</span>;
         <span class="kw">if</span> <span class="ident">x</span> <span class="op">==</span> <span class="string">b&quot;true&quot;</span> {
-            <span class="ident">visitor</span>.<span class="ident">visit_bool</span>(<span class="bool-val">true</span>)
+            <span class="kw">return</span> <span class="ident">visitor</span>.<span class="ident">visit_bool</span>(<span class="bool-val">true</span>);
         } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">x</span> <span class="op">==</span> <span class="string">b&quot;false&quot;</span> {
-            <span class="ident">visitor</span>.<span class="ident">visit_bool</span>(<span class="bool-val">false</span>)
-        } <span class="kw">else</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">n</span>) <span class="op">=</span> <span class="ident">try_positive_integer_bytes</span>(<span class="ident">x</span>) {
-            <span class="ident">visitor</span>.<span class="ident">visit_u64</span>(<span class="ident">n</span>)
-        } <span class="kw">else</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">n</span>) <span class="op">=</span> <span class="ident">try_negative_integer_bytes</span>(<span class="ident">x</span>) {
-            <span class="ident">visitor</span>.<span class="ident">visit_i64</span>(<span class="ident">n</span>)
-        } <span class="kw">else</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">n</span>) <span class="op">=</span> <span class="ident">try_float_bytes</span>(<span class="ident">x</span>) {
+            <span class="kw">return</span> <span class="ident">visitor</span>.<span class="ident">visit_bool</span>(<span class="bool-val">false</span>);
+        } <span class="kw">else</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">n</span>) <span class="op">=</span> <span class="ident">try_positive_integer64_bytes</span>(<span class="ident">x</span>) {
+            <span class="kw">return</span> <span class="ident">visitor</span>.<span class="ident">visit_u64</span>(<span class="ident">n</span>);
+        } <span class="kw">else</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">n</span>) <span class="op">=</span> <span class="ident">try_negative_integer64_bytes</span>(<span class="ident">x</span>) {
+            <span class="kw">return</span> <span class="ident">visitor</span>.<span class="ident">visit_i64</span>(<span class="ident">n</span>);
+        }
+        <span class="macro">serde_if_integer128</span><span class="macro">!</span> {
+            <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">n</span>) <span class="op">=</span> <span class="ident">try_positive_integer128_bytes</span>(<span class="ident">x</span>) {
+                <span class="kw">return</span> <span class="ident">visitor</span>.<span class="ident">visit_u128</span>(<span class="ident">n</span>);
+            } <span class="kw">else</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">n</span>) <span class="op">=</span> <span class="ident">try_negative_integer128_bytes</span>(<span class="ident">x</span>) {
+                <span class="kw">return</span> <span class="ident">visitor</span>.<span class="ident">visit_i128</span>(<span class="ident">n</span>);
+            }
+        }
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">n</span>) <span class="op">=</span> <span class="ident">try_float_bytes</span>(<span class="ident">x</span>) {
             <span class="ident">visitor</span>.<span class="ident">visit_f64</span>(<span class="ident">n</span>)
         } <span class="kw">else</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">s</span>) <span class="op">=</span> <span class="ident">str</span>::<span class="ident">from_utf8</span>(<span class="ident">x</span>) {
             <span class="ident">visitor</span>.<span class="ident">visit_str</span>(<span class="ident">s</span>)
@@ -1531,8 +1588,8 @@
             <span class="self">self</span>,
             <span class="ident">visitor</span>: <span class="ident">V</span>,
         ) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">V</span>::<span class="ident">Value</span>, <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span> {
-            <span class="kw">let</span> <span class="ident">field</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">next_field</span>()<span class="question-mark">?</span>; 
-            <span class="kw">let</span> <span class="ident">num</span> <span class="op">=</span> 
+            <span class="kw">let</span> <span class="ident">field</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">next_field</span>()<span class="question-mark">?</span>;
+            <span class="kw">let</span> <span class="ident">num</span> <span class="op">=</span>
                 <span class="kw">if</span> <span class="ident">field</span>.<span class="ident">starts_with</span>(<span class="string">&quot;0x&quot;</span>) {
                     <span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">inttype</span><span class="op">&gt;</span>::<span class="ident">from_str_radix</span>(<span class="kw-2">&amp;</span><span class="ident">field</span>[<span class="number">2</span>..], <span class="number">16</span>)
                 } <span class="kw">else</span> {
@@ -1561,17 +1618,25 @@
     ) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">V</span>::<span class="ident">Value</span>, <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="ident">visitor</span>.<span class="ident">visit_bool</span>(
             <span class="self">self</span>.<span class="ident">next_field</span>()<span class="question-mark">?</span>
-                .<span class="ident">parse</span>().<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">err</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">error</span>(<span class="ident">DEK</span>::<span class="ident">ParseBool</span>(<span class="ident">err</span>)))<span class="question-mark">?</span>)
+                .<span class="ident">parse</span>()
+                .<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">err</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">error</span>(<span class="ident">DEK</span>::<span class="ident">ParseBool</span>(<span class="ident">err</span>)))<span class="question-mark">?</span>,
+        )
     }
 
     <span class="macro">deserialize_int</span><span class="macro">!</span>(<span class="ident">deserialize_u8</span>, <span class="ident">visit_u8</span>, <span class="ident">u8</span>);
     <span class="macro">deserialize_int</span><span class="macro">!</span>(<span class="ident">deserialize_u16</span>, <span class="ident">visit_u16</span>, <span class="ident">u16</span>);
     <span class="macro">deserialize_int</span><span class="macro">!</span>(<span class="ident">deserialize_u32</span>, <span class="ident">visit_u32</span>, <span class="ident">u32</span>);
     <span class="macro">deserialize_int</span><span class="macro">!</span>(<span class="ident">deserialize_u64</span>, <span class="ident">visit_u64</span>, <span class="ident">u64</span>);
+    <span class="macro">serde_if_integer128</span><span class="macro">!</span> {
+        <span class="macro">deserialize_int</span><span class="macro">!</span>(<span class="ident">deserialize_u128</span>, <span class="ident">visit_u128</span>, <span class="ident">u128</span>);
+    }
     <span class="macro">deserialize_int</span><span class="macro">!</span>(<span class="ident">deserialize_i8</span>, <span class="ident">visit_i8</span>, <span class="ident">i8</span>);
     <span class="macro">deserialize_int</span><span class="macro">!</span>(<span class="ident">deserialize_i16</span>, <span class="ident">visit_i16</span>, <span class="ident">i16</span>);
     <span class="macro">deserialize_int</span><span class="macro">!</span>(<span class="ident">deserialize_i32</span>, <span class="ident">visit_i32</span>, <span class="ident">i32</span>);
     <span class="macro">deserialize_int</span><span class="macro">!</span>(<span class="ident">deserialize_i64</span>, <span class="ident">visit_i64</span>, <span class="ident">i64</span>);
+    <span class="macro">serde_if_integer128</span><span class="macro">!</span> {
+        <span class="macro">deserialize_int</span><span class="macro">!</span>(<span class="ident">deserialize_i128</span>, <span class="ident">visit_i128</span>, <span class="ident">i128</span>);
+    }
 
     <span class="kw">fn</span> <span class="ident">deserialize_f32</span><span class="op">&lt;</span><span class="ident">V</span>: <span class="ident">Visitor</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;&gt;</span>(
         <span class="self">self</span>,
@@ -1579,7 +1644,9 @@
     ) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">V</span>::<span class="ident">Value</span>, <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="ident">visitor</span>.<span class="ident">visit_f32</span>(
             <span class="self">self</span>.<span class="ident">next_field</span>()<span class="question-mark">?</span>
-                .<span class="ident">parse</span>().<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">err</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">error</span>(<span class="ident">DEK</span>::<span class="ident">ParseFloat</span>(<span class="ident">err</span>)))<span class="question-mark">?</span>)
+                .<span class="ident">parse</span>()
+                .<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">err</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">error</span>(<span class="ident">DEK</span>::<span class="ident">ParseFloat</span>(<span class="ident">err</span>)))<span class="question-mark">?</span>,
+        )
     }
 
     <span class="kw">fn</span> <span class="ident">deserialize_f64</span><span class="op">&lt;</span><span class="ident">V</span>: <span class="ident">Visitor</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;&gt;</span>(
@@ -1588,7 +1655,9 @@
     ) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">V</span>::<span class="ident">Value</span>, <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="ident">visitor</span>.<span class="ident">visit_f64</span>(
             <span class="self">self</span>.<span class="ident">next_field</span>()<span class="question-mark">?</span>
-                .<span class="ident">parse</span>().<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">err</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">error</span>(<span class="ident">DEK</span>::<span class="ident">ParseFloat</span>(<span class="ident">err</span>)))<span class="question-mark">?</span>)
+                .<span class="ident">parse</span>()
+                .<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">err</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">error</span>(<span class="ident">DEK</span>::<span class="ident">ParseFloat</span>(<span class="ident">err</span>)))<span class="question-mark">?</span>,
+        )
     }
 
     <span class="kw">fn</span> <span class="ident">deserialize_char</span><span class="op">&lt;</span><span class="ident">V</span>: <span class="ident">Visitor</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;&gt;</span>(
@@ -1600,7 +1669,8 @@
         <span class="kw">if</span> <span class="ident">len</span> <span class="op">!=</span> <span class="number">1</span> {
             <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="self">self</span>.<span class="ident">error</span>(<span class="ident">DEK</span>::<span class="ident">Message</span>(<span class="macro">format</span><span class="macro">!</span>(
                 <span class="string">&quot;expected single character but got {} characters in &#39;{}&#39;&quot;</span>,
-                <span class="ident">len</span>, <span class="ident">field</span>))));
+                <span class="ident">len</span>, <span class="ident">field</span>
+            ))));
         }
         <span class="ident">visitor</span>.<span class="ident">visit_char</span>(<span class="ident">field</span>.<span class="ident">chars</span>().<span class="ident">next</span>().<span class="ident">unwrap</span>())
     }
@@ -1623,9 +1693,7 @@
         <span class="self">self</span>,
         <span class="ident">visitor</span>: <span class="ident">V</span>,
     ) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">V</span>::<span class="ident">Value</span>, <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">next_field_bytes</span>().<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">f</span><span class="op">|</span> {
-            <span class="ident">visitor</span>.<span class="ident">visit_borrowed_bytes</span>(<span class="ident">f</span>)
-        })
+        <span class="self">self</span>.<span class="ident">next_field_bytes</span>().<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">f</span><span class="op">|</span> <span class="ident">visitor</span>.<span class="ident">visit_borrowed_bytes</span>(<span class="ident">f</span>))
     }
 
     <span class="kw">fn</span> <span class="ident">deserialize_byte_buf</span><span class="op">&lt;</span><span class="ident">V</span>: <span class="ident">Visitor</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;&gt;</span>(
@@ -1764,8 +1832,8 @@
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;de</span>: <span class="lifetime">&#39;a</span>, <span class="ident">T</span>: <span class="ident">DeRecord</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;&gt;</span>
-    <span class="ident">VariantAccess</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="ident">DeRecordWrap</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;de</span>: <span class="lifetime">&#39;a</span>, <span class="ident">T</span>: <span class="ident">DeRecord</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;&gt;</span> <span class="ident">VariantAccess</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span>
+    <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="ident">DeRecordWrap</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
 {
     <span class="kw">type</span> <span class="ident">Error</span> <span class="op">=</span> <span class="ident">DeserializeError</span>;
 
@@ -1800,8 +1868,8 @@
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;de</span>: <span class="lifetime">&#39;a</span>, <span class="ident">T</span>: <span class="ident">DeRecord</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;&gt;</span>
-    <span class="ident">SeqAccess</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="ident">DeRecordWrap</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;de</span>: <span class="lifetime">&#39;a</span>, <span class="ident">T</span>: <span class="ident">DeRecord</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;&gt;</span> <span class="ident">SeqAccess</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span>
+    <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="ident">DeRecordWrap</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
 {
     <span class="kw">type</span> <span class="ident">Error</span> <span class="op">=</span> <span class="ident">DeserializeError</span>;
 
@@ -1817,8 +1885,8 @@
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;de</span>: <span class="lifetime">&#39;a</span>, <span class="ident">T</span>: <span class="ident">DeRecord</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;&gt;</span>
-    <span class="ident">MapAccess</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="ident">DeRecordWrap</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;de</span>: <span class="lifetime">&#39;a</span>, <span class="ident">T</span>: <span class="ident">DeRecord</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;&gt;</span> <span class="ident">MapAccess</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span>
+    <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="ident">DeRecordWrap</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
 {
     <span class="kw">type</span> <span class="ident">Error</span> <span class="op">=</span> <span class="ident">DeserializeError</span>;
 
@@ -1873,10 +1941,7 @@
 
 <span class="kw">impl</span> <span class="ident">SerdeError</span> <span class="kw">for</span> <span class="ident">DeserializeError</span> {
     <span class="kw">fn</span> <span class="ident">custom</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">fmt</span>::<span class="ident">Display</span><span class="op">&gt;</span>(<span class="ident">msg</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="ident">DeserializeError</span> {
-        <span class="ident">DeserializeError</span> {
-            <span class="ident">field</span>: <span class="prelude-val">None</span>,
-            <span class="ident">kind</span>: <span class="ident">DEK</span>::<span class="ident">Message</span>(<span class="ident">msg</span>.<span class="ident">to_string</span>()),
-        }
+        <span class="ident">DeserializeError</span> { <span class="ident">field</span>: <span class="prelude-val">None</span>, <span class="ident">kind</span>: <span class="ident">DEK</span>::<span class="ident">Message</span>(<span class="ident">msg</span>.<span class="ident">to_string</span>()) }
     }
 }
 
@@ -1942,11 +2007,21 @@
     }
 }
 
-<span class="kw">fn</span> <span class="ident">try_positive_integer</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u64</span><span class="op">&gt;</span> {
+<span class="macro">serde_if_integer128</span><span class="macro">!</span> {
+    <span class="kw">fn</span> <span class="ident">try_positive_integer128</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u128</span><span class="op">&gt;</span> {
+        <span class="ident">s</span>.<span class="ident">parse</span>().<span class="ident">ok</span>()
+    }
+
+    <span class="kw">fn</span> <span class="ident">try_negative_integer128</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">i128</span><span class="op">&gt;</span> {
+        <span class="ident">s</span>.<span class="ident">parse</span>().<span class="ident">ok</span>()
+    }
+}
+
+<span class="kw">fn</span> <span class="ident">try_positive_integer64</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u64</span><span class="op">&gt;</span> {
     <span class="ident">s</span>.<span class="ident">parse</span>().<span class="ident">ok</span>()
 }
 
-<span class="kw">fn</span> <span class="ident">try_negative_integer</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">i64</span><span class="op">&gt;</span> {
+<span class="kw">fn</span> <span class="ident">try_negative_integer64</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">i64</span><span class="op">&gt;</span> {
     <span class="ident">s</span>.<span class="ident">parse</span>().<span class="ident">ok</span>()
 }
 
@@ -1954,12 +2029,22 @@
     <span class="ident">s</span>.<span class="ident">parse</span>().<span class="ident">ok</span>()
 }
 
-<span class="kw">fn</span> <span class="ident">try_positive_integer_bytes</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u64</span><span class="op">&gt;</span> {
+<span class="kw">fn</span> <span class="ident">try_positive_integer64_bytes</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u64</span><span class="op">&gt;</span> {
     <span class="ident">str</span>::<span class="ident">from_utf8</span>(<span class="ident">s</span>).<span class="ident">ok</span>().<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">s</span><span class="op">|</span> <span class="ident">s</span>.<span class="ident">parse</span>().<span class="ident">ok</span>())
 }
 
-<span class="kw">fn</span> <span class="ident">try_negative_integer_bytes</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">i64</span><span class="op">&gt;</span> {
+<span class="kw">fn</span> <span class="ident">try_negative_integer64_bytes</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">i64</span><span class="op">&gt;</span> {
     <span class="ident">str</span>::<span class="ident">from_utf8</span>(<span class="ident">s</span>).<span class="ident">ok</span>().<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">s</span><span class="op">|</span> <span class="ident">s</span>.<span class="ident">parse</span>().<span class="ident">ok</span>())
+}
+
+<span class="macro">serde_if_integer128</span><span class="macro">!</span> {
+    <span class="kw">fn</span> <span class="ident">try_positive_integer128_bytes</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u128</span><span class="op">&gt;</span> {
+        <span class="ident">str</span>::<span class="ident">from_utf8</span>(<span class="ident">s</span>).<span class="ident">ok</span>().<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">s</span><span class="op">|</span> <span class="ident">s</span>.<span class="ident">parse</span>().<span class="ident">ok</span>())
+    }
+
+    <span class="kw">fn</span> <span class="ident">try_negative_integer128_bytes</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">i128</span><span class="op">&gt;</span> {
+        <span class="ident">str</span>::<span class="ident">from_utf8</span>(<span class="ident">s</span>).<span class="ident">ok</span>().<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">s</span><span class="op">|</span> <span class="ident">s</span>.<span class="ident">parse</span>().<span class="ident">ok</span>())
+    }
 }
 
 <span class="kw">fn</span> <span class="ident">try_float_bytes</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span> {
@@ -1970,17 +2055,15 @@
 <span class="kw">mod</span> <span class="ident">tests</span> {
     <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashMap</span>;
 
-    <span class="kw">use</span> <span class="ident">serde</span>::<span class="ident">de</span>::<span class="ident">DeserializeOwned</span>;
-    <span class="kw">use</span> <span class="ident">serde_bytes</span>::{<span class="self">self</span>, <span class="ident">ByteBuf</span>};
+    <span class="kw">use</span> <span class="ident">bstr</span>::<span class="ident">BString</span>;
+    <span class="kw">use</span> <span class="ident">serde</span>::{<span class="ident">de</span>::<span class="ident">DeserializeOwned</span>, <span class="ident">serde_if_integer128</span>, <span class="ident">Deserialize</span>};
 
-    <span class="kw">use</span> <span class="ident">byte_record</span>::<span class="ident">ByteRecord</span>;
-    <span class="kw">use</span> <span class="ident">error</span>::<span class="ident">Error</span>;
-    <span class="kw">use</span> <span class="ident">string_record</span>::<span class="ident">StringRecord</span>;
     <span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">deserialize_byte_record</span>, <span class="ident">deserialize_string_record</span>};
+    <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">byte_record</span>::<span class="ident">ByteRecord</span>;
+    <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">error</span>::<span class="ident">Error</span>;
+    <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">string_record</span>::<span class="ident">StringRecord</span>;
 
-    <span class="kw">fn</span> <span class="ident">de</span><span class="op">&lt;</span><span class="ident">D</span>: <span class="ident">DeserializeOwned</span><span class="op">&gt;</span>(
-        <span class="ident">fields</span>: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="ident">str</span>],
-    ) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">de</span><span class="op">&lt;</span><span class="ident">D</span>: <span class="ident">DeserializeOwned</span><span class="op">&gt;</span>(<span class="ident">fields</span>: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="ident">str</span>]) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">record</span> <span class="op">=</span> <span class="ident">StringRecord</span>::<span class="ident">from</span>(<span class="ident">fields</span>);
         <span class="ident">deserialize_string_record</span>(<span class="kw-2">&amp;</span><span class="ident">record</span>, <span class="prelude-val">None</span>)
     }
@@ -2007,10 +2090,8 @@
             <span class="ident">x</span>: <span class="ident">String</span>,
         }
 
-        <span class="kw">let</span> <span class="ident">got</span>: <span class="ident">Foo</span> <span class="op">=</span> <span class="ident">de_headers</span>(
-            <span class="kw-2">&amp;</span>[<span class="string">&quot;x&quot;</span>, <span class="string">&quot;y&quot;</span>, <span class="string">&quot;z&quot;</span>],
-            <span class="kw-2">&amp;</span>[<span class="string">&quot;hi&quot;</span>, <span class="string">&quot;42&quot;</span>, <span class="string">&quot;1.3&quot;</span>],
-        ).<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">got</span>: <span class="ident">Foo</span> <span class="op">=</span>
+            <span class="ident">de_headers</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;x&quot;</span>, <span class="string">&quot;y&quot;</span>, <span class="string">&quot;z&quot;</span>], <span class="kw-2">&amp;</span>[<span class="string">&quot;hi&quot;</span>, <span class="string">&quot;42&quot;</span>, <span class="string">&quot;1.3&quot;</span>]).<span class="ident">unwrap</span>();
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">got</span>, <span class="ident">Foo</span> { <span class="ident">x</span>: <span class="string">&quot;hi&quot;</span>.<span class="ident">into</span>(), <span class="ident">y</span>: <span class="number">42</span>, <span class="ident">z</span>: <span class="number">1.3</span> });
     }
 
@@ -2026,7 +2107,8 @@
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">de_headers</span>::<span class="op">&lt;</span><span class="ident">Foo</span><span class="op">&gt;</span>(
             <span class="kw-2">&amp;</span>[<span class="string">&quot;a&quot;</span>, <span class="string">&quot;x&quot;</span>, <span class="string">&quot;y&quot;</span>, <span class="string">&quot;z&quot;</span>],
             <span class="kw-2">&amp;</span>[<span class="string">&quot;foo&quot;</span>, <span class="string">&quot;hi&quot;</span>, <span class="string">&quot;42&quot;</span>, <span class="string">&quot;1.3&quot;</span>],
-        ).<span class="ident">is_err</span>());
+        )
+        .<span class="ident">is_err</span>());
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
@@ -2037,10 +2119,7 @@
             <span class="ident">y</span>: <span class="ident">i32</span>,
             <span class="ident">x</span>: <span class="ident">String</span>,
         }
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">de_headers</span>::<span class="op">&lt;</span><span class="ident">Foo</span><span class="op">&gt;</span>(
-            <span class="kw-2">&amp;</span>[<span class="string">&quot;y&quot;</span>, <span class="string">&quot;z&quot;</span>],
-            <span class="kw-2">&amp;</span>[<span class="string">&quot;42&quot;</span>, <span class="string">&quot;1.3&quot;</span>],
-        ).<span class="ident">is_err</span>());
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">de_headers</span>::<span class="op">&lt;</span><span class="ident">Foo</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;y&quot;</span>, <span class="string">&quot;z&quot;</span>], <span class="kw-2">&amp;</span>[<span class="string">&quot;42&quot;</span>, <span class="string">&quot;1.3&quot;</span>],).<span class="ident">is_err</span>());
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
@@ -2052,10 +2131,7 @@
             <span class="ident">x</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
         }
 
-        <span class="kw">let</span> <span class="ident">got</span>: <span class="ident">Foo</span> <span class="op">=</span> <span class="ident">de_headers</span>(
-            <span class="kw-2">&amp;</span>[<span class="string">&quot;y&quot;</span>, <span class="string">&quot;z&quot;</span>],
-            <span class="kw-2">&amp;</span>[<span class="string">&quot;42&quot;</span>, <span class="string">&quot;1.3&quot;</span>],
-        ).<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">got</span>: <span class="ident">Foo</span> <span class="op">=</span> <span class="ident">de_headers</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;y&quot;</span>, <span class="string">&quot;z&quot;</span>], <span class="kw-2">&amp;</span>[<span class="string">&quot;42&quot;</span>, <span class="string">&quot;1.3&quot;</span>]).<span class="ident">unwrap</span>();
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">got</span>, <span class="ident">Foo</span> { <span class="ident">x</span>: <span class="prelude-val">None</span>, <span class="ident">y</span>: <span class="number">42</span>, <span class="ident">z</span>: <span class="number">1.3</span> });
     }
 
@@ -2097,7 +2173,7 @@
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">got</span>.<span class="ident">unwrap</span>(), <span class="ident">Foo</span>);
 
         <span class="kw">let</span> <span class="ident">got</span> <span class="op">=</span> <span class="ident">de_headers</span>::<span class="op">&lt;</span><span class="ident">Bar</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span>[], <span class="kw-2">&amp;</span>[]);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">got</span>.<span class="ident">unwrap</span>(), <span class="ident">Bar</span>{});
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">got</span>.<span class="ident">unwrap</span>(), <span class="ident">Bar</span> {});
 
         <span class="kw">let</span> <span class="ident">got</span> <span class="op">=</span> <span class="ident">de_headers</span>::<span class="op">&lt;</span>()<span class="op">&gt;</span>(<span class="kw-2">&amp;</span>[], <span class="kw-2">&amp;</span>[]);
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">got</span>.<span class="ident">unwrap</span>(), ());
@@ -2125,6 +2201,14 @@
     <span class="kw">fn</span> <span class="ident">one_field</span>() {
         <span class="kw">let</span> <span class="ident">got</span>: <span class="ident">i32</span> <span class="op">=</span> <span class="ident">de</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;42&quot;</span>]).<span class="ident">unwrap</span>();
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">got</span>, <span class="number">42</span>);
+    }
+
+    <span class="macro">serde_if_integer128</span><span class="macro">!</span> {
+        <span class="attribute">#[<span class="ident">test</span>]</span>
+        <span class="kw">fn</span> <span class="ident">one_field_128</span>() {
+            <span class="kw">let</span> <span class="ident">got</span>: <span class="ident">i128</span> <span class="op">=</span> <span class="ident">de</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;2010223372036854775808&quot;</span>]).<span class="ident">unwrap</span>();
+            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">got</span>, <span class="number">2010223372036854775808</span>);
+        }
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
@@ -2228,7 +2312,7 @@
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">bytes</span>() {
-        <span class="kw">let</span> <span class="ident">got</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">de</span>::<span class="op">&lt;</span><span class="ident">ByteBuf</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;foobar&quot;</span>]).<span class="ident">unwrap</span>().<span class="ident">into</span>();
+        <span class="kw">let</span> <span class="ident">got</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">de</span>::<span class="op">&lt;</span><span class="ident">BString</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;foobar&quot;</span>]).<span class="ident">unwrap</span>().<span class="ident">into</span>();
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">got</span>, <span class="string">b&quot;foobar&quot;</span>.<span class="ident">to_vec</span>());
     }
 
@@ -2276,15 +2360,16 @@
             <span class="ident">String</span>(<span class="ident">String</span>),
         }
 
-        <span class="kw">let</span> <span class="ident">got</span>: <span class="ident">Row</span> <span class="op">=</span> <span class="ident">de_headers</span>(
-            <span class="kw-2">&amp;</span>[<span class="string">&quot;x&quot;</span>, <span class="string">&quot;y&quot;</span>, <span class="string">&quot;z&quot;</span>],
-            <span class="kw-2">&amp;</span>[<span class="string">&quot;true&quot;</span>, <span class="string">&quot;null&quot;</span>, <span class="string">&quot;1&quot;</span>],
-        ).<span class="ident">unwrap</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">got</span>, <span class="ident">Row</span> {
-            <span class="ident">x</span>: <span class="ident">Boolish</span>::<span class="ident">Bool</span>(<span class="bool-val">true</span>),
-            <span class="ident">y</span>: <span class="ident">Boolish</span>::<span class="ident">String</span>(<span class="string">&quot;null&quot;</span>.<span class="ident">into</span>()),
-            <span class="ident">z</span>: <span class="ident">Boolish</span>::<span class="ident">Number</span>(<span class="number">1</span>),
-        });
+        <span class="kw">let</span> <span class="ident">got</span>: <span class="ident">Row</span> <span class="op">=</span>
+            <span class="ident">de_headers</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;x&quot;</span>, <span class="string">&quot;y&quot;</span>, <span class="string">&quot;z&quot;</span>], <span class="kw-2">&amp;</span>[<span class="string">&quot;true&quot;</span>, <span class="string">&quot;null&quot;</span>, <span class="string">&quot;1&quot;</span>]).<span class="ident">unwrap</span>();
+        <span class="macro">assert_eq</span><span class="macro">!</span>(
+            <span class="ident">got</span>,
+            <span class="ident">Row</span> {
+                <span class="ident">x</span>: <span class="ident">Boolish</span>::<span class="ident">Bool</span>(<span class="bool-val">true</span>),
+                <span class="ident">y</span>: <span class="ident">Boolish</span>::<span class="ident">String</span>(<span class="string">&quot;null&quot;</span>.<span class="ident">into</span>()),
+                <span class="ident">z</span>: <span class="ident">Boolish</span>::<span class="ident">Number</span>(<span class="number">1</span>),
+            }
+        );
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
@@ -2296,10 +2381,8 @@
             <span class="ident">c</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span>,
         }
 
-        <span class="kw">let</span> <span class="ident">got</span>: <span class="ident">Foo</span> <span class="op">=</span> <span class="ident">de_headers</span>(
-            <span class="kw-2">&amp;</span>[<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>, <span class="string">&quot;c&quot;</span>],
-            <span class="kw-2">&amp;</span>[<span class="string">&quot;&quot;</span>, <span class="string">&quot;foo&quot;</span>, <span class="string">&quot;5&quot;</span>],
-        ).<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">got</span>: <span class="ident">Foo</span> <span class="op">=</span>
+            <span class="ident">de_headers</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>, <span class="string">&quot;c&quot;</span>], <span class="kw-2">&amp;</span>[<span class="string">&quot;&quot;</span>, <span class="string">&quot;foo&quot;</span>, <span class="string">&quot;5&quot;</span>]).<span class="ident">unwrap</span>();
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">got</span>, <span class="ident">Foo</span> { <span class="ident">a</span>: <span class="prelude-val">None</span>, <span class="ident">b</span>: <span class="string">&quot;foo&quot;</span>.<span class="ident">into</span>(), <span class="ident">c</span>: <span class="prelude-val">Some</span>(<span class="number">5</span>) });
     }
 
@@ -2307,18 +2390,16 @@
     <span class="kw">fn</span> <span class="ident">option_invalid_field</span>() {
         <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Deserialize</span>, <span class="ident">Debug</span>, <span class="ident">PartialEq</span>)]</span>
         <span class="kw">struct</span> <span class="ident">Foo</span> {
-            <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">deserialize_with</span> <span class="op">=</span> <span class="string">&quot;::invalid_option&quot;</span>)]</span>
+            <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">deserialize_with</span> <span class="op">=</span> <span class="string">&quot;crate::invalid_option&quot;</span>)]</span>
             <span class="ident">a</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span>,
-            <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">deserialize_with</span> <span class="op">=</span> <span class="string">&quot;::invalid_option&quot;</span>)]</span>
+            <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">deserialize_with</span> <span class="op">=</span> <span class="string">&quot;crate::invalid_option&quot;</span>)]</span>
             <span class="ident">b</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span>,
-            <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">deserialize_with</span> <span class="op">=</span> <span class="string">&quot;::invalid_option&quot;</span>)]</span>
+            <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">deserialize_with</span> <span class="op">=</span> <span class="string">&quot;crate::invalid_option&quot;</span>)]</span>
             <span class="ident">c</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span>,
         }
 
-        <span class="kw">let</span> <span class="ident">got</span>: <span class="ident">Foo</span> <span class="op">=</span> <span class="ident">de_headers</span>(
-            <span class="kw-2">&amp;</span>[<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>, <span class="string">&quot;c&quot;</span>],
-            <span class="kw-2">&amp;</span>[<span class="string">&quot;xyz&quot;</span>, <span class="string">&quot;&quot;</span>, <span class="string">&quot;5&quot;</span>],
-        ).<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">got</span>: <span class="ident">Foo</span> <span class="op">=</span>
+            <span class="ident">de_headers</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>, <span class="string">&quot;c&quot;</span>], <span class="kw-2">&amp;</span>[<span class="string">&quot;xyz&quot;</span>, <span class="string">&quot;&quot;</span>, <span class="string">&quot;5&quot;</span>]).<span class="ident">unwrap</span>();
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">got</span>, <span class="ident">Foo</span> { <span class="ident">a</span>: <span class="prelude-val">None</span>, <span class="ident">b</span>: <span class="prelude-val">None</span>, <span class="ident">c</span>: <span class="prelude-val">Some</span>(<span class="number">5</span>) });
     }
 
@@ -2333,8 +2414,8 @@
 
         <span class="kw">let</span> <span class="ident">headers</span> <span class="op">=</span> <span class="ident">StringRecord</span>::<span class="ident">from</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>, <span class="string">&quot;c&quot;</span>]);
         <span class="kw">let</span> <span class="ident">record</span> <span class="op">=</span> <span class="ident">StringRecord</span>::<span class="ident">from</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;foo&quot;</span>, <span class="string">&quot;5&quot;</span>, <span class="string">&quot;bar&quot;</span>]);
-        <span class="kw">let</span> <span class="ident">got</span>: <span class="ident">Foo</span> <span class="op">=</span> <span class="ident">deserialize_string_record</span>(
-            <span class="kw-2">&amp;</span><span class="ident">record</span>, <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="ident">headers</span>)).<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">got</span>: <span class="ident">Foo</span> <span class="op">=</span>
+            <span class="ident">deserialize_string_record</span>(<span class="kw-2">&amp;</span><span class="ident">record</span>, <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="ident">headers</span>)).<span class="ident">unwrap</span>();
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">got</span>, <span class="ident">Foo</span> { <span class="ident">a</span>: <span class="string">&quot;foo&quot;</span>, <span class="ident">b</span>: <span class="number">5</span>, <span class="ident">c</span>: <span class="string">&quot;bar&quot;</span> });
     }
 
@@ -2344,13 +2425,11 @@
 
         <span class="kw">let</span> <span class="ident">headers</span> <span class="op">=</span> <span class="ident">StringRecord</span>::<span class="ident">from</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>, <span class="string">&quot;c&quot;</span>]);
         <span class="kw">let</span> <span class="ident">record</span> <span class="op">=</span> <span class="ident">StringRecord</span>::<span class="ident">from</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;aardvark&quot;</span>, <span class="string">&quot;bee&quot;</span>, <span class="string">&quot;cat&quot;</span>]);
-        <span class="kw">let</span> <span class="ident">got</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">deserialize_string_record</span>(
-            <span class="kw-2">&amp;</span><span class="ident">record</span>, <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="ident">headers</span>)).<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">got</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> <span class="op">=</span>
+            <span class="ident">deserialize_string_record</span>(<span class="kw-2">&amp;</span><span class="ident">record</span>, <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="ident">headers</span>)).<span class="ident">unwrap</span>();
 
-        <span class="kw">let</span> <span class="ident">expected</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">headers</span>
-            .<span class="ident">iter</span>()
-            .<span class="ident">zip</span>(<span class="kw-2">&amp;</span><span class="ident">record</span>)
-            .<span class="ident">collect</span>();
+        <span class="kw">let</span> <span class="ident">expected</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> <span class="op">=</span>
+            <span class="ident">headers</span>.<span class="ident">iter</span>().<span class="ident">zip</span>(<span class="kw-2">&amp;</span><span class="ident">record</span>).<span class="ident">collect</span>();
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">got</span>, <span class="ident">expected</span>);
     }
 
@@ -2360,13 +2439,11 @@
 
         <span class="kw">let</span> <span class="ident">headers</span> <span class="op">=</span> <span class="ident">ByteRecord</span>::<span class="ident">from</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="string">b&quot;a&quot;</span>, <span class="string">b&quot;\xFF&quot;</span>, <span class="string">b&quot;c&quot;</span>]);
         <span class="kw">let</span> <span class="ident">record</span> <span class="op">=</span> <span class="ident">ByteRecord</span>::<span class="ident">from</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;aardvark&quot;</span>, <span class="string">&quot;bee&quot;</span>, <span class="string">&quot;cat&quot;</span>]);
-        <span class="kw">let</span> <span class="ident">got</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>[<span class="ident">u8</span>], <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span> <span class="op">=</span> <span class="ident">deserialize_byte_record</span>(
-            <span class="kw-2">&amp;</span><span class="ident">record</span>, <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="ident">headers</span>)).<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">got</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>[<span class="ident">u8</span>], <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span> <span class="op">=</span>
+            <span class="ident">deserialize_byte_record</span>(<span class="kw-2">&amp;</span><span class="ident">record</span>, <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="ident">headers</span>)).<span class="ident">unwrap</span>();
 
-        <span class="kw">let</span> <span class="ident">expected</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>[<span class="ident">u8</span>], <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span> <span class="op">=</span> <span class="ident">headers</span>
-            .<span class="ident">iter</span>()
-            .<span class="ident">zip</span>(<span class="kw-2">&amp;</span><span class="ident">record</span>)
-            .<span class="ident">collect</span>();
+        <span class="kw">let</span> <span class="ident">expected</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>[<span class="ident">u8</span>], <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span> <span class="op">=</span>
+            <span class="ident">headers</span>.<span class="ident">iter</span>().<span class="ident">zip</span>(<span class="kw-2">&amp;</span><span class="ident">record</span>).<span class="ident">collect</span>();
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">got</span>, <span class="ident">expected</span>);
     }
 
@@ -2395,10 +2472,13 @@
         <span class="kw">let</span> <span class="ident">header</span> <span class="op">=</span> <span class="ident">StringRecord</span>::<span class="ident">from</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;x&quot;</span>, <span class="string">&quot;y&quot;</span>, <span class="string">&quot;prop1&quot;</span>, <span class="string">&quot;prop2&quot;</span>]);
         <span class="kw">let</span> <span class="ident">record</span> <span class="op">=</span> <span class="ident">StringRecord</span>::<span class="ident">from</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;1&quot;</span>, <span class="string">&quot;2&quot;</span>, <span class="string">&quot;3&quot;</span>, <span class="string">&quot;4&quot;</span>]);
         <span class="kw">let</span> <span class="ident">got</span>: <span class="ident">Row</span> <span class="op">=</span> <span class="ident">record</span>.<span class="ident">deserialize</span>(<span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="ident">header</span>)).<span class="ident">unwrap</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">got</span>, <span class="ident">Row</span> {
-            <span class="ident">input</span>: <span class="ident">Input</span> { <span class="ident">x</span>: <span class="number">1.0</span>, <span class="ident">y</span>: <span class="number">2.0</span> },
-            <span class="ident">properties</span>: <span class="ident">Properties</span> { <span class="ident">prop1</span>: <span class="number">3.0</span>, <span class="ident">prop2</span>: <span class="number">4.0</span> },
-        });
+        <span class="macro">assert_eq</span><span class="macro">!</span>(
+            <span class="ident">got</span>,
+            <span class="ident">Row</span> {
+                <span class="ident">input</span>: <span class="ident">Input</span> { <span class="ident">x</span>: <span class="number">1.0</span>, <span class="ident">y</span>: <span class="number">2.0</span> },
+                <span class="ident">properties</span>: <span class="ident">Properties</span> { <span class="ident">prop1</span>: <span class="number">3.0</span>, <span class="ident">prop2</span>: <span class="number">4.0</span> },
+            }
+        );
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
@@ -2406,23 +2486,23 @@
         <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Deserialize</span>, <span class="ident">PartialEq</span>)]</span>
         <span class="kw">struct</span> <span class="ident">Row</span> {
             <span class="ident">h1</span>: <span class="ident">String</span>,
-            <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">with</span> <span class="op">=</span> <span class="string">&quot;serde_bytes&quot;</span>)]</span>
-            <span class="ident">h2</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>,
+            <span class="ident">h2</span>: <span class="ident">BString</span>,
             <span class="ident">h3</span>: <span class="ident">String</span>,
         }
 
         <span class="kw">let</span> <span class="ident">headers</span> <span class="op">=</span> <span class="ident">ByteRecord</span>::<span class="ident">from</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="string">b&quot;h1&quot;</span>, <span class="string">b&quot;h2&quot;</span>, <span class="string">b&quot;h3&quot;</span>]);
-        <span class="kw">let</span> <span class="ident">record</span> <span class="op">=</span> <span class="ident">ByteRecord</span>::<span class="ident">from</span>(<span class="macro">vec</span><span class="macro">!</span>[
-            <span class="ident">b</span>(<span class="string">b&quot;baz&quot;</span>), <span class="ident">b</span>(<span class="string">b&quot;foo\xFFbar&quot;</span>), <span class="ident">b</span>(<span class="string">b&quot;quux&quot;</span>),
-        ]);
-        <span class="kw">let</span> <span class="ident">got</span>: <span class="ident">Row</span> <span class="op">=</span> <span class="ident">deserialize_byte_record</span>(
-            <span class="kw-2">&amp;</span><span class="ident">record</span>, <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="ident">headers</span>),
-        ).<span class="ident">unwrap</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">got</span>, <span class="ident">Row</span> {
-            <span class="ident">h1</span>: <span class="string">&quot;baz&quot;</span>.<span class="ident">to_string</span>(),
-            <span class="ident">h2</span>: <span class="string">b&quot;foo\xFFbar&quot;</span>.<span class="ident">to_vec</span>(),
-            <span class="ident">h3</span>: <span class="string">&quot;quux&quot;</span>.<span class="ident">to_string</span>(),
-        });
+        <span class="kw">let</span> <span class="ident">record</span> <span class="op">=</span>
+            <span class="ident">ByteRecord</span>::<span class="ident">from</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="ident">b</span>(<span class="string">b&quot;baz&quot;</span>), <span class="ident">b</span>(<span class="string">b&quot;foo\xFFbar&quot;</span>), <span class="ident">b</span>(<span class="string">b&quot;quux&quot;</span>)]);
+        <span class="kw">let</span> <span class="ident">got</span>: <span class="ident">Row</span> <span class="op">=</span>
+            <span class="ident">deserialize_byte_record</span>(<span class="kw-2">&amp;</span><span class="ident">record</span>, <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="ident">headers</span>)).<span class="ident">unwrap</span>();
+        <span class="macro">assert_eq</span><span class="macro">!</span>(
+            <span class="ident">got</span>,
+            <span class="ident">Row</span> {
+                <span class="ident">h1</span>: <span class="string">&quot;baz&quot;</span>.<span class="ident">to_string</span>(),
+                <span class="ident">h2</span>: <span class="ident">BString</span>::<span class="ident">from</span>(<span class="string">b&quot;foo\xFFbar&quot;</span>.<span class="ident">to_vec</span>()),
+                <span class="ident">h3</span>: <span class="string">&quot;quux&quot;</span>.<span class="ident">to_string</span>(),
+            }
+        );
     }
 }
 </pre></div>

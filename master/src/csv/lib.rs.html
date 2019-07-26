@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/csv-1.0.7/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../csv/index.html'><img src='../../rust-logo.png' alt='logo' width='100'></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/csv-1.1.1/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../csv/index.html'><div class='logo-container'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -357,36 +357,6 @@
 <span id="357">357</span>
 <span id="358">358</span>
 <span id="359">359</span>
-<span id="360">360</span>
-<span id="361">361</span>
-<span id="362">362</span>
-<span id="363">363</span>
-<span id="364">364</span>
-<span id="365">365</span>
-<span id="366">366</span>
-<span id="367">367</span>
-<span id="368">368</span>
-<span id="369">369</span>
-<span id="370">370</span>
-<span id="371">371</span>
-<span id="372">372</span>
-<span id="373">373</span>
-<span id="374">374</span>
-<span id="375">375</span>
-<span id="376">376</span>
-<span id="377">377</span>
-<span id="378">378</span>
-<span id="379">379</span>
-<span id="380">380</span>
-<span id="381">381</span>
-<span id="382">382</span>
-<span id="383">383</span>
-<span id="384">384</span>
-<span id="385">385</span>
-<span id="386">386</span>
-<span id="387">387</span>
-<span id="388">388</span>
-<span id="389">389</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">/*!
 The `csv` crate provides a fast and flexible CSV reader and writer, with
@@ -436,13 +406,7 @@ Add this to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-csv = &quot;1&quot;
-```
-
-and this to your crate root:
-
-```rust
-extern crate csv;
+csv = &quot;1.1&quot;
 ```
 
 If you want to use Serde&#39;s custom derive functionality on your custom structs,
@@ -450,16 +414,7 @@ then add this to your `[dependencies]` section of `Cargo.toml`:
 
 ```toml
 [dependencies]
-serde = &quot;1&quot;
-serde_derive = &quot;1&quot;
-```
-
-and this to your crate root:
-
-```ignore
-extern crate serde;
-#[macro_use]
-extern crate serde_derive;
+serde = { version = &quot;1&quot;, features = [&quot;derive&quot;] }
 ```
 
 # Example
@@ -470,13 +425,11 @@ stdout.
 There are more examples in the [cookbook](cookbook/index.html).
 
 ```no_run
-extern crate csv;
-
 use std::error::Error;
 use std::io;
 use std::process;
 
-fn example() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {
+fn example() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
     // Build the CSV reader and iterate over each record.
     let mut rdr = csv::Reader::from_reader(io::stdin());
     for result in rdr.records() {
@@ -511,15 +464,13 @@ By default, the member names of the struct are matched with the values in the
 header record of your CSV data.
 
 ```no_run
-extern crate csv;
-#[macro_use]
-extern crate serde_derive;
-
 use std::error::Error;
 use std::io;
 use std::process;
 
-#[derive(Debug,Deserialize)]
+use serde::Deserialize;
+
+#[derive(Debug, Deserialize)]
 struct Record {
     city: String,
     region: String,
@@ -527,7 +478,7 @@ struct Record {
     population: Option&lt;u64&gt;,
 }
 
-fn example() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {
+fn example() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
     let mut rdr = csv::Reader::from_reader(io::stdin());
     for result in rdr.deserialize() {
         // Notice that we need to provide a type hint for automatic
@@ -558,38 +509,27 @@ $ cargo run --example cookbook-read-serde &lt; examples/data/smallpop.csv
 
 <span class="attribute">#![<span class="ident">deny</span>(<span class="ident">missing_docs</span>)]</span>
 
-<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">csv_core</span>;
-<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">itoa</span>;
-<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">ryu</span>;
-<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">serde</span>;
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
-<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">serde_bytes</span>;
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
-<span class="attribute">#[<span class="ident">macro_use</span>]</span>
-<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">serde_derive</span>;
-
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">result</span>;
 
 <span class="kw">use</span> <span class="ident">serde</span>::{<span class="ident">Deserialize</span>, <span class="ident">Deserializer</span>};
 
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">byte_record</span>::{<span class="ident">ByteRecord</span>, <span class="ident">ByteRecordIter</span>, <span class="ident">Position</span>};
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">deserializer</span>::{<span class="ident">DeserializeError</span>, <span class="ident">DeserializeErrorKind</span>};
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">error</span>::{
+<span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">byte_record</span>::{<span class="ident">ByteRecord</span>, <span class="ident">ByteRecordIter</span>, <span class="ident">Position</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">deserializer</span>::{<span class="ident">DeserializeError</span>, <span class="ident">DeserializeErrorKind</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">error</span>::{
     <span class="ident">Error</span>, <span class="ident">ErrorKind</span>, <span class="ident">FromUtf8Error</span>, <span class="ident">IntoInnerError</span>, <span class="prelude-ty">Result</span>, <span class="ident">Utf8Error</span>,
 };
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">reader</span>::{
-    <span class="ident">Reader</span>, <span class="ident">ReaderBuilder</span>,
-    <span class="ident">DeserializeRecordsIntoIter</span>, <span class="ident">DeserializeRecordsIter</span>,
-    <span class="ident">StringRecordsIntoIter</span>, <span class="ident">StringRecordsIter</span>,
-    <span class="ident">ByteRecordsIntoIter</span>, <span class="ident">ByteRecordsIter</span>,
+<span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">reader</span>::{
+    <span class="ident">ByteRecordsIntoIter</span>, <span class="ident">ByteRecordsIter</span>, <span class="ident">DeserializeRecordsIntoIter</span>,
+    <span class="ident">DeserializeRecordsIter</span>, <span class="ident">Reader</span>, <span class="ident">ReaderBuilder</span>, <span class="ident">StringRecordsIntoIter</span>,
+    <span class="ident">StringRecordsIter</span>,
 };
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">string_record</span>::{<span class="ident">StringRecord</span>, <span class="ident">StringRecordIter</span>};
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">writer</span>::{<span class="ident">Writer</span>, <span class="ident">WriterBuilder</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">string_record</span>::{<span class="ident">StringRecord</span>, <span class="ident">StringRecordIter</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">writer</span>::{<span class="ident">Writer</span>, <span class="ident">WriterBuilder</span>};
 
 <span class="kw">mod</span> <span class="ident">byte_record</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">cookbook</span>;
 <span class="kw">mod</span> <span class="ident">deserializer</span>;
 <span class="kw">mod</span> <span class="ident">error</span>;
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">cookbook</span>;
 <span class="kw">mod</span> <span class="ident">reader</span>;
 <span class="kw">mod</span> <span class="ident">serializer</span>;
 <span class="kw">mod</span> <span class="ident">string_record</span>;
@@ -739,12 +679,10 @@ $ cargo run --example cookbook-read-serde &lt; examples/data/smallpop.csv
 <span class="doccomment">/// an error.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ```</span>
-<span class="doccomment">/// extern crate csv;</span>
-<span class="doccomment">/// #[macro_use]</span>
-<span class="doccomment">/// extern crate serde_derive;</span>
-<span class="doccomment">///</span>
 <span class="doccomment">/// use std::error::Error;</span>
+<span class="doccomment">///</span>
 <span class="doccomment">/// use csv::Reader;</span>
+<span class="doccomment">/// use serde::Deserialize;</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// #[derive(Debug, Deserialize, Eq, PartialEq)]</span>
 <span class="doccomment">/// struct Row {</span>
@@ -757,7 +695,7 @@ $ cargo run --example cookbook-read-serde &lt; examples/data/smallpop.csv
 <span class="doccomment">/// }</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// # fn main() { example().unwrap(); }</span>
-<span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {</span>
+<span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {</span>
 <span class="doccomment">///     let data = &quot;\</span>
 <span class="doccomment">/// a,b,c</span>
 <span class="doccomment">/// 5,\&quot;\&quot;,xyz</span>
@@ -773,7 +711,9 @@ $ cargo run --example cookbook-read-serde &lt; examples/data/smallpop.csv
 <span class="doccomment">/// }</span>
 <span class="doccomment">/// ```</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">invalid_option</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span>, <span class="ident">D</span>, <span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">de</span>: <span class="ident">D</span>) <span class="op">-&gt;</span> <span class="ident">result</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>, <span class="ident">D</span>::<span class="ident">Error</span><span class="op">&gt;</span>
-    <span class="kw">where</span> <span class="ident">D</span>: <span class="ident">Deserializer</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>: <span class="ident">Deserialize</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span>
+<span class="kw">where</span>
+    <span class="ident">D</span>: <span class="ident">Deserializer</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span>,
+    <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>: <span class="ident">Deserialize</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span>,
 {
     <span class="prelude-ty">Option</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>::<span class="ident">deserialize</span>(<span class="ident">de</span>).<span class="ident">or_else</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>))
 }

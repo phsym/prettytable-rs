@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/csv-1.0.7/src/reader.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>reader.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../csv/index.html'><img src='../../rust-logo.png' alt='logo' width='100'></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/csv-1.1.1/src/reader.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>reader.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../csv/index.html'><div class='logo-container'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
 <span id="2">   2</span>
 <span id="3">   3</span>
 <span id="4">   4</span>
@@ -2596,88 +2596,6 @@
 <span id="2596">2596</span>
 <span id="2597">2597</span>
 <span id="2598">2598</span>
-<span id="2599">2599</span>
-<span id="2600">2600</span>
-<span id="2601">2601</span>
-<span id="2602">2602</span>
-<span id="2603">2603</span>
-<span id="2604">2604</span>
-<span id="2605">2605</span>
-<span id="2606">2606</span>
-<span id="2607">2607</span>
-<span id="2608">2608</span>
-<span id="2609">2609</span>
-<span id="2610">2610</span>
-<span id="2611">2611</span>
-<span id="2612">2612</span>
-<span id="2613">2613</span>
-<span id="2614">2614</span>
-<span id="2615">2615</span>
-<span id="2616">2616</span>
-<span id="2617">2617</span>
-<span id="2618">2618</span>
-<span id="2619">2619</span>
-<span id="2620">2620</span>
-<span id="2621">2621</span>
-<span id="2622">2622</span>
-<span id="2623">2623</span>
-<span id="2624">2624</span>
-<span id="2625">2625</span>
-<span id="2626">2626</span>
-<span id="2627">2627</span>
-<span id="2628">2628</span>
-<span id="2629">2629</span>
-<span id="2630">2630</span>
-<span id="2631">2631</span>
-<span id="2632">2632</span>
-<span id="2633">2633</span>
-<span id="2634">2634</span>
-<span id="2635">2635</span>
-<span id="2636">2636</span>
-<span id="2637">2637</span>
-<span id="2638">2638</span>
-<span id="2639">2639</span>
-<span id="2640">2640</span>
-<span id="2641">2641</span>
-<span id="2642">2642</span>
-<span id="2643">2643</span>
-<span id="2644">2644</span>
-<span id="2645">2645</span>
-<span id="2646">2646</span>
-<span id="2647">2647</span>
-<span id="2648">2648</span>
-<span id="2649">2649</span>
-<span id="2650">2650</span>
-<span id="2651">2651</span>
-<span id="2652">2652</span>
-<span id="2653">2653</span>
-<span id="2654">2654</span>
-<span id="2655">2655</span>
-<span id="2656">2656</span>
-<span id="2657">2657</span>
-<span id="2658">2658</span>
-<span id="2659">2659</span>
-<span id="2660">2660</span>
-<span id="2661">2661</span>
-<span id="2662">2662</span>
-<span id="2663">2663</span>
-<span id="2664">2664</span>
-<span id="2665">2665</span>
-<span id="2666">2666</span>
-<span id="2667">2667</span>
-<span id="2668">2668</span>
-<span id="2669">2669</span>
-<span id="2670">2670</span>
-<span id="2671">2671</span>
-<span id="2672">2672</span>
-<span id="2673">2673</span>
-<span id="2674">2674</span>
-<span id="2675">2675</span>
-<span id="2676">2676</span>
-<span id="2677">2677</span>
-<span id="2678">2678</span>
-<span id="2679">2679</span>
-<span id="2680">2680</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fs</span>::<span class="ident">File</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>::{<span class="self">self</span>, <span class="ident">BufRead</span>, <span class="ident">Seek</span>};
@@ -2685,15 +2603,13 @@
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">path</span>::<span class="ident">Path</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">result</span>;
 
-<span class="kw">use</span> <span class="ident">csv_core</span>::{
-    <span class="ident">Reader</span> <span class="kw">as</span> <span class="ident">CoreReader</span>, <span class="ident">ReaderBuilder</span> <span class="kw">as</span> <span class="ident">CoreReaderBuilder</span>,
-};
+<span class="kw">use</span> <span class="ident">csv_core</span>::{<span class="ident">Reader</span> <span class="kw">as</span> <span class="ident">CoreReader</span>, <span class="ident">ReaderBuilder</span> <span class="kw">as</span> <span class="ident">CoreReaderBuilder</span>};
 <span class="kw">use</span> <span class="ident">serde</span>::<span class="ident">de</span>::<span class="ident">DeserializeOwned</span>;
 
-<span class="kw">use</span> <span class="ident">byte_record</span>::{<span class="self">self</span>, <span class="ident">ByteRecord</span>, <span class="ident">Position</span>};
-<span class="kw">use</span> <span class="ident">error</span>::{<span class="ident">ErrorKind</span>, <span class="prelude-ty">Result</span>, <span class="ident">Utf8Error</span>, <span class="ident">new_error</span>};
-<span class="kw">use</span> <span class="ident">string_record</span>::{<span class="self">self</span>, <span class="ident">StringRecord</span>};
-<span class="kw">use</span> {<span class="ident">Terminator</span>, <span class="ident">Trim</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">byte_record</span>::{<span class="ident">ByteRecord</span>, <span class="ident">Position</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">error</span>::{<span class="ident">Error</span>, <span class="ident">ErrorKind</span>, <span class="prelude-ty">Result</span>, <span class="ident">Utf8Error</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">string_record</span>::<span class="ident">StringRecord</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">Terminator</span>, <span class="ident">Trim</span>};
 
 <span class="doccomment">/// Builds a CSV reader with various configuration knobs.</span>
 <span class="doccomment">///</span>
@@ -2717,7 +2633,7 @@
 <span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">ReaderBuilder</span> {
     <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-&gt;</span> <span class="ident">ReaderBuilder</span> {
         <span class="ident">ReaderBuilder</span> {
-            <span class="ident">capacity</span>: <span class="number">8</span> <span class="op">*</span> (<span class="number">1</span><span class="op">&lt;&lt;</span><span class="number">10</span>),
+            <span class="ident">capacity</span>: <span class="number">8</span> <span class="op">*</span> (<span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">10</span>),
             <span class="ident">flexible</span>: <span class="bool-val">false</span>,
             <span class="ident">has_headers</span>: <span class="bool-val">true</span>,
             <span class="ident">trim</span>: <span class="ident">Trim</span>::<span class="ident">default</span>(),
@@ -2735,13 +2651,11 @@
     <span class="doccomment">/// # Example</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// extern crate csv;</span>
-    <span class="doccomment">///</span>
     <span class="doccomment">/// use std::error::Error;</span>
     <span class="doccomment">/// use csv::{ReaderBuilder, StringRecord};</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # fn main() { example().unwrap(); }</span>
-    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {</span>
+    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {</span>
     <span class="doccomment">///     let data = &quot;\</span>
     <span class="doccomment">/// city,country,pop</span>
     <span class="doccomment">/// Boston,United States,4628910</span>
@@ -2772,13 +2686,11 @@
     <span class="doccomment">/// # Example</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```no_run</span>
-    <span class="doccomment">/// extern crate csv;</span>
-    <span class="doccomment">///</span>
     <span class="doccomment">/// use std::error::Error;</span>
     <span class="doccomment">/// use csv::ReaderBuilder;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # fn main() { example().unwrap(); }</span>
-    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {</span>
+    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {</span>
     <span class="doccomment">///     let mut rdr = ReaderBuilder::new().from_path(&quot;foo.csv&quot;)?;</span>
     <span class="doccomment">///     for result in rdr.records() {</span>
     <span class="doccomment">///         let record = result?;</span>
@@ -2799,13 +2711,11 @@
     <span class="doccomment">/// # Example</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// extern crate csv;</span>
-    <span class="doccomment">///</span>
     <span class="doccomment">/// use std::error::Error;</span>
     <span class="doccomment">/// use csv::ReaderBuilder;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # fn main() { example().unwrap(); }</span>
-    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {</span>
+    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {</span>
     <span class="doccomment">///     let data = &quot;\</span>
     <span class="doccomment">/// city,country,pop</span>
     <span class="doccomment">/// Boston,United States,4628910</span>
@@ -2830,13 +2740,11 @@
     <span class="doccomment">/// # Example</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// extern crate csv;</span>
-    <span class="doccomment">///</span>
     <span class="doccomment">/// use std::error::Error;</span>
     <span class="doccomment">/// use csv::ReaderBuilder;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # fn main() { example().unwrap(); }</span>
-    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {</span>
+    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {</span>
     <span class="doccomment">///     let data = &quot;\</span>
     <span class="doccomment">/// city;country;pop</span>
     <span class="doccomment">/// Boston;United States;4628910</span>
@@ -2875,13 +2783,11 @@
     <span class="doccomment">/// Namely, the first row is treated just like any other row.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// extern crate csv;</span>
-    <span class="doccomment">///</span>
     <span class="doccomment">/// use std::error::Error;</span>
     <span class="doccomment">/// use csv::ReaderBuilder;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # fn main() { example().unwrap(); }</span>
-    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {</span>
+    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {</span>
     <span class="doccomment">///     let data = &quot;\</span>
     <span class="doccomment">/// city,country,pop</span>
     <span class="doccomment">/// Boston,United States,4628910</span>
@@ -2927,13 +2833,11 @@
     <span class="doccomment">/// # Example: flexible records enabled</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// extern crate csv;</span>
-    <span class="doccomment">///</span>
     <span class="doccomment">/// use std::error::Error;</span>
     <span class="doccomment">/// use csv::ReaderBuilder;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # fn main() { example().unwrap(); }</span>
-    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {</span>
+    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {</span>
     <span class="doccomment">///     // Notice that the first row is missing the population count.</span>
     <span class="doccomment">///     let data = &quot;\</span>
     <span class="doccomment">/// city,country,pop</span>
@@ -2960,13 +2864,11 @@
     <span class="doccomment">/// default).</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// extern crate csv;</span>
-    <span class="doccomment">///</span>
     <span class="doccomment">/// use std::error::Error;</span>
     <span class="doccomment">/// use csv::{ErrorKind, ReaderBuilder};</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # fn main() { example().unwrap(); }</span>
-    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {</span>
+    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {</span>
     <span class="doccomment">///     // Notice that the first row is missing the population count.</span>
     <span class="doccomment">///     let data = &quot;\</span>
     <span class="doccomment">/// city,country,pop</span>
@@ -3024,13 +2926,11 @@
     <span class="doccomment">/// This example shows what happens when all values are trimmed.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// extern crate csv;</span>
-    <span class="doccomment">///</span>
     <span class="doccomment">/// use std::error::Error;</span>
     <span class="doccomment">/// use csv::{ReaderBuilder, StringRecord, Trim};</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # fn main() { example().unwrap(); }</span>
-    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {</span>
+    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {</span>
     <span class="doccomment">///     let data = &quot;\</span>
     <span class="doccomment">/// city ,   country ,  pop</span>
     <span class="doccomment">/// Boston,\&quot;</span>
@@ -3064,13 +2964,11 @@
     <span class="doccomment">/// # Example: `$` as a record terminator</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// extern crate csv;</span>
-    <span class="doccomment">///</span>
     <span class="doccomment">/// use std::error::Error;</span>
     <span class="doccomment">/// use csv::{ReaderBuilder, Terminator};</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # fn main() { example().unwrap(); }</span>
-    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {</span>
+    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {</span>
     <span class="doccomment">///     let data = &quot;city,country,pop$Boston,United States,4628910&quot;;</span>
     <span class="doccomment">///     let mut rdr = ReaderBuilder::new()</span>
     <span class="doccomment">///         .terminator(Terminator::Any(b&#39;$&#39;))</span>
@@ -3085,10 +2983,7 @@
     <span class="doccomment">///     }</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">terminator</span>(
-        <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
-        <span class="ident">term</span>: <span class="ident">Terminator</span>,
-    ) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ReaderBuilder</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">terminator</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">term</span>: <span class="ident">Terminator</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ReaderBuilder</span> {
         <span class="self">self</span>.<span class="ident">builder</span>.<span class="ident">terminator</span>(<span class="ident">term</span>.<span class="ident">to_core</span>());
         <span class="self">self</span>
     }
@@ -3100,13 +2995,11 @@
     <span class="doccomment">/// # Example: single quotes instead of double quotes</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// extern crate csv;</span>
-    <span class="doccomment">///</span>
     <span class="doccomment">/// use std::error::Error;</span>
     <span class="doccomment">/// use csv::ReaderBuilder;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # fn main() { example().unwrap(); }</span>
-    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {</span>
+    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {</span>
     <span class="doccomment">///     let data = &quot;\</span>
     <span class="doccomment">/// city,country,pop</span>
     <span class="doccomment">/// Boston,&#39;United States&#39;,4628910</span>
@@ -3139,13 +3032,11 @@
     <span class="doccomment">/// # Example</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// extern crate csv;</span>
-    <span class="doccomment">///</span>
     <span class="doccomment">/// use std::error::Error;</span>
     <span class="doccomment">/// use csv::ReaderBuilder;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # fn main() { example().unwrap(); }</span>
-    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {</span>
+    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {</span>
     <span class="doccomment">///     let data = &quot;\</span>
     <span class="doccomment">/// city,country,pop</span>
     <span class="doccomment">/// Boston,\&quot;The \\\&quot;United\\\&quot; States\&quot;,4628910</span>
@@ -3178,13 +3069,11 @@
     <span class="doccomment">/// # Example</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// extern crate csv;</span>
-    <span class="doccomment">///</span>
     <span class="doccomment">/// use std::error::Error;</span>
     <span class="doccomment">/// use csv::ReaderBuilder;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # fn main() { example().unwrap(); }</span>
-    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {</span>
+    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {</span>
     <span class="doccomment">///     let data = &quot;\</span>
     <span class="doccomment">/// city,country,pop</span>
     <span class="doccomment">/// Boston,\&quot;The \&quot;\&quot;United\&quot;\&quot; States\&quot;,4628910</span>
@@ -3217,13 +3106,11 @@
     <span class="doccomment">/// # Example</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// extern crate csv;</span>
-    <span class="doccomment">///</span>
     <span class="doccomment">/// use std::error::Error;</span>
     <span class="doccomment">/// use csv::ReaderBuilder;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # fn main() { example().unwrap(); }</span>
-    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {</span>
+    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {</span>
     <span class="doccomment">///     let data = &quot;\</span>
     <span class="doccomment">/// city,country,pop</span>
     <span class="doccomment">/// Boston,\&quot;The United States,4628910</span>
@@ -3258,13 +3145,11 @@
     <span class="doccomment">/// # Example</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// extern crate csv;</span>
-    <span class="doccomment">///</span>
     <span class="doccomment">/// use std::error::Error;</span>
     <span class="doccomment">/// use csv::ReaderBuilder;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # fn main() { example().unwrap(); }</span>
-    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {</span>
+    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {</span>
     <span class="doccomment">///     let data = &quot;\</span>
     <span class="doccomment">/// city,country,pop</span>
     <span class="doccomment">/// #Concord,United States,42695</span>
@@ -3297,13 +3182,11 @@
     <span class="doccomment">/// # Example</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// extern crate csv;</span>
-    <span class="doccomment">///</span>
     <span class="doccomment">/// use std::error::Error;</span>
     <span class="doccomment">/// use csv::ReaderBuilder;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # fn main() { example().unwrap(); }</span>
-    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {</span>
+    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {</span>
     <span class="doccomment">///     let data = &quot;\</span>
     <span class="doccomment">/// city\x1Fcountry\x1Fpop\x1EBoston\x1FUnited States\x1F4628910&quot;;</span>
     <span class="doccomment">///     let mut rdr = ReaderBuilder::new()</span>
@@ -3360,13 +3243,11 @@
 <span class="doccomment">/// a `Reader`. For example, to change the field delimiter:</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ```</span>
-<span class="doccomment">/// extern crate csv;</span>
-<span class="doccomment">///</span>
 <span class="doccomment">/// use std::error::Error;</span>
 <span class="doccomment">/// use csv::ReaderBuilder;</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// # fn main() { example().unwrap(); }</span>
-<span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {</span>
+<span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {</span>
 <span class="doccomment">///     let data = &quot;\</span>
 <span class="doccomment">/// city;country;pop</span>
 <span class="doccomment">/// Boston;United States;4628910</span>
@@ -3482,13 +3363,11 @@
     <span class="doccomment">/// # Example</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```no_run</span>
-    <span class="doccomment">/// extern crate csv;</span>
-    <span class="doccomment">///</span>
     <span class="doccomment">/// use std::error::Error;</span>
     <span class="doccomment">/// use csv::Reader;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # fn main() { example().unwrap(); }</span>
-    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {</span>
+    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {</span>
     <span class="doccomment">///     let mut rdr = Reader::from_path(&quot;foo.csv&quot;)?;</span>
     <span class="doccomment">///     for result in rdr.records() {</span>
     <span class="doccomment">///         let record = result?;</span>
@@ -3531,13 +3410,11 @@
     <span class="doccomment">/// # Example</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// extern crate csv;</span>
-    <span class="doccomment">///</span>
     <span class="doccomment">/// use std::error::Error;</span>
     <span class="doccomment">/// use csv::Reader;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # fn main() { example().unwrap(); }</span>
-    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {</span>
+    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {</span>
     <span class="doccomment">///     let data = &quot;\</span>
     <span class="doccomment">/// city,country,pop</span>
     <span class="doccomment">/// Boston,United States,4628910</span>
@@ -3574,12 +3451,10 @@
     <span class="doccomment">/// to the fields of the struct.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// extern crate csv;</span>
-    <span class="doccomment">/// #[macro_use]</span>
-    <span class="doccomment">/// extern crate serde_derive;</span>
-    <span class="doccomment">///</span>
     <span class="doccomment">/// use std::error::Error;</span>
+    <span class="doccomment">///</span>
     <span class="doccomment">/// use csv::Reader;</span>
+    <span class="doccomment">/// use serde::Deserialize;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// #[derive(Debug, Deserialize, Eq, PartialEq)]</span>
     <span class="doccomment">/// struct Row {</span>
@@ -3590,7 +3465,7 @@
     <span class="doccomment">/// }</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # fn main() { example().unwrap(); }</span>
-    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {</span>
+    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {</span>
     <span class="doccomment">///     let data = &quot;\</span>
     <span class="doccomment">/// city,country,popcount</span>
     <span class="doccomment">/// Boston,United States,4628910</span>
@@ -3633,12 +3508,10 @@
     <span class="doccomment">/// a &quot;tail&quot; of fields in a record:</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// extern crate csv;</span>
-    <span class="doccomment">/// #[macro_use]</span>
-    <span class="doccomment">/// extern crate serde_derive;</span>
-    <span class="doccomment">///</span>
     <span class="doccomment">/// use std::error::Error;</span>
+    <span class="doccomment">///</span>
     <span class="doccomment">/// use csv::ReaderBuilder;</span>
+    <span class="doccomment">/// use serde::Deserialize;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// #[derive(Debug, Deserialize, Eq, PartialEq)]</span>
     <span class="doccomment">/// struct Row {</span>
@@ -3647,7 +3520,7 @@
     <span class="doccomment">/// }</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # fn main() { example().unwrap(); }</span>
-    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {</span>
+    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {</span>
     <span class="doccomment">///     let data = &quot;foo,1,2,3&quot;;</span>
     <span class="doccomment">///     let mut rdr = ReaderBuilder::new()</span>
     <span class="doccomment">///         .has_headers(false)</span>
@@ -3682,12 +3555,10 @@
     <span class="doccomment">/// following example shows both forms in action:</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// extern crate csv;</span>
-    <span class="doccomment">/// #[macro_use]</span>
-    <span class="doccomment">/// extern crate serde_derive;</span>
-    <span class="doccomment">///</span>
     <span class="doccomment">/// use std::error::Error;</span>
+    <span class="doccomment">///</span>
     <span class="doccomment">/// use csv::Reader;</span>
+    <span class="doccomment">/// use serde::Deserialize;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// #[derive(Debug, Deserialize, PartialEq)]</span>
     <span class="doccomment">/// struct Row {</span>
@@ -3710,7 +3581,7 @@
     <span class="doccomment">/// }</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # fn main() { example().unwrap(); }</span>
-    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {</span>
+    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {</span>
     <span class="doccomment">///     let data = &quot;\</span>
     <span class="doccomment">/// label,value</span>
     <span class="doccomment">/// celsius,22.2222</span>
@@ -3746,7 +3617,8 @@
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">deserialize</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">DeserializeRecordsIter</span><span class="op">&lt;</span><span class="ident">R</span>, <span class="ident">D</span><span class="op">&gt;</span>
-            <span class="kw">where</span> <span class="ident">D</span>: <span class="ident">DeserializeOwned</span>
+    <span class="kw">where</span>
+        <span class="ident">D</span>: <span class="ident">DeserializeOwned</span>,
     {
         <span class="ident">DeserializeRecordsIter</span>::<span class="ident">new</span>(<span class="self">self</span>)
     }
@@ -3772,12 +3644,10 @@
     <span class="doccomment">/// # Example</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// extern crate csv;</span>
-    <span class="doccomment">/// #[macro_use]</span>
-    <span class="doccomment">/// extern crate serde_derive;</span>
-    <span class="doccomment">///</span>
     <span class="doccomment">/// use std::error::Error;</span>
+    <span class="doccomment">///</span>
     <span class="doccomment">/// use csv::Reader;</span>
+    <span class="doccomment">/// use serde::Deserialize;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// #[derive(Debug, Deserialize, Eq, PartialEq)]</span>
     <span class="doccomment">/// struct Row {</span>
@@ -3788,7 +3658,7 @@
     <span class="doccomment">/// }</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # fn main() { example().unwrap(); }</span>
-    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {</span>
+    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {</span>
     <span class="doccomment">///     let data = &quot;\</span>
     <span class="doccomment">/// city,country,popcount</span>
     <span class="doccomment">/// Boston,United States,4628910</span>
@@ -3810,7 +3680,8 @@
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">into_deserialize</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">DeserializeRecordsIntoIter</span><span class="op">&lt;</span><span class="ident">R</span>, <span class="ident">D</span><span class="op">&gt;</span>
-            <span class="kw">where</span> <span class="ident">D</span>: <span class="ident">DeserializeOwned</span>
+    <span class="kw">where</span>
+        <span class="ident">D</span>: <span class="ident">DeserializeOwned</span>,
     {
         <span class="ident">DeserializeRecordsIntoIter</span>::<span class="ident">new</span>(<span class="self">self</span>)
     }
@@ -3827,13 +3698,11 @@
     <span class="doccomment">/// # Example</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// extern crate csv;</span>
-    <span class="doccomment">///</span>
     <span class="doccomment">/// use std::error::Error;</span>
     <span class="doccomment">/// use csv::Reader;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # fn main() { example().unwrap(); }</span>
-    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {</span>
+    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {</span>
     <span class="doccomment">///     let data = &quot;\</span>
     <span class="doccomment">/// city,country,pop</span>
     <span class="doccomment">/// Boston,United States,4628910</span>
@@ -3869,13 +3738,11 @@
     <span class="doccomment">/// # Example</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// extern crate csv;</span>
-    <span class="doccomment">///</span>
     <span class="doccomment">/// use std::error::Error;</span>
     <span class="doccomment">/// use csv::Reader;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # fn main() { example().unwrap(); }</span>
-    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {</span>
+    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {</span>
     <span class="doccomment">///     let data = &quot;\</span>
     <span class="doccomment">/// city,country,pop</span>
     <span class="doccomment">/// Boston,United States,4628910</span>
@@ -3908,13 +3775,11 @@
     <span class="doccomment">/// # Example</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// extern crate csv;</span>
-    <span class="doccomment">///</span>
     <span class="doccomment">/// use std::error::Error;</span>
     <span class="doccomment">/// use csv::Reader;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # fn main() { example().unwrap(); }</span>
-    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {</span>
+    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {</span>
     <span class="doccomment">///     let data = &quot;\</span>
     <span class="doccomment">/// city,country,pop</span>
     <span class="doccomment">/// Boston,United States,4628910</span>
@@ -3950,13 +3815,11 @@
     <span class="doccomment">/// # Example</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// extern crate csv;</span>
-    <span class="doccomment">///</span>
     <span class="doccomment">/// use std::error::Error;</span>
     <span class="doccomment">/// use csv::Reader;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # fn main() { example().unwrap(); }</span>
-    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {</span>
+    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {</span>
     <span class="doccomment">///     let data = &quot;\</span>
     <span class="doccomment">/// city,country,pop</span>
     <span class="doccomment">/// Boston,United States,4628910</span>
@@ -3997,13 +3860,11 @@
     <span class="doccomment">/// the header row does not appear as a record in the iterator!</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// extern crate csv;</span>
-    <span class="doccomment">///</span>
     <span class="doccomment">/// use std::error::Error;</span>
     <span class="doccomment">/// use csv::Reader;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # fn main() { example().unwrap(); }</span>
-    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {</span>
+    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {</span>
     <span class="doccomment">///     let data = &quot;\</span>
     <span class="doccomment">/// city,country,pop</span>
     <span class="doccomment">/// Boston,United States,4628910</span>
@@ -4042,7 +3903,7 @@
         <span class="kw">let</span> <span class="ident">headers</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">state</span>.<span class="ident">headers</span>.<span class="ident">as_ref</span>().<span class="ident">unwrap</span>();
         <span class="kw">match</span> <span class="ident">headers</span>.<span class="ident">string_record</span> {
             <span class="prelude-val">Ok</span>(<span class="kw-2">ref</span> <span class="ident">record</span>) <span class="op">=&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">record</span>),
-            <span class="prelude-val">Err</span>(<span class="kw-2">ref</span> <span class="ident">err</span>) <span class="op">=&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">new_error</span>(<span class="ident">ErrorKind</span>::<span class="ident">Utf8</span> {
+            <span class="prelude-val">Err</span>(<span class="kw-2">ref</span> <span class="ident">err</span>) <span class="op">=&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">new</span>(<span class="ident">ErrorKind</span>::<span class="ident">Utf8</span> {
                 <span class="ident">pos</span>: <span class="ident">headers</span>.<span class="ident">byte_record</span>.<span class="ident">position</span>().<span class="ident">map</span>(<span class="ident">Clone</span>::<span class="ident">clone</span>),
                 <span class="ident">err</span>: <span class="ident">err</span>.<span class="ident">clone</span>(),
             })),
@@ -4068,13 +3929,11 @@
     <span class="doccomment">/// the header row does not appear as a record in the iterator!</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// extern crate csv;</span>
-    <span class="doccomment">///</span>
     <span class="doccomment">/// use std::error::Error;</span>
     <span class="doccomment">/// use csv::Reader;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # fn main() { example().unwrap(); }</span>
-    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {</span>
+    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {</span>
     <span class="doccomment">///     let data = &quot;\</span>
     <span class="doccomment">/// city,country,pop</span>
     <span class="doccomment">/// Boston,United States,4628910</span>
@@ -4122,13 +3981,11 @@
     <span class="doccomment">/// # Example</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// extern crate csv;</span>
-    <span class="doccomment">///</span>
     <span class="doccomment">/// use std::error::Error;</span>
     <span class="doccomment">/// use csv::{Reader, StringRecord};</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # fn main() { example().unwrap(); }</span>
-    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {</span>
+    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {</span>
     <span class="doccomment">///     let data = &quot;\</span>
     <span class="doccomment">/// city,country,pop</span>
     <span class="doccomment">/// Boston,United States,4628910</span>
@@ -4155,13 +4012,11 @@
     <span class="doccomment">/// # Example</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// extern crate csv;</span>
-    <span class="doccomment">///</span>
     <span class="doccomment">/// use std::error::Error;</span>
     <span class="doccomment">/// use csv::{Reader, ByteRecord};</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # fn main() { example().unwrap(); }</span>
-    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {</span>
+    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {</span>
     <span class="doccomment">///     let data = &quot;\</span>
     <span class="doccomment">/// city,country,pop</span>
     <span class="doccomment">/// Boston,United States,4628910</span>
@@ -4226,13 +4081,11 @@
     <span class="doccomment">/// # Example</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// extern crate csv;</span>
-    <span class="doccomment">///</span>
     <span class="doccomment">/// use std::error::Error;</span>
     <span class="doccomment">/// use csv::{Reader, StringRecord};</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # fn main() { example().unwrap(); }</span>
-    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {</span>
+    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {</span>
     <span class="doccomment">///     let data = &quot;\</span>
     <span class="doccomment">/// city,country,pop</span>
     <span class="doccomment">/// Boston,United States,4628910</span>
@@ -4249,7 +4102,7 @@
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">read_record</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">record</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">StringRecord</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">string_record</span>::<span class="ident">read</span>(<span class="self">self</span>, <span class="ident">record</span>);
+        <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">record</span>.<span class="ident">read</span>(<span class="self">self</span>);
         <span class="comment">// We need to trim again because trimming string records includes</span>
         <span class="comment">// Unicode whitespace. (ByteRecord trimming only includes ASCII</span>
         <span class="comment">// whitespace.)</span>
@@ -4276,13 +4129,11 @@
     <span class="doccomment">/// # Example</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// extern crate csv;</span>
-    <span class="doccomment">///</span>
     <span class="doccomment">/// use std::error::Error;</span>
     <span class="doccomment">/// use csv::{ByteRecord, Reader};</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # fn main() { example().unwrap(); }</span>
-    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {</span>
+    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {</span>
     <span class="doccomment">///     let data = &quot;\</span>
     <span class="doccomment">/// city,country,pop</span>
     <span class="doccomment">/// Boston,United States,4628910</span>
@@ -4353,13 +4204,17 @@
         <span class="kw">loop</span> {
             <span class="kw">let</span> (<span class="ident">res</span>, <span class="ident">nin</span>, <span class="ident">nout</span>, <span class="ident">nend</span>) <span class="op">=</span> {
                 <span class="kw">let</span> <span class="ident">input</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">rdr</span>.<span class="ident">fill_buf</span>()<span class="question-mark">?</span>;
-                <span class="kw">let</span> (<span class="ident">fields</span>, <span class="ident">ends</span>) <span class="op">=</span> <span class="ident">byte_record</span>::<span class="ident">as_parts</span>(<span class="ident">record</span>);
+                <span class="kw">let</span> (<span class="ident">fields</span>, <span class="ident">ends</span>) <span class="op">=</span> <span class="ident">record</span>.<span class="ident">as_parts</span>();
                 <span class="self">self</span>.<span class="ident">core</span>.<span class="ident">read_record</span>(
-                    <span class="ident">input</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fields</span>[<span class="ident">outlen</span>..], <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ends</span>[<span class="ident">endlen</span>..])
+                    <span class="ident">input</span>,
+                    <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fields</span>[<span class="ident">outlen</span>..],
+                    <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ends</span>[<span class="ident">endlen</span>..],
+                )
             };
             <span class="self">self</span>.<span class="ident">rdr</span>.<span class="ident">consume</span>(<span class="ident">nin</span>);
             <span class="kw">let</span> <span class="ident">byte</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">state</span>.<span class="ident">cur_pos</span>.<span class="ident">byte</span>();
-            <span class="self">self</span>.<span class="ident">state</span>.<span class="ident">cur_pos</span>
+            <span class="self">self</span>.<span class="ident">state</span>
+                .<span class="ident">cur_pos</span>
                 .<span class="ident">set_byte</span>(<span class="ident">byte</span> <span class="op">+</span> <span class="ident">nin</span> <span class="kw">as</span> <span class="ident">u64</span>)
                 .<span class="ident">set_line</span>(<span class="self">self</span>.<span class="ident">core</span>.<span class="ident">line</span>());
             <span class="ident">outlen</span> <span class="op">+=</span> <span class="ident">nout</span>;
@@ -4367,15 +4222,15 @@
             <span class="kw">match</span> <span class="ident">res</span> {
                 <span class="ident">InputEmpty</span> <span class="op">=&gt;</span> <span class="kw">continue</span>,
                 <span class="ident">OutputFull</span> <span class="op">=&gt;</span> {
-                    <span class="ident">byte_record</span>::<span class="ident">expand_fields</span>(<span class="ident">record</span>);
+                    <span class="ident">record</span>.<span class="ident">expand_fields</span>();
                     <span class="kw">continue</span>;
                 }
                 <span class="ident">OutputEndsFull</span> <span class="op">=&gt;</span> {
-                    <span class="ident">byte_record</span>::<span class="ident">expand_ends</span>(<span class="ident">record</span>);
+                    <span class="ident">record</span>.<span class="ident">expand_ends</span>();
                     <span class="kw">continue</span>;
                 }
                 <span class="ident">Record</span> <span class="op">=&gt;</span> {
-                    <span class="ident">byte_record</span>::<span class="ident">set_len</span>(<span class="ident">record</span>, <span class="ident">endlen</span>);
+                    <span class="ident">record</span>.<span class="ident">set_len</span>(<span class="ident">endlen</span>);
                     <span class="self">self</span>.<span class="ident">state</span>.<span class="ident">add_record</span>(<span class="ident">record</span>)<span class="question-mark">?</span>;
                     <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="bool-val">true</span>);
                 }
@@ -4396,14 +4251,12 @@
     <span class="doccomment">/// # Example: reading the position</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// extern crate csv;</span>
-    <span class="doccomment">///</span>
     <span class="doccomment">/// use std::error::Error;</span>
     <span class="doccomment">/// use std::io;</span>
     <span class="doccomment">/// use csv::{Reader, Position};</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # fn main() { example().unwrap(); }</span>
-    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {</span>
+    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {</span>
     <span class="doccomment">///     let data = &quot;\</span>
     <span class="doccomment">/// city,country,popcount</span>
     <span class="doccomment">/// Boston,United States,4628910</span>
@@ -4441,14 +4294,12 @@
     <span class="doccomment">/// # Example</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// extern crate csv;</span>
-    <span class="doccomment">///</span>
     <span class="doccomment">/// use std::error::Error;</span>
     <span class="doccomment">/// use std::io;</span>
     <span class="doccomment">/// use csv::{Reader, Position};</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # fn main() { example().unwrap(); }</span>
-    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {</span>
+    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {</span>
     <span class="doccomment">///     let data = &quot;\</span>
     <span class="doccomment">/// city,country,popcount</span>
     <span class="doccomment">/// Boston,United States,4628910</span>
@@ -4519,14 +4370,12 @@
     <span class="doccomment">/// # Example: seek to parse a record twice</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// extern crate csv;</span>
-    <span class="doccomment">///</span>
     <span class="doccomment">/// use std::error::Error;</span>
     <span class="doccomment">/// use std::io;</span>
     <span class="doccomment">/// use csv::{Reader, Position};</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # fn main() { example().unwrap(); }</span>
-    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {</span>
+    <span class="doccomment">/// fn example() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {</span>
     <span class="doccomment">///     let data = &quot;\</span>
     <span class="doccomment">/// city,country,popcount</span>
     <span class="doccomment">/// Boston,United States,4628910</span>
@@ -4610,7 +4459,7 @@
                 <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="self">self</span>.<span class="ident">first_field_count</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">record</span>.<span class="ident">len</span>() <span class="kw">as</span> <span class="ident">u64</span>),
                 <span class="prelude-val">Some</span>(<span class="ident">expected</span>) <span class="op">=&gt;</span> {
                     <span class="kw">if</span> <span class="ident">record</span>.<span class="ident">len</span>() <span class="kw">as</span> <span class="ident">u64</span> <span class="op">!=</span> <span class="ident">expected</span> {
-                        <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">new_error</span>(<span class="ident">ErrorKind</span>::<span class="ident">UnequalLengths</span> {
+                        <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">new</span>(<span class="ident">ErrorKind</span>::<span class="ident">UnequalLengths</span> {
                             <span class="ident">pos</span>: <span class="ident">record</span>.<span class="ident">position</span>().<span class="ident">map</span>(<span class="ident">Clone</span>::<span class="ident">clone</span>),
                             <span class="ident">expected_len</span>: <span class="ident">expected</span>,
                             <span class="ident">len</span>: <span class="ident">record</span>.<span class="ident">len</span>() <span class="kw">as</span> <span class="ident">u64</span>,
@@ -4636,12 +4485,11 @@
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">io</span>::<span class="ident">Read</span>, <span class="ident">D</span>: <span class="ident">DeserializeOwned</span><span class="op">&gt;</span> <span class="ident">DeserializeRecordsIntoIter</span><span class="op">&lt;</span><span class="ident">R</span>, <span class="ident">D</span><span class="op">&gt;</span> {
     <span class="kw">fn</span> <span class="ident">new</span>(<span class="kw-2">mut</span> <span class="ident">rdr</span>: <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">DeserializeRecordsIntoIter</span><span class="op">&lt;</span><span class="ident">R</span>, <span class="ident">D</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">headers</span> <span class="op">=</span>
-            <span class="kw">if</span> <span class="op">!</span><span class="ident">rdr</span>.<span class="ident">state</span>.<span class="ident">has_headers</span> {
-                <span class="prelude-val">None</span>
-            } <span class="kw">else</span> {
-                <span class="ident">rdr</span>.<span class="ident">headers</span>().<span class="ident">ok</span>().<span class="ident">map</span>(<span class="ident">Clone</span>::<span class="ident">clone</span>)
-            };
+        <span class="kw">let</span> <span class="ident">headers</span> <span class="op">=</span> <span class="kw">if</span> <span class="op">!</span><span class="ident">rdr</span>.<span class="ident">state</span>.<span class="ident">has_headers</span> {
+            <span class="prelude-val">None</span>
+        } <span class="kw">else</span> {
+            <span class="ident">rdr</span>.<span class="ident">headers</span>().<span class="ident">ok</span>().<span class="ident">map</span>(<span class="ident">Clone</span>::<span class="ident">clone</span>)
+        };
         <span class="ident">DeserializeRecordsIntoIter</span> {
             <span class="ident">rdr</span>: <span class="ident">rdr</span>,
             <span class="ident">rec</span>: <span class="ident">StringRecord</span>::<span class="ident">new</span>(),
@@ -4666,8 +4514,8 @@
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">io</span>::<span class="ident">Read</span>, <span class="ident">D</span>: <span class="ident">DeserializeOwned</span><span class="op">&gt;</span>
-    <span class="ident">Iterator</span> <span class="kw">for</span> <span class="ident">DeserializeRecordsIntoIter</span><span class="op">&lt;</span><span class="ident">R</span>, <span class="ident">D</span><span class="op">&gt;</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">io</span>::<span class="ident">Read</span>, <span class="ident">D</span>: <span class="ident">DeserializeOwned</span><span class="op">&gt;</span> <span class="ident">Iterator</span>
+    <span class="kw">for</span> <span class="ident">DeserializeRecordsIntoIter</span><span class="op">&lt;</span><span class="ident">R</span>, <span class="ident">D</span><span class="op">&gt;</span>
 {
     <span class="kw">type</span> <span class="ident">Item</span> <span class="op">=</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>;
 
@@ -4695,12 +4543,11 @@
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;r</span>, <span class="ident">R</span>: <span class="ident">io</span>::<span class="ident">Read</span>, <span class="ident">D</span>: <span class="ident">DeserializeOwned</span><span class="op">&gt;</span> <span class="ident">DeserializeRecordsIter</span><span class="op">&lt;</span><span class="lifetime">&#39;r</span>, <span class="ident">R</span>, <span class="ident">D</span><span class="op">&gt;</span> {
     <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">rdr</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;r</span> <span class="kw-2">mut</span> <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">DeserializeRecordsIter</span><span class="op">&lt;</span><span class="lifetime">&#39;r</span>, <span class="ident">R</span>, <span class="ident">D</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">headers</span> <span class="op">=</span>
-            <span class="kw">if</span> <span class="op">!</span><span class="ident">rdr</span>.<span class="ident">state</span>.<span class="ident">has_headers</span> {
-                <span class="prelude-val">None</span>
-            } <span class="kw">else</span> {
-                <span class="ident">rdr</span>.<span class="ident">headers</span>().<span class="ident">ok</span>().<span class="ident">map</span>(<span class="ident">Clone</span>::<span class="ident">clone</span>)
-            };
+        <span class="kw">let</span> <span class="ident">headers</span> <span class="op">=</span> <span class="kw">if</span> <span class="op">!</span><span class="ident">rdr</span>.<span class="ident">state</span>.<span class="ident">has_headers</span> {
+            <span class="prelude-val">None</span>
+        } <span class="kw">else</span> {
+            <span class="ident">rdr</span>.<span class="ident">headers</span>().<span class="ident">ok</span>().<span class="ident">map</span>(<span class="ident">Clone</span>::<span class="ident">clone</span>)
+        };
         <span class="ident">DeserializeRecordsIter</span> {
             <span class="ident">rdr</span>: <span class="ident">rdr</span>,
             <span class="ident">rec</span>: <span class="ident">StringRecord</span>::<span class="ident">new</span>(),
@@ -4720,8 +4567,8 @@
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;r</span>, <span class="ident">R</span>: <span class="ident">io</span>::<span class="ident">Read</span>, <span class="ident">D</span>: <span class="ident">DeserializeOwned</span><span class="op">&gt;</span>
-    <span class="ident">Iterator</span> <span class="kw">for</span> <span class="ident">DeserializeRecordsIter</span><span class="op">&lt;</span><span class="lifetime">&#39;r</span>, <span class="ident">R</span>, <span class="ident">D</span><span class="op">&gt;</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;r</span>, <span class="ident">R</span>: <span class="ident">io</span>::<span class="ident">Read</span>, <span class="ident">D</span>: <span class="ident">DeserializeOwned</span><span class="op">&gt;</span> <span class="ident">Iterator</span>
+    <span class="kw">for</span> <span class="ident">DeserializeRecordsIter</span><span class="op">&lt;</span><span class="lifetime">&#39;r</span>, <span class="ident">R</span>, <span class="ident">D</span><span class="op">&gt;</span>
 {
     <span class="kw">type</span> <span class="ident">Item</span> <span class="op">=</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>;
 
@@ -4890,14 +4737,18 @@
 <span class="kw">mod</span> <span class="ident">tests</span> {
     <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>;
 
-    <span class="kw">use</span> <span class="ident">byte_record</span>::<span class="ident">ByteRecord</span>;
-    <span class="kw">use</span> <span class="ident">error</span>::<span class="ident">ErrorKind</span>;
-    <span class="kw">use</span> <span class="ident">string_record</span>::<span class="ident">StringRecord</span>;
+    <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">byte_record</span>::<span class="ident">ByteRecord</span>;
+    <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">error</span>::<span class="ident">ErrorKind</span>;
+    <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">string_record</span>::<span class="ident">StringRecord</span>;
 
-    <span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">ReaderBuilder</span>, <span class="ident">Position</span>, <span class="ident">Trim</span>};
+    <span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">Position</span>, <span class="ident">ReaderBuilder</span>, <span class="ident">Trim</span>};
 
-    <span class="kw">fn</span> <span class="ident">b</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] { <span class="ident">s</span>.<span class="ident">as_bytes</span>() }
-    <span class="kw">fn</span> <span class="ident">s</span>(<span class="ident">b</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> { ::<span class="ident">std</span>::<span class="ident">str</span>::<span class="ident">from_utf8</span>(<span class="ident">b</span>).<span class="ident">unwrap</span>() }
+    <span class="kw">fn</span> <span class="ident">b</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] {
+        <span class="ident">s</span>.<span class="ident">as_bytes</span>()
+    }
+    <span class="kw">fn</span> <span class="ident">s</span>(<span class="ident">b</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
+        ::<span class="ident">std</span>::<span class="ident">str</span>::<span class="ident">from_utf8</span>(<span class="ident">b</span>).<span class="ident">unwrap</span>()
+    }
 
     <span class="kw">fn</span> <span class="ident">newpos</span>(<span class="ident">byte</span>: <span class="ident">u64</span>, <span class="ident">line</span>: <span class="ident">u64</span>, <span class="ident">record</span>: <span class="ident">u64</span>) <span class="op">-&gt;</span> <span class="ident">Position</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">p</span> <span class="op">=</span> <span class="ident">Position</span>::<span class="ident">new</span>();
@@ -4908,9 +4759,8 @@
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">read_byte_record</span>() {
         <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="ident">b</span>(<span class="string">&quot;foo,\&quot;b,ar\&quot;,baz\nabc,mno,xyz&quot;</span>);
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rdr</span> <span class="op">=</span> <span class="ident">ReaderBuilder</span>::<span class="ident">new</span>()
-            .<span class="ident">has_headers</span>(<span class="bool-val">false</span>)
-            .<span class="ident">from_reader</span>(<span class="ident">data</span>);
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rdr</span> <span class="op">=</span>
+            <span class="ident">ReaderBuilder</span>::<span class="ident">new</span>().<span class="ident">has_headers</span>(<span class="bool-val">false</span>).<span class="ident">from_reader</span>(<span class="ident">data</span>);
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rec</span> <span class="op">=</span> <span class="ident">ByteRecord</span>::<span class="ident">new</span>();
 
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">rdr</span>.<span class="ident">read_byte_record</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">rec</span>).<span class="ident">unwrap</span>());
@@ -5028,9 +4878,8 @@
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">read_record_unequal_fails</span>() {
         <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="ident">b</span>(<span class="string">&quot;foo\nbar,baz&quot;</span>);
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rdr</span> <span class="op">=</span> <span class="ident">ReaderBuilder</span>::<span class="ident">new</span>()
-            .<span class="ident">has_headers</span>(<span class="bool-val">false</span>)
-            .<span class="ident">from_reader</span>(<span class="ident">data</span>);
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rdr</span> <span class="op">=</span>
+            <span class="ident">ReaderBuilder</span>::<span class="ident">new</span>().<span class="ident">has_headers</span>(<span class="bool-val">false</span>).<span class="ident">from_reader</span>(<span class="ident">data</span>);
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rec</span> <span class="op">=</span> <span class="ident">ByteRecord</span>::<span class="ident">new</span>();
 
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">rdr</span>.<span class="ident">read_byte_record</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">rec</span>).<span class="ident">unwrap</span>());
@@ -5038,18 +4887,16 @@
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="string">&quot;foo&quot;</span>, <span class="ident">s</span>(<span class="kw-2">&amp;</span><span class="ident">rec</span>[<span class="number">0</span>]));
 
         <span class="kw">match</span> <span class="ident">rdr</span>.<span class="ident">read_byte_record</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">rec</span>) {
-            <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=&gt;</span> {
-                <span class="kw">match</span> <span class="kw-2">*</span><span class="ident">err</span>.<span class="ident">kind</span>() {
-                    <span class="ident">ErrorKind</span>::<span class="ident">UnequalLengths</span> {
-                        <span class="ident">expected_len</span>: <span class="number">1</span>,
-                        <span class="kw-2">ref</span> <span class="ident">pos</span>,
-                        <span class="ident">len</span>: <span class="number">2</span>,
-                    } <span class="op">=&gt;</span> {
-                        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">pos</span>, <span class="kw-2">&amp;</span><span class="prelude-val">Some</span>(<span class="ident">newpos</span>(<span class="number">4</span>, <span class="number">2</span>, <span class="number">1</span>)));
-                    }
-                    <span class="kw-2">ref</span> <span class="ident">wrong</span> <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;match failed, got {:?}&quot;</span>, <span class="ident">wrong</span>),
+            <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=&gt;</span> <span class="kw">match</span> <span class="kw-2">*</span><span class="ident">err</span>.<span class="ident">kind</span>() {
+                <span class="ident">ErrorKind</span>::<span class="ident">UnequalLengths</span> {
+                    <span class="ident">expected_len</span>: <span class="number">1</span>,
+                    <span class="kw-2">ref</span> <span class="ident">pos</span>,
+                    <span class="ident">len</span>: <span class="number">2</span>,
+                } <span class="op">=&gt;</span> {
+                    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">pos</span>, <span class="kw-2">&amp;</span><span class="prelude-val">Some</span>(<span class="ident">newpos</span>(<span class="number">4</span>, <span class="number">2</span>, <span class="number">1</span>)));
                 }
-            }
+                <span class="kw-2">ref</span> <span class="ident">wrong</span> <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;match failed, got {:?}&quot;</span>, <span class="ident">wrong</span>),
+            },
             <span class="ident">wrong</span> <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;match failed, got {:?}&quot;</span>, <span class="ident">wrong</span>),
         }
     }
@@ -5080,9 +4927,8 @@
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">read_record_unequal_continue</span>() {
         <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="ident">b</span>(<span class="string">&quot;foo\nbar,baz\nquux&quot;</span>);
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rdr</span> <span class="op">=</span> <span class="ident">ReaderBuilder</span>::<span class="ident">new</span>()
-            .<span class="ident">has_headers</span>(<span class="bool-val">false</span>)
-            .<span class="ident">from_reader</span>(<span class="ident">data</span>);
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rdr</span> <span class="op">=</span>
+            <span class="ident">ReaderBuilder</span>::<span class="ident">new</span>().<span class="ident">has_headers</span>(<span class="bool-val">false</span>).<span class="ident">from_reader</span>(<span class="ident">data</span>);
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rec</span> <span class="op">=</span> <span class="ident">ByteRecord</span>::<span class="ident">new</span>();
 
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">rdr</span>.<span class="ident">read_byte_record</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">rec</span>).<span class="ident">unwrap</span>());
@@ -5090,18 +4936,16 @@
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="string">&quot;foo&quot;</span>, <span class="ident">s</span>(<span class="kw-2">&amp;</span><span class="ident">rec</span>[<span class="number">0</span>]));
 
         <span class="kw">match</span> <span class="ident">rdr</span>.<span class="ident">read_byte_record</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">rec</span>) {
-            <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=&gt;</span> {
-                <span class="kw">match</span> <span class="ident">err</span>.<span class="ident">kind</span>() {
-                    <span class="kw-2">&amp;</span><span class="ident">ErrorKind</span>::<span class="ident">UnequalLengths</span> {
-                        <span class="ident">expected_len</span>: <span class="number">1</span>,
-                        <span class="kw-2">ref</span> <span class="ident">pos</span>,
-                        <span class="ident">len</span>: <span class="number">2</span>,
-                    } <span class="op">=&gt;</span> {
-                        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">pos</span>, <span class="kw-2">&amp;</span><span class="prelude-val">Some</span>(<span class="ident">newpos</span>(<span class="number">4</span>, <span class="number">2</span>, <span class="number">1</span>)));
-                    }
-                    <span class="ident">wrong</span> <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;match failed, got {:?}&quot;</span>, <span class="ident">wrong</span>),
+            <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=&gt;</span> <span class="kw">match</span> <span class="ident">err</span>.<span class="ident">kind</span>() {
+                <span class="kw-2">&amp;</span><span class="ident">ErrorKind</span>::<span class="ident">UnequalLengths</span> {
+                    <span class="ident">expected_len</span>: <span class="number">1</span>,
+                    <span class="kw-2">ref</span> <span class="ident">pos</span>,
+                    <span class="ident">len</span>: <span class="number">2</span>,
+                } <span class="op">=&gt;</span> {
+                    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">pos</span>, <span class="kw-2">&amp;</span><span class="prelude-val">Some</span>(<span class="ident">newpos</span>(<span class="number">4</span>, <span class="number">2</span>, <span class="number">1</span>)));
                 }
-            }
+                <span class="ident">wrong</span> <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;match failed, got {:?}&quot;</span>, <span class="ident">wrong</span>),
+            },
             <span class="ident">wrong</span> <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;match failed, got {:?}&quot;</span>, <span class="ident">wrong</span>),
         }
 
@@ -5182,9 +5026,8 @@
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">read_record_no_headers_before</span>() {
         <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="ident">b</span>(<span class="string">&quot;foo,bar,baz\na,b,c\nd,e,f&quot;</span>);
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rdr</span> <span class="op">=</span> <span class="ident">ReaderBuilder</span>::<span class="ident">new</span>()
-            .<span class="ident">has_headers</span>(<span class="bool-val">false</span>)
-            .<span class="ident">from_reader</span>(<span class="ident">data</span>);
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rdr</span> <span class="op">=</span>
+            <span class="ident">ReaderBuilder</span>::<span class="ident">new</span>().<span class="ident">has_headers</span>(<span class="bool-val">false</span>).<span class="ident">from_reader</span>(<span class="ident">data</span>);
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rec</span> <span class="op">=</span> <span class="ident">StringRecord</span>::<span class="ident">new</span>();
 
         {
@@ -5213,9 +5056,8 @@
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">read_record_no_headers_after</span>() {
         <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="ident">b</span>(<span class="string">&quot;foo,bar,baz\na,b,c\nd,e,f&quot;</span>);
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rdr</span> <span class="op">=</span> <span class="ident">ReaderBuilder</span>::<span class="ident">new</span>()
-            .<span class="ident">has_headers</span>(<span class="bool-val">false</span>)
-            .<span class="ident">from_reader</span>(<span class="ident">data</span>);
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rdr</span> <span class="op">=</span>
+            <span class="ident">ReaderBuilder</span>::<span class="ident">new</span>().<span class="ident">has_headers</span>(<span class="bool-val">false</span>).<span class="ident">from_reader</span>(<span class="ident">data</span>);
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rec</span> <span class="op">=</span> <span class="ident">StringRecord</span>::<span class="ident">new</span>();
 
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">rdr</span>.<span class="ident">read_record</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">rec</span>).<span class="ident">unwrap</span>());
@@ -5242,8 +5084,7 @@
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">seek</span>() {
         <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="ident">b</span>(<span class="string">&quot;foo,bar,baz\na,b,c\nd,e,f\ng,h,i&quot;</span>);
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rdr</span> <span class="op">=</span> <span class="ident">ReaderBuilder</span>::<span class="ident">new</span>()
-            .<span class="ident">from_reader</span>(<span class="ident">io</span>::<span class="ident">Cursor</span>::<span class="ident">new</span>(<span class="ident">data</span>));
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rdr</span> <span class="op">=</span> <span class="ident">ReaderBuilder</span>::<span class="ident">new</span>().<span class="ident">from_reader</span>(<span class="ident">io</span>::<span class="ident">Cursor</span>::<span class="ident">new</span>(<span class="ident">data</span>));
         <span class="ident">rdr</span>.<span class="ident">seek</span>(<span class="ident">newpos</span>(<span class="number">18</span>, <span class="number">3</span>, <span class="number">2</span>)).<span class="ident">unwrap</span>();
 
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rec</span> <span class="op">=</span> <span class="ident">StringRecord</span>::<span class="ident">new</span>();
@@ -5268,8 +5109,7 @@
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">seek_headers_after</span>() {
         <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="ident">b</span>(<span class="string">&quot;foo,bar,baz\na,b,c\nd,e,f\ng,h,i&quot;</span>);
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rdr</span> <span class="op">=</span> <span class="ident">ReaderBuilder</span>::<span class="ident">new</span>()
-            .<span class="ident">from_reader</span>(<span class="ident">io</span>::<span class="ident">Cursor</span>::<span class="ident">new</span>(<span class="ident">data</span>));
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rdr</span> <span class="op">=</span> <span class="ident">ReaderBuilder</span>::<span class="ident">new</span>().<span class="ident">from_reader</span>(<span class="ident">io</span>::<span class="ident">Cursor</span>::<span class="ident">new</span>(<span class="ident">data</span>));
         <span class="ident">rdr</span>.<span class="ident">seek</span>(<span class="ident">newpos</span>(<span class="number">18</span>, <span class="number">3</span>, <span class="number">2</span>)).<span class="ident">unwrap</span>();
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">rdr</span>.<span class="ident">headers</span>().<span class="ident">unwrap</span>(), <span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;foo&quot;</span>, <span class="string">&quot;bar&quot;</span>, <span class="string">&quot;baz&quot;</span>]);
     }
@@ -5279,8 +5119,7 @@
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">seek_headers_before_after</span>() {
         <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="ident">b</span>(<span class="string">&quot;foo,bar,baz\na,b,c\nd,e,f\ng,h,i&quot;</span>);
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rdr</span> <span class="op">=</span> <span class="ident">ReaderBuilder</span>::<span class="ident">new</span>()
-            .<span class="ident">from_reader</span>(<span class="ident">io</span>::<span class="ident">Cursor</span>::<span class="ident">new</span>(<span class="ident">data</span>));
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rdr</span> <span class="op">=</span> <span class="ident">ReaderBuilder</span>::<span class="ident">new</span>().<span class="ident">from_reader</span>(<span class="ident">io</span>::<span class="ident">Cursor</span>::<span class="ident">new</span>(<span class="ident">data</span>));
         <span class="kw">let</span> <span class="ident">headers</span> <span class="op">=</span> <span class="ident">rdr</span>.<span class="ident">headers</span>().<span class="ident">unwrap</span>().<span class="ident">clone</span>();
         <span class="ident">rdr</span>.<span class="ident">seek</span>(<span class="ident">newpos</span>(<span class="number">18</span>, <span class="number">3</span>, <span class="number">2</span>)).<span class="ident">unwrap</span>();
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="ident">headers</span>, <span class="ident">rdr</span>.<span class="ident">headers</span>().<span class="ident">unwrap</span>());
@@ -5292,8 +5131,7 @@
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">seek_headers_no_actual_seek</span>() {
         <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="ident">b</span>(<span class="string">&quot;foo,bar,baz\na,b,c\nd,e,f\ng,h,i&quot;</span>);
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rdr</span> <span class="op">=</span> <span class="ident">ReaderBuilder</span>::<span class="ident">new</span>()
-            .<span class="ident">from_reader</span>(<span class="ident">io</span>::<span class="ident">Cursor</span>::<span class="ident">new</span>(<span class="ident">data</span>));
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rdr</span> <span class="op">=</span> <span class="ident">ReaderBuilder</span>::<span class="ident">new</span>().<span class="ident">from_reader</span>(<span class="ident">io</span>::<span class="ident">Cursor</span>::<span class="ident">new</span>(<span class="ident">data</span>));
         <span class="ident">rdr</span>.<span class="ident">seek</span>(<span class="ident">Position</span>::<span class="ident">new</span>()).<span class="ident">unwrap</span>();
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="string">&quot;foo&quot;</span>, <span class="kw-2">&amp;</span><span class="ident">rdr</span>.<span class="ident">headers</span>().<span class="ident">unwrap</span>()[<span class="number">0</span>]);
     }
@@ -5342,9 +5180,8 @@
     <span class="comment">// Test that reading the first record on empty data works.</span>
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">no_headers_on_empty_data</span>() {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rdr</span> <span class="op">=</span> <span class="ident">ReaderBuilder</span>::<span class="ident">new</span>()
-            .<span class="ident">has_headers</span>(<span class="bool-val">false</span>)
-            .<span class="ident">from_reader</span>(<span class="string">&quot;&quot;</span>.<span class="ident">as_bytes</span>());
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rdr</span> <span class="op">=</span>
+            <span class="ident">ReaderBuilder</span>::<span class="ident">new</span>().<span class="ident">has_headers</span>(<span class="bool-val">false</span>).<span class="ident">from_reader</span>(<span class="string">&quot;&quot;</span>.<span class="ident">as_bytes</span>());
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">rdr</span>.<span class="ident">records</span>().<span class="ident">count</span>(), <span class="number">0</span>);
     }
 
@@ -5352,9 +5189,8 @@
     <span class="comment">// we&#39;ve tried to read headers before hand.</span>
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">no_headers_on_empty_data_after_headers</span>() {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rdr</span> <span class="op">=</span> <span class="ident">ReaderBuilder</span>::<span class="ident">new</span>()
-            .<span class="ident">has_headers</span>(<span class="bool-val">false</span>)
-            .<span class="ident">from_reader</span>(<span class="string">&quot;&quot;</span>.<span class="ident">as_bytes</span>());
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rdr</span> <span class="op">=</span>
+            <span class="ident">ReaderBuilder</span>::<span class="ident">new</span>().<span class="ident">has_headers</span>(<span class="bool-val">false</span>).<span class="ident">from_reader</span>(<span class="string">&quot;&quot;</span>.<span class="ident">as_bytes</span>());
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">rdr</span>.<span class="ident">headers</span>().<span class="ident">unwrap</span>().<span class="ident">len</span>(), <span class="number">0</span>);
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">rdr</span>.<span class="ident">records</span>().<span class="ident">count</span>(), <span class="number">0</span>);
     }

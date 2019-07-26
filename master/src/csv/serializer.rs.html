@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/csv-1.0.7/src/serializer.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>serializer.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../csv/index.html'><img src='../../rust-logo.png' alt='logo' width='100'></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/csv-1.1.1/src/serializer.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>serializer.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../csv/index.html'><div class='logo-container'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
 <span id="2">   2</span>
 <span id="3">   3</span>
 <span id="4">   4</span>
@@ -1311,6 +1311,34 @@
 <span id="1311">1311</span>
 <span id="1312">1312</span>
 <span id="1313">1313</span>
+<span id="1314">1314</span>
+<span id="1315">1315</span>
+<span id="1316">1316</span>
+<span id="1317">1317</span>
+<span id="1318">1318</span>
+<span id="1319">1319</span>
+<span id="1320">1320</span>
+<span id="1321">1321</span>
+<span id="1322">1322</span>
+<span id="1323">1323</span>
+<span id="1324">1324</span>
+<span id="1325">1325</span>
+<span id="1326">1326</span>
+<span id="1327">1327</span>
+<span id="1328">1328</span>
+<span id="1329">1329</span>
+<span id="1330">1330</span>
+<span id="1331">1331</span>
+<span id="1332">1332</span>
+<span id="1333">1333</span>
+<span id="1334">1334</span>
+<span id="1335">1335</span>
+<span id="1336">1336</span>
+<span id="1337">1337</span>
+<span id="1338">1338</span>
+<span id="1339">1339</span>
+<span id="1340">1340</span>
+<span id="1341">1341</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>;
@@ -1319,15 +1347,14 @@
 <span class="kw">use</span> <span class="ident">itoa</span>;
 <span class="kw">use</span> <span class="ident">ryu</span>;
 <span class="kw">use</span> <span class="ident">serde</span>::<span class="ident">ser</span>::{
-    <span class="ident">Error</span> <span class="kw">as</span> <span class="ident">SerdeError</span>,
-    <span class="ident">Serialize</span>, <span class="ident">Serializer</span>,
-    <span class="ident">SerializeSeq</span>, <span class="ident">SerializeTuple</span>, <span class="ident">SerializeTupleStruct</span>,
-    <span class="ident">SerializeTupleVariant</span>, <span class="ident">SerializeMap</span>, <span class="ident">SerializeStruct</span>,
-    <span class="ident">SerializeStructVariant</span>,
+    <span class="ident">Error</span> <span class="kw">as</span> <span class="ident">SerdeError</span>, <span class="ident">Serialize</span>, <span class="ident">SerializeMap</span>, <span class="ident">SerializeSeq</span>,
+    <span class="ident">SerializeStruct</span>, <span class="ident">SerializeStructVariant</span>, <span class="ident">SerializeTuple</span>,
+    <span class="ident">SerializeTupleStruct</span>, <span class="ident">SerializeTupleVariant</span>, <span class="ident">Serializer</span>,
 };
+<span class="kw">use</span> <span class="ident">serde</span>::<span class="ident">serde_if_integer128</span>;
 
-<span class="kw">use</span> <span class="ident">error</span>::{<span class="ident">Error</span>, <span class="ident">ErrorKind</span>, <span class="ident">new_error</span>};
-<span class="kw">use</span> <span class="ident">writer</span>::<span class="ident">Writer</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">error</span>::{<span class="ident">Error</span>, <span class="ident">ErrorKind</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">writer</span>::<span class="ident">Writer</span>;
 
 <span class="doccomment">/// Serialize the given value to the given writer, and return an error if</span>
 <span class="doccomment">/// anything went wrong.</span>
@@ -1381,6 +1408,12 @@
         <span class="self">self</span>.<span class="ident">wtr</span>.<span class="ident">write_field</span>(<span class="ident">buffer</span>.<span class="ident">format</span>(<span class="ident">v</span>))
     }
 
+    <span class="macro">serde_if_integer128</span><span class="macro">!</span> {
+        <span class="kw">fn</span> <span class="ident">serialize_i128</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="ident">i128</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="prelude-val">Ok</span>, <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span> {
+            <span class="self">self</span>.<span class="ident">collect_str</span>(<span class="kw-2">&amp;</span><span class="ident">v</span>)
+        }
+    }
+
     <span class="kw">fn</span> <span class="ident">serialize_u8</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="ident">u8</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="prelude-val">Ok</span>, <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buffer</span> <span class="op">=</span> <span class="ident">itoa</span>::<span class="ident">Buffer</span>::<span class="ident">new</span>();
         <span class="self">self</span>.<span class="ident">wtr</span>.<span class="ident">write_field</span>(<span class="ident">buffer</span>.<span class="ident">format</span>(<span class="ident">v</span>))
@@ -1399,6 +1432,12 @@
     <span class="kw">fn</span> <span class="ident">serialize_u64</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="ident">u64</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="prelude-val">Ok</span>, <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buffer</span> <span class="op">=</span> <span class="ident">itoa</span>::<span class="ident">Buffer</span>::<span class="ident">new</span>();
         <span class="self">self</span>.<span class="ident">wtr</span>.<span class="ident">write_field</span>(<span class="ident">buffer</span>.<span class="ident">format</span>(<span class="ident">v</span>))
+    }
+
+    <span class="macro">serde_if_integer128</span><span class="macro">!</span> {
+        <span class="kw">fn</span> <span class="ident">serialize_u128</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="ident">u128</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="prelude-val">Ok</span>, <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span> {
+            <span class="self">self</span>.<span class="ident">collect_str</span>(<span class="kw-2">&amp;</span><span class="ident">v</span>)
+        }
     }
 
     <span class="kw">fn</span> <span class="ident">serialize_f32</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="ident">f32</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="prelude-val">Ok</span>, <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span> {
@@ -1512,7 +1551,8 @@
         <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">custom</span>(
             <span class="string">&quot;serializing maps is not supported, \
              if you have a use case, please file an issue at \
-             https://github.com/BurntSushi/rust-csv&quot;</span>))
+             https://github.com/BurntSushi/rust-csv&quot;</span>,
+        ))
     }
 
     <span class="kw">fn</span> <span class="ident">serialize_struct</span>(
@@ -1657,7 +1697,7 @@
 
 <span class="kw">impl</span> <span class="ident">SerdeError</span> <span class="kw">for</span> <span class="ident">Error</span> {
     <span class="kw">fn</span> <span class="ident">custom</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">fmt</span>::<span class="ident">Display</span><span class="op">&gt;</span>(<span class="ident">msg</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="ident">Error</span> {
-        <span class="ident">new_error</span>(<span class="ident">ErrorKind</span>::<span class="ident">Serialize</span>(<span class="ident">msg</span>.<span class="ident">to_string</span>()))
+        <span class="ident">Error</span>::<span class="ident">new</span>(<span class="ident">ErrorKind</span>::<span class="ident">Serialize</span>(<span class="ident">msg</span>.<span class="ident">to_string</span>()))
     }
 }
 
@@ -1754,10 +1794,7 @@
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;w</span>, <span class="ident">W</span>: <span class="ident">io</span>::<span class="ident">Write</span><span class="op">&gt;</span> <span class="ident">SeHeader</span><span class="op">&lt;</span><span class="lifetime">&#39;w</span>, <span class="ident">W</span><span class="op">&gt;</span> {
     <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">wtr</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;w</span> <span class="kw-2">mut</span> <span class="ident">Writer</span><span class="op">&lt;</span><span class="ident">W</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
-        <span class="ident">SeHeader</span> {
-            <span class="ident">wtr</span>: <span class="ident">wtr</span>,
-            <span class="ident">state</span>: <span class="ident">HeaderState</span>::<span class="ident">Write</span>,
-        }
+        <span class="ident">SeHeader</span> { <span class="ident">wtr</span>: <span class="ident">wtr</span>, <span class="ident">state</span>: <span class="ident">HeaderState</span>::<span class="ident">Write</span> }
     }
 
     <span class="kw">fn</span> <span class="ident">wrote_header</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
@@ -1827,6 +1864,12 @@
         <span class="self">self</span>.<span class="ident">handle_scalar</span>(<span class="ident">v</span>)
     }
 
+    <span class="macro">serde_if_integer128</span><span class="macro">!</span> {
+        <span class="kw">fn</span> <span class="ident">serialize_i128</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="ident">i128</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="prelude-val">Ok</span>, <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span> {
+            <span class="self">self</span>.<span class="ident">handle_scalar</span>(<span class="ident">v</span>)
+        }
+    }
+
     <span class="kw">fn</span> <span class="ident">serialize_u8</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="ident">u8</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="prelude-val">Ok</span>, <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">handle_scalar</span>(<span class="ident">v</span>)
     }
@@ -1841,6 +1884,12 @@
 
     <span class="kw">fn</span> <span class="ident">serialize_u64</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="ident">u64</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="prelude-val">Ok</span>, <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">handle_scalar</span>(<span class="ident">v</span>)
+    }
+
+    <span class="macro">serde_if_integer128</span><span class="macro">!</span> {
+        <span class="kw">fn</span> <span class="ident">serialize_u128</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="ident">u128</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="prelude-val">Ok</span>, <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span> {
+            <span class="self">self</span>.<span class="ident">handle_scalar</span>(<span class="ident">v</span>)
+        }
     }
 
     <span class="kw">fn</span> <span class="ident">serialize_f32</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="ident">f32</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="prelude-val">Ok</span>, <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span> {
@@ -1941,9 +1990,7 @@
         <span class="ident">_variant</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>,
         <span class="ident">_len</span>: <span class="ident">usize</span>,
     ) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">SerializeTupleVariant</span>, <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">custom</span>(
-            <span class="string">&quot;serializing enum tuple variants is not supported&quot;</span>,
-        ))
+        <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">custom</span>(<span class="string">&quot;serializing enum tuple variants is not supported&quot;</span>))
     }
 
     <span class="kw">fn</span> <span class="ident">serialize_map</span>(
@@ -1973,9 +2020,7 @@
         <span class="ident">_variant</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>,
         <span class="ident">_len</span>: <span class="ident">usize</span>,
     ) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">SerializeStructVariant</span>, <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">custom</span>(
-            <span class="string">&quot;serializing enum struct variants is not supported&quot;</span>,
-        ))
+        <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">custom</span>(<span class="string">&quot;serializing enum struct variants is not supported&quot;</span>))
     }
 }
 
@@ -2076,10 +2121,8 @@
         <span class="ident">value</span>: <span class="kw-2">&amp;</span><span class="ident">T</span>,
     ) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="comment">// Grab old state and update state to `EncounteredStructField`.</span>
-        <span class="kw">let</span> <span class="ident">old_state</span> <span class="op">=</span> <span class="ident">mem</span>::<span class="ident">replace</span>(
-            <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">state</span>,
-            <span class="ident">HeaderState</span>::<span class="ident">EncounteredStructField</span>,
-        );
+        <span class="kw">let</span> <span class="ident">old_state</span> <span class="op">=</span>
+            <span class="ident">mem</span>::<span class="ident">replace</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">state</span>, <span class="ident">HeaderState</span>::<span class="ident">EncounteredStructField</span>);
         <span class="kw">if</span> <span class="kw">let</span> <span class="ident">HeaderState</span>::<span class="ident">ErrorIfWrite</span>(<span class="ident">err</span>) <span class="op">=</span> <span class="ident">old_state</span> {
             <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">err</span>);
         }
@@ -2117,11 +2160,11 @@
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">mod</span> <span class="ident">tests</span> {
-    <span class="kw">use</span> <span class="ident">serde</span>::<span class="ident">Serialize</span>;
-    <span class="kw">use</span> <span class="ident">serde_bytes</span>::<span class="ident">Bytes</span>;
+    <span class="kw">use</span> <span class="ident">bstr</span>::<span class="ident">ByteSlice</span>;
+    <span class="kw">use</span> <span class="ident">serde</span>::{<span class="ident">serde_if_integer128</span>, <span class="ident">Serialize</span>};
 
-    <span class="kw">use</span> <span class="ident">error</span>::{<span class="ident">Error</span>, <span class="ident">ErrorKind</span>};
-    <span class="kw">use</span> <span class="ident">writer</span>::<span class="ident">Writer</span>;
+    <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">error</span>::{<span class="ident">Error</span>, <span class="ident">ErrorKind</span>};
+    <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">writer</span>::<span class="ident">Writer</span>;
 
     <span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">SeHeader</span>, <span class="ident">SeRecord</span>};
 
@@ -2172,11 +2215,40 @@
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">got</span>, <span class="string">&quot;&quot;</span>);
     }
 
+    <span class="macro">serde_if_integer128</span><span class="macro">!</span> {
+        <span class="attribute">#[<span class="ident">test</span>]</span>
+        <span class="kw">fn</span> <span class="ident">integer_u128</span>() {
+            <span class="kw">let</span> <span class="ident">got</span> <span class="op">=</span> <span class="ident">serialize</span>(<span class="ident">i128</span>::<span class="ident">max_value</span>() <span class="kw">as</span> <span class="ident">u128</span> <span class="op">+</span> <span class="number">1</span>);
+            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">got</span>, <span class="string">&quot;170141183460469231731687303715884105728\n&quot;</span>);
+            <span class="kw">let</span> (<span class="ident">wrote</span>, <span class="ident">got</span>) <span class="op">=</span> <span class="ident">serialize_header</span>(<span class="number">12345</span>);
+            <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">wrote</span>);
+            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">got</span>, <span class="string">&quot;&quot;</span>);
+        }
+
+        <span class="attribute">#[<span class="ident">test</span>]</span>
+        <span class="kw">fn</span> <span class="ident">integer_i128</span>() {
+            <span class="kw">let</span> <span class="ident">got</span> <span class="op">=</span> <span class="ident">serialize</span>(<span class="ident">i128</span>::<span class="ident">max_value</span>());
+            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">got</span>, <span class="string">&quot;170141183460469231731687303715884105727\n&quot;</span>);
+            <span class="kw">let</span> (<span class="ident">wrote</span>, <span class="ident">got</span>) <span class="op">=</span> <span class="ident">serialize_header</span>(<span class="number">12345</span>);
+            <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">wrote</span>);
+            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">got</span>, <span class="string">&quot;&quot;</span>);
+        }
+    }
+
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">float</span>() {
         <span class="kw">let</span> <span class="ident">got</span> <span class="op">=</span> <span class="ident">serialize</span>(<span class="number">1.23</span>);
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">got</span>, <span class="string">&quot;1.23\n&quot;</span>);
         <span class="kw">let</span> (<span class="ident">wrote</span>, <span class="ident">got</span>) <span class="op">=</span> <span class="ident">serialize_header</span>(<span class="number">1.23</span>);
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">wrote</span>);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">got</span>, <span class="string">&quot;&quot;</span>);
+    }
+
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">float_nan</span>() {
+        <span class="kw">let</span> <span class="ident">got</span> <span class="op">=</span> <span class="ident">serialize</span>(::<span class="ident">std</span>::<span class="ident">f64</span>::<span class="ident">NAN</span>);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">got</span>, <span class="string">&quot;NaN\n&quot;</span>);
+        <span class="kw">let</span> (<span class="ident">wrote</span>, <span class="ident">got</span>) <span class="op">=</span> <span class="ident">serialize_header</span>(::<span class="ident">std</span>::<span class="ident">f64</span>::<span class="ident">NAN</span>);
         <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">wrote</span>);
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">got</span>, <span class="string">&quot;&quot;</span>);
     }
@@ -2201,7 +2273,7 @@
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">bytes</span>() {
-        <span class="kw">let</span> <span class="ident">got</span> <span class="op">=</span> <span class="ident">serialize</span>(<span class="ident">Bytes</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="string">b&quot;how\nare\n\&quot;you\&quot;?&quot;</span>[..]));
+        <span class="kw">let</span> <span class="ident">got</span> <span class="op">=</span> <span class="ident">serialize</span>(<span class="string">b&quot;how\nare\n\&quot;you\&quot;?&quot;</span>.<span class="ident">as_bstr</span>());
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">got</span>, <span class="string">&quot;\&quot;how\nare\n\&quot;\&quot;you\&quot;\&quot;?\&quot;\n&quot;</span>);
         <span class="kw">let</span> (<span class="ident">wrote</span>, <span class="ident">got</span>) <span class="op">=</span> <span class="ident">serialize_header</span>(<span class="kw-2">&amp;</span><span class="string">b&quot;how\nare\n\&quot;you\&quot;?&quot;</span>[..]);
         <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">wrote</span>);
@@ -2265,7 +2337,11 @@
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">enum_units</span>() {
         <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize</span>)]</span>
-        <span class="kw">enum</span> <span class="ident">Wat</span> { <span class="ident">Foo</span>, <span class="ident">Bar</span>, <span class="ident">Baz</span> }
+        <span class="kw">enum</span> <span class="ident">Wat</span> {
+            <span class="ident">Foo</span>,
+            <span class="ident">Bar</span>,
+            <span class="ident">Baz</span>,
+        }
 
         <span class="kw">let</span> <span class="ident">got</span> <span class="op">=</span> <span class="ident">serialize</span>(<span class="ident">Wat</span>::<span class="ident">Foo</span>);
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">got</span>, <span class="string">&quot;Foo\n&quot;</span>);
@@ -2289,7 +2365,11 @@
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">enum_newtypes</span>() {
         <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize</span>)]</span>
-        <span class="kw">enum</span> <span class="ident">Wat</span> { <span class="ident">Foo</span>(<span class="ident">i32</span>), <span class="ident">Bar</span>(<span class="ident">f32</span>), <span class="ident">Baz</span>(<span class="ident">bool</span>) }
+        <span class="kw">enum</span> <span class="ident">Wat</span> {
+            <span class="ident">Foo</span>(<span class="ident">i32</span>),
+            <span class="ident">Bar</span>(<span class="ident">f32</span>),
+            <span class="ident">Baz</span>(<span class="ident">bool</span>),
+        }
 
         <span class="kw">let</span> <span class="ident">got</span> <span class="op">=</span> <span class="ident">serialize</span>(<span class="ident">Wat</span>::<span class="ident">Foo</span>(<span class="number">5</span>));
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">got</span>, <span class="string">&quot;5\n&quot;</span>);
@@ -2402,6 +2482,25 @@
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">got</span>, <span class="string">&quot;true,5,hi\n&quot;</span>);
     }
 
+    <span class="macro">serde_if_integer128</span><span class="macro">!</span> {
+        <span class="attribute">#[<span class="ident">test</span>]</span>
+        <span class="kw">fn</span> <span class="ident">struct_no_headers_128</span>() {
+            <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize</span>)]</span>
+            <span class="kw">struct</span> <span class="ident">Foo</span> {
+                <span class="ident">x</span>: <span class="ident">i128</span>,
+                <span class="ident">y</span>: <span class="ident">u128</span>,
+            }
+
+            <span class="kw">let</span> <span class="ident">got</span> <span class="op">=</span>
+                <span class="ident">serialize</span>(<span class="ident">Foo</span> { <span class="ident">x</span>: <span class="ident">i128</span>::<span class="ident">max_value</span>(), <span class="ident">y</span>: <span class="ident">u128</span>::<span class="ident">max_value</span>() });
+            <span class="macro">assert_eq</span><span class="macro">!</span>(
+                <span class="ident">got</span>,
+                <span class="string">&quot;170141183460469231731687303715884105727,\
+                 340282366920938463463374607431768211455\n&quot;</span>
+            );
+        }
+    }
+
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">struct_headers</span>() {
         <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Serialize</span>)]</span>
@@ -2434,10 +2533,7 @@
 
         <span class="kw">let</span> <span class="ident">row</span> <span class="op">=</span> <span class="ident">Foo</span> {
             <span class="ident">label</span>: <span class="string">&quot;foo&quot;</span>.<span class="ident">into</span>(),
-            <span class="ident">nest</span>: <span class="ident">Nested</span> {
-                <span class="ident">label2</span>: <span class="string">&quot;bar&quot;</span>.<span class="ident">into</span>(),
-                <span class="ident">value</span>: <span class="number">5</span>,
-            },
+            <span class="ident">nest</span>: <span class="ident">Nested</span> { <span class="ident">label2</span>: <span class="string">&quot;bar&quot;</span>.<span class="ident">into</span>(), <span class="ident">value</span>: <span class="number">5</span> },
         };
 
         <span class="kw">let</span> <span class="ident">got</span> <span class="op">=</span> <span class="ident">serialize</span>(<span class="ident">row</span>.<span class="ident">clone</span>());
@@ -2483,19 +2579,9 @@
             <span class="ident">empty</span>: (),
         }
         <span class="kw">let</span> <span class="ident">row</span> <span class="op">=</span> (
-            <span class="ident">Foo</span> {
-                <span class="ident">label</span>: <span class="string">&quot;hi&quot;</span>.<span class="ident">to_string</span>(),
-                <span class="ident">num</span>: <span class="number">5.0</span>,
-            },
-            <span class="ident">Bar</span> {
-                <span class="ident">label2</span>: <span class="bool-val">true</span>,
-                <span class="ident">value</span>: <span class="number">3</span>,
-                <span class="ident">empty</span>: (),
-            },
-            <span class="ident">Foo</span> {
-                <span class="ident">label</span>: <span class="string">&quot;baz&quot;</span>.<span class="ident">to_string</span>(),
-                <span class="ident">num</span>: <span class="number">2.3</span>,
-            },
+            <span class="ident">Foo</span> { <span class="ident">label</span>: <span class="string">&quot;hi&quot;</span>.<span class="ident">to_string</span>(), <span class="ident">num</span>: <span class="number">5.0</span> },
+            <span class="ident">Bar</span> { <span class="ident">label2</span>: <span class="bool-val">true</span>, <span class="ident">value</span>: <span class="number">3</span>, <span class="ident">empty</span>: () },
+            <span class="ident">Foo</span> { <span class="ident">label</span>: <span class="string">&quot;baz&quot;</span>.<span class="ident">to_string</span>(), <span class="ident">num</span>: <span class="number">2.3</span> },
         );
 
         <span class="kw">let</span> <span class="ident">got</span> <span class="op">=</span> <span class="ident">serialize</span>(<span class="ident">row</span>.<span class="ident">clone</span>());
@@ -2513,13 +2599,7 @@
             <span class="ident">label</span>: <span class="ident">String</span>,
             <span class="ident">num</span>: <span class="ident">f64</span>,
         }
-        <span class="kw">let</span> <span class="ident">row</span> <span class="op">=</span> (
-            <span class="number">3.14</span>,
-            <span class="ident">Foo</span> {
-                <span class="ident">label</span>: <span class="string">&quot;hi&quot;</span>.<span class="ident">to_string</span>(),
-                <span class="ident">num</span>: <span class="number">5.0</span>,
-            },
-        );
+        <span class="kw">let</span> <span class="ident">row</span> <span class="op">=</span> (<span class="number">3.14</span>, <span class="ident">Foo</span> { <span class="ident">label</span>: <span class="string">&quot;hi&quot;</span>.<span class="ident">to_string</span>(), <span class="ident">num</span>: <span class="number">5.0</span> });
 
         <span class="kw">let</span> <span class="ident">got</span> <span class="op">=</span> <span class="ident">serialize</span>(<span class="ident">row</span>.<span class="ident">clone</span>());
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">got</span>, <span class="string">&quot;3.14,hi,5.0\n&quot;</span>);
@@ -2538,13 +2618,7 @@
             <span class="ident">label</span>: <span class="ident">String</span>,
             <span class="ident">num</span>: <span class="ident">f64</span>,
         }
-        <span class="kw">let</span> <span class="ident">row</span> <span class="op">=</span> (
-            <span class="ident">Foo</span> {
-                <span class="ident">label</span>: <span class="string">&quot;hi&quot;</span>.<span class="ident">to_string</span>(),
-                <span class="ident">num</span>: <span class="number">5.0</span>,
-            },
-            <span class="number">3.14</span>,
-        );
+        <span class="kw">let</span> <span class="ident">row</span> <span class="op">=</span> (<span class="ident">Foo</span> { <span class="ident">label</span>: <span class="string">&quot;hi&quot;</span>.<span class="ident">to_string</span>(), <span class="ident">num</span>: <span class="number">5.0</span> }, <span class="number">3.14</span>);
 
         <span class="kw">let</span> <span class="ident">got</span> <span class="op">=</span> <span class="ident">serialize</span>(<span class="ident">row</span>.<span class="ident">clone</span>());
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">got</span>, <span class="string">&quot;hi,5.0,3.14\n&quot;</span>);
@@ -2564,14 +2638,8 @@
             <span class="ident">num</span>: <span class="ident">f64</span>,
         }
         <span class="kw">let</span> <span class="ident">row</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[
-            <span class="ident">Foo</span> {
-                <span class="ident">label</span>: <span class="string">&quot;hi&quot;</span>.<span class="ident">to_string</span>(),
-                <span class="ident">num</span>: <span class="number">5.0</span>,
-            },
-            <span class="ident">Foo</span> {
-                <span class="ident">label</span>: <span class="string">&quot;baz&quot;</span>.<span class="ident">to_string</span>(),
-                <span class="ident">num</span>: <span class="number">2.3</span>,
-            },
+            <span class="ident">Foo</span> { <span class="ident">label</span>: <span class="string">&quot;hi&quot;</span>.<span class="ident">to_string</span>(), <span class="ident">num</span>: <span class="number">5.0</span> },
+            <span class="ident">Foo</span> { <span class="ident">label</span>: <span class="string">&quot;baz&quot;</span>.<span class="ident">to_string</span>(), <span class="ident">num</span>: <span class="number">2.3</span> },
         ];
 
         <span class="kw">let</span> <span class="ident">got</span> <span class="op">=</span> <span class="ident">serialize</span>(<span class="ident">row</span>.<span class="ident">clone</span>());
@@ -2599,22 +2667,10 @@
         <span class="kw">struct</span> <span class="ident">Baz</span>(<span class="ident">bool</span>);
         <span class="kw">let</span> <span class="ident">row</span> <span class="op">=</span> (
             (
-                <span class="ident">Foo</span> {
-                    <span class="ident">label</span>: <span class="string">&quot;hi&quot;</span>.<span class="ident">to_string</span>(),
-                    <span class="ident">num</span>: <span class="number">5.0</span>,
-                },
-                <span class="ident">Bar</span> {
-                    <span class="ident">label2</span>: <span class="ident">Baz</span>(<span class="bool-val">true</span>),
-                    <span class="ident">value</span>: <span class="number">3</span>,
-                    <span class="ident">empty</span>: (),
-                },
+                <span class="ident">Foo</span> { <span class="ident">label</span>: <span class="string">&quot;hi&quot;</span>.<span class="ident">to_string</span>(), <span class="ident">num</span>: <span class="number">5.0</span> },
+                <span class="ident">Bar</span> { <span class="ident">label2</span>: <span class="ident">Baz</span>(<span class="bool-val">true</span>), <span class="ident">value</span>: <span class="number">3</span>, <span class="ident">empty</span>: () },
             ),
-            <span class="macro">vec</span><span class="macro">!</span>[
-                (<span class="ident">Foo</span> {
-                    <span class="ident">label</span>: <span class="string">&quot;baz&quot;</span>.<span class="ident">to_string</span>(),
-                    <span class="ident">num</span>: <span class="number">2.3</span>,
-                },),
-            ],
+            <span class="macro">vec</span><span class="macro">!</span>[(<span class="ident">Foo</span> { <span class="ident">label</span>: <span class="string">&quot;baz&quot;</span>.<span class="ident">to_string</span>(), <span class="ident">num</span>: <span class="number">2.3</span> },)],
         );
 
         <span class="kw">let</span> <span class="ident">got</span> <span class="op">=</span> <span class="ident">serialize</span>(<span class="ident">row</span>.<span class="ident">clone</span>());

@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/csv-core-0.1.5/src/reader.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>reader.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../csv_core/index.html'><img src='../../rust-logo.png' alt='logo' width='100'></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/csv-core-0.1.6/src/reader.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>reader.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../csv_core/index.html'><div class='logo-container'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
 <span id="2">   2</span>
 <span id="3">   3</span>
 <span id="4">   4</span>
@@ -1899,10 +1899,114 @@
 <span id="1899">1899</span>
 <span id="1900">1900</span>
 <span id="1901">1901</span>
+<span id="1902">1902</span>
+<span id="1903">1903</span>
+<span id="1904">1904</span>
+<span id="1905">1905</span>
+<span id="1906">1906</span>
+<span id="1907">1907</span>
+<span id="1908">1908</span>
+<span id="1909">1909</span>
+<span id="1910">1910</span>
+<span id="1911">1911</span>
+<span id="1912">1912</span>
+<span id="1913">1913</span>
+<span id="1914">1914</span>
+<span id="1915">1915</span>
+<span id="1916">1916</span>
+<span id="1917">1917</span>
+<span id="1918">1918</span>
+<span id="1919">1919</span>
+<span id="1920">1920</span>
+<span id="1921">1921</span>
+<span id="1922">1922</span>
+<span id="1923">1923</span>
+<span id="1924">1924</span>
+<span id="1925">1925</span>
+<span id="1926">1926</span>
+<span id="1927">1927</span>
+<span id="1928">1928</span>
+<span id="1929">1929</span>
+<span id="1930">1930</span>
+<span id="1931">1931</span>
+<span id="1932">1932</span>
+<span id="1933">1933</span>
+<span id="1934">1934</span>
+<span id="1935">1935</span>
+<span id="1936">1936</span>
+<span id="1937">1937</span>
+<span id="1938">1938</span>
+<span id="1939">1939</span>
+<span id="1940">1940</span>
+<span id="1941">1941</span>
+<span id="1942">1942</span>
+<span id="1943">1943</span>
+<span id="1944">1944</span>
+<span id="1945">1945</span>
+<span id="1946">1946</span>
+<span id="1947">1947</span>
+<span id="1948">1948</span>
+<span id="1949">1949</span>
+<span id="1950">1950</span>
+<span id="1951">1951</span>
+<span id="1952">1952</span>
+<span id="1953">1953</span>
+<span id="1954">1954</span>
+<span id="1955">1955</span>
+<span id="1956">1956</span>
+<span id="1957">1957</span>
+<span id="1958">1958</span>
+<span id="1959">1959</span>
+<span id="1960">1960</span>
+<span id="1961">1961</span>
+<span id="1962">1962</span>
+<span id="1963">1963</span>
+<span id="1964">1964</span>
+<span id="1965">1965</span>
+<span id="1966">1966</span>
+<span id="1967">1967</span>
+<span id="1968">1968</span>
+<span id="1969">1969</span>
+<span id="1970">1970</span>
+<span id="1971">1971</span>
+<span id="1972">1972</span>
+<span id="1973">1973</span>
+<span id="1974">1974</span>
+<span id="1975">1975</span>
+<span id="1976">1976</span>
+<span id="1977">1977</span>
+<span id="1978">1978</span>
+<span id="1979">1979</span>
+<span id="1980">1980</span>
+<span id="1981">1981</span>
+<span id="1982">1982</span>
+<span id="1983">1983</span>
+<span id="1984">1984</span>
+<span id="1985">1985</span>
+<span id="1986">1986</span>
+<span id="1987">1987</span>
+<span id="1988">1988</span>
+<span id="1989">1989</span>
+<span id="1990">1990</span>
+<span id="1991">1991</span>
+<span id="1992">1992</span>
+<span id="1993">1993</span>
+<span id="1994">1994</span>
+<span id="1995">1995</span>
+<span id="1996">1996</span>
+<span id="1997">1997</span>
+<span id="1998">1998</span>
+<span id="1999">1999</span>
+<span id="2000">2000</span>
+<span id="2001">2001</span>
+<span id="2002">2002</span>
+<span id="2003">2003</span>
+<span id="2004">2004</span>
+<span id="2005">2005</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">fmt</span>;
 
-<span class="kw">use</span> <span class="ident">Terminator</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">Terminator</span>;
 
 <span class="comment">// BE ADVISED</span>
 <span class="comment">//</span>
@@ -2087,10 +2191,7 @@
     <span class="doccomment">/// A record terminator can be any single byte. The default is a special</span>
     <span class="doccomment">/// value, `Terminator::CRLF`, which treats any occurrence of `\r`, `\n`</span>
     <span class="doccomment">/// or `\r\n` as a single record terminator.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">terminator</span>(
-        <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
-        <span class="ident">term</span>: <span class="ident">Terminator</span>,
-    ) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ReaderBuilder</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">terminator</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">term</span>: <span class="ident">Terminator</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ReaderBuilder</span> {
         <span class="self">self</span>.<span class="ident">rdr</span>.<span class="ident">term</span> <span class="op">=</span> <span class="ident">term</span>;
         <span class="self">self</span>
     }
@@ -2372,9 +2473,7 @@
     <span class="doccomment">/// Returns true if this state indicates that a record has been parsed.</span>
     <span class="kw">fn</span> <span class="ident">is_record_final</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
         <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
-            <span class="ident">NfaState</span>::<span class="ident">End</span>
-            <span class="op">|</span> <span class="ident">NfaState</span>::<span class="ident">EndRecord</span>
-            <span class="op">|</span> <span class="ident">NfaState</span>::<span class="ident">CRLF</span> <span class="op">=&gt;</span> <span class="bool-val">true</span>,
+            <span class="ident">NfaState</span>::<span class="ident">End</span> <span class="op">|</span> <span class="ident">NfaState</span>::<span class="ident">EndRecord</span> <span class="op">|</span> <span class="ident">NfaState</span>::<span class="ident">CRLF</span> <span class="op">=&gt;</span> <span class="bool-val">true</span>,
             <span class="kw">_</span> <span class="op">=&gt;</span> <span class="bool-val">false</span>,
         }
     }
@@ -2518,9 +2617,9 @@
     <span class="doccomment">/// buffered. Hopefully that won&#39;t happen very often.</span>
     <span class="kw">fn</span> <span class="ident">strip_utf8_bom</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">input</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>]) <span class="op">-&gt;</span> (<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>], <span class="ident">usize</span>) {
         <span class="kw">let</span> (<span class="ident">input</span>, <span class="ident">nin</span>) <span class="op">=</span> <span class="kw">if</span> {
-            <span class="op">!</span><span class="self">self</span>.<span class="ident">has_read</span> <span class="op">&amp;&amp;</span>
-                <span class="ident">input</span>.<span class="ident">len</span>() <span class="op">&gt;=</span> <span class="number">3</span> <span class="op">&amp;&amp;</span>
-                <span class="kw-2">&amp;</span><span class="ident">input</span>[<span class="number">0</span>..<span class="number">3</span>] <span class="op">==</span> <span class="string">b&quot;\xef\xbb\xbf&quot;</span>
+            <span class="op">!</span><span class="self">self</span>.<span class="ident">has_read</span>
+                <span class="op">&amp;&amp;</span> <span class="ident">input</span>.<span class="ident">len</span>() <span class="op">&gt;=</span> <span class="number">3</span>
+                <span class="op">&amp;&amp;</span> <span class="kw-2">&amp;</span><span class="ident">input</span>[<span class="number">0</span>..<span class="number">3</span>] <span class="op">==</span> <span class="string">b&quot;\xef\xbb\xbf&quot;</span>
         } {
             (<span class="kw-2">&amp;</span><span class="ident">input</span>[<span class="number">3</span>..], <span class="number">3</span>)
         } <span class="kw">else</span> {
@@ -2538,8 +2637,8 @@
     ) <span class="op">-&gt;</span> (<span class="ident">ReadRecordResult</span>, <span class="ident">usize</span>, <span class="ident">usize</span>, <span class="ident">usize</span>) {
         <span class="kw">if</span> <span class="ident">input</span>.<span class="ident">is_empty</span>() {
             <span class="kw">let</span> <span class="ident">s</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">transition_final_dfa</span>(<span class="self">self</span>.<span class="ident">dfa_state</span>);
-            <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">dfa</span>.<span class="ident">new_read_record_result</span>(
-                <span class="ident">s</span>, <span class="bool-val">true</span>, <span class="bool-val">false</span>, <span class="bool-val">false</span>, <span class="bool-val">false</span>);
+            <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span>
+                <span class="self">self</span>.<span class="ident">dfa</span>.<span class="ident">new_read_record_result</span>(<span class="ident">s</span>, <span class="bool-val">true</span>, <span class="bool-val">false</span>, <span class="bool-val">false</span>, <span class="bool-val">false</span>);
             <span class="comment">// This part is a little tricky. When reading the final record,</span>
             <span class="comment">// the last result the caller will get is an InputEmpty, and while</span>
             <span class="comment">// they&#39;ll have everything they need in `output`, they&#39;ll be</span>
@@ -2588,15 +2687,18 @@
                 }
             }
             <span class="kw">if</span> <span class="ident">state</span> <span class="op">==</span> <span class="self">self</span>.<span class="ident">dfa</span>.<span class="ident">in_field</span> <span class="op">||</span> <span class="ident">state</span> <span class="op">==</span> <span class="self">self</span>.<span class="ident">dfa</span>.<span class="ident">in_quoted</span> {
-                <span class="self">self</span>.<span class="ident">dfa</span>.<span class="ident">classes</span>.<span class="ident">scan_and_copy</span>(
-                    <span class="ident">input</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">nin</span>, <span class="ident">output</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">nout</span>);
+                <span class="self">self</span>.<span class="ident">dfa</span>
+                    .<span class="ident">classes</span>
+                    .<span class="ident">scan_and_copy</span>(<span class="ident">input</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">nin</span>, <span class="ident">output</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">nout</span>);
             }
         }
         <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">dfa</span>.<span class="ident">new_read_record_result</span>(
-            <span class="ident">state</span>, <span class="bool-val">false</span>,
+            <span class="ident">state</span>,
+            <span class="bool-val">false</span>,
             <span class="ident">nin</span> <span class="op">&gt;=</span> <span class="ident">input</span>.<span class="ident">len</span>(),
             <span class="ident">nout</span> <span class="op">&gt;=</span> <span class="ident">output</span>.<span class="ident">len</span>(),
-            <span class="ident">nend</span> <span class="op">&gt;=</span> <span class="ident">ends</span>.<span class="ident">len</span>());
+            <span class="ident">nend</span> <span class="op">&gt;=</span> <span class="ident">ends</span>.<span class="ident">len</span>(),
+        );
         <span class="self">self</span>.<span class="ident">dfa_state</span> <span class="op">=</span> <span class="ident">state</span>;
         <span class="kw">if</span> <span class="ident">res</span>.<span class="ident">is_record</span>() {
             <span class="self">self</span>.<span class="ident">output_pos</span> <span class="op">=</span> <span class="number">0</span>;
@@ -2615,7 +2717,11 @@
         <span class="kw">if</span> <span class="ident">input</span>.<span class="ident">is_empty</span>() {
             <span class="self">self</span>.<span class="ident">dfa_state</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">transition_final_dfa</span>(<span class="self">self</span>.<span class="ident">dfa_state</span>);
             <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">dfa</span>.<span class="ident">new_read_field_result</span>(
-                <span class="self">self</span>.<span class="ident">dfa_state</span>, <span class="bool-val">true</span>, <span class="bool-val">false</span>, <span class="bool-val">false</span>);
+                <span class="self">self</span>.<span class="ident">dfa_state</span>,
+                <span class="bool-val">true</span>,
+                <span class="bool-val">false</span>,
+                <span class="bool-val">false</span>,
+            );
             <span class="kw">return</span> (<span class="ident">res</span>, <span class="number">0</span>, <span class="number">0</span>);
         }
         <span class="kw">if</span> <span class="ident">output</span>.<span class="ident">is_empty</span>() {
@@ -2638,7 +2744,11 @@
             }
         }
         <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">dfa</span>.<span class="ident">new_read_field_result</span>(
-            <span class="ident">state</span>, <span class="bool-val">false</span>, <span class="ident">nin</span> <span class="op">&gt;=</span> <span class="ident">input</span>.<span class="ident">len</span>(), <span class="ident">nout</span> <span class="op">&gt;=</span> <span class="ident">output</span>.<span class="ident">len</span>());
+            <span class="ident">state</span>,
+            <span class="bool-val">false</span>,
+            <span class="ident">nin</span> <span class="op">&gt;=</span> <span class="ident">input</span>.<span class="ident">len</span>(),
+            <span class="ident">nout</span> <span class="op">&gt;=</span> <span class="ident">output</span>.<span class="ident">len</span>(),
+        );
         <span class="self">self</span>.<span class="ident">dfa_state</span> <span class="op">=</span> <span class="ident">state</span>;
         (<span class="ident">res</span>, <span class="ident">nin</span>, <span class="ident">nout</span>)
     }
@@ -2722,8 +2832,7 @@
             <span class="kw">for</span> <span class="ident">c</span> <span class="kw">in</span> (<span class="number">0</span>..<span class="number">256</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">c</span><span class="op">|</span> <span class="ident">c</span> <span class="kw">as</span> <span class="ident">u8</span>) {
                 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">nfa_result</span> <span class="op">=</span> (<span class="ident">state</span>, <span class="ident">NfaInputAction</span>::<span class="ident">Epsilon</span>);
                 <span class="comment">// Consume NFA states until we hit a non-epsilon transition.</span>
-                <span class="kw">while</span>
-                    <span class="ident">nfa_result</span>.<span class="number">0</span> <span class="op">!=</span> <span class="ident">NfaState</span>::<span class="ident">End</span>
+                <span class="kw">while</span> <span class="ident">nfa_result</span>.<span class="number">0</span> <span class="op">!=</span> <span class="ident">NfaState</span>::<span class="ident">End</span>
                     <span class="op">&amp;&amp;</span> <span class="ident">nfa_result</span>.<span class="number">1</span> <span class="op">==</span> <span class="ident">NfaInputAction</span>::<span class="ident">Epsilon</span>
                 {
                     <span class="ident">nfa_result</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">transition_nfa</span>(<span class="ident">nfa_result</span>.<span class="number">0</span>, <span class="ident">c</span>);
@@ -2731,7 +2840,11 @@
                 <span class="kw">let</span> <span class="ident">from</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">dfa</span>.<span class="ident">new_state</span>(<span class="ident">state</span>);
                 <span class="kw">let</span> <span class="ident">to</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">dfa</span>.<span class="ident">new_state</span>(<span class="ident">nfa_result</span>.<span class="number">0</span>);
                 <span class="self">self</span>.<span class="ident">dfa</span>.<span class="ident">set</span>(
-                    <span class="ident">from</span>, <span class="ident">c</span>, <span class="ident">to</span>, <span class="ident">nfa_result</span>.<span class="number">1</span> <span class="op">==</span> <span class="ident">NfaInputAction</span>::<span class="ident">CopyToOutput</span>);
+                    <span class="ident">from</span>,
+                    <span class="ident">c</span>,
+                    <span class="ident">to</span>,
+                    <span class="ident">nfa_result</span>.<span class="number">1</span> <span class="op">==</span> <span class="ident">NfaInputAction</span>::<span class="ident">CopyToOutput</span>,
+                );
             }
         }
         <span class="self">self</span>.<span class="ident">dfa_state</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">dfa</span>.<span class="ident">new_state</span>(<span class="ident">NfaState</span>::<span class="ident">StartRecord</span>);
@@ -2784,10 +2897,10 @@
                     <span class="ident">output</span>[<span class="ident">nout</span>] <span class="op">=</span> <span class="ident">input</span>[<span class="ident">nin</span>];
                     <span class="ident">nout</span> <span class="op">+=</span> <span class="number">1</span>;
                     <span class="ident">nin</span> <span class="op">+=</span> <span class="number">1</span>;
-                },
+                }
                 <span class="ident">NfaInputAction</span>::<span class="ident">Discard</span> <span class="op">=&gt;</span> {
                     <span class="ident">nin</span> <span class="op">+=</span> <span class="number">1</span>;
-                },
+                }
                 <span class="ident">NfaInputAction</span>::<span class="ident">Epsilon</span> <span class="op">=&gt;</span> {}
             }
             <span class="ident">state</span> <span class="op">=</span> <span class="ident">s</span>;
@@ -2803,7 +2916,8 @@
             <span class="ident">state</span>,
             <span class="ident">nin</span> <span class="op">&gt;=</span> <span class="ident">input</span>.<span class="ident">len</span>(),
             <span class="ident">nout</span> <span class="op">&gt;=</span> <span class="ident">output</span>.<span class="ident">len</span>(),
-            <span class="ident">nend</span> <span class="op">&gt;=</span> <span class="ident">ends</span>.<span class="ident">len</span>());
+            <span class="ident">nend</span> <span class="op">&gt;=</span> <span class="ident">ends</span>.<span class="ident">len</span>(),
+        );
         <span class="self">self</span>.<span class="ident">nfa_state</span> <span class="op">=</span> <span class="ident">state</span>;
         <span class="self">self</span>.<span class="ident">output_pos</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">res</span>.<span class="ident">is_record</span>() { <span class="number">0</span> } <span class="kw">else</span> { <span class="ident">nout</span> };
         (<span class="ident">res</span>, <span class="ident">nin</span>, <span class="ident">nout</span>, <span class="ident">nend</span>)
@@ -2834,11 +2948,11 @@
                     <span class="ident">output</span>[<span class="ident">nout</span>] <span class="op">=</span> <span class="ident">input</span>[<span class="ident">nin</span>];
                     <span class="ident">nout</span> <span class="op">+=</span> <span class="number">1</span>;
                     <span class="ident">nin</span> <span class="op">+=</span> <span class="number">1</span>;
-                },
+                }
                 <span class="ident">NfaInputAction</span>::<span class="ident">Discard</span> <span class="op">=&gt;</span> {
                     <span class="ident">nin</span> <span class="op">+=</span> <span class="number">1</span>;
-                },
-                <span class="ident">NfaInputAction</span>::<span class="ident">Epsilon</span> <span class="op">=&gt;</span> ()
+                }
+                <span class="ident">NfaInputAction</span>::<span class="ident">Epsilon</span> <span class="op">=&gt;</span> (),
             }
             <span class="ident">state</span> <span class="op">=</span> <span class="ident">s</span>;
             <span class="kw">if</span> <span class="ident">state</span>.<span class="ident">is_field_final</span>() {
@@ -2846,7 +2960,10 @@
             }
         }
         <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="ident">ReadFieldResult</span>::<span class="ident">from_nfa</span>(
-            <span class="ident">state</span>, <span class="ident">nin</span> <span class="op">&gt;=</span> <span class="ident">input</span>.<span class="ident">len</span>(), <span class="ident">nout</span> <span class="op">&gt;=</span> <span class="ident">output</span>.<span class="ident">len</span>());
+            <span class="ident">state</span>,
+            <span class="ident">nin</span> <span class="op">&gt;=</span> <span class="ident">input</span>.<span class="ident">len</span>(),
+            <span class="ident">nout</span> <span class="op">&gt;=</span> <span class="ident">output</span>.<span class="ident">len</span>(),
+        );
         <span class="self">self</span>.<span class="ident">nfa_state</span> <span class="op">=</span> <span class="ident">state</span>;
         (<span class="ident">res</span>, <span class="ident">nin</span>, <span class="ident">nout</span>)
     }
@@ -2857,22 +2974,12 @@
     <span class="kw">fn</span> <span class="ident">transition_final_nfa</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">state</span>: <span class="ident">NfaState</span>) <span class="op">-&gt;</span> <span class="ident">NfaState</span> {
         <span class="kw">use</span> <span class="self">self</span>::<span class="ident">NfaState</span>::<span class="kw-2">*</span>;
         <span class="kw">match</span> <span class="ident">state</span> {
-            <span class="ident">End</span>
-            <span class="op">|</span> <span class="ident">StartRecord</span>
-            <span class="op">|</span> <span class="ident">EndRecord</span>
-            <span class="op">|</span> <span class="ident">InComment</span>
-            <span class="op">|</span> <span class="ident">CRLF</span> <span class="op">=&gt;</span> <span class="ident">End</span>,
-            <span class="ident">StartField</span>
-            <span class="op">|</span> <span class="ident">EndFieldDelim</span>
-            <span class="op">|</span> <span class="ident">EndFieldTerm</span>
-            <span class="op">|</span> <span class="ident">InField</span>
-            <span class="op">|</span> <span class="ident">InQuotedField</span>
-            <span class="op">|</span> <span class="ident">InEscapedQuote</span>
-            <span class="op">|</span> <span class="ident">InDoubleEscapedQuote</span>
+            <span class="ident">End</span> <span class="op">|</span> <span class="ident">StartRecord</span> <span class="op">|</span> <span class="ident">EndRecord</span> <span class="op">|</span> <span class="ident">InComment</span> <span class="op">|</span> <span class="ident">CRLF</span> <span class="op">=&gt;</span> <span class="ident">End</span>,
+            <span class="ident">StartField</span> <span class="op">|</span> <span class="ident">EndFieldDelim</span> <span class="op">|</span> <span class="ident">EndFieldTerm</span> <span class="op">|</span> <span class="ident">InField</span>
+            <span class="op">|</span> <span class="ident">InQuotedField</span> <span class="op">|</span> <span class="ident">InEscapedQuote</span> <span class="op">|</span> <span class="ident">InDoubleEscapedQuote</span>
             <span class="op">|</span> <span class="ident">InRecordTerm</span> <span class="op">=&gt;</span> <span class="ident">EndRecord</span>,
         }
     }
-
 
     <span class="doccomment">/// Compute the next NFA state given the current NFA state and the current</span>
     <span class="doccomment">/// input byte.</span>
@@ -2898,9 +3005,7 @@
                     (<span class="ident">StartField</span>, <span class="ident">NfaInputAction</span>::<span class="ident">Epsilon</span>)
                 }
             }
-            <span class="ident">EndRecord</span> <span class="op">=&gt;</span> {
-                (<span class="ident">StartRecord</span>, <span class="ident">NfaInputAction</span>::<span class="ident">Epsilon</span>)
-            }
+            <span class="ident">EndRecord</span> <span class="op">=&gt;</span> (<span class="ident">StartRecord</span>, <span class="ident">NfaInputAction</span>::<span class="ident">Epsilon</span>),
             <span class="ident">StartField</span> <span class="op">=&gt;</span> {
                 <span class="kw">if</span> <span class="self">self</span>.<span class="ident">quoting</span> <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">quote</span> <span class="op">==</span> <span class="ident">c</span> {
                     (<span class="ident">InQuotedField</span>, <span class="ident">NfaInputAction</span>::<span class="ident">Discard</span>)
@@ -2912,12 +3017,8 @@
                     (<span class="ident">InField</span>, <span class="ident">NfaInputAction</span>::<span class="ident">CopyToOutput</span>)
                 }
             }
-            <span class="ident">EndFieldDelim</span> <span class="op">=&gt;</span> {
-                (<span class="ident">StartField</span>, <span class="ident">NfaInputAction</span>::<span class="ident">Epsilon</span>)
-            }
-            <span class="ident">EndFieldTerm</span> <span class="op">=&gt;</span> {
-                (<span class="ident">InRecordTerm</span>, <span class="ident">NfaInputAction</span>::<span class="ident">Epsilon</span>)
-            }
+            <span class="ident">EndFieldDelim</span> <span class="op">=&gt;</span> (<span class="ident">StartField</span>, <span class="ident">NfaInputAction</span>::<span class="ident">Epsilon</span>),
+            <span class="ident">EndFieldTerm</span> <span class="op">=&gt;</span> (<span class="ident">InRecordTerm</span>, <span class="ident">NfaInputAction</span>::<span class="ident">Epsilon</span>),
             <span class="ident">InField</span> <span class="op">=&gt;</span> {
                 <span class="kw">if</span> <span class="self">self</span>.<span class="ident">delimiter</span> <span class="op">==</span> <span class="ident">c</span> {
                     (<span class="ident">EndFieldDelim</span>, <span class="ident">NfaInputAction</span>::<span class="ident">Discard</span>)
@@ -2936,9 +3037,7 @@
                     (<span class="ident">InQuotedField</span>, <span class="ident">NfaInputAction</span>::<span class="ident">CopyToOutput</span>)
                 }
             }
-            <span class="ident">InEscapedQuote</span> <span class="op">=&gt;</span> {
-                (<span class="ident">InQuotedField</span>, <span class="ident">NfaInputAction</span>::<span class="ident">CopyToOutput</span>)
-            }
+            <span class="ident">InEscapedQuote</span> <span class="op">=&gt;</span> (<span class="ident">InQuotedField</span>, <span class="ident">NfaInputAction</span>::<span class="ident">CopyToOutput</span>),
             <span class="ident">InDoubleEscapedQuote</span> <span class="op">=&gt;</span> {
                 <span class="kw">if</span> <span class="self">self</span>.<span class="ident">quoting</span> <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">double_quote</span> <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">quote</span> <span class="op">==</span> <span class="ident">c</span> {
                     (<span class="ident">InQuotedField</span>, <span class="ident">NfaInputAction</span>::<span class="ident">CopyToOutput</span>)
@@ -3170,8 +3269,7 @@
         <span class="ident">output</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>],
         <span class="ident">nout</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">usize</span>,
     ) {
-        <span class="kw">while</span>
-            <span class="kw-2">*</span><span class="ident">nin</span> <span class="op">&lt;</span> <span class="ident">input</span>.<span class="ident">len</span>()
+        <span class="kw">while</span> <span class="kw-2">*</span><span class="ident">nin</span> <span class="op">&lt;</span> <span class="ident">input</span>.<span class="ident">len</span>()
             <span class="op">&amp;&amp;</span> <span class="kw-2">*</span><span class="ident">nout</span> <span class="op">&lt;</span> <span class="ident">output</span>.<span class="ident">len</span>()
             <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">classes</span>[<span class="ident">input</span>[<span class="kw-2">*</span><span class="ident">nin</span>] <span class="kw">as</span> <span class="ident">usize</span>] <span class="op">==</span> <span class="number">0</span>
         {
@@ -3212,7 +3310,8 @@
         <span class="macro">write</span><span class="macro">!</span>(
             <span class="ident">f</span>,
             <span class="string">&quot;DfaClasses {{ classes: N/A, next_class: {:?} }}&quot;</span>,
-            <span class="self">self</span>.<span class="ident">next_class</span>)
+            <span class="self">self</span>.<span class="ident">next_class</span>
+        )
     }
 }
 
@@ -3238,16 +3337,16 @@
 
     <span class="kw">use</span> <span class="ident">arrayvec</span>::{<span class="ident">ArrayString</span>, <span class="ident">ArrayVec</span>};
 
-    <span class="kw">use</span> <span class="kw">super</span>::{
-        <span class="ident">Reader</span>, <span class="ident">ReaderBuilder</span>, <span class="ident">ReadFieldResult</span>, <span class="ident">Terminator</span>,
-    };
+    <span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">ReadFieldResult</span>, <span class="ident">Reader</span>, <span class="ident">ReaderBuilder</span>, <span class="ident">Terminator</span>};
 
     <span class="kw">type</span> <span class="ident">Csv</span> <span class="op">=</span> <span class="ident">ArrayVec</span><span class="op">&lt;</span>[<span class="ident">Row</span>; <span class="number">10</span>]<span class="op">&gt;</span>;
     <span class="kw">type</span> <span class="ident">Row</span> <span class="op">=</span> <span class="ident">ArrayVec</span><span class="op">&lt;</span>[<span class="ident">Field</span>; <span class="number">10</span>]<span class="op">&gt;</span>;
     <span class="kw">type</span> <span class="ident">Field</span> <span class="op">=</span> <span class="ident">ArrayString</span><span class="op">&lt;</span>[<span class="ident">u8</span>; <span class="number">10</span>]<span class="op">&gt;</span>;
 
     <span class="comment">// OMG I HATE BYTE STRING LITERALS SO MUCH.</span>
-    <span class="kw">fn</span> <span class="ident">b</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] { <span class="ident">s</span>.<span class="ident">as_bytes</span>() }
+    <span class="kw">fn</span> <span class="ident">b</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] {
+        <span class="ident">s</span>.<span class="ident">as_bytes</span>()
+    }
 
     <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">csv</span> {
         ($([$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">field</span>:<span class="ident">expr</span>),<span class="kw-2">*</span>]),<span class="kw-2">*</span>) <span class="op">=&gt;</span> {{
@@ -3342,7 +3441,7 @@
     }
 
     <span class="kw">fn</span> <span class="ident">parse_by_record</span>(<span class="ident">rdr</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Reader</span>, <span class="ident">data</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="ident">Csv</span> {
-        <span class="kw">use</span> <span class="ident">ReadRecordResult</span>::<span class="kw-2">*</span>;
+        <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">ReadRecordResult</span>::<span class="kw-2">*</span>;
 
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">data</span> <span class="op">=</span> <span class="ident">data</span>.<span class="ident">as_bytes</span>();
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">record</span> <span class="op">=</span> [<span class="number">0</span>; <span class="number">1024</span>];
@@ -3352,7 +3451,10 @@
         <span class="kw">let</span> (<span class="kw-2">mut</span> <span class="ident">outpos</span>, <span class="kw-2">mut</span> <span class="ident">endpos</span>) <span class="op">=</span> (<span class="number">0</span>, <span class="number">0</span>);
         <span class="kw">loop</span> {
             <span class="kw">let</span> (<span class="ident">res</span>, <span class="ident">nin</span>, <span class="ident">nout</span>, <span class="ident">nend</span>) <span class="op">=</span> <span class="ident">rdr</span>.<span class="ident">read_record</span>(
-                <span class="ident">data</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">record</span>[<span class="ident">outpos</span>..], <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ends</span>[<span class="ident">endpos</span>..]);
+                <span class="ident">data</span>,
+                <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">record</span>[<span class="ident">outpos</span>..],
+                <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ends</span>[<span class="ident">endpos</span>..],
+            );
             <span class="ident">data</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">data</span>[<span class="ident">nin</span>..];
             <span class="ident">outpos</span> <span class="op">+=</span> <span class="ident">nout</span>;
             <span class="ident">endpos</span> <span class="op">+=</span> <span class="ident">nend</span>;
@@ -3398,78 +3500,111 @@
     <span class="macro">parses_to</span><span class="macro">!</span>(<span class="ident">many_rows_one_field</span>, <span class="string">&quot;a\nb&quot;</span>, <span class="macro">csv</span><span class="macro">!</span>[[<span class="string">&quot;a&quot;</span>], [<span class="string">&quot;b&quot;</span>]]);
     <span class="macro">parses_to</span><span class="macro">!</span>(
         <span class="ident">many_rows_many_fields</span>,
-       <span class="string">&quot;a,b,c\nx,y,z&quot;</span>, <span class="macro">csv</span><span class="macro">!</span>[[<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>, <span class="string">&quot;c&quot;</span>], [<span class="string">&quot;x&quot;</span>, <span class="string">&quot;y&quot;</span>, <span class="string">&quot;z&quot;</span>]]);
+        <span class="string">&quot;a,b,c\nx,y,z&quot;</span>,
+        <span class="macro">csv</span><span class="macro">!</span>[[<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>, <span class="string">&quot;c&quot;</span>], [<span class="string">&quot;x&quot;</span>, <span class="string">&quot;y&quot;</span>, <span class="string">&quot;z&quot;</span>]]
+    );
     <span class="macro">parses_to</span><span class="macro">!</span>(
         <span class="ident">many_rows_trailing_comma</span>,
-        <span class="string">&quot;a,b,\nx,y,&quot;</span>, <span class="macro">csv</span><span class="macro">!</span>[[<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>, <span class="string">&quot;&quot;</span>], [<span class="string">&quot;x&quot;</span>, <span class="string">&quot;y&quot;</span>, <span class="string">&quot;&quot;</span>]]);
+        <span class="string">&quot;a,b,\nx,y,&quot;</span>,
+        <span class="macro">csv</span><span class="macro">!</span>[[<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>, <span class="string">&quot;&quot;</span>], [<span class="string">&quot;x&quot;</span>, <span class="string">&quot;y&quot;</span>, <span class="string">&quot;&quot;</span>]]
+    );
     <span class="macro">parses_to</span><span class="macro">!</span>(<span class="ident">many_rows_one_field_lf</span>, <span class="string">&quot;a\nb\n&quot;</span>, <span class="macro">csv</span><span class="macro">!</span>[[<span class="string">&quot;a&quot;</span>], [<span class="string">&quot;b&quot;</span>]]);
     <span class="macro">parses_to</span><span class="macro">!</span>(
         <span class="ident">many_rows_many_fields_lf</span>,
-        <span class="string">&quot;a,b,c\nx,y,z\n&quot;</span>, <span class="macro">csv</span><span class="macro">!</span>[[<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>, <span class="string">&quot;c&quot;</span>], [<span class="string">&quot;x&quot;</span>, <span class="string">&quot;y&quot;</span>, <span class="string">&quot;z&quot;</span>]]);
+        <span class="string">&quot;a,b,c\nx,y,z\n&quot;</span>,
+        <span class="macro">csv</span><span class="macro">!</span>[[<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>, <span class="string">&quot;c&quot;</span>], [<span class="string">&quot;x&quot;</span>, <span class="string">&quot;y&quot;</span>, <span class="string">&quot;z&quot;</span>]]
+    );
     <span class="macro">parses_to</span><span class="macro">!</span>(
         <span class="ident">many_rows_trailing_comma_lf</span>,
-        <span class="string">&quot;a,b,\nx,y,\n&quot;</span>, <span class="macro">csv</span><span class="macro">!</span>[[<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>, <span class="string">&quot;&quot;</span>], [<span class="string">&quot;x&quot;</span>, <span class="string">&quot;y&quot;</span>, <span class="string">&quot;&quot;</span>]]);
+        <span class="string">&quot;a,b,\nx,y,\n&quot;</span>,
+        <span class="macro">csv</span><span class="macro">!</span>[[<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>, <span class="string">&quot;&quot;</span>], [<span class="string">&quot;x&quot;</span>, <span class="string">&quot;y&quot;</span>, <span class="string">&quot;&quot;</span>]]
+    );
     <span class="macro">parses_to</span><span class="macro">!</span>(<span class="ident">many_rows_one_field_crlf</span>, <span class="string">&quot;a\r\nb\r\n&quot;</span>, <span class="macro">csv</span><span class="macro">!</span>[[<span class="string">&quot;a&quot;</span>], [<span class="string">&quot;b&quot;</span>]]);
     <span class="macro">parses_to</span><span class="macro">!</span>(
         <span class="ident">many_rows_many_fields_crlf</span>,
         <span class="string">&quot;a,b,c\r\nx,y,z\r\n&quot;</span>,
-        <span class="macro">csv</span><span class="macro">!</span>[[<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>, <span class="string">&quot;c&quot;</span>], [<span class="string">&quot;x&quot;</span>, <span class="string">&quot;y&quot;</span>, <span class="string">&quot;z&quot;</span>]]);
-    <span class="macro">parses_to</span><span class="macro">!</span>(<span class="ident">many_rows_trailing_comma_crlf</span>,
-               <span class="string">&quot;a,b,\r\nx,y,\r\n&quot;</span>, <span class="macro">csv</span><span class="macro">!</span>[[<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>, <span class="string">&quot;&quot;</span>], [<span class="string">&quot;x&quot;</span>, <span class="string">&quot;y&quot;</span>, <span class="string">&quot;&quot;</span>]]);
+        <span class="macro">csv</span><span class="macro">!</span>[[<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>, <span class="string">&quot;c&quot;</span>], [<span class="string">&quot;x&quot;</span>, <span class="string">&quot;y&quot;</span>, <span class="string">&quot;z&quot;</span>]]
+    );
+    <span class="macro">parses_to</span><span class="macro">!</span>(
+        <span class="ident">many_rows_trailing_comma_crlf</span>,
+        <span class="string">&quot;a,b,\r\nx,y,\r\n&quot;</span>,
+        <span class="macro">csv</span><span class="macro">!</span>[[<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>, <span class="string">&quot;&quot;</span>], [<span class="string">&quot;x&quot;</span>, <span class="string">&quot;y&quot;</span>, <span class="string">&quot;&quot;</span>]]
+    );
     <span class="macro">parses_to</span><span class="macro">!</span>(<span class="ident">many_rows_one_field_cr</span>, <span class="string">&quot;a\rb\r&quot;</span>, <span class="macro">csv</span><span class="macro">!</span>[[<span class="string">&quot;a&quot;</span>], [<span class="string">&quot;b&quot;</span>]]);
     <span class="macro">parses_to</span><span class="macro">!</span>(
         <span class="ident">many_rows_many_fields_cr</span>,
-        <span class="string">&quot;a,b,c\rx,y,z\r&quot;</span>, <span class="macro">csv</span><span class="macro">!</span>[[<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>, <span class="string">&quot;c&quot;</span>], [<span class="string">&quot;x&quot;</span>, <span class="string">&quot;y&quot;</span>, <span class="string">&quot;z&quot;</span>]]);
+        <span class="string">&quot;a,b,c\rx,y,z\r&quot;</span>,
+        <span class="macro">csv</span><span class="macro">!</span>[[<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>, <span class="string">&quot;c&quot;</span>], [<span class="string">&quot;x&quot;</span>, <span class="string">&quot;y&quot;</span>, <span class="string">&quot;z&quot;</span>]]
+    );
     <span class="macro">parses_to</span><span class="macro">!</span>(
         <span class="ident">many_rows_trailing_comma_cr</span>,
-        <span class="string">&quot;a,b,\rx,y,\r&quot;</span>, <span class="macro">csv</span><span class="macro">!</span>[[<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>, <span class="string">&quot;&quot;</span>], [<span class="string">&quot;x&quot;</span>, <span class="string">&quot;y&quot;</span>, <span class="string">&quot;&quot;</span>]]);
+        <span class="string">&quot;a,b,\rx,y,\r&quot;</span>,
+        <span class="macro">csv</span><span class="macro">!</span>[[<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>, <span class="string">&quot;&quot;</span>], [<span class="string">&quot;x&quot;</span>, <span class="string">&quot;y&quot;</span>, <span class="string">&quot;&quot;</span>]]
+    );
 
     <span class="macro">parses_to</span><span class="macro">!</span>(
         <span class="ident">trailing_lines_no_record</span>,
         <span class="string">&quot;\n\n\na,b,c\nx,y,z\n\n\n&quot;</span>,
-        <span class="macro">csv</span><span class="macro">!</span>[[<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>, <span class="string">&quot;c&quot;</span>], [<span class="string">&quot;x&quot;</span>, <span class="string">&quot;y&quot;</span>, <span class="string">&quot;z&quot;</span>]]);
+        <span class="macro">csv</span><span class="macro">!</span>[[<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>, <span class="string">&quot;c&quot;</span>], [<span class="string">&quot;x&quot;</span>, <span class="string">&quot;y&quot;</span>, <span class="string">&quot;z&quot;</span>]]
+    );
     <span class="macro">parses_to</span><span class="macro">!</span>(
         <span class="ident">trailing_lines_no_record_cr</span>,
         <span class="string">&quot;\r\r\ra,b,c\rx,y,z\r\r\r&quot;</span>,
-        <span class="macro">csv</span><span class="macro">!</span>[[<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>, <span class="string">&quot;c&quot;</span>], [<span class="string">&quot;x&quot;</span>, <span class="string">&quot;y&quot;</span>, <span class="string">&quot;z&quot;</span>]]);
+        <span class="macro">csv</span><span class="macro">!</span>[[<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>, <span class="string">&quot;c&quot;</span>], [<span class="string">&quot;x&quot;</span>, <span class="string">&quot;y&quot;</span>, <span class="string">&quot;z&quot;</span>]]
+    );
     <span class="macro">parses_to</span><span class="macro">!</span>(
         <span class="ident">trailing_lines_no_record_crlf</span>,
         <span class="string">&quot;\r\n\r\n\r\na,b,c\r\nx,y,z\r\n\r\n\r\n&quot;</span>,
-        <span class="macro">csv</span><span class="macro">!</span>[[<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>, <span class="string">&quot;c&quot;</span>], [<span class="string">&quot;x&quot;</span>, <span class="string">&quot;y&quot;</span>, <span class="string">&quot;z&quot;</span>]]);
+        <span class="macro">csv</span><span class="macro">!</span>[[<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>, <span class="string">&quot;c&quot;</span>], [<span class="string">&quot;x&quot;</span>, <span class="string">&quot;y&quot;</span>, <span class="string">&quot;z&quot;</span>]]
+    );
 
     <span class="macro">parses_to</span><span class="macro">!</span>(<span class="ident">empty</span>, <span class="string">&quot;&quot;</span>, <span class="macro">csv</span><span class="macro">!</span>[]);
     <span class="macro">parses_to</span><span class="macro">!</span>(<span class="ident">empty_lines</span>, <span class="string">&quot;\n\n\n\n&quot;</span>, <span class="macro">csv</span><span class="macro">!</span>[]);
     <span class="macro">parses_to</span><span class="macro">!</span>(
-        <span class="ident">empty_lines_interspersed</span>, <span class="string">&quot;\n\na,b\n\n\nx,y\n\n\nm,n\n&quot;</span>,
-        <span class="macro">csv</span><span class="macro">!</span>[[<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>], [<span class="string">&quot;x&quot;</span>, <span class="string">&quot;y&quot;</span>], [<span class="string">&quot;m&quot;</span>, <span class="string">&quot;n&quot;</span>]]);
+        <span class="ident">empty_lines_interspersed</span>,
+        <span class="string">&quot;\n\na,b\n\n\nx,y\n\n\nm,n\n&quot;</span>,
+        <span class="macro">csv</span><span class="macro">!</span>[[<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>], [<span class="string">&quot;x&quot;</span>, <span class="string">&quot;y&quot;</span>], [<span class="string">&quot;m&quot;</span>, <span class="string">&quot;n&quot;</span>]]
+    );
     <span class="macro">parses_to</span><span class="macro">!</span>(<span class="ident">empty_lines_crlf</span>, <span class="string">&quot;\r\n\r\n\r\n\r\n&quot;</span>, <span class="macro">csv</span><span class="macro">!</span>[]);
     <span class="macro">parses_to</span><span class="macro">!</span>(
         <span class="ident">empty_lines_interspersed_crlf</span>,
         <span class="string">&quot;\r\n\r\na,b\r\n\r\n\r\nx,y\r\n\r\n\r\nm,n\r\n&quot;</span>,
-        <span class="macro">csv</span><span class="macro">!</span>[[<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>], [<span class="string">&quot;x&quot;</span>, <span class="string">&quot;y&quot;</span>], [<span class="string">&quot;m&quot;</span>, <span class="string">&quot;n&quot;</span>]]);
+        <span class="macro">csv</span><span class="macro">!</span>[[<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>], [<span class="string">&quot;x&quot;</span>, <span class="string">&quot;y&quot;</span>], [<span class="string">&quot;m&quot;</span>, <span class="string">&quot;n&quot;</span>]]
+    );
     <span class="macro">parses_to</span><span class="macro">!</span>(<span class="ident">empty_lines_mixed</span>, <span class="string">&quot;\r\n\n\r\n\n&quot;</span>, <span class="macro">csv</span><span class="macro">!</span>[]);
     <span class="macro">parses_to</span><span class="macro">!</span>(
         <span class="ident">empty_lines_interspersed_mixed</span>,
         <span class="string">&quot;\n\r\na,b\r\n\n\r\nx,y\r\n\n\r\nm,n\r\n&quot;</span>,
-        <span class="macro">csv</span><span class="macro">!</span>[[<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>], [<span class="string">&quot;x&quot;</span>, <span class="string">&quot;y&quot;</span>], [<span class="string">&quot;m&quot;</span>, <span class="string">&quot;n&quot;</span>]]);
+        <span class="macro">csv</span><span class="macro">!</span>[[<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>], [<span class="string">&quot;x&quot;</span>, <span class="string">&quot;y&quot;</span>], [<span class="string">&quot;m&quot;</span>, <span class="string">&quot;n&quot;</span>]]
+    );
     <span class="macro">parses_to</span><span class="macro">!</span>(<span class="ident">empty_lines_cr</span>, <span class="string">&quot;\r\r\r\r&quot;</span>, <span class="macro">csv</span><span class="macro">!</span>[]);
     <span class="macro">parses_to</span><span class="macro">!</span>(
-        <span class="ident">empty_lines_interspersed_cr</span>, <span class="string">&quot;\r\ra,b\r\r\rx,y\r\r\rm,n\r&quot;</span>,
-        <span class="macro">csv</span><span class="macro">!</span>[[<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>], [<span class="string">&quot;x&quot;</span>, <span class="string">&quot;y&quot;</span>], [<span class="string">&quot;m&quot;</span>, <span class="string">&quot;n&quot;</span>]]);
+        <span class="ident">empty_lines_interspersed_cr</span>,
+        <span class="string">&quot;\r\ra,b\r\r\rx,y\r\r\rm,n\r&quot;</span>,
+        <span class="macro">csv</span><span class="macro">!</span>[[<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>], [<span class="string">&quot;x&quot;</span>, <span class="string">&quot;y&quot;</span>], [<span class="string">&quot;m&quot;</span>, <span class="string">&quot;n&quot;</span>]]
+    );
 
     <span class="macro">parses_to</span><span class="macro">!</span>(
-        <span class="ident">term_weird</span>, <span class="string">&quot;zza,bzc,dzz&quot;</span>,
+        <span class="ident">term_weird</span>,
+        <span class="string">&quot;zza,bzc,dzz&quot;</span>,
         <span class="macro">csv</span><span class="macro">!</span>[[<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>], [<span class="string">&quot;c&quot;</span>, <span class="string">&quot;d&quot;</span>]],
-        <span class="op">|</span><span class="ident">b</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ReaderBuilder</span><span class="op">|</span> { <span class="ident">b</span>.<span class="ident">terminator</span>(<span class="ident">Terminator</span>::<span class="ident">Any</span>(<span class="string">b&#39;z&#39;</span>)); });
+        <span class="op">|</span><span class="ident">b</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ReaderBuilder</span><span class="op">|</span> {
+            <span class="ident">b</span>.<span class="ident">terminator</span>(<span class="ident">Terminator</span>::<span class="ident">Any</span>(<span class="string">b&#39;z&#39;</span>));
+        }
+    );
 
     <span class="macro">parses_to</span><span class="macro">!</span>(
-        <span class="ident">ascii_delimited</span>, <span class="string">&quot;a\x1fb\x1ec\x1fd&quot;</span>,
+        <span class="ident">ascii_delimited</span>,
+        <span class="string">&quot;a\x1fb\x1ec\x1fd&quot;</span>,
         <span class="macro">csv</span><span class="macro">!</span>[[<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>], [<span class="string">&quot;c&quot;</span>, <span class="string">&quot;d&quot;</span>]],
-        <span class="op">|</span><span class="ident">b</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ReaderBuilder</span><span class="op">|</span> { <span class="ident">b</span>.<span class="ident">ascii</span>(); });
+        <span class="op">|</span><span class="ident">b</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ReaderBuilder</span><span class="op">|</span> {
+            <span class="ident">b</span>.<span class="ident">ascii</span>();
+        }
+    );
 
     <span class="macro">parses_to</span><span class="macro">!</span>(<span class="ident">bom_at_start</span>, <span class="string">&quot;\u{feff}a&quot;</span>, <span class="macro">csv</span><span class="macro">!</span>[[<span class="string">&quot;a&quot;</span>]]);
     <span class="macro">parses_to</span><span class="macro">!</span>(<span class="ident">bom_in_field</span>, <span class="string">&quot;a\u{feff}&quot;</span>, <span class="macro">csv</span><span class="macro">!</span>[[<span class="string">&quot;a\u{feff}&quot;</span>]]);
-    <span class="macro">parses_to</span><span class="macro">!</span>(<span class="ident">bom_at_field_start</span>, <span class="string">&quot;a,\u{feff}b&quot;</span>, <span class="macro">csv</span><span class="macro">!</span>[[<span class="string">&quot;a&quot;</span>,<span class="string">&quot;\u{feff}b&quot;</span>]]);
+    <span class="macro">parses_to</span><span class="macro">!</span>(<span class="ident">bom_at_field_start</span>, <span class="string">&quot;a,\u{feff}b&quot;</span>, <span class="macro">csv</span><span class="macro">!</span>[[<span class="string">&quot;a&quot;</span>, <span class="string">&quot;\u{feff}b&quot;</span>]]);
 
     <span class="macro">parses_to</span><span class="macro">!</span>(<span class="ident">quote_empty</span>, <span class="string">&quot;\&quot;\&quot;&quot;</span>, <span class="macro">csv</span><span class="macro">!</span>[[<span class="string">&quot;&quot;</span>]]);
     <span class="macro">parses_to</span><span class="macro">!</span>(<span class="ident">quote_lf</span>, <span class="string">&quot;\&quot;\&quot;\n&quot;</span>, <span class="macro">csv</span><span class="macro">!</span>[[<span class="string">&quot;&quot;</span>]]);
@@ -3477,21 +3612,46 @@
     <span class="macro">parses_to</span><span class="macro">!</span>(<span class="ident">quote_inner_space</span>, <span class="string">&quot;\&quot; a \&quot;&quot;</span>, <span class="macro">csv</span><span class="macro">!</span>[[<span class="string">&quot; a &quot;</span>]]);
     <span class="macro">parses_to</span><span class="macro">!</span>(<span class="ident">quote_outer_space</span>, <span class="string">&quot;  \&quot;a\&quot;  &quot;</span>, <span class="macro">csv</span><span class="macro">!</span>[[<span class="string">&quot;  \&quot;a\&quot;  &quot;</span>]]);
 
-    <span class="macro">parses_to</span><span class="macro">!</span>(<span class="ident">quote_change</span>, <span class="string">&quot;zaz&quot;</span>, <span class="macro">csv</span><span class="macro">!</span>[[<span class="string">&quot;a&quot;</span>]],
-               <span class="op">|</span><span class="ident">b</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ReaderBuilder</span><span class="op">|</span> { <span class="ident">b</span>.<span class="ident">quote</span>(<span class="string">b&#39;z&#39;</span>); });
+    <span class="macro">parses_to</span><span class="macro">!</span>(<span class="ident">quote_change</span>, <span class="string">&quot;zaz&quot;</span>, <span class="macro">csv</span><span class="macro">!</span>[[<span class="string">&quot;a&quot;</span>]], <span class="op">|</span><span class="ident">b</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ReaderBuilder</span><span class="op">|</span> {
+        <span class="ident">b</span>.<span class="ident">quote</span>(<span class="string">b&#39;z&#39;</span>);
+    });
 
     <span class="comment">// This one is pretty hokey.</span>
     <span class="comment">// I don&#39;t really know what the &quot;right&quot; behavior is.</span>
-    <span class="macro">parses_to</span><span class="macro">!</span>(<span class="ident">quote_delimiter</span>, <span class="string">&quot;,a,,b&quot;</span>, <span class="macro">csv</span><span class="macro">!</span>[[<span class="string">&quot;a,b&quot;</span>]],
-               <span class="op">|</span><span class="ident">b</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ReaderBuilder</span><span class="op">|</span> { <span class="ident">b</span>.<span class="ident">quote</span>(<span class="string">b&#39;,&#39;</span>); });
+    <span class="macro">parses_to</span><span class="macro">!</span>(
+        <span class="ident">quote_delimiter</span>,
+        <span class="string">&quot;,a,,b&quot;</span>,
+        <span class="macro">csv</span><span class="macro">!</span>[[<span class="string">&quot;a,b&quot;</span>]],
+        <span class="op">|</span><span class="ident">b</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ReaderBuilder</span><span class="op">|</span> {
+            <span class="ident">b</span>.<span class="ident">quote</span>(<span class="string">b&#39;,&#39;</span>);
+        }
+    );
 
     <span class="macro">parses_to</span><span class="macro">!</span>(<span class="ident">quote_no_escapes</span>, <span class="string">r#&quot;&quot;a\&quot;b&quot;&quot;#</span>, <span class="macro">csv</span><span class="macro">!</span>[[<span class="string">r#&quot;a\b&quot;&quot;#</span>]]);
-    <span class="macro">parses_to</span><span class="macro">!</span>(<span class="ident">quote_escapes_no_double</span>, <span class="string">r#&quot;&quot;a&quot;&quot;b&quot;&quot;#</span>, <span class="macro">csv</span><span class="macro">!</span>[[<span class="string">r#&quot;a&quot;b&quot;&quot;#</span>]],
-               <span class="op">|</span><span class="ident">b</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ReaderBuilder</span><span class="op">|</span> { <span class="ident">b</span>.<span class="ident">double_quote</span>(<span class="bool-val">false</span>); });
-    <span class="macro">parses_to</span><span class="macro">!</span>(<span class="ident">quote_escapes</span>, <span class="string">r#&quot;&quot;a\&quot;b&quot;&quot;#</span>, <span class="macro">csv</span><span class="macro">!</span>[[<span class="string">r#&quot;a&quot;b&quot;#</span>]],
-               <span class="op">|</span><span class="ident">b</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ReaderBuilder</span><span class="op">|</span> { <span class="ident">b</span>.<span class="ident">escape</span>(<span class="prelude-val">Some</span>(<span class="string">b&#39;\\&#39;</span>)); });
-    <span class="macro">parses_to</span><span class="macro">!</span>(<span class="ident">quote_escapes_change</span>, <span class="string">r#&quot;&quot;az&quot;b&quot;&quot;#</span>, <span class="macro">csv</span><span class="macro">!</span>[[<span class="string">r#&quot;a&quot;b&quot;#</span>]],
-               <span class="op">|</span><span class="ident">b</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ReaderBuilder</span><span class="op">|</span> { <span class="ident">b</span>.<span class="ident">escape</span>(<span class="prelude-val">Some</span>(<span class="string">b&#39;z&#39;</span>)); });
+    <span class="macro">parses_to</span><span class="macro">!</span>(
+        <span class="ident">quote_escapes_no_double</span>,
+        <span class="string">r#&quot;&quot;a&quot;&quot;b&quot;&quot;#</span>,
+        <span class="macro">csv</span><span class="macro">!</span>[[<span class="string">r#&quot;a&quot;b&quot;&quot;#</span>]],
+        <span class="op">|</span><span class="ident">b</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ReaderBuilder</span><span class="op">|</span> {
+            <span class="ident">b</span>.<span class="ident">double_quote</span>(<span class="bool-val">false</span>);
+        }
+    );
+    <span class="macro">parses_to</span><span class="macro">!</span>(
+        <span class="ident">quote_escapes</span>,
+        <span class="string">r#&quot;&quot;a\&quot;b&quot;&quot;#</span>,
+        <span class="macro">csv</span><span class="macro">!</span>[[<span class="string">r#&quot;a&quot;b&quot;#</span>]],
+        <span class="op">|</span><span class="ident">b</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ReaderBuilder</span><span class="op">|</span> {
+            <span class="ident">b</span>.<span class="ident">escape</span>(<span class="prelude-val">Some</span>(<span class="string">b&#39;\\&#39;</span>));
+        }
+    );
+    <span class="macro">parses_to</span><span class="macro">!</span>(
+        <span class="ident">quote_escapes_change</span>,
+        <span class="string">r#&quot;&quot;az&quot;b&quot;&quot;#</span>,
+        <span class="macro">csv</span><span class="macro">!</span>[[<span class="string">r#&quot;a&quot;b&quot;#</span>]],
+        <span class="op">|</span><span class="ident">b</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ReaderBuilder</span><span class="op">|</span> {
+            <span class="ident">b</span>.<span class="ident">escape</span>(<span class="prelude-val">Some</span>(<span class="string">b&#39;z&#39;</span>));
+        }
+    );
 
     <span class="macro">parses_to</span><span class="macro">!</span>(
         <span class="ident">quote_escapes_with_comma</span>,
@@ -3499,36 +3659,78 @@
         <span class="macro">csv</span><span class="macro">!</span>[[<span class="string">r#&quot;&quot;A,B&quot;&quot;#</span>]],
         <span class="op">|</span><span class="ident">b</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ReaderBuilder</span><span class="op">|</span> {
             <span class="ident">b</span>.<span class="ident">escape</span>(<span class="prelude-val">Some</span>(<span class="string">b&#39;\\&#39;</span>)).<span class="ident">double_quote</span>(<span class="bool-val">false</span>);
-        });
+        }
+    );
 
+    <span class="macro">parses_to</span><span class="macro">!</span>(
+        <span class="ident">quoting_disabled</span>,
+        <span class="string">r#&quot;&quot;abc,foo&quot;&quot;#</span>,
+        <span class="macro">csv</span><span class="macro">!</span>[[<span class="string">r#&quot;&quot;abc&quot;#</span>, <span class="string">r#&quot;foo&quot;&quot;#</span>]],
+        <span class="op">|</span><span class="ident">b</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ReaderBuilder</span><span class="op">|</span> {
+            <span class="ident">b</span>.<span class="ident">quoting</span>(<span class="bool-val">false</span>);
+        }
+    );
 
-    <span class="macro">parses_to</span><span class="macro">!</span>(<span class="ident">quoting_disabled</span>, <span class="string">r#&quot;&quot;abc,foo&quot;&quot;#</span>, <span class="macro">csv</span><span class="macro">!</span>[[<span class="string">r#&quot;&quot;abc&quot;#</span>, <span class="string">r#&quot;foo&quot;&quot;#</span>]],
-               <span class="op">|</span><span class="ident">b</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ReaderBuilder</span><span class="op">|</span> { <span class="ident">b</span>.<span class="ident">quoting</span>(<span class="bool-val">false</span>); });
-
-    <span class="macro">parses_to</span><span class="macro">!</span>(<span class="ident">delimiter_tabs</span>, <span class="string">&quot;a\tb&quot;</span>, <span class="macro">csv</span><span class="macro">!</span>[[<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>]],
-               <span class="op">|</span><span class="ident">b</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ReaderBuilder</span><span class="op">|</span> { <span class="ident">b</span>.<span class="ident">delimiter</span>(<span class="string">b&#39;\t&#39;</span>); });
-    <span class="macro">parses_to</span><span class="macro">!</span>(<span class="ident">delimiter_weird</span>, <span class="string">&quot;azb&quot;</span>, <span class="macro">csv</span><span class="macro">!</span>[[<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>]],
-               <span class="op">|</span><span class="ident">b</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ReaderBuilder</span><span class="op">|</span> { <span class="ident">b</span>.<span class="ident">delimiter</span>(<span class="string">b&#39;z&#39;</span>); });
+    <span class="macro">parses_to</span><span class="macro">!</span>(
+        <span class="ident">delimiter_tabs</span>,
+        <span class="string">&quot;a\tb&quot;</span>,
+        <span class="macro">csv</span><span class="macro">!</span>[[<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>]],
+        <span class="op">|</span><span class="ident">b</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ReaderBuilder</span><span class="op">|</span> {
+            <span class="ident">b</span>.<span class="ident">delimiter</span>(<span class="string">b&#39;\t&#39;</span>);
+        }
+    );
+    <span class="macro">parses_to</span><span class="macro">!</span>(
+        <span class="ident">delimiter_weird</span>,
+        <span class="string">&quot;azb&quot;</span>,
+        <span class="macro">csv</span><span class="macro">!</span>[[<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>]],
+        <span class="op">|</span><span class="ident">b</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ReaderBuilder</span><span class="op">|</span> {
+            <span class="ident">b</span>.<span class="ident">delimiter</span>(<span class="string">b&#39;z&#39;</span>);
+        }
+    );
 
     <span class="macro">parses_to</span><span class="macro">!</span>(<span class="ident">extra_record_crlf_1</span>, <span class="string">&quot;foo\n1\n&quot;</span>, <span class="macro">csv</span><span class="macro">!</span>[[<span class="string">&quot;foo&quot;</span>], [<span class="string">&quot;1&quot;</span>]]);
     <span class="macro">parses_to</span><span class="macro">!</span>(<span class="ident">extra_record_crlf_2</span>, <span class="string">&quot;foo\r\n1\r\n&quot;</span>, <span class="macro">csv</span><span class="macro">!</span>[[<span class="string">&quot;foo&quot;</span>], [<span class="string">&quot;1&quot;</span>]]);
 
-    <span class="macro">parses_to</span><span class="macro">!</span>(<span class="ident">comment_1</span>, <span class="string">&quot;foo\n# hi\nbar\n&quot;</span>, <span class="macro">csv</span><span class="macro">!</span>[[<span class="string">&quot;foo&quot;</span>], [<span class="string">&quot;bar&quot;</span>]],
-               <span class="op">|</span><span class="ident">b</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ReaderBuilder</span><span class="op">|</span> { <span class="ident">b</span>.<span class="ident">comment</span>(<span class="prelude-val">Some</span>(<span class="string">b&#39;#&#39;</span>)); });
+    <span class="macro">parses_to</span><span class="macro">!</span>(
+        <span class="ident">comment_1</span>,
+        <span class="string">&quot;foo\n# hi\nbar\n&quot;</span>,
+        <span class="macro">csv</span><span class="macro">!</span>[[<span class="string">&quot;foo&quot;</span>], [<span class="string">&quot;bar&quot;</span>]],
+        <span class="op">|</span><span class="ident">b</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ReaderBuilder</span><span class="op">|</span> {
+            <span class="ident">b</span>.<span class="ident">comment</span>(<span class="prelude-val">Some</span>(<span class="string">b&#39;#&#39;</span>));
+        }
+    );
     <span class="macro">parses_to</span><span class="macro">!</span>(
         <span class="ident">comment_2</span>,
         <span class="string">&quot;foo\n # hi\nbar\n&quot;</span>,
         <span class="macro">csv</span><span class="macro">!</span>[[<span class="string">&quot;foo&quot;</span>], [<span class="string">&quot; # hi&quot;</span>], [<span class="string">&quot;bar&quot;</span>]],
-        <span class="op">|</span><span class="ident">b</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ReaderBuilder</span><span class="op">|</span> { <span class="ident">b</span>.<span class="ident">comment</span>(<span class="prelude-val">Some</span>(<span class="string">b&#39;#&#39;</span>)); });
+        <span class="op">|</span><span class="ident">b</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ReaderBuilder</span><span class="op">|</span> {
+            <span class="ident">b</span>.<span class="ident">comment</span>(<span class="prelude-val">Some</span>(<span class="string">b&#39;#&#39;</span>));
+        }
+    );
     <span class="macro">parses_to</span><span class="macro">!</span>(
         <span class="ident">comment_3</span>,
         <span class="string">&quot;foo\n# hi\nbar\n&quot;</span>,
         <span class="macro">csv</span><span class="macro">!</span>[[<span class="string">&quot;foo&quot;</span>], [<span class="string">&quot;# hi&quot;</span>], [<span class="string">&quot;bar&quot;</span>]],
-        <span class="op">|</span><span class="ident">b</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ReaderBuilder</span><span class="op">|</span> { <span class="ident">b</span>.<span class="ident">comment</span>(<span class="prelude-val">Some</span>(<span class="string">b&#39;\n&#39;</span>)); });
-    <span class="macro">parses_to</span><span class="macro">!</span>(<span class="ident">comment_4</span>, <span class="string">&quot;foo,b#ar,baz&quot;</span>, <span class="macro">csv</span><span class="macro">!</span>[[<span class="string">&quot;foo&quot;</span>, <span class="string">&quot;b#ar&quot;</span>, <span class="string">&quot;baz&quot;</span>]],
-               <span class="op">|</span><span class="ident">b</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ReaderBuilder</span><span class="op">|</span> { <span class="ident">b</span>.<span class="ident">comment</span>(<span class="prelude-val">Some</span>(<span class="string">b&#39;#&#39;</span>)); });
-    <span class="macro">parses_to</span><span class="macro">!</span>(<span class="ident">comment_5</span>, <span class="string">&quot;foo,#bar,baz&quot;</span>, <span class="macro">csv</span><span class="macro">!</span>[[<span class="string">&quot;foo&quot;</span>, <span class="string">&quot;#bar&quot;</span>, <span class="string">&quot;baz&quot;</span>]],
-               <span class="op">|</span><span class="ident">b</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ReaderBuilder</span><span class="op">|</span> { <span class="ident">b</span>.<span class="ident">comment</span>(<span class="prelude-val">Some</span>(<span class="string">b&#39;#&#39;</span>)); });
+        <span class="op">|</span><span class="ident">b</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ReaderBuilder</span><span class="op">|</span> {
+            <span class="ident">b</span>.<span class="ident">comment</span>(<span class="prelude-val">Some</span>(<span class="string">b&#39;\n&#39;</span>));
+        }
+    );
+    <span class="macro">parses_to</span><span class="macro">!</span>(
+        <span class="ident">comment_4</span>,
+        <span class="string">&quot;foo,b#ar,baz&quot;</span>,
+        <span class="macro">csv</span><span class="macro">!</span>[[<span class="string">&quot;foo&quot;</span>, <span class="string">&quot;b#ar&quot;</span>, <span class="string">&quot;baz&quot;</span>]],
+        <span class="op">|</span><span class="ident">b</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ReaderBuilder</span><span class="op">|</span> {
+            <span class="ident">b</span>.<span class="ident">comment</span>(<span class="prelude-val">Some</span>(<span class="string">b&#39;#&#39;</span>));
+        }
+    );
+    <span class="macro">parses_to</span><span class="macro">!</span>(
+        <span class="ident">comment_5</span>,
+        <span class="string">&quot;foo,#bar,baz&quot;</span>,
+        <span class="macro">csv</span><span class="macro">!</span>[[<span class="string">&quot;foo&quot;</span>, <span class="string">&quot;#bar&quot;</span>, <span class="string">&quot;baz&quot;</span>]],
+        <span class="op">|</span><span class="ident">b</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ReaderBuilder</span><span class="op">|</span> {
+            <span class="ident">b</span>.<span class="ident">comment</span>(<span class="prelude-val">Some</span>(<span class="string">b&#39;#&#39;</span>));
+        }
+    );
 
     <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">assert_read</span> {
         (
@@ -3546,7 +3748,7 @@
     <span class="comment">// straight to End.</span>
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">stream_empty</span>() {
-        <span class="kw">use</span> <span class="ident">ReadFieldResult</span>::<span class="kw-2">*</span>;
+        <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">ReadFieldResult</span>::<span class="kw-2">*</span>;
 
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rdr</span> <span class="op">=</span> <span class="ident">Reader</span>::<span class="ident">new</span>();
         <span class="macro">assert_read</span><span class="macro">!</span>(<span class="ident">rdr</span>, <span class="kw-2">&amp;</span>[], <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [], <span class="number">0</span>, <span class="number">0</span>, <span class="ident">End</span>);
@@ -3555,7 +3757,7 @@
     <span class="comment">// Test that a single space is treated as a single field.</span>
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">stream_space</span>() {
-        <span class="kw">use</span> <span class="ident">ReadFieldResult</span>::<span class="kw-2">*</span>;
+        <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">ReadFieldResult</span>::<span class="kw-2">*</span>;
 
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rdr</span> <span class="op">=</span> <span class="ident">Reader</span>::<span class="ident">new</span>();
         <span class="macro">assert_read</span><span class="macro">!</span>(<span class="ident">rdr</span>, <span class="ident">b</span>(<span class="string">&quot; &quot;</span>), <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="number">0</span>], <span class="number">1</span>, <span class="number">1</span>, <span class="ident">InputEmpty</span>);
@@ -3566,7 +3768,7 @@
     <span class="comment">// Test that a single comma ...</span>
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">stream_comma</span>() {
-        <span class="kw">use</span> <span class="ident">ReadFieldResult</span>::<span class="kw-2">*</span>;
+        <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">ReadFieldResult</span>::<span class="kw-2">*</span>;
 
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rdr</span> <span class="op">=</span> <span class="ident">Reader</span>::<span class="ident">new</span>();
         <span class="macro">assert_read</span><span class="macro">!</span>(<span class="ident">rdr</span>, <span class="ident">b</span>(<span class="string">&quot;,&quot;</span>), <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="number">0</span>], <span class="number">1</span>, <span class="number">0</span>, <span class="ident">Field</span> { <span class="ident">record_end</span>: <span class="bool-val">false</span> });
@@ -3578,7 +3780,7 @@
     <span class="comment">// buffers.</span>
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">stream_output_chunks</span>() {
-        <span class="kw">use</span> <span class="ident">ReadFieldResult</span>::<span class="kw-2">*</span>;
+        <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">ReadFieldResult</span>::<span class="kw-2">*</span>;
 
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">inp</span> <span class="op">=</span> <span class="ident">b</span>(<span class="string">&quot;fooquux&quot;</span>);
         <span class="kw">let</span> <span class="ident">out</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="number">0</span>; <span class="number">2</span>];
@@ -3609,7 +3811,7 @@
     <span class="comment">// buffers.</span>
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">stream_input_chunks</span>() {
-        <span class="kw">use</span> <span class="ident">ReadFieldResult</span>::<span class="kw-2">*</span>;
+        <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">ReadFieldResult</span>::<span class="kw-2">*</span>;
 
         <span class="kw">let</span> <span class="ident">out</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="number">0</span>; <span class="number">10</span>];
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rdr</span> <span class="op">=</span> <span class="ident">Reader</span>::<span class="ident">new</span>();
@@ -3633,7 +3835,7 @@
     <span class="comment">// Test we can read doubled quotes correctly in a stream.</span>
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">stream_doubled_quotes</span>() {
-        <span class="kw">use</span> <span class="ident">ReadFieldResult</span>::<span class="kw-2">*</span>;
+        <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">ReadFieldResult</span>::<span class="kw-2">*</span>;
 
         <span class="kw">let</span> <span class="ident">out</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="number">0</span>; <span class="number">10</span>];
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rdr</span> <span class="op">=</span> <span class="ident">Reader</span>::<span class="ident">new</span>();
@@ -3651,7 +3853,7 @@
     <span class="comment">// Test we can read escaped quotes correctly in a stream.</span>
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">stream_escaped_quotes</span>() {
-        <span class="kw">use</span> <span class="ident">ReadFieldResult</span>::<span class="kw-2">*</span>;
+        <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">ReadFieldResult</span>::<span class="kw-2">*</span>;
 
         <span class="kw">let</span> <span class="ident">out</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="number">0</span>; <span class="number">10</span>];
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">builder</span> <span class="op">=</span> <span class="ident">ReaderBuilder</span>::<span class="ident">new</span>();
@@ -3670,13 +3872,19 @@
     <span class="comment">// Test that empty output buffers don&#39;t wreak havoc.</span>
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">stream_empty_output</span>() {
-        <span class="kw">use</span> <span class="ident">ReadFieldResult</span>::<span class="kw-2">*</span>;
+        <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">ReadFieldResult</span>::<span class="kw-2">*</span>;
 
         <span class="kw">let</span> <span class="ident">out</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="number">0</span>; <span class="number">10</span>];
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rdr</span> <span class="op">=</span> <span class="ident">Reader</span>::<span class="ident">new</span>();
 
         <span class="macro">assert_read</span><span class="macro">!</span>(
-            <span class="ident">rdr</span>, <span class="ident">b</span>(<span class="string">&quot;foo,bar&quot;</span>), <span class="ident">out</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="ident">Field</span> { <span class="ident">record_end</span>: <span class="bool-val">false</span> });
+            <span class="ident">rdr</span>,
+            <span class="ident">b</span>(<span class="string">&quot;foo,bar&quot;</span>),
+            <span class="ident">out</span>,
+            <span class="number">4</span>,
+            <span class="number">3</span>,
+            <span class="ident">Field</span> { <span class="ident">record_end</span>: <span class="bool-val">false</span> }
+        );
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="ident">out</span>[..<span class="number">3</span>], <span class="ident">b</span>(<span class="string">&quot;foo&quot;</span>));
 
         <span class="macro">assert_read</span><span class="macro">!</span>(<span class="ident">rdr</span>, <span class="ident">b</span>(<span class="string">&quot;bar&quot;</span>), <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [], <span class="number">0</span>, <span class="number">0</span>, <span class="ident">OutputFull</span>);
@@ -3692,7 +3900,7 @@
     <span class="comment">// the right thing.</span>
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">reset_works</span>() {
-        <span class="kw">use</span> <span class="ident">ReadFieldResult</span>::<span class="kw-2">*</span>;
+        <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">ReadFieldResult</span>::<span class="kw-2">*</span>;
 
         <span class="kw">let</span> <span class="ident">out</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="number">0</span>; <span class="number">10</span>];
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rdr</span> <span class="op">=</span> <span class="ident">Reader</span>::<span class="ident">new</span>();
@@ -3716,7 +3924,7 @@
     <span class="comment">// Test the line number reporting is correct.</span>
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">line_numbers</span>() {
-        <span class="kw">use</span> <span class="ident">ReadFieldResult</span>::<span class="kw-2">*</span>;
+        <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">ReadFieldResult</span>::<span class="kw-2">*</span>;
 
         <span class="kw">let</span> <span class="ident">out</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="number">0</span>; <span class="number">10</span>];
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rdr</span> <span class="op">=</span> <span class="ident">Reader</span>::<span class="ident">new</span>();
@@ -3754,7 +3962,7 @@
     <span class="comment">// Test that we can incrementally read a record.</span>
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">stream_record</span>() {
-        <span class="kw">use</span> <span class="ident">ReadRecordResult</span>::<span class="kw-2">*</span>;
+        <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">ReadRecordResult</span>::<span class="kw-2">*</span>;
 
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">inp</span> <span class="op">=</span> <span class="ident">b</span>(<span class="string">&quot;foo,bar\nbaz&quot;</span>);
         <span class="kw">let</span> <span class="ident">out</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="number">0</span>; <span class="number">1024</span>];
@@ -3779,7 +3987,7 @@
     <span class="comment">// we get an appropriate state returned.</span>
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">stream_record_last_end_output_full</span>() {
-        <span class="kw">use</span> <span class="ident">ReadRecordResult</span>::<span class="kw-2">*</span>;
+        <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">ReadRecordResult</span>::<span class="kw-2">*</span>;
 
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">inp</span> <span class="op">=</span> <span class="ident">b</span>(<span class="string">&quot;foo,bar\nbaz&quot;</span>);
         <span class="kw">let</span> <span class="ident">out</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="number">0</span>; <span class="number">1024</span>];
