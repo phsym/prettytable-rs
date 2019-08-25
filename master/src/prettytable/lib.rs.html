@@ -1558,7 +1558,7 @@
 <span class="attribute">#[<span class="ident">macro_export</span>]</span>
 <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">table</span> {
     ($([$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">content</span>:<span class="ident">tt</span>)<span class="kw-2">*</span>]), <span class="kw-2">*</span>) <span class="op">=&gt;</span> (
-        <span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">Table</span>::<span class="ident">init</span>(<span class="macro">vec</span><span class="macro">!</span>[$(<span class="macro">row</span><span class="macro">!</span>[$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">content</span>)<span class="kw-2">*</span>]), <span class="kw-2">*</span>])
+        <span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">Table</span>::<span class="ident">init</span>(<span class="macro">vec</span><span class="macro">!</span>[$(<span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">row</span><span class="op">!</span>[$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">content</span>)<span class="kw-2">*</span>]), <span class="kw-2">*</span>])
     );
 }
 
@@ -1569,7 +1569,7 @@
 <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">ptable</span> {
     ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">content</span>:<span class="ident">tt</span>)<span class="kw-2">*</span>) <span class="op">=&gt;</span> (
         {
-            <span class="kw">let</span> <span class="ident">tab</span> <span class="op">=</span> <span class="macro">table</span><span class="macro">!</span>($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">content</span>)<span class="kw-2">*</span>);
+            <span class="kw">let</span> <span class="ident">tab</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">table</span><span class="op">!</span>($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">content</span>)<span class="kw-2">*</span>);
             <span class="ident">tab</span>.<span class="ident">printstd</span>();
             <span class="ident">tab</span>
         }
