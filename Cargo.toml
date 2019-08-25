@@ -32,7 +32,7 @@ name = "prettytable"
 
 [dependencies]
 unicode-width = "0.1"
-term = "0.5"
+term = "0.6"
 lazy_static = "1"
 atty = "0.2"
 encode_unicode = "0.3"
