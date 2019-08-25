@@ -15,7 +15,9 @@ install:
 build_script:
   - cargo build --verbose
   - cargo build --verbose --no-default-features
+  - cargo build --verbose --all-features
 
 test_script:
   - cargo test --verbose
   - cargo test --verbose --no-default-features
+  - cargo test --verbose --all-features
