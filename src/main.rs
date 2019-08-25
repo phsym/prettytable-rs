@@ -45,7 +45,6 @@ fn main() {
     table.set_titles(row!["Title 1", "Title 2"]);
     table.set_format(*consts::FORMAT_DEFAULT);
     table.get_format().indent(8);
-    let size = table.printstd();
-    println!("Table height = {}", size);
+    table.printstd();
     // println!("{:#?}", table);
 }
