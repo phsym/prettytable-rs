@@ -3,7 +3,7 @@
         unused_import_braces,
         unused_qualifications)]
 //! A formatted and aligned table printer written in rust
-//! 
+
 #[macro_use]
 extern crate lazy_static;
 
@@ -145,7 +145,7 @@ impl<'a> TableSlice<'a> {
                 .print_line_separator(out, &col_width, LinePosition::Title)?;
         }
         // Print rows
-        let mut iter = self.rows.into_iter().peekable();
+        let mut iter = self.rows.iter().peekable();
         while let Some(r) = iter.next() {
             height += f(r, out, self.format, &col_width)?;
             if iter.peek().is_some() {
@@ -214,7 +214,7 @@ impl Table {
     /// Create a table initialized with `rows`
     pub fn init(rows: Vec<Row>) -> Table {
         Table {
-            rows: rows,
+            rows,
             titles: Box::new(None),
             format: Box::new(*consts::FORMAT_DEFAULT),
         }

@@ -60,10 +60,10 @@ impl LineSeparator {
     /// and `junc` is the one used for junctions between columns and lines
     pub fn new(line: char, junc: char, ljunc: char, rjunc: char) -> LineSeparator {
         LineSeparator {
-            line: line,
-            junc: junc,
-            ljunc: ljunc,
-            rjunc: rjunc,
+            line,
+            junc,
+            ljunc,
+            rjunc,
         }
     }
 
@@ -80,7 +80,7 @@ impl LineSeparator {
         if lborder {
             out.write_all(Utf8Char::from(self.ljunc).as_bytes())?;
         }
-        let mut iter = col_width.into_iter().peekable();
+        let mut iter = col_width.iter().peekable();
         while let Some(width) = iter.next() {
             for _ in 0..width + padding.0 + padding.1 {
                 out.write_all(Utf8Char::from(self.line).as_bytes())?;

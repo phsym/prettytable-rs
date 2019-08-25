@@ -20,7 +20,7 @@ pub struct Row {
 impl Row {
     /// Create a new `Row` backed with `cells` vector
     pub fn new(cells: Vec<Cell>) -> Row {
-        Row { cells: cells }
+        Row { cells }
     }
 
     /// Create an row of length `size`, with empty strings stored
