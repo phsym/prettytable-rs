@@ -1,8 +1,4 @@
-#[macro_use]
-extern crate prettytable;
-extern crate term;
-
-use prettytable::Table;
+use prettytable::{Table, table, cell};
 
 use std::io;
 use std::io::Write;

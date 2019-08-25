@@ -1,8 +1,6 @@
-#[macro_use]
-extern crate prettytable;
 use prettytable::{Table, Row, Cell};
-
 use prettytable::{Attr, color};
+use prettytable::{table, row, cell, ptable};
 
 #[allow(dead_code)]
 fn main() {

@@ -1,6 +1,4 @@
-#[macro_use]
-extern crate prettytable;
-use prettytable::format;
+use prettytable::{format, table, row};
 
 fn main() {
     let mut table = table!(["Value 1", "Value 2"], ["Value three", "Value four"]);

@@ -1,6 +1,4 @@
-#[macro_use]
-extern crate prettytable;
-use prettytable::{Table, Row, Cell};
+use prettytable::{Table, Row, Cell, row, table, ptable};
 
 /*
     Following main function will print :

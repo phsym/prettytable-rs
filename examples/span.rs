@@ -1,6 +1,4 @@
-#[macro_use]
-extern crate prettytable;
-use prettytable::{Row, Cell, format::Alignment};
+use prettytable::{Row, Cell, format::Alignment, table};
 
 
 fn main() {
