@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/term-0.5.2/src/terminfo/parser/compiled.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>compiled.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../../dark.css"><link rel="stylesheet" type="text/css" href="../../../../light.css" id="themeStyle"><script src="../../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../../noscript.css"></noscript><link rel="shortcut icon" href="https://doc.rust-lang.org/favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../../term/index.html'><div class='logo-container'><img src='https://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../../../settings.html"><img src="../../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/term-0.6.1/src/terminfo/parser/compiled.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>compiled.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../../dark.css"><link rel="stylesheet" type="text/css" href="../../../../light.css" id="themeStyle"><script src="../../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../../noscript.css"></noscript><link rel="shortcut icon" href="https://doc.rust-lang.org/favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../../term/index.html'><div class='logo-container'><img src='https://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../../../settings.html"><img src="../../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -195,8 +195,15 @@
 <span id="195">195</span>
 <span id="196">196</span>
 <span id="197">197</span>
+<span id="198">198</span>
+<span id="199">199</span>
+<span id="200">200</span>
+<span id="201">201</span>
+<span id="202">202</span>
+<span id="203">203</span>
+<span id="204">204</span>
 </pre><div class="example-wrap"><pre class="rust ">
-<span class="comment">// Copyright 2013 The Rust Project Developers. See the COPYRIGHT</span>
+<span class="comment">// Copyright 2019 The Rust Project Developers. See the COPYRIGHT</span>
 <span class="comment">// file at the top-level directory of this distribution and at</span>
 <span class="comment">// http://rust-lang.org/COPYRIGHT.</span>
 <span class="comment">//</span>
@@ -209,29 +216,30 @@
 <span class="doccomment">//! ncurses-compatible compiled terminfo format parsing (term(5))</span>
 
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashMap</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>::<span class="ident">prelude</span>::<span class="kw-2">*</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>::<span class="ident">prelude</span>::<span class="kw-2">*</span>;
 
-<span class="kw">use</span> <span class="ident">byteorder</span>::{<span class="ident">LittleEndian</span>, <span class="ident">ReadBytesExt</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">terminfo</span>::<span class="ident">Error</span>::<span class="kw-2">*</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">terminfo</span>::<span class="ident">TermInfo</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="prelude-ty">Result</span>;
 
-<span class="kw">use</span> <span class="ident">terminfo</span>::<span class="ident">Error</span>::<span class="kw-2">*</span>;
-<span class="kw">use</span> <span class="ident">terminfo</span>::<span class="ident">TermInfo</span>;
-<span class="kw">use</span> <span class="prelude-ty">Result</span>;
-
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">terminfo</span>::<span class="ident">parser</span>::<span class="ident">names</span>::<span class="kw-2">*</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">terminfo</span>::<span class="ident">parser</span>::<span class="ident">names</span>::<span class="kw-2">*</span>;
 
 <span class="comment">// These are the orders ncurses uses in its compiled format (as of 5.9). Not</span>
 <span class="comment">// sure if portable.</span>
 
-<span class="kw">fn</span> <span class="ident">read_le_u16</span>(<span class="ident">r</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">io</span>::<span class="ident">Read</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span> {
-    <span class="kw">return</span> <span class="ident">r</span>.<span class="ident">read_u16</span>::<span class="op">&lt;</span><span class="ident">LittleEndian</span><span class="op">&gt;</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">i</span><span class="op">|</span> <span class="ident">i</span> <span class="kw">as</span> <span class="ident">u32</span>);
+<span class="kw">fn</span> <span class="ident">read_le_u16</span>(<span class="ident">r</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw">dyn</span> <span class="ident">io</span>::<span class="ident">Read</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span> {
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buf</span> <span class="op">=</span> [<span class="number">0</span>; <span class="number">2</span>];
+    <span class="ident">r</span>.<span class="ident">read_exact</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">buf</span>)
+        .<span class="ident">map</span>(<span class="op">|</span>()<span class="op">|</span> <span class="ident">u32</span>::<span class="ident">from</span>(<span class="ident">u16</span>::<span class="ident">from_le_bytes</span>(<span class="ident">buf</span>)))
 }
 
-<span class="kw">fn</span> <span class="ident">read_le_u32</span>(<span class="ident">r</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">io</span>::<span class="ident">Read</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span> {
-    <span class="kw">return</span> <span class="ident">r</span>.<span class="ident">read_u32</span>::<span class="op">&lt;</span><span class="ident">LittleEndian</span><span class="op">&gt;</span>();
+<span class="kw">fn</span> <span class="ident">read_le_u32</span>(<span class="ident">r</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw">dyn</span> <span class="ident">io</span>::<span class="ident">Read</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span> {
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buf</span> <span class="op">=</span> [<span class="number">0</span>; <span class="number">4</span>];
+    <span class="ident">r</span>.<span class="ident">read_exact</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">buf</span>).<span class="ident">map</span>(<span class="op">|</span>()<span class="op">|</span> <span class="ident">u32</span>::<span class="ident">from_le_bytes</span>(<span class="ident">buf</span>))
 }
 
-<span class="kw">fn</span> <span class="ident">read_byte</span>(<span class="ident">r</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">io</span>::<span class="ident">Read</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span> {
+<span class="kw">fn</span> <span class="ident">read_byte</span>(<span class="ident">r</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw">dyn</span> <span class="ident">io</span>::<span class="ident">Read</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span> {
     <span class="kw">match</span> <span class="ident">r</span>.<span class="ident">bytes</span>().<span class="ident">next</span>() {
         <span class="prelude-val">Some</span>(<span class="ident">s</span>) <span class="op">=&gt;</span> <span class="ident">s</span>,
         <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">io</span>::<span class="ident">Error</span>::<span class="ident">new</span>(<span class="ident">io</span>::<span class="ident">ErrorKind</span>::<span class="ident">Other</span>, <span class="string">&quot;end of file&quot;</span>)),
@@ -240,7 +248,7 @@
 
 <span class="doccomment">/// Parse a compiled terminfo entry, using long capability names if `longnames`</span>
 <span class="doccomment">/// is true</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">parse</span>(<span class="ident">file</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">io</span>::<span class="ident">Read</span>, <span class="ident">longnames</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">TermInfo</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">parse</span>(<span class="ident">file</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw">dyn</span> <span class="ident">io</span>::<span class="ident">Read</span>, <span class="ident">longnames</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">TermInfo</span><span class="op">&gt;</span> {
     <span class="kw">let</span> (<span class="ident">bnames</span>, <span class="ident">snames</span>, <span class="ident">nnames</span>) <span class="op">=</span> <span class="kw">if</span> <span class="ident">longnames</span> {
         (<span class="ident">boolfnames</span>, <span class="ident">stringfnames</span>, <span class="ident">numfnames</span>)
     } <span class="kw">else</span> {
@@ -248,7 +256,9 @@
     };
 
     <span class="comment">// Check magic number</span>
-    <span class="kw">let</span> <span class="ident">magic</span> <span class="op">=</span> <span class="ident">file</span>.<span class="ident">read_u16</span>::<span class="op">&lt;</span><span class="ident">LittleEndian</span><span class="op">&gt;</span>()<span class="question-mark">?</span>;
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buf</span> <span class="op">=</span> [<span class="number">0</span>; <span class="number">2</span>];
+    <span class="ident">file</span>.<span class="ident">read_exact</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">buf</span>)<span class="question-mark">?</span>;
+    <span class="kw">let</span> <span class="ident">magic</span> <span class="op">=</span> <span class="ident">u16</span>::<span class="ident">from_le_bytes</span>(<span class="ident">buf</span>);
 
     <span class="kw">let</span> <span class="ident">read_number</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">magic</span> {
         <span class="number">0x011A</span> <span class="op">=&gt;</span> <span class="ident">read_le_u16</span>,
@@ -267,7 +277,7 @@
                 <span class="op">-</span><span class="number">1</span> <span class="op">=&gt;</span> <span class="number">0</span>,
                 <span class="kw">_</span> <span class="op">=&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">InvalidLength</span>.<span class="ident">into</span>()),
             }
-        }}
+        }};
     }
 
     <span class="kw">let</span> <span class="ident">names_bytes</span> <span class="op">=</span> <span class="macro">read_nonneg</span><span class="macro">!</span>();
@@ -294,7 +304,8 @@
 
     <span class="comment">// don&#39;t read NUL</span>
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">bytes</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">new</span>();
-    <span class="ident">file</span>.<span class="ident">take</span>((<span class="ident">names_bytes</span> <span class="op">-</span> <span class="number">1</span>) <span class="kw">as</span> <span class="ident">u64</span>).<span class="ident">read_to_end</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">bytes</span>)<span class="question-mark">?</span>;
+    <span class="ident">file</span>.<span class="ident">take</span>((<span class="ident">names_bytes</span> <span class="op">-</span> <span class="number">1</span>) <span class="kw">as</span> <span class="ident">u64</span>)
+        .<span class="ident">read_to_end</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">bytes</span>)<span class="question-mark">?</span>;
     <span class="kw">let</span> <span class="ident">names_str</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">String</span>::<span class="ident">from_utf8</span>(<span class="ident">bytes</span>) {
         <span class="prelude-val">Ok</span>(<span class="ident">s</span>) <span class="op">=&gt;</span> <span class="ident">s</span>,
         <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">NotUtf8</span>(<span class="ident">e</span>.<span class="ident">utf8_error</span>()).<span class="ident">into</span>()),
@@ -328,7 +339,10 @@
 
     <span class="kw">let</span> <span class="ident">string_map</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;&gt;</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">string_offsets_count</span> <span class="op">&gt;</span> <span class="number">0</span> {
         <span class="kw">let</span> <span class="ident">string_offsets</span> <span class="op">=</span> (<span class="number">0</span>..<span class="ident">string_offsets_count</span>)
-            .<span class="ident">map</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">file</span>.<span class="ident">read_u16</span>::<span class="op">&lt;</span><span class="ident">LittleEndian</span><span class="op">&gt;</span>())
+            .<span class="ident">map</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> {
+                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buf</span> <span class="op">=</span> [<span class="number">0</span>; <span class="number">2</span>];
+                <span class="ident">file</span>.<span class="ident">read_exact</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">buf</span>).<span class="ident">map</span>(<span class="op">|</span>()<span class="op">|</span> <span class="ident">u16</span>::<span class="ident">from_le_bytes</span>(<span class="ident">buf</span>))
+            })
             .<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;&gt;</span><span class="op">&gt;</span>()<span class="question-mark">?</span>;
 
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">string_table</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">new</span>();
@@ -364,7 +378,7 @@
                     .<span class="ident">position</span>(<span class="op">|</span><span class="kw-2">&amp;</span><span class="ident">b</span><span class="op">|</span> <span class="ident">b</span> <span class="op">==</span> <span class="number">0</span>);
                 <span class="kw">match</span> <span class="ident">nulpos</span> {
                     <span class="prelude-val">Some</span>(<span class="ident">len</span>) <span class="op">=&gt;</span> <span class="prelude-val">Ok</span>((<span class="ident">name</span>, <span class="ident">string_table</span>[<span class="ident">offset</span>..<span class="ident">offset</span> <span class="op">+</span> <span class="ident">len</span>].<span class="ident">to_vec</span>())),
-                    <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(::<span class="ident">Error</span>::<span class="ident">TerminfoParsing</span>(<span class="ident">StringsMissingNull</span>)),
+                    <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="prelude-val">Err</span>(<span class="kw">crate</span>::<span class="ident">Error</span>::<span class="ident">TerminfoParsing</span>(<span class="ident">StringsMissingNull</span>)),
                 }
             })
             .<span class="ident">collect</span>::<span class="op">&lt;</span><span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw">_</span>, <span class="kw">_</span><span class="op">&gt;&gt;</span><span class="op">&gt;</span>()<span class="question-mark">?</span>

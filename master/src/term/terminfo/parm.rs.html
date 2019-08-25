@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/term-0.5.2/src/terminfo/parm.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>parm.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css"><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="https://doc.rust-lang.org/favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../term/index.html'><div class='logo-container'><img src='https://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/term-0.6.1/src/terminfo/parm.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>parm.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css"><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="https://doc.rust-lang.org/favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../term/index.html'><div class='logo-container'><img src='https://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -741,8 +741,13 @@
 <span id="741">741</span>
 <span id="742">742</span>
 <span id="743">743</span>
+<span id="744">744</span>
+<span id="745">745</span>
+<span id="746">746</span>
+<span id="747">747</span>
+<span id="748">748</span>
 </pre><div class="example-wrap"><pre class="rust ">
-<span class="comment">// Copyright 2012 The Rust Project Developers. See the COPYRIGHT</span>
+<span class="comment">// Copyright 2019 The Rust Project Developers. See the COPYRIGHT</span>
 <span class="comment">// file at the top-level directory of this distribution and at</span>
 <span class="comment">// http://rust-lang.org/COPYRIGHT.</span>
 <span class="comment">//</span>
@@ -825,7 +830,7 @@
 }
 
 <span class="kw">impl</span> ::<span class="ident">std</span>::<span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">Error</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> ::<span class="ident">std</span>::<span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> ::<span class="ident">std</span>::<span class="ident">fmt</span>::<span class="ident">Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
         <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>::<span class="ident">Error</span>;
         <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="self">self</span>.<span class="ident">description</span>())
     }
@@ -848,7 +853,7 @@
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">cause</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>::<span class="ident">std</span>::<span class="ident">error</span>::<span class="ident">Error</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">cause</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw">dyn</span> (::<span class="ident">std</span>::<span class="ident">error</span>::<span class="ident">Error</span>)<span class="op">&gt;</span> {
         <span class="prelude-val">None</span>
     }
 }
@@ -857,9 +862,9 @@
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Default</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Variables</span> {
     <span class="doccomment">/// Static variables A-Z</span>
-    <span class="ident">sta</span>: [<span class="ident">Param</span>; <span class="number">26</span>],
+    <span class="ident">sta_vars</span>: [<span class="ident">Param</span>; <span class="number">26</span>],
     <span class="doccomment">/// Dynamic variables a-z</span>
-    <span class="ident">dyn</span>: [<span class="ident">Param</span>; <span class="number">26</span>],
+    <span class="ident">dyn_vars</span>: [<span class="ident">Param</span>; <span class="number">26</span>],
 }
 
 <span class="kw">impl</span> <span class="ident">Variables</span> {
@@ -965,18 +970,20 @@
                         }
                     }
                     <span class="string">&#39;=&#39;</span> <span class="op">|</span> <span class="string">&#39;&gt;&#39;</span> <span class="op">|</span> <span class="string">&#39;&lt;&#39;</span> <span class="op">|</span> <span class="string">&#39;A&#39;</span> <span class="op">|</span> <span class="string">&#39;O&#39;</span> <span class="op">=&gt;</span> <span class="kw">match</span> (<span class="ident">stack</span>.<span class="ident">pop</span>(), <span class="ident">stack</span>.<span class="ident">pop</span>()) {
-                        (<span class="prelude-val">Some</span>(<span class="ident">Number</span>(<span class="ident">y</span>)), <span class="prelude-val">Some</span>(<span class="ident">Number</span>(<span class="ident">x</span>))) <span class="op">=&gt;</span> <span class="ident">stack</span>.<span class="ident">push</span>(<span class="ident">Number</span>(<span class="kw">if</span> <span class="kw">match</span> <span class="ident">cur</span> {
-                            <span class="string">&#39;=&#39;</span> <span class="op">=&gt;</span> <span class="ident">x</span> <span class="op">==</span> <span class="ident">y</span>,
-                            <span class="string">&#39;&lt;&#39;</span> <span class="op">=&gt;</span> <span class="ident">x</span> <span class="op">&lt;</span> <span class="ident">y</span>,
-                            <span class="string">&#39;&gt;&#39;</span> <span class="op">=&gt;</span> <span class="ident">x</span> <span class="op">&gt;</span> <span class="ident">y</span>,
-                            <span class="string">&#39;A&#39;</span> <span class="op">=&gt;</span> <span class="ident">x</span> <span class="op">&gt;</span> <span class="number">0</span> <span class="op">&amp;&amp;</span> <span class="ident">y</span> <span class="op">&gt;</span> <span class="number">0</span>,
-                            <span class="string">&#39;O&#39;</span> <span class="op">=&gt;</span> <span class="ident">x</span> <span class="op">&gt;</span> <span class="number">0</span> <span class="op">||</span> <span class="ident">y</span> <span class="op">&gt;</span> <span class="number">0</span>,
-                            <span class="kw">_</span> <span class="op">=&gt;</span> <span class="macro">unreachable</span><span class="macro">!</span>(<span class="string">&quot;logic error&quot;</span>),
-                        } {
-                            <span class="number">1</span>
-                        } <span class="kw">else</span> {
-                            <span class="number">0</span>
-                        })),
+                        (<span class="prelude-val">Some</span>(<span class="ident">Number</span>(<span class="ident">y</span>)), <span class="prelude-val">Some</span>(<span class="ident">Number</span>(<span class="ident">x</span>))) <span class="op">=&gt;</span> <span class="ident">stack</span>.<span class="ident">push</span>(<span class="ident">Number</span>(
+                            <span class="kw">if</span> <span class="kw">match</span> <span class="ident">cur</span> {
+                                <span class="string">&#39;=&#39;</span> <span class="op">=&gt;</span> <span class="ident">x</span> <span class="op">==</span> <span class="ident">y</span>,
+                                <span class="string">&#39;&lt;&#39;</span> <span class="op">=&gt;</span> <span class="ident">x</span> <span class="op">&lt;</span> <span class="ident">y</span>,
+                                <span class="string">&#39;&gt;&#39;</span> <span class="op">=&gt;</span> <span class="ident">x</span> <span class="op">&gt;</span> <span class="ident">y</span>,
+                                <span class="string">&#39;A&#39;</span> <span class="op">=&gt;</span> <span class="ident">x</span> <span class="op">&gt;</span> <span class="number">0</span> <span class="op">&amp;&amp;</span> <span class="ident">y</span> <span class="op">&gt;</span> <span class="number">0</span>,
+                                <span class="string">&#39;O&#39;</span> <span class="op">=&gt;</span> <span class="ident">x</span> <span class="op">&gt;</span> <span class="number">0</span> <span class="op">||</span> <span class="ident">y</span> <span class="op">&gt;</span> <span class="number">0</span>,
+                                <span class="kw">_</span> <span class="op">=&gt;</span> <span class="macro">unreachable</span><span class="macro">!</span>(<span class="string">&quot;logic error&quot;</span>),
+                            } {
+                                <span class="number">1</span>
+                            } <span class="kw">else</span> {
+                                <span class="number">0</span>
+                            },
+                        )),
                         (<span class="prelude-val">Some</span>(<span class="kw">_</span>), <span class="prelude-val">Some</span>(<span class="kw">_</span>)) <span class="op">=&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">TypeMismatch</span>),
                         <span class="kw">_</span> <span class="op">=&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">StackUnderflow</span>),
                     },
@@ -1008,7 +1015,7 @@
                             <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">StackUnderflow</span>);
                         }
                     }
-                    <span class="string">&#39;:&#39;</span> <span class="op">|</span> <span class="string">&#39;#&#39;</span> <span class="op">|</span> <span class="string">&#39; &#39;</span> <span class="op">|</span> <span class="string">&#39;.&#39;</span> <span class="op">|</span> <span class="string">&#39;0&#39;</span>...<span class="string">&#39;9&#39;</span> <span class="op">=&gt;</span> {
+                    <span class="string">&#39;:&#39;</span> <span class="op">|</span> <span class="string">&#39;#&#39;</span> <span class="op">|</span> <span class="string">&#39; &#39;</span> <span class="op">|</span> <span class="string">&#39;.&#39;</span> <span class="op">|</span> <span class="string">&#39;0&#39;</span>..=<span class="string">&#39;9&#39;</span> <span class="op">=&gt;</span> {
                         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">flags</span> <span class="op">=</span> <span class="ident">Flags</span>::<span class="ident">default</span>();
                         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">fstate</span> <span class="op">=</span> <span class="ident">FormatState</span>::<span class="ident">Flags</span>;
                         <span class="kw">match</span> <span class="ident">cur</span> {
@@ -1016,7 +1023,7 @@
                             <span class="string">&#39;#&#39;</span> <span class="op">=&gt;</span> <span class="ident">flags</span>.<span class="ident">alternate</span> <span class="op">=</span> <span class="bool-val">true</span>,
                             <span class="string">&#39; &#39;</span> <span class="op">=&gt;</span> <span class="ident">flags</span>.<span class="ident">space</span> <span class="op">=</span> <span class="bool-val">true</span>,
                             <span class="string">&#39;.&#39;</span> <span class="op">=&gt;</span> <span class="ident">fstate</span> <span class="op">=</span> <span class="ident">FormatState</span>::<span class="ident">Precision</span>,
-                            <span class="string">&#39;0&#39;</span>...<span class="string">&#39;9&#39;</span> <span class="op">=&gt;</span> {
+                            <span class="string">&#39;0&#39;</span>..=<span class="string">&#39;9&#39;</span> <span class="op">=&gt;</span> {
                                 <span class="ident">flags</span>.<span class="ident">width</span> <span class="op">=</span> <span class="ident">cur</span> <span class="kw">as</span> <span class="ident">usize</span> <span class="op">-</span> <span class="string">&#39;0&#39;</span> <span class="kw">as</span> <span class="ident">usize</span>;
                                 <span class="ident">fstate</span> <span class="op">=</span> <span class="ident">FormatState</span>::<span class="ident">Width</span>;
                             }
@@ -1041,23 +1048,24 @@
                 <span class="comment">// params are 1-indexed</span>
                 <span class="ident">stack</span>.<span class="ident">push</span>(
                     <span class="ident">mparams</span>[<span class="kw">match</span> <span class="ident">cur</span>.<span class="ident">to_digit</span>(<span class="number">10</span>) {
-                                <span class="prelude-val">Some</span>(<span class="ident">d</span>) <span class="op">=&gt;</span> <span class="ident">d</span> <span class="kw">as</span> <span class="ident">usize</span> <span class="op">-</span> <span class="number">1</span>,
-                                <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">InvalidParameterIndex</span>(<span class="ident">cur</span>)),
-                            }].<span class="ident">clone</span>(),
+                        <span class="prelude-val">Some</span>(<span class="ident">d</span>) <span class="op">=&gt;</span> <span class="ident">d</span> <span class="kw">as</span> <span class="ident">usize</span> <span class="op">-</span> <span class="number">1</span>,
+                        <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">InvalidParameterIndex</span>(<span class="ident">cur</span>)),
+                    }]
+                    .<span class="ident">clone</span>(),
                 );
             }
             <span class="ident">SetVar</span> <span class="op">=&gt;</span> {
                 <span class="kw">if</span> <span class="ident">cur</span> <span class="op">&gt;=</span> <span class="string">&#39;A&#39;</span> <span class="op">&amp;&amp;</span> <span class="ident">cur</span> <span class="op">&lt;=</span> <span class="string">&#39;Z&#39;</span> {
                     <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">arg</span>) <span class="op">=</span> <span class="ident">stack</span>.<span class="ident">pop</span>() {
                         <span class="kw">let</span> <span class="ident">idx</span> <span class="op">=</span> (<span class="ident">cur</span> <span class="kw">as</span> <span class="ident">u8</span>) <span class="op">-</span> <span class="string">b&#39;A&#39;</span>;
-                        <span class="ident">vars</span>.<span class="ident">sta</span>[<span class="ident">idx</span> <span class="kw">as</span> <span class="ident">usize</span>] <span class="op">=</span> <span class="ident">arg</span>;
+                        <span class="ident">vars</span>.<span class="ident">sta_vars</span>[<span class="ident">idx</span> <span class="kw">as</span> <span class="ident">usize</span>] <span class="op">=</span> <span class="ident">arg</span>;
                     } <span class="kw">else</span> {
                         <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">StackUnderflow</span>);
                     }
                 } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">cur</span> <span class="op">&gt;=</span> <span class="string">&#39;a&#39;</span> <span class="op">&amp;&amp;</span> <span class="ident">cur</span> <span class="op">&lt;=</span> <span class="string">&#39;z&#39;</span> {
                     <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">arg</span>) <span class="op">=</span> <span class="ident">stack</span>.<span class="ident">pop</span>() {
                         <span class="kw">let</span> <span class="ident">idx</span> <span class="op">=</span> (<span class="ident">cur</span> <span class="kw">as</span> <span class="ident">u8</span>) <span class="op">-</span> <span class="string">b&#39;a&#39;</span>;
-                        <span class="ident">vars</span>.<span class="ident">dyn</span>[<span class="ident">idx</span> <span class="kw">as</span> <span class="ident">usize</span>] <span class="op">=</span> <span class="ident">arg</span>;
+                        <span class="ident">vars</span>.<span class="ident">dyn_vars</span>[<span class="ident">idx</span> <span class="kw">as</span> <span class="ident">usize</span>] <span class="op">=</span> <span class="ident">arg</span>;
                     } <span class="kw">else</span> {
                         <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">StackUnderflow</span>);
                     }
@@ -1068,16 +1076,16 @@
             <span class="ident">GetVar</span> <span class="op">=&gt;</span> {
                 <span class="kw">if</span> <span class="ident">cur</span> <span class="op">&gt;=</span> <span class="string">&#39;A&#39;</span> <span class="op">&amp;&amp;</span> <span class="ident">cur</span> <span class="op">&lt;=</span> <span class="string">&#39;Z&#39;</span> {
                     <span class="kw">let</span> <span class="ident">idx</span> <span class="op">=</span> (<span class="ident">cur</span> <span class="kw">as</span> <span class="ident">u8</span>) <span class="op">-</span> <span class="string">b&#39;A&#39;</span>;
-                    <span class="ident">stack</span>.<span class="ident">push</span>(<span class="ident">vars</span>.<span class="ident">sta</span>[<span class="ident">idx</span> <span class="kw">as</span> <span class="ident">usize</span>].<span class="ident">clone</span>());
+                    <span class="ident">stack</span>.<span class="ident">push</span>(<span class="ident">vars</span>.<span class="ident">sta_vars</span>[<span class="ident">idx</span> <span class="kw">as</span> <span class="ident">usize</span>].<span class="ident">clone</span>());
                 } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">cur</span> <span class="op">&gt;=</span> <span class="string">&#39;a&#39;</span> <span class="op">&amp;&amp;</span> <span class="ident">cur</span> <span class="op">&lt;=</span> <span class="string">&#39;z&#39;</span> {
                     <span class="kw">let</span> <span class="ident">idx</span> <span class="op">=</span> (<span class="ident">cur</span> <span class="kw">as</span> <span class="ident">u8</span>) <span class="op">-</span> <span class="string">b&#39;a&#39;</span>;
-                    <span class="ident">stack</span>.<span class="ident">push</span>(<span class="ident">vars</span>.<span class="ident">dyn</span>[<span class="ident">idx</span> <span class="kw">as</span> <span class="ident">usize</span>].<span class="ident">clone</span>());
+                    <span class="ident">stack</span>.<span class="ident">push</span>(<span class="ident">vars</span>.<span class="ident">dyn_vars</span>[<span class="ident">idx</span> <span class="kw">as</span> <span class="ident">usize</span>].<span class="ident">clone</span>());
                 } <span class="kw">else</span> {
                     <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">InvalidVariableName</span>(<span class="ident">cur</span>));
                 }
             }
             <span class="ident">CharConstant</span> <span class="op">=&gt;</span> {
-                <span class="ident">stack</span>.<span class="ident">push</span>(<span class="ident">Number</span>(<span class="ident">c</span> <span class="kw">as</span> <span class="ident">i32</span>));
+                <span class="ident">stack</span>.<span class="ident">push</span>(<span class="ident">Number</span>(<span class="ident">i32</span>::<span class="ident">from</span>(<span class="ident">c</span>)));
                 <span class="ident">state</span> <span class="op">=</span> <span class="ident">CharClose</span>;
             }
             <span class="ident">CharClose</span> <span class="op">=&gt;</span> {
@@ -1090,7 +1098,8 @@
                     <span class="ident">stack</span>.<span class="ident">push</span>(<span class="ident">Number</span>(<span class="ident">i</span>));
                     <span class="ident">state</span> <span class="op">=</span> <span class="ident">Nothing</span>;
                 } <span class="kw">else</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">digit</span>) <span class="op">=</span> <span class="ident">cur</span>.<span class="ident">to_digit</span>(<span class="number">10</span>) {
-                    <span class="kw">match</span> <span class="ident">i</span>.<span class="ident">checked_mul</span>(<span class="number">10</span>)
+                    <span class="kw">match</span> <span class="ident">i</span>
+                        .<span class="ident">checked_mul</span>(<span class="number">10</span>)
                         .<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">i_ten</span><span class="op">|</span> <span class="ident">i_ten</span>.<span class="ident">checked_add</span>(<span class="ident">digit</span> <span class="kw">as</span> <span class="ident">i32</span>))
                     {
                         <span class="prelude-val">Some</span>(<span class="ident">i</span>) <span class="op">=&gt;</span> {
@@ -1128,11 +1137,11 @@
                     (<span class="ident">FormatState</span>::<span class="ident">Flags</span>, <span class="string">&#39; &#39;</span>) <span class="op">=&gt;</span> {
                         <span class="ident">flags</span>.<span class="ident">space</span> <span class="op">=</span> <span class="bool-val">true</span>;
                     }
-                    (<span class="ident">FormatState</span>::<span class="ident">Flags</span>, <span class="string">&#39;0&#39;</span>...<span class="string">&#39;9&#39;</span>) <span class="op">=&gt;</span> {
+                    (<span class="ident">FormatState</span>::<span class="ident">Flags</span>, <span class="string">&#39;0&#39;</span>..=<span class="string">&#39;9&#39;</span>) <span class="op">=&gt;</span> {
                         <span class="ident">flags</span>.<span class="ident">width</span> <span class="op">=</span> <span class="ident">cur</span> <span class="kw">as</span> <span class="ident">usize</span> <span class="op">-</span> <span class="string">&#39;0&#39;</span> <span class="kw">as</span> <span class="ident">usize</span>;
                         <span class="kw-2">*</span><span class="ident">fstate</span> <span class="op">=</span> <span class="ident">FormatState</span>::<span class="ident">Width</span>;
                     }
-                    (<span class="ident">FormatState</span>::<span class="ident">Width</span>, <span class="string">&#39;0&#39;</span>...<span class="string">&#39;9&#39;</span>) <span class="op">=&gt;</span> {
+                    (<span class="ident">FormatState</span>::<span class="ident">Width</span>, <span class="string">&#39;0&#39;</span>..=<span class="string">&#39;9&#39;</span>) <span class="op">=&gt;</span> {
                         <span class="ident">flags</span>.<span class="ident">width</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">flags</span>
                             .<span class="ident">width</span>
                             .<span class="ident">checked_mul</span>(<span class="number">10</span>)
@@ -1145,7 +1154,7 @@
                     (<span class="ident">FormatState</span>::<span class="ident">Width</span>, <span class="string">&#39;.&#39;</span>) <span class="op">|</span> (<span class="ident">FormatState</span>::<span class="ident">Flags</span>, <span class="string">&#39;.&#39;</span>) <span class="op">=&gt;</span> {
                         <span class="kw-2">*</span><span class="ident">fstate</span> <span class="op">=</span> <span class="ident">FormatState</span>::<span class="ident">Precision</span>;
                     }
-                    (<span class="ident">FormatState</span>::<span class="ident">Precision</span>, <span class="string">&#39;0&#39;</span>...<span class="string">&#39;9&#39;</span>) <span class="op">=&gt;</span> {
+                    (<span class="ident">FormatState</span>::<span class="ident">Precision</span>, <span class="string">&#39;0&#39;</span>..=<span class="string">&#39;9&#39;</span>) <span class="op">=&gt;</span> {
                         <span class="ident">flags</span>.<span class="ident">precision</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">flags</span>
                             .<span class="ident">precision</span>
                             .<span class="ident">checked_mul</span>(<span class="number">10</span>)
@@ -1279,7 +1288,8 @@
                     }
                 }
                 <span class="ident">String</span> <span class="op">=&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">TypeMismatch</span>),
-            }.<span class="ident">into_bytes</span>()
+            }
+            .<span class="ident">into_bytes</span>()
         }
         <span class="ident">Words</span>(<span class="ident">s</span>) <span class="op">=&gt;</span> <span class="kw">match</span> <span class="ident">op</span> {
             <span class="ident">String</span> <span class="op">=&gt;</span> {
@@ -1308,8 +1318,8 @@
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">mod</span> <span class="ident">test</span> {
-    <span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">expand</span>, <span class="ident">Variables</span>};
     <span class="kw">use</span> <span class="kw">super</span>::<span class="ident">Param</span>::{<span class="self">self</span>, <span class="ident">Number</span>, <span class="ident">Words</span>};
+    <span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">expand</span>, <span class="ident">Variables</span>};
     <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">result</span>::<span class="prelude-ty">Result</span>::<span class="prelude-val">Ok</span>;
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
