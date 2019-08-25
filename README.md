@@ -5,7 +5,7 @@
 [![Crates.io](https://img.shields.io/crates/v/prettytable-rs.svg)](https://crates.io/crates/prettytable-rs)
 [![Doc.rs](https://docs.rs/prettytable-rs/badge.svg)](https://docs.rs/crate/prettytable-rs/)
 [![Doc.rs](https://img.shields.io/badge/docs-master-blue.svg)](http://phsym.github.io/prettytable-rs/master)
-
+[![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=phsym/prettytable-rs)](https://dependabot.com)
 # prettytable-rs
 
 A formatted and aligned table printer library for [Rust](https://www.rust-lang.org).
