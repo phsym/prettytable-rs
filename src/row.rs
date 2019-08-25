@@ -304,15 +304,15 @@ impl <S: ToString> Extend<S> for Row {
 #[macro_export]
 macro_rules! row {
     (($($out:tt)*);) => (vec![$($out)*]);
-    (($($out:tt)*); $value:expr) => (vec![$($out)* cell!($value)]);
-    (($($out:tt)*); $value:expr, $($n:tt)*) => (row!(($($out)* cell!($value),); $($n)*));
-    (($($out:tt)*); $style:ident -> $value:expr) => (vec![$($out)* cell!($style -> $value)]);
-    (($($out:tt)*); $style:ident -> $value:expr, $($n: tt)*) => (row!(($($out)* cell!($style -> $value),); $($n)*));
+    (($($out:tt)*); $value:expr) => (vec![$($out)* $crate::cell!($value)]);
+    (($($out:tt)*); $value:expr, $($n:tt)*) => ($crate::row!(($($out)* $crate::cell!($value),); $($n)*));
+    (($($out:tt)*); $style:ident -> $value:expr) => (vec![$($out)* $crate::cell!($style -> $value)]);
+    (($($out:tt)*); $style:ident -> $value:expr, $($n: tt)*) => ($crate::row!(($($out)* $crate::cell!($style -> $value),); $($n)*));
 
-    ($($content:expr), *) => ($crate::Row::new(vec![$(cell!($content)), *])); // This line may not be needed starting from Rust 1.20
-    ($style:ident => $($content:expr), *) => ($crate::Row::new(vec![$(cell!($style -> $content)), *]));
-    ($style:ident => $($content:expr,) *) => ($crate::Row::new(vec![$(cell!($style -> $content)), *]));
-    ($($content:tt)*) => ($crate::Row::new(row!((); $($content)*)));
+    ($($content:expr), *) => ($crate::Row::new(vec![$($crate::cell!($content)), *])); // This line may not be needed starting from Rust 1.20
+    ($style:ident => $($content:expr), *) => ($crate::Row::new(vec![$($crate::cell!($style -> $content)), *]));
+    ($style:ident => $($content:expr,) *) => ($crate::Row::new(vec![$($crate::cell!($style -> $content)), *]));
+    ($($content:tt)*) => ($crate::Row::new($crate::row!((); $($content)*)));
 }
 
 #[cfg(test)]
