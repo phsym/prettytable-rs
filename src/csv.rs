@@ -1,6 +1,6 @@
 //! CSV impl and reexported types
 
-extern crate csv;
+use csv;
 
 pub use self::csv::{Reader, Writer, Result, ReaderBuilder};
 use std::path::Path;
@@ -81,7 +81,7 @@ impl super::Table {
 
 #[cfg(test)]
 mod tests {
-    use {Table, Row, Cell};
+    use crate::{Table, Row, Cell};
 
     static CSV_S: &'static str = "ABC,DEFG,HIJKLMN\n\
                                 foobar,bar,foo\n\

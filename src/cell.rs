@@ -320,10 +320,10 @@ macro_rules! cell {
 
 #[cfg(test)]
 mod tests {
-    use Cell;
-    use format::Alignment;
+    use super::Cell;
+    use crate::format::Alignment;
     use term::{color, Attr};
-    use utils::StringWriter;
+    use crate::utils::StringWriter;
 
     #[test]
     fn get_content() {

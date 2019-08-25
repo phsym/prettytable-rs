@@ -108,7 +108,7 @@ pub fn display_width(text: &str) -> usize {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use format::Alignment;
+    use crate::format::Alignment;
     use std::io::Write;
 
     #[test]

@@ -1,11 +1,9 @@
-// #![feature(trace_macros)]
-#[macro_use]
-extern crate prettytable;
 use prettytable::Table;
 use prettytable::Row;
 use prettytable::Cell;
 use prettytable::format::*;
 use prettytable::{Attr, color};
+use prettytable::{table, row, ptable}; // Import macros
 
 // trace_macros!(true);
 

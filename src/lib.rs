@@ -3,12 +3,9 @@
         unused_import_braces,
         unused_qualifications)]
 //! A formatted and aligned table printer written in rust
-extern crate unicode_width;
-extern crate term;
-extern crate atty;
+//! 
 #[macro_use]
 extern crate lazy_static;
-extern crate encode_unicode;
 
 use std::io::{self, Write, Error};
 use std::fmt;
@@ -587,13 +584,9 @@ macro_rules! ptable {
 
 #[cfg(test)]
 mod tests {
-    use Table;
-    use Slice;
-    use Row;
-    use Cell;
-    use format;
+    use crate::{Table, Slice, Row, Cell, format};
     use format::consts::{FORMAT_DEFAULT, FORMAT_NO_LINESEP, FORMAT_NO_COLSEP, FORMAT_CLEAN, FORMAT_BOX_CHARS};
-    use utils::StringWriter;
+    use crate::utils::StringWriter;
 
     #[test]
     fn table() {

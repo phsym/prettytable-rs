@@ -1,5 +1,3 @@
-extern crate prettytable;
-
 /*
     Following main function will print :
     +---------+------+---------+
