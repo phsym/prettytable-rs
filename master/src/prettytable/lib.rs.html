@@ -981,25 +981,15 @@
 <span id="981">981</span>
 <span id="982">982</span>
 <span id="983">983</span>
-<span id="984">984</span>
-<span id="985">985</span>
-<span id="986">986</span>
-<span id="987">987</span>
-<span id="988">988</span>
-<span id="989">989</span>
-<span id="990">990</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="attribute">#![<span class="ident">warn</span>(<span class="ident">missing_docs</span>,
         <span class="ident">unused_extern_crates</span>,
         <span class="ident">unused_import_braces</span>,
         <span class="ident">unused_qualifications</span>)]</span>
 <span class="doccomment">//! A formatted and aligned table printer written in rust</span>
-<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">unicode_width</span>;
-<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">term</span>;
-<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">atty</span>;
+<span class="doccomment">//! </span>
 <span class="attribute">#[<span class="ident">macro_use</span>]</span>
 <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">lazy_static</span>;
-<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">encode_unicode</span>;
 
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>::{<span class="self">self</span>, <span class="ident">Write</span>, <span class="ident">Error</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
@@ -1578,13 +1568,9 @@
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">mod</span> <span class="ident">tests</span> {
-    <span class="kw">use</span> <span class="ident">Table</span>;
-    <span class="kw">use</span> <span class="ident">Slice</span>;
-    <span class="kw">use</span> <span class="ident">Row</span>;
-    <span class="kw">use</span> <span class="ident">Cell</span>;
-    <span class="kw">use</span> <span class="ident">format</span>;
+    <span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">Table</span>, <span class="ident">Slice</span>, <span class="ident">Row</span>, <span class="ident">Cell</span>, <span class="ident">format</span>};
     <span class="kw">use</span> <span class="ident">format</span>::<span class="ident">consts</span>::{<span class="ident">FORMAT_DEFAULT</span>, <span class="ident">FORMAT_NO_LINESEP</span>, <span class="ident">FORMAT_NO_COLSEP</span>, <span class="ident">FORMAT_CLEAN</span>, <span class="ident">FORMAT_BOX_CHARS</span>};
-    <span class="kw">use</span> <span class="ident">utils</span>::<span class="ident">StringWriter</span>;
+    <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">utils</span>::<span class="ident">StringWriter</span>;
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">table</span>() {

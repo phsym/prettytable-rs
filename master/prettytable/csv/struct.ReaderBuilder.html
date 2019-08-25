@@ -10,7 +10,7 @@ with <code>from_</code>.</p>
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>::<span class="ident">Error</span>;
 <span class="kw">use</span> <span class="ident">csv</span>::{<span class="ident">ReaderBuilder</span>, <span class="ident">StringRecord</span>};
 
-<span class="kw">fn</span> <span class="ident">example</span>() <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">dyn</span> <span class="ident">Error</span><span class="op">&gt;&gt;</span> {
+<span class="kw">fn</span> <span class="ident">example</span>() <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">Error</span><span class="op">&gt;&gt;</span> {
     <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="string">&quot;\
 city,country,pop
 Boston,United States,4628910
@@ -36,7 +36,7 @@ returns the corresponding error.</p>
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>::<span class="ident">Error</span>;
 <span class="kw">use</span> <span class="ident">csv</span>::<span class="ident">ReaderBuilder</span>;
 
-<span class="kw">fn</span> <span class="ident">example</span>() <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">dyn</span> <span class="ident">Error</span><span class="op">&gt;&gt;</span> {
+<span class="kw">fn</span> <span class="ident">example</span>() <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">Error</span><span class="op">&gt;&gt;</span> {
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rdr</span> <span class="op">=</span> <span class="ident">ReaderBuilder</span>::<span class="ident">new</span>().<span class="ident">from_path</span>(<span class="string">&quot;foo.csv&quot;</span>)<span class="question-mark">?</span>;
     <span class="kw">for</span> <span class="ident">result</span> <span class="kw">in</span> <span class="ident">rdr</span>.<span class="ident">records</span>() {
         <span class="kw">let</span> <span class="ident">record</span> <span class="op">=</span> <span class="ident">result</span><span class="question-mark">?</span>;
@@ -52,7 +52,7 @@ wrap <code>rdr</code> in a buffered reader like <code>io::BufReader</code>.</p>
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>::<span class="ident">Error</span>;
 <span class="kw">use</span> <span class="ident">csv</span>::<span class="ident">ReaderBuilder</span>;
 
-<span class="kw">fn</span> <span class="ident">example</span>() <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">dyn</span> <span class="ident">Error</span><span class="op">&gt;&gt;</span> {
+<span class="kw">fn</span> <span class="ident">example</span>() <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">Error</span><span class="op">&gt;&gt;</span> {
     <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="string">&quot;\
 city,country,pop
 Boston,United States,4628910
@@ -72,7 +72,7 @@ Concord,United States,42695
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>::<span class="ident">Error</span>;
 <span class="kw">use</span> <span class="ident">csv</span>::<span class="ident">ReaderBuilder</span>;
 
-<span class="kw">fn</span> <span class="ident">example</span>() <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">dyn</span> <span class="ident">Error</span><span class="op">&gt;&gt;</span> {
+<span class="kw">fn</span> <span class="ident">example</span>() <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">Error</span><span class="op">&gt;&gt;</span> {
     <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="string">&quot;\
 city;country;pop
 Boston;United States;4628910
@@ -104,7 +104,7 @@ Namely, the first row is treated just like any other row.</p>
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>::<span class="ident">Error</span>;
 <span class="kw">use</span> <span class="ident">csv</span>::<span class="ident">ReaderBuilder</span>;
 
-<span class="kw">fn</span> <span class="ident">example</span>() <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">dyn</span> <span class="ident">Error</span><span class="op">&gt;&gt;</span> {
+<span class="kw">fn</span> <span class="ident">example</span>() <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">Error</span><span class="op">&gt;&gt;</span> {
     <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="string">&quot;\
 city,country,pop
 Boston,United States,4628910
@@ -143,7 +143,7 @@ number of fields in a previous record.</p>
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>::<span class="ident">Error</span>;
 <span class="kw">use</span> <span class="ident">csv</span>::<span class="ident">ReaderBuilder</span>;
 
-<span class="kw">fn</span> <span class="ident">example</span>() <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">dyn</span> <span class="ident">Error</span><span class="op">&gt;&gt;</span> {
+<span class="kw">fn</span> <span class="ident">example</span>() <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">Error</span><span class="op">&gt;&gt;</span> {
     <span class="comment">// Notice that the first row is missing the population count.</span>
     <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="string">&quot;\
 city,country,pop
@@ -170,7 +170,7 @@ default).</p>
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>::<span class="ident">Error</span>;
 <span class="kw">use</span> <span class="ident">csv</span>::{<span class="ident">ErrorKind</span>, <span class="ident">ReaderBuilder</span>};
 
-<span class="kw">fn</span> <span class="ident">example</span>() <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">dyn</span> <span class="ident">Error</span><span class="op">&gt;&gt;</span> {
+<span class="kw">fn</span> <span class="ident">example</span>() <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">Error</span><span class="op">&gt;&gt;</span> {
     <span class="comment">// Notice that the first row is missing the population count.</span>
     <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="string">&quot;\
 city,country,pop
@@ -221,7 +221,7 @@ whitespace characters correspond to the set <code>[\t\n\v\f\r ]</code>.</p>
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>::<span class="ident">Error</span>;
 <span class="kw">use</span> <span class="ident">csv</span>::{<span class="ident">ReaderBuilder</span>, <span class="ident">StringRecord</span>, <span class="ident">Trim</span>};
 
-<span class="kw">fn</span> <span class="ident">example</span>() <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">dyn</span> <span class="ident">Error</span><span class="op">&gt;&gt;</span> {
+<span class="kw">fn</span> <span class="ident">example</span>() <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">Error</span><span class="op">&gt;&gt;</span> {
     <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="string">&quot;\
 city ,   country ,  pop
 Boston,\&quot;
@@ -249,7 +249,7 @@ or <code>\r\n</code> as a single record terminator.</p>
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>::<span class="ident">Error</span>;
 <span class="kw">use</span> <span class="ident">csv</span>::{<span class="ident">ReaderBuilder</span>, <span class="ident">Terminator</span>};
 
-<span class="kw">fn</span> <span class="ident">example</span>() <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">dyn</span> <span class="ident">Error</span><span class="op">&gt;&gt;</span> {
+<span class="kw">fn</span> <span class="ident">example</span>() <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">Error</span><span class="op">&gt;&gt;</span> {
     <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="string">&quot;city,country,pop$Boston,United States,4628910&quot;</span>;
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rdr</span> <span class="op">=</span> <span class="ident">ReaderBuilder</span>::<span class="ident">new</span>()
         .<span class="ident">terminator</span>(<span class="ident">Terminator</span>::<span class="ident">Any</span>(<span class="string">b&#39;$&#39;</span>))
@@ -270,7 +270,7 @@ or <code>\r\n</code> as a single record terminator.</p>
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>::<span class="ident">Error</span>;
 <span class="kw">use</span> <span class="ident">csv</span>::<span class="ident">ReaderBuilder</span>;
 
-<span class="kw">fn</span> <span class="ident">example</span>() <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">dyn</span> <span class="ident">Error</span><span class="op">&gt;&gt;</span> {
+<span class="kw">fn</span> <span class="ident">example</span>() <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">Error</span><span class="op">&gt;&gt;</span> {
     <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="string">&quot;\
 city,country,pop
 Boston,&#39;United States&#39;,4628910
@@ -296,7 +296,7 @@ character like <code></code> (instead of escaping quotes by doubling them).</p>
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>::<span class="ident">Error</span>;
 <span class="kw">use</span> <span class="ident">csv</span>::<span class="ident">ReaderBuilder</span>;
 
-<span class="kw">fn</span> <span class="ident">example</span>() <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">dyn</span> <span class="ident">Error</span><span class="op">&gt;&gt;</span> {
+<span class="kw">fn</span> <span class="ident">example</span>() <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">Error</span><span class="op">&gt;&gt;</span> {
     <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="string">&quot;\
 city,country,pop
 Boston,\&quot;The \\\&quot;United\\\&quot; States\&quot;,4628910
@@ -323,7 +323,7 @@ doubled quotes are not interpreted as escapes.</p>
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>::<span class="ident">Error</span>;
 <span class="kw">use</span> <span class="ident">csv</span>::<span class="ident">ReaderBuilder</span>;
 
-<span class="kw">fn</span> <span class="ident">example</span>() <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">dyn</span> <span class="ident">Error</span><span class="op">&gt;&gt;</span> {
+<span class="kw">fn</span> <span class="ident">example</span>() <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">Error</span><span class="op">&gt;&gt;</span> {
     <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="string">&quot;\
 city,country,pop
 Boston,\&quot;The \&quot;\&quot;United\&quot;\&quot; States\&quot;,4628910
@@ -350,7 +350,7 @@ quotes are not treated specially.</p>
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>::<span class="ident">Error</span>;
 <span class="kw">use</span> <span class="ident">csv</span>::<span class="ident">ReaderBuilder</span>;
 
-<span class="kw">fn</span> <span class="ident">example</span>() <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">dyn</span> <span class="ident">Error</span><span class="op">&gt;&gt;</span> {
+<span class="kw">fn</span> <span class="ident">example</span>() <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">Error</span><span class="op">&gt;&gt;</span> {
     <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="string">&quot;\
 city,country,pop
 Boston,\&quot;The United States,4628910
@@ -378,7 +378,7 @@ line is ignored by the CSV parser.</p>
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>::<span class="ident">Error</span>;
 <span class="kw">use</span> <span class="ident">csv</span>::<span class="ident">ReaderBuilder</span>;
 
-<span class="kw">fn</span> <span class="ident">example</span>() <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">dyn</span> <span class="ident">Error</span><span class="op">&gt;&gt;</span> {
+<span class="kw">fn</span> <span class="ident">example</span>() <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">Error</span><span class="op">&gt;&gt;</span> {
     <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="string">&quot;\
 city,country,pop
 #Concord,United States,42695
@@ -405,7 +405,7 @@ separator (<code>\x1F</code>) and record separator (<code>\x1E</code>), respecti
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>::<span class="ident">Error</span>;
 <span class="kw">use</span> <span class="ident">csv</span>::<span class="ident">ReaderBuilder</span>;
 
-<span class="kw">fn</span> <span class="ident">example</span>() <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">dyn</span> <span class="ident">Error</span><span class="op">&gt;&gt;</span> {
+<span class="kw">fn</span> <span class="ident">example</span>() <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">Error</span><span class="op">&gt;&gt;</span> {
     <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="string">&quot;\
 city\x1Fcountry\x1Fpop\x1EBoston\x1FUnited States\x1F4628910&quot;</span>;
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rdr</span> <span class="op">=</span> <span class="ident">ReaderBuilder</span>::<span class="ident">new</span>()
