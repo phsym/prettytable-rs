@@ -29,6 +29,7 @@ A formatted and aligned table printer library for [Rust](https://www.rust-lang.o
     * [Importing](#user-content-importing)
     * [Exporting](#user-content-exporting)
   * [Note on line endings](#user-content-note-on-line-endings)
+  * [Evcxr Integration](#evcxr-integration)
 
 ## Including
 
@@ -379,3 +380,19 @@ on any platform.
 This customization capability will probably move to Formatting API in a future release.
 
 Additional examples are provided in the documentation and in [examples](./examples/) directory.
+
+## Evcxr Integration
+
+[Evcxr][evcxr] is a Rust REPL and a [Jupyter notebook kernel][evcxr-jupyter].
+This crate integrates into Evcxr and the Jupyter notebooks using the `evcxr` feature flag, which enables native displays of tables.
+This includes support for displaying colors and various formattings.
+
+You can include prettytable as a dependency using this line:
+```
+:dep prettytable = { git = "https://github.com/phsym/prettytable-rs", package = "prettytable-rs", features = ["evcxr"] }
+```
+
+![prettytable being used in a Jupyter notebook with Evcxr Rust kernel.](./prettytable-evcxr.png)
+
+[evcxr]: https://github.com/google/evcxr/
+[evcxr-jupyter]: https://github.com/google/evcxr/blob/master/evcxr_jupyter/README.md

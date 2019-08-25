@@ -12,6 +12,9 @@ keywords = ["tab", "table", "format", "pretty", "print"]
 categories = ["command-line-interface"]
 license = "BSD-3-Clause"
 edition = "2018"
+exclude = [
+    "prettytable-evcxr.png"
+]
 
 [badges]
 appveyor = { repository = "phsym/prettytable-rs", branch = "master", service = "github" }
