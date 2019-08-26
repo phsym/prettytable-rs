@@ -205,6 +205,21 @@ impl Row {
                                             -> Result<usize, Error> {
         self.__print(out, format, col_width, Cell::print_term)
     }
+
+    /// Print the row in HTML format to `out`.
+    ///
+    /// If the row is has fewer columns than `col_num`, the row is padded with empty cells.
+    pub fn print_html<T: Write + ?Sized>(&self, out: &mut T, col_num: usize) -> Result<(), Error> {
+        let mut printed_columns = 0;
+        for cell in self.iter() {
+            printed_columns += cell.print_html(out)?;
+        }
+        // Pad with empty cells, if target width is not reached
+        for _ in 0..col_num - printed_columns {
+            Cell::default().print_html(out)?;
+        }
+        Ok(())
+    }
 }
 
 impl Default for Row {

@@ -24,6 +24,9 @@ mod utils;
 #[cfg(feature = "csv")]
 pub mod csv;
 
+#[cfg(feature = "evcxr")]
+pub mod evcxr;
+
 pub use row::Row;
 pub use cell::Cell;
 use format::{TableFormat, LinePosition, consts};
@@ -204,6 +207,28 @@ impl<'a> TableSlice<'a> {
     pub fn printstd(&self) -> usize {
         self.print_tty(false)
     }
+
+    /// Print table in HTML format to `out`.
+    pub fn print_html<T: Write + ?Sized>(&self, out: &mut T) -> Result<(), Error> {
+        // Compute column width
+        let column_num = self.get_column_num();
+        out.write_all(b"<table>")?;
+        // Print titles / table header
+        if let Some(ref t) = *self.titles {
+            out.write_all(b"<th>")?;
+            t.print_html(out, column_num)?;
+            out.write_all(b"</th>")?;
+        }
+        // Print rows
+        for r in self.rows {
+            out.write_all(b"<tr>")?;
+            r.print_html(out, column_num)?;
+            out.write_all(b"</tr>")?;
+        }
+        out.write_all(b"</table>")?;
+        out.flush()?;
+        Ok(())
+    }
 }
 
 impl<'a> IntoIterator for &'a TableSlice<'a> {
@@ -372,6 +397,10 @@ impl Table {
         self.as_ref().printstd()
     }
 
+    /// Print table in HTML format to `out`.
+    pub fn print_html<T: Write + ?Sized>(&self, out: &mut T) -> Result<(), Error> {
+        self.as_ref().print_html(out)
+    }
 }
 
 impl Index<usize> for Table {
@@ -979,5 +1008,70 @@ mod tests {
         println!("{}", table.to_string().replace("\r\n","\n"));
         assert_eq!(out, table.to_string().replace("\r\n","\n"));
         assert_eq!(7, table.print(&mut StringWriter::new()).unwrap());
+    }
+
+    #[test]
+    fn table_html() {
+        let mut table = Table::new();
+        table.add_row(Row::new(vec![Cell::new("a"), Cell::new("bc"), Cell::new("def")]));
+        table.add_row(Row::new(vec![Cell::new("def"), Cell::new("bc"), Cell::new("a")]));
+        table.set_titles(Row::new(vec![Cell::new("t1"), Cell::new("t2"), Cell::new("t3")]));
+        let out = "\
+<table>\
+<th><td style=\"text-align: left;\">t1</td><td style=\"text-align: left;\">t2</td><td style=\"text-align: left;\">t3</td></th>\
+<tr><td style=\"text-align: left;\">a</td><td style=\"text-align: left;\">bc</td><td style=\"text-align: left;\">def</td></tr>\
+<tr><td style=\"text-align: left;\">def</td><td style=\"text-align: left;\">bc</td><td style=\"text-align: left;\">a</td></tr>\
+</table>";
+        let mut writer = StringWriter::new();
+        assert!(table.print_html(&mut writer).is_ok());
+        assert_eq!(writer.as_string().replace("\r\n", "\n"), out);
+        table.unset_titles();
+        let out = "\
+<table>\
+<tr><td style=\"text-align: left;\">a</td><td style=\"text-align: left;\">bc</td><td style=\"text-align: left;\">def</td></tr>\
+<tr><td style=\"text-align: left;\">def</td><td style=\"text-align: left;\">bc</td><td style=\"text-align: left;\">a</td></tr>\
+</table>";
+        let mut writer = StringWriter::new();
+        assert!(table.print_html(&mut writer).is_ok());
+        assert_eq!(writer.as_string().replace("\r\n", "\n"), out);
+    }
+
+    #[test]
+    fn table_html_colors() {
+        let mut table = Table::new();
+        table.add_row(Row::new(vec![
+            Cell::new("bold").style_spec("b"),
+            Cell::new("italic").style_spec("i"),
+            Cell::new("underline").style_spec("u"),
+        ]));
+        table.add_row(Row::new(vec![
+            Cell::new("left").style_spec("l"),
+            Cell::new("center").style_spec("c"),
+            Cell::new("right").style_spec("r"),
+        ]));
+        table.add_row(Row::new(vec![
+            Cell::new("red").style_spec("Fr"),
+            Cell::new("black").style_spec("Fd"),
+            Cell::new("yellow").style_spec("Fy"),
+        ]));
+        table.add_row(Row::new(vec![
+            Cell::new("bright magenta on cyan").style_spec("FMBc"),
+            Cell::new("white on bright green").style_spec("FwBG"),
+            Cell::new("default on blue").style_spec("Bb"),
+        ]));
+        table.set_titles(Row::new(vec![
+            Cell::new("span horizontal").style_spec("H3"),
+        ]));
+        let out = "\
+<table>\
+<th><td colspan=\"3\" style=\"text-align: left;\">span horizontal</td></th>\
+<tr><td style=\"font-weight: bold;text-align: left;\">bold</td><td style=\"font-style: italic;text-align: left;\">italic</td><td style=\"text-decoration: underline;text-align: left;\">underline</td></tr>\
+<tr><td style=\"text-align: left;\">left</td><td style=\"text-align: center;\">center</td><td style=\"text-align: right;\">right</td></tr>\
+<tr><td style=\"color: #aa0000;text-align: left;\">red</td><td style=\"color: #000000;text-align: left;\">black</td><td style=\"color: #aa5500;text-align: left;\">yellow</td></tr>\
+<tr><td style=\"color: #ff55ff;background-color: #00aaaa;text-align: left;\">bright magenta on cyan</td><td style=\"color: #aaaaaa;background-color: #55ff55;text-align: left;\">white on bright green</td><td style=\"background-color: #0000aa;text-align: left;\">default on blue</td></tr>\
+</table>";
+        let mut writer = StringWriter::new();
+        assert!(table.print_html(&mut writer).is_ok());
+        assert_eq!(writer.as_string().replace("\r\n", "\n"), out);
     }
 }

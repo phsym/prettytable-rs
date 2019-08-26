@@ -1,8 +1,7 @@
 //! This module contains definition of table/row cells stuff
 
 use super::format::Alignment;
-use super::utils::display_width;
-use super::utils::print_align;
+use super::utils::{display_width, print_align, HtmlEscape};
 use super::{color, Attr, Terminal};
 use std::io::{Error, Write};
 use std::string::ToString;
@@ -244,6 +243,79 @@ impl Cell {
             Err(e) => Err(term_error_to_io_error(e)),
         }
     }
+
+    /// Print the cell in HTML format to `out`.
+    pub fn print_html<T: Write + ?Sized>(&self, out: &mut T) -> Result<usize, Error> {
+        /// Convert the color to a hex value useful in CSS
+        fn color2hex(color: color::Color) -> &'static str {
+            match color {
+                color::BLACK => "#000000",
+                color::RED => "#aa0000",
+                color::GREEN => "#00aa00",
+                color::YELLOW => "#aa5500",
+                color::BLUE => "#0000aa",
+                color::MAGENTA => "#aa00aa",
+                color::CYAN => "#00aaaa",
+                color::WHITE => "#aaaaaa",
+                color::BRIGHT_BLACK => "#555555",
+                color::BRIGHT_RED => "#ff5555",
+                color::BRIGHT_GREEN => "#55ff55",
+                color::BRIGHT_YELLOW => "#ffff55",
+                color::BRIGHT_BLUE => "#5555ff",
+                color::BRIGHT_MAGENTA => "#ff55ff",
+                color::BRIGHT_CYAN => "#55ffff",
+                color::BRIGHT_WHITE => "#ffffff",
+
+                // Unknown colors, fallback to blakc
+                _ => "#000000",
+            }
+        };
+
+        let colspan = if self.hspan > 1 {
+            format!(" colspan=\"{}\"", self.hspan)
+        } else {
+            String::new()
+        };
+
+        // Process style properties like color
+        let mut styles = String::new();
+        for style in &self.style {
+            match style {
+                Attr::Bold => styles += "font-weight: bold;",
+                Attr::Italic(true) => styles += "font-style: italic;",
+                Attr::Underline(true) => styles += "text-decoration: underline;",
+                Attr::ForegroundColor(c) => {
+                    styles += "color: ";
+                    styles += color2hex(*c);
+                    styles += ";";
+                }
+                Attr::BackgroundColor(c) => {
+                    styles += "background-color: ";
+                    styles += color2hex(*c);
+                    styles += ";";
+                }
+                _ => {}
+            }
+        }
+        // Process alignment
+        match self.align {
+            Alignment::LEFT => styles += "text-align: left;",
+            Alignment::CENTER => styles += "text-align: center;",
+            Alignment::RIGHT => styles += "text-align: right;",
+        }
+
+        let content = self.content.join("<br />");
+        out.write_all(
+            format!(
+                "<td{1} style=\"{2}\">{0}</td>",
+                HtmlEscape(&content),
+                colspan,
+                styles
+            )
+            .as_bytes(),
+        )?;
+        Ok(self.hspan)
+    }
 }
 
 fn term_error_to_io_error(te: ::term::Error) -> Error {
@@ -358,6 +430,25 @@ mod tests {
         let mut out = StringWriter::new();
         let _ = unicode_cell.print(&mut out, 0, 20, false);
         assert_eq!(out.as_string(), "由系统自动更新      ");
+    }
+
+    #[test]
+    fn print_ascii_html() {
+        let ascii_cell = Cell::new("hello");
+        assert_eq!(ascii_cell.get_width(), 5);
+
+        let mut out = StringWriter::new();
+        let _ = ascii_cell.print_html(&mut out);
+        assert_eq!(out.as_string(), r#"<td style="text-align: left;">hello</td>"#);
+    }
+
+    #[test]
+    fn print_html_special_chars() {
+        let ascii_cell = Cell::new("<abc\">&'");
+
+        let mut out = StringWriter::new();
+        let _ = ascii_cell.print_html(&mut out);
+        assert_eq!(out.as_string(), r#"<td style="text-align: left;">&lt;abc&quot;&gt;&amp;&#39;</td>"#);
     }
 
     #[test]
