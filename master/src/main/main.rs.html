@@ -48,7 +48,6 @@
 <span id="48">48</span>
 <span id="49">49</span>
 <span id="50">50</span>
-<span id="51">51</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">prettytable</span>::<span class="ident">Table</span>;
 <span class="kw">use</span> <span class="ident">prettytable</span>::<span class="ident">Row</span>;
@@ -97,8 +96,7 @@
     <span class="ident">table</span>.<span class="ident">set_titles</span>(<span class="macro">row</span><span class="macro">!</span>[<span class="string">&quot;Title 1&quot;</span>, <span class="string">&quot;Title 2&quot;</span>]);
     <span class="ident">table</span>.<span class="ident">set_format</span>(<span class="kw-2">*</span><span class="ident">consts</span>::<span class="ident">FORMAT_DEFAULT</span>);
     <span class="ident">table</span>.<span class="ident">get_format</span>().<span class="ident">indent</span>(<span class="number">8</span>);
-    <span class="kw">let</span> <span class="ident">size</span> <span class="op">=</span> <span class="ident">table</span>.<span class="ident">printstd</span>();
-    <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;Table height = {}&quot;</span>, <span class="ident">size</span>);
+    <span class="ident">table</span>.<span class="ident">printstd</span>();
     <span class="comment">// println!(&quot;{:#?}&quot;, table);</span>
 }
 </pre></div>

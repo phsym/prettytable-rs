@@ -1061,27 +1061,13 @@
 <span id="1061">1061</span>
 <span id="1062">1062</span>
 <span id="1063">1063</span>
-<span id="1064">1064</span>
-<span id="1065">1065</span>
-<span id="1066">1066</span>
-<span id="1067">1067</span>
-<span id="1068">1068</span>
-<span id="1069">1069</span>
-<span id="1070">1070</span>
-<span id="1071">1071</span>
-<span id="1072">1072</span>
-<span id="1073">1073</span>
-<span id="1074">1074</span>
-<span id="1075">1075</span>
-<span id="1076">1076</span>
-<span id="1077">1077</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="attribute">#![<span class="ident">warn</span>(<span class="ident">missing_docs</span>,
         <span class="ident">unused_extern_crates</span>,
         <span class="ident">unused_import_braces</span>,
         <span class="ident">unused_qualifications</span>)]</span>
 <span class="doccomment">//! A formatted and aligned table printer written in rust</span>
-<span class="doccomment">//! </span>
+
 <span class="attribute">#[<span class="ident">macro_use</span>]</span>
 <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">lazy_static</span>;
 
@@ -1226,7 +1212,7 @@
                 .<span class="ident">print_line_separator</span>(<span class="ident">out</span>, <span class="kw-2">&amp;</span><span class="ident">col_width</span>, <span class="ident">LinePosition</span>::<span class="ident">Title</span>)<span class="question-mark">?</span>;
         }
         <span class="comment">// Print rows</span>
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">iter</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">rows</span>.<span class="ident">into_iter</span>().<span class="ident">peekable</span>();
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">iter</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">rows</span>.<span class="ident">iter</span>().<span class="ident">peekable</span>();
         <span class="kw">while</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">r</span>) <span class="op">=</span> <span class="ident">iter</span>.<span class="ident">next</span>() {
             <span class="ident">height</span> <span class="op">+=</span> <span class="ident">f</span>(<span class="ident">r</span>, <span class="ident">out</span>, <span class="self">self</span>.<span class="ident">format</span>, <span class="kw-2">&amp;</span><span class="ident">col_width</span>)<span class="question-mark">?</span>;
             <span class="kw">if</span> <span class="ident">iter</span>.<span class="ident">peek</span>().<span class="ident">is_some</span>() {
@@ -1259,17 +1245,11 @@
     <span class="doccomment">/// as not beeing tty, and ANSI escape characters won&#39;t be displayed unless `force colorize`</span>
     <span class="doccomment">/// is set to `true`.</span>
     <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">/// The number of lines printed</span>
-    <span class="doccomment">/// # Panic</span>
-    <span class="doccomment">/// Panic if writing to standard output fails</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">print_tty</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">force_colorize</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
-        <span class="kw">let</span> <span class="ident">r</span> <span class="op">=</span> <span class="kw">match</span> (<span class="ident">stdout</span>(), <span class="ident">atty</span>::<span class="ident">is</span>(<span class="ident">atty</span>::<span class="ident">Stream</span>::<span class="ident">Stdout</span>) <span class="op">||</span> <span class="ident">force_colorize</span>) {
+    <span class="doccomment">/// A `Result` holding the number of lines printed, or an `io::Error` if any failure happens</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">print_tty</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">force_colorize</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+        <span class="kw">match</span> (<span class="ident">stdout</span>(), <span class="ident">atty</span>::<span class="ident">is</span>(<span class="ident">atty</span>::<span class="ident">Stream</span>::<span class="ident">Stdout</span>) <span class="op">||</span> <span class="ident">force_colorize</span>) {
             (<span class="prelude-val">Some</span>(<span class="kw-2">mut</span> <span class="ident">o</span>), <span class="bool-val">true</span>) <span class="op">=&gt;</span> <span class="self">self</span>.<span class="ident">print_term</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw-2">*</span><span class="ident">o</span>),
             <span class="kw">_</span> <span class="op">=&gt;</span> <span class="self">self</span>.<span class="ident">print</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">io</span>::<span class="ident">stdout</span>()),
-        };
-        <span class="kw">match</span> <span class="ident">r</span> {
-            <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Cannot print table to standard output : {}&quot;</span>, <span class="ident">e</span>),
-            <span class="prelude-val">Ok</span>(<span class="ident">height</span>) <span class="op">=&gt;</span> <span class="ident">height</span>
         }
     }
 
@@ -1277,13 +1257,10 @@
     <span class="doccomment">/// stdout is a tty terminal. This means that if stdout is redirected to a file, or piped</span>
     <span class="doccomment">/// to another program, no color will be displayed.</span>
     <span class="doccomment">/// To force colors rendering, use `print_tty()` method.</span>
-    <span class="doccomment">/// Calling `printstd()` is equivalent to calling `print_tty(false)`</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">/// The number of lines printed</span>
-    <span class="doccomment">/// # Panic</span>
-    <span class="doccomment">/// Panic if writing to standard output fails</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">printstd</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
-        <span class="self">self</span>.<span class="ident">print_tty</span>(<span class="bool-val">false</span>)
+    <span class="doccomment">/// Any failure to print is ignored. For better control, use `print_tty()`.</span>
+    <span class="doccomment">/// Calling `printstd()` is equivalent to calling `print_tty(false)` and ignoring the result.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">printstd</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) {
+        <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">print_tty</span>(<span class="bool-val">false</span>); <span class="comment">// Ignore result</span>
     }
 
     <span class="doccomment">/// Print table in HTML format to `out`.</span>
@@ -1326,7 +1303,7 @@
     <span class="doccomment">/// Create a table initialized with `rows`</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">init</span>(<span class="ident">rows</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Row</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">Table</span> {
         <span class="ident">Table</span> {
-            <span class="ident">rows</span>: <span class="ident">rows</span>,
+            <span class="ident">rows</span>,
             <span class="ident">titles</span>: <span class="ident">Box</span>::<span class="ident">new</span>(<span class="prelude-val">None</span>),
             <span class="ident">format</span>: <span class="ident">Box</span>::<span class="ident">new</span>(<span class="kw-2">*</span><span class="ident">consts</span>::<span class="ident">FORMAT_DEFAULT</span>),
         }
@@ -1455,10 +1432,8 @@
     <span class="doccomment">/// as not beeing tty, and ANSI escape characters won&#39;t be displayed unless `force colorize`</span>
     <span class="doccomment">/// is set to `true`.</span>
     <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">/// The number of lines printed</span>
-    <span class="doccomment">/// # Panic</span>
-    <span class="doccomment">/// Panic if writing to standard output fails</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">print_tty</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">force_colorize</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+    <span class="doccomment">/// A `Result` holding the number of lines printed, or an `io::Error` if any failure happens</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">print_tty</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">force_colorize</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">print_tty</span>(<span class="ident">force_colorize</span>)
     }
 
@@ -1466,12 +1441,9 @@
     <span class="doccomment">/// stdout is a tty terminal. This means that if stdout is redirected to a file, or piped</span>
     <span class="doccomment">/// to another program, no color will be displayed.</span>
     <span class="doccomment">/// To force colors rendering, use `print_tty()` method.</span>
-    <span class="doccomment">/// Calling `printstd()` is equivalent to calling `print_tty(false)`</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">/// The number of lines printed</span>
-    <span class="doccomment">/// # Panic</span>
-    <span class="doccomment">/// Panic if writing to standard output fails</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">printstd</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+    <span class="doccomment">/// Any failure to print is ignored. For better control, use `print_tty()`.</span>
+    <span class="doccomment">/// Calling `printstd()` is equivalent to calling `print_tty(false)` and ignoring the result.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">printstd</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) {
         <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">printstd</span>()
     }
 

@@ -234,9 +234,9 @@
 <span class="kw">mod</span> <span class="ident">tests</span> {
     <span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">Table</span>, <span class="ident">Row</span>, <span class="ident">Cell</span>};
 
-    <span class="kw">static</span> <span class="ident">CSV_S</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;ABC,DEFG,HIJKLMN\n\
-                                foobar,bar,foo\n\
-                                foobar2,bar2,foo2\n&quot;</span>;
+    <span class="kw">static</span> <span class="ident">CSV_S</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;ABC,DEFG,HIJKLMN\n\
+                        foobar,bar,foo\n\
+                        foobar2,bar2,foo2\n&quot;</span>;
 
     <span class="kw">fn</span> <span class="ident">test_table</span>() <span class="op">-&gt;</span> <span class="ident">Table</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">table</span> <span class="op">=</span> <span class="ident">Table</span>::<span class="ident">new</span>();
