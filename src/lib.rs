@@ -68,8 +68,8 @@ pub struct TableSlice<'a> {
 
 impl<'a> TableSlice<'a> {
     /// Compute and return the number of column
-    #[deprecated(since="0.8.0", note="Will become private in future release. See [issue #87](https://github.com/phsym/prettytable-rs/issues/87)")]
-    pub fn get_column_num(&self) -> usize {
+    // #[deprecated(since="0.8.0", note="Will become private in future release. See [issue #87](https://github.com/phsym/prettytable-rs/issues/87)")]
+    fn get_column_num(&self) -> usize {
         let mut cnum = 0;
         for r in self.rows {
             let l = r.column_count();
@@ -256,8 +256,9 @@ impl Table {
     }
 
     /// Compute and return the number of column
-    #[deprecated(since="0.8.0", note="Will become private in future release. See [issue #87](https://github.com/phsym/prettytable-rs/issues/87)")]
-    pub fn get_column_num(&self) -> usize {
+    // #[deprecated(since="0.8.0", note="Will become private in future release. See [issue #87](https://github.com/phsym/prettytable-rs/issues/87)")]
+    #[cfg(test)] // Only used for testing for now
+    pub (crate) fn get_column_num(&self) -> usize {
         self.as_ref().get_column_num()
     }
 
