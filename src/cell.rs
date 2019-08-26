@@ -230,8 +230,7 @@ impl Cell {
         for a in &self.style {
             match out.attr(*a) {
                 Ok(..) | Err(::term::Error::NotSupported) | Err(::term::Error::ColorOutOfRange) => {
-                    ()
-                } // Ignore unsupported atrributes
+                } // Ignore unsupported attributes
                 Err(e) => return Err(term_error_to_io_error(e)),
             };
         }

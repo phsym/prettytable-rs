@@ -83,9 +83,9 @@ impl super::Table {
 mod tests {
     use crate::{Table, Row, Cell};
 
-    static CSV_S: &'static str = "ABC,DEFG,HIJKLMN\n\
-                                foobar,bar,foo\n\
-                                foobar2,bar2,foo2\n";
+    static CSV_S: &str = "ABC,DEFG,HIJKLMN\n\
+                        foobar,bar,foo\n\
+                        foobar2,bar2,foo2\n";
 
     fn test_table() -> Table {
         let mut table = Table::new();

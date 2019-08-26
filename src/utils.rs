@@ -8,9 +8,9 @@ use unicode_width::UnicodeWidthStr;
 use super::format::Alignment;
 
 #[cfg(any(not(windows), not(feature="win_crlf")))]
-pub static NEWLINE: &'static [u8] = b"\n";
+pub static NEWLINE: &[u8] = b"\n";
 #[cfg(all(windows, feature="win_crlf"))]
-pub static NEWLINE: &'static [u8] = b"\r\n";
+pub static NEWLINE: &[u8] = b"\r\n";
 
 /// Internal utility for writing data into a string
 pub struct StringWriter {
@@ -152,10 +152,10 @@ mod tests {
     #[test]
     fn string_writer() {
         let mut out = StringWriter::new();
-        out.write("foo".as_bytes()).unwrap();
-        out.write(" ".as_bytes()).unwrap();
-        out.write("".as_bytes()).unwrap();
-        out.write("bar".as_bytes()).unwrap();
+        out.write_all(b"foo").unwrap();
+        out.write_all(b" ").unwrap();
+        out.write_all(b"").unwrap();
+        out.write_all(b"bar").unwrap();
         assert_eq!(out.as_string(), "foo bar");
     }
 
@@ -200,7 +200,7 @@ mod tests {
     #[test]
     fn utf8_error() {
         let mut out = StringWriter::new();
-        let res = out.write_all(&vec![0, 255]);
+        let res = out.write_all(&[0, 255]);
         assert!(res.is_err());
     }
 }

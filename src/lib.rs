@@ -3,7 +3,7 @@
         unused_import_braces,
         unused_qualifications)]
 //! A formatted and aligned table printer written in rust
-//! 
+
 #[macro_use]
 extern crate lazy_static;
 
@@ -148,7 +148,7 @@ impl<'a> TableSlice<'a> {
                 .print_line_separator(out, &col_width, LinePosition::Title)?;
         }
         // Print rows
-        let mut iter = self.rows.into_iter().peekable();
+        let mut iter = self.rows.iter().peekable();
         while let Some(r) = iter.next() {
             height += f(r, out, self.format, &col_width)?;
             if iter.peek().is_some() {
@@ -181,17 +181,11 @@ impl<'a> TableSlice<'a> {
     /// as not beeing tty, and ANSI escape characters won't be displayed unless `force colorize`
     /// is set to `true`.
     /// # Returns
-    /// The number of lines printed
-    /// # Panic
-    /// Panic if writing to standard output fails
-    pub fn print_tty(&self, force_colorize: bool) -> usize {
-        let r = match (stdout(), atty::is(atty::Stream::Stdout) || force_colorize) {
+    /// A `Result` holding the number of lines printed, or an `io::Error` if any failure happens
+    pub fn print_tty(&self, force_colorize: bool) -> Result<usize, Error> {
+        match (stdout(), atty::is(atty::Stream::Stdout) || force_colorize) {
             (Some(mut o), true) => self.print_term(&mut *o),
             _ => self.print(&mut io::stdout()),
-        };
-        match r {
-            Err(e) => panic!("Cannot print table to standard output : {}", e),
-            Ok(height) => height
         }
     }
 
@@ -199,13 +193,10 @@ impl<'a> TableSlice<'a> {
     /// stdout is a tty terminal. This means that if stdout is redirected to a file, or piped
     /// to another program, no color will be displayed.
     /// To force colors rendering, use `print_tty()` method.
-    /// Calling `printstd()` is equivalent to calling `print_tty(false)`
-    /// # Returns
-    /// The number of lines printed
-    /// # Panic
-    /// Panic if writing to standard output fails
-    pub fn printstd(&self) -> usize {
-        self.print_tty(false)
+    /// Any failure to print is ignored. For better control, use `print_tty()`.
+    /// Calling `printstd()` is equivalent to calling `print_tty(false)` and ignoring the result.
+    pub fn printstd(&self) {
+        let _ = self.print_tty(false); // Ignore result
     }
 
     /// Print table in HTML format to `out`.
@@ -248,7 +239,7 @@ impl Table {
     /// Create a table initialized with `rows`
     pub fn init(rows: Vec<Row>) -> Table {
         Table {
-            rows: rows,
+            rows,
             titles: Box::new(None),
             format: Box::new(*consts::FORMAT_DEFAULT),
         }
@@ -377,10 +368,8 @@ impl Table {
     /// as not beeing tty, and ANSI escape characters won't be displayed unless `force colorize`
     /// is set to `true`.
     /// # Returns
-    /// The number of lines printed
-    /// # Panic
-    /// Panic if writing to standard output fails
-    pub fn print_tty(&self, force_colorize: bool) -> usize {
+    /// A `Result` holding the number of lines printed, or an `io::Error` if any failure happens
+    pub fn print_tty(&self, force_colorize: bool) -> Result<usize, Error> {
         self.as_ref().print_tty(force_colorize)
     }
 
@@ -388,12 +377,9 @@ impl Table {
     /// stdout is a tty terminal. This means that if stdout is redirected to a file, or piped
     /// to another program, no color will be displayed.
     /// To force colors rendering, use `print_tty()` method.
-    /// Calling `printstd()` is equivalent to calling `print_tty(false)`
-    /// # Returns
-    /// The number of lines printed
-    /// # Panic
-    /// Panic if writing to standard output fails
-    pub fn printstd(&self) -> usize {
+    /// Any failure to print is ignored. For better control, use `print_tty()`.
+    /// Calling `printstd()` is equivalent to calling `print_tty(false)` and ignoring the result.
+    pub fn printstd(&self) {
         self.as_ref().printstd()
     }
 
