@@ -445,12 +445,102 @@
 <span id="445">445</span>
 <span id="446">446</span>
 <span id="447">447</span>
+<span id="448">448</span>
+<span id="449">449</span>
+<span id="450">450</span>
+<span id="451">451</span>
+<span id="452">452</span>
+<span id="453">453</span>
+<span id="454">454</span>
+<span id="455">455</span>
+<span id="456">456</span>
+<span id="457">457</span>
+<span id="458">458</span>
+<span id="459">459</span>
+<span id="460">460</span>
+<span id="461">461</span>
+<span id="462">462</span>
+<span id="463">463</span>
+<span id="464">464</span>
+<span id="465">465</span>
+<span id="466">466</span>
+<span id="467">467</span>
+<span id="468">468</span>
+<span id="469">469</span>
+<span id="470">470</span>
+<span id="471">471</span>
+<span id="472">472</span>
+<span id="473">473</span>
+<span id="474">474</span>
+<span id="475">475</span>
+<span id="476">476</span>
+<span id="477">477</span>
+<span id="478">478</span>
+<span id="479">479</span>
+<span id="480">480</span>
+<span id="481">481</span>
+<span id="482">482</span>
+<span id="483">483</span>
+<span id="484">484</span>
+<span id="485">485</span>
+<span id="486">486</span>
+<span id="487">487</span>
+<span id="488">488</span>
+<span id="489">489</span>
+<span id="490">490</span>
+<span id="491">491</span>
+<span id="492">492</span>
+<span id="493">493</span>
+<span id="494">494</span>
+<span id="495">495</span>
+<span id="496">496</span>
+<span id="497">497</span>
+<span id="498">498</span>
+<span id="499">499</span>
+<span id="500">500</span>
+<span id="501">501</span>
+<span id="502">502</span>
+<span id="503">503</span>
+<span id="504">504</span>
+<span id="505">505</span>
+<span id="506">506</span>
+<span id="507">507</span>
+<span id="508">508</span>
+<span id="509">509</span>
+<span id="510">510</span>
+<span id="511">511</span>
+<span id="512">512</span>
+<span id="513">513</span>
+<span id="514">514</span>
+<span id="515">515</span>
+<span id="516">516</span>
+<span id="517">517</span>
+<span id="518">518</span>
+<span id="519">519</span>
+<span id="520">520</span>
+<span id="521">521</span>
+<span id="522">522</span>
+<span id="523">523</span>
+<span id="524">524</span>
+<span id="525">525</span>
+<span id="526">526</span>
+<span id="527">527</span>
+<span id="528">528</span>
+<span id="529">529</span>
+<span id="530">530</span>
+<span id="531">531</span>
+<span id="532">532</span>
+<span id="533">533</span>
+<span id="534">534</span>
+<span id="535">535</span>
+<span id="536">536</span>
+<span id="537">537</span>
+<span id="538">538</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! This module contains definition of table/row cells stuff</span>
 
 <span class="kw">use</span> <span class="kw">super</span>::<span class="ident">format</span>::<span class="ident">Alignment</span>;
-<span class="kw">use</span> <span class="kw">super</span>::<span class="ident">utils</span>::<span class="ident">display_width</span>;
-<span class="kw">use</span> <span class="kw">super</span>::<span class="ident">utils</span>::<span class="ident">print_align</span>;
+<span class="kw">use</span> <span class="kw">super</span>::<span class="ident">utils</span>::{<span class="ident">display_width</span>, <span class="ident">print_align</span>, <span class="ident">HtmlEscape</span>};
 <span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">color</span>, <span class="ident">Attr</span>, <span class="ident">Terminal</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>::{<span class="ident">Error</span>, <span class="ident">Write</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">string</span>::<span class="ident">ToString</span>;
@@ -692,6 +782,79 @@
             <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">term_error_to_io_error</span>(<span class="ident">e</span>)),
         }
     }
+
+    <span class="doccomment">/// Print the cell in HTML format to `out`.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">print_html</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Write</span> <span class="op">+</span> <span class="question-mark">?</span><span class="ident">Sized</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">out</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+        <span class="doccomment">/// Convert the color to a hex value useful in CSS</span>
+        <span class="kw">fn</span> <span class="ident">color2hex</span>(<span class="ident">color</span>: <span class="ident">color</span>::<span class="ident">Color</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span> {
+            <span class="kw">match</span> <span class="ident">color</span> {
+                <span class="ident">color</span>::<span class="ident">BLACK</span> <span class="op">=&gt;</span> <span class="string">&quot;#000000&quot;</span>,
+                <span class="ident">color</span>::<span class="ident">RED</span> <span class="op">=&gt;</span> <span class="string">&quot;#aa0000&quot;</span>,
+                <span class="ident">color</span>::<span class="ident">GREEN</span> <span class="op">=&gt;</span> <span class="string">&quot;#00aa00&quot;</span>,
+                <span class="ident">color</span>::<span class="ident">YELLOW</span> <span class="op">=&gt;</span> <span class="string">&quot;#aa5500&quot;</span>,
+                <span class="ident">color</span>::<span class="ident">BLUE</span> <span class="op">=&gt;</span> <span class="string">&quot;#0000aa&quot;</span>,
+                <span class="ident">color</span>::<span class="ident">MAGENTA</span> <span class="op">=&gt;</span> <span class="string">&quot;#aa00aa&quot;</span>,
+                <span class="ident">color</span>::<span class="ident">CYAN</span> <span class="op">=&gt;</span> <span class="string">&quot;#00aaaa&quot;</span>,
+                <span class="ident">color</span>::<span class="ident">WHITE</span> <span class="op">=&gt;</span> <span class="string">&quot;#aaaaaa&quot;</span>,
+                <span class="ident">color</span>::<span class="ident">BRIGHT_BLACK</span> <span class="op">=&gt;</span> <span class="string">&quot;#555555&quot;</span>,
+                <span class="ident">color</span>::<span class="ident">BRIGHT_RED</span> <span class="op">=&gt;</span> <span class="string">&quot;#ff5555&quot;</span>,
+                <span class="ident">color</span>::<span class="ident">BRIGHT_GREEN</span> <span class="op">=&gt;</span> <span class="string">&quot;#55ff55&quot;</span>,
+                <span class="ident">color</span>::<span class="ident">BRIGHT_YELLOW</span> <span class="op">=&gt;</span> <span class="string">&quot;#ffff55&quot;</span>,
+                <span class="ident">color</span>::<span class="ident">BRIGHT_BLUE</span> <span class="op">=&gt;</span> <span class="string">&quot;#5555ff&quot;</span>,
+                <span class="ident">color</span>::<span class="ident">BRIGHT_MAGENTA</span> <span class="op">=&gt;</span> <span class="string">&quot;#ff55ff&quot;</span>,
+                <span class="ident">color</span>::<span class="ident">BRIGHT_CYAN</span> <span class="op">=&gt;</span> <span class="string">&quot;#55ffff&quot;</span>,
+                <span class="ident">color</span>::<span class="ident">BRIGHT_WHITE</span> <span class="op">=&gt;</span> <span class="string">&quot;#ffffff&quot;</span>,
+
+                <span class="comment">// Unknown colors, fallback to blakc</span>
+                <span class="kw">_</span> <span class="op">=&gt;</span> <span class="string">&quot;#000000&quot;</span>,
+            }
+        };
+
+        <span class="kw">let</span> <span class="ident">colspan</span> <span class="op">=</span> <span class="kw">if</span> <span class="self">self</span>.<span class="ident">hspan</span> <span class="op">&gt;</span> <span class="number">1</span> {
+            <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot; colspan=\&quot;{}\&quot;&quot;</span>, <span class="self">self</span>.<span class="ident">hspan</span>)
+        } <span class="kw">else</span> {
+            <span class="ident">String</span>::<span class="ident">new</span>()
+        };
+
+        <span class="comment">// Process style properties like color</span>
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">styles</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">new</span>();
+        <span class="kw">for</span> <span class="ident">style</span> <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">style</span> {
+            <span class="kw">match</span> <span class="ident">style</span> {
+                <span class="ident">Attr</span>::<span class="ident">Bold</span> <span class="op">=&gt;</span> <span class="ident">styles</span> <span class="op">+=</span> <span class="string">&quot;font-weight: bold;&quot;</span>,
+                <span class="ident">Attr</span>::<span class="ident">Italic</span>(<span class="bool-val">true</span>) <span class="op">=&gt;</span> <span class="ident">styles</span> <span class="op">+=</span> <span class="string">&quot;font-style: italic;&quot;</span>,
+                <span class="ident">Attr</span>::<span class="ident">Underline</span>(<span class="bool-val">true</span>) <span class="op">=&gt;</span> <span class="ident">styles</span> <span class="op">+=</span> <span class="string">&quot;text-decoration: underline;&quot;</span>,
+                <span class="ident">Attr</span>::<span class="ident">ForegroundColor</span>(<span class="ident">c</span>) <span class="op">=&gt;</span> {
+                    <span class="ident">styles</span> <span class="op">+=</span> <span class="string">&quot;color: &quot;</span>;
+                    <span class="ident">styles</span> <span class="op">+=</span> <span class="ident">color2hex</span>(<span class="kw-2">*</span><span class="ident">c</span>);
+                    <span class="ident">styles</span> <span class="op">+=</span> <span class="string">&quot;;&quot;</span>;
+                }
+                <span class="ident">Attr</span>::<span class="ident">BackgroundColor</span>(<span class="ident">c</span>) <span class="op">=&gt;</span> {
+                    <span class="ident">styles</span> <span class="op">+=</span> <span class="string">&quot;background-color: &quot;</span>;
+                    <span class="ident">styles</span> <span class="op">+=</span> <span class="ident">color2hex</span>(<span class="kw-2">*</span><span class="ident">c</span>);
+                    <span class="ident">styles</span> <span class="op">+=</span> <span class="string">&quot;;&quot;</span>;
+                }
+                <span class="kw">_</span> <span class="op">=&gt;</span> {}
+            }
+        }
+        <span class="comment">// Process alignment</span>
+        <span class="kw">match</span> <span class="self">self</span>.<span class="ident">align</span> {
+            <span class="ident">Alignment</span>::<span class="ident">LEFT</span> <span class="op">=&gt;</span> <span class="ident">styles</span> <span class="op">+=</span> <span class="string">&quot;text-align: left;&quot;</span>,
+            <span class="ident">Alignment</span>::<span class="ident">CENTER</span> <span class="op">=&gt;</span> <span class="ident">styles</span> <span class="op">+=</span> <span class="string">&quot;text-align: center;&quot;</span>,
+            <span class="ident">Alignment</span>::<span class="ident">RIGHT</span> <span class="op">=&gt;</span> <span class="ident">styles</span> <span class="op">+=</span> <span class="string">&quot;text-align: right;&quot;</span>,
+        }
+
+        <span class="kw">let</span> <span class="ident">content</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">content</span>.<span class="ident">join</span>(<span class="string">&quot;&lt;br /&gt;&quot;</span>);
+        <span class="ident">out</span>.<span class="ident">write_all</span>(
+            <span class="macro">format</span><span class="macro">!</span>(
+                <span class="string">&quot;&lt;td{1} style=\&quot;{2}\&quot;&gt;{0}&lt;/td&gt;&quot;</span>,
+                <span class="ident">HtmlEscape</span>(<span class="kw-2">&amp;</span><span class="ident">content</span>),
+                <span class="ident">colspan</span>,
+                <span class="ident">styles</span>
+            )
+            .<span class="ident">as_bytes</span>(),
+        )<span class="question-mark">?</span>;
+        <span class="prelude-val">Ok</span>(<span class="self">self</span>.<span class="ident">hspan</span>)
+    }
 }
 
 <span class="kw">fn</span> <span class="ident">term_error_to_io_error</span>(<span class="ident">te</span>: ::<span class="ident">term</span>::<span class="ident">Error</span>) <span class="op">-&gt;</span> <span class="ident">Error</span> {
@@ -806,6 +969,25 @@
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">out</span> <span class="op">=</span> <span class="ident">StringWriter</span>::<span class="ident">new</span>();
         <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">unicode_cell</span>.<span class="ident">print</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">out</span>, <span class="number">0</span>, <span class="number">20</span>, <span class="bool-val">false</span>);
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">out</span>.<span class="ident">as_string</span>(), <span class="string">&quot;由系统自动更新      &quot;</span>);
+    }
+
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">print_ascii_html</span>() {
+        <span class="kw">let</span> <span class="ident">ascii_cell</span> <span class="op">=</span> <span class="ident">Cell</span>::<span class="ident">new</span>(<span class="string">&quot;hello&quot;</span>);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">ascii_cell</span>.<span class="ident">get_width</span>(), <span class="number">5</span>);
+
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">out</span> <span class="op">=</span> <span class="ident">StringWriter</span>::<span class="ident">new</span>();
+        <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">ascii_cell</span>.<span class="ident">print_html</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">out</span>);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">out</span>.<span class="ident">as_string</span>(), <span class="string">r#&quot;&lt;td style=&quot;text-align: left;&quot;&gt;hello&lt;/td&gt;&quot;#</span>);
+    }
+
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">print_html_special_chars</span>() {
+        <span class="kw">let</span> <span class="ident">ascii_cell</span> <span class="op">=</span> <span class="ident">Cell</span>::<span class="ident">new</span>(<span class="string">&quot;&lt;abc\&quot;&gt;&amp;&#39;&quot;</span>);
+
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">out</span> <span class="op">=</span> <span class="ident">StringWriter</span>::<span class="ident">new</span>();
+        <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">ascii_cell</span>.<span class="ident">print_html</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">out</span>);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">out</span>.<span class="ident">as_string</span>(), <span class="string">r#&quot;&lt;td style=&quot;text-align: left;&quot;&gt;&amp;lt;abc&amp;quot;&amp;gt;&amp;amp;&amp;#39;&lt;/td&gt;&quot;#</span>);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>

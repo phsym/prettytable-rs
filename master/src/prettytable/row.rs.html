@@ -380,6 +380,21 @@
 <span id="380">380</span>
 <span id="381">381</span>
 <span id="382">382</span>
+<span id="383">383</span>
+<span id="384">384</span>
+<span id="385">385</span>
+<span id="386">386</span>
+<span id="387">387</span>
+<span id="388">388</span>
+<span id="389">389</span>
+<span id="390">390</span>
+<span id="391">391</span>
+<span id="392">392</span>
+<span id="393">393</span>
+<span id="394">394</span>
+<span id="395">395</span>
+<span id="396">396</span>
+<span id="397">397</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! This module contains definition of table rows stuff</span>
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>::{<span class="ident">Write</span>, <span class="ident">Error</span>};
@@ -587,6 +602,21 @@
                                             <span class="ident">col_width</span>: <span class="kw-2">&amp;</span>[<span class="ident">usize</span>])
                                             <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">__print</span>(<span class="ident">out</span>, <span class="ident">format</span>, <span class="ident">col_width</span>, <span class="ident">Cell</span>::<span class="ident">print_term</span>)
+    }
+
+    <span class="doccomment">/// Print the row in HTML format to `out`.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// If the row is has fewer columns than `col_num`, the row is padded with empty cells.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">print_html</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Write</span> <span class="op">+</span> <span class="question-mark">?</span><span class="ident">Sized</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">out</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">T</span>, <span class="ident">col_num</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">printed_columns</span> <span class="op">=</span> <span class="number">0</span>;
+        <span class="kw">for</span> <span class="ident">cell</span> <span class="kw">in</span> <span class="self">self</span>.<span class="ident">iter</span>() {
+            <span class="ident">printed_columns</span> <span class="op">+=</span> <span class="ident">cell</span>.<span class="ident">print_html</span>(<span class="ident">out</span>)<span class="question-mark">?</span>;
+        }
+        <span class="comment">// Pad with empty cells, if target width is not reached</span>
+        <span class="kw">for</span> <span class="kw">_</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">col_num</span> <span class="op">-</span> <span class="ident">printed_columns</span> {
+            <span class="ident">Cell</span>::<span class="ident">default</span>().<span class="ident">print_html</span>(<span class="ident">out</span>)<span class="question-mark">?</span>;
+        }
+        <span class="prelude-val">Ok</span>(())
     }
 }
 
