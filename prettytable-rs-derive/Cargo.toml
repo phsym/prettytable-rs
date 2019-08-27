@@ -1,0 +1,14 @@
+[package]
+name = "prettytable-rs-derive"
+version = "0.1.0"
+authors = ["Andrea Stevanato <andrea.stevanato.95@hotmail.it>"]
+edition = "2018"
+
+[dependencies]
+syn = {version = "0.15.42", features = ["full"]}
+quote = "0.6.13"
+prettytable-rs = { path = "../" }
+
+[lib]
+proc-macro = true
+name = "prettytable_derive"
