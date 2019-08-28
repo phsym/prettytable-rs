@@ -1095,4 +1095,42 @@ mod tests {
         assert!(table.print_html(&mut writer).is_ok());
         assert_eq!(writer.as_string().replace("\r\n", "\n"), out);
     }
+
+	#[test]
+	fn from_vec() {
+		struct Test {
+			t1: String,
+			t2: String,
+			t3: String,
+		};
+
+		impl crate::TableElem for Test {
+			fn get_field_name() -> Vec<&'static str> {
+				vec!["t1", "t2", "t3"]
+			}
+
+			fn get_field(self) -> Vec<String> {
+				vec![self.t1.into(), self.t2.into(), self.t3.into()]
+			}
+		}
+		
+		let v = vec![
+			Test {t1: "a".to_string(), t2: "bc".to_string(), t3: "def".to_string()}, 
+			Test {t1: "def".to_string(), t2: "bc".to_string(), t3: "a".to_string()},
+		];
+
+		let table = Table::from_vec(v);
+        let out = "\
++-----+----+-----+
+| t1  | t2 | t3  |
++=====+====+=====+
+| a   | bc | def |
++-----+----+-----+
+| def | bc | a   |
++-----+----+-----+
+";
+
+        assert_eq!(table.to_string().replace("\r\n", "\n"), out);
+        assert_eq!(7, table.print(&mut StringWriter::new()).unwrap());
+	}
 }
