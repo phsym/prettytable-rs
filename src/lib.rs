@@ -393,7 +393,7 @@ impl Table {
 	/// 
 	/// A struct may implements the `TableElem` trait using the derive proc-macro 
 	/// from `prettytable-rs-derive` crate
-	pub fn from_vec<T: TableElem>(v: Vec<T>) -> Self {
+	pub fn from_vec<T: TableElem>(v: &Vec<T>) -> Self {
 		// Create the table
 		let mut table = Self::new();
 
@@ -421,7 +421,7 @@ pub trait TableElem {
 	/// Returns a vector containing the name of the struct fields
 	fn get_field_name() -> Vec<&'static str>;
 	/// Returns a vector that contains the contents of the struct's fields
-	fn get_field(self) -> Vec<String>;
+	fn get_field(&self) -> Vec<String>;
 }
 
 impl Index<usize> for Table {
@@ -1109,8 +1109,8 @@ mod tests {
 				vec!["t1", "t2", "t3"]
 			}
 
-			fn get_field(self) -> Vec<String> {
-				vec![self.t1.into(), self.t2.into(), self.t3.into()]
+			fn get_field(&self) -> Vec<String> {
+				vec![self.t1.to_string(), self.t2.to_string(), self.t3.to_string()]
 			}
 		}
 		
@@ -1119,7 +1119,7 @@ mod tests {
 			Test {t1: "def".to_string(), t2: "bc".to_string(), t3: "a".to_string()},
 		];
 
-		let table = Table::from_vec(v);
+		let table = Table::from_vec(&v);
         let out = "\
 +-----+----+-----+
 | t1  | t2 | t3  |

@@ -21,8 +21,8 @@ pub fn derive_table_elem(input: TokenStream) -> TokenStream {
                 vec![#(#f_name_str),*]
             }
 
-            fn get_field(self) -> Vec<String> {
-                vec![#(self.#f_name.into()),*]
+            fn get_field(&self) -> Vec<String> {
+                vec![#(self.#f_name.to_string()),*]
             }
         }
     })
