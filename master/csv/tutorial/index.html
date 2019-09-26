@@ -514,7 +514,7 @@ record into a new allocation.</p>
 <h2 id="delimiters-quotes-and-variable-length-records" class="section-header"><a href="#delimiters-quotes-and-variable-length-records">Delimiters, quotes and variable length records</a></h2>
 <p>In this section we'll temporarily depart from our <code>uspop.csv</code> data set and
 show how to read some CSV data that is a little less clean. This CSV data
-uses <code>;</code> as a delimiter, escapes quotes with <code>&quot;</code> (instead of <code>&quot;&quot;</code>) and has
+uses <code>;</code> as a delimiter, escapes quotes with <code>\&quot;</code> (instead of <code>&quot;&quot;</code>) and has
 records of varying length. Here's the data, which contains a list of WWE
 wrestlers and the year they started, if it's known:</p>
 <pre><code class="language-text">$ cat strange.csv
@@ -530,7 +530,7 @@ Rafael Halperin
 <ol>
 <li>Disable headers, since this data has none.</li>
 <li>Change the delimiter from <code>,</code> to <code>;</code>.</li>
-<li>Change the quote strategy from doubled (e.g., <code>&quot;&quot;</code>) to escaped (e.g., <code>&quot;</code>).</li>
+<li>Change the quote strategy from doubled (e.g., <code>&quot;&quot;</code>) to escaped (e.g., <code>\&quot;</code>).</li>
 <li>Permit flexible length records, since some omit the year.</li>
 <li>Ignore lines beginning with a <code>#</code>.</li>
 </ol>
