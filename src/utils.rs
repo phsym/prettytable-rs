@@ -3,6 +3,7 @@ use std::fmt;
 use std::io::{Error, ErrorKind, Write};
 use std::str;
 
+use regex::Regex;
 use unicode_width::UnicodeWidthStr;
 
 use super::format::Alignment;
@@ -77,30 +78,20 @@ pub fn print_align<T: Write + ?Sized>(out: &mut T,
 }
 
 /// Return the display width of a unicode string.
-/// This functions takes ANSI-escaped color codes into account.
+/// This functions takes ANSI-escaped color codes and hyperlinks into account.
 pub fn display_width(text: &str) -> usize {
     let width = UnicodeWidthStr::width(text);
-    let mut state = 0;
     let mut hidden = 0;
 
-    for c in text.chars() {
-        state = match (state, c) {
-            (0, '\u{1b}') => 1,
-            (1, '[') => 2,
-            (1, _) => 0,
-            (2, 'm') => 3,
-            _ => state,
-        };
-
-        // We don't count escape characters as hidden as
-        // UnicodeWidthStr::width already considers them.
-        if state > 1 {
-            hidden += 1;
-        }
-
-        if state == 3 {
-            state = 0;
-        }
+    lazy_static! {
+        static ref COLOR_RE: Regex = Regex::new(r"\u{1b}(?P<colors>\[[^m]+?)m").unwrap();
+        static ref HYPERLINK_RE: Regex = Regex::new(r"\u{1b}]8;;(?P<url>[^\u{1b}]+?)\u{1b}\\(?P<text>[^\u{1b}]+?)\u{1b}]8;;\u{1b}\\").unwrap();
+    }
+    for caps in COLOR_RE.captures_iter(text) {
+        hidden += UnicodeWidthStr::width(&caps["colors"])
+    }
+    for caps in HYPERLINK_RE.captures_iter(text) {
+        hidden += 10 + UnicodeWidthStr::width(&caps["url"])
     }
 
     width - hidden
@@ -195,6 +186,17 @@ mod tests {
         let mut out = StringWriter::new();
         print_align(&mut out, Alignment::CENTER, "foo", '*', 1, false).unwrap();
         assert_eq!(out.as_string(), "foo");
+    }
+
+    #[test]
+    fn ansi_escapes() {
+        let mut out = StringWriter::new();
+        print_align(&mut out, Alignment::LEFT, "\u{1b}[31;40mred\u{1b}[0m", ' ', 10, false).unwrap();
+        assert_eq!(display_width(out.as_string()), 10);
+
+        let mut out = StringWriter::new();
+        print_align(&mut out, Alignment::LEFT, "\u{1b}]8;;http://example.com\u{1b}\\example\u{1b}]8;;\u{1b}\\", ' ', 10, false).unwrap();
+        assert_eq!(display_width(out.as_string()), 10);
     }
 
     #[test]

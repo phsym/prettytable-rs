@@ -241,6 +241,14 @@ Uppercase letters stand for **bright** counterparts of the above colors:
 * **B** : Bright Blue
 * ... and so on ...
 
+## ANSI hyperlinks
+
+In most modern terminal emulators, it is possible to embed hyperlinks using ANSI escape codes. The following string field would display as a clickable link:
+
+```rust
+"\u{1b}]8;;http://example.com\u{1b}\\example.com\u{1b}]8;;\u{1b}\\"
+```
+
 ## Slicing
 
 Tables can be sliced into immutable borrowed subtables.
