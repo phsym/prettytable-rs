@@ -976,6 +976,28 @@ mod tests {
     }
 
     #[test]
+    fn test_markdown_format_with_title() {
+        let mut table = Table::new();
+        table.set_format(*format::consts::FORMAT_MARKDOWN);
+
+        table.set_titles(Row::new(vec![Cell::new("Title 1"), Cell::new("Title 2")]));
+        table.add_row(Row::new(vec![Cell::new("Value 1"), Cell::new("Value 2")]));
+        table.add_row(Row::new(vec![Cell::new("Value three"), Cell::new("Value four")]));
+
+        let out = "\
+| Title 1     | Title 2    |
+|-------------|------------|
+| Value 1     | Value 2    |
+| Value three | Value four |
+";
+        println!("{}", out);
+        println!("____");
+        println!("{}", table.to_string().replace("\r\n","\n"));
+        assert_eq!(out, table.to_string().replace("\r\n","\n"));
+        assert_eq!(4, table.print(&mut StringWriter::new()).unwrap());
+    }
+
+    #[test]
     fn test_horizontal_span() {
         let mut table = Table::new();
         table.set_titles(Row::new(vec![Cell::new("t1"), Cell::new("t2").with_hspan(2)]));

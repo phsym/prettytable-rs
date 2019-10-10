@@ -41,6 +41,16 @@ fn main() {
     table.printstd();
     println!("");
 
+    // Print
+    // | Title 1     | Title 2    |
+    // |-------------|------------|
+    // | Value 1     | Value 2    |
+    // | Value three | Value four |
+    println!("FORMAT_MARKDOWN :");
+    table.set_format(*format::consts::FORMAT_MARKDOWN);
+    table.printstd();
+    println!("");
+
     // Custom format can be implemented using `prettytable::format::FormatBuilder`
     // Example to print
     // +-------------+------------+
