@@ -1,8 +1,6 @@
-use prettytable::{Row, Cell, format::Alignment, table};
-
+use prettytable::{format::Alignment, table, Cell, Row};
 
 fn main() {
-
     /*
         The following code will output
 
@@ -18,12 +16,14 @@ fn main() {
     */
 
     let mut table: prettytable::Table = table![
-        [H2 -> "This is a cell with span of 2", "span of 1"],
-        ["span of 1", "span of 1", "span of 1"],
-        [H03c -> "This cell with a span of 3 is centered"]
-        ];
-    table.set_titles(Row::new(vec![
-        Cell::new_align("A table with horizontal span", Alignment::CENTER).with_hspan(3)
-    ]));
+    [H2 -> "This is a cell with span of 2", "span of 1"],
+    ["span of 1", "span of 1", "span of 1"],
+    [H03c -> "This cell with a span of 3 is centered"]
+    ];
+    table.set_titles(Row::new(vec![Cell::new_align(
+        "A table with horizontal span",
+        Alignment::CENTER,
+    )
+    .with_hspan(3)]));
     table.printstd();
 }

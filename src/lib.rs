@@ -1,24 +1,26 @@
-#![warn(missing_docs,
-        unused_extern_crates,
-        unused_import_braces,
-        unused_qualifications)]
+#![warn(
+    missing_docs,
+    unused_extern_crates,
+    unused_import_braces,
+    unused_qualifications
+)]
 //! A formatted and aligned table printer written in rust
 
 #[macro_use]
 extern crate lazy_static;
 
-use std::io::{self, Write, Error};
 use std::fmt;
+use std::io::{self, Error, Write};
 use std::iter::{FromIterator, IntoIterator};
-use std::slice::{Iter, IterMut};
 use std::ops::{Index, IndexMut};
+use std::slice::{Iter, IterMut};
 
-pub use term::{Attr, color};
-pub(crate) use term::{Terminal, stdout};
+pub use term::{color, Attr};
+pub(crate) use term::{stdout, Terminal};
 
 mod cell;
-mod row;
 pub mod format;
+mod row;
 mod utils;
 
 #[cfg(feature = "csv")]
@@ -27,9 +29,9 @@ pub mod csv;
 #[cfg(feature = "evcxr")]
 pub mod evcxr;
 
-pub use row::Row;
 pub use cell::Cell;
-use format::{TableFormat, LinePosition, consts};
+use format::{consts, LinePosition, TableFormat};
+pub use row::Row;
 use utils::StringWriter;
 
 /// An owned printable table
@@ -135,16 +137,19 @@ impl<'a> TableSlice<'a> {
 
     /// Internal only
     fn __print<T: Write + ?Sized, F>(&self, out: &mut T, f: F) -> Result<usize, Error>
-        where F: Fn(&Row, &mut T, &TableFormat, &[usize]) -> Result<usize, Error>
+    where
+        F: Fn(&Row, &mut T, &TableFormat, &[usize]) -> Result<usize, Error>,
     {
         let mut height = 0;
         // Compute columns width
         let col_width = self.get_all_column_width();
-        height += self.format
+        height += self
+            .format
             .print_line_separator(out, &col_width, LinePosition::Top)?;
         if let Some(ref t) = *self.titles {
             height += f(t, out, self.format, &col_width)?;
-            height += self.format
+            height += self
+                .format
                 .print_line_separator(out, &col_width, LinePosition::Title)?;
         }
         // Print rows
@@ -152,11 +157,13 @@ impl<'a> TableSlice<'a> {
         while let Some(r) = iter.next() {
             height += f(r, out, self.format, &col_width)?;
             if iter.peek().is_some() {
-                height += self.format
-                    .print_line_separator(out, &col_width, LinePosition::Intern)?;
+                height +=
+                    self.format
+                        .print_line_separator(out, &col_width, LinePosition::Intern)?;
             }
         }
-        height += self.format
+        height += self
+            .format
             .print_line_separator(out, &col_width, LinePosition::Bottom)?;
         out.flush()?;
         Ok(height)
@@ -258,7 +265,7 @@ impl Table {
     /// Compute and return the number of column
     // #[deprecated(since="0.8.0", note="Will become private in future release. See [issue #87](https://github.com/phsym/prettytable-rs/issues/87)")]
     #[cfg(test)] // Only used for testing for now
-    pub (crate) fn get_column_num(&self) -> usize {
+    pub(crate) fn get_column_num(&self) -> usize {
         self.as_ref().get_column_num()
     }
 
@@ -428,7 +435,8 @@ impl<'a> fmt::Display for TableSlice<'a> {
 
 impl<B: ToString, A: IntoIterator<Item = B>> FromIterator<A> for Table {
     fn from_iter<T>(iterator: T) -> Table
-        where T: IntoIterator<Item = A>
+    where
+        T: IntoIterator<Item = A>,
     {
         Self::init(iterator.into_iter().map(Row::from).collect())
     }
@@ -436,16 +444,18 @@ impl<B: ToString, A: IntoIterator<Item = B>> FromIterator<A> for Table {
 
 impl FromIterator<Row> for Table {
     fn from_iter<T>(iterator: T) -> Table
-        where T: IntoIterator<Item = Row>
+    where
+        T: IntoIterator<Item = Row>,
     {
         Self::init(iterator.into_iter().collect())
     }
 }
 
 impl<T, A, B> From<T> for Table
-    where B: ToString,
-          A: IntoIterator<Item = B>,
-          T: IntoIterator<Item = A>
+where
+    B: ToString,
+    A: IntoIterator<Item = B>,
+    T: IntoIterator<Item = A>,
 {
     fn from(it: T) -> Table {
         Self::from_iter(it)
@@ -476,8 +486,8 @@ impl<'a> IntoIterator for &'a mut Table {
 //     }
 // }
 
-impl <A: Into<Row>> Extend<A> for Table {
-    fn extend<T: IntoIterator<Item=A>>(&mut self, iter: T) {
+impl<A: Into<Row>> Extend<A> for Table {
+    fn extend<T: IntoIterator<Item = A>>(&mut self, iter: T) {
         self.rows.extend(iter.into_iter().map(|r| r.into()));
     }
 }
@@ -528,8 +538,9 @@ pub trait Slice<'a, E> {
 }
 
 impl<'a, T, E> Slice<'a, E> for T
-    where T: AsRef<TableSlice<'a>>,
-          [Row]: Index<E, Output = [Row]>
+where
+    T: AsRef<TableSlice<'a>>,
+    [Row]: Index<E, Output = [Row]>,
 {
     type Output = TableSlice<'a>;
     fn slice(&'a self, arg: E) -> Self::Output {
@@ -600,16 +611,30 @@ macro_rules! ptable {
 
 #[cfg(test)]
 mod tests {
-    use crate::{Table, Slice, Row, Cell, format};
-    use format::consts::{FORMAT_DEFAULT, FORMAT_NO_LINESEP, FORMAT_NO_COLSEP, FORMAT_CLEAN, FORMAT_BOX_CHARS};
     use crate::utils::StringWriter;
+    use crate::{format, Cell, Row, Slice, Table};
+    use format::consts::{
+        FORMAT_BOX_CHARS, FORMAT_CLEAN, FORMAT_DEFAULT, FORMAT_NO_COLSEP, FORMAT_NO_LINESEP,
+    };
 
     #[test]
     fn table() {
         let mut table = Table::new();
-        table.add_row(Row::new(vec![Cell::new("a"), Cell::new("bc"), Cell::new("def")]));
-        table.add_row(Row::new(vec![Cell::new("def"), Cell::new("bc"), Cell::new("a")]));
-        table.set_titles(Row::new(vec![Cell::new("t1"), Cell::new("t2"), Cell::new("t3")]));
+        table.add_row(Row::new(vec![
+            Cell::new("a"),
+            Cell::new("bc"),
+            Cell::new("def"),
+        ]));
+        table.add_row(Row::new(vec![
+            Cell::new("def"),
+            Cell::new("bc"),
+            Cell::new("a"),
+        ]));
+        table.set_titles(Row::new(vec![
+            Cell::new("t1"),
+            Cell::new("t2"),
+            Cell::new("t3"),
+        ]));
         let out = "\
 +-----+----+-----+
 | t1  | t2 | t3  |
@@ -636,9 +661,21 @@ mod tests {
     #[test]
     fn index() {
         let mut table = Table::new();
-        table.add_row(Row::new(vec![Cell::new("a"), Cell::new("bc"), Cell::new("def")]));
-        table.add_row(Row::new(vec![Cell::new("def"), Cell::new("bc"), Cell::new("a")]));
-        table.set_titles(Row::new(vec![Cell::new("t1"), Cell::new("t2"), Cell::new("t3")]));
+        table.add_row(Row::new(vec![
+            Cell::new("a"),
+            Cell::new("bc"),
+            Cell::new("def"),
+        ]));
+        table.add_row(Row::new(vec![
+            Cell::new("def"),
+            Cell::new("bc"),
+            Cell::new("a"),
+        ]));
+        table.set_titles(Row::new(vec![
+            Cell::new("t1"),
+            Cell::new("t2"),
+            Cell::new("t3"),
+        ]));
         assert_eq!(table[1][1].get_content(), "bc");
 
         table[1][1] = Cell::new("newval");
@@ -681,8 +718,16 @@ mod tests {
     #[test]
     fn get_row() {
         let mut table = Table::new();
-        table.add_row(Row::new(vec![Cell::new("a"), Cell::new("bc"), Cell::new("def")]));
-        table.add_row(Row::new(vec![Cell::new("def"), Cell::new("bc"), Cell::new("a")]));
+        table.add_row(Row::new(vec![
+            Cell::new("a"),
+            Cell::new("bc"),
+            Cell::new("def"),
+        ]));
+        table.add_row(Row::new(vec![
+            Cell::new("def"),
+            Cell::new("bc"),
+            Cell::new("a"),
+        ]));
         assert!(table.get_row(12).is_none());
         assert!(table.get_row(1).is_some());
         assert_eq!(table.get_row(1).unwrap()[0].get_content(), "def");
@@ -704,8 +749,16 @@ mod tests {
     #[test]
     fn remove_row() {
         let mut table = Table::new();
-        table.add_row(Row::new(vec![Cell::new("a"), Cell::new("bc"), Cell::new("def")]));
-        table.add_row(Row::new(vec![Cell::new("def"), Cell::new("bc"), Cell::new("a")]));
+        table.add_row(Row::new(vec![
+            Cell::new("a"),
+            Cell::new("bc"),
+            Cell::new("def"),
+        ]));
+        table.add_row(Row::new(vec![
+            Cell::new("def"),
+            Cell::new("bc"),
+            Cell::new("a"),
+        ]));
         table.remove_row(12);
         assert_eq!(table.len(), 2);
         table.remove_row(0);
@@ -716,14 +769,26 @@ mod tests {
     #[test]
     fn insert_row() {
         let mut table = Table::new();
-        table.add_row(Row::new(vec![Cell::new("a"), Cell::new("bc"), Cell::new("def")]));
-        table.add_row(Row::new(vec![Cell::new("def"), Cell::new("bc"), Cell::new("a")]));
-        table.insert_row(12,
-                         Row::new(vec![Cell::new("1"), Cell::new("2"), Cell::new("3")]));
+        table.add_row(Row::new(vec![
+            Cell::new("a"),
+            Cell::new("bc"),
+            Cell::new("def"),
+        ]));
+        table.add_row(Row::new(vec![
+            Cell::new("def"),
+            Cell::new("bc"),
+            Cell::new("a"),
+        ]));
+        table.insert_row(
+            12,
+            Row::new(vec![Cell::new("1"), Cell::new("2"), Cell::new("3")]),
+        );
         assert_eq!(table.len(), 3);
         assert_eq!(table[2][1].get_content(), "2");
-        table.insert_row(1,
-                         Row::new(vec![Cell::new("3"), Cell::new("4"), Cell::new("5")]));
+        table.insert_row(
+            1,
+            Row::new(vec![Cell::new("3"), Cell::new("4"), Cell::new("5")]),
+        );
         assert_eq!(table.len(), 4);
         assert_eq!(table[1][1].get_content(), "4");
         assert_eq!(table[2][1].get_content(), "bc");
@@ -732,8 +797,16 @@ mod tests {
     #[test]
     fn set_element() {
         let mut table = Table::new();
-        table.add_row(Row::new(vec![Cell::new("a"), Cell::new("bc"), Cell::new("def")]));
-        table.add_row(Row::new(vec![Cell::new("def"), Cell::new("bc"), Cell::new("a")]));
+        table.add_row(Row::new(vec![
+            Cell::new("a"),
+            Cell::new("bc"),
+            Cell::new("def"),
+        ]));
+        table.add_row(Row::new(vec![
+            Cell::new("def"),
+            Cell::new("bc"),
+            Cell::new("a"),
+        ]));
         assert!(table.set_element("foo", 12, 12).is_err());
         assert!(table.set_element("foo", 1, 1).is_ok());
         assert_eq!(table[1][1].get_content(), "foo");
@@ -743,9 +816,21 @@ mod tests {
     fn no_linesep() {
         let mut table = Table::new();
         table.set_format(*FORMAT_NO_LINESEP);
-        table.add_row(Row::new(vec![Cell::new("a"), Cell::new("bc"), Cell::new("def")]));
-        table.add_row(Row::new(vec![Cell::new("def"), Cell::new("bc"), Cell::new("a")]));
-        table.set_titles(Row::new(vec![Cell::new("t1"), Cell::new("t2"), Cell::new("t3")]));
+        table.add_row(Row::new(vec![
+            Cell::new("a"),
+            Cell::new("bc"),
+            Cell::new("def"),
+        ]));
+        table.add_row(Row::new(vec![
+            Cell::new("def"),
+            Cell::new("bc"),
+            Cell::new("a"),
+        ]));
+        table.set_titles(Row::new(vec![
+            Cell::new("t1"),
+            Cell::new("t2"),
+            Cell::new("t3"),
+        ]));
         assert_eq!(table[1][1].get_content(), "bc");
 
         table[1][1] = Cell::new("newval");
@@ -766,9 +851,21 @@ mod tests {
     fn no_colsep() {
         let mut table = Table::new();
         table.set_format(*FORMAT_NO_COLSEP);
-        table.add_row(Row::new(vec![Cell::new("a"), Cell::new("bc"), Cell::new("def")]));
-        table.add_row(Row::new(vec![Cell::new("def"), Cell::new("bc"), Cell::new("a")]));
-        table.set_titles(Row::new(vec![Cell::new("t1"), Cell::new("t2"), Cell::new("t3")]));
+        table.add_row(Row::new(vec![
+            Cell::new("a"),
+            Cell::new("bc"),
+            Cell::new("def"),
+        ]));
+        table.add_row(Row::new(vec![
+            Cell::new("def"),
+            Cell::new("bc"),
+            Cell::new("a"),
+        ]));
+        table.set_titles(Row::new(vec![
+            Cell::new("t1"),
+            Cell::new("t2"),
+            Cell::new("t3"),
+        ]));
         assert_eq!(table[1][1].get_content(), "bc");
 
         table[1][1] = Cell::new("newval");
@@ -794,19 +891,31 @@ mod tests {
     fn clean() {
         let mut table = Table::new();
         table.set_format(*FORMAT_CLEAN);
-        table.add_row(Row::new(vec![Cell::new("a"), Cell::new("bc"), Cell::new("def")]));
-        table.add_row(Row::new(vec![Cell::new("def"), Cell::new("bc"), Cell::new("a")]));
-        table.set_titles(Row::new(vec![Cell::new("t1"), Cell::new("t2"), Cell::new("t3")]));
+        table.add_row(Row::new(vec![
+            Cell::new("a"),
+            Cell::new("bc"),
+            Cell::new("def"),
+        ]));
+        table.add_row(Row::new(vec![
+            Cell::new("def"),
+            Cell::new("bc"),
+            Cell::new("a"),
+        ]));
+        table.set_titles(Row::new(vec![
+            Cell::new("t1"),
+            Cell::new("t2"),
+            Cell::new("t3"),
+        ]));
         assert_eq!(table[1][1].get_content(), "bc");
 
         table[1][1] = Cell::new("newval");
         assert_eq!(table[1][1].get_content(), "newval");
 
         let out = "\
-\u{0020}t1   t2      t3 \n\
-\u{0020}a    bc      def \n\
-\u{0020}def  newval  a \n\
-";
+                   \u{0020}t1   t2      t3 \n\
+                   \u{0020}a    bc      def \n\
+                   \u{0020}def  newval  a \n\
+                   ";
         println!("{}", out);
         println!("____");
         println!("{}", table.to_string().replace("\r\n", "\n"));
@@ -820,9 +929,21 @@ mod tests {
         let mut format = *FORMAT_DEFAULT;
         format.padding(2, 2);
         table.set_format(format);
-        table.add_row(Row::new(vec![Cell::new("a"), Cell::new("bc"), Cell::new("def")]));
-        table.add_row(Row::new(vec![Cell::new("def"), Cell::new("bc"), Cell::new("a")]));
-        table.set_titles(Row::new(vec![Cell::new("t1"), Cell::new("t2"), Cell::new("t3")]));
+        table.add_row(Row::new(vec![
+            Cell::new("a"),
+            Cell::new("bc"),
+            Cell::new("def"),
+        ]));
+        table.add_row(Row::new(vec![
+            Cell::new("def"),
+            Cell::new("bc"),
+            Cell::new("a"),
+        ]));
+        table.set_titles(Row::new(vec![
+            Cell::new("t1"),
+            Cell::new("t2"),
+            Cell::new("t3"),
+        ]));
         assert_eq!(table[1][1].get_content(), "bc");
 
         table[1][1] = Cell::new("newval");
@@ -847,9 +968,21 @@ mod tests {
     #[test]
     fn indent() {
         let mut table = Table::new();
-        table.add_row(Row::new(vec![Cell::new("a"), Cell::new("bc"), Cell::new("def")]));
-        table.add_row(Row::new(vec![Cell::new("def"), Cell::new("bc"), Cell::new("a")]));
-        table.set_titles(Row::new(vec![Cell::new("t1"), Cell::new("t2"), Cell::new("t3")]));
+        table.add_row(Row::new(vec![
+            Cell::new("a"),
+            Cell::new("bc"),
+            Cell::new("def"),
+        ]));
+        table.add_row(Row::new(vec![
+            Cell::new("def"),
+            Cell::new("bc"),
+            Cell::new("a"),
+        ]));
+        table.set_titles(Row::new(vec![
+            Cell::new("t1"),
+            Cell::new("t2"),
+            Cell::new("t3"),
+        ]));
         table.get_format().indent(8);
         let out = "        +-----+----+-----+
         | t1  | t2 | t3  |
@@ -866,13 +999,41 @@ mod tests {
     #[test]
     fn slices() {
         let mut table = Table::new();
-        table.set_titles(Row::new(vec![Cell::new("t1"), Cell::new("t2"), Cell::new("t3")]));
-        table.add_row(Row::new(vec![Cell::new("0"), Cell::new("0"), Cell::new("0")]));
-        table.add_row(Row::new(vec![Cell::new("1"), Cell::new("1"), Cell::new("1")]));
-        table.add_row(Row::new(vec![Cell::new("2"), Cell::new("2"), Cell::new("2")]));
-        table.add_row(Row::new(vec![Cell::new("3"), Cell::new("3"), Cell::new("3")]));
-        table.add_row(Row::new(vec![Cell::new("4"), Cell::new("4"), Cell::new("4")]));
-        table.add_row(Row::new(vec![Cell::new("5"), Cell::new("5"), Cell::new("5")]));
+        table.set_titles(Row::new(vec![
+            Cell::new("t1"),
+            Cell::new("t2"),
+            Cell::new("t3"),
+        ]));
+        table.add_row(Row::new(vec![
+            Cell::new("0"),
+            Cell::new("0"),
+            Cell::new("0"),
+        ]));
+        table.add_row(Row::new(vec![
+            Cell::new("1"),
+            Cell::new("1"),
+            Cell::new("1"),
+        ]));
+        table.add_row(Row::new(vec![
+            Cell::new("2"),
+            Cell::new("2"),
+            Cell::new("2"),
+        ]));
+        table.add_row(Row::new(vec![
+            Cell::new("3"),
+            Cell::new("3"),
+            Cell::new("3"),
+        ]));
+        table.add_row(Row::new(vec![
+            Cell::new("4"),
+            Cell::new("4"),
+            Cell::new("4"),
+        ]));
+        table.add_row(Row::new(vec![
+            Cell::new("5"),
+            Cell::new("5"),
+            Cell::new("5"),
+        ]));
         let out = "\
 +----+----+----+
 | t1 | t2 | t3 |
@@ -890,16 +1051,31 @@ mod tests {
         assert_eq!(out, slice.to_string().replace("\r\n", "\n"));
         assert_eq!(9, slice.print(&mut StringWriter::new()).unwrap());
         assert_eq!(out, table.slice(1..4).to_string().replace("\r\n", "\n"));
-        assert_eq!(9, table.slice(1..4).print(&mut StringWriter::new()).unwrap());
+        assert_eq!(
+            9,
+            table.slice(1..4).print(&mut StringWriter::new()).unwrap()
+        );
     }
 
     #[test]
     fn test_unicode_separators() {
         let mut table = Table::new();
         table.set_format(*FORMAT_BOX_CHARS);
-        table.add_row(Row::new(vec![Cell::new("1"), Cell::new("1"), Cell::new("1")]));
-        table.add_row(Row::new(vec![Cell::new("2"), Cell::new("2"), Cell::new("2")]));
-        table.set_titles(Row::new(vec![Cell::new("t1"), Cell::new("t2"), Cell::new("t3")]));
+        table.add_row(Row::new(vec![
+            Cell::new("1"),
+            Cell::new("1"),
+            Cell::new("1"),
+        ]));
+        table.add_row(Row::new(vec![
+            Cell::new("2"),
+            Cell::new("2"),
+            Cell::new("2"),
+        ]));
+        table.set_titles(Row::new(vec![
+            Cell::new("t1"),
+            Cell::new("t2"),
+            Cell::new("t3"),
+        ]));
         let out = "\
 ┌────┬────┬────┐
 │ t1 │ t2 │ t3 │
@@ -918,23 +1094,26 @@ mod tests {
 
     #[test]
     fn test_readme_format() {
-
         // The below is lifted from the README
 
         let mut table = Table::new();
         let format = format::FormatBuilder::new()
             .column_separator('|')
             .borders('|')
-            .separators(&[format::LinePosition::Top,
-                        format::LinePosition::Bottom],
-                        format::LineSeparator::new('-', '+', '+', '+'))
+            .separators(
+                &[format::LinePosition::Top, format::LinePosition::Bottom],
+                format::LineSeparator::new('-', '+', '+', '+'),
+            )
             .padding(1, 1)
             .build();
         table.set_format(format);
 
         table.set_titles(Row::new(vec![Cell::new("Title 1"), Cell::new("Title 2")]));
         table.add_row(Row::new(vec![Cell::new("Value 1"), Cell::new("Value 2")]));
-        table.add_row(Row::new(vec![Cell::new("Value three"), Cell::new("Value four")]));
+        table.add_row(Row::new(vec![
+            Cell::new("Value three"),
+            Cell::new("Value four"),
+        ]));
 
         let out = "\
 +-------------+------------+
@@ -946,8 +1125,8 @@ mod tests {
 
         println!("{}", out);
         println!("____");
-        println!("{}", table.to_string().replace("\r\n","\n"));
-        assert_eq!(out, table.to_string().replace("\r\n","\n"));
+        println!("{}", table.to_string().replace("\r\n", "\n"));
+        assert_eq!(out, table.to_string().replace("\r\n", "\n"));
         assert_eq!(5, table.print(&mut StringWriter::new()).unwrap());
     }
 
@@ -958,7 +1137,10 @@ mod tests {
 
         table.set_titles(Row::new(vec![Cell::new("Title 1"), Cell::new("Title 2")]));
         table.add_row(Row::new(vec![Cell::new("Value 1"), Cell::new("Value 2")]));
-        table.add_row(Row::new(vec![Cell::new("Value three"), Cell::new("Value four")]));
+        table.add_row(Row::new(vec![
+            Cell::new("Value three"),
+            Cell::new("Value four"),
+        ]));
 
         let out = "\
 +-------------+------------+
@@ -970,17 +1152,27 @@ mod tests {
 ";
         println!("{}", out);
         println!("____");
-        println!("{}", table.to_string().replace("\r\n","\n"));
-        assert_eq!(out, table.to_string().replace("\r\n","\n"));
+        println!("{}", table.to_string().replace("\r\n", "\n"));
+        assert_eq!(out, table.to_string().replace("\r\n", "\n"));
         assert_eq!(6, table.print(&mut StringWriter::new()).unwrap());
     }
 
     #[test]
     fn test_horizontal_span() {
         let mut table = Table::new();
-        table.set_titles(Row::new(vec![Cell::new("t1"), Cell::new("t2").with_hspan(2)]));
-        table.add_row(Row::new(vec![Cell::new("a"), Cell::new("bc"), Cell::new("def")]));
-        table.add_row(Row::new(vec![Cell::new("def").style_spec("H02c"), Cell::new("a")]));
+        table.set_titles(Row::new(vec![
+            Cell::new("t1"),
+            Cell::new("t2").with_hspan(2),
+        ]));
+        table.add_row(Row::new(vec![
+            Cell::new("a"),
+            Cell::new("bc"),
+            Cell::new("def"),
+        ]));
+        table.add_row(Row::new(vec![
+            Cell::new("def").style_spec("H02c"),
+            Cell::new("a"),
+        ]));
         let out = "\
 +----+----+-----+
 | t1 | t2       |
@@ -992,17 +1184,29 @@ mod tests {
 ";
         println!("{}", out);
         println!("____");
-        println!("{}", table.to_string().replace("\r\n","\n"));
-        assert_eq!(out, table.to_string().replace("\r\n","\n"));
+        println!("{}", table.to_string().replace("\r\n", "\n"));
+        assert_eq!(out, table.to_string().replace("\r\n", "\n"));
         assert_eq!(7, table.print(&mut StringWriter::new()).unwrap());
     }
 
     #[test]
     fn table_html() {
         let mut table = Table::new();
-        table.add_row(Row::new(vec![Cell::new("a"), Cell::new("bc"), Cell::new("def")]));
-        table.add_row(Row::new(vec![Cell::new("def"), Cell::new("bc"), Cell::new("a")]));
-        table.set_titles(Row::new(vec![Cell::new("t1"), Cell::new("t2"), Cell::new("t3")]));
+        table.add_row(Row::new(vec![
+            Cell::new("a"),
+            Cell::new("bc"),
+            Cell::new("def"),
+        ]));
+        table.add_row(Row::new(vec![
+            Cell::new("def"),
+            Cell::new("bc"),
+            Cell::new("a"),
+        ]));
+        table.set_titles(Row::new(vec![
+            Cell::new("t1"),
+            Cell::new("t2"),
+            Cell::new("t3"),
+        ]));
         let out = "\
 <table>\
 <th><td style=\"text-align: left;\">t1</td><td style=\"text-align: left;\">t2</td><td style=\"text-align: left;\">t3</td></th>\
@@ -1046,9 +1250,9 @@ mod tests {
             Cell::new("white on bright green").style_spec("FwBG"),
             Cell::new("default on blue").style_spec("Bb"),
         ]));
-        table.set_titles(Row::new(vec![
-            Cell::new("span horizontal").style_spec("H3"),
-        ]));
+        table.set_titles(Row::new(
+            vec![Cell::new("span horizontal").style_spec("H3")],
+        ));
         let out = "\
 <table>\
 <th><td colspan=\"3\" style=\"text-align: left;\">span horizontal</td></th>\

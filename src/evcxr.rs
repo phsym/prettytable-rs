@@ -1,7 +1,7 @@
 //! This modules contains traits and implementations to work within Evcxr
 
-use super::TableSlice;
 use super::utils::StringWriter;
+use super::TableSlice;
 use std::io::Write;
 
 /// Evcxr specific output trait

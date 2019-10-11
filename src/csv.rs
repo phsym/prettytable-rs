@@ -2,9 +2,9 @@
 
 use csv;
 
-pub use self::csv::{Reader, Writer, Result, ReaderBuilder};
-use std::path::Path;
+pub use self::csv::{Reader, ReaderBuilder, Result, Writer};
 use std::io::{Read, Write};
+use std::path::Path;
 
 impl<'a> super::TableSlice<'a> {
     /// Write the table to the specified writer.
@@ -15,9 +15,7 @@ impl<'a> super::TableSlice<'a> {
     /// Write the table to the specified writer.
     ///
     /// This allows for format customisation.
-    pub fn to_csv_writer<W: Write>(&self,
-                                mut writer: Writer<W>)
-                                -> Result<Writer<W>> {
+    pub fn to_csv_writer<W: Write>(&self, mut writer: Writer<W>) -> Result<Writer<W>> {
         for title in self.titles {
             writer.write_record(title.iter().map(|c| c.get_content()))?;
         }
@@ -38,7 +36,8 @@ impl super::Table {
         Ok(Self::from_csv(
             &mut ReaderBuilder::new()
                 .has_headers(false)
-                .from_reader(csv_s.as_bytes())))
+                .from_reader(csv_s.as_bytes()),
+        ))
     }
 
     /// Create a table from a CSV file
@@ -46,25 +45,27 @@ impl super::Table {
     /// For more customisability use `from_csv()`
     pub fn from_csv_file<P: AsRef<Path>>(csv_p: P) -> Result<Self> {
         Ok(Self::from_csv(
-            &mut ReaderBuilder::new()
-                .has_headers(false)
-                .from_path(csv_p)?))
+            &mut ReaderBuilder::new().has_headers(false).from_path(csv_p)?,
+        ))
     }
 
     /// Create a table from a CSV reader
     pub fn from_csv<R: Read>(reader: &mut Reader<R>) -> Self {
-        Self::init(reader
-                        .records()
-                        .map(|row| {
-                                super::Row::new(row.unwrap()
-                                            .into_iter()
-                                            .map(|cell| super::Cell::new(&cell))
-                                            .collect())
-                            })
-                        .collect())
+        Self::init(
+            reader
+                .records()
+                .map(|row| {
+                    super::Row::new(
+                        row.unwrap()
+                            .into_iter()
+                            .map(|cell| super::Cell::new(&cell))
+                            .collect(),
+                    )
+                })
+                .collect(),
+        )
     }
 
-    
     /// Write the table to the specified writer.
     pub fn to_csv<W: Write>(&self, w: W) -> Result<Writer<W>> {
         self.as_ref().to_csv(w)
@@ -78,33 +79,43 @@ impl super::Table {
     }
 }
 
-
 #[cfg(test)]
 mod tests {
-    use crate::{Table, Row, Cell};
+    use crate::{Cell, Row, Table};
 
     static CSV_S: &str = "ABC,DEFG,HIJKLMN\n\
-                        foobar,bar,foo\n\
-                        foobar2,bar2,foo2\n";
+                          foobar,bar,foo\n\
+                          foobar2,bar2,foo2\n";
 
     fn test_table() -> Table {
         let mut table = Table::new();
-        table
-            .add_row(Row::new(vec![Cell::new("ABC"), Cell::new("DEFG"), Cell::new("HIJKLMN")]));
-        table.add_row(Row::new(vec![Cell::new("foobar"), Cell::new("bar"), Cell::new("foo")]));
-        table.add_row(Row::new(vec![Cell::new("foobar2"),
-                                    Cell::new("bar2"),
-                                    Cell::new("foo2")]));
+        table.add_row(Row::new(vec![
+            Cell::new("ABC"),
+            Cell::new("DEFG"),
+            Cell::new("HIJKLMN"),
+        ]));
+        table.add_row(Row::new(vec![
+            Cell::new("foobar"),
+            Cell::new("bar"),
+            Cell::new("foo"),
+        ]));
+        table.add_row(Row::new(vec![
+            Cell::new("foobar2"),
+            Cell::new("bar2"),
+            Cell::new("foo2"),
+        ]));
         table
     }
 
     #[test]
     fn from() {
-        assert_eq!(test_table().to_string().replace("\r\n", "\n"),
-                    Table::from_csv_string(CSV_S)
-                        .unwrap()
-                        .to_string()
-                        .replace("\r\n", "\n"));
+        assert_eq!(
+            test_table().to_string().replace("\r\n", "\n"),
+            Table::from_csv_string(CSV_S)
+                .unwrap()
+                .to_string()
+                .replace("\r\n", "\n")
+        );
     }
 
     #[test]
@@ -116,8 +127,10 @@ mod tests {
                     .unwrap()
                     .into_inner()
                     .unwrap()
-                ).unwrap(),
-                CSV_S);
+            )
+            .unwrap(),
+            CSV_S
+        );
     }
 
     #[test]
@@ -130,21 +143,34 @@ mod tests {
                         .unwrap()
                         .into_inner()
                         .unwrap()
-                ).unwrap()
-            ).unwrap()
+                )
+                .unwrap()
+            )
+            .unwrap()
             .to_string()
             .replace("\r\n", "\n"),
-            test_table().to_string().replace("\r\n", "\n"));
+            test_table().to_string().replace("\r\n", "\n")
+        );
     }
 
     #[test]
     fn extend_table() {
         let mut table = Table::new();
-        table.add_row(Row::new(vec![Cell::new("ABC"), Cell::new("DEFG"), Cell::new("HIJKLMN")]));
+        table.add_row(Row::new(vec![
+            Cell::new("ABC"),
+            Cell::new("DEFG"),
+            Cell::new("HIJKLMN"),
+        ]));
         table.extend(vec![vec!["A", "B", "C"]]);
         let t2 = table.clone();
         table.extend(t2.rows);
-        assert_eq!(table.get_row(1).unwrap().get_cell(2).unwrap().get_content(), "C");
-        assert_eq!(table.get_row(2).unwrap().get_cell(1).unwrap().get_content(), "DEFG");
+        assert_eq!(
+            table.get_row(1).unwrap().get_cell(2).unwrap().get_content(),
+            "C"
+        );
+        assert_eq!(
+            table.get_row(2).unwrap().get_cell(1).unwrap().get_content(),
+            "DEFG"
+        );
     }
 }
