@@ -141,3 +141,45 @@ where
     //dbg!(&nodes);
     nodes.iter().map(|n| level_to_string(&n.level)).collect()
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_() {
+        let items = vec![
+            "1/2",
+            "1/2/3",
+            "1/2/3/4",
+            "1/2/5",
+            "6",
+            "7",
+            "7/8",
+            "7/9",
+        ];
+
+        let prefixes = provide_tree_prefix_display(&items, |parent, item| {
+            let pi = item.split("/");
+            let pp = parent.split("/");
+            (pi.count() == pp.count() + 1) && item.starts_with(parent)
+        });
+
+        let mut actual = String::new();
+        prefixes.iter().zip(items).for_each(|(p, i)|
+            actual.push_str(&format!("{} {}\n", p, i))
+        );
+
+        let expected = r#" 1/2
+ ├─ 1/2/3
+ │  └─ 1/2/3/4
+ └─ 1/2/5
+ 6
+ 7
+ ├─ 7/8
+ └─ 7/9
+"#;
+        //dbg!(&actual);
+        assert_eq!(actual, expected);
+    }
+}
