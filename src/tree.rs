@@ -4,42 +4,52 @@
 //!
 //! ```rust
 //! use prettytable::tree;
+//! use prettytable::{format, row, Table};
+//! 
+//! fn main() {
+//!     // Create data
+//!     let data = vec![
+//!         ("1", 1, "a"),
+//!         ("1/2", 2, "b"),
+//!         ("1/2/3", 3, "b"),
+//!         ("1/4", 4, "c"),
+//!         ("5", 5, "z"),
+//!         ("5/6", 6, "z"),
+//!     ];
+//!     // Create the table
+//!     let mut table = Table::new();
+//!     let format = format::FormatBuilder::new()
+//!         .separators(&[], format::LineSeparator::new('-', '+', '+', '+'))
+//!         .padding(1, 1)
+//!         .build();
+//!     table.set_format(format);
+//!     table.set_titles(row![bl->"t1", br->"t2"]);
+//!     let prefixes = tree::provide_prefix(&data, |parent, item| {
+//!         parent.0.split("/").count() + 1 == item.0.split("/").count() && item.0.starts_with(parent.0)
+//!     });
+//!     for (datum, prefix) in data.iter().zip(prefixes.iter()) {
+//!         table.add_row(row![
+//!             &format!("{} {}", prefix, datum.1),
+//!             r-> &format!("{}", datum.2),
+//!         ]);
+//!     }
 //!
-//! let items = vec![
-//!     "1/2",
-//!     "1/2/3",
-//!     "1/2/3/4",
-//!     "1/2/5",
-//!     "6",
-//!     "7",
-//!     "7/8",
-//!     "7/9",
-//! ];
-//!
-//! let prefixes = tree::provide_prefix(&items, |parent, item| {
-//!     let pi = item.split("/");
-//!     let pp = parent.split("/");
-//!     (pi.count() == pp.count() + 1) && item.starts_with(parent)
-//! });
-//!
-//! let mut actual = String::new();
-//! prefixes.iter().zip(items).for_each(|(p, i)|
-//!     actual.push_str(&format!("{} {}\n", p, i))
-//! );
-//!
-//! let expected = r#" 1/2
-//!  ├─ 1/2/3
-//!  │  └─ 1/2/3/4
-//!  └─ 1/2/5
-//!  6
-//!  7
-//!  ├─ 7/8
-//!  └─ 7/9
-//! "#;
-//! //dbg!(&actual);
-//! assert_eq!(actual, expected);
+//!     // Print the table to stdout
+//!     table.printstd();
+//! }
 //! ```
 //!
+//! will print :
+//!
+//! ```txt
+//!  t1        t2
+//!   1         a
+//!   ├─ 2      b
+//!   │  └─ 3   b
+//!   └─ 4      c
+//!   5         z
+//!   └─ 6      z
+//! ```
 
 #[derive(Debug, Clone)]
 struct TreeNode {
@@ -159,7 +169,7 @@ mod tests {
             "7/9",
         ];
 
-        let prefixes = provide_tree_prefix_display(&items, |parent, item| {
+        let prefixes = provide_prefix(&items, |parent, item| {
             let pi = item.split("/");
             let pp = parent.split("/");
             (pi.count() == pp.count() + 1) && item.starts_with(parent)
