@@ -411,7 +411,7 @@
 <span class="doccomment">/// Write integer to an `io::Write`.</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>
 <span class="attribute">#[<span class="ident">inline</span>]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">write</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">io</span>::<span class="ident">Write</span>, <span class="ident">V</span>: <span class="ident">Integer</span><span class="op">&gt;</span>(<span class="kw-2">mut</span> <span class="ident">wr</span>: <span class="ident">W</span>, <span class="ident">value</span>: <span class="ident">V</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">write</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">io</span>::<span class="ident">Write</span>, <span class="ident">V</span>: <span class="ident">Integer</span><span class="op">&gt;</span>(<span class="kw-2">mut</span> <span class="ident">wr</span>: <span class="ident">W</span>, <span class="ident">value</span>: <span class="ident">V</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buf</span> <span class="op">=</span> <span class="ident">Buffer</span>::<span class="ident">new</span>();
     <span class="kw">let</span> <span class="ident">s</span> <span class="op">=</span> <span class="ident">buf</span>.<span class="ident">format</span>(<span class="ident">value</span>);
     <span class="macro">try</span><span class="macro">!</span>(<span class="ident">wr</span>.<span class="ident">write_all</span>(<span class="ident">s</span>.<span class="ident">as_bytes</span>()));
@@ -420,7 +420,7 @@
 
 <span class="doccomment">/// Write integer to an `fmt::Write`.</span>
 <span class="attribute">#[<span class="ident">inline</span>]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">fmt</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">fmt</span>::<span class="ident">Write</span>, <span class="ident">V</span>: <span class="ident">Integer</span><span class="op">&gt;</span>(<span class="kw-2">mut</span> <span class="ident">wr</span>: <span class="ident">W</span>, <span class="ident">value</span>: <span class="ident">V</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">fmt</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">fmt</span>::<span class="ident">Write</span>, <span class="ident">V</span>: <span class="ident">Integer</span><span class="op">&gt;</span>(<span class="kw-2">mut</span> <span class="ident">wr</span>: <span class="ident">W</span>, <span class="ident">value</span>: <span class="ident">V</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buf</span> <span class="op">=</span> <span class="ident">Buffer</span>::<span class="ident">new</span>();
     <span class="ident">wr</span>.<span class="ident">write_str</span>(<span class="ident">buf</span>.<span class="ident">format</span>(<span class="ident">value</span>))
 }
@@ -441,14 +441,14 @@
 
 <span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">Buffer</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-&gt;</span> <span class="ident">Buffer</span> {
+    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Buffer</span> {
         <span class="ident">Buffer</span>::<span class="ident">new</span>()
     }
 }
 
 <span class="kw">impl</span> <span class="ident">Clone</span> <span class="kw">for</span> <span class="ident">Buffer</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">clone</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">clone</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="ident">Buffer</span>::<span class="ident">new</span>()
     }
 }
@@ -457,7 +457,7 @@
     <span class="doccomment">/// This is a cheap operation; you don&#39;t need to worry about reusing buffers</span>
     <span class="doccomment">/// for efficiency.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-&gt;</span> <span class="ident">Buffer</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Buffer</span> {
         <span class="ident">Buffer</span> {
             <span class="ident">bytes</span>: <span class="kw">unsafe</span> { <span class="ident">mem</span>::<span class="ident">uninitialized</span>() },
         }
@@ -465,7 +465,7 @@
 
     <span class="doccomment">/// Print an integer into this buffer and return a reference to its string representation</span>
     <span class="doccomment">/// within the buffer.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">format</span><span class="op">&lt;</span><span class="ident">I</span>: <span class="ident">Integer</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">i</span>: <span class="ident">I</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">format</span><span class="op">&lt;</span><span class="ident">I</span>: <span class="ident">Integer</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">i</span>: <span class="ident">I</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
         <span class="ident">i</span>.<span class="ident">write</span>(<span class="self">self</span>)
     }
 }
@@ -481,11 +481,11 @@
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Integer</span>: <span class="ident">private</span>::<span class="ident">Sealed</span> {
     <span class="comment">// Not public API.</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">write</span>(<span class="self">self</span>, <span class="ident">buf</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Buffer</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span>;
+    <span class="kw">fn</span> <span class="ident">write</span>(<span class="self">self</span>, <span class="ident">buf</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Buffer</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span>;
 }
 
 <span class="kw">trait</span> <span class="ident">IntegerPrivate</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">write_to</span>(<span class="self">self</span>, <span class="ident">buf</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">B</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">u8</span>];
+    <span class="kw">fn</span> <span class="ident">write_to</span>(<span class="self">self</span>, <span class="ident">buf</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">B</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">u8</span>];
 }
 
 <span class="kw">const</span> <span class="ident">DEC_DIGITS_LUT</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> [<span class="ident">u8</span>] <span class="op">=</span> <span class="string">b&quot;\
@@ -498,12 +498,12 @@
 <span class="comment">// Adaptation of the original implementation at</span>
 <span class="comment">// https://github.com/rust-lang/rust/blob/b8214dc6c6fc20d0a660fb5700dca9ebf51ebe89/src/libcore/fmt/num.rs#L188-L266</span>
 <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">impl_IntegerCommon</span> {
-    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">max_len</span>:<span class="ident">expr</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>:<span class="ident">ident</span>) <span class="op">=&gt;</span> {
+    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">max_len</span>:<span class="ident">expr</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>:<span class="ident">ident</span>) <span class="op">=</span><span class="op">&gt;</span> {
         <span class="kw">impl</span> <span class="ident">Integer</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span> {
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">write</span>(<span class="self">self</span>, <span class="ident">buf</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Buffer</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
+            <span class="kw">fn</span> <span class="ident">write</span>(<span class="self">self</span>, <span class="ident">buf</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Buffer</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
                 <span class="kw">unsafe</span> {
-                    <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">max_len</span> <span class="op">&lt;=</span> <span class="ident">I128_MAX_LEN</span>);
+                    <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">max_len</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">I128_MAX_LEN</span>);
                     <span class="kw">let</span> <span class="ident">buf</span> <span class="op">=</span> <span class="ident">mem</span>::<span class="ident">transmute</span>::<span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>; <span class="ident">I128_MAX_LEN</span>], <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>; <span class="macro-nonterminal">$</span><span class="macro-nonterminal">max_len</span>]<span class="op">&gt;</span>(
                         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">buf</span>.<span class="ident">bytes</span>,
                     );
@@ -518,14 +518,14 @@
 }
 
 <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">impl_Integer</span> {
-    ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">max_len</span>:<span class="ident">expr</span> <span class="op">=&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>:<span class="ident">ident</span>),<span class="op">*</span> <span class="kw">as</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">conv_fn</span>:<span class="ident">ident</span>) <span class="op">=&gt;</span> {$(
+    ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">max_len</span>:<span class="ident">expr</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>:<span class="ident">ident</span>),<span class="op">*</span> <span class="kw">as</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">conv_fn</span>:<span class="ident">ident</span>) <span class="op">=</span><span class="op">&gt;</span> {$(
         <span class="macro">impl_IntegerCommon</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">max_len</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>);
 
         <span class="kw">impl</span> <span class="ident">IntegerPrivate</span><span class="op">&lt;</span>[<span class="ident">u8</span>; <span class="macro-nonterminal">$</span><span class="macro-nonterminal">max_len</span>]<span class="op">&gt;</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span> {
             <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">unused_comparisons</span>)]</span>
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">write_to</span>(<span class="self">self</span>, <span class="ident">buf</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>; <span class="macro-nonterminal">$</span><span class="macro-nonterminal">max_len</span>]) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] {
-                <span class="kw">let</span> <span class="ident">is_nonnegative</span> <span class="op">=</span> <span class="self">self</span> <span class="op">&gt;=</span> <span class="number">0</span>;
+            <span class="kw">fn</span> <span class="ident">write_to</span>(<span class="self">self</span>, <span class="ident">buf</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>; <span class="macro-nonterminal">$</span><span class="macro-nonterminal">max_len</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] {
+                <span class="kw">let</span> <span class="ident">is_nonnegative</span> <span class="op">=</span> <span class="self">self</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">0</span>;
                 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">n</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">is_nonnegative</span> {
                     <span class="self">self</span> <span class="kw">as</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">conv_fn</span>
                 } <span class="kw">else</span> {
@@ -538,15 +538,15 @@
 
                 <span class="kw">unsafe</span> {
                     <span class="comment">// need at least 16 bits for the 4-characters-at-a-time to work.</span>
-                    <span class="kw">if</span> <span class="ident">mem</span>::<span class="ident">size_of</span>::<span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&gt;</span>() <span class="op">&gt;=</span> <span class="number">2</span> {
+                    <span class="kw">if</span> <span class="ident">mem</span>::<span class="ident">size_of</span>::<span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&gt;</span>() <span class="op">&gt;</span><span class="op">=</span> <span class="number">2</span> {
                         <span class="comment">// eagerly decode 4 characters at a time</span>
-                        <span class="kw">while</span> <span class="ident">n</span> <span class="op">&gt;=</span> <span class="number">10000</span> {
+                        <span class="kw">while</span> <span class="ident">n</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">10000</span> {
                             <span class="kw">let</span> <span class="ident">rem</span> <span class="op">=</span> (<span class="ident">n</span> <span class="op">%</span> <span class="number">10000</span>) <span class="kw">as</span> <span class="ident">isize</span>;
-                            <span class="ident">n</span> <span class="op">/=</span> <span class="number">10000</span>;
+                            <span class="ident">n</span> <span class="op">/</span><span class="op">=</span> <span class="number">10000</span>;
 
-                            <span class="kw">let</span> <span class="ident">d1</span> <span class="op">=</span> (<span class="ident">rem</span> <span class="op">/</span> <span class="number">100</span>) <span class="op">&lt;&lt;</span> <span class="number">1</span>;
-                            <span class="kw">let</span> <span class="ident">d2</span> <span class="op">=</span> (<span class="ident">rem</span> <span class="op">%</span> <span class="number">100</span>) <span class="op">&lt;&lt;</span> <span class="number">1</span>;
-                            <span class="ident">curr</span> <span class="op">-=</span> <span class="number">4</span>;
+                            <span class="kw">let</span> <span class="ident">d1</span> <span class="op">=</span> (<span class="ident">rem</span> <span class="op">/</span> <span class="number">100</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">1</span>;
+                            <span class="kw">let</span> <span class="ident">d2</span> <span class="op">=</span> (<span class="ident">rem</span> <span class="op">%</span> <span class="number">100</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">1</span>;
+                            <span class="ident">curr</span> <span class="op">-</span><span class="op">=</span> <span class="number">4</span>;
                             <span class="ident">ptr</span>::<span class="ident">copy_nonoverlapping</span>(<span class="ident">lut_ptr</span>.<span class="ident">offset</span>(<span class="ident">d1</span>), <span class="ident">buf_ptr</span>.<span class="ident">offset</span>(<span class="ident">curr</span>), <span class="number">2</span>);
                             <span class="ident">ptr</span>::<span class="ident">copy_nonoverlapping</span>(<span class="ident">lut_ptr</span>.<span class="ident">offset</span>(<span class="ident">d2</span>), <span class="ident">buf_ptr</span>.<span class="ident">offset</span>(<span class="ident">curr</span> <span class="op">+</span> <span class="number">2</span>), <span class="number">2</span>);
                         }
@@ -556,25 +556,25 @@
                     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">n</span> <span class="op">=</span> <span class="ident">n</span> <span class="kw">as</span> <span class="ident">isize</span>; <span class="comment">// possibly reduce 64bit math</span>
 
                     <span class="comment">// decode 2 more chars, if &gt; 2 chars</span>
-                    <span class="kw">if</span> <span class="ident">n</span> <span class="op">&gt;=</span> <span class="number">100</span> {
-                        <span class="kw">let</span> <span class="ident">d1</span> <span class="op">=</span> (<span class="ident">n</span> <span class="op">%</span> <span class="number">100</span>) <span class="op">&lt;&lt;</span> <span class="number">1</span>;
-                        <span class="ident">n</span> <span class="op">/=</span> <span class="number">100</span>;
-                        <span class="ident">curr</span> <span class="op">-=</span> <span class="number">2</span>;
+                    <span class="kw">if</span> <span class="ident">n</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">100</span> {
+                        <span class="kw">let</span> <span class="ident">d1</span> <span class="op">=</span> (<span class="ident">n</span> <span class="op">%</span> <span class="number">100</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">1</span>;
+                        <span class="ident">n</span> <span class="op">/</span><span class="op">=</span> <span class="number">100</span>;
+                        <span class="ident">curr</span> <span class="op">-</span><span class="op">=</span> <span class="number">2</span>;
                         <span class="ident">ptr</span>::<span class="ident">copy_nonoverlapping</span>(<span class="ident">lut_ptr</span>.<span class="ident">offset</span>(<span class="ident">d1</span>), <span class="ident">buf_ptr</span>.<span class="ident">offset</span>(<span class="ident">curr</span>), <span class="number">2</span>);
                     }
 
                     <span class="comment">// decode last 1 or 2 chars</span>
                     <span class="kw">if</span> <span class="ident">n</span> <span class="op">&lt;</span> <span class="number">10</span> {
-                        <span class="ident">curr</span> <span class="op">-=</span> <span class="number">1</span>;
+                        <span class="ident">curr</span> <span class="op">-</span><span class="op">=</span> <span class="number">1</span>;
                         <span class="kw-2">*</span><span class="ident">buf_ptr</span>.<span class="ident">offset</span>(<span class="ident">curr</span>) <span class="op">=</span> (<span class="ident">n</span> <span class="kw">as</span> <span class="ident">u8</span>) <span class="op">+</span> <span class="string">b&#39;0&#39;</span>;
                     } <span class="kw">else</span> {
-                        <span class="kw">let</span> <span class="ident">d1</span> <span class="op">=</span> <span class="ident">n</span> <span class="op">&lt;&lt;</span> <span class="number">1</span>;
-                        <span class="ident">curr</span> <span class="op">-=</span> <span class="number">2</span>;
+                        <span class="kw">let</span> <span class="ident">d1</span> <span class="op">=</span> <span class="ident">n</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">1</span>;
+                        <span class="ident">curr</span> <span class="op">-</span><span class="op">=</span> <span class="number">2</span>;
                         <span class="ident">ptr</span>::<span class="ident">copy_nonoverlapping</span>(<span class="ident">lut_ptr</span>.<span class="ident">offset</span>(<span class="ident">d1</span>), <span class="ident">buf_ptr</span>.<span class="ident">offset</span>(<span class="ident">curr</span>), <span class="number">2</span>);
                     }
 
                     <span class="kw">if</span> <span class="op">!</span><span class="ident">is_nonnegative</span> {
-                        <span class="ident">curr</span> <span class="op">-=</span> <span class="number">1</span>;
+                        <span class="ident">curr</span> <span class="op">-</span><span class="op">=</span> <span class="number">1</span>;
                         <span class="kw-2">*</span><span class="ident">buf_ptr</span>.<span class="ident">offset</span>(<span class="ident">curr</span>) <span class="op">=</span> <span class="string">b&#39;-&#39;</span>;
                     }
                 }
@@ -596,35 +596,35 @@
 <span class="kw">const</span> <span class="ident">U64_MAX_LEN</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">20</span>;
 
 <span class="macro">impl_Integer</span><span class="macro">!</span>(
-    <span class="ident">I8_MAX_LEN</span> <span class="op">=&gt;</span> <span class="ident">i8</span>,
-    <span class="ident">U8_MAX_LEN</span> <span class="op">=&gt;</span> <span class="ident">u8</span>,
-    <span class="ident">I16_MAX_LEN</span> <span class="op">=&gt;</span> <span class="ident">i16</span>,
-    <span class="ident">U16_MAX_LEN</span> <span class="op">=&gt;</span> <span class="ident">u16</span>,
-    <span class="ident">I32_MAX_LEN</span> <span class="op">=&gt;</span> <span class="ident">i32</span>,
-    <span class="ident">U32_MAX_LEN</span> <span class="op">=&gt;</span> <span class="ident">u32</span>
+    <span class="ident">I8_MAX_LEN</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">i8</span>,
+    <span class="ident">U8_MAX_LEN</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">u8</span>,
+    <span class="ident">I16_MAX_LEN</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">i16</span>,
+    <span class="ident">U16_MAX_LEN</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">u16</span>,
+    <span class="ident">I32_MAX_LEN</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">i32</span>,
+    <span class="ident">U32_MAX_LEN</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">u32</span>
     <span class="kw">as</span> <span class="ident">u32</span>);
 
-<span class="macro">impl_Integer</span><span class="macro">!</span>(<span class="ident">I64_MAX_LEN</span> <span class="op">=&gt;</span> <span class="ident">i64</span>, <span class="ident">U64_MAX_LEN</span> <span class="op">=&gt;</span> <span class="ident">u64</span> <span class="kw">as</span> <span class="ident">u64</span>);
+<span class="macro">impl_Integer</span><span class="macro">!</span>(<span class="ident">I64_MAX_LEN</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">i64</span>, <span class="ident">U64_MAX_LEN</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">u64</span> <span class="kw">as</span> <span class="ident">u64</span>);
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;16&quot;</span>)]</span>
-<span class="macro">impl_Integer</span><span class="macro">!</span>(<span class="ident">I16_MAX_LEN</span> <span class="op">=&gt;</span> <span class="ident">isize</span>, <span class="ident">U16_MAX_LEN</span> <span class="op">=&gt;</span> <span class="ident">usize</span> <span class="kw">as</span> <span class="ident">u16</span>);
+<span class="macro">impl_Integer</span><span class="macro">!</span>(<span class="ident">I16_MAX_LEN</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">isize</span>, <span class="ident">U16_MAX_LEN</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">usize</span> <span class="kw">as</span> <span class="ident">u16</span>);
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;32&quot;</span>)]</span>
-<span class="macro">impl_Integer</span><span class="macro">!</span>(<span class="ident">I32_MAX_LEN</span> <span class="op">=&gt;</span> <span class="ident">isize</span>, <span class="ident">U32_MAX_LEN</span> <span class="op">=&gt;</span> <span class="ident">usize</span> <span class="kw">as</span> <span class="ident">u32</span>);
+<span class="macro">impl_Integer</span><span class="macro">!</span>(<span class="ident">I32_MAX_LEN</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">isize</span>, <span class="ident">U32_MAX_LEN</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">usize</span> <span class="kw">as</span> <span class="ident">u32</span>);
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;64&quot;</span>)]</span>
-<span class="macro">impl_Integer</span><span class="macro">!</span>(<span class="ident">I64_MAX_LEN</span> <span class="op">=&gt;</span> <span class="ident">isize</span>, <span class="ident">U64_MAX_LEN</span> <span class="op">=&gt;</span> <span class="ident">usize</span> <span class="kw">as</span> <span class="ident">u64</span>);
+<span class="macro">impl_Integer</span><span class="macro">!</span>(<span class="ident">I64_MAX_LEN</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">isize</span>, <span class="ident">U64_MAX_LEN</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">usize</span> <span class="kw">as</span> <span class="ident">u64</span>);
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;i128&quot;</span>))]</span>
 <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">impl_Integer128</span> {
-    ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">max_len</span>:<span class="ident">expr</span> <span class="op">=&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>:<span class="ident">ident</span>),<span class="kw-2">*</span>) <span class="op">=&gt;</span> {$(
+    ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">max_len</span>:<span class="ident">expr</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>:<span class="ident">ident</span>),<span class="kw-2">*</span>) <span class="op">=</span><span class="op">&gt;</span> {$(
         <span class="macro">impl_IntegerCommon</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">max_len</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>);
 
         <span class="kw">impl</span> <span class="ident">IntegerPrivate</span><span class="op">&lt;</span>[<span class="ident">u8</span>; <span class="macro-nonterminal">$</span><span class="macro-nonterminal">max_len</span>]<span class="op">&gt;</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span> {
             <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">unused_comparisons</span>)]</span>
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">write_to</span>(<span class="self">self</span>, <span class="ident">buf</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>; <span class="macro-nonterminal">$</span><span class="macro-nonterminal">max_len</span>]) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] {
-                <span class="kw">let</span> <span class="ident">is_nonnegative</span> <span class="op">=</span> <span class="self">self</span> <span class="op">&gt;=</span> <span class="number">0</span>;
+            <span class="kw">fn</span> <span class="ident">write_to</span>(<span class="self">self</span>, <span class="ident">buf</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>; <span class="macro-nonterminal">$</span><span class="macro-nonterminal">max_len</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] {
+                <span class="kw">let</span> <span class="ident">is_nonnegative</span> <span class="op">=</span> <span class="self">self</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">0</span>;
                 <span class="kw">let</span> <span class="ident">n</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">is_nonnegative</span> {
                     <span class="self">self</span> <span class="kw">as</span> <span class="ident">u128</span>
                 } <span class="kw">else</span> {
@@ -638,9 +638,9 @@
                     <span class="comment">// Divide by 10^19 which is the highest power less than 2^64.</span>
                     <span class="kw">let</span> (<span class="ident">n</span>, <span class="ident">rem</span>) <span class="op">=</span> <span class="ident">udiv128</span>::<span class="ident">udivmod_1e19</span>(<span class="ident">n</span>);
                     <span class="kw">let</span> <span class="ident">buf1</span> <span class="op">=</span> <span class="ident">buf_ptr</span>.<span class="ident">offset</span>(<span class="ident">curr</span> <span class="op">-</span> <span class="ident">U64_MAX_LEN</span> <span class="kw">as</span> <span class="ident">isize</span>) <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> [<span class="ident">u8</span>; <span class="ident">U64_MAX_LEN</span>];
-                    <span class="ident">curr</span> <span class="op">-=</span> <span class="ident">rem</span>.<span class="ident">write_to</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw-2">*</span><span class="ident">buf1</span>).<span class="ident">len</span>() <span class="kw">as</span> <span class="ident">isize</span>;
+                    <span class="ident">curr</span> <span class="op">-</span><span class="op">=</span> <span class="ident">rem</span>.<span class="ident">write_to</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw-2">*</span><span class="ident">buf1</span>).<span class="ident">len</span>() <span class="kw">as</span> <span class="ident">isize</span>;
 
-                    <span class="kw">if</span> <span class="ident">n</span> <span class="op">!=</span> <span class="number">0</span> {
+                    <span class="kw">if</span> <span class="ident">n</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span> {
                         <span class="comment">// Memset the base10 leading zeros of rem.</span>
                         <span class="kw">let</span> <span class="ident">target</span> <span class="op">=</span> <span class="ident">buf</span>.<span class="ident">len</span>() <span class="kw">as</span> <span class="ident">isize</span> <span class="op">-</span> <span class="number">19</span>;
                         <span class="ident">ptr</span>::<span class="ident">write_bytes</span>(<span class="ident">buf_ptr</span>.<span class="ident">offset</span>(<span class="ident">target</span>), <span class="string">b&#39;0&#39;</span>, (<span class="ident">curr</span> <span class="op">-</span> <span class="ident">target</span>) <span class="kw">as</span> <span class="ident">usize</span>);
@@ -649,9 +649,9 @@
                         <span class="comment">// Divide by 10^19 again.</span>
                         <span class="kw">let</span> (<span class="ident">n</span>, <span class="ident">rem</span>) <span class="op">=</span> <span class="ident">udiv128</span>::<span class="ident">udivmod_1e19</span>(<span class="ident">n</span>);
                         <span class="kw">let</span> <span class="ident">buf2</span> <span class="op">=</span> <span class="ident">buf_ptr</span>.<span class="ident">offset</span>(<span class="ident">curr</span> <span class="op">-</span> <span class="ident">U64_MAX_LEN</span> <span class="kw">as</span> <span class="ident">isize</span>) <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> [<span class="ident">u8</span>; <span class="ident">U64_MAX_LEN</span>];
-                        <span class="ident">curr</span> <span class="op">-=</span> <span class="ident">rem</span>.<span class="ident">write_to</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw-2">*</span><span class="ident">buf2</span>).<span class="ident">len</span>() <span class="kw">as</span> <span class="ident">isize</span>;
+                        <span class="ident">curr</span> <span class="op">-</span><span class="op">=</span> <span class="ident">rem</span>.<span class="ident">write_to</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw-2">*</span><span class="ident">buf2</span>).<span class="ident">len</span>() <span class="kw">as</span> <span class="ident">isize</span>;
 
-                        <span class="kw">if</span> <span class="ident">n</span> <span class="op">!=</span> <span class="number">0</span> {
+                        <span class="kw">if</span> <span class="ident">n</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span> {
                             <span class="comment">// Memset the leading zeros.</span>
                             <span class="kw">let</span> <span class="ident">target</span> <span class="op">=</span> <span class="ident">buf</span>.<span class="ident">len</span>() <span class="kw">as</span> <span class="ident">isize</span> <span class="op">-</span> <span class="number">38</span>;
                             <span class="ident">ptr</span>::<span class="ident">write_bytes</span>(<span class="ident">buf_ptr</span>.<span class="ident">offset</span>(<span class="ident">target</span>), <span class="string">b&#39;0&#39;</span>, (<span class="ident">curr</span> <span class="op">-</span> <span class="ident">target</span>) <span class="kw">as</span> <span class="ident">usize</span>);
@@ -659,13 +659,13 @@
 
                             <span class="comment">// There is at most one digit left</span>
                             <span class="comment">// because u128::max / 10^19 / 10^19 is 3.</span>
-                            <span class="ident">curr</span> <span class="op">-=</span> <span class="number">1</span>;
+                            <span class="ident">curr</span> <span class="op">-</span><span class="op">=</span> <span class="number">1</span>;
                             <span class="kw-2">*</span><span class="ident">buf_ptr</span>.<span class="ident">offset</span>(<span class="ident">curr</span>) <span class="op">=</span> (<span class="ident">n</span> <span class="kw">as</span> <span class="ident">u8</span>) <span class="op">+</span> <span class="string">b&#39;0&#39;</span>;
                         }
                     }
 
                     <span class="kw">if</span> <span class="op">!</span><span class="ident">is_nonnegative</span> {
-                        <span class="ident">curr</span> <span class="op">-=</span> <span class="number">1</span>;
+                        <span class="ident">curr</span> <span class="op">-</span><span class="op">=</span> <span class="number">1</span>;
                         <span class="kw-2">*</span><span class="ident">buf_ptr</span>.<span class="ident">offset</span>(<span class="ident">curr</span>) <span class="op">=</span> <span class="string">b&#39;-&#39;</span>;
                     }
 
@@ -682,6 +682,6 @@
 <span class="kw">const</span> <span class="ident">I128_MAX_LEN</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">40</span>;
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;i128&quot;</span>))]</span>
-<span class="macro">impl_Integer128</span><span class="macro">!</span>(<span class="ident">I128_MAX_LEN</span> <span class="op">=&gt;</span> <span class="ident">i128</span>, <span class="ident">U128_MAX_LEN</span> <span class="op">=&gt;</span> <span class="ident">u128</span>);
+<span class="macro">impl_Integer128</span><span class="macro">!</span>(<span class="ident">I128_MAX_LEN</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">i128</span>, <span class="ident">U128_MAX_LEN</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">u128</span>);
 </pre></div>
 </section><section id="search" class="content hidden"></section><section class="footer"></section><aside id="help" class="hidden"><div><h1 class="hidden">Help</h1><div class="shortcuts"><h2>Keyboard Shortcuts</h2><dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd><dt><kbd>S</kbd></dt><dd>Focus the search field</dd><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd><dt><kbd>↹</kbd></dt><dd>Switch tab</dd><dt><kbd>&#9166;</kbd></dt><dd>Go to active search result</dd><dt><kbd>+</kbd></dt><dd>Expand all sections</dd><dt><kbd>-</kbd></dt><dd>Collapse all sections</dd></dl></div><div class="infos"><h2>Search Tricks</h2><p>Prefix searches with a type followed by a colon (e.g., <code>fn:</code>) to restrict the search to a given type.</p><p>Accepted types are: <code>fn</code>, <code>mod</code>, <code>struct</code>, <code>enum</code>, <code>trait</code>, <code>type</code>, <code>macro</code>, and <code>const</code>.</p><p>Search functions by type signature (e.g., <code>vec -> usize</code> or <code>* -> vec</code>)</p><p>Search multiple things at once by splitting your query with comma (e.g., <code>str,u8</code> or <code>String,struct:Vec,test</code>)</p></div></div></aside><script>window.rootPath = "../../";window.currentCrate = "itoa";</script><script src="../../aliases.js"></script><script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script><script defer src="../../search-index.js"></script></body></html>

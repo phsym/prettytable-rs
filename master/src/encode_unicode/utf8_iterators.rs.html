@@ -376,35 +376,35 @@
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Utf8Iterator</span> (<span class="ident">u32</span>);
 
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">Utf8Char</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Utf8Iterator</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">uc</span>: <span class="ident">Utf8Char</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">uc</span>: <span class="ident">Utf8Char</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="kw">let</span> <span class="ident">used</span> <span class="op">=</span> <span class="ident">u32</span>::<span class="ident">from_le</span>(<span class="kw">unsafe</span>{ <span class="ident">mem</span>::<span class="ident">transmute</span>(<span class="ident">uc</span>.<span class="ident">to_array</span>().<span class="number">0</span>) });
         <span class="comment">// uses u64 because shifting an u32 by 32 bits is a no-op.</span>
-        <span class="kw">let</span> <span class="ident">unused_set</span> <span class="op">=</span> (<span class="ident">u64</span>::<span class="ident">MAX</span>  <span class="op">&lt;&lt;</span>  <span class="ident">uc</span>.<span class="ident">len</span>() <span class="kw">as</span> <span class="ident">u64</span><span class="kw-2">*</span><span class="number">8</span>) <span class="kw">as</span> <span class="ident">u32</span>;
+        <span class="kw">let</span> <span class="ident">unused_set</span> <span class="op">=</span> (<span class="ident">u64</span>::<span class="ident">MAX</span>  <span class="op">&lt;</span><span class="op">&lt;</span>  <span class="ident">uc</span>.<span class="ident">len</span>() <span class="kw">as</span> <span class="ident">u64</span><span class="kw-2">*</span><span class="number">8</span>) <span class="kw">as</span> <span class="ident">u32</span>;
         <span class="ident">Utf8Iterator</span>(<span class="ident">used</span> <span class="op">|</span> <span class="ident">unused_set</span>)
     }
 }
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">char</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Utf8Iterator</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">c</span>: <span class="ident">char</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">c</span>: <span class="ident">char</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span>::<span class="ident">from</span>(<span class="ident">Utf8Char</span>::<span class="ident">from</span>(<span class="ident">c</span>))
     }
 }
 <span class="kw">impl</span> <span class="ident">Iterator</span> <span class="kw">for</span> <span class="ident">Utf8Iterator</span> {
     <span class="kw">type</span> <span class="ident">Item</span><span class="op">=</span><span class="ident">u8</span>;
-    <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">next</span> <span class="op">=</span> <span class="self">self</span>.<span class="number">0</span> <span class="kw">as</span> <span class="ident">u8</span>;
-        <span class="kw">if</span> <span class="ident">next</span> <span class="op">==</span> <span class="number">0xff</span> {
+        <span class="kw">if</span> <span class="ident">next</span> <span class="op">=</span><span class="op">=</span> <span class="number">0xff</span> {
             <span class="prelude-val">None</span>
         } <span class="kw">else</span> {
-            <span class="self">self</span>.<span class="number">0</span> <span class="op">=</span> (<span class="self">self</span>.<span class="number">0</span> <span class="op">&gt;&gt;</span> <span class="number">8</span>)  <span class="op">|</span>  <span class="number">0xff_00_00_00</span>;
+            <span class="self">self</span>.<span class="number">0</span> <span class="op">=</span> (<span class="self">self</span>.<span class="number">0</span> <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">8</span>)  <span class="op">|</span>  <span class="number">0xff_00_00_00</span>;
             <span class="prelude-val">Some</span>(<span class="ident">next</span>)
         }
     }
-    <span class="kw">fn</span> <span class="ident">size_hint</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> (<span class="ident">usize</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>) {
+    <span class="kw">fn</span> <span class="ident">size_hint</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">usize</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>) {
         (<span class="self">self</span>.<span class="ident">len</span>(),  <span class="prelude-val">Some</span>(<span class="self">self</span>.<span class="ident">len</span>()))
     }
 }
 <span class="kw">impl</span> <span class="ident">ExactSizeIterator</span> <span class="kw">for</span> <span class="ident">Utf8Iterator</span> {
-    <span class="kw">fn</span> <span class="ident">len</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {<span class="comment">// not straightforward, but possible</span>
+    <span class="kw">fn</span> <span class="ident">len</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {<span class="comment">// not straightforward, but possible</span>
         <span class="kw">let</span> <span class="ident">unused_bytes</span> <span class="op">=</span> <span class="self">self</span>.<span class="number">0</span>.<span class="ident">not</span>().<span class="ident">leading_zeros</span>() <span class="op">/</span> <span class="number">8</span>;
         <span class="number">4</span> <span class="op">-</span> <span class="ident">unused_bytes</span> <span class="kw">as</span> <span class="ident">usize</span>
     }
@@ -412,24 +412,24 @@
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span><span class="op">=</span><span class="string">&quot;std&quot;</span>)]</span>
 <span class="kw">impl</span> <span class="ident">Read</span> <span class="kw">for</span> <span class="ident">Utf8Iterator</span> {
     <span class="doccomment">/// Always returns Ok</span>
-    <span class="kw">fn</span> <span class="ident">read</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,  <span class="ident">buf</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span>[<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">ioError</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">read</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,  <span class="ident">buf</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">ioError</span><span class="op">&gt;</span> {
         <span class="comment">// Cannot call self.next() until I know I can write the result.</span>
         <span class="kw">for</span> (<span class="ident">i</span>, <span class="ident">dst</span>) <span class="kw">in</span> <span class="ident">buf</span>.<span class="ident">iter_mut</span>().<span class="ident">enumerate</span>() {
             <span class="kw">match</span> <span class="self">self</span>.<span class="ident">next</span>() {
-                <span class="prelude-val">Some</span>(<span class="ident">b</span>) <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="ident">dst</span> <span class="op">=</span> <span class="ident">b</span>,
-                <span class="prelude-val">None</span>    <span class="op">=&gt;</span> <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="ident">i</span>),
+                <span class="prelude-val">Some</span>(<span class="ident">b</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="ident">dst</span> <span class="op">=</span> <span class="ident">b</span>,
+                <span class="prelude-val">None</span>    <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="ident">i</span>),
             }
         }
         <span class="prelude-val">Ok</span>(<span class="ident">buf</span>.<span class="ident">len</span>())
     }
 }
 <span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">Utf8Iterator</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>,  <span class="ident">fmtr</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>,  <span class="ident">fmtr</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">content</span> <span class="op">=</span> [<span class="number">0</span>; <span class="number">4</span>];
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">i</span> <span class="op">=</span> <span class="number">0</span>;
         <span class="kw">for</span> <span class="ident">b</span> <span class="kw">in</span> <span class="self">self</span>.<span class="ident">clone</span>() {
             <span class="ident">content</span>[<span class="ident">i</span>] <span class="op">=</span> <span class="ident">b</span>;
-            <span class="ident">i</span> <span class="op">+=</span> <span class="number">1</span>;
+            <span class="ident">i</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
         }
         <span class="macro">write</span><span class="macro">!</span>(<span class="ident">fmtr</span>, <span class="string">&quot;{:?}&quot;</span>, <span class="kw-2">&amp;</span><span class="ident">content</span>[..<span class="ident">i</span>])
     }
@@ -491,8 +491,8 @@
 <span class="doccomment">/// assert_eq!(&amp;buf[..8], s.as_bytes());</span>
 <span class="doccomment">/// assert_eq!(buf[8], b&#39;E&#39;);</span>
 <span class="doccomment">/// ```</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">iter_bytes</span><span class="op">&lt;</span><span class="ident">U</span>:<span class="ident">Borrow</span><span class="op">&lt;</span><span class="ident">Utf8Char</span><span class="op">&gt;</span>, <span class="ident">I</span>:<span class="ident">IntoIterator</span><span class="op">&lt;</span><span class="ident">Item</span><span class="op">=</span><span class="ident">U</span><span class="op">&gt;&gt;</span>
-(<span class="ident">iterable</span>: <span class="ident">I</span>) <span class="op">-&gt;</span> <span class="ident">Utf8CharSplitter</span><span class="op">&lt;</span><span class="ident">U</span>, <span class="ident">I</span>::<span class="ident">IntoIter</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">iter_bytes</span><span class="op">&lt;</span><span class="ident">U</span>:<span class="ident">Borrow</span><span class="op">&lt;</span><span class="ident">Utf8Char</span><span class="op">&gt;</span>, <span class="ident">I</span>:<span class="ident">IntoIterator</span><span class="op">&lt;</span><span class="ident">Item</span><span class="op">=</span><span class="ident">U</span><span class="op">&gt;</span><span class="op">&gt;</span>
+(<span class="ident">iterable</span>: <span class="ident">I</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Utf8CharSplitter</span><span class="op">&lt;</span><span class="ident">U</span>, <span class="ident">I</span>::<span class="ident">IntoIter</span><span class="op">&gt;</span> {
     <span class="ident">Utf8CharSplitter</span>{ <span class="ident">inner</span>: <span class="ident">iterable</span>.<span class="ident">into_iter</span>(),  <span class="ident">prev</span>: <span class="number">0</span> }
 }
 
@@ -500,42 +500,42 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// See its documentation for details.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Utf8CharSplitter</span><span class="op">&lt;</span><span class="ident">U</span>:<span class="ident">Borrow</span><span class="op">&lt;</span><span class="ident">Utf8Char</span><span class="op">&gt;</span>, <span class="ident">I</span>:<span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span><span class="op">=</span><span class="ident">U</span><span class="op">&gt;&gt;</span> {
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Utf8CharSplitter</span><span class="op">&lt;</span><span class="ident">U</span>:<span class="ident">Borrow</span><span class="op">&lt;</span><span class="ident">Utf8Char</span><span class="op">&gt;</span>, <span class="ident">I</span>:<span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span><span class="op">=</span><span class="ident">U</span><span class="op">&gt;</span><span class="op">&gt;</span> {
     <span class="ident">inner</span>: <span class="ident">I</span>,
     <span class="ident">prev</span>: <span class="ident">u32</span>,
 }
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">I</span>:<span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span><span class="op">=</span><span class="ident">Utf8Char</span><span class="op">&gt;&gt;</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">I</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Utf8CharSplitter</span><span class="op">&lt;</span><span class="ident">Utf8Char</span>,<span class="ident">I</span><span class="op">&gt;</span> {
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">I</span>:<span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span><span class="op">=</span><span class="ident">Utf8Char</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">I</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Utf8CharSplitter</span><span class="op">&lt;</span><span class="ident">Utf8Char</span>,<span class="ident">I</span><span class="op">&gt;</span> {
     <span class="doccomment">/// A less generic constructor than `iter_bytes()`</span>
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">iter</span>: <span class="ident">I</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">iter</span>: <span class="ident">I</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="ident">iter_bytes</span>(<span class="ident">iter</span>)
     }
 }
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">U</span>:<span class="ident">Borrow</span><span class="op">&lt;</span><span class="ident">Utf8Char</span><span class="op">&gt;</span>, <span class="ident">I</span>:<span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span><span class="op">=</span><span class="ident">U</span><span class="op">&gt;&gt;</span> <span class="ident">Utf8CharSplitter</span><span class="op">&lt;</span><span class="ident">U</span>,<span class="ident">I</span><span class="op">&gt;</span> {
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">U</span>:<span class="ident">Borrow</span><span class="op">&lt;</span><span class="ident">Utf8Char</span><span class="op">&gt;</span>, <span class="ident">I</span>:<span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span><span class="op">=</span><span class="ident">U</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="ident">Utf8CharSplitter</span><span class="op">&lt;</span><span class="ident">U</span>,<span class="ident">I</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Extracts the source iterator.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Note that `iter_bytes(iter.into_inner())` is not a no-op:  </span>
     <span class="doccomment">/// If the last returned byte from `next()` was not an ASCII by,</span>
     <span class="doccomment">/// the remaining bytes of that codepoint is lost.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">into_inner</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">I</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">into_inner</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">I</span> {
         <span class="self">self</span>.<span class="ident">inner</span>
     }
 }
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">U</span>:<span class="ident">Borrow</span><span class="op">&lt;</span><span class="ident">Utf8Char</span><span class="op">&gt;</span>, <span class="ident">I</span>:<span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span><span class="op">=</span><span class="ident">U</span><span class="op">&gt;&gt;</span> <span class="ident">Iterator</span> <span class="kw">for</span> <span class="ident">Utf8CharSplitter</span><span class="op">&lt;</span><span class="ident">U</span>,<span class="ident">I</span><span class="op">&gt;</span> {
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">U</span>:<span class="ident">Borrow</span><span class="op">&lt;</span><span class="ident">Utf8Char</span><span class="op">&gt;</span>, <span class="ident">I</span>:<span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span><span class="op">=</span><span class="ident">U</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="ident">Iterator</span> <span class="kw">for</span> <span class="ident">Utf8CharSplitter</span><span class="op">&lt;</span><span class="ident">U</span>,<span class="ident">I</span><span class="op">&gt;</span> {
     <span class="kw">type</span> <span class="ident">Item</span> <span class="op">=</span> <span class="ident">u8</span>;
-    <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Item</span><span class="op">&gt;</span> {
-        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">prev</span> <span class="op">==</span> <span class="number">0</span> {
+    <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Item</span><span class="op">&gt;</span> {
+        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">prev</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
             <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">next</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">u8c</span><span class="op">|</span> {
                 <span class="kw">let</span> <span class="ident">array</span> <span class="op">=</span> <span class="ident">u8c</span>.<span class="ident">borrow</span>().<span class="ident">to_array</span>().<span class="number">0</span>;
-                <span class="self">self</span>.<span class="ident">prev</span> <span class="op">=</span> <span class="kw">unsafe</span>{ <span class="ident">u32</span>::<span class="ident">from_le</span>(<span class="ident">mem</span>::<span class="ident">transmute</span>(<span class="ident">array</span>)) } <span class="op">&gt;&gt;</span> <span class="number">8</span>;
+                <span class="self">self</span>.<span class="ident">prev</span> <span class="op">=</span> <span class="kw">unsafe</span>{ <span class="ident">u32</span>::<span class="ident">from_le</span>(<span class="ident">mem</span>::<span class="ident">transmute</span>(<span class="ident">array</span>)) } <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">8</span>;
                 <span class="ident">array</span>[<span class="number">0</span>]
             })
         } <span class="kw">else</span> {
             <span class="kw">let</span> <span class="ident">next</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">prev</span> <span class="kw">as</span> <span class="ident">u8</span>;
-            <span class="self">self</span>.<span class="ident">prev</span> <span class="op">&gt;&gt;=</span> <span class="number">8</span>;
+            <span class="self">self</span>.<span class="ident">prev</span> <span class="op">&gt;</span><span class="op">&gt;</span><span class="op">=</span> <span class="number">8</span>;
             <span class="prelude-val">Some</span>(<span class="ident">next</span>)
         }
     }
-    <span class="kw">fn</span> <span class="ident">size_hint</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> (<span class="ident">usize</span>,<span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>) {
+    <span class="kw">fn</span> <span class="ident">size_hint</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">usize</span>,<span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>) {
         <span class="comment">// Doesn&#39;t need to handle unlikely overflows correctly because</span>
         <span class="comment">// size_hint() cannot be relied upon anyway. (the trait isn&#39;t unsafe)</span>
         <span class="kw">let</span> (<span class="ident">min</span>, <span class="ident">max</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">size_hint</span>();
@@ -544,35 +544,35 @@
     }
 }
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span><span class="op">=</span><span class="string">&quot;std&quot;</span>)]</span>
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">U</span>:<span class="ident">Borrow</span><span class="op">&lt;</span><span class="ident">Utf8Char</span><span class="op">&gt;</span>, <span class="ident">I</span>:<span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span><span class="op">=</span><span class="ident">U</span><span class="op">&gt;&gt;</span> <span class="ident">Read</span> <span class="kw">for</span> <span class="ident">Utf8CharSplitter</span><span class="op">&lt;</span><span class="ident">U</span>,<span class="ident">I</span><span class="op">&gt;</span> {
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">U</span>:<span class="ident">Borrow</span><span class="op">&lt;</span><span class="ident">Utf8Char</span><span class="op">&gt;</span>, <span class="ident">I</span>:<span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span><span class="op">=</span><span class="ident">U</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="ident">Read</span> <span class="kw">for</span> <span class="ident">Utf8CharSplitter</span><span class="op">&lt;</span><span class="ident">U</span>,<span class="ident">I</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Always returns `Ok`</span>
-    <span class="kw">fn</span> <span class="ident">read</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,  <span class="ident">buf</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span>[<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">ioError</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">read</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,  <span class="ident">buf</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">ioError</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">i</span> <span class="op">=</span> <span class="number">0</span>;
         <span class="comment">// write remaining bytes of previous codepoint</span>
-        <span class="kw">while</span> <span class="self">self</span>.<span class="ident">prev</span> <span class="op">!=</span> <span class="number">0</span>  <span class="op">&amp;&amp;</span>  <span class="ident">i</span> <span class="op">&lt;</span> <span class="ident">buf</span>.<span class="ident">len</span>() {
+        <span class="kw">while</span> <span class="self">self</span>.<span class="ident">prev</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span>  <span class="kw-2">&amp;</span><span class="op">&amp;</span>  <span class="ident">i</span> <span class="op">&lt;</span> <span class="ident">buf</span>.<span class="ident">len</span>() {
             <span class="ident">buf</span>[<span class="ident">i</span>] <span class="op">=</span> <span class="self">self</span>.<span class="ident">prev</span> <span class="kw">as</span> <span class="ident">u8</span>;
-            <span class="self">self</span>.<span class="ident">prev</span> <span class="op">&gt;&gt;=</span> <span class="number">8</span>;
-            <span class="ident">i</span> <span class="op">+=</span> <span class="number">1</span>;
+            <span class="self">self</span>.<span class="ident">prev</span> <span class="op">&gt;</span><span class="op">&gt;</span><span class="op">=</span> <span class="number">8</span>;
+            <span class="ident">i</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
         }
         <span class="comment">// write whole characters</span>
         <span class="kw">while</span> <span class="ident">i</span> <span class="op">&lt;</span> <span class="ident">buf</span>.<span class="ident">len</span>() {
             <span class="kw">let</span> <span class="ident">bytes</span> <span class="op">=</span> <span class="kw">match</span> <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">next</span>() {
-                <span class="prelude-val">Some</span>(<span class="ident">u8c</span>) <span class="op">=&gt;</span> <span class="ident">u8c</span>.<span class="ident">borrow</span>().<span class="ident">to_array</span>().<span class="number">0</span>,
-                <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="kw">break</span>
+                <span class="prelude-val">Some</span>(<span class="ident">u8c</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">u8c</span>.<span class="ident">borrow</span>().<span class="ident">to_array</span>().<span class="number">0</span>,
+                <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">break</span>
             };
             <span class="ident">buf</span>[<span class="ident">i</span>] <span class="op">=</span> <span class="ident">bytes</span>[<span class="number">0</span>];
-            <span class="ident">i</span> <span class="op">+=</span> <span class="number">1</span>;
-            <span class="kw">if</span> <span class="ident">bytes</span>[<span class="number">1</span>] <span class="op">!=</span> <span class="number">0</span> {
+            <span class="ident">i</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
+            <span class="kw">if</span> <span class="ident">bytes</span>[<span class="number">1</span>] <span class="op">!</span><span class="op">=</span> <span class="number">0</span> {
                 <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="ident">bytes</span>[<span class="number">0</span>].<span class="ident">not</span>().<span class="ident">leading_zeros</span>() <span class="kw">as</span> <span class="ident">usize</span>;
                 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">written</span> <span class="op">=</span> <span class="number">1</span>;
                 <span class="kw">while</span> <span class="ident">written</span> <span class="op">&lt;</span> <span class="ident">len</span> {
                     <span class="kw">if</span> <span class="ident">i</span> <span class="op">&lt;</span> <span class="ident">buf</span>.<span class="ident">len</span>() {
                         <span class="ident">buf</span>[<span class="ident">i</span>] <span class="op">=</span> <span class="ident">bytes</span>[<span class="ident">written</span>];
-                        <span class="ident">i</span> <span class="op">+=</span> <span class="number">1</span>;
-                        <span class="ident">written</span> <span class="op">+=</span> <span class="number">1</span>;
+                        <span class="ident">i</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
+                        <span class="ident">written</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
                     } <span class="kw">else</span> {
                         <span class="kw">let</span> <span class="ident">bytes_as_u32</span> <span class="op">=</span> <span class="kw">unsafe</span>{ <span class="ident">u32</span>::<span class="ident">from_le</span>(<span class="ident">mem</span>::<span class="ident">transmute</span>(<span class="ident">bytes</span>)) };
-                        <span class="self">self</span>.<span class="ident">prev</span> <span class="op">=</span> <span class="ident">bytes_as_u32</span> <span class="op">&gt;&gt;</span> (<span class="number">8</span><span class="kw-2">*</span><span class="ident">written</span>);
+                        <span class="self">self</span>.<span class="ident">prev</span> <span class="op">=</span> <span class="ident">bytes_as_u32</span> <span class="op">&gt;</span><span class="op">&gt;</span> (<span class="number">8</span><span class="kw-2">*</span><span class="ident">written</span>);
                         <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="ident">i</span>);
                     }
                 }
@@ -593,7 +593,7 @@
     <span class="ident">index</span>: <span class="ident">usize</span>,
 }
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Utf8CharIndices</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="ident">Utf8CharIndices</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Utf8CharIndices</span> {
         <span class="ident">Utf8CharIndices</span>{<span class="ident">str</span>: <span class="ident">s</span>, <span class="ident">index</span>: <span class="number">0</span>}
     }
 }
@@ -609,23 +609,23 @@
     <span class="doccomment">/// assert_eq!(iter.next(), Some((0, Utf8Char::from(&#39;a&#39;))));</span>
     <span class="doccomment">/// assert_eq!(iter.as_str(), &quot;b&quot;);</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_str</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_str</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span> {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">str</span>[<span class="self">self</span>.<span class="ident">index</span>..]
     }
 }
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Iterator</span> <span class="kw">for</span> <span class="ident">Utf8CharIndices</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
     <span class="kw">type</span> <span class="ident">Item</span> <span class="op">=</span> (<span class="ident">usize</span>,<span class="ident">Utf8Char</span>);
-    <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">usize</span>,<span class="ident">Utf8Char</span>)<span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">usize</span>,<span class="ident">Utf8Char</span>)<span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="ident">Utf8Char</span>::<span class="ident">from_str_start</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">str</span>[<span class="self">self</span>.<span class="ident">index</span>..]) {
-            <span class="prelude-val">Ok</span>((<span class="ident">u8c</span>, <span class="ident">len</span>)) <span class="op">=&gt;</span> {
+            <span class="prelude-val">Ok</span>((<span class="ident">u8c</span>, <span class="ident">len</span>)) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="kw">let</span> <span class="ident">item</span> <span class="op">=</span> (<span class="self">self</span>.<span class="ident">index</span>, <span class="ident">u8c</span>);
-                <span class="self">self</span>.<span class="ident">index</span> <span class="op">+=</span> <span class="ident">len</span>;
+                <span class="self">self</span>.<span class="ident">index</span> <span class="op">+</span><span class="op">=</span> <span class="ident">len</span>;
                 <span class="prelude-val">Some</span>(<span class="ident">item</span>)
             },
-            <span class="prelude-val">Err</span>(<span class="ident">EmptyStrError</span>) <span class="op">=&gt;</span> <span class="prelude-val">None</span>
+            <span class="prelude-val">Err</span>(<span class="ident">EmptyStrError</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">None</span>
         }
     }
-    <span class="kw">fn</span> <span class="ident">size_hint</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> (<span class="ident">usize</span>,<span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>) {
+    <span class="kw">fn</span> <span class="ident">size_hint</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">usize</span>,<span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>) {
         <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">str</span>.<span class="ident">len</span>() <span class="op">-</span> <span class="self">self</span>.<span class="ident">index</span>;
         <span class="comment">// For len+3 to overflow, the slice must fill all but two bytes of</span>
         <span class="comment">// addressable memory, and size_hint() doesn&#39;t need to be correct.</span>
@@ -633,12 +633,12 @@
     }
 }
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">DoubleEndedIterator</span> <span class="kw">for</span> <span class="ident">Utf8CharIndices</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">next_back</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">usize</span>,<span class="ident">Utf8Char</span>)<span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">next_back</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">usize</span>,<span class="ident">Utf8Char</span>)<span class="op">&gt;</span> {
         <span class="comment">// Cannot refactor out the unwrap without switching to ::from_slice()</span>
         <span class="comment">// since slicing the str panics if not on a boundary.</span>
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">index</span> <span class="op">&lt;</span> <span class="self">self</span>.<span class="ident">str</span>.<span class="ident">len</span>() {
             <span class="kw">let</span> <span class="ident">rev</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">str</span>.<span class="ident">bytes</span>().<span class="ident">rev</span>();
-            <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="number">1</span> <span class="op">+</span> <span class="ident">rev</span>.<span class="ident">take_while</span>(<span class="op">|</span><span class="ident">b</span><span class="op">|</span> <span class="ident">b</span> <span class="op">&amp;</span> <span class="number">0b1100_0000</span> <span class="op">==</span> <span class="number">0b1000_0000</span> ).<span class="ident">count</span>();
+            <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="number">1</span> <span class="op">+</span> <span class="ident">rev</span>.<span class="ident">take_while</span>(<span class="op">|</span><span class="ident">b</span><span class="op">|</span> <span class="ident">b</span> <span class="op">&amp;</span> <span class="number">0b1100_0000</span> <span class="op">=</span><span class="op">=</span> <span class="number">0b1000_0000</span> ).<span class="ident">count</span>();
             <span class="kw">let</span> <span class="ident">starts</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">str</span>.<span class="ident">len</span>() <span class="op">-</span> <span class="ident">len</span>;
             <span class="kw">let</span> (<span class="ident">u8c</span>,<span class="kw">_</span>) <span class="op">=</span> <span class="ident">Utf8Char</span>::<span class="ident">from_str_start</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">str</span>[<span class="ident">starts</span>..]).<span class="ident">unwrap</span>();
             <span class="self">self</span>.<span class="ident">str</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">str</span>[..<span class="ident">starts</span>];
@@ -649,7 +649,7 @@
     }
 }
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">Utf8CharIndices</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>,  <span class="ident">fmtr</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>,  <span class="ident">fmtr</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
         <span class="ident">fmtr</span>.<span class="ident">debug_tuple</span>(<span class="string">&quot;Utf8CharIndices&quot;</span>)
             .<span class="ident">field</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">index</span>)
             .<span class="ident">field</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">as_str</span>())
@@ -662,7 +662,7 @@
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Utf8Chars</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="ident">Utf8CharIndices</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>);
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Utf8Chars</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="ident">Utf8Chars</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Utf8Chars</span> {
         <span class="ident">Utf8Chars</span>(<span class="ident">Utf8CharIndices</span>::<span class="ident">from</span>(<span class="ident">s</span>))
     }
 }
@@ -678,26 +678,26 @@
     <span class="doccomment">/// assert_eq!(iter.next_back(), Some(Utf8Char::from(&#39;c&#39;)));</span>
     <span class="doccomment">/// assert_eq!(iter.as_str(), &quot;b&quot;);</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_str</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_str</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span> {
         <span class="self">self</span>.<span class="number">0</span>.<span class="ident">as_str</span>()
     }
 }
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Iterator</span> <span class="kw">for</span> <span class="ident">Utf8Chars</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
     <span class="kw">type</span> <span class="ident">Item</span> <span class="op">=</span> <span class="ident">Utf8Char</span>;
-    <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Utf8Char</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Utf8Char</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="number">0</span>.<span class="ident">next</span>().<span class="ident">map</span>(<span class="op">|</span>(<span class="kw">_</span>,<span class="ident">u8c</span>)<span class="op">|</span> <span class="ident">u8c</span> )
     }
-    <span class="kw">fn</span> <span class="ident">size_hint</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> (<span class="ident">usize</span>,<span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>) {
+    <span class="kw">fn</span> <span class="ident">size_hint</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">usize</span>,<span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>) {
         <span class="self">self</span>.<span class="number">0</span>.<span class="ident">size_hint</span>()
     }
 }
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">DoubleEndedIterator</span> <span class="kw">for</span> <span class="ident">Utf8Chars</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">next_back</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Utf8Char</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">next_back</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Utf8Char</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="number">0</span>.<span class="ident">next_back</span>().<span class="ident">map</span>(<span class="op">|</span>(<span class="kw">_</span>,<span class="ident">u8c</span>)<span class="op">|</span> <span class="ident">u8c</span> )
     }
 }
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">Utf8Chars</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>,  <span class="ident">fmtr</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>,  <span class="ident">fmtr</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
         <span class="ident">fmtr</span>.<span class="ident">debug_tuple</span>(<span class="string">&quot;Utf8CharIndices&quot;</span>)
             .<span class="ident">field</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">as_str</span>())
             .<span class="ident">finish</span>()

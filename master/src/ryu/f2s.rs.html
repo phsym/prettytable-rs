@@ -384,7 +384,7 @@
     <span class="number">570899077082383953</span>,
     <span class="number">456719261665907162</span>,
     <span class="number">365375409332725730</span>,
-    <span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">63</span>,
+    <span class="number">1</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">63</span>,
 ];
 
 <span class="kw">static</span> <span class="ident">FLOAT_POW5_SPLIT</span>: [<span class="ident">u64</span>; <span class="number">47</span>] <span class="op">=</span> [
@@ -438,61 +438,61 @@
 ];
 
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;no-panic&quot;</span>, <span class="ident">inline</span>)]</span>
-<span class="kw">fn</span> <span class="ident">pow5_factor</span>(<span class="kw-2">mut</span> <span class="ident">value</span>: <span class="ident">u32</span>) <span class="op">-&gt;</span> <span class="ident">u32</span> {
+<span class="kw">fn</span> <span class="ident">pow5_factor</span>(<span class="kw-2">mut</span> <span class="ident">value</span>: <span class="ident">u32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u32</span> {
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">count</span> <span class="op">=</span> <span class="number">0u32</span>;
     <span class="kw">loop</span> {
-        <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">value</span> <span class="op">!=</span> <span class="number">0</span>);
+        <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">value</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span>);
         <span class="kw">let</span> <span class="ident">q</span> <span class="op">=</span> <span class="ident">value</span> <span class="op">/</span> <span class="number">5</span>;
         <span class="kw">let</span> <span class="ident">r</span> <span class="op">=</span> <span class="ident">value</span> <span class="op">%</span> <span class="number">5</span>;
-        <span class="kw">if</span> <span class="ident">r</span> <span class="op">!=</span> <span class="number">0</span> {
+        <span class="kw">if</span> <span class="ident">r</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span> {
             <span class="kw">break</span>;
         }
         <span class="ident">value</span> <span class="op">=</span> <span class="ident">q</span>;
-        <span class="ident">count</span> <span class="op">+=</span> <span class="number">1</span>;
+        <span class="ident">count</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
     }
     <span class="ident">count</span>
 }
 
 <span class="comment">// Returns true if value is divisible by 5^p.</span>
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;no-panic&quot;</span>, <span class="ident">inline</span>)]</span>
-<span class="kw">fn</span> <span class="ident">multiple_of_power_of_5</span>(<span class="ident">value</span>: <span class="ident">u32</span>, <span class="ident">p</span>: <span class="ident">u32</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
-    <span class="ident">pow5_factor</span>(<span class="ident">value</span>) <span class="op">&gt;=</span> <span class="ident">p</span>
+<span class="kw">fn</span> <span class="ident">multiple_of_power_of_5</span>(<span class="ident">value</span>: <span class="ident">u32</span>, <span class="ident">p</span>: <span class="ident">u32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+    <span class="ident">pow5_factor</span>(<span class="ident">value</span>) <span class="op">&gt;</span><span class="op">=</span> <span class="ident">p</span>
 }
 
 <span class="comment">// Returns true if value is divisible by 2^p.</span>
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;no-panic&quot;</span>, <span class="ident">inline</span>)]</span>
-<span class="kw">fn</span> <span class="ident">multiple_of_power_of_2</span>(<span class="ident">value</span>: <span class="ident">u32</span>, <span class="ident">p</span>: <span class="ident">u32</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+<span class="kw">fn</span> <span class="ident">multiple_of_power_of_2</span>(<span class="ident">value</span>: <span class="ident">u32</span>, <span class="ident">p</span>: <span class="ident">u32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
     <span class="comment">// return __builtin_ctz(value) &gt;= p;</span>
-    (<span class="ident">value</span> <span class="op">&amp;</span> ((<span class="number">1u32</span> <span class="op">&lt;&lt;</span> <span class="ident">p</span>) <span class="op">-</span> <span class="number">1</span>)) <span class="op">==</span> <span class="number">0</span>
+    (<span class="ident">value</span> <span class="op">&amp;</span> ((<span class="number">1u32</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="ident">p</span>) <span class="op">-</span> <span class="number">1</span>)) <span class="op">=</span><span class="op">=</span> <span class="number">0</span>
 }
 
 <span class="comment">// It seems to be slightly faster to avoid uint128_t here, although the</span>
 <span class="comment">// generated code for uint128_t looks slightly nicer.</span>
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;no-panic&quot;</span>, <span class="ident">inline</span>)]</span>
-<span class="kw">fn</span> <span class="ident">mul_shift</span>(<span class="ident">m</span>: <span class="ident">u32</span>, <span class="ident">factor</span>: <span class="ident">u64</span>, <span class="ident">shift</span>: <span class="ident">i32</span>) <span class="op">-&gt;</span> <span class="ident">u32</span> {
+<span class="kw">fn</span> <span class="ident">mul_shift</span>(<span class="ident">m</span>: <span class="ident">u32</span>, <span class="ident">factor</span>: <span class="ident">u64</span>, <span class="ident">shift</span>: <span class="ident">i32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u32</span> {
     <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">shift</span> <span class="op">&gt;</span> <span class="number">32</span>);
 
     <span class="comment">// The casts here help MSVC to avoid calls to the __allmul library</span>
     <span class="comment">// function.</span>
     <span class="kw">let</span> <span class="ident">factor_lo</span> <span class="op">=</span> <span class="ident">factor</span> <span class="kw">as</span> <span class="ident">u32</span>;
-    <span class="kw">let</span> <span class="ident">factor_hi</span> <span class="op">=</span> (<span class="ident">factor</span> <span class="op">&gt;&gt;</span> <span class="number">32</span>) <span class="kw">as</span> <span class="ident">u32</span>;
+    <span class="kw">let</span> <span class="ident">factor_hi</span> <span class="op">=</span> (<span class="ident">factor</span> <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">32</span>) <span class="kw">as</span> <span class="ident">u32</span>;
     <span class="kw">let</span> <span class="ident">bits0</span> <span class="op">=</span> <span class="ident">m</span> <span class="kw">as</span> <span class="ident">u64</span> <span class="op">*</span> <span class="ident">factor_lo</span> <span class="kw">as</span> <span class="ident">u64</span>;
     <span class="kw">let</span> <span class="ident">bits1</span> <span class="op">=</span> <span class="ident">m</span> <span class="kw">as</span> <span class="ident">u64</span> <span class="op">*</span> <span class="ident">factor_hi</span> <span class="kw">as</span> <span class="ident">u64</span>;
 
-    <span class="kw">let</span> <span class="ident">sum</span> <span class="op">=</span> (<span class="ident">bits0</span> <span class="op">&gt;&gt;</span> <span class="number">32</span>) <span class="op">+</span> <span class="ident">bits1</span>;
-    <span class="kw">let</span> <span class="ident">shifted_sum</span> <span class="op">=</span> <span class="ident">sum</span> <span class="op">&gt;&gt;</span> (<span class="ident">shift</span> <span class="op">-</span> <span class="number">32</span>);
-    <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">shifted_sum</span> <span class="op">&lt;=</span> <span class="ident">u32</span>::<span class="ident">max_value</span>() <span class="kw">as</span> <span class="ident">u64</span>);
+    <span class="kw">let</span> <span class="ident">sum</span> <span class="op">=</span> (<span class="ident">bits0</span> <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">32</span>) <span class="op">+</span> <span class="ident">bits1</span>;
+    <span class="kw">let</span> <span class="ident">shifted_sum</span> <span class="op">=</span> <span class="ident">sum</span> <span class="op">&gt;</span><span class="op">&gt;</span> (<span class="ident">shift</span> <span class="op">-</span> <span class="number">32</span>);
+    <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">shifted_sum</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">u32</span>::<span class="ident">max_value</span>() <span class="kw">as</span> <span class="ident">u64</span>);
     <span class="ident">shifted_sum</span> <span class="kw">as</span> <span class="ident">u32</span>
 }
 
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;no-panic&quot;</span>, <span class="ident">inline</span>)]</span>
-<span class="kw">fn</span> <span class="ident">mul_pow5_inv_div_pow2</span>(<span class="ident">m</span>: <span class="ident">u32</span>, <span class="ident">q</span>: <span class="ident">u32</span>, <span class="ident">j</span>: <span class="ident">i32</span>) <span class="op">-&gt;</span> <span class="ident">u32</span> {
+<span class="kw">fn</span> <span class="ident">mul_pow5_inv_div_pow2</span>(<span class="ident">m</span>: <span class="ident">u32</span>, <span class="ident">q</span>: <span class="ident">u32</span>, <span class="ident">j</span>: <span class="ident">i32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u32</span> {
     <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">q</span> <span class="op">&lt;</span> <span class="ident">FLOAT_POW5_INV_SPLIT</span>.<span class="ident">len</span>() <span class="kw">as</span> <span class="ident">u32</span>);
     <span class="kw">unsafe</span> { <span class="ident">mul_shift</span>(<span class="ident">m</span>, <span class="kw-2">*</span><span class="ident">FLOAT_POW5_INV_SPLIT</span>.<span class="ident">get_unchecked</span>(<span class="ident">q</span> <span class="kw">as</span> <span class="ident">usize</span>), <span class="ident">j</span>) }
 }
 
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;no-panic&quot;</span>, <span class="ident">inline</span>)]</span>
-<span class="kw">fn</span> <span class="ident">mul_pow5_div_pow2</span>(<span class="ident">m</span>: <span class="ident">u32</span>, <span class="ident">i</span>: <span class="ident">u32</span>, <span class="ident">j</span>: <span class="ident">i32</span>) <span class="op">-&gt;</span> <span class="ident">u32</span> {
+<span class="kw">fn</span> <span class="ident">mul_pow5_div_pow2</span>(<span class="ident">m</span>: <span class="ident">u32</span>, <span class="ident">i</span>: <span class="ident">u32</span>, <span class="ident">j</span>: <span class="ident">i32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u32</span> {
     <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">i</span> <span class="op">&lt;</span> <span class="ident">FLOAT_POW5_SPLIT</span>.<span class="ident">len</span>() <span class="kw">as</span> <span class="ident">u32</span>);
     <span class="kw">unsafe</span> { <span class="ident">mul_shift</span>(<span class="ident">m</span>, <span class="kw-2">*</span><span class="ident">FLOAT_POW5_SPLIT</span>.<span class="ident">get_unchecked</span>(<span class="ident">i</span> <span class="kw">as</span> <span class="ident">usize</span>), <span class="ident">j</span>) }
 }
@@ -506,8 +506,8 @@
 }
 
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;no-panic&quot;</span>, <span class="ident">inline</span>)]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">f2d</span>(<span class="ident">ieee_mantissa</span>: <span class="ident">u32</span>, <span class="ident">ieee_exponent</span>: <span class="ident">u32</span>) <span class="op">-&gt;</span> <span class="ident">FloatingDecimal32</span> {
-    <span class="kw">let</span> (<span class="ident">e2</span>, <span class="ident">m2</span>) <span class="op">=</span> <span class="kw">if</span> <span class="ident">ieee_exponent</span> <span class="op">==</span> <span class="number">0</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">f2d</span>(<span class="ident">ieee_mantissa</span>: <span class="ident">u32</span>, <span class="ident">ieee_exponent</span>: <span class="ident">u32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">FloatingDecimal32</span> {
+    <span class="kw">let</span> (<span class="ident">e2</span>, <span class="ident">m2</span>) <span class="op">=</span> <span class="kw">if</span> <span class="ident">ieee_exponent</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
         (
             <span class="comment">// We subtract 2 so that the bounds computation has 2 additional bits.</span>
             <span class="number">1</span> <span class="op">-</span> <span class="ident">FLOAT_BIAS</span> <span class="op">-</span> <span class="ident">FLOAT_MANTISSA_BITS</span> <span class="kw">as</span> <span class="ident">i32</span> <span class="op">-</span> <span class="number">2</span>,
@@ -516,17 +516,17 @@
     } <span class="kw">else</span> {
         (
             <span class="ident">ieee_exponent</span> <span class="kw">as</span> <span class="ident">i32</span> <span class="op">-</span> <span class="ident">FLOAT_BIAS</span> <span class="op">-</span> <span class="ident">FLOAT_MANTISSA_BITS</span> <span class="kw">as</span> <span class="ident">i32</span> <span class="op">-</span> <span class="number">2</span>,
-            (<span class="number">1u32</span> <span class="op">&lt;&lt;</span> <span class="ident">FLOAT_MANTISSA_BITS</span>) <span class="op">|</span> <span class="ident">ieee_mantissa</span>,
+            (<span class="number">1u32</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="ident">FLOAT_MANTISSA_BITS</span>) <span class="op">|</span> <span class="ident">ieee_mantissa</span>,
         )
     };
-    <span class="kw">let</span> <span class="ident">even</span> <span class="op">=</span> (<span class="ident">m2</span> <span class="op">&amp;</span> <span class="number">1</span>) <span class="op">==</span> <span class="number">0</span>;
+    <span class="kw">let</span> <span class="ident">even</span> <span class="op">=</span> (<span class="ident">m2</span> <span class="op">&amp;</span> <span class="number">1</span>) <span class="op">=</span><span class="op">=</span> <span class="number">0</span>;
     <span class="kw">let</span> <span class="ident">accept_bounds</span> <span class="op">=</span> <span class="ident">even</span>;
 
     <span class="comment">// Step 2: Determine the interval of valid decimal representations.</span>
     <span class="kw">let</span> <span class="ident">mv</span> <span class="op">=</span> <span class="number">4</span> <span class="op">*</span> <span class="ident">m2</span>;
     <span class="kw">let</span> <span class="ident">mp</span> <span class="op">=</span> <span class="number">4</span> <span class="op">*</span> <span class="ident">m2</span> <span class="op">+</span> <span class="number">2</span>;
     <span class="comment">// Implicit bool -&gt; int conversion. True is 1, false is 0.</span>
-    <span class="kw">let</span> <span class="ident">mm_shift</span> <span class="op">=</span> (<span class="ident">ieee_mantissa</span> <span class="op">!=</span> <span class="number">0</span> <span class="op">||</span> <span class="ident">ieee_exponent</span> <span class="op">&lt;=</span> <span class="number">1</span>) <span class="kw">as</span> <span class="ident">u32</span>;
+    <span class="kw">let</span> <span class="ident">mm_shift</span> <span class="op">=</span> (<span class="ident">ieee_mantissa</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span> <span class="op">|</span><span class="op">|</span> <span class="ident">ieee_exponent</span> <span class="op">&lt;</span><span class="op">=</span> <span class="number">1</span>) <span class="kw">as</span> <span class="ident">u32</span>;
     <span class="kw">let</span> <span class="ident">mm</span> <span class="op">=</span> <span class="number">4</span> <span class="op">*</span> <span class="ident">m2</span> <span class="op">-</span> <span class="number">1</span> <span class="op">-</span> <span class="ident">mm_shift</span>;
 
     <span class="comment">// Step 3: Convert to a decimal power base using 64-bit arithmetic.</span>
@@ -537,7 +537,7 @@
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">vm_is_trailing_zeros</span> <span class="op">=</span> <span class="bool-val">false</span>;
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">vr_is_trailing_zeros</span> <span class="op">=</span> <span class="bool-val">false</span>;
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">last_removed_digit</span> <span class="op">=</span> <span class="number">0u8</span>;
-    <span class="kw">if</span> <span class="ident">e2</span> <span class="op">&gt;=</span> <span class="number">0</span> {
+    <span class="kw">if</span> <span class="ident">e2</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">0</span> {
         <span class="kw">let</span> <span class="ident">q</span> <span class="op">=</span> <span class="ident">log10_pow2</span>(<span class="ident">e2</span>);
         <span class="ident">e10</span> <span class="op">=</span> <span class="ident">q</span> <span class="kw">as</span> <span class="ident">i32</span>;
         <span class="kw">let</span> <span class="ident">k</span> <span class="op">=</span> <span class="ident">FLOAT_POW5_INV_BITCOUNT</span> <span class="op">+</span> <span class="ident">pow5bits</span>(<span class="ident">q</span> <span class="kw">as</span> <span class="ident">i32</span>) <span class="op">-</span> <span class="number">1</span>;
@@ -545,7 +545,7 @@
         <span class="ident">vr</span> <span class="op">=</span> <span class="ident">mul_pow5_inv_div_pow2</span>(<span class="ident">mv</span>, <span class="ident">q</span>, <span class="ident">i</span>);
         <span class="ident">vp</span> <span class="op">=</span> <span class="ident">mul_pow5_inv_div_pow2</span>(<span class="ident">mp</span>, <span class="ident">q</span>, <span class="ident">i</span>);
         <span class="ident">vm</span> <span class="op">=</span> <span class="ident">mul_pow5_inv_div_pow2</span>(<span class="ident">mm</span>, <span class="ident">q</span>, <span class="ident">i</span>);
-        <span class="kw">if</span> <span class="ident">q</span> <span class="op">!=</span> <span class="number">0</span> <span class="op">&amp;&amp;</span> (<span class="ident">vp</span> <span class="op">-</span> <span class="number">1</span>) <span class="op">/</span> <span class="number">10</span> <span class="op">&lt;=</span> <span class="ident">vm</span> <span class="op">/</span> <span class="number">10</span> {
+        <span class="kw">if</span> <span class="ident">q</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span> <span class="kw-2">&amp;</span><span class="op">&amp;</span> (<span class="ident">vp</span> <span class="op">-</span> <span class="number">1</span>) <span class="op">/</span> <span class="number">10</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">vm</span> <span class="op">/</span> <span class="number">10</span> {
             <span class="comment">// We need to know one removed digit even if we are not going to loop below. We could use</span>
             <span class="comment">// q = X - 1 above, except that would require 33 bits for the result, and we&#39;ve found that</span>
             <span class="comment">// 32-bit arithmetic is faster even on 64-bit machines.</span>
@@ -553,15 +553,15 @@
             <span class="ident">last_removed_digit</span> <span class="op">=</span>
                 (<span class="ident">mul_pow5_inv_div_pow2</span>(<span class="ident">mv</span>, <span class="ident">q</span> <span class="op">-</span> <span class="number">1</span>, <span class="op">-</span><span class="ident">e2</span> <span class="op">+</span> <span class="ident">q</span> <span class="kw">as</span> <span class="ident">i32</span> <span class="op">-</span> <span class="number">1</span> <span class="op">+</span> <span class="ident">l</span>) <span class="op">%</span> <span class="number">10</span>) <span class="kw">as</span> <span class="ident">u8</span>;
         }
-        <span class="kw">if</span> <span class="ident">q</span> <span class="op">&lt;=</span> <span class="number">9</span> {
+        <span class="kw">if</span> <span class="ident">q</span> <span class="op">&lt;</span><span class="op">=</span> <span class="number">9</span> {
             <span class="comment">// The largest power of 5 that fits in 24 bits is 5^10, but q &lt;= 9 seems to be safe as well.</span>
             <span class="comment">// Only one of mp, mv, and mm can be a multiple of 5, if any.</span>
-            <span class="kw">if</span> <span class="ident">mv</span> <span class="op">%</span> <span class="number">5</span> <span class="op">==</span> <span class="number">0</span> {
+            <span class="kw">if</span> <span class="ident">mv</span> <span class="op">%</span> <span class="number">5</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
                 <span class="ident">vr_is_trailing_zeros</span> <span class="op">=</span> <span class="ident">multiple_of_power_of_5</span>(<span class="ident">mv</span>, <span class="ident">q</span>);
             } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">accept_bounds</span> {
                 <span class="ident">vm_is_trailing_zeros</span> <span class="op">=</span> <span class="ident">multiple_of_power_of_5</span>(<span class="ident">mm</span>, <span class="ident">q</span>);
             } <span class="kw">else</span> {
-                <span class="ident">vp</span> <span class="op">-=</span> <span class="ident">multiple_of_power_of_5</span>(<span class="ident">mp</span>, <span class="ident">q</span>) <span class="kw">as</span> <span class="ident">u32</span>;
+                <span class="ident">vp</span> <span class="op">-</span><span class="op">=</span> <span class="ident">multiple_of_power_of_5</span>(<span class="ident">mp</span>, <span class="ident">q</span>) <span class="kw">as</span> <span class="ident">u32</span>;
             }
         }
     } <span class="kw">else</span> {
@@ -573,20 +573,20 @@
         <span class="ident">vr</span> <span class="op">=</span> <span class="ident">mul_pow5_div_pow2</span>(<span class="ident">mv</span>, <span class="ident">i</span> <span class="kw">as</span> <span class="ident">u32</span>, <span class="ident">j</span>);
         <span class="ident">vp</span> <span class="op">=</span> <span class="ident">mul_pow5_div_pow2</span>(<span class="ident">mp</span>, <span class="ident">i</span> <span class="kw">as</span> <span class="ident">u32</span>, <span class="ident">j</span>);
         <span class="ident">vm</span> <span class="op">=</span> <span class="ident">mul_pow5_div_pow2</span>(<span class="ident">mm</span>, <span class="ident">i</span> <span class="kw">as</span> <span class="ident">u32</span>, <span class="ident">j</span>);
-        <span class="kw">if</span> <span class="ident">q</span> <span class="op">!=</span> <span class="number">0</span> <span class="op">&amp;&amp;</span> (<span class="ident">vp</span> <span class="op">-</span> <span class="number">1</span>) <span class="op">/</span> <span class="number">10</span> <span class="op">&lt;=</span> <span class="ident">vm</span> <span class="op">/</span> <span class="number">10</span> {
+        <span class="kw">if</span> <span class="ident">q</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span> <span class="kw-2">&amp;</span><span class="op">&amp;</span> (<span class="ident">vp</span> <span class="op">-</span> <span class="number">1</span>) <span class="op">/</span> <span class="number">10</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">vm</span> <span class="op">/</span> <span class="number">10</span> {
             <span class="ident">j</span> <span class="op">=</span> <span class="ident">q</span> <span class="kw">as</span> <span class="ident">i32</span> <span class="op">-</span> <span class="number">1</span> <span class="op">-</span> (<span class="ident">pow5bits</span>(<span class="ident">i</span> <span class="op">+</span> <span class="number">1</span>) <span class="op">-</span> <span class="ident">FLOAT_POW5_BITCOUNT</span>);
             <span class="ident">last_removed_digit</span> <span class="op">=</span> (<span class="ident">mul_pow5_div_pow2</span>(<span class="ident">mv</span>, (<span class="ident">i</span> <span class="op">+</span> <span class="number">1</span>) <span class="kw">as</span> <span class="ident">u32</span>, <span class="ident">j</span>) <span class="op">%</span> <span class="number">10</span>) <span class="kw">as</span> <span class="ident">u8</span>;
         }
-        <span class="kw">if</span> <span class="ident">q</span> <span class="op">&lt;=</span> <span class="number">1</span> {
+        <span class="kw">if</span> <span class="ident">q</span> <span class="op">&lt;</span><span class="op">=</span> <span class="number">1</span> {
             <span class="comment">// {vr,vp,vm} is trailing zeros if {mv,mp,mm} has at least q trailing 0 bits.</span>
             <span class="comment">// mv = 4 * m2, so it always has at least two trailing 0 bits.</span>
             <span class="ident">vr_is_trailing_zeros</span> <span class="op">=</span> <span class="bool-val">true</span>;
             <span class="kw">if</span> <span class="ident">accept_bounds</span> {
                 <span class="comment">// mm = mv - 1 - mm_shift, so it has 1 trailing 0 bit iff mm_shift == 1.</span>
-                <span class="ident">vm_is_trailing_zeros</span> <span class="op">=</span> <span class="ident">mm_shift</span> <span class="op">==</span> <span class="number">1</span>;
+                <span class="ident">vm_is_trailing_zeros</span> <span class="op">=</span> <span class="ident">mm_shift</span> <span class="op">=</span><span class="op">=</span> <span class="number">1</span>;
             } <span class="kw">else</span> {
                 <span class="comment">// mp = mv + 2, so it always has at least one trailing 0 bit.</span>
-                <span class="ident">vp</span> <span class="op">-=</span> <span class="number">1</span>;
+                <span class="ident">vp</span> <span class="op">-</span><span class="op">=</span> <span class="number">1</span>;
             }
         } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">q</span> <span class="op">&lt;</span> <span class="number">31</span> {
             <span class="comment">// TODO(ulfjack): Use a tighter bound here.</span>
@@ -596,33 +596,33 @@
 
     <span class="comment">// Step 4: Find the shortest decimal representation in the interval of valid representations.</span>
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">removed</span> <span class="op">=</span> <span class="number">0i32</span>;
-    <span class="kw">let</span> <span class="ident">output</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">vm_is_trailing_zeros</span> <span class="op">||</span> <span class="ident">vr_is_trailing_zeros</span> {
+    <span class="kw">let</span> <span class="ident">output</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">vm_is_trailing_zeros</span> <span class="op">|</span><span class="op">|</span> <span class="ident">vr_is_trailing_zeros</span> {
         <span class="comment">// General case, which happens rarely (~4.0%).</span>
         <span class="kw">while</span> <span class="ident">vp</span> <span class="op">/</span> <span class="number">10</span> <span class="op">&gt;</span> <span class="ident">vm</span> <span class="op">/</span> <span class="number">10</span> {
-            <span class="ident">vm_is_trailing_zeros</span> <span class="op">&amp;=</span> <span class="ident">vm</span> <span class="op">-</span> (<span class="ident">vm</span> <span class="op">/</span> <span class="number">10</span>) <span class="op">*</span> <span class="number">10</span> <span class="op">==</span> <span class="number">0</span>;
-            <span class="ident">vr_is_trailing_zeros</span> <span class="op">&amp;=</span> <span class="ident">last_removed_digit</span> <span class="op">==</span> <span class="number">0</span>;
+            <span class="ident">vm_is_trailing_zeros</span> <span class="kw-2">&amp;</span><span class="op">=</span> <span class="ident">vm</span> <span class="op">-</span> (<span class="ident">vm</span> <span class="op">/</span> <span class="number">10</span>) <span class="op">*</span> <span class="number">10</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span>;
+            <span class="ident">vr_is_trailing_zeros</span> <span class="kw-2">&amp;</span><span class="op">=</span> <span class="ident">last_removed_digit</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span>;
             <span class="ident">last_removed_digit</span> <span class="op">=</span> (<span class="ident">vr</span> <span class="op">%</span> <span class="number">10</span>) <span class="kw">as</span> <span class="ident">u8</span>;
-            <span class="ident">vr</span> <span class="op">/=</span> <span class="number">10</span>;
-            <span class="ident">vp</span> <span class="op">/=</span> <span class="number">10</span>;
-            <span class="ident">vm</span> <span class="op">/=</span> <span class="number">10</span>;
-            <span class="ident">removed</span> <span class="op">+=</span> <span class="number">1</span>;
+            <span class="ident">vr</span> <span class="op">/</span><span class="op">=</span> <span class="number">10</span>;
+            <span class="ident">vp</span> <span class="op">/</span><span class="op">=</span> <span class="number">10</span>;
+            <span class="ident">vm</span> <span class="op">/</span><span class="op">=</span> <span class="number">10</span>;
+            <span class="ident">removed</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
         }
         <span class="kw">if</span> <span class="ident">vm_is_trailing_zeros</span> {
-            <span class="kw">while</span> <span class="ident">vm</span> <span class="op">%</span> <span class="number">10</span> <span class="op">==</span> <span class="number">0</span> {
-                <span class="ident">vr_is_trailing_zeros</span> <span class="op">&amp;=</span> <span class="ident">last_removed_digit</span> <span class="op">==</span> <span class="number">0</span>;
+            <span class="kw">while</span> <span class="ident">vm</span> <span class="op">%</span> <span class="number">10</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+                <span class="ident">vr_is_trailing_zeros</span> <span class="kw-2">&amp;</span><span class="op">=</span> <span class="ident">last_removed_digit</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span>;
                 <span class="ident">last_removed_digit</span> <span class="op">=</span> (<span class="ident">vr</span> <span class="op">%</span> <span class="number">10</span>) <span class="kw">as</span> <span class="ident">u8</span>;
-                <span class="ident">vr</span> <span class="op">/=</span> <span class="number">10</span>;
-                <span class="ident">vp</span> <span class="op">/=</span> <span class="number">10</span>;
-                <span class="ident">vm</span> <span class="op">/=</span> <span class="number">10</span>;
-                <span class="ident">removed</span> <span class="op">+=</span> <span class="number">1</span>;
+                <span class="ident">vr</span> <span class="op">/</span><span class="op">=</span> <span class="number">10</span>;
+                <span class="ident">vp</span> <span class="op">/</span><span class="op">=</span> <span class="number">10</span>;
+                <span class="ident">vm</span> <span class="op">/</span><span class="op">=</span> <span class="number">10</span>;
+                <span class="ident">removed</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
             }
         }
-        <span class="kw">if</span> <span class="ident">vr_is_trailing_zeros</span> <span class="op">&amp;&amp;</span> <span class="ident">last_removed_digit</span> <span class="op">==</span> <span class="number">5</span> <span class="op">&amp;&amp;</span> <span class="ident">vr</span> <span class="op">%</span> <span class="number">2</span> <span class="op">==</span> <span class="number">0</span> {
+        <span class="kw">if</span> <span class="ident">vr_is_trailing_zeros</span> <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="ident">last_removed_digit</span> <span class="op">=</span><span class="op">=</span> <span class="number">5</span> <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="ident">vr</span> <span class="op">%</span> <span class="number">2</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
             <span class="comment">// Round even if the exact number is .....50..0.</span>
             <span class="ident">last_removed_digit</span> <span class="op">=</span> <span class="number">4</span>;
         }
         <span class="comment">// We need to take vr + 1 if vr is outside bounds or we need to round up.</span>
-        <span class="ident">vr</span> <span class="op">+</span> ((<span class="ident">vr</span> <span class="op">==</span> <span class="ident">vm</span> <span class="op">&amp;&amp;</span> (<span class="op">!</span><span class="ident">accept_bounds</span> <span class="op">||</span> <span class="op">!</span><span class="ident">vm_is_trailing_zeros</span>)) <span class="op">||</span> <span class="ident">last_removed_digit</span> <span class="op">&gt;=</span> <span class="number">5</span>)
+        <span class="ident">vr</span> <span class="op">+</span> ((<span class="ident">vr</span> <span class="op">=</span><span class="op">=</span> <span class="ident">vm</span> <span class="kw-2">&amp;</span><span class="op">&amp;</span> (<span class="op">!</span><span class="ident">accept_bounds</span> <span class="op">|</span><span class="op">|</span> <span class="op">!</span><span class="ident">vm_is_trailing_zeros</span>)) <span class="op">|</span><span class="op">|</span> <span class="ident">last_removed_digit</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">5</span>)
             <span class="kw">as</span> <span class="ident">u32</span>
     } <span class="kw">else</span> {
         <span class="comment">// Specialized for the common case (~96.0%). Percentages below are relative to this.</span>
@@ -630,13 +630,13 @@
         <span class="comment">// 0: 13.6%, 1: 70.7%, 2: 14.1%, 3: 1.39%, 4: 0.14%, 5+: 0.01%</span>
         <span class="kw">while</span> <span class="ident">vp</span> <span class="op">/</span> <span class="number">10</span> <span class="op">&gt;</span> <span class="ident">vm</span> <span class="op">/</span> <span class="number">10</span> {
             <span class="ident">last_removed_digit</span> <span class="op">=</span> (<span class="ident">vr</span> <span class="op">%</span> <span class="number">10</span>) <span class="kw">as</span> <span class="ident">u8</span>;
-            <span class="ident">vr</span> <span class="op">/=</span> <span class="number">10</span>;
-            <span class="ident">vp</span> <span class="op">/=</span> <span class="number">10</span>;
-            <span class="ident">vm</span> <span class="op">/=</span> <span class="number">10</span>;
-            <span class="ident">removed</span> <span class="op">+=</span> <span class="number">1</span>;
+            <span class="ident">vr</span> <span class="op">/</span><span class="op">=</span> <span class="number">10</span>;
+            <span class="ident">vp</span> <span class="op">/</span><span class="op">=</span> <span class="number">10</span>;
+            <span class="ident">vm</span> <span class="op">/</span><span class="op">=</span> <span class="number">10</span>;
+            <span class="ident">removed</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
         }
         <span class="comment">// We need to take vr + 1 if vr is outside bounds or we need to round up.</span>
-        <span class="ident">vr</span> <span class="op">+</span> (<span class="ident">vr</span> <span class="op">==</span> <span class="ident">vm</span> <span class="op">||</span> <span class="ident">last_removed_digit</span> <span class="op">&gt;=</span> <span class="number">5</span>) <span class="kw">as</span> <span class="ident">u32</span>
+        <span class="ident">vr</span> <span class="op">+</span> (<span class="ident">vr</span> <span class="op">=</span><span class="op">=</span> <span class="ident">vm</span> <span class="op">|</span><span class="op">|</span> <span class="ident">last_removed_digit</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">5</span>) <span class="kw">as</span> <span class="ident">u32</span>
     };
     <span class="kw">let</span> <span class="ident">exp</span> <span class="op">=</span> <span class="ident">e10</span> <span class="op">+</span> <span class="ident">removed</span>;
 

@@ -6,5 +6,4 @@ implementors["ryu"] = [];
             } else {
                 window.pending_implementors = implementors;
             }
-        
-})()
+        })()

@@ -127,11 +127,11 @@
 <span class="comment">// Returns (lo, hi).</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">integer128</span>))]</span>
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;no-panic&quot;</span>, <span class="ident">inline</span>)]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">umul128</span>(<span class="ident">a</span>: <span class="ident">u64</span>, <span class="ident">b</span>: <span class="ident">u64</span>) <span class="op">-&gt;</span> (<span class="ident">u64</span>, <span class="ident">u64</span>) {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">umul128</span>(<span class="ident">a</span>: <span class="ident">u64</span>, <span class="ident">b</span>: <span class="ident">u64</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">u64</span>, <span class="ident">u64</span>) {
     <span class="kw">let</span> <span class="ident">a_lo</span> <span class="op">=</span> <span class="ident">a</span> <span class="kw">as</span> <span class="ident">u32</span>;
-    <span class="kw">let</span> <span class="ident">a_hi</span> <span class="op">=</span> (<span class="ident">a</span> <span class="op">&gt;&gt;</span> <span class="number">32</span>) <span class="kw">as</span> <span class="ident">u32</span>;
+    <span class="kw">let</span> <span class="ident">a_hi</span> <span class="op">=</span> (<span class="ident">a</span> <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">32</span>) <span class="kw">as</span> <span class="ident">u32</span>;
     <span class="kw">let</span> <span class="ident">b_lo</span> <span class="op">=</span> <span class="ident">b</span> <span class="kw">as</span> <span class="ident">u32</span>;
-    <span class="kw">let</span> <span class="ident">b_hi</span> <span class="op">=</span> (<span class="ident">b</span> <span class="op">&gt;&gt;</span> <span class="number">32</span>) <span class="kw">as</span> <span class="ident">u32</span>;
+    <span class="kw">let</span> <span class="ident">b_hi</span> <span class="op">=</span> (<span class="ident">b</span> <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">32</span>) <span class="kw">as</span> <span class="ident">u32</span>;
 
     <span class="kw">let</span> <span class="ident">b00</span> <span class="op">=</span> <span class="ident">a_lo</span> <span class="kw">as</span> <span class="ident">u64</span> <span class="op">*</span> <span class="ident">b_lo</span> <span class="kw">as</span> <span class="ident">u64</span>;
     <span class="kw">let</span> <span class="ident">b01</span> <span class="op">=</span> <span class="ident">a_lo</span> <span class="kw">as</span> <span class="ident">u64</span> <span class="op">*</span> <span class="ident">b_hi</span> <span class="kw">as</span> <span class="ident">u64</span>;
@@ -139,75 +139,75 @@
     <span class="kw">let</span> <span class="ident">b11</span> <span class="op">=</span> <span class="ident">a_hi</span> <span class="kw">as</span> <span class="ident">u64</span> <span class="op">*</span> <span class="ident">b_hi</span> <span class="kw">as</span> <span class="ident">u64</span>;
 
     <span class="kw">let</span> <span class="ident">b00_lo</span> <span class="op">=</span> <span class="ident">b00</span> <span class="kw">as</span> <span class="ident">u32</span>;
-    <span class="kw">let</span> <span class="ident">b00_hi</span> <span class="op">=</span> (<span class="ident">b00</span> <span class="op">&gt;&gt;</span> <span class="number">32</span>) <span class="kw">as</span> <span class="ident">u32</span>;
+    <span class="kw">let</span> <span class="ident">b00_hi</span> <span class="op">=</span> (<span class="ident">b00</span> <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">32</span>) <span class="kw">as</span> <span class="ident">u32</span>;
 
     <span class="kw">let</span> <span class="ident">mid1</span> <span class="op">=</span> <span class="ident">b10</span> <span class="op">+</span> <span class="ident">b00_hi</span> <span class="kw">as</span> <span class="ident">u64</span>;
     <span class="kw">let</span> <span class="ident">mid1_lo</span> <span class="op">=</span> <span class="ident">mid1</span> <span class="kw">as</span> <span class="ident">u32</span>;
-    <span class="kw">let</span> <span class="ident">mid1_hi</span> <span class="op">=</span> (<span class="ident">mid1</span> <span class="op">&gt;&gt;</span> <span class="number">32</span>) <span class="kw">as</span> <span class="ident">u32</span>;
+    <span class="kw">let</span> <span class="ident">mid1_hi</span> <span class="op">=</span> (<span class="ident">mid1</span> <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">32</span>) <span class="kw">as</span> <span class="ident">u32</span>;
 
     <span class="kw">let</span> <span class="ident">mid2</span> <span class="op">=</span> <span class="ident">b01</span> <span class="op">+</span> <span class="ident">mid1_lo</span> <span class="kw">as</span> <span class="ident">u64</span>;
     <span class="kw">let</span> <span class="ident">mid2_lo</span> <span class="op">=</span> <span class="ident">mid2</span> <span class="kw">as</span> <span class="ident">u32</span>;
-    <span class="kw">let</span> <span class="ident">mid2_hi</span> <span class="op">=</span> (<span class="ident">mid2</span> <span class="op">&gt;&gt;</span> <span class="number">32</span>) <span class="kw">as</span> <span class="ident">u32</span>;
+    <span class="kw">let</span> <span class="ident">mid2_hi</span> <span class="op">=</span> (<span class="ident">mid2</span> <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">32</span>) <span class="kw">as</span> <span class="ident">u32</span>;
 
     <span class="kw">let</span> <span class="ident">p_hi</span> <span class="op">=</span> <span class="ident">b11</span> <span class="op">+</span> <span class="ident">mid1_hi</span> <span class="kw">as</span> <span class="ident">u64</span> <span class="op">+</span> <span class="ident">mid2_hi</span> <span class="kw">as</span> <span class="ident">u64</span>;
-    <span class="kw">let</span> <span class="ident">p_lo</span> <span class="op">=</span> ((<span class="ident">mid2_lo</span> <span class="kw">as</span> <span class="ident">u64</span>) <span class="op">&lt;&lt;</span> <span class="number">32</span>) <span class="op">|</span> <span class="ident">b00_lo</span> <span class="kw">as</span> <span class="ident">u64</span>;
+    <span class="kw">let</span> <span class="ident">p_lo</span> <span class="op">=</span> ((<span class="ident">mid2_lo</span> <span class="kw">as</span> <span class="ident">u64</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">32</span>) <span class="op">|</span> <span class="ident">b00_lo</span> <span class="kw">as</span> <span class="ident">u64</span>;
 
     (<span class="ident">p_lo</span>, <span class="ident">p_hi</span>)
 }
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">integer128</span>))]</span>
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;no-panic&quot;</span>, <span class="ident">inline</span>)]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">shiftright128</span>(<span class="ident">lo</span>: <span class="ident">u64</span>, <span class="ident">hi</span>: <span class="ident">u64</span>, <span class="ident">dist</span>: <span class="ident">u32</span>) <span class="op">-&gt;</span> <span class="ident">u64</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">shiftright128</span>(<span class="ident">lo</span>: <span class="ident">u64</span>, <span class="ident">hi</span>: <span class="ident">u64</span>, <span class="ident">dist</span>: <span class="ident">u32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u64</span> {
     <span class="comment">// We don&#39;t need to handle the case dist &gt;= 64 here (see above).</span>
     <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">dist</span> <span class="op">&gt;</span> <span class="number">0</span>);
     <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">dist</span> <span class="op">&lt;</span> <span class="number">64</span>);
-    (<span class="ident">hi</span> <span class="op">&lt;&lt;</span> (<span class="number">64</span> <span class="op">-</span> <span class="ident">dist</span>)) <span class="op">|</span> (<span class="ident">lo</span> <span class="op">&gt;&gt;</span> <span class="ident">dist</span>)
+    (<span class="ident">hi</span> <span class="op">&lt;</span><span class="op">&lt;</span> (<span class="number">64</span> <span class="op">-</span> <span class="ident">dist</span>)) <span class="op">|</span> (<span class="ident">lo</span> <span class="op">&gt;</span><span class="op">&gt;</span> <span class="ident">dist</span>)
 }
 
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;no-panic&quot;</span>, <span class="ident">inline</span>)]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">div5</span>(<span class="ident">x</span>: <span class="ident">u64</span>) <span class="op">-&gt;</span> <span class="ident">u64</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">div5</span>(<span class="ident">x</span>: <span class="ident">u64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u64</span> {
     <span class="ident">x</span> <span class="op">/</span> <span class="number">5</span>
 }
 
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;no-panic&quot;</span>, <span class="ident">inline</span>)]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">div10</span>(<span class="ident">x</span>: <span class="ident">u64</span>) <span class="op">-&gt;</span> <span class="ident">u64</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">div10</span>(<span class="ident">x</span>: <span class="ident">u64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u64</span> {
     <span class="ident">x</span> <span class="op">/</span> <span class="number">10</span>
 }
 
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;no-panic&quot;</span>, <span class="ident">inline</span>)]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">div100</span>(<span class="ident">x</span>: <span class="ident">u64</span>) <span class="op">-&gt;</span> <span class="ident">u64</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">div100</span>(<span class="ident">x</span>: <span class="ident">u64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u64</span> {
     <span class="ident">x</span> <span class="op">/</span> <span class="number">100</span>
 }
 
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;no-panic&quot;</span>, <span class="ident">inline</span>)]</span>
-<span class="kw">fn</span> <span class="ident">pow5_factor</span>(<span class="kw-2">mut</span> <span class="ident">value</span>: <span class="ident">u64</span>) <span class="op">-&gt;</span> <span class="ident">u32</span> {
+<span class="kw">fn</span> <span class="ident">pow5_factor</span>(<span class="kw-2">mut</span> <span class="ident">value</span>: <span class="ident">u64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u32</span> {
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">count</span> <span class="op">=</span> <span class="number">0u32</span>;
     <span class="kw">loop</span> {
-        <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">value</span> <span class="op">!=</span> <span class="number">0</span>);
+        <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">value</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span>);
         <span class="kw">let</span> <span class="ident">q</span> <span class="op">=</span> <span class="ident">div5</span>(<span class="ident">value</span>);
         <span class="kw">let</span> <span class="ident">r</span> <span class="op">=</span> (<span class="ident">value</span> <span class="kw">as</span> <span class="ident">u32</span>).<span class="ident">wrapping_sub</span>(<span class="number">5u32</span>.<span class="ident">wrapping_mul</span>(<span class="ident">q</span> <span class="kw">as</span> <span class="ident">u32</span>));
-        <span class="kw">if</span> <span class="ident">r</span> <span class="op">!=</span> <span class="number">0</span> {
+        <span class="kw">if</span> <span class="ident">r</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span> {
             <span class="kw">break</span>;
         }
         <span class="ident">value</span> <span class="op">=</span> <span class="ident">q</span>;
-        <span class="ident">count</span> <span class="op">+=</span> <span class="number">1</span>;
+        <span class="ident">count</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
     }
     <span class="ident">count</span>
 }
 
 <span class="comment">// Returns true if value is divisible by 5^p.</span>
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;no-panic&quot;</span>, <span class="ident">inline</span>)]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">multiple_of_power_of_5</span>(<span class="ident">value</span>: <span class="ident">u64</span>, <span class="ident">p</span>: <span class="ident">u32</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">multiple_of_power_of_5</span>(<span class="ident">value</span>: <span class="ident">u64</span>, <span class="ident">p</span>: <span class="ident">u32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
     <span class="comment">// I tried a case distinction on p, but there was no performance difference.</span>
-    <span class="ident">pow5_factor</span>(<span class="ident">value</span>) <span class="op">&gt;=</span> <span class="ident">p</span>
+    <span class="ident">pow5_factor</span>(<span class="ident">value</span>) <span class="op">&gt;</span><span class="op">=</span> <span class="ident">p</span>
 }
 
 <span class="comment">// Returns true if value is divisible by 2^p.</span>
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;no-panic&quot;</span>, <span class="ident">inline</span>)]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">multiple_of_power_of_2</span>(<span class="ident">value</span>: <span class="ident">u64</span>, <span class="ident">p</span>: <span class="ident">u32</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
-    <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">value</span> <span class="op">!=</span> <span class="number">0</span>);
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">multiple_of_power_of_2</span>(<span class="ident">value</span>: <span class="ident">u64</span>, <span class="ident">p</span>: <span class="ident">u32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+    <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">value</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span>);
     <span class="comment">// return __builtin_ctzll(value) &gt;= p;</span>
-    (<span class="ident">value</span> <span class="op">&amp;</span> ((<span class="number">1u64</span> <span class="op">&lt;&lt;</span> <span class="ident">p</span>) <span class="op">-</span> <span class="number">1</span>)) <span class="op">==</span> <span class="number">0</span>
+    (<span class="ident">value</span> <span class="op">&amp;</span> ((<span class="number">1u64</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="ident">p</span>) <span class="op">-</span> <span class="number">1</span>)) <span class="op">=</span><span class="op">=</span> <span class="number">0</span>
 }
 </pre></div>
 </section><section id="search" class="content hidden"></section><section class="footer"></section><aside id="help" class="hidden"><div><h1 class="hidden">Help</h1><div class="shortcuts"><h2>Keyboard Shortcuts</h2><dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd><dt><kbd>S</kbd></dt><dd>Focus the search field</dd><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd><dt><kbd>↹</kbd></dt><dd>Switch tab</dd><dt><kbd>&#9166;</kbd></dt><dd>Go to active search result</dd><dt><kbd>+</kbd></dt><dd>Expand all sections</dd><dt><kbd>-</kbd></dt><dd>Collapse all sections</dd></dl></div><div class="infos"><h2>Search Tricks</h2><p>Prefix searches with a type followed by a colon (e.g., <code>fn:</code>) to restrict the search to a given type.</p><p>Accepted types are: <code>fn</code>, <code>mod</code>, <code>struct</code>, <code>enum</code>, <code>trait</code>, <code>type</code>, <code>macro</code>, and <code>const</code>.</p><p>Search functions by type signature (e.g., <code>vec -> usize</code> or <code>* -> vec</code>)</p><p>Search multiple things at once by splitting your query with comma (e.g., <code>str,u8</code> or <code>String,struct:Vec,test</code>)</p></div></div></aside><script>window.rootPath = "../../";window.currentCrate = "ryu";</script><script src="../../aliases.js"></script><script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script><script defer src="../../search-index.js"></script></body></html>

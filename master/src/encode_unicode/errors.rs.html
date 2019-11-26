@@ -305,29 +305,29 @@
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>::<span class="ident">Error</span>;
 
 
-<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">description</span> {(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">err</span>:<span class="ident">ty</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">desc</span>:<span class="ident">expr</span>) <span class="op">=&gt;</span> {
+<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">description</span> {(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">err</span>:<span class="ident">ty</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">desc</span>:<span class="ident">expr</span>) <span class="op">=</span><span class="op">&gt;</span> {
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">feature</span><span class="op">=</span><span class="string">&quot;std&quot;</span>))]</span>
     <span class="kw">impl</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">err</span> {
         <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">missing_docs</span>)]</span>
-        <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">description</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span> {
+        <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">description</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span> {
             (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">desc</span>)(<span class="self">self</span>)
         }
     }
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span><span class="op">=</span><span class="string">&quot;std&quot;</span>)]</span>
     <span class="kw">impl</span> <span class="ident">Error</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">err</span> {
-        <span class="kw">fn</span> <span class="ident">description</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span> {
+        <span class="kw">fn</span> <span class="ident">description</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span> {
             (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">desc</span>)(<span class="self">self</span>)
         }
     }
     <span class="kw">impl</span> <span class="ident">Display</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">err</span> {
-        <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>,  <span class="ident">fmtr</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+        <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>,  <span class="ident">fmtr</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
             <span class="macro">write</span><span class="macro">!</span>(<span class="ident">fmtr</span>, <span class="string">&quot;{}&quot;</span>, <span class="self">self</span>.<span class="ident">description</span>())
         }
     }
 }}
 
 
-<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">single_cause</span> {(<span class="attribute">#[<span class="macro-nonterminal">$</span><span class="macro-nonterminal">doc1</span>:<span class="ident">meta</span>]</span> <span class="attribute">#[<span class="macro-nonterminal">$</span><span class="macro-nonterminal">doc2</span>:<span class="ident">meta</span>]</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">err</span>:<span class="ident">ident</span> <span class="op">=&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">desc</span>:<span class="ident">expr</span>) <span class="op">=&gt;</span> {
+<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">single_cause</span> {(<span class="attribute">#[<span class="macro-nonterminal">$</span><span class="macro-nonterminal">doc1</span>:<span class="ident">meta</span>]</span> <span class="attribute">#[<span class="macro-nonterminal">$</span><span class="macro-nonterminal">doc2</span>:<span class="ident">meta</span>]</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">err</span>:<span class="ident">ident</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">desc</span>:<span class="ident">expr</span>) <span class="op">=</span><span class="op">&gt;</span> {
     <span class="comment">// Rust 1.15 doesn&#39;t understand $(#[$doc:meta])* $:ident</span>
     <span class="attribute">#[<span class="macro-nonterminal">$</span><span class="macro-nonterminal">doc1</span>]</span>
     <span class="attribute">#[<span class="macro-nonterminal">$</span><span class="macro-nonterminal">doc2</span>]</span>
@@ -340,54 +340,54 @@
 <span class="macro">single_cause</span><span class="macro">!</span>{
     <span class="doccomment">/// Cannot tell whether an `u16` needs an extra unit,</span>
     <span class="doccomment">/// because it&#39;s a trailing surrogate itself.</span>
-    <span class="ident">InvalidUtf16FirstUnit</span> <span class="op">=&gt;</span> <span class="string">&quot;is a trailing surrogate&quot;</span>
+    <span class="ident">InvalidUtf16FirstUnit</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;is a trailing surrogate&quot;</span>
 }
 
 <span class="macro">single_cause</span><span class="macro">!</span>{
     <span class="doccomment">/// Cannot create an `Utf8Char` or `Utf16Char` from the first codepoint of a str,</span>
     <span class="doccomment">/// because there are none.</span>
-    <span class="ident">EmptyStrError</span> <span class="op">=&gt;</span> <span class="string">&quot;is empty&quot;</span>
+    <span class="ident">EmptyStrError</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;is empty&quot;</span>
 }
 
 <span class="macro">single_cause</span><span class="macro">!</span>{
     <span class="doccomment">/// Cannot create an `Utf8Char` from a standalone `u8`</span>
     <span class="doccomment">/// that is not an ASCII character.</span>
-    <span class="ident">NonAsciiError</span> <span class="op">=&gt;</span> <span class="string">&quot;is not an ASCII character&quot;</span>
+    <span class="ident">NonAsciiError</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;is not an ASCII character&quot;</span>
 }
 
 <span class="macro">single_cause</span><span class="macro">!</span>{
     <span class="doccomment">/// Cannot create an `Utf16Char` from a standalone `u16` that is not a</span>
     <span class="doccomment">/// codepoint in the basic multilingual plane, but part of a suurrogate pair.</span>
-    <span class="ident">NonBMPError</span> <span class="op">=&gt;</span> <span class="string">&quot;is not a codepoint in the basic multilingual plane&quot;</span>
+    <span class="ident">NonBMPError</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;is not a codepoint in the basic multilingual plane&quot;</span>
 }
 
 
 
 <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">simple</span> {(<span class="attribute">#[<span class="macro-nonterminal">$</span><span class="macro-nonterminal">tydoc</span>:<span class="ident">meta</span>]</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">err</span>:<span class="ident">ident</span>  {
-                          $($(<span class="attribute">#[<span class="macro-nonterminal">$</span><span class="macro-nonterminal">vardoc</span>:<span class="ident">meta</span>]</span>)<span class="op">*</span> ::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">variant</span>:<span class="ident">ident</span> <span class="op">=&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">string</span>:<span class="ident">expr</span>),<span class="op">+</span>,
-                      } ) <span class="op">=&gt;</span> {
+                          $($(<span class="attribute">#[<span class="macro-nonterminal">$</span><span class="macro-nonterminal">vardoc</span>:<span class="ident">meta</span>]</span>)<span class="op">*</span> ::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">variant</span>:<span class="ident">ident</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">string</span>:<span class="ident">expr</span>),<span class="op">+</span>,
+                      } ) <span class="op">=</span><span class="op">&gt;</span> {
     <span class="attribute">#[<span class="macro-nonterminal">$</span><span class="macro-nonterminal">tydoc</span>]</span>
     <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>,<span class="ident">Copy</span>, <span class="ident">Debug</span>, <span class="ident">PartialEq</span>,<span class="ident">Eq</span>)]</span>
     <span class="kw">pub</span> <span class="kw">enum</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">err</span> {
         $($(<span class="attribute">#[<span class="macro-nonterminal">$</span><span class="macro-nonterminal">vardoc</span>]</span>)<span class="op">*</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">variant</span>),<span class="op">*</span>
     }
-    <span class="macro">description</span><span class="macro">!</span>{<span class="macro-nonterminal">$</span><span class="macro-nonterminal">err</span>, <span class="op">|</span><span class="ident">e</span>: <span class="kw-2">&amp;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">err</span><span class="op">|</span> <span class="kw">match</span> <span class="kw-2">*</span><span class="ident">e</span> {$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">err</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">variant</span><span class="op">=&gt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">string</span>),<span class="kw-2">*</span>} }
+    <span class="macro">description</span><span class="macro">!</span>{<span class="macro-nonterminal">$</span><span class="macro-nonterminal">err</span>, <span class="op">|</span><span class="ident">e</span>: <span class="kw-2">&amp;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">err</span><span class="op">|</span> <span class="kw">match</span> <span class="kw-2">*</span><span class="ident">e</span> {$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">err</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">variant</span><span class="op">=</span><span class="op">&gt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">string</span>),<span class="kw-2">*</span>} }
 }}
 
 
 <span class="macro">simple</span><span class="macro">!</span>{<span class="doccomment">/// Reasons why an `u32` is not a valid UTF codepoint.</span>
     <span class="ident">InvalidCodepoint</span> {
         <span class="doccomment">/// It&#39;s reserved for UTF-16 surrogate pairs.&quot;</span>
-        ::<span class="ident">Utf16Reserved</span> <span class="op">=&gt;</span> <span class="string">&quot;is reserved for UTF-16 surrogate pairs&quot;</span>,
+        ::<span class="ident">Utf16Reserved</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;is reserved for UTF-16 surrogate pairs&quot;</span>,
         <span class="doccomment">/// It&#39;s higher than the highest codepoint (which is 0x10ffff).</span>
-        ::<span class="ident">TooHigh</span> <span class="op">=&gt;</span> <span class="string">&quot;is higher than the highest codepoint&quot;</span>,
+        ::<span class="ident">TooHigh</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;is higher than the highest codepoint&quot;</span>,
     }}
 <span class="kw">use</span> <span class="self">self</span>::<span class="ident">InvalidCodepoint</span>::<span class="kw-2">*</span>;
 <span class="kw">impl</span> <span class="ident">InvalidCodepoint</span> {
     <span class="doccomment">/// Get the range of values for which this error would be given.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">error_range</span>(<span class="self">self</span>) <span class="op">-&gt;</span> (<span class="ident">u32</span>,<span class="ident">u32</span>) {<span class="kw">match</span> <span class="self">self</span> {
-        <span class="ident">Utf16Reserved</span> <span class="op">=&gt;</span> (<span class="number">0xd8_00</span>, <span class="number">0xdf_ff</span>),
-        <span class="ident">TooHigh</span> <span class="op">=&gt;</span> (<span class="number">0x00_10_ff_ff</span>, <span class="number">0xff_ff_ff_ff</span>),
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">error_range</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">u32</span>,<span class="ident">u32</span>) {<span class="kw">match</span> <span class="self">self</span> {
+        <span class="ident">Utf16Reserved</span> <span class="op">=</span><span class="op">&gt;</span> (<span class="number">0xd8_00</span>, <span class="number">0xdf_ff</span>),
+        <span class="ident">TooHigh</span> <span class="op">=</span><span class="op">&gt;</span> (<span class="number">0x00_10_ff_ff</span>, <span class="number">0xff_ff_ff_ff</span>),
     }}
 }
 
@@ -395,9 +395,9 @@
 <span class="macro">simple</span><span class="macro">!</span>{<span class="doccomment">/// Reasons why a `[u16; 2]` doesn&#39;t form a valid UTF-16 codepoint.</span>
     <span class="ident">InvalidUtf16Array</span> {
         <span class="doccomment">/// The first unit is a trailing/low surrogate, which is never valid.</span>
-        ::<span class="ident">FirstIsTrailingSurrogate</span> <span class="op">=&gt;</span> <span class="string">&quot;the first unit is a trailing surrogate, which is never valid&quot;</span>,
+        ::<span class="ident">FirstIsTrailingSurrogate</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;the first unit is a trailing surrogate, which is never valid&quot;</span>,
         <span class="doccomment">/// The second unit is needed, but is not a trailing surrogate.</span>
-        ::<span class="ident">SecondIsNotTrailingSurrogate</span> <span class="op">=&gt;</span> <span class="string">&quot;the second unit is needed but is not a trailing surrogate&quot;</span>,
+        ::<span class="ident">SecondIsNotTrailingSurrogate</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;the second unit is needed but is not a trailing surrogate&quot;</span>,
     }}
 
 <span class="macro">simple</span><span class="macro">!</span>{<span class="doccomment">/// Reasons why one or two `u16`s are not valid UTF-16, in sinking precedence.</span>
@@ -405,56 +405,56 @@
         <span class="doccomment">/// The first unit is a trailing/low surrogate, which is never valid.</span>
         <span class="doccomment">///</span>
         <span class="doccomment">/// Note that the value of a low surrogate is actually higher than a high surrogate.</span>
-        ::<span class="ident">FirstIsTrailingSurrogate</span> <span class="op">=&gt;</span> <span class="string">&quot;the first unit is a trailing / low surrogate, which is never valid&quot;</span>,
+        ::<span class="ident">FirstIsTrailingSurrogate</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;the first unit is a trailing / low surrogate, which is never valid&quot;</span>,
         <span class="doccomment">/// You provided a second unit, but the first one stands on its own.</span>
-        ::<span class="ident">SuperfluousSecond</span> <span class="op">=&gt;</span> <span class="string">&quot;the second unit is superfluous&quot;</span>,
+        ::<span class="ident">SuperfluousSecond</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;the second unit is superfluous&quot;</span>,
         <span class="doccomment">/// The first and only unit requires a second unit.</span>
-        ::<span class="ident">MissingSecond</span> <span class="op">=&gt;</span> <span class="string">&quot;the first unit requires a second unit&quot;</span>,
+        ::<span class="ident">MissingSecond</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;the first unit requires a second unit&quot;</span>,
         <span class="doccomment">/// The first unit requires a second unit, but it&#39;s not a trailing/low surrogate.</span>
         <span class="doccomment">///</span>
         <span class="doccomment">/// Note that the value of a low surrogate is actually higher than a high surrogate.</span>
-        ::<span class="ident">InvalidSecond</span> <span class="op">=&gt;</span> <span class="string">&quot;the required second unit is not a trailing / low surrogate&quot;</span>,
+        ::<span class="ident">InvalidSecond</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;the required second unit is not a trailing / low surrogate&quot;</span>,
     }}
 
 
 <span class="macro">simple</span><span class="macro">!</span>{<span class="doccomment">/// Reasons why a slice of `u16`s doesn&#39;t start with valid UTF-16.</span>
     <span class="ident">InvalidUtf16Slice</span> {
         <span class="doccomment">/// The slice is empty.</span>
-        ::<span class="ident">EmptySlice</span> <span class="op">=&gt;</span> <span class="string">&quot;the slice is empty&quot;</span>,
+        ::<span class="ident">EmptySlice</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;the slice is empty&quot;</span>,
         <span class="doccomment">/// The first unit is a low surrogate.</span>
-        ::<span class="ident">FirstLowSurrogate</span> <span class="op">=&gt;</span> <span class="string">&quot;the first unit is a trailing surrogate&quot;</span>,
+        ::<span class="ident">FirstLowSurrogate</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;the first unit is a trailing surrogate&quot;</span>,
         <span class="doccomment">/// The first and only unit requires a second unit.</span>
-        ::<span class="ident">MissingSecond</span> <span class="op">=&gt;</span> <span class="string">&quot;the first and only unit requires a second one&quot;</span>,
+        ::<span class="ident">MissingSecond</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;the first and only unit requires a second one&quot;</span>,
         <span class="doccomment">/// The first unit requires a second one, but it&#39;s not a trailing surrogate.</span>
-        ::<span class="ident">SecondNotLowSurrogate</span> <span class="op">=&gt;</span> <span class="string">&quot;the required second unit is not a trailing surrogate&quot;</span>,
+        ::<span class="ident">SecondNotLowSurrogate</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;the required second unit is not a trailing surrogate&quot;</span>,
     }}
 
 <span class="macro">simple</span><span class="macro">!</span>{<span class="doccomment">/// Types of invalid sequences encountered by `Utf16CharParser`.</span>
     <span class="ident">Utf16PairError</span> {
         <span class="doccomment">/// A trailing surrogate was not preceeded by a leading surrogate.</span>
-        ::<span class="ident">UnexpectedTrailingSurrogate</span> <span class="op">=&gt;</span> <span class="string">&quot;a trailing surrogate was not preceeded by a leading surrogate&quot;</span>,
+        ::<span class="ident">UnexpectedTrailingSurrogate</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;a trailing surrogate was not preceeded by a leading surrogate&quot;</span>,
         <span class="doccomment">/// A leading surrogate was followed by an unit that was not a trailing surrogate.</span>
-        ::<span class="ident">UnmatchedLeadingSurrogate</span> <span class="op">=&gt;</span> <span class="string">&quot;a leading surrogate was followed by an unit that was not a trailing surrogate&quot;</span>,
+        ::<span class="ident">UnmatchedLeadingSurrogate</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;a leading surrogate was followed by an unit that was not a trailing surrogate&quot;</span>,
         <span class="doccomment">/// A trailing surrogate was expected when the end was reached.</span>
-        ::<span class="ident">Incomplete</span> <span class="op">=&gt;</span> <span class="string">&quot;a trailing surrogate was expected when the end was reached&quot;</span>,
+        ::<span class="ident">Incomplete</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;a trailing surrogate was expected when the end was reached&quot;</span>,
     }}
 
 
 <span class="macro">simple</span><span class="macro">!</span>{<span class="doccomment">/// Reasons why `Utf8Char::from_str()` or `Utf16Char::from_str()` failed.</span>
     <span class="ident">FromStrError</span> {
         <span class="doccomment">/// `Utf8Char` or `Utf16Char` cannot store more than a single codepoint.</span>
-        ::<span class="ident">MultipleCodepoints</span> <span class="op">=&gt;</span> <span class="string">&quot;has more than one codepoint&quot;</span>,
+        ::<span class="ident">MultipleCodepoints</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;has more than one codepoint&quot;</span>,
         <span class="doccomment">/// `Utf8Char` or `Utf16Char` cannot be empty.</span>
-        ::<span class="ident">Empty</span> <span class="op">=&gt;</span> <span class="string">&quot;is empty&quot;</span>,
+        ::<span class="ident">Empty</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;is empty&quot;</span>,
     }}
 
 
 <span class="macro">simple</span><span class="macro">!</span>{<span class="doccomment">/// Reasons why a byte is not the start of a UTF-8 codepoint.</span>
     <span class="ident">InvalidUtf8FirstByte</span> {
         <span class="doccomment">/// Sequences cannot be longer than 4 bytes. Is given for values &gt;= 240.</span>
-        ::<span class="ident">TooLongSeqence</span> <span class="op">=&gt;</span> <span class="string">&quot;is greater than 247 (UTF-8 sequences cannot be longer than four bytes)&quot;</span>,
+        ::<span class="ident">TooLongSeqence</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;is greater than 247 (UTF-8 sequences cannot be longer than four bytes)&quot;</span>,
         <span class="doccomment">/// This byte belongs to a previous sequence. Is given for values between 128 and 192 (exclusive).</span>
-        ::<span class="ident">ContinuationByte</span> <span class="op">=&gt;</span> <span class="string">&quot;is a continuation of a previous sequence&quot;</span>,
+        ::<span class="ident">ContinuationByte</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;is a continuation of a previous sequence&quot;</span>,
     }}
 <span class="kw">use</span> <span class="self">self</span>::<span class="ident">InvalidUtf8FirstByte</span>::<span class="kw-2">*</span>;
 
@@ -462,40 +462,40 @@
 
 <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">complex</span> {
 (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">err</span>:<span class="ident">ty</span>
- {$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">sub</span>:<span class="ident">ty</span> <span class="op">=&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">to</span>:<span class="ident">expr</span>,)<span class="kw-2">*</span>}
- {$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">desc</span>:<span class="ident">pat</span> <span class="op">=&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">string</span>:<span class="ident">expr</span>),<span class="op">+</span>,}
- <span class="op">=&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">use_cause</span>:<span class="ident">expr</span> <span class="op">=&gt;</span>
- {$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">cause</span>:<span class="ident">pat</span> <span class="op">=&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">result</span>:<span class="ident">expr</span>),<span class="op">+</span>,} $(<span class="attribute">#[<span class="macro-nonterminal">$</span><span class="macro-nonterminal">causedoc</span>:<span class="ident">meta</span>]</span>)<span class="op">*</span>
-) <span class="op">=&gt;</span> {
+ {$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">sub</span>:<span class="ident">ty</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">to</span>:<span class="ident">expr</span>,)<span class="kw-2">*</span>}
+ {$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">desc</span>:<span class="ident">pat</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">string</span>:<span class="ident">expr</span>),<span class="op">+</span>,}
+ <span class="op">=</span><span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">use_cause</span>:<span class="ident">expr</span> <span class="op">=</span><span class="op">&gt;</span>
+ {$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">cause</span>:<span class="ident">pat</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">result</span>:<span class="ident">expr</span>),<span class="op">+</span>,} $(<span class="attribute">#[<span class="macro-nonterminal">$</span><span class="macro-nonterminal">causedoc</span>:<span class="ident">meta</span>]</span>)<span class="op">*</span>
+) <span class="op">=</span><span class="op">&gt;</span> {
     $(<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">sub</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">err</span> {
-          <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">error</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">sub</span>) <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">err</span> {
+          <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">error</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">sub</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">err</span> {
               <span class="macro-nonterminal">$</span><span class="macro-nonterminal">to</span>(<span class="ident">error</span>)
           }
       })<span class="op">*</span>
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">feature</span><span class="op">=</span><span class="string">&quot;std&quot;</span>))]</span>
     <span class="kw">impl</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">err</span> {
         <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">missing_docs</span>)]</span>
-        <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">description</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span> {
-            <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span>{ $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">desc</span> <span class="op">=&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">string</span>,)<span class="op">*</span> }
+        <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">description</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span> {
+            <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span>{ $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">desc</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">string</span>,)<span class="op">*</span> }
         }
         <span class="doccomment">/// A hack to avoid two Display impls</span>
-        <span class="kw">fn</span> <span class="ident">cause</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Display</span><span class="op">&gt;</span> {<span class="prelude-val">None</span>}
+        <span class="kw">fn</span> <span class="ident">cause</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Display</span><span class="op">&gt;</span> {<span class="prelude-val">None</span>}
     }
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span><span class="op">=</span><span class="string">&quot;std&quot;</span>)]</span>
     <span class="kw">impl</span> <span class="ident">Error</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">err</span> {
-        <span class="kw">fn</span> <span class="ident">description</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span> {
-            <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span>{ $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">desc</span> <span class="op">=&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">string</span>,)<span class="op">*</span> }
+        <span class="kw">fn</span> <span class="ident">description</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span> {
+            <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span>{ $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">desc</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">string</span>,)<span class="op">*</span> }
         }
         $(<span class="attribute">#[<span class="macro-nonterminal">$</span><span class="macro-nonterminal">causedoc</span>]</span>)<span class="op">*</span>
-        <span class="kw">fn</span> <span class="ident">cause</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Error</span><span class="op">&gt;</span> {
-            <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span>{ $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">cause</span> <span class="op">=&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">result</span>,)<span class="op">*</span> }
+        <span class="kw">fn</span> <span class="ident">cause</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Error</span><span class="op">&gt;</span> {
+            <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span>{ $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">cause</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">result</span>,)<span class="op">*</span> }
         }
     }
     <span class="kw">impl</span> <span class="ident">Display</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">err</span> {
-        <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>,  <span class="ident">fmtr</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+        <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>,  <span class="ident">fmtr</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
             <span class="kw">match</span> (<span class="self">self</span>.<span class="ident">cause</span>(), <span class="macro-nonterminal">$</span><span class="macro-nonterminal">use_cause</span>) {
-                (<span class="prelude-val">Some</span>(<span class="ident">d</span>),<span class="bool-val">true</span>) <span class="op">=&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">fmtr</span>, <span class="string">&quot;{}: {}&quot;</span>, <span class="self">self</span>.<span class="ident">description</span>(), <span class="ident">d</span>),
-                        <span class="kw">_</span>      <span class="op">=&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">fmtr</span>, <span class="string">&quot;{}&quot;</span>, <span class="self">self</span>.<span class="ident">description</span>()),
+                (<span class="prelude-val">Some</span>(<span class="ident">d</span>),<span class="bool-val">true</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">fmtr</span>, <span class="string">&quot;{}: {}&quot;</span>, <span class="self">self</span>.<span class="ident">description</span>(), <span class="ident">d</span>),
+                        <span class="kw">_</span>      <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">fmtr</span>, <span class="string">&quot;{}&quot;</span>, <span class="self">self</span>.<span class="ident">description</span>()),
             }
         }
     }
@@ -519,15 +519,15 @@
 }
 <span class="kw">use</span> <span class="self">self</span>::<span class="ident">InvalidUtf8</span>::<span class="kw-2">*</span>;
 <span class="macro">complex</span><span class="macro">!</span>{<span class="ident">InvalidUtf8</span> {
-        <span class="ident">InvalidUtf8FirstByte</span> <span class="op">=&gt;</span> <span class="ident">FirstByte</span>,
+        <span class="ident">InvalidUtf8FirstByte</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">FirstByte</span>,
     } {
-        <span class="ident">FirstByte</span>(<span class="ident">TooLongSeqence</span>) <span class="op">=&gt;</span> <span class="string">&quot;the first byte is greater than 239 (UTF-8 sequences cannot be longer than four bytes)&quot;</span>,
-        <span class="ident">FirstByte</span>(<span class="ident">ContinuationByte</span>) <span class="op">=&gt;</span> <span class="string">&quot;the first byte is a continuation of a previous sequence&quot;</span>,
-        <span class="ident">OverLong</span> <span class="op">=&gt;</span> <span class="string">&quot;the sequence contains too many zeros and could be shorter&quot;</span>,
-        <span class="ident">NotAContinuationByte</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="string">&quot;the sequence is too short&quot;</span>,
-    } <span class="op">=&gt;</span> <span class="bool-val">false</span> <span class="op">=&gt;</span> {
-        <span class="ident">FirstByte</span>(<span class="kw-2">ref</span> <span class="ident">cause</span>) <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">cause</span>),
-        <span class="kw">_</span> <span class="op">=&gt;</span> <span class="prelude-val">None</span>,
+        <span class="ident">FirstByte</span>(<span class="ident">TooLongSeqence</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;the first byte is greater than 239 (UTF-8 sequences cannot be longer than four bytes)&quot;</span>,
+        <span class="ident">FirstByte</span>(<span class="ident">ContinuationByte</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;the first byte is a continuation of a previous sequence&quot;</span>,
+        <span class="ident">OverLong</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;the sequence contains too many zeros and could be shorter&quot;</span>,
+        <span class="ident">NotAContinuationByte</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;the sequence is too short&quot;</span>,
+    } <span class="op">=</span><span class="op">&gt;</span> <span class="bool-val">false</span> <span class="op">=</span><span class="op">&gt;</span> {
+        <span class="ident">FirstByte</span>(<span class="kw-2">ref</span> <span class="ident">cause</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">cause</span>),
+        <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">None</span>,
     }<span class="doccomment">/// Returns `Some` if the error is a `InvalidUtf8FirstByte`.</span>
 }
 
@@ -541,14 +541,14 @@
     <span class="ident">Codepoint</span>(<span class="ident">InvalidCodepoint</span>),
 }
 <span class="macro">complex</span><span class="macro">!</span>{<span class="ident">InvalidUtf8Array</span> {
-        <span class="ident">InvalidUtf8</span> <span class="op">=&gt;</span> <span class="ident">InvalidUtf8Array</span>::<span class="ident">Utf8</span>,
-        <span class="ident">InvalidCodepoint</span> <span class="op">=&gt;</span> <span class="ident">InvalidUtf8Array</span>::<span class="ident">Codepoint</span>,
+        <span class="ident">InvalidUtf8</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">InvalidUtf8Array</span>::<span class="ident">Utf8</span>,
+        <span class="ident">InvalidCodepoint</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">InvalidUtf8Array</span>::<span class="ident">Codepoint</span>,
     } {
-        <span class="ident">InvalidUtf8Array</span>::<span class="ident">Utf8</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="string">&quot;the sequence is invalid UTF-8&quot;</span>,
-        <span class="ident">InvalidUtf8Array</span>::<span class="ident">Codepoint</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="string">&quot;the encoded codepoint is invalid&quot;</span>,
-    } <span class="op">=&gt;</span> <span class="bool-val">true</span> <span class="op">=&gt;</span> {
-        <span class="ident">InvalidUtf8Array</span>::<span class="ident">Utf8</span>(<span class="kw-2">ref</span> <span class="ident">u</span>) <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">u</span>),
-        <span class="ident">InvalidUtf8Array</span>::<span class="ident">Codepoint</span>(<span class="kw-2">ref</span> <span class="ident">c</span>) <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">c</span>),
+        <span class="ident">InvalidUtf8Array</span>::<span class="ident">Utf8</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;the sequence is invalid UTF-8&quot;</span>,
+        <span class="ident">InvalidUtf8Array</span>::<span class="ident">Codepoint</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;the encoded codepoint is invalid&quot;</span>,
+    } <span class="op">=</span><span class="op">&gt;</span> <span class="bool-val">true</span> <span class="op">=</span><span class="op">&gt;</span> {
+        <span class="ident">InvalidUtf8Array</span>::<span class="ident">Utf8</span>(<span class="kw-2">ref</span> <span class="ident">u</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">u</span>),
+        <span class="ident">InvalidUtf8Array</span>::<span class="ident">Codepoint</span>(<span class="kw-2">ref</span> <span class="ident">c</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">c</span>),
     }<span class="doccomment">/// Always returns `Some`.</span>
 }
 
@@ -564,17 +564,17 @@
     <span class="ident">TooShort</span>(<span class="ident">usize</span>),
 }
 <span class="macro">complex</span><span class="macro">!</span>{<span class="ident">InvalidUtf8Slice</span> {
-        <span class="ident">InvalidUtf8</span> <span class="op">=&gt;</span> <span class="ident">InvalidUtf8Slice</span>::<span class="ident">Utf8</span>,
-        <span class="ident">InvalidCodepoint</span> <span class="op">=&gt;</span> <span class="ident">InvalidUtf8Slice</span>::<span class="ident">Codepoint</span>,
+        <span class="ident">InvalidUtf8</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">InvalidUtf8Slice</span>::<span class="ident">Utf8</span>,
+        <span class="ident">InvalidCodepoint</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">InvalidUtf8Slice</span>::<span class="ident">Codepoint</span>,
     } {
-        <span class="ident">InvalidUtf8Slice</span>::<span class="ident">Utf8</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="string">&quot;the sequence is invalid UTF-8&quot;</span>,
-        <span class="ident">InvalidUtf8Slice</span>::<span class="ident">Codepoint</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="string">&quot;the encoded codepoint is invalid&quot;</span>,
-        <span class="ident">InvalidUtf8Slice</span>::<span class="ident">TooShort</span>(<span class="number">1</span>) <span class="op">=&gt;</span> <span class="string">&quot;the slice is empty&quot;</span>,
-        <span class="ident">InvalidUtf8Slice</span>::<span class="ident">TooShort</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="string">&quot;the slice is shorter than the sequence&quot;</span>,
-    } <span class="op">=&gt;</span> <span class="bool-val">true</span> <span class="op">=&gt;</span> {
-        <span class="ident">InvalidUtf8Slice</span>::<span class="ident">Utf8</span>(<span class="kw-2">ref</span> <span class="ident">u</span>) <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">u</span>),
-        <span class="ident">InvalidUtf8Slice</span>::<span class="ident">Codepoint</span>(<span class="kw-2">ref</span> <span class="ident">c</span>) <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">c</span>),
-        <span class="ident">InvalidUtf8Slice</span>::<span class="ident">TooShort</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="prelude-val">None</span>,
+        <span class="ident">InvalidUtf8Slice</span>::<span class="ident">Utf8</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;the sequence is invalid UTF-8&quot;</span>,
+        <span class="ident">InvalidUtf8Slice</span>::<span class="ident">Codepoint</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;the encoded codepoint is invalid&quot;</span>,
+        <span class="ident">InvalidUtf8Slice</span>::<span class="ident">TooShort</span>(<span class="number">1</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;the slice is empty&quot;</span>,
+        <span class="ident">InvalidUtf8Slice</span>::<span class="ident">TooShort</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;the slice is shorter than the sequence&quot;</span>,
+    } <span class="op">=</span><span class="op">&gt;</span> <span class="bool-val">true</span> <span class="op">=</span><span class="op">&gt;</span> {
+        <span class="ident">InvalidUtf8Slice</span>::<span class="ident">Utf8</span>(<span class="kw-2">ref</span> <span class="ident">u</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">u</span>),
+        <span class="ident">InvalidUtf8Slice</span>::<span class="ident">Codepoint</span>(<span class="kw-2">ref</span> <span class="ident">c</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">c</span>),
+        <span class="ident">InvalidUtf8Slice</span>::<span class="ident">TooShort</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">None</span>,
     }
 }
 </pre></div>

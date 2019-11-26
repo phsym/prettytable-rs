@@ -382,7 +382,7 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// If slice only contains ASCII bytes, then the length of the slice is</span>
 <span class="doccomment">/// returned.</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">first_non_ascii_byte</span>(<span class="ident">slice</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">first_non_ascii_byte</span>(<span class="ident">slice</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_arch</span> <span class="op">=</span> <span class="string">&quot;x86_64&quot;</span>))]</span>
     {
         <span class="ident">first_non_ascii_byte_fallback</span>(<span class="ident">slice</span>)
@@ -395,7 +395,7 @@
 }
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">test</span>, <span class="ident">not</span>(<span class="ident">target_arch</span> <span class="op">=</span> <span class="string">&quot;x86_64&quot;</span>)))]</span>
-<span class="kw">fn</span> <span class="ident">first_non_ascii_byte_fallback</span>(<span class="ident">slice</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+<span class="kw">fn</span> <span class="ident">first_non_ascii_byte_fallback</span>(<span class="ident">slice</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
     <span class="kw">let</span> <span class="ident">align</span> <span class="op">=</span> <span class="ident">USIZE_BYTES</span> <span class="op">-</span> <span class="number">1</span>;
     <span class="kw">let</span> <span class="ident">start_ptr</span> <span class="op">=</span> <span class="ident">slice</span>.<span class="ident">as_ptr</span>();
     <span class="kw">let</span> <span class="ident">end_ptr</span> <span class="op">=</span> <span class="ident">slice</span>[<span class="ident">slice</span>.<span class="ident">len</span>()..].<span class="ident">as_ptr</span>();
@@ -408,20 +408,20 @@
 
         <span class="kw">let</span> <span class="ident">chunk</span> <span class="op">=</span> <span class="ident">read_unaligned_usize</span>(<span class="ident">ptr</span>);
         <span class="kw">let</span> <span class="ident">mask</span> <span class="op">=</span> <span class="ident">chunk</span> <span class="op">&amp;</span> <span class="ident">ASCII_MASK</span>;
-        <span class="kw">if</span> <span class="ident">mask</span> <span class="op">!=</span> <span class="number">0</span> {
+        <span class="kw">if</span> <span class="ident">mask</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span> {
             <span class="kw">return</span> <span class="ident">first_non_ascii_byte_mask</span>(<span class="ident">mask</span>);
         }
 
         <span class="ident">ptr</span> <span class="op">=</span> <span class="ident">ptr_add</span>(<span class="ident">ptr</span>, <span class="ident">USIZE_BYTES</span> <span class="op">-</span> (<span class="ident">start_ptr</span> <span class="kw">as</span> <span class="ident">usize</span> <span class="op">&amp;</span> <span class="ident">align</span>));
         <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">ptr</span> <span class="op">&gt;</span> <span class="ident">start_ptr</span>);
-        <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">ptr_sub</span>(<span class="ident">end_ptr</span>, <span class="ident">USIZE_BYTES</span>) <span class="op">&gt;=</span> <span class="ident">start_ptr</span>);
-        <span class="kw">if</span> <span class="ident">slice</span>.<span class="ident">len</span>() <span class="op">&gt;=</span> <span class="ident">FALLBACK_LOOP_SIZE</span> {
-            <span class="kw">while</span> <span class="ident">ptr</span> <span class="op">&lt;=</span> <span class="ident">ptr_sub</span>(<span class="ident">end_ptr</span>, <span class="ident">FALLBACK_LOOP_SIZE</span>) {
+        <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">ptr_sub</span>(<span class="ident">end_ptr</span>, <span class="ident">USIZE_BYTES</span>) <span class="op">&gt;</span><span class="op">=</span> <span class="ident">start_ptr</span>);
+        <span class="kw">if</span> <span class="ident">slice</span>.<span class="ident">len</span>() <span class="op">&gt;</span><span class="op">=</span> <span class="ident">FALLBACK_LOOP_SIZE</span> {
+            <span class="kw">while</span> <span class="ident">ptr</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">ptr_sub</span>(<span class="ident">end_ptr</span>, <span class="ident">FALLBACK_LOOP_SIZE</span>) {
                 <span class="macro">debug_assert_eq</span><span class="macro">!</span>(<span class="number">0</span>, (<span class="ident">ptr</span> <span class="kw">as</span> <span class="ident">usize</span>) <span class="op">%</span> <span class="ident">USIZE_BYTES</span>);
 
                 <span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> <span class="kw-2">*</span>(<span class="ident">ptr</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">usize</span>);
                 <span class="kw">let</span> <span class="ident">b</span> <span class="op">=</span> <span class="kw-2">*</span>(<span class="ident">ptr_add</span>(<span class="ident">ptr</span>, <span class="ident">USIZE_BYTES</span>) <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">usize</span>);
-                <span class="kw">if</span> (<span class="ident">a</span> <span class="op">|</span> <span class="ident">b</span>) <span class="op">&amp;</span> <span class="ident">ASCII_MASK</span> <span class="op">!=</span> <span class="number">0</span> {
+                <span class="kw">if</span> (<span class="ident">a</span> <span class="op">|</span> <span class="ident">b</span>) <span class="op">&amp;</span> <span class="ident">ASCII_MASK</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span> {
                     <span class="comment">// What a kludge. We wrap the position finding code into</span>
                     <span class="comment">// a non-inlineable function, which makes the codegen in</span>
                     <span class="comment">// the tight loop above a bit better by avoiding a</span>
@@ -432,19 +432,19 @@
                     <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">findpos</span>(
                         <span class="ident">start_ptr</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">u8</span>,
                         <span class="ident">ptr</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">u8</span>,
-                    ) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+                    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
                         <span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> <span class="kw-2">*</span>(<span class="ident">ptr</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">usize</span>);
                         <span class="kw">let</span> <span class="ident">b</span> <span class="op">=</span> <span class="kw-2">*</span>(<span class="ident">ptr_add</span>(<span class="ident">ptr</span>, <span class="ident">USIZE_BYTES</span>) <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">usize</span>);
 
                         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">at</span> <span class="op">=</span> <span class="ident">sub</span>(<span class="ident">ptr</span>, <span class="ident">start_ptr</span>);
                         <span class="kw">let</span> <span class="ident">maska</span> <span class="op">=</span> <span class="ident">a</span> <span class="op">&amp;</span> <span class="ident">ASCII_MASK</span>;
-                        <span class="kw">if</span> <span class="ident">maska</span> <span class="op">!=</span> <span class="number">0</span> {
+                        <span class="kw">if</span> <span class="ident">maska</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span> {
                             <span class="kw">return</span> <span class="ident">at</span> <span class="op">+</span> <span class="ident">first_non_ascii_byte_mask</span>(<span class="ident">maska</span>);
                         }
 
-                        <span class="ident">at</span> <span class="op">+=</span> <span class="ident">USIZE_BYTES</span>;
+                        <span class="ident">at</span> <span class="op">+</span><span class="op">=</span> <span class="ident">USIZE_BYTES</span>;
                         <span class="kw">let</span> <span class="ident">maskb</span> <span class="op">=</span> <span class="ident">b</span> <span class="op">&amp;</span> <span class="ident">ASCII_MASK</span>;
-                        <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">maskb</span> <span class="op">!=</span> <span class="number">0</span>);
+                        <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">maskb</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span>);
                         <span class="kw">return</span> <span class="ident">at</span> <span class="op">+</span> <span class="ident">first_non_ascii_byte_mask</span>(<span class="ident">maskb</span>);
                     }
                     <span class="kw">return</span> <span class="ident">findpos</span>(<span class="ident">start_ptr</span>, <span class="ident">ptr</span>);
@@ -457,7 +457,7 @@
 }
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_arch</span> <span class="op">=</span> <span class="string">&quot;x86_64&quot;</span>)]</span>
-<span class="kw">fn</span> <span class="ident">first_non_ascii_byte_sse2</span>(<span class="ident">slice</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+<span class="kw">fn</span> <span class="ident">first_non_ascii_byte_sse2</span>(<span class="ident">slice</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
     <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">arch</span>::<span class="ident">x86_64</span>::<span class="kw-2">*</span>;
 
     <span class="kw">const</span> <span class="ident">VECTOR_SIZE</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="ident">mem</span>::<span class="ident">size_of</span>::<span class="op">&lt;</span><span class="ident">__m128i</span><span class="op">&gt;</span>();
@@ -475,15 +475,15 @@
 
         <span class="kw">let</span> <span class="ident">chunk</span> <span class="op">=</span> <span class="ident">_mm_loadu_si128</span>(<span class="ident">ptr</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">__m128i</span>);
         <span class="kw">let</span> <span class="ident">mask</span> <span class="op">=</span> <span class="ident">_mm_movemask_epi8</span>(<span class="ident">chunk</span>);
-        <span class="kw">if</span> <span class="ident">mask</span> <span class="op">!=</span> <span class="number">0</span> {
+        <span class="kw">if</span> <span class="ident">mask</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span> {
             <span class="kw">return</span> <span class="ident">mask</span>.<span class="ident">trailing_zeros</span>() <span class="kw">as</span> <span class="ident">usize</span>;
         }
 
         <span class="ident">ptr</span> <span class="op">=</span> <span class="ident">ptr</span>.<span class="ident">add</span>(<span class="ident">VECTOR_SIZE</span> <span class="op">-</span> (<span class="ident">start_ptr</span> <span class="kw">as</span> <span class="ident">usize</span> <span class="op">&amp;</span> <span class="ident">VECTOR_ALIGN</span>));
         <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">ptr</span> <span class="op">&gt;</span> <span class="ident">start_ptr</span>);
-        <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">end_ptr</span>.<span class="ident">sub</span>(<span class="ident">VECTOR_SIZE</span>) <span class="op">&gt;=</span> <span class="ident">start_ptr</span>);
-        <span class="kw">if</span> <span class="ident">slice</span>.<span class="ident">len</span>() <span class="op">&gt;=</span> <span class="ident">VECTOR_LOOP_SIZE</span> {
-            <span class="kw">while</span> <span class="ident">ptr</span> <span class="op">&lt;=</span> <span class="ident">ptr_sub</span>(<span class="ident">end_ptr</span>, <span class="ident">VECTOR_LOOP_SIZE</span>) {
+        <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">end_ptr</span>.<span class="ident">sub</span>(<span class="ident">VECTOR_SIZE</span>) <span class="op">&gt;</span><span class="op">=</span> <span class="ident">start_ptr</span>);
+        <span class="kw">if</span> <span class="ident">slice</span>.<span class="ident">len</span>() <span class="op">&gt;</span><span class="op">=</span> <span class="ident">VECTOR_LOOP_SIZE</span> {
+            <span class="kw">while</span> <span class="ident">ptr</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">ptr_sub</span>(<span class="ident">end_ptr</span>, <span class="ident">VECTOR_LOOP_SIZE</span>) {
                 <span class="macro">debug_assert_eq</span><span class="macro">!</span>(<span class="number">0</span>, (<span class="ident">ptr</span> <span class="kw">as</span> <span class="ident">usize</span>) <span class="op">%</span> <span class="ident">VECTOR_SIZE</span>);
 
                 <span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> <span class="ident">_mm_load_si128</span>(<span class="ident">ptr</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">__m128i</span>);
@@ -496,39 +496,39 @@
                 <span class="kw">let</span> <span class="ident">or1</span> <span class="op">=</span> <span class="ident">_mm_or_si128</span>(<span class="ident">a</span>, <span class="ident">b</span>);
                 <span class="kw">let</span> <span class="ident">or2</span> <span class="op">=</span> <span class="ident">_mm_or_si128</span>(<span class="ident">c</span>, <span class="ident">d</span>);
                 <span class="kw">let</span> <span class="ident">or3</span> <span class="op">=</span> <span class="ident">_mm_or_si128</span>(<span class="ident">or1</span>, <span class="ident">or2</span>);
-                <span class="kw">if</span> <span class="ident">_mm_movemask_epi8</span>(<span class="ident">or3</span>) <span class="op">!=</span> <span class="number">0</span> {
+                <span class="kw">if</span> <span class="ident">_mm_movemask_epi8</span>(<span class="ident">or3</span>) <span class="op">!</span><span class="op">=</span> <span class="number">0</span> {
                     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">at</span> <span class="op">=</span> <span class="ident">sub</span>(<span class="ident">ptr</span>, <span class="ident">start_ptr</span>);
                     <span class="kw">let</span> <span class="ident">mask</span> <span class="op">=</span> <span class="ident">_mm_movemask_epi8</span>(<span class="ident">a</span>);
-                    <span class="kw">if</span> <span class="ident">mask</span> <span class="op">!=</span> <span class="number">0</span> {
+                    <span class="kw">if</span> <span class="ident">mask</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span> {
                         <span class="kw">return</span> <span class="ident">at</span> <span class="op">+</span> <span class="ident">mask</span>.<span class="ident">trailing_zeros</span>() <span class="kw">as</span> <span class="ident">usize</span>;
                     }
 
-                    <span class="ident">at</span> <span class="op">+=</span> <span class="ident">VECTOR_SIZE</span>;
+                    <span class="ident">at</span> <span class="op">+</span><span class="op">=</span> <span class="ident">VECTOR_SIZE</span>;
                     <span class="kw">let</span> <span class="ident">mask</span> <span class="op">=</span> <span class="ident">_mm_movemask_epi8</span>(<span class="ident">b</span>);
-                    <span class="kw">if</span> <span class="ident">mask</span> <span class="op">!=</span> <span class="number">0</span> {
+                    <span class="kw">if</span> <span class="ident">mask</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span> {
                         <span class="kw">return</span> <span class="ident">at</span> <span class="op">+</span> <span class="ident">mask</span>.<span class="ident">trailing_zeros</span>() <span class="kw">as</span> <span class="ident">usize</span>;
                     }
 
-                    <span class="ident">at</span> <span class="op">+=</span> <span class="ident">VECTOR_SIZE</span>;
+                    <span class="ident">at</span> <span class="op">+</span><span class="op">=</span> <span class="ident">VECTOR_SIZE</span>;
                     <span class="kw">let</span> <span class="ident">mask</span> <span class="op">=</span> <span class="ident">_mm_movemask_epi8</span>(<span class="ident">c</span>);
-                    <span class="kw">if</span> <span class="ident">mask</span> <span class="op">!=</span> <span class="number">0</span> {
+                    <span class="kw">if</span> <span class="ident">mask</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span> {
                         <span class="kw">return</span> <span class="ident">at</span> <span class="op">+</span> <span class="ident">mask</span>.<span class="ident">trailing_zeros</span>() <span class="kw">as</span> <span class="ident">usize</span>;
                     }
 
-                    <span class="ident">at</span> <span class="op">+=</span> <span class="ident">VECTOR_SIZE</span>;
+                    <span class="ident">at</span> <span class="op">+</span><span class="op">=</span> <span class="ident">VECTOR_SIZE</span>;
                     <span class="kw">let</span> <span class="ident">mask</span> <span class="op">=</span> <span class="ident">_mm_movemask_epi8</span>(<span class="ident">d</span>);
-                    <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">mask</span> <span class="op">!=</span> <span class="number">0</span>);
+                    <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">mask</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span>);
                     <span class="kw">return</span> <span class="ident">at</span> <span class="op">+</span> <span class="ident">mask</span>.<span class="ident">trailing_zeros</span>() <span class="kw">as</span> <span class="ident">usize</span>;
                 }
                 <span class="ident">ptr</span> <span class="op">=</span> <span class="ident">ptr_add</span>(<span class="ident">ptr</span>, <span class="ident">VECTOR_LOOP_SIZE</span>);
             }
         }
-        <span class="kw">while</span> <span class="ident">ptr</span> <span class="op">&lt;=</span> <span class="ident">end_ptr</span>.<span class="ident">sub</span>(<span class="ident">VECTOR_SIZE</span>) {
-            <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">sub</span>(<span class="ident">end_ptr</span>, <span class="ident">ptr</span>) <span class="op">&gt;=</span> <span class="ident">VECTOR_SIZE</span>);
+        <span class="kw">while</span> <span class="ident">ptr</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">end_ptr</span>.<span class="ident">sub</span>(<span class="ident">VECTOR_SIZE</span>) {
+            <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">sub</span>(<span class="ident">end_ptr</span>, <span class="ident">ptr</span>) <span class="op">&gt;</span><span class="op">=</span> <span class="ident">VECTOR_SIZE</span>);
 
             <span class="kw">let</span> <span class="ident">chunk</span> <span class="op">=</span> <span class="ident">_mm_loadu_si128</span>(<span class="ident">ptr</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">__m128i</span>);
             <span class="kw">let</span> <span class="ident">mask</span> <span class="op">=</span> <span class="ident">_mm_movemask_epi8</span>(<span class="ident">chunk</span>);
-            <span class="kw">if</span> <span class="ident">mask</span> <span class="op">!=</span> <span class="number">0</span> {
+            <span class="kw">if</span> <span class="ident">mask</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span> {
                 <span class="kw">return</span> <span class="ident">sub</span>(<span class="ident">ptr</span>, <span class="ident">start_ptr</span>) <span class="op">+</span> <span class="ident">mask</span>.<span class="ident">trailing_zeros</span>() <span class="kw">as</span> <span class="ident">usize</span>;
             }
             <span class="ident">ptr</span> <span class="op">=</span> <span class="ident">ptr</span>.<span class="ident">add</span>(<span class="ident">VECTOR_SIZE</span>);
@@ -542,9 +542,9 @@
     <span class="ident">start_ptr</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">u8</span>,
     <span class="ident">end_ptr</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">u8</span>,
     <span class="kw-2">mut</span> <span class="ident">ptr</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">u8</span>,
-) <span class="op">-&gt;</span> <span class="ident">usize</span> {
-    <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">start_ptr</span> <span class="op">&lt;=</span> <span class="ident">ptr</span>);
-    <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">ptr</span> <span class="op">&lt;=</span> <span class="ident">end_ptr</span>);
+) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
+    <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">start_ptr</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">ptr</span>);
+    <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">ptr</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">end_ptr</span>);
 
     <span class="kw">while</span> <span class="ident">ptr</span> <span class="op">&lt;</span> <span class="ident">end_ptr</span> {
         <span class="kw">if</span> <span class="kw-2">*</span><span class="ident">ptr</span> <span class="op">&gt;</span> <span class="number">0x7F</span> {
@@ -563,7 +563,7 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// The position returned is always in the inclusive range [0, 7].</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">test</span>, <span class="ident">not</span>(<span class="ident">target_arch</span> <span class="op">=</span> <span class="string">&quot;x86_64&quot;</span>)))]</span>
-<span class="kw">fn</span> <span class="ident">first_non_ascii_byte_mask</span>(<span class="ident">mask</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+<span class="kw">fn</span> <span class="ident">first_non_ascii_byte_mask</span>(<span class="ident">mask</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_endian</span> <span class="op">=</span> <span class="string">&quot;little&quot;</span>)]</span>
     {
         <span class="ident">mask</span>.<span class="ident">trailing_zeros</span>() <span class="kw">as</span> <span class="ident">usize</span> <span class="op">/</span> <span class="number">8</span>
@@ -575,19 +575,19 @@
 }
 
 <span class="doccomment">/// Increment the given pointer by the given amount.</span>
-<span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">ptr_add</span>(<span class="ident">ptr</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">u8</span>, <span class="ident">amt</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">u8</span> {
+<span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">ptr_add</span>(<span class="ident">ptr</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">u8</span>, <span class="ident">amt</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">u8</span> {
     <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">amt</span> <span class="op">&lt;</span> ::<span class="ident">core</span>::<span class="ident">isize</span>::<span class="ident">MAX</span> <span class="kw">as</span> <span class="ident">usize</span>);
     <span class="ident">ptr</span>.<span class="ident">offset</span>(<span class="ident">amt</span> <span class="kw">as</span> <span class="ident">isize</span>)
 }
 
 <span class="doccomment">/// Decrement the given pointer by the given amount.</span>
-<span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">ptr_sub</span>(<span class="ident">ptr</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">u8</span>, <span class="ident">amt</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">u8</span> {
+<span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">ptr_sub</span>(<span class="ident">ptr</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">u8</span>, <span class="ident">amt</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">u8</span> {
     <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">amt</span> <span class="op">&lt;</span> ::<span class="ident">core</span>::<span class="ident">isize</span>::<span class="ident">MAX</span> <span class="kw">as</span> <span class="ident">usize</span>);
     <span class="ident">ptr</span>.<span class="ident">offset</span>((<span class="ident">amt</span> <span class="kw">as</span> <span class="ident">isize</span>).<span class="ident">wrapping_neg</span>())
 }
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">test</span>, <span class="ident">not</span>(<span class="ident">target_arch</span> <span class="op">=</span> <span class="string">&quot;x86_64&quot;</span>)))]</span>
-<span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">read_unaligned_usize</span>(<span class="ident">ptr</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">u8</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+<span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">read_unaligned_usize</span>(<span class="ident">ptr</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">u8</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
     <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">ptr</span>;
 
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">n</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">0</span>;
@@ -597,8 +597,8 @@
 
 <span class="doccomment">/// Subtract `b` from `a` and return the difference. `a` should be greater than</span>
 <span class="doccomment">/// or equal to `b`.</span>
-<span class="kw">fn</span> <span class="ident">sub</span>(<span class="ident">a</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">u8</span>, <span class="ident">b</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">u8</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
-    <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">a</span> <span class="op">&gt;=</span> <span class="ident">b</span>);
+<span class="kw">fn</span> <span class="ident">sub</span>(<span class="ident">a</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">u8</span>, <span class="ident">b</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">u8</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
+    <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">a</span> <span class="op">&gt;</span><span class="op">=</span> <span class="ident">b</span>);
     (<span class="ident">a</span> <span class="kw">as</span> <span class="ident">usize</span>) <span class="op">-</span> (<span class="ident">b</span> <span class="kw">as</span> <span class="ident">usize</span>)
 }
 

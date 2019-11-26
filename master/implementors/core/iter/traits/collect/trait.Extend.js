@@ -8,5 +8,4 @@ implementors["prettytable"] = [{text:"impl&lt;S:&nbsp;<a class=\"trait\" href=\"
             } else {
                 window.pending_implementors = implementors;
             }
-        
-})()
+        })()

@@ -7,5 +7,4 @@ implementors["serde"] = [];
             } else {
                 window.pending_implementors = implementors;
             }
-        
-})()
+        })()

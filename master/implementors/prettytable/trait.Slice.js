@@ -6,5 +6,4 @@ implementors["prettytable"] = [];
             } else {
                 window.pending_implementors = implementors;
             }
-        
-})()
+        })()

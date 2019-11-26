@@ -1204,7 +1204,7 @@
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Chars</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">bs</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="ident">Chars</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">bs</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Chars</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
         <span class="ident">Chars</span> { <span class="ident">bs</span> }
     }
 
@@ -1228,7 +1228,7 @@
     <span class="doccomment">/// assert_eq!(b&quot;&quot;, chars.as_bytes());</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_bytes</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>] {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_bytes</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>] {
         <span class="self">self</span>.<span class="ident">bs</span>
     }
 }
@@ -1237,9 +1237,9 @@
     <span class="kw">type</span> <span class="ident">Item</span> <span class="op">=</span> <span class="ident">char</span>;
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">char</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">char</span><span class="op">&gt;</span> {
         <span class="kw">let</span> (<span class="ident">ch</span>, <span class="ident">size</span>) <span class="op">=</span> <span class="ident">decode_lossy</span>(<span class="self">self</span>.<span class="ident">bs</span>);
-        <span class="kw">if</span> <span class="ident">size</span> <span class="op">==</span> <span class="number">0</span> {
+        <span class="kw">if</span> <span class="ident">size</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
             <span class="kw">return</span> <span class="prelude-val">None</span>;
         }
         <span class="self">self</span>.<span class="ident">bs</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">bs</span>[<span class="ident">size</span>..];
@@ -1249,9 +1249,9 @@
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">DoubleEndedIterator</span> <span class="kw">for</span> <span class="ident">Chars</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">next_back</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">char</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">next_back</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">char</span><span class="op">&gt;</span> {
         <span class="kw">let</span> (<span class="ident">ch</span>, <span class="ident">size</span>) <span class="op">=</span> <span class="ident">decode_last_lossy</span>(<span class="self">self</span>.<span class="ident">bs</span>);
-        <span class="kw">if</span> <span class="ident">size</span> <span class="op">==</span> <span class="number">0</span> {
+        <span class="kw">if</span> <span class="ident">size</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
             <span class="kw">return</span> <span class="prelude-val">None</span>;
         }
         <span class="self">self</span>.<span class="ident">bs</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">bs</span>[..<span class="self">self</span>.<span class="ident">bs</span>.<span class="ident">len</span>() <span class="op">-</span> <span class="ident">size</span>];
@@ -1285,7 +1285,7 @@
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">CharIndices</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">bs</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="ident">CharIndices</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">bs</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CharIndices</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
         <span class="ident">CharIndices</span> { <span class="ident">bs</span>: <span class="ident">bs</span>, <span class="ident">forward_index</span>: <span class="number">0</span>, <span class="ident">reverse_index</span>: <span class="ident">bs</span>.<span class="ident">len</span>() }
     }
 
@@ -1309,7 +1309,7 @@
     <span class="doccomment">/// assert_eq!(b&quot;&quot;, it.as_bytes());</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_bytes</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>] {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_bytes</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>] {
         <span class="self">self</span>.<span class="ident">bs</span>
     }
 }
@@ -1318,27 +1318,27 @@
     <span class="kw">type</span> <span class="ident">Item</span> <span class="op">=</span> (<span class="ident">usize</span>, <span class="ident">usize</span>, <span class="ident">char</span>);
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">usize</span>, <span class="ident">usize</span>, <span class="ident">char</span>)<span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">usize</span>, <span class="ident">usize</span>, <span class="ident">char</span>)<span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">index</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">forward_index</span>;
         <span class="kw">let</span> (<span class="ident">ch</span>, <span class="ident">size</span>) <span class="op">=</span> <span class="ident">decode_lossy</span>(<span class="self">self</span>.<span class="ident">bs</span>);
-        <span class="kw">if</span> <span class="ident">size</span> <span class="op">==</span> <span class="number">0</span> {
+        <span class="kw">if</span> <span class="ident">size</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
             <span class="kw">return</span> <span class="prelude-val">None</span>;
         }
         <span class="self">self</span>.<span class="ident">bs</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">bs</span>[<span class="ident">size</span>..];
-        <span class="self">self</span>.<span class="ident">forward_index</span> <span class="op">+=</span> <span class="ident">size</span>;
+        <span class="self">self</span>.<span class="ident">forward_index</span> <span class="op">+</span><span class="op">=</span> <span class="ident">size</span>;
         <span class="prelude-val">Some</span>((<span class="ident">index</span>, <span class="ident">index</span> <span class="op">+</span> <span class="ident">size</span>, <span class="ident">ch</span>))
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">DoubleEndedIterator</span> <span class="kw">for</span> <span class="ident">CharIndices</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">next_back</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">usize</span>, <span class="ident">usize</span>, <span class="ident">char</span>)<span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">next_back</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">usize</span>, <span class="ident">usize</span>, <span class="ident">char</span>)<span class="op">&gt;</span> {
         <span class="kw">let</span> (<span class="ident">ch</span>, <span class="ident">size</span>) <span class="op">=</span> <span class="ident">decode_last_lossy</span>(<span class="self">self</span>.<span class="ident">bs</span>);
-        <span class="kw">if</span> <span class="ident">size</span> <span class="op">==</span> <span class="number">0</span> {
+        <span class="kw">if</span> <span class="ident">size</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
             <span class="kw">return</span> <span class="prelude-val">None</span>;
         }
         <span class="self">self</span>.<span class="ident">bs</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">bs</span>[..<span class="self">self</span>.<span class="ident">bs</span>.<span class="ident">len</span>() <span class="op">-</span> <span class="ident">size</span>];
-        <span class="self">self</span>.<span class="ident">reverse_index</span> <span class="op">-=</span> <span class="ident">size</span>;
+        <span class="self">self</span>.<span class="ident">reverse_index</span> <span class="op">-</span><span class="op">=</span> <span class="ident">size</span>;
         <span class="prelude-val">Some</span>((<span class="self">self</span>.<span class="ident">reverse_index</span>, <span class="self">self</span>.<span class="ident">reverse_index</span> <span class="op">+</span> <span class="ident">size</span>, <span class="ident">ch</span>))
     }
 }
@@ -1417,7 +1417,7 @@
     <span class="doccomment">/// assert_eq!(string, &quot;foobar&quot;);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">valid_up_to</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">valid_up_to</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
         <span class="self">self</span>.<span class="ident">valid_up_to</span>
     }
 
@@ -1431,20 +1431,20 @@
     <span class="doccomment">/// when processing streams, where a `None` value signals that more input</span>
     <span class="doccomment">/// might be needed.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">error_len</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">error_len</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">error_len</span>
     }
 }
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>
 <span class="kw">impl</span> <span class="ident">error</span>::<span class="ident">Error</span> <span class="kw">for</span> <span class="ident">Utf8Error</span> {
-    <span class="kw">fn</span> <span class="ident">description</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
+    <span class="kw">fn</span> <span class="ident">description</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
         <span class="string">&quot;invalid UTF-8&quot;</span>
     }
 }
 
 <span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">Utf8Error</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
         <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;invalid UTF-8 found at byte offset {}&quot;</span>, <span class="self">self</span>.<span class="ident">valid_up_to</span>)
     }
 }
@@ -1453,12 +1453,12 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// If the slice isn&#39;t valid UTF-8, then an error is returned that explains</span>
 <span class="doccomment">/// the first location at which invalid UTF-89 was detected.</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">validate</span>(<span class="ident">slice</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Utf8Error</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">validate</span>(<span class="ident">slice</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Utf8Error</span><span class="op">&gt;</span> {
     <span class="comment">// The fast path for validating UTF-8. It steps through a UTF-8 automaton</span>
     <span class="comment">// and uses a SIMD accelerated ASCII fast path on x86_64. If an error is</span>
     <span class="comment">// detected, it backs up and runs the slower version of the UTF-8 automaton</span>
     <span class="comment">// to determine correct error information.</span>
-    <span class="kw">fn</span> <span class="ident">fast</span>(<span class="ident">slice</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Utf8Error</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">fast</span>(<span class="ident">slice</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Utf8Error</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">state</span> <span class="op">=</span> <span class="ident">ACCEPT</span>;
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">i</span> <span class="op">=</span> <span class="number">0</span>;
 
@@ -1467,21 +1467,21 @@
 
             <span class="comment">// ASCII fast path. If we see two consecutive ASCII bytes, then try</span>
             <span class="comment">// to validate as much ASCII as possible very quickly.</span>
-            <span class="kw">if</span> <span class="ident">state</span> <span class="op">==</span> <span class="ident">ACCEPT</span>
-                <span class="op">&amp;&amp;</span> <span class="ident">b</span> <span class="op">&lt;=</span> <span class="number">0x7F</span>
-                <span class="op">&amp;&amp;</span> <span class="ident">slice</span>.<span class="ident">get</span>(<span class="ident">i</span> <span class="op">+</span> <span class="number">1</span>).<span class="ident">map_or</span>(<span class="bool-val">false</span>, <span class="op">|</span><span class="kw-2">&amp;</span><span class="ident">b</span><span class="op">|</span> <span class="ident">b</span> <span class="op">&lt;=</span> <span class="number">0x7F</span>)
+            <span class="kw">if</span> <span class="ident">state</span> <span class="op">=</span><span class="op">=</span> <span class="ident">ACCEPT</span>
+                <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="ident">b</span> <span class="op">&lt;</span><span class="op">=</span> <span class="number">0x7F</span>
+                <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="ident">slice</span>.<span class="ident">get</span>(<span class="ident">i</span> <span class="op">+</span> <span class="number">1</span>).<span class="ident">map_or</span>(<span class="bool-val">false</span>, <span class="op">|</span><span class="kw-2">&amp;</span><span class="ident">b</span><span class="op">|</span> <span class="ident">b</span> <span class="op">&lt;</span><span class="op">=</span> <span class="number">0x7F</span>)
             {
-                <span class="ident">i</span> <span class="op">+=</span> <span class="ident">ascii</span>::<span class="ident">first_non_ascii_byte</span>(<span class="kw-2">&amp;</span><span class="ident">slice</span>[<span class="ident">i</span>..]);
+                <span class="ident">i</span> <span class="op">+</span><span class="op">=</span> <span class="ident">ascii</span>::<span class="ident">first_non_ascii_byte</span>(<span class="kw-2">&amp;</span><span class="ident">slice</span>[<span class="ident">i</span>..]);
                 <span class="kw">continue</span>;
             }
 
             <span class="ident">state</span> <span class="op">=</span> <span class="ident">step</span>(<span class="ident">state</span>, <span class="ident">b</span>);
-            <span class="kw">if</span> <span class="ident">state</span> <span class="op">==</span> <span class="ident">REJECT</span> {
+            <span class="kw">if</span> <span class="ident">state</span> <span class="op">=</span><span class="op">=</span> <span class="ident">REJECT</span> {
                 <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">find_valid_up_to</span>(<span class="ident">slice</span>, <span class="ident">i</span>));
             }
-            <span class="ident">i</span> <span class="op">+=</span> <span class="number">1</span>;
+            <span class="ident">i</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
         }
-        <span class="kw">if</span> <span class="ident">state</span> <span class="op">!=</span> <span class="ident">ACCEPT</span> {
+        <span class="kw">if</span> <span class="ident">state</span> <span class="op">!</span><span class="op">=</span> <span class="ident">ACCEPT</span> {
             <span class="prelude-val">Err</span>(<span class="ident">find_valid_up_to</span>(<span class="ident">slice</span>, <span class="ident">slice</span>.<span class="ident">len</span>()))
         } <span class="kw">else</span> {
             <span class="prelude-val">Ok</span>(())
@@ -1492,18 +1492,18 @@
     <span class="comment">// invalid, return an error that correctly reports the position at which</span>
     <span class="comment">// the last complete UTF-8 sequence ends.</span>
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">never</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">find_valid_up_to</span>(<span class="ident">slice</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>], <span class="ident">rejected_at</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">Utf8Error</span> {
+    <span class="kw">fn</span> <span class="ident">find_valid_up_to</span>(<span class="ident">slice</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>], <span class="ident">rejected_at</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Utf8Error</span> {
         <span class="comment">// In order to find the last valid byte, we need to back up an amount</span>
         <span class="comment">// that guarantees every preceding byte is part of a valid UTF-8</span>
         <span class="comment">// code unit sequence. To do this, we simply locate the last leading</span>
         <span class="comment">// byte that occurs before rejected_at.</span>
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">backup</span> <span class="op">=</span> <span class="ident">rejected_at</span>.<span class="ident">saturating_sub</span>(<span class="number">1</span>);
-        <span class="kw">while</span> <span class="ident">backup</span> <span class="op">&gt;</span> <span class="number">0</span> <span class="op">&amp;&amp;</span> <span class="op">!</span><span class="ident">is_leading_utf8_byte</span>(<span class="ident">slice</span>[<span class="ident">backup</span>]) {
-            <span class="ident">backup</span> <span class="op">-=</span> <span class="number">1</span>;
+        <span class="kw">while</span> <span class="ident">backup</span> <span class="op">&gt;</span> <span class="number">0</span> <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="op">!</span><span class="ident">is_leading_utf8_byte</span>(<span class="ident">slice</span>[<span class="ident">backup</span>]) {
+            <span class="ident">backup</span> <span class="op">-</span><span class="op">=</span> <span class="number">1</span>;
         }
         <span class="kw">let</span> <span class="ident">upto</span> <span class="op">=</span> <span class="ident">cmp</span>::<span class="ident">min</span>(<span class="ident">slice</span>.<span class="ident">len</span>(), <span class="ident">rejected_at</span>.<span class="ident">saturating_add</span>(<span class="number">1</span>));
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">err</span> <span class="op">=</span> <span class="ident">slow</span>(<span class="kw-2">&amp;</span><span class="ident">slice</span>[<span class="ident">backup</span>..<span class="ident">upto</span>]).<span class="ident">unwrap_err</span>();
-        <span class="ident">err</span>.<span class="ident">valid_up_to</span> <span class="op">+=</span> <span class="ident">backup</span>;
+        <span class="ident">err</span>.<span class="ident">valid_up_to</span> <span class="op">+</span><span class="op">=</span> <span class="ident">backup</span>;
         <span class="ident">err</span>
     }
 
@@ -1513,20 +1513,20 @@
     <span class="comment">// last valid UTF-8 byte. In particular, tracking this requires checking</span>
     <span class="comment">// for an ACCEPT state on each byte, which degrades throughput pretty</span>
     <span class="comment">// badly.</span>
-    <span class="kw">fn</span> <span class="ident">slow</span>(<span class="ident">slice</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Utf8Error</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">slow</span>(<span class="ident">slice</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Utf8Error</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">state</span> <span class="op">=</span> <span class="ident">ACCEPT</span>;
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">valid_up_to</span> <span class="op">=</span> <span class="number">0</span>;
         <span class="kw">for</span> (<span class="ident">i</span>, <span class="kw-2">&amp;</span><span class="ident">b</span>) <span class="kw">in</span> <span class="ident">slice</span>.<span class="ident">iter</span>().<span class="ident">enumerate</span>() {
             <span class="ident">state</span> <span class="op">=</span> <span class="ident">step</span>(<span class="ident">state</span>, <span class="ident">b</span>);
-            <span class="kw">if</span> <span class="ident">state</span> <span class="op">==</span> <span class="ident">ACCEPT</span> {
+            <span class="kw">if</span> <span class="ident">state</span> <span class="op">=</span><span class="op">=</span> <span class="ident">ACCEPT</span> {
                 <span class="ident">valid_up_to</span> <span class="op">=</span> <span class="ident">i</span> <span class="op">+</span> <span class="number">1</span>;
-            } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">state</span> <span class="op">==</span> <span class="ident">REJECT</span> {
+            } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">state</span> <span class="op">=</span><span class="op">=</span> <span class="ident">REJECT</span> {
                 <span class="comment">// Our error length must always be at least 1.</span>
                 <span class="kw">let</span> <span class="ident">error_len</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">cmp</span>::<span class="ident">max</span>(<span class="number">1</span>, <span class="ident">i</span> <span class="op">-</span> <span class="ident">valid_up_to</span>));
                 <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Utf8Error</span> { <span class="ident">valid_up_to</span>, <span class="ident">error_len</span> });
             }
         }
-        <span class="kw">if</span> <span class="ident">state</span> <span class="op">!=</span> <span class="ident">ACCEPT</span> {
+        <span class="kw">if</span> <span class="ident">state</span> <span class="op">!</span><span class="op">=</span> <span class="ident">ACCEPT</span> {
             <span class="prelude-val">Err</span>(<span class="ident">Utf8Error</span> { <span class="ident">valid_up_to</span>, <span class="ident">error_len</span>: <span class="prelude-val">None</span> })
         } <span class="kw">else</span> {
             <span class="prelude-val">Ok</span>(())
@@ -1534,7 +1534,7 @@
     }
 
     <span class="comment">// Advance to the next state given the current state and current byte.</span>
-    <span class="kw">fn</span> <span class="ident">step</span>(<span class="ident">state</span>: <span class="ident">usize</span>, <span class="ident">b</span>: <span class="ident">u8</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+    <span class="kw">fn</span> <span class="ident">step</span>(<span class="ident">state</span>: <span class="ident">usize</span>, <span class="ident">b</span>: <span class="ident">u8</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
         <span class="kw">let</span> <span class="ident">class</span> <span class="op">=</span> <span class="ident">CLASSES</span>[<span class="ident">b</span> <span class="kw">as</span> <span class="ident">usize</span>];
         <span class="comment">// SAFETY: This is safe because &#39;class&#39; is always &lt;=11 and &#39;state&#39; is</span>
         <span class="comment">// always &lt;=96. Therefore, the maximal index is 96+11 = 107, where</span>
@@ -1595,25 +1595,25 @@
 <span class="doccomment">/// assert_eq!(vec![&#39;☃&#39;, &#39;\u{FFFD}&#39;, &#39;𝞃&#39;, &#39;\u{FFFD}&#39;, &#39;a&#39;], chars);</span>
 <span class="doccomment">/// ```</span>
 <span class="attribute">#[<span class="ident">inline</span>]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">decode</span><span class="op">&lt;</span><span class="ident">B</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;&gt;</span>(<span class="ident">slice</span>: <span class="ident">B</span>) <span class="op">-&gt;</span> (<span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">char</span><span class="op">&gt;</span>, <span class="ident">usize</span>) {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">decode</span><span class="op">&lt;</span><span class="ident">B</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">slice</span>: <span class="ident">B</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">char</span><span class="op">&gt;</span>, <span class="ident">usize</span>) {
     <span class="kw">let</span> <span class="ident">slice</span> <span class="op">=</span> <span class="ident">slice</span>.<span class="ident">as_ref</span>();
     <span class="kw">match</span> <span class="ident">slice</span>.<span class="ident">get</span>(<span class="number">0</span>) {
-        <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="kw">return</span> (<span class="prelude-val">None</span>, <span class="number">0</span>),
-        <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="ident">b</span>) <span class="kw">if</span> <span class="ident">b</span> <span class="op">&lt;=</span> <span class="number">0x7F</span> <span class="op">=&gt;</span> <span class="kw">return</span> (<span class="prelude-val">Some</span>(<span class="ident">b</span> <span class="kw">as</span> <span class="ident">char</span>), <span class="number">1</span>),
-        <span class="kw">_</span> <span class="op">=&gt;</span> {}
+        <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> (<span class="prelude-val">None</span>, <span class="number">0</span>),
+        <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="ident">b</span>) <span class="kw">if</span> <span class="ident">b</span> <span class="op">&lt;</span><span class="op">=</span> <span class="number">0x7F</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> (<span class="prelude-val">Some</span>(<span class="ident">b</span> <span class="kw">as</span> <span class="ident">char</span>), <span class="number">1</span>),
+        <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> {}
     }
 
     <span class="kw">let</span> (<span class="kw-2">mut</span> <span class="ident">state</span>, <span class="kw-2">mut</span> <span class="ident">cp</span>, <span class="kw-2">mut</span> <span class="ident">i</span>) <span class="op">=</span> (<span class="ident">ACCEPT</span>, <span class="number">0</span>, <span class="number">0</span>);
     <span class="kw">while</span> <span class="ident">i</span> <span class="op">&lt;</span> <span class="ident">slice</span>.<span class="ident">len</span>() {
         <span class="ident">decode_step</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">state</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">cp</span>, <span class="ident">slice</span>[<span class="ident">i</span>]);
-        <span class="ident">i</span> <span class="op">+=</span> <span class="number">1</span>;
+        <span class="ident">i</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
 
-        <span class="kw">if</span> <span class="ident">state</span> <span class="op">==</span> <span class="ident">ACCEPT</span> {
+        <span class="kw">if</span> <span class="ident">state</span> <span class="op">=</span><span class="op">=</span> <span class="ident">ACCEPT</span> {
             <span class="comment">// SAFETY: This is safe because `decode_step` guarantees that</span>
             <span class="comment">// `cp` is a valid Unicode scalar value in an ACCEPT state.</span>
             <span class="kw">let</span> <span class="ident">ch</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">char</span>::<span class="ident">from_u32_unchecked</span>(<span class="ident">cp</span>) };
             <span class="kw">return</span> (<span class="prelude-val">Some</span>(<span class="ident">ch</span>), <span class="ident">i</span>);
-        } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">state</span> <span class="op">==</span> <span class="ident">REJECT</span> {
+        } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">state</span> <span class="op">=</span><span class="op">=</span> <span class="ident">REJECT</span> {
             <span class="comment">// At this point, we always want to advance at least one byte.</span>
             <span class="kw">return</span> (<span class="prelude-val">None</span>, <span class="ident">cmp</span>::<span class="ident">max</span>(<span class="number">1</span>, <span class="ident">i</span>.<span class="ident">saturating_sub</span>(<span class="number">1</span>)));
         }
@@ -1669,10 +1669,10 @@
 <span class="doccomment">/// assert_eq!(vec![&#39;☃&#39;, &#39;\u{FFFD}&#39;, &#39;𝞃&#39;, &#39;\u{FFFD}&#39;, &#39;a&#39;], chars);</span>
 <span class="doccomment">/// ```</span>
 <span class="attribute">#[<span class="ident">inline</span>]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">decode_lossy</span><span class="op">&lt;</span><span class="ident">B</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;&gt;</span>(<span class="ident">slice</span>: <span class="ident">B</span>) <span class="op">-&gt;</span> (<span class="ident">char</span>, <span class="ident">usize</span>) {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">decode_lossy</span><span class="op">&lt;</span><span class="ident">B</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">slice</span>: <span class="ident">B</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">char</span>, <span class="ident">usize</span>) {
     <span class="kw">match</span> <span class="ident">decode</span>(<span class="ident">slice</span>) {
-        (<span class="prelude-val">Some</span>(<span class="ident">ch</span>), <span class="ident">size</span>) <span class="op">=&gt;</span> (<span class="ident">ch</span>, <span class="ident">size</span>),
-        (<span class="prelude-val">None</span>, <span class="ident">size</span>) <span class="op">=&gt;</span> (<span class="string">&#39;\u{FFFD}&#39;</span>, <span class="ident">size</span>),
+        (<span class="prelude-val">Some</span>(<span class="ident">ch</span>), <span class="ident">size</span>) <span class="op">=</span><span class="op">&gt;</span> (<span class="ident">ch</span>, <span class="ident">size</span>),
+        (<span class="prelude-val">None</span>, <span class="ident">size</span>) <span class="op">=</span><span class="op">&gt;</span> (<span class="string">&#39;\u{FFFD}&#39;</span>, <span class="ident">size</span>),
     }
 }
 
@@ -1722,7 +1722,7 @@
 <span class="doccomment">/// assert_eq!(vec![&#39;a&#39;, &#39;\u{FFFD}&#39;, &#39;𝞃&#39;, &#39;\u{FFFD}&#39;, &#39;☃&#39;], chars);</span>
 <span class="doccomment">/// ```</span>
 <span class="attribute">#[<span class="ident">inline</span>]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">decode_last</span><span class="op">&lt;</span><span class="ident">B</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;&gt;</span>(<span class="ident">slice</span>: <span class="ident">B</span>) <span class="op">-&gt;</span> (<span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">char</span><span class="op">&gt;</span>, <span class="ident">usize</span>) {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">decode_last</span><span class="op">&lt;</span><span class="ident">B</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">slice</span>: <span class="ident">B</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">char</span><span class="op">&gt;</span>, <span class="ident">usize</span>) {
     <span class="comment">// TODO: We could implement this by reversing the UTF-8 automaton, but for</span>
     <span class="comment">// now, we do it the slow way by using the forward automaton.</span>
 
@@ -1732,14 +1732,14 @@
     }
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">start</span> <span class="op">=</span> <span class="ident">slice</span>.<span class="ident">len</span>() <span class="op">-</span> <span class="number">1</span>;
     <span class="kw">let</span> <span class="ident">limit</span> <span class="op">=</span> <span class="ident">slice</span>.<span class="ident">len</span>().<span class="ident">saturating_sub</span>(<span class="number">4</span>);
-    <span class="kw">while</span> <span class="ident">start</span> <span class="op">&gt;</span> <span class="ident">limit</span> <span class="op">&amp;&amp;</span> <span class="op">!</span><span class="ident">is_leading_utf8_byte</span>(<span class="ident">slice</span>[<span class="ident">start</span>]) {
-        <span class="ident">start</span> <span class="op">-=</span> <span class="number">1</span>;
+    <span class="kw">while</span> <span class="ident">start</span> <span class="op">&gt;</span> <span class="ident">limit</span> <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="op">!</span><span class="ident">is_leading_utf8_byte</span>(<span class="ident">slice</span>[<span class="ident">start</span>]) {
+        <span class="ident">start</span> <span class="op">-</span><span class="op">=</span> <span class="number">1</span>;
     }
     <span class="kw">let</span> (<span class="ident">ch</span>, <span class="ident">size</span>) <span class="op">=</span> <span class="ident">decode</span>(<span class="kw-2">&amp;</span><span class="ident">slice</span>[<span class="ident">start</span>..]);
     <span class="comment">// If we didn&#39;t consume all of the bytes, then that means there&#39;s at least</span>
     <span class="comment">// one stray byte that never occurs in a valid code unit prefix, so we can</span>
     <span class="comment">// advance by one byte.</span>
-    <span class="kw">if</span> <span class="ident">start</span> <span class="op">+</span> <span class="ident">size</span> <span class="op">!=</span> <span class="ident">slice</span>.<span class="ident">len</span>() {
+    <span class="kw">if</span> <span class="ident">start</span> <span class="op">+</span> <span class="ident">size</span> <span class="op">!</span><span class="op">=</span> <span class="ident">slice</span>.<span class="ident">len</span>() {
         (<span class="prelude-val">None</span>, <span class="number">1</span>)
     } <span class="kw">else</span> {
         (<span class="ident">ch</span>, <span class="ident">size</span>)
@@ -1793,29 +1793,29 @@
 <span class="doccomment">/// assert_eq!(vec![&#39;a&#39;, &#39;\u{FFFD}&#39;, &#39;𝞃&#39;, &#39;\u{FFFD}&#39;, &#39;☃&#39;], chars);</span>
 <span class="doccomment">/// ```</span>
 <span class="attribute">#[<span class="ident">inline</span>]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">decode_last_lossy</span><span class="op">&lt;</span><span class="ident">B</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;&gt;</span>(<span class="ident">slice</span>: <span class="ident">B</span>) <span class="op">-&gt;</span> (<span class="ident">char</span>, <span class="ident">usize</span>) {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">decode_last_lossy</span><span class="op">&lt;</span><span class="ident">B</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">slice</span>: <span class="ident">B</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">char</span>, <span class="ident">usize</span>) {
     <span class="kw">match</span> <span class="ident">decode_last</span>(<span class="ident">slice</span>) {
-        (<span class="prelude-val">Some</span>(<span class="ident">ch</span>), <span class="ident">size</span>) <span class="op">=&gt;</span> (<span class="ident">ch</span>, <span class="ident">size</span>),
-        (<span class="prelude-val">None</span>, <span class="ident">size</span>) <span class="op">=&gt;</span> (<span class="string">&#39;\u{FFFD}&#39;</span>, <span class="ident">size</span>),
+        (<span class="prelude-val">Some</span>(<span class="ident">ch</span>), <span class="ident">size</span>) <span class="op">=</span><span class="op">&gt;</span> (<span class="ident">ch</span>, <span class="ident">size</span>),
+        (<span class="prelude-val">None</span>, <span class="ident">size</span>) <span class="op">=</span><span class="op">&gt;</span> (<span class="string">&#39;\u{FFFD}&#39;</span>, <span class="ident">size</span>),
     }
 }
 
 <span class="attribute">#[<span class="ident">inline</span>]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">decode_step</span>(<span class="ident">state</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">usize</span>, <span class="ident">cp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">u32</span>, <span class="ident">b</span>: <span class="ident">u8</span>) {
     <span class="kw">let</span> <span class="ident">class</span> <span class="op">=</span> <span class="ident">CLASSES</span>[<span class="ident">b</span> <span class="kw">as</span> <span class="ident">usize</span>];
-    <span class="kw">if</span> <span class="kw-2">*</span><span class="ident">state</span> <span class="op">==</span> <span class="ident">ACCEPT</span> {
-        <span class="kw-2">*</span><span class="ident">cp</span> <span class="op">=</span> (<span class="number">0xFF</span> <span class="op">&gt;&gt;</span> <span class="ident">class</span>) <span class="op">&amp;</span> (<span class="ident">b</span> <span class="kw">as</span> <span class="ident">u32</span>);
+    <span class="kw">if</span> <span class="kw-2">*</span><span class="ident">state</span> <span class="op">=</span><span class="op">=</span> <span class="ident">ACCEPT</span> {
+        <span class="kw-2">*</span><span class="ident">cp</span> <span class="op">=</span> (<span class="number">0xFF</span> <span class="op">&gt;</span><span class="op">&gt;</span> <span class="ident">class</span>) <span class="op">&amp;</span> (<span class="ident">b</span> <span class="kw">as</span> <span class="ident">u32</span>);
     } <span class="kw">else</span> {
-        <span class="kw-2">*</span><span class="ident">cp</span> <span class="op">=</span> (<span class="ident">b</span> <span class="kw">as</span> <span class="ident">u32</span> <span class="op">&amp;</span> <span class="number">0b111111</span>) <span class="op">|</span> (<span class="kw-2">*</span><span class="ident">cp</span> <span class="op">&lt;&lt;</span> <span class="number">6</span>);
+        <span class="kw-2">*</span><span class="ident">cp</span> <span class="op">=</span> (<span class="ident">b</span> <span class="kw">as</span> <span class="ident">u32</span> <span class="op">&amp;</span> <span class="number">0b111111</span>) <span class="op">|</span> (<span class="kw-2">*</span><span class="ident">cp</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">6</span>);
     }
     <span class="kw-2">*</span><span class="ident">state</span> <span class="op">=</span> <span class="ident">STATES_FORWARD</span>[<span class="kw-2">*</span><span class="ident">state</span> <span class="op">+</span> <span class="ident">class</span> <span class="kw">as</span> <span class="ident">usize</span>] <span class="kw">as</span> <span class="ident">usize</span>;
 }
 
-<span class="kw">fn</span> <span class="ident">is_leading_utf8_byte</span>(<span class="ident">b</span>: <span class="ident">u8</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+<span class="kw">fn</span> <span class="ident">is_leading_utf8_byte</span>(<span class="ident">b</span>: <span class="ident">u8</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
     <span class="comment">// In the ASCII case, the most significant bit is never set. The leading</span>
     <span class="comment">// byte of a 2/3/4-byte sequence always has the top two most significant</span>
     <span class="comment">// bigs set.</span>
-    (<span class="ident">b</span> <span class="op">&amp;</span> <span class="number">0b1100_0000</span>) <span class="op">!=</span> <span class="number">0b1000_0000</span>
+    (<span class="ident">b</span> <span class="op">&amp;</span> <span class="number">0b1100_0000</span>) <span class="op">!</span><span class="op">=</span> <span class="number">0b1000_0000</span>
 }
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
@@ -1826,11 +1826,11 @@
     <span class="kw">use</span> <span class="ident">tests</span>::<span class="ident">LOSSY_TESTS</span>;
     <span class="kw">use</span> <span class="ident">utf8</span>::{<span class="self">self</span>, <span class="ident">Utf8Error</span>};
 
-    <span class="kw">fn</span> <span class="ident">utf8e</span>(<span class="ident">valid_up_to</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">Utf8Error</span> {
+    <span class="kw">fn</span> <span class="ident">utf8e</span>(<span class="ident">valid_up_to</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Utf8Error</span> {
         <span class="ident">Utf8Error</span> { <span class="ident">valid_up_to</span>, <span class="ident">error_len</span>: <span class="prelude-val">None</span> }
     }
 
-    <span class="kw">fn</span> <span class="ident">utf8e2</span>(<span class="ident">valid_up_to</span>: <span class="ident">usize</span>, <span class="ident">error_len</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">Utf8Error</span> {
+    <span class="kw">fn</span> <span class="ident">utf8e2</span>(<span class="ident">valid_up_to</span>: <span class="ident">usize</span>, <span class="ident">error_len</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Utf8Error</span> {
         <span class="ident">Utf8Error</span> { <span class="ident">valid_up_to</span>, <span class="ident">error_len</span>: <span class="prelude-val">Some</span>(<span class="ident">error_len</span>) }
     }
 
@@ -1838,8 +1838,8 @@
     <span class="kw">fn</span> <span class="ident">validate_all_codepoints</span>() {
         <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="number">0</span>..(<span class="number">0x10FFFF</span> <span class="op">+</span> <span class="number">1</span>) {
             <span class="kw">let</span> <span class="ident">cp</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">char</span>::<span class="ident">from_u32</span>(<span class="ident">i</span>) {
-                <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="kw">continue</span>,
-                <span class="prelude-val">Some</span>(<span class="ident">cp</span>) <span class="op">=&gt;</span> <span class="ident">cp</span>,
+                <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">continue</span>,
+                <span class="prelude-val">Some</span>(<span class="ident">cp</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">cp</span>,
             };
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buf</span> <span class="op">=</span> [<span class="number">0</span>; <span class="number">4</span>];
             <span class="kw">let</span> <span class="ident">s</span> <span class="op">=</span> <span class="ident">cp</span>.<span class="ident">encode_utf8</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">buf</span>);
@@ -1954,7 +1954,7 @@
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">decode_valid</span>() {
-        <span class="kw">fn</span> <span class="ident">d</span>(<span class="kw-2">mut</span> <span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">char</span><span class="op">&gt;</span> {
+        <span class="kw">fn</span> <span class="ident">d</span>(<span class="kw-2">mut</span> <span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">char</span><span class="op">&gt;</span> {
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">chars</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[];
             <span class="kw">while</span> <span class="op">!</span><span class="ident">s</span>.<span class="ident">is_empty</span>() {
                 <span class="kw">let</span> (<span class="ident">ch</span>, <span class="ident">size</span>) <span class="op">=</span> <span class="ident">utf8</span>::<span class="ident">decode</span>(<span class="ident">s</span>.<span class="ident">as_bytes</span>());
@@ -2066,7 +2066,7 @@
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">decode_last_valid</span>() {
-        <span class="kw">fn</span> <span class="ident">d</span>(<span class="kw-2">mut</span> <span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">char</span><span class="op">&gt;</span> {
+        <span class="kw">fn</span> <span class="ident">d</span>(<span class="kw-2">mut</span> <span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">char</span><span class="op">&gt;</span> {
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">chars</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[];
             <span class="kw">while</span> <span class="op">!</span><span class="ident">s</span>.<span class="ident">is_empty</span>() {
                 <span class="kw">let</span> (<span class="ident">ch</span>, <span class="ident">size</span>) <span class="op">=</span> <span class="ident">utf8</span>::<span class="ident">decode_last</span>(<span class="ident">s</span>.<span class="ident">as_bytes</span>());

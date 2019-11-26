@@ -618,7 +618,7 @@
 <span class="kw">impl</span> <span class="ident">LineSeparator</span> {
     <span class="doccomment">/// Create a new line separator instance where `line` is the character used to separate 2 lines</span>
     <span class="doccomment">/// and `junc` is the one used for junctions between columns and lines</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">line</span>: <span class="ident">char</span>, <span class="ident">junc</span>: <span class="ident">char</span>, <span class="ident">ljunc</span>: <span class="ident">char</span>, <span class="ident">rjunc</span>: <span class="ident">char</span>) <span class="op">-&gt;</span> <span class="ident">LineSeparator</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">line</span>: <span class="ident">char</span>, <span class="ident">junc</span>: <span class="ident">char</span>, <span class="ident">ljunc</span>: <span class="ident">char</span>, <span class="ident">rjunc</span>: <span class="ident">char</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">LineSeparator</span> {
         <span class="ident">LineSeparator</span> {
             <span class="ident">line</span>,
             <span class="ident">junc</span>,
@@ -636,7 +636,7 @@
                                  <span class="ident">colsep</span>: <span class="ident">bool</span>,
                                  <span class="ident">lborder</span>: <span class="ident">bool</span>,
                                  <span class="ident">rborder</span>: <span class="ident">bool</span>)
-                                 <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+                                 <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="ident">lborder</span> {
             <span class="ident">out</span>.<span class="ident">write_all</span>(<span class="ident">Utf8Char</span>::<span class="ident">from</span>(<span class="self">self</span>.<span class="ident">ljunc</span>).<span class="ident">as_bytes</span>())<span class="question-mark">?</span>;
         }
@@ -645,7 +645,7 @@
             <span class="kw">for</span> <span class="kw">_</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">width</span> <span class="op">+</span> <span class="ident">padding</span>.<span class="number">0</span> <span class="op">+</span> <span class="ident">padding</span>.<span class="number">1</span> {
                 <span class="ident">out</span>.<span class="ident">write_all</span>(<span class="ident">Utf8Char</span>::<span class="ident">from</span>(<span class="self">self</span>.<span class="ident">line</span>).<span class="ident">as_bytes</span>())<span class="question-mark">?</span>;
             }
-            <span class="kw">if</span> <span class="ident">colsep</span> <span class="op">&amp;&amp;</span> <span class="ident">iter</span>.<span class="ident">peek</span>().<span class="ident">is_some</span>() {
+            <span class="kw">if</span> <span class="ident">colsep</span> <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="ident">iter</span>.<span class="ident">peek</span>().<span class="ident">is_some</span>() {
                 <span class="ident">out</span>.<span class="ident">write_all</span>(<span class="ident">Utf8Char</span>::<span class="ident">from</span>(<span class="self">self</span>.<span class="ident">junc</span>).<span class="ident">as_bytes</span>())<span class="question-mark">?</span>;
             }
         }
@@ -658,7 +658,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">LineSeparator</span> {
-    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="ident">LineSeparator</span>::<span class="ident">new</span>(<span class="string">&#39;-&#39;</span>, <span class="string">&#39;+&#39;</span>, <span class="string">&#39;+&#39;</span>, <span class="string">&#39;+&#39;</span>)
     }
 }
@@ -690,7 +690,7 @@
 
 <span class="kw">impl</span> <span class="ident">TableFormat</span> {
     <span class="doccomment">/// Create a new empty TableFormat.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-&gt;</span> <span class="ident">TableFormat</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">TableFormat</span> {
         <span class="ident">TableFormat</span> {
             <span class="ident">csep</span>: <span class="prelude-val">None</span>,
             <span class="ident">lborder</span>: <span class="prelude-val">None</span>,
@@ -706,7 +706,7 @@
     }
 
     <span class="doccomment">/// Return a tuple with left and right padding</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_padding</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> (<span class="ident">usize</span>, <span class="ident">usize</span>) {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_padding</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">usize</span>, <span class="ident">usize</span>) {
         (<span class="self">self</span>.<span class="ident">pad_left</span>, <span class="self">self</span>.<span class="ident">pad_right</span>)
     }
 
@@ -740,10 +740,10 @@
     <span class="doccomment">/// Set a line separator</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">separator</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">what</span>: <span class="ident">LinePosition</span>, <span class="ident">separator</span>: <span class="ident">LineSeparator</span>) {
         <span class="kw-2">*</span><span class="kw">match</span> <span class="ident">what</span> {
-             <span class="ident">LinePosition</span>::<span class="ident">Top</span> <span class="op">=&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">top_sep</span>,
-             <span class="ident">LinePosition</span>::<span class="ident">Bottom</span> <span class="op">=&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">bottom_sep</span>,
-             <span class="ident">LinePosition</span>::<span class="ident">Title</span> <span class="op">=&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">tsep</span>,
-             <span class="ident">LinePosition</span>::<span class="ident">Intern</span> <span class="op">=&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">lsep</span>,
+             <span class="ident">LinePosition</span>::<span class="ident">Top</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">top_sep</span>,
+             <span class="ident">LinePosition</span>::<span class="ident">Bottom</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">bottom_sep</span>,
+             <span class="ident">LinePosition</span>::<span class="ident">Title</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">tsep</span>,
+             <span class="ident">LinePosition</span>::<span class="ident">Intern</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">lsep</span>,
          } <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">separator</span>);
     }
 
@@ -754,15 +754,15 @@
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">get_sep_for_line</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">pos</span>: <span class="ident">LinePosition</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">LineSeparator</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">get_sep_for_line</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">pos</span>: <span class="ident">LinePosition</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">LineSeparator</span><span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="ident">pos</span> {
-            <span class="ident">LinePosition</span>::<span class="ident">Intern</span> <span class="op">=&gt;</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">lsep</span>,
-            <span class="ident">LinePosition</span>::<span class="ident">Top</span> <span class="op">=&gt;</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">top_sep</span>,
-            <span class="ident">LinePosition</span>::<span class="ident">Bottom</span> <span class="op">=&gt;</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">bottom_sep</span>,
-            <span class="ident">LinePosition</span>::<span class="ident">Title</span> <span class="op">=&gt;</span> {
+            <span class="ident">LinePosition</span>::<span class="ident">Intern</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">lsep</span>,
+            <span class="ident">LinePosition</span>::<span class="ident">Top</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">top_sep</span>,
+            <span class="ident">LinePosition</span>::<span class="ident">Bottom</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">bottom_sep</span>,
+            <span class="ident">LinePosition</span>::<span class="ident">Title</span> <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="kw">match</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">tsep</span> {
-                    <span class="ident">s</span> @ <span class="kw-2">&amp;</span><span class="prelude-val">Some</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="ident">s</span>,
-                    <span class="kw-2">&amp;</span><span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">lsep</span>,
+                    <span class="ident">s</span> @ <span class="kw-2">&amp;</span><span class="prelude-val">Some</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">s</span>,
+                    <span class="kw-2">&amp;</span><span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">lsep</span>,
                 }
             }
         }
@@ -774,7 +774,7 @@
     }
 
     <span class="doccomment">/// Get global indentation in spaces used when rendering a table</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_indent</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_indent</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
         <span class="self">self</span>.<span class="ident">indent</span>
     }
 
@@ -785,9 +785,9 @@
                                                    <span class="ident">out</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">T</span>,
                                                    <span class="ident">col_width</span>: <span class="kw-2">&amp;</span>[<span class="ident">usize</span>],
                                                    <span class="ident">pos</span>: <span class="ident">LinePosition</span>)
-                                                   <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+                                                   <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">get_sep_for_line</span>(<span class="ident">pos</span>) {
-            <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">l</span>) <span class="op">=&gt;</span> {
+            <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">l</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="comment">//TODO: Wrap this into dedicated function one day</span>
                 <span class="ident">out</span>.<span class="ident">write_all</span>(<span class="kw-2">&amp;</span><span class="macro">vec</span><span class="macro">!</span>[<span class="string">b&#39; &#39;</span>; <span class="self">self</span>.<span class="ident">get_indent</span>()])<span class="question-mark">?</span>;
                 <span class="ident">l</span>.<span class="ident">print</span>(<span class="ident">out</span>,
@@ -797,17 +797,17 @@
                          <span class="self">self</span>.<span class="ident">lborder</span>.<span class="ident">is_some</span>(),
                          <span class="self">self</span>.<span class="ident">rborder</span>.<span class="ident">is_some</span>())
             }
-            <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="prelude-val">Ok</span>(<span class="number">0</span>),
+            <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="number">0</span>),
         }
     }
 
     <span class="doccomment">/// Returns the character used to separate columns.</span>
     <span class="doccomment">/// `pos` specify if the separator is left/right final or internal to the table</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_column_separator</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">pos</span>: <span class="ident">ColumnPosition</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">char</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_column_separator</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">pos</span>: <span class="ident">ColumnPosition</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">char</span><span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="ident">pos</span> {
-            <span class="ident">ColumnPosition</span>::<span class="ident">Left</span> <span class="op">=&gt;</span> <span class="self">self</span>.<span class="ident">lborder</span>,
-            <span class="ident">ColumnPosition</span>::<span class="ident">Intern</span> <span class="op">=&gt;</span> <span class="self">self</span>.<span class="ident">csep</span>,
-            <span class="ident">ColumnPosition</span>::<span class="ident">Right</span> <span class="op">=&gt;</span> <span class="self">self</span>.<span class="ident">rborder</span>,
+            <span class="ident">ColumnPosition</span>::<span class="ident">Left</span> <span class="op">=</span><span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">lborder</span>,
+            <span class="ident">ColumnPosition</span>::<span class="ident">Intern</span> <span class="op">=</span><span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">csep</span>,
+            <span class="ident">ColumnPosition</span>::<span class="ident">Right</span> <span class="op">=</span><span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">rborder</span>,
         }
     }
 
@@ -816,16 +816,16 @@
     <span class="kw">pub</span> (<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">print_column_separator</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Write</span> <span class="op">+</span> <span class="question-mark">?</span><span class="ident">Sized</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>,
                                                      <span class="ident">out</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">T</span>,
                                                      <span class="ident">pos</span>: <span class="ident">ColumnPosition</span>)
-                                                     <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
+                                                     <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="self">self</span>.<span class="ident">get_column_separator</span>(<span class="ident">pos</span>) {
-            <span class="prelude-val">Some</span>(<span class="ident">s</span>) <span class="op">=&gt;</span> <span class="ident">out</span>.<span class="ident">write_all</span>(<span class="ident">Utf8Char</span>::<span class="ident">from</span>(<span class="ident">s</span>).<span class="ident">as_bytes</span>()),
-            <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="prelude-val">Ok</span>(()),
+            <span class="prelude-val">Some</span>(<span class="ident">s</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">out</span>.<span class="ident">write_all</span>(<span class="ident">Utf8Char</span>::<span class="ident">from</span>(<span class="ident">s</span>).<span class="ident">as_bytes</span>()),
+            <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(()),
         }
     }
 }
 
 <span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">TableFormat</span> {
-    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="ident">TableFormat</span>::<span class="ident">new</span>()
     }
 }
@@ -837,72 +837,72 @@
 
 <span class="kw">impl</span> <span class="ident">FormatBuilder</span> {
     <span class="doccomment">/// Creates a new builder</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-&gt;</span> <span class="ident">FormatBuilder</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">FormatBuilder</span> {
         <span class="ident">FormatBuilder</span> { <span class="ident">format</span>: <span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">TableFormat</span>::<span class="ident">new</span>()) }
     }
 
     <span class="doccomment">/// Set left and right padding</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">padding</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">left</span>: <span class="ident">usize</span>, <span class="ident">right</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">padding</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">left</span>: <span class="ident">usize</span>, <span class="ident">right</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">format</span>.<span class="ident">padding</span>(<span class="ident">left</span>, <span class="ident">right</span>);
         <span class="self">self</span>
     }
 
     <span class="doccomment">/// Set the character used for internal column separation</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">column_separator</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">separator</span>: <span class="ident">char</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">column_separator</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">separator</span>: <span class="ident">char</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">format</span>.<span class="ident">column_separator</span>(<span class="ident">separator</span>);
         <span class="self">self</span>
     }
 
     <span class="doccomment">/// Set the character used for table borders</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">borders</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">border</span>: <span class="ident">char</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">borders</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">border</span>: <span class="ident">char</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">format</span>.<span class="ident">borders</span>(<span class="ident">border</span>);
         <span class="self">self</span>
     }
 
     <span class="doccomment">/// Set the character used for left table border</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">left_border</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">border</span>: <span class="ident">char</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">left_border</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">border</span>: <span class="ident">char</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">format</span>.<span class="ident">left_border</span>(<span class="ident">border</span>);
         <span class="self">self</span>
     }
 
     <span class="doccomment">/// Set the character used for right table border</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">right_border</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">border</span>: <span class="ident">char</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">right_border</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">border</span>: <span class="ident">char</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">format</span>.<span class="ident">right_border</span>(<span class="ident">border</span>);
         <span class="self">self</span>
     }
 
     <span class="doccomment">/// Set a line separator format</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">separator</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">what</span>: <span class="ident">LinePosition</span>, <span class="ident">separator</span>: <span class="ident">LineSeparator</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">separator</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">what</span>: <span class="ident">LinePosition</span>, <span class="ident">separator</span>: <span class="ident">LineSeparator</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">format</span>.<span class="ident">separator</span>(<span class="ident">what</span>, <span class="ident">separator</span>);
         <span class="self">self</span>
     }
 
     <span class="doccomment">/// Set separator format for multiple kind of line separators</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">separators</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">what</span>: <span class="kw-2">&amp;</span>[<span class="ident">LinePosition</span>], <span class="ident">separator</span>: <span class="ident">LineSeparator</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">separators</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">what</span>: <span class="kw-2">&amp;</span>[<span class="ident">LinePosition</span>], <span class="ident">separator</span>: <span class="ident">LineSeparator</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">format</span>.<span class="ident">separators</span>(<span class="ident">what</span>, <span class="ident">separator</span>);
         <span class="self">self</span>
     }
 
     <span class="doccomment">/// Set global indentation in spaces used when rendering a table</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">indent</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">spaces</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">indent</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">spaces</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">format</span>.<span class="ident">indent</span>(<span class="ident">spaces</span>);
         <span class="self">self</span>
     }
 
     <span class="doccomment">/// Return the generated `TableFormat`</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">build</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">TableFormat</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">build</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">TableFormat</span> {
         <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">format</span>
     }
 }
 
 <span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">TableFormat</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">FormatBuilder</span> {
-    <span class="kw">fn</span> <span class="ident">into</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">TableFormat</span> {
+    <span class="kw">fn</span> <span class="ident">into</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">TableFormat</span> {
         <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">format</span>
     }
 }
 
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">TableFormat</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">FormatBuilder</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">fmt</span>: <span class="ident">TableFormat</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">fmt</span>: <span class="ident">TableFormat</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="ident">FormatBuilder</span> { <span class="ident">format</span>: <span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">fmt</span>) }
     }
 }

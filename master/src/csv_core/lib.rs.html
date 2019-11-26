@@ -321,25 +321,25 @@ foo,\&quot;bar,baz\&quot;
 
 <span class="kw">impl</span> <span class="ident">Terminator</span> {
     <span class="doccomment">/// Checks whether the terminator is set to CRLF.</span>
-    <span class="kw">fn</span> <span class="ident">is_crlf</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">fn</span> <span class="ident">is_crlf</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
-            <span class="ident">Terminator</span>::<span class="ident">CRLF</span> <span class="op">=&gt;</span> <span class="bool-val">true</span>,
-            <span class="ident">Terminator</span>::<span class="ident">Any</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="bool-val">false</span>,
-            <span class="kw">_</span> <span class="op">=&gt;</span> <span class="macro">unreachable</span><span class="macro">!</span>(),
+            <span class="ident">Terminator</span>::<span class="ident">CRLF</span> <span class="op">=</span><span class="op">&gt;</span> <span class="bool-val">true</span>,
+            <span class="ident">Terminator</span>::<span class="ident">Any</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="bool-val">false</span>,
+            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">unreachable</span><span class="macro">!</span>(),
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">equals</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="ident">u8</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">fn</span> <span class="ident">equals</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="ident">u8</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
-            <span class="ident">Terminator</span>::<span class="ident">CRLF</span> <span class="op">=&gt;</span> <span class="ident">other</span> <span class="op">==</span> <span class="string">b&#39;\r&#39;</span> <span class="op">||</span> <span class="ident">other</span> <span class="op">==</span> <span class="string">b&#39;\n&#39;</span>,
-            <span class="ident">Terminator</span>::<span class="ident">Any</span>(<span class="ident">b</span>) <span class="op">=&gt;</span> <span class="ident">other</span> <span class="op">==</span> <span class="ident">b</span>,
-            <span class="kw">_</span> <span class="op">=&gt;</span> <span class="macro">unreachable</span><span class="macro">!</span>(),
+            <span class="ident">Terminator</span>::<span class="ident">CRLF</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">other</span> <span class="op">=</span><span class="op">=</span> <span class="string">b&#39;\r&#39;</span> <span class="op">|</span><span class="op">|</span> <span class="ident">other</span> <span class="op">=</span><span class="op">=</span> <span class="string">b&#39;\n&#39;</span>,
+            <span class="ident">Terminator</span>::<span class="ident">Any</span>(<span class="ident">b</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">other</span> <span class="op">=</span><span class="op">=</span> <span class="ident">b</span>,
+            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">unreachable</span><span class="macro">!</span>(),
         }
     }
 }
 
 <span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">Terminator</span> {
-    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-&gt;</span> <span class="ident">Terminator</span> {
+    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Terminator</span> {
         <span class="ident">Terminator</span>::<span class="ident">CRLF</span>
     }
 }
@@ -373,7 +373,7 @@ foo,\&quot;bar,baz\&quot;
 }
 
 <span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">QuoteStyle</span> {
-    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-&gt;</span> <span class="ident">QuoteStyle</span> {
+    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">QuoteStyle</span> {
         <span class="ident">QuoteStyle</span>::<span class="ident">Necessary</span>
     }
 }
