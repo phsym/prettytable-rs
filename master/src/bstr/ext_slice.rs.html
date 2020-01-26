@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/bstr-0.2.8/src/ext_slice.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>ext_slice.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../bstr/index.html'><div class='logo-container'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/bstr-0.2.10/src/ext_slice.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>ext_slice.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../bstr/index.html'><div class='logo-container'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
 <span id="2">   2</span>
 <span id="3">   3</span>
 <span id="4">   4</span>
@@ -3635,6 +3635,43 @@
 <span id="3635">3635</span>
 <span id="3636">3636</span>
 <span id="3637">3637</span>
+<span id="3638">3638</span>
+<span id="3639">3639</span>
+<span id="3640">3640</span>
+<span id="3641">3641</span>
+<span id="3642">3642</span>
+<span id="3643">3643</span>
+<span id="3644">3644</span>
+<span id="3645">3645</span>
+<span id="3646">3646</span>
+<span id="3647">3647</span>
+<span id="3648">3648</span>
+<span id="3649">3649</span>
+<span id="3650">3650</span>
+<span id="3651">3651</span>
+<span id="3652">3652</span>
+<span id="3653">3653</span>
+<span id="3654">3654</span>
+<span id="3655">3655</span>
+<span id="3656">3656</span>
+<span id="3657">3657</span>
+<span id="3658">3658</span>
+<span id="3659">3659</span>
+<span id="3660">3660</span>
+<span id="3661">3661</span>
+<span id="3662">3662</span>
+<span id="3663">3663</span>
+<span id="3664">3664</span>
+<span id="3665">3665</span>
+<span id="3666">3666</span>
+<span id="3667">3667</span>
+<span id="3668">3668</span>
+<span id="3669">3669</span>
+<span id="3670">3670</span>
+<span id="3671">3671</span>
+<span id="3672">3672</span>
+<span id="3673">3673</span>
+<span id="3674">3674</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">borrow</span>::<span class="ident">Cow</span>;
@@ -3663,7 +3700,7 @@
     <span class="ident">SentenceIndices</span>, <span class="ident">Sentences</span>, <span class="ident">WordIndices</span>, <span class="ident">Words</span>, <span class="ident">WordsWithBreakIndices</span>,
     <span class="ident">WordsWithBreaks</span>,
 };
-<span class="kw">use</span> <span class="ident">utf8</span>::{<span class="self">self</span>, <span class="ident">CharIndices</span>, <span class="ident">Chars</span>, <span class="ident">Utf8Error</span>};
+<span class="kw">use</span> <span class="ident">utf8</span>::{<span class="self">self</span>, <span class="ident">CharIndices</span>, <span class="ident">Chars</span>, <span class="ident">Utf8Chunks</span>, <span class="ident">Utf8Error</span>};
 
 <span class="doccomment">/// A short-hand constructor for building a `&amp;[u8]`.</span>
 <span class="doccomment">///</span>
@@ -5340,6 +5377,43 @@
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">char_indices</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CharIndices</span> {
         <span class="ident">CharIndices</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">as_bytes</span>())
+    }
+
+    <span class="doccomment">/// Iterate over chunks of valid UTF-8.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// The iterator returned yields chunks of valid UTF-8 separated by invalid</span>
+    <span class="doccomment">/// UTF-8 bytes, if they exist. Invalid UTF-8 bytes are always 1-3 bytes,</span>
+    <span class="doccomment">/// which are determined via the &quot;substitution of maximal subparts&quot;</span>
+    <span class="doccomment">/// strategy described in the docs for the</span>
+    <span class="doccomment">/// [`ByteSlice::to_str_lossy`](trait.ByteSlice.html#method.to_str_lossy)</span>
+    <span class="doccomment">/// method.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Examples</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This example shows how the `std::fmt::Display` implementation is</span>
+    <span class="doccomment">/// written for the `BStr` type:</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// use bstr::{ByteSlice, Utf8Chunk};</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// let bytes = b&quot;foo\xFD\xFEbar\xFF&quot;;</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// let (mut valid_chunks, mut invalid_chunks) = (vec![], vec![]);</span>
+    <span class="doccomment">/// for chunk in bytes.utf8_chunks() {</span>
+    <span class="doccomment">///     if !chunk.valid().is_empty() {</span>
+    <span class="doccomment">///         valid_chunks.push(chunk.valid());</span>
+    <span class="doccomment">///     }</span>
+    <span class="doccomment">///     if !chunk.invalid().is_empty() {</span>
+    <span class="doccomment">///         invalid_chunks.push(chunk.invalid());</span>
+    <span class="doccomment">///     }</span>
+    <span class="doccomment">/// }</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// assert_eq!(valid_chunks, vec![&quot;foo&quot;, &quot;bar&quot;]);</span>
+    <span class="doccomment">/// assert_eq!(invalid_chunks, vec![b&quot;\xFD&quot;, b&quot;\xFE&quot;, b&quot;\xFF&quot;]);</span>
+    <span class="doccomment">/// ```</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">utf8_chunks</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Utf8Chunks</span> {
+        <span class="ident">Utf8Chunks</span> { <span class="ident">bytes</span>: <span class="self">self</span>.<span class="ident">as_bytes</span>() }
     }
 
     <span class="doccomment">/// Returns an iterator over the grapheme clusters in this byte string.</span>

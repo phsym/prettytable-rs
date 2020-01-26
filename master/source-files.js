@@ -1,7 +1,7 @@
 var N = null;var sourcesIndex = {};
 sourcesIndex["atty"] = {"name":"","files":["lib.rs"]};
 sourcesIndex["bstr"] = {"name":"","dirs":[{"name":"byteset","files":["mod.rs","scalar.rs"]},{"name":"search","files":["byte_frequencies.rs","mod.rs","prefilter.rs","twoway.rs"]},{"name":"unicode","dirs":[{"name":"fsm","files":["grapheme_break_fwd.rs","grapheme_break_rev.rs","mod.rs","regional_indicator_rev.rs","sentence_break_fwd.rs","simple_word_fwd.rs","whitespace_anchored_fwd.rs","whitespace_anchored_rev.rs","word_break_fwd.rs"]}],"files":["grapheme.rs","mod.rs","sentence.rs","whitespace.rs","word.rs"]}],"files":["ascii.rs","bstr.rs","bstring.rs","cow.rs","ext_slice.rs","ext_vec.rs","impls.rs","io.rs","lib.rs","utf8.rs"]};
-sourcesIndex["byteorder"] = {"name":"","files":["io.rs","lib.rs"]};
+sourcesIndex["byteorder"] = {"name":"","files":["lib.rs"]};
 sourcesIndex["cfg_if"] = {"name":"","files":["lib.rs"]};
 sourcesIndex["csv"] = {"name":"","files":["byte_record.rs","cookbook.rs","deserializer.rs","error.rs","lib.rs","reader.rs","serializer.rs","string_record.rs","tutorial.rs","writer.rs"]};
 sourcesIndex["csv_core"] = {"name":"","files":["lib.rs","reader.rs","writer.rs"]};

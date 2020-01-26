@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/bstr-0.2.8/src/utf8.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>utf8.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../bstr/index.html'><div class='logo-container'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/bstr-0.2.10/src/utf8.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>utf8.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../bstr/index.html'><div class='logo-container'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
 <span id="2">   2</span>
 <span id="3">   3</span>
 <span id="4">   4</span>
@@ -1122,14 +1122,119 @@
 <span id="1122">1122</span>
 <span id="1123">1123</span>
 <span id="1124">1124</span>
+<span id="1125">1125</span>
+<span id="1126">1126</span>
+<span id="1127">1127</span>
+<span id="1128">1128</span>
+<span id="1129">1129</span>
+<span id="1130">1130</span>
+<span id="1131">1131</span>
+<span id="1132">1132</span>
+<span id="1133">1133</span>
+<span id="1134">1134</span>
+<span id="1135">1135</span>
+<span id="1136">1136</span>
+<span id="1137">1137</span>
+<span id="1138">1138</span>
+<span id="1139">1139</span>
+<span id="1140">1140</span>
+<span id="1141">1141</span>
+<span id="1142">1142</span>
+<span id="1143">1143</span>
+<span id="1144">1144</span>
+<span id="1145">1145</span>
+<span id="1146">1146</span>
+<span id="1147">1147</span>
+<span id="1148">1148</span>
+<span id="1149">1149</span>
+<span id="1150">1150</span>
+<span id="1151">1151</span>
+<span id="1152">1152</span>
+<span id="1153">1153</span>
+<span id="1154">1154</span>
+<span id="1155">1155</span>
+<span id="1156">1156</span>
+<span id="1157">1157</span>
+<span id="1158">1158</span>
+<span id="1159">1159</span>
+<span id="1160">1160</span>
+<span id="1161">1161</span>
+<span id="1162">1162</span>
+<span id="1163">1163</span>
+<span id="1164">1164</span>
+<span id="1165">1165</span>
+<span id="1166">1166</span>
+<span id="1167">1167</span>
+<span id="1168">1168</span>
+<span id="1169">1169</span>
+<span id="1170">1170</span>
+<span id="1171">1171</span>
+<span id="1172">1172</span>
+<span id="1173">1173</span>
+<span id="1174">1174</span>
+<span id="1175">1175</span>
+<span id="1176">1176</span>
+<span id="1177">1177</span>
+<span id="1178">1178</span>
+<span id="1179">1179</span>
+<span id="1180">1180</span>
+<span id="1181">1181</span>
+<span id="1182">1182</span>
+<span id="1183">1183</span>
+<span id="1184">1184</span>
+<span id="1185">1185</span>
+<span id="1186">1186</span>
+<span id="1187">1187</span>
+<span id="1188">1188</span>
+<span id="1189">1189</span>
+<span id="1190">1190</span>
+<span id="1191">1191</span>
+<span id="1192">1192</span>
+<span id="1193">1193</span>
+<span id="1194">1194</span>
+<span id="1195">1195</span>
+<span id="1196">1196</span>
+<span id="1197">1197</span>
+<span id="1198">1198</span>
+<span id="1199">1199</span>
+<span id="1200">1200</span>
+<span id="1201">1201</span>
+<span id="1202">1202</span>
+<span id="1203">1203</span>
+<span id="1204">1204</span>
+<span id="1205">1205</span>
+<span id="1206">1206</span>
+<span id="1207">1207</span>
+<span id="1208">1208</span>
+<span id="1209">1209</span>
+<span id="1210">1210</span>
+<span id="1211">1211</span>
+<span id="1212">1212</span>
+<span id="1213">1213</span>
+<span id="1214">1214</span>
+<span id="1215">1215</span>
+<span id="1216">1216</span>
+<span id="1217">1217</span>
+<span id="1218">1218</span>
+<span id="1219">1219</span>
+<span id="1220">1220</span>
+<span id="1221">1221</span>
+<span id="1222">1222</span>
+<span id="1223">1223</span>
+<span id="1224">1224</span>
+<span id="1225">1225</span>
+<span id="1226">1226</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">char</span>;
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">cmp</span>;
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">fmt</span>;
+<span class="kw">use</span> <span class="ident">core</span>::<span class="ident">str</span>;
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>;
 
 <span class="kw">use</span> <span class="ident">ascii</span>;
+<span class="kw">use</span> <span class="ident">bstr</span>::<span class="ident">BStr</span>;
+<span class="kw">use</span> <span class="ident">ext_slice</span>::<span class="ident">ByteSlice</span>;
 
 <span class="comment">// The UTF-8 decoder provided here is based on the one presented here:</span>
 <span class="comment">// https://bjoern.hoehrmann.de/utf-8/decoder/dfa/</span>
@@ -1342,6 +1447,111 @@
         <span class="prelude-val">Some</span>((<span class="self">self</span>.<span class="ident">reverse_index</span>, <span class="self">self</span>.<span class="ident">reverse_index</span> <span class="op">+</span> <span class="ident">size</span>, <span class="ident">ch</span>))
     }
 }
+
+<span class="doccomment">/// An iterator over chunks of valid UTF-8 in a byte slice.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// See [`utf8_chunks`](trait.ByteSlice.html#method.utf8_chunks).</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Debug</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Utf8Chunks</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span>(<span class="kw">super</span>) <span class="ident">bytes</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>],
+}
+
+<span class="doccomment">/// A chunk of valid UTF-8, possibly followed by invalid UTF-8 bytes.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// This is yielded by the</span>
+<span class="doccomment">/// [`Utf8Chunks`](struct.Utf8Chunks.html)</span>
+<span class="doccomment">/// iterator, which can be created via the</span>
+<span class="doccomment">/// [`ByteSlice::utf8_chunks`](trait.ByteSlice.html#method.utf8_chunks)</span>
+<span class="doccomment">/// method.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// The `&#39;a` lifetime parameter corresponds to the lifetime of the bytes that</span>
+<span class="doccomment">/// are being iterated over.</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Utf8Chunk</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// A valid UTF-8 piece, at the start, end, or between invalid UTF-8 bytes.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This is empty between adjacent invalid UTF-8 byte sequences.</span>
+    <span class="ident">valid</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>,
+    <span class="doccomment">/// A sequence of invalid UTF-8 bytes.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Can only be empty in the last chunk.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Should be replaced by a single unicode replacement character, if not</span>
+    <span class="doccomment">/// empty.</span>
+    <span class="ident">invalid</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">BStr</span>,
+}
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Utf8Chunk</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Returns the (possibly empty) valid UTF-8 bytes in this chunk.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This may be empty if there are consecutive sequences of invalid UTF-8</span>
+    <span class="doccomment">/// bytes.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">valid</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span> {
+        <span class="self">self</span>.<span class="ident">valid</span>
+    }
+
+    <span class="doccomment">/// Returns the (possibly empty) invalid UTF-8 bytes in this chunk that</span>
+    <span class="doccomment">/// immediately follow the valid UTF-8 bytes in this chunk.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This is only empty when this chunk corresponds to the last chunk in</span>
+    <span class="doccomment">/// the original bytes.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// The maximum length of this slice is 3. That is, invalid UTF-8 byte</span>
+    <span class="doccomment">/// sequences greater than 1 always correspond to a valid _prefix_ of</span>
+    <span class="doccomment">/// a valid UTF-8 encoded codepoint. This corresponds to the &quot;substitution</span>
+    <span class="doccomment">/// of maximal subparts&quot; strategy that is described in more detail in the</span>
+    <span class="doccomment">/// docs for the</span>
+    <span class="doccomment">/// [`ByteSlice::to_str_lossy`](trait.ByteSlice.html#method.to_str_lossy)</span>
+    <span class="doccomment">/// method.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">invalid</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>] {
+        <span class="self">self</span>.<span class="ident">invalid</span>.<span class="ident">as_bytes</span>()
+    }
+}
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Iterator</span> <span class="kw">for</span> <span class="ident">Utf8Chunks</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="kw">type</span> <span class="ident">Item</span> <span class="op">=</span> <span class="ident">Utf8Chunk</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>;
+
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Utf8Chunk</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">bytes</span>.<span class="ident">is_empty</span>() {
+            <span class="kw">return</span> <span class="prelude-val">None</span>;
+        }
+        <span class="kw">match</span> <span class="ident">validate</span>(<span class="self">self</span>.<span class="ident">bytes</span>) {
+            <span class="prelude-val">Ok</span>(()) <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="kw">let</span> <span class="ident">valid</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">bytes</span>;
+                <span class="self">self</span>.<span class="ident">bytes</span> <span class="op">=</span> <span class="kw-2">&amp;</span>[];
+                <span class="prelude-val">Some</span>(<span class="ident">Utf8Chunk</span> {
+                    <span class="comment">// SAFETY: This is safe because of the guarantees provided</span>
+                    <span class="comment">// by utf8::validate.</span>
+                    <span class="ident">valid</span>: <span class="kw">unsafe</span> { <span class="ident">str</span>::<span class="ident">from_utf8_unchecked</span>(<span class="ident">valid</span>) },
+                    <span class="ident">invalid</span>: [].<span class="ident">as_bstr</span>(),
+                })
+            }
+            <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="kw">let</span> (<span class="ident">valid</span>, <span class="ident">rest</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">bytes</span>.<span class="ident">split_at</span>(<span class="ident">e</span>.<span class="ident">valid_up_to</span>());
+                <span class="comment">// SAFETY: This is safe because of the guarantees provided by</span>
+                <span class="comment">// utf8::validate.</span>
+                <span class="kw">let</span> <span class="ident">valid</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">str</span>::<span class="ident">from_utf8_unchecked</span>(<span class="ident">valid</span>) };
+                <span class="kw">let</span> (<span class="ident">invalid</span>, <span class="ident">rest</span>) <span class="op">=</span>
+                    <span class="ident">rest</span>.<span class="ident">split_at</span>(<span class="ident">e</span>.<span class="ident">error_len</span>().<span class="ident">unwrap_or</span>(<span class="ident">rest</span>.<span class="ident">len</span>()));
+                <span class="self">self</span>.<span class="ident">bytes</span> <span class="op">=</span> <span class="ident">rest</span>;
+                <span class="prelude-val">Some</span>(<span class="ident">Utf8Chunk</span> { <span class="ident">valid</span>, <span class="ident">invalid</span>: <span class="ident">invalid</span>.<span class="ident">as_bstr</span>() })
+            }
+        }
+    }
+
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">size_hint</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">usize</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>) {
+        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">bytes</span>.<span class="ident">is_empty</span>() {
+            (<span class="number">0</span>, <span class="prelude-val">Some</span>(<span class="number">0</span>))
+        } <span class="kw">else</span> {
+            (<span class="number">1</span>, <span class="prelude-val">Some</span>(<span class="self">self</span>.<span class="ident">bytes</span>.<span class="ident">len</span>()))
+        }
+    }
+}
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> ::<span class="ident">core</span>::<span class="ident">iter</span>::<span class="ident">FusedIterator</span> <span class="kw">for</span> <span class="ident">Utf8Chunks</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {}
 
 <span class="doccomment">/// An error that occurs when UTF-8 decoding fails.</span>
 <span class="doccomment">///</span>
@@ -1968,10 +2178,7 @@
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="string">&#39;☃&#39;</span>, <span class="string">&#39;☃&#39;</span>], <span class="ident">d</span>(<span class="string">&quot;☃☃&quot;</span>));
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="string">&#39;α&#39;</span>, <span class="string">&#39;β&#39;</span>, <span class="string">&#39;γ&#39;</span>, <span class="string">&#39;δ&#39;</span>, <span class="string">&#39;ε&#39;</span>], <span class="ident">d</span>(<span class="string">&quot;αβγδε&quot;</span>));
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="string">&#39;☃&#39;</span>, <span class="string">&#39;⛄&#39;</span>, <span class="string">&#39;⛇&#39;</span>], <span class="ident">d</span>(<span class="string">&quot;☃⛄⛇&quot;</span>));
-        <span class="macro">assert_eq</span><span class="macro">!</span>(
-            <span class="macro">vec</span><span class="macro">!</span>[<span class="string">&#39;𝗮&#39;</span>, <span class="string">&#39;𝗯&#39;</span>, <span class="string">&#39;𝗰&#39;</span>, <span class="string">&#39;𝗱&#39;</span>, <span class="string">&#39;𝗲&#39;</span>],
-            <span class="ident">d</span>(<span class="string">&quot;𝗮𝗯𝗰𝗱𝗲&quot;</span>)
-        );
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="string">&#39;𝗮&#39;</span>, <span class="string">&#39;𝗯&#39;</span>, <span class="string">&#39;𝗰&#39;</span>, <span class="string">&#39;𝗱&#39;</span>, <span class="string">&#39;𝗲&#39;</span>], <span class="ident">d</span>(<span class="string">&quot;𝗮𝗯𝗰𝗱𝗲&quot;</span>));
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
@@ -2080,10 +2287,7 @@
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="string">&#39;☃&#39;</span>, <span class="string">&#39;☃&#39;</span>], <span class="ident">d</span>(<span class="string">&quot;☃☃&quot;</span>));
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="string">&#39;ε&#39;</span>, <span class="string">&#39;δ&#39;</span>, <span class="string">&#39;γ&#39;</span>, <span class="string">&#39;β&#39;</span>, <span class="string">&#39;α&#39;</span>], <span class="ident">d</span>(<span class="string">&quot;αβγδε&quot;</span>));
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="string">&#39;⛇&#39;</span>, <span class="string">&#39;⛄&#39;</span>, <span class="string">&#39;☃&#39;</span>], <span class="ident">d</span>(<span class="string">&quot;☃⛄⛇&quot;</span>));
-        <span class="macro">assert_eq</span><span class="macro">!</span>(
-            <span class="macro">vec</span><span class="macro">!</span>[<span class="string">&#39;𝗲&#39;</span>, <span class="string">&#39;𝗱&#39;</span>, <span class="string">&#39;𝗰&#39;</span>, <span class="string">&#39;𝗯&#39;</span>, <span class="string">&#39;𝗮&#39;</span>],
-            <span class="ident">d</span>(<span class="string">&quot;𝗮𝗯𝗰𝗱𝗲&quot;</span>)
-        );
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="string">&#39;𝗲&#39;</span>, <span class="string">&#39;𝗱&#39;</span>, <span class="string">&#39;𝗰&#39;</span>, <span class="string">&#39;𝗯&#39;</span>, <span class="string">&#39;𝗮&#39;</span>], <span class="ident">d</span>(<span class="string">&quot;𝗮𝗯𝗰𝗱𝗲&quot;</span>));
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>

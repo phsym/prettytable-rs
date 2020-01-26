@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="API documentation for the Rust `ByteSlice` trait in crate `bstr`."><meta name="keywords" content="rust, rustlang, rust-lang, ByteSlice"><title>bstr::ByteSlice - Rust</title><link rel="stylesheet" type="text/css" href="../normalize.css"><link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../dark.css"><link rel="stylesheet" type="text/css" href="../light.css" id="themeStyle"><script src="../storage.js"></script><noscript><link rel="stylesheet" href="../noscript.css"></noscript><link rel="shortcut icon" href="../favicon.ico"><style type="text/css">#crate-search{background-image:url("../down-arrow.svg");}</style></head><body class="rustdoc trait"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../bstr/index.html'><div class='logo-container'><img src='../rust-logo.png' alt='logo'></div></a><p class='location'>Trait ByteSlice</p><div class="sidebar-elems"><div class="block items"><a class="sidebar-title" href="#provided-methods">Provided Methods</a><div class="sidebar-links"><a href="#method.as_bstr">as_bstr</a><a href="#method.as_bstr_mut">as_bstr_mut</a><a href="#method.bytes">bytes</a><a href="#method.char_indices">char_indices</a><a href="#method.chars">chars</a><a href="#method.contains_str">contains_str</a><a href="#method.copy_within_str">copy_within_str</a><a href="#method.ends_with_str">ends_with_str</a><a href="#method.fields">fields</a><a href="#method.fields_with">fields_with</a><a href="#method.find">find</a><a href="#method.find_byte">find_byte</a><a href="#method.find_byteset">find_byteset</a><a href="#method.find_char">find_char</a><a href="#method.find_iter">find_iter</a><a href="#method.find_non_ascii_byte">find_non_ascii_byte</a><a href="#method.find_not_byteset">find_not_byteset</a><a href="#method.from_os_str">from_os_str</a><a href="#method.from_path">from_path</a><a href="#method.grapheme_indices">grapheme_indices</a><a href="#method.graphemes">graphemes</a><a href="#method.is_ascii">is_ascii</a><a href="#method.is_utf8">is_utf8</a><a href="#method.last_byte">last_byte</a><a href="#method.lines">lines</a><a href="#method.lines_with_terminator">lines_with_terminator</a><a href="#method.make_ascii_lowercase">make_ascii_lowercase</a><a href="#method.make_ascii_uppercase">make_ascii_uppercase</a><a href="#method.repeatn">repeatn</a><a href="#method.replace">replace</a><a href="#method.replace_into">replace_into</a><a href="#method.replacen">replacen</a><a href="#method.replacen_into">replacen_into</a><a href="#method.reverse_bytes">reverse_bytes</a><a href="#method.reverse_chars">reverse_chars</a><a href="#method.reverse_graphemes">reverse_graphemes</a><a href="#method.rfind">rfind</a><a href="#method.rfind_byte">rfind_byte</a><a href="#method.rfind_byteset">rfind_byteset</a><a href="#method.rfind_char">rfind_char</a><a href="#method.rfind_iter">rfind_iter</a><a href="#method.rfind_not_byteset">rfind_not_byteset</a><a href="#method.rsplit_str">rsplit_str</a><a href="#method.rsplitn_str">rsplitn_str</a><a href="#method.sentence_indices">sentence_indices</a><a href="#method.sentences">sentences</a><a href="#method.split_str">split_str</a><a href="#method.splitn_str">splitn_str</a><a href="#method.starts_with_str">starts_with_str</a><a href="#method.to_ascii_lowercase">to_ascii_lowercase</a><a href="#method.to_ascii_uppercase">to_ascii_uppercase</a><a href="#method.to_lowercase">to_lowercase</a><a href="#method.to_lowercase_into">to_lowercase_into</a><a href="#method.to_os_str">to_os_str</a><a href="#method.to_os_str_lossy">to_os_str_lossy</a><a href="#method.to_path">to_path</a><a href="#method.to_path_lossy">to_path_lossy</a><a href="#method.to_str">to_str</a><a href="#method.to_str_lossy">to_str_lossy</a><a href="#method.to_str_lossy_into">to_str_lossy_into</a><a href="#method.to_str_unchecked">to_str_unchecked</a><a href="#method.to_uppercase">to_uppercase</a><a href="#method.to_uppercase_into">to_uppercase_into</a><a href="#method.trim">trim</a><a href="#method.trim_end">trim_end</a><a href="#method.trim_end_with">trim_end_with</a><a href="#method.trim_start">trim_start</a><a href="#method.trim_start_with">trim_start_with</a><a href="#method.trim_with">trim_with</a><a href="#method.word_indices">word_indices</a><a href="#method.words">words</a><a href="#method.words_with_break_indices">words_with_break_indices</a><a href="#method.words_with_breaks">words_with_breaks</a></div><a class="sidebar-title" href="#foreign-impls">Implementations on Foreign Types</a><div class="sidebar-links"><a href="#impl-ByteSlice-for-%5Bu8%5D">[u8]</a></div><a class="sidebar-title" href="#implementors">Implementors</a></div><p class='location'><a href='index.html'>bstr</a></p><script>window.sidebarCurrent = {name: 'ByteSlice', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../settings.html"><img src="../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class='fqn'><span class='out-of-band'><span id='render-detail'><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class='inner'>&#x2212;</span>]</a></span><a class='srclink' href='../src/bstr/ext_slice.rs.html#98-2929' title='goto source code'>[src]</a></span><span class='in-band'>Trait <a href='index.html'>bstr</a>::<wbr><a class="trait" href=''>ByteSlice</a></span></h1><div class="docblock type-decl hidden-by-usual-hider"><pre class='rust trait'>pub trait ByteSlice: Sealed {
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="API documentation for the Rust `ByteSlice` trait in crate `bstr`."><meta name="keywords" content="rust, rustlang, rust-lang, ByteSlice"><title>bstr::ByteSlice - Rust</title><link rel="stylesheet" type="text/css" href="../normalize.css"><link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../dark.css"><link rel="stylesheet" type="text/css" href="../light.css" id="themeStyle"><script src="../storage.js"></script><noscript><link rel="stylesheet" href="../noscript.css"></noscript><link rel="shortcut icon" href="../favicon.ico"><style type="text/css">#crate-search{background-image:url("../down-arrow.svg");}</style></head><body class="rustdoc trait"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../bstr/index.html'><div class='logo-container'><img src='../rust-logo.png' alt='logo'></div></a><p class='location'>Trait ByteSlice</p><div class="sidebar-elems"><div class="block items"><a class="sidebar-title" href="#provided-methods">Provided Methods</a><div class="sidebar-links"><a href="#method.as_bstr">as_bstr</a><a href="#method.as_bstr_mut">as_bstr_mut</a><a href="#method.bytes">bytes</a><a href="#method.char_indices">char_indices</a><a href="#method.chars">chars</a><a href="#method.contains_str">contains_str</a><a href="#method.copy_within_str">copy_within_str</a><a href="#method.ends_with_str">ends_with_str</a><a href="#method.fields">fields</a><a href="#method.fields_with">fields_with</a><a href="#method.find">find</a><a href="#method.find_byte">find_byte</a><a href="#method.find_byteset">find_byteset</a><a href="#method.find_char">find_char</a><a href="#method.find_iter">find_iter</a><a href="#method.find_non_ascii_byte">find_non_ascii_byte</a><a href="#method.find_not_byteset">find_not_byteset</a><a href="#method.from_os_str">from_os_str</a><a href="#method.from_path">from_path</a><a href="#method.grapheme_indices">grapheme_indices</a><a href="#method.graphemes">graphemes</a><a href="#method.is_ascii">is_ascii</a><a href="#method.is_utf8">is_utf8</a><a href="#method.last_byte">last_byte</a><a href="#method.lines">lines</a><a href="#method.lines_with_terminator">lines_with_terminator</a><a href="#method.make_ascii_lowercase">make_ascii_lowercase</a><a href="#method.make_ascii_uppercase">make_ascii_uppercase</a><a href="#method.repeatn">repeatn</a><a href="#method.replace">replace</a><a href="#method.replace_into">replace_into</a><a href="#method.replacen">replacen</a><a href="#method.replacen_into">replacen_into</a><a href="#method.reverse_bytes">reverse_bytes</a><a href="#method.reverse_chars">reverse_chars</a><a href="#method.reverse_graphemes">reverse_graphemes</a><a href="#method.rfind">rfind</a><a href="#method.rfind_byte">rfind_byte</a><a href="#method.rfind_byteset">rfind_byteset</a><a href="#method.rfind_char">rfind_char</a><a href="#method.rfind_iter">rfind_iter</a><a href="#method.rfind_not_byteset">rfind_not_byteset</a><a href="#method.rsplit_str">rsplit_str</a><a href="#method.rsplitn_str">rsplitn_str</a><a href="#method.sentence_indices">sentence_indices</a><a href="#method.sentences">sentences</a><a href="#method.split_str">split_str</a><a href="#method.splitn_str">splitn_str</a><a href="#method.starts_with_str">starts_with_str</a><a href="#method.to_ascii_lowercase">to_ascii_lowercase</a><a href="#method.to_ascii_uppercase">to_ascii_uppercase</a><a href="#method.to_lowercase">to_lowercase</a><a href="#method.to_lowercase_into">to_lowercase_into</a><a href="#method.to_os_str">to_os_str</a><a href="#method.to_os_str_lossy">to_os_str_lossy</a><a href="#method.to_path">to_path</a><a href="#method.to_path_lossy">to_path_lossy</a><a href="#method.to_str">to_str</a><a href="#method.to_str_lossy">to_str_lossy</a><a href="#method.to_str_lossy_into">to_str_lossy_into</a><a href="#method.to_str_unchecked">to_str_unchecked</a><a href="#method.to_uppercase">to_uppercase</a><a href="#method.to_uppercase_into">to_uppercase_into</a><a href="#method.trim">trim</a><a href="#method.trim_end">trim_end</a><a href="#method.trim_end_with">trim_end_with</a><a href="#method.trim_start">trim_start</a><a href="#method.trim_start_with">trim_start_with</a><a href="#method.trim_with">trim_with</a><a href="#method.utf8_chunks">utf8_chunks</a><a href="#method.word_indices">word_indices</a><a href="#method.words">words</a><a href="#method.words_with_break_indices">words_with_break_indices</a><a href="#method.words_with_breaks">words_with_breaks</a></div><a class="sidebar-title" href="#foreign-impls">Implementations on Foreign Types</a><div class="sidebar-links"><a href="#impl-ByteSlice-for-%5Bu8%5D">[u8]</a></div><a class="sidebar-title" href="#implementors">Implementors</a></div><p class='location'><a href='index.html'>bstr</a></p><script>window.sidebarCurrent = {name: 'ByteSlice', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../settings.html"><img src="../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class='fqn'><span class='out-of-band'><span id='render-detail'><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class='inner'>&#x2212;</span>]</a></span><a class='srclink' href='../src/bstr/ext_slice.rs.html#98-2966' title='goto source code'>[src]</a></span><span class='in-band'>Trait <a href='index.html'>bstr</a>::<wbr><a class="trait" href=''>ByteSlice</a></span></h1><div class="docblock type-decl hidden-by-usual-hider"><pre class='rust trait'>pub trait ByteSlice: Sealed {
     fn <a href='#method.as_bstr' class='fnname'>as_bstr</a>(&amp;self) -&gt; &amp;<a class="struct" href="../bstr/struct.BStr.html" title="struct bstr::BStr">BStr</a> { ... }
 <div class='item-spacer'></div>    fn <a href='#method.as_bstr_mut' class='fnname'>as_bstr_mut</a>(&amp;mut self) -&gt; &amp;mut <a class="struct" href="../bstr/struct.BStr.html" title="struct bstr::BStr">BStr</a> { ... }
 <div class='item-spacer'></div>    fn <a href='#method.from_os_str' class='fnname'>from_os_str</a>(os_str: &amp;<a class="struct" href="https://doc.rust-lang.org/nightly/std/ffi/os_str/struct.OsStr.html" title="struct std::ffi::os_str::OsStr">OsStr</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>&gt; { ... }
@@ -40,6 +40,7 @@
 <div class='item-spacer'></div>    fn <a href='#method.bytes' class='fnname'>bytes</a>(&amp;self) -&gt; <a class="struct" href="../bstr/struct.Bytes.html" title="struct bstr::Bytes">Bytes</a> { ... }
 <div class='item-spacer'></div>    fn <a href='#method.chars' class='fnname'>chars</a>(&amp;self) -&gt; <a class="struct" href="../bstr/struct.Chars.html" title="struct bstr::Chars">Chars</a> { ... }
 <div class='item-spacer'></div>    fn <a href='#method.char_indices' class='fnname'>char_indices</a>(&amp;self) -&gt; <a class="struct" href="../bstr/struct.CharIndices.html" title="struct bstr::CharIndices">CharIndices</a> { ... }
+<div class='item-spacer'></div>    fn <a href='#method.utf8_chunks' class='fnname'>utf8_chunks</a>(&amp;self) -&gt; <a class="struct" href="../bstr/struct.Utf8Chunks.html" title="struct bstr::Utf8Chunks">Utf8Chunks</a> { ... }
 <div class='item-spacer'></div>    fn <a href='#method.graphemes' class='fnname'>graphemes</a>(&amp;self) -&gt; <a class="struct" href="../bstr/struct.Graphemes.html" title="struct bstr::Graphemes">Graphemes</a> { ... }
 <div class='item-spacer'></div>    fn <a href='#method.grapheme_indices' class='fnname'>grapheme_indices</a>(&amp;self) -&gt; <a class="struct" href="../bstr/struct.GraphemeIndices.html" title="struct bstr::GraphemeIndices">GraphemeIndices</a> { ... }
 <div class='item-spacer'></div>    fn <a href='#method.words' class='fnname'>words</a>(&amp;self) -&gt; <a class="struct" href="../bstr/struct.Words.html" title="struct bstr::Words">Words</a> { ... }
@@ -1047,10 +1048,38 @@ replacement codepoint can substitute anywhere from 1 to 3 invalid bytes
     (<span class="number">3</span>, <span class="number">4</span>, <span class="string">&#39;\u{FFFD}&#39;</span>),
     (<span class="number">0</span>, <span class="number">3</span>, <span class="string">&#39;☃&#39;</span>),
 ]);</pre></div>
+</div><h3 id='method.utf8_chunks' class='method'><div class="important-traits"><div class='tooltip'>ⓘ<span class='tooltiptext'>Important traits for <a class="struct" href="../bstr/struct.Utf8Chunks.html" title="struct bstr::Utf8Chunks">Utf8Chunks</a>&lt;'a&gt;</span></div><div class="content hidden"><h3 class="important">Important traits for <a class="struct" href="../bstr/struct.Utf8Chunks.html" title="struct bstr::Utf8Chunks">Utf8Chunks</a>&lt;'a&gt;</h3><code class="content"><span class="where fmt-newline">impl&lt;'a&gt; <a class="trait" href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html" title="trait core::iter::traits::iterator::Iterator">Iterator</a> for <a class="struct" href="../bstr/struct.Utf8Chunks.html" title="struct bstr::Utf8Chunks">Utf8Chunks</a>&lt;'a&gt;</span><span class="where fmt-newline">    type <a href='https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html#associatedtype.Item' class="type">Item</a> = <a class="struct" href="../bstr/struct.Utf8Chunk.html" title="struct bstr::Utf8Chunk">Utf8Chunk</a>&lt;'a&gt;;</span></code></div></div><code id='utf8_chunks.v'>fn <a href='#method.utf8_chunks' class='fnname'>utf8_chunks</a>(&amp;self) -&gt; <a class="struct" href="../bstr/struct.Utf8Chunks.html" title="struct bstr::Utf8Chunks">Utf8Chunks</a></code></h3><div class='docblock'><p>Iterate over chunks of valid UTF-8.</p>
+<p>The iterator returned yields chunks of valid UTF-8 separated by invalid
+UTF-8 bytes, if they exist. Invalid UTF-8 bytes are always 1-3 bytes,
+which are determined via the &quot;substitution of maximal subparts&quot;
+strategy described in the docs for the
+<a href="trait.ByteSlice.html#method.to_str_lossy"><code>ByteSlice::to_str_lossy</code></a>
+method.</p>
+<h1 id="examples-39" class="section-header"><a href="#examples-39">Examples</a></h1>
+<p>This example shows how the <code>std::fmt::Display</code> implementation is
+written for the <code>BStr</code> type:</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered">
+<span class="kw">use</span> <span class="ident">bstr</span>::{<span class="ident">ByteSlice</span>, <span class="ident">Utf8Chunk</span>};
+
+<span class="kw">let</span> <span class="ident">bytes</span> <span class="op">=</span> <span class="string">b&quot;foo\xFD\xFEbar\xFF&quot;</span>;
+
+<span class="kw">let</span> (<span class="kw-2">mut</span> <span class="ident">valid_chunks</span>, <span class="kw-2">mut</span> <span class="ident">invalid_chunks</span>) <span class="op">=</span> (<span class="macro">vec</span><span class="macro">!</span>[], <span class="macro">vec</span><span class="macro">!</span>[]);
+<span class="kw">for</span> <span class="ident">chunk</span> <span class="kw">in</span> <span class="ident">bytes</span>.<span class="ident">utf8_chunks</span>() {
+    <span class="kw">if</span> <span class="op">!</span><span class="ident">chunk</span>.<span class="ident">valid</span>().<span class="ident">is_empty</span>() {
+        <span class="ident">valid_chunks</span>.<span class="ident">push</span>(<span class="ident">chunk</span>.<span class="ident">valid</span>());
+    }
+    <span class="kw">if</span> <span class="op">!</span><span class="ident">chunk</span>.<span class="ident">invalid</span>().<span class="ident">is_empty</span>() {
+        <span class="ident">invalid_chunks</span>.<span class="ident">push</span>(<span class="ident">chunk</span>.<span class="ident">invalid</span>());
+    }
+}
+
+<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">valid_chunks</span>, <span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;foo&quot;</span>, <span class="string">&quot;bar&quot;</span>]);
+<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">invalid_chunks</span>, <span class="macro">vec</span><span class="macro">!</span>[<span class="string">b&quot;\xFD&quot;</span>, <span class="string">b&quot;\xFE&quot;</span>, <span class="string">b&quot;\xFF&quot;</span>]);</pre></div>
 </div><h3 id='method.graphemes' class='method'><div class="important-traits"><div class='tooltip'>ⓘ<span class='tooltiptext'>Important traits for <a class="struct" href="../bstr/struct.Graphemes.html" title="struct bstr::Graphemes">Graphemes</a>&lt;'a&gt;</span></div><div class="content hidden"><h3 class="important">Important traits for <a class="struct" href="../bstr/struct.Graphemes.html" title="struct bstr::Graphemes">Graphemes</a>&lt;'a&gt;</h3><code class="content"><span class="where fmt-newline">impl&lt;'a&gt; <a class="trait" href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html" title="trait core::iter::traits::iterator::Iterator">Iterator</a> for <a class="struct" href="../bstr/struct.Graphemes.html" title="struct bstr::Graphemes">Graphemes</a>&lt;'a&gt;</span><span class="where fmt-newline">    type <a href='https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html#associatedtype.Item' class="type">Item</a> = &amp;'a <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>;</span></code></div></div><code id='graphemes.v'>fn <a href='#method.graphemes' class='fnname'>graphemes</a>(&amp;self) -&gt; <a class="struct" href="../bstr/struct.Graphemes.html" title="struct bstr::Graphemes">Graphemes</a></code></h3><div class='docblock'><p>Returns an iterator over the grapheme clusters in this byte string.
 If invalid UTF-8 is encountered, then the Unicode replacement codepoint
 is yielded instead.</p>
-<h1 id="examples-39" class="section-header"><a href="#examples-39">Examples</a></h1>
+<h1 id="examples-40" class="section-header"><a href="#examples-40">Examples</a></h1>
 <p>This example shows how multiple codepoints can combine to form a
 single grapheme cluster:</p>
 
@@ -1072,7 +1101,7 @@ single grapheme cluster:</p>
 along with their starting and ending byte index positions. If invalid
 UTF-8 is encountered, then the Unicode replacement codepoint is yielded
 instead.</p>
-<h1 id="examples-40" class="section-header"><a href="#examples-40">Examples</a></h1>
+<h1 id="examples-41" class="section-header"><a href="#examples-41">Examples</a></h1>
 <p>This example shows how to get the byte offsets of each individual
 grapheme cluster:</p>
 
@@ -1114,7 +1143,7 @@ categories.</p>
 <p>Since words are made up of one or more codepoints, this iterator
 yields <code>&amp;str</code> elements. When invalid UTF-8 is encountered, replacement
 codepoints are <a href="index.html#handling-of-invalid-utf-8">substituted</a>.</p>
-<h1 id="examples-41" class="section-header"><a href="#examples-41">Examples</a></h1>
+<h1 id="examples-42" class="section-header"><a href="#examples-42">Examples</a></h1>
 <p>Basic usage:</p>
 
 <div class="example-wrap"><pre class="rust rust-example-rendered">
@@ -1138,7 +1167,7 @@ categories.</p>
 <p>Since words are made up of one or more codepoints, this iterator
 yields <code>&amp;str</code> elements. When invalid UTF-8 is encountered, replacement
 codepoints are <a href="index.html#handling-of-invalid-utf-8">substituted</a>.</p>
-<h1 id="examples-42" class="section-header"><a href="#examples-42">Examples</a></h1>
+<h1 id="examples-43" class="section-header"><a href="#examples-43">Examples</a></h1>
 <p>This example shows how to get the byte offsets of each individual
 word:</p>
 
@@ -1160,7 +1189,7 @@ codepoint substitutions if invalid UTF-8 is encountered).</p>
 <p>Since words are made up of one or more codepoints, this iterator
 yields <code>&amp;str</code> elements. When invalid UTF-8 is encountered, replacement
 codepoints are <a href="index.html#handling-of-invalid-utf-8">substituted</a>.</p>
-<h1 id="examples-43" class="section-header"><a href="#examples-43">Examples</a></h1>
+<h1 id="examples-44" class="section-header"><a href="#examples-44">Examples</a></h1>
 <p>Basic usage:</p>
 
 <div class="example-wrap"><pre class="rust rust-example-rendered">
@@ -1181,7 +1210,7 @@ encountered).</p>
 <p>Since words are made up of one or more codepoints, this iterator
 yields <code>&amp;str</code> elements. When invalid UTF-8 is encountered, replacement
 codepoints are <a href="index.html#handling-of-invalid-utf-8">substituted</a>.</p>
-<h1 id="examples-44" class="section-header"><a href="#examples-44">Examples</a></h1>
+<h1 id="examples-45" class="section-header"><a href="#examples-45">Examples</a></h1>
 <p>This example shows how to get the byte offsets of each individual
 word:</p>
 
@@ -1208,7 +1237,7 @@ substitutions if invalid UTF-8 is encountered).</p>
 <p>Since sentences are made up of one or more codepoints, this iterator
 yields <code>&amp;str</code> elements. When invalid UTF-8 is encountered, replacement
 codepoints are <a href="index.html#handling-of-invalid-utf-8">substituted</a>.</p>
-<h1 id="examples-45" class="section-header"><a href="#examples-45">Examples</a></h1>
+<h1 id="examples-46" class="section-header"><a href="#examples-46">Examples</a></h1>
 <p>Basic usage:</p>
 
 <div class="example-wrap"><pre class="rust rust-example-rendered">
@@ -1230,7 +1259,7 @@ substitutions if invalid UTF-8 is encountered).</p>
 <p>Since sentences are made up of one or more codepoints, this iterator
 yields <code>&amp;str</code> elements. When invalid UTF-8 is encountered, replacement
 codepoints are <a href="index.html#handling-of-invalid-utf-8">substituted</a>.</p>
-<h1 id="examples-46" class="section-header"><a href="#examples-46">Examples</a></h1>
+<h1 id="examples-47" class="section-header"><a href="#examples-47">Examples</a></h1>
 <p>Basic usage:</p>
 
 <div class="example-wrap"><pre class="rust rust-example-rendered">
@@ -1248,7 +1277,7 @@ codepoints are <a href="index.html#handling-of-invalid-utf-8">substituted</a>.</
 terminators.</p>
 <p>For this iterator, the only line terminators recognized are <code>\r\n</code> and
 <code>\n</code>.</p>
-<h1 id="examples-47" class="section-header"><a href="#examples-47">Examples</a></h1>
+<h1 id="examples-48" class="section-header"><a href="#examples-48">Examples</a></h1>
 <p>Basic usage:</p>
 
 <div class="example-wrap"><pre class="rust rust-example-rendered">
@@ -1275,7 +1304,7 @@ byte string. For example, the last line in a byte string may not end
 with a line terminator.</p>
 <p>Concatenating all elements yielded by this iterator is guaranteed to
 yield the original byte string.</p>
-<h1 id="examples-48" class="section-header"><a href="#examples-48">Examples</a></h1>
+<h1 id="examples-49" class="section-header"><a href="#examples-49">Examples</a></h1>
 <p>Basic usage:</p>
 
 <div class="example-wrap"><pre class="rust rust-example-rendered">
@@ -1303,7 +1332,7 @@ quux&quot;</span>;
 removed.</p>
 <p>Whitespace is defined according to the terms of the <code>White_Space</code>
 Unicode property.</p>
-<h1 id="examples-49" class="section-header"><a href="#examples-49">Examples</a></h1>
+<h1 id="examples-50" class="section-header"><a href="#examples-50">Examples</a></h1>
 <p>Basic usage:</p>
 
 <div class="example-wrap"><pre class="rust rust-example-rendered">
@@ -1314,7 +1343,7 @@ Unicode property.</p>
 </div><h3 id='method.trim_start' class='method'><code id='trim_start.v'>fn <a href='#method.trim_start' class='fnname'>trim_start</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a></code></h3><div class='docblock'><p>Return a byte string slice with leading whitespace removed.</p>
 <p>Whitespace is defined according to the terms of the <code>White_Space</code>
 Unicode property.</p>
-<h1 id="examples-50" class="section-header"><a href="#examples-50">Examples</a></h1>
+<h1 id="examples-51" class="section-header"><a href="#examples-51">Examples</a></h1>
 <p>Basic usage:</p>
 
 <div class="example-wrap"><pre class="rust rust-example-rendered">
@@ -1325,7 +1354,7 @@ Unicode property.</p>
 </div><h3 id='method.trim_end' class='method'><code id='trim_end.v'>fn <a href='#method.trim_end' class='fnname'>trim_end</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a></code></h3><div class='docblock'><p>Return a byte string slice with trailing whitespace removed.</p>
 <p>Whitespace is defined according to the terms of the <code>White_Space</code>
 Unicode property.</p>
-<h1 id="examples-51" class="section-header"><a href="#examples-51">Examples</a></h1>
+<h1 id="examples-52" class="section-header"><a href="#examples-52">Examples</a></h1>
 <p>Basic usage:</p>
 
 <div class="example-wrap"><pre class="rust rust-example-rendered">
@@ -1335,7 +1364,7 @@ Unicode property.</p>
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">s</span>.<span class="ident">trim_end</span>(), <span class="ident">B</span>(<span class="string">&quot; foo\tbar&quot;</span>));</pre></div>
 </div><h3 id='method.trim_with' class='method'><code id='trim_with.v'>fn <a href='#method.trim_with' class='fnname'>trim_with</a>&lt;F:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/function/trait.FnMut.html" title="trait core::ops::function::FnMut">FnMut</a>(<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.char.html">char</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>&gt;(&amp;self, trim: F) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a></code></h3><div class='docblock'><p>Return a byte string slice with leading and trailing characters
 satisfying the given predicate removed.</p>
-<h1 id="examples-52" class="section-header"><a href="#examples-52">Examples</a></h1>
+<h1 id="examples-53" class="section-header"><a href="#examples-53">Examples</a></h1>
 <p>Basic usage:</p>
 
 <div class="example-wrap"><pre class="rust rust-example-rendered">
@@ -1345,7 +1374,7 @@ satisfying the given predicate removed.</p>
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">s</span>.<span class="ident">trim_with</span>(<span class="op">|</span><span class="ident">c</span><span class="op">|</span> <span class="ident">c</span>.<span class="ident">is_numeric</span>()), <span class="ident">B</span>(<span class="string">&quot;foo5bar&quot;</span>));</pre></div>
 </div><h3 id='method.trim_start_with' class='method'><code id='trim_start_with.v'>fn <a href='#method.trim_start_with' class='fnname'>trim_start_with</a>&lt;F:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/function/trait.FnMut.html" title="trait core::ops::function::FnMut">FnMut</a>(<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.char.html">char</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>&gt;(&amp;self, trim: F) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a></code></h3><div class='docblock'><p>Return a byte string slice with leading characters satisfying the given
 predicate removed.</p>
-<h1 id="examples-53" class="section-header"><a href="#examples-53">Examples</a></h1>
+<h1 id="examples-54" class="section-header"><a href="#examples-54">Examples</a></h1>
 <p>Basic usage:</p>
 
 <div class="example-wrap"><pre class="rust rust-example-rendered">
@@ -1355,7 +1384,7 @@ predicate removed.</p>
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">s</span>.<span class="ident">trim_start_with</span>(<span class="op">|</span><span class="ident">c</span><span class="op">|</span> <span class="ident">c</span>.<span class="ident">is_numeric</span>()), <span class="ident">B</span>(<span class="string">&quot;foo5bar789&quot;</span>));</pre></div>
 </div><h3 id='method.trim_end_with' class='method'><code id='trim_end_with.v'>fn <a href='#method.trim_end_with' class='fnname'>trim_end_with</a>&lt;F:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/function/trait.FnMut.html" title="trait core::ops::function::FnMut">FnMut</a>(<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.char.html">char</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>&gt;(&amp;self, trim: F) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a></code></h3><div class='docblock'><p>Return a byte string slice with trailing characters satisfying the
 given predicate removed.</p>
-<h1 id="examples-54" class="section-header"><a href="#examples-54">Examples</a></h1>
+<h1 id="examples-55" class="section-header"><a href="#examples-55">Examples</a></h1>
 <p>Basic usage:</p>
 
 <div class="example-wrap"><pre class="rust rust-example-rendered">
@@ -1375,7 +1404,7 @@ the given byte string may not be equivalent to the number of bytes in
 this byte string.</p>
 <p>If you'd like to reuse an allocation for performance reasons, then use
 <a href="#method.to_lowercase_into"><code>to_lowercase_into</code></a> instead.</p>
-<h1 id="examples-55" class="section-header"><a href="#examples-55">Examples</a></h1>
+<h1 id="examples-56" class="section-header"><a href="#examples-56">Examples</a></h1>
 <p>Basic usage:</p>
 
 <div class="example-wrap"><pre class="rust rust-example-rendered">
@@ -1409,7 +1438,7 @@ the given byte string may not be equivalent to the number of bytes in
 this byte string.</p>
 <p>If you don't need to amortize allocation and instead prefer
 convenience, then use <a href="#method.to_lowercase"><code>to_lowercase</code></a> instead.</p>
-<h1 id="examples-56" class="section-header"><a href="#examples-56">Examples</a></h1>
+<h1 id="examples-57" class="section-header"><a href="#examples-57">Examples</a></h1>
 <p>Basic usage:</p>
 
 <div class="example-wrap"><pre class="rust rust-example-rendered">
@@ -1449,7 +1478,7 @@ equivalent to the length of this byte string.</p>
 <p>If you'd like to reuse an allocation for performance reasons, then use
 <a href="#method.make_ascii_lowercase"><code>make_ascii_lowercase</code></a> to perform
 the conversion in place.</p>
-<h1 id="examples-57" class="section-header"><a href="#examples-57">Examples</a></h1>
+<h1 id="examples-58" class="section-header"><a href="#examples-58">Examples</a></h1>
 <p>Basic usage:</p>
 
 <div class="example-wrap"><pre class="rust rust-example-rendered">
@@ -1470,7 +1499,7 @@ letters <code>A-Z</code> are converted to <code>a-z</code>. All other bytes rema
 <p>If you don't need to do the conversion in
 place and instead prefer convenience, then use
 <a href="#method.to_ascii_lowercase"><code>to_ascii_lowercase</code></a> instead.</p>
-<h1 id="examples-58" class="section-header"><a href="#examples-58">Examples</a></h1>
+<h1 id="examples-59" class="section-header"><a href="#examples-59">Examples</a></h1>
 <p>Basic usage:</p>
 
 <div class="example-wrap"><pre class="rust rust-example-rendered">
@@ -1499,7 +1528,7 @@ the given byte string may not be equivalent to the number of bytes in
 this byte string.</p>
 <p>If you'd like to reuse an allocation for performance reasons, then use
 <a href="#method.to_uppercase_into"><code>to_uppercase_into</code></a> instead.</p>
-<h1 id="examples-59" class="section-header"><a href="#examples-59">Examples</a></h1>
+<h1 id="examples-60" class="section-header"><a href="#examples-60">Examples</a></h1>
 <p>Basic usage:</p>
 
 <div class="example-wrap"><pre class="rust rust-example-rendered">
@@ -1533,7 +1562,7 @@ the given byte string may not be equivalent to the number of bytes in
 this byte string.</p>
 <p>If you don't need to amortize allocation and instead prefer
 convenience, then use <a href="#method.to_uppercase"><code>to_uppercase</code></a> instead.</p>
-<h1 id="examples-60" class="section-header"><a href="#examples-60">Examples</a></h1>
+<h1 id="examples-61" class="section-header"><a href="#examples-61">Examples</a></h1>
 <p>Basic usage:</p>
 
 <div class="example-wrap"><pre class="rust rust-example-rendered">
@@ -1573,7 +1602,7 @@ equivalent to the length of this byte string.</p>
 <p>If you'd like to reuse an allocation for performance reasons, then use
 <a href="#method.make_ascii_uppercase"><code>make_ascii_uppercase</code></a> to perform
 the conversion in place.</p>
-<h1 id="examples-61" class="section-header"><a href="#examples-61">Examples</a></h1>
+<h1 id="examples-62" class="section-header"><a href="#examples-62">Examples</a></h1>
 <p>Basic usage:</p>
 
 <div class="example-wrap"><pre class="rust rust-example-rendered">
@@ -1594,7 +1623,7 @@ letters <code>a-z</code> are converted to <code>A-Z</code>. All other bytes rema
 <p>If you don't need to do the conversion in
 place and instead prefer convenience, then use
 <a href="#method.to_ascii_uppercase"><code>to_ascii_uppercase</code></a> instead.</p>
-<h1 id="examples-62" class="section-header"><a href="#examples-62">Examples</a></h1>
+<h1 id="examples-63" class="section-header"><a href="#examples-63">Examples</a></h1>
 <p>Basic usage:</p>
 
 <div class="example-wrap"><pre class="rust rust-example-rendered">
@@ -1619,7 +1648,7 @@ content.</p>
 <p>Note that this is equivalent to the generic <code>[u8]::reverse</code> method.
 This method is provided to permit callers to explicitly differentiate
 between reversing bytes, codepoints and graphemes.</p>
-<h1 id="examples-63" class="section-header"><a href="#examples-63">Examples</a></h1>
+<h1 id="examples-64" class="section-header"><a href="#examples-64">Examples</a></h1>
 <p>Basic usage:</p>
 
 <div class="example-wrap"><pre class="rust rust-example-rendered">
@@ -1648,7 +1677,7 @@ if this byte string contains grapheme clusters with more than one
 codepoint, then those grapheme clusters will not necessarily be
 preserved. If you'd like to preserve grapheme clusters, then use
 <a href="#method.reverse_graphemes"><code>reverse_graphemes</code></a> instead.</p>
-<h1 id="examples-64" class="section-header"><a href="#examples-64">Examples</a></h1>
+<h1 id="examples-65" class="section-header"><a href="#examples-65">Examples</a></h1>
 <p>Basic usage:</p>
 
 <div class="example-wrap"><pre class="rust rust-example-rendered">
@@ -1697,7 +1726,7 @@ is also guaranteed to be valid UTF-8.</p>
 
 <span class="kw">let</span> <span class="ident">reversed</span> <span class="op">=</span> <span class="ident">graphemes</span>.<span class="ident">concat</span>();
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">reversed</span>, <span class="string">&quot;rab☃oof&quot;</span>);</pre></div>
-<h1 id="examples-65" class="section-header"><a href="#examples-65">Examples</a></h1>
+<h1 id="examples-66" class="section-header"><a href="#examples-66">Examples</a></h1>
 <p>Basic usage:</p>
 
 <div class="example-wrap"><pre class="rust rust-example-rendered">
@@ -1719,7 +1748,7 @@ unlike <code>reverse_chars</code>.</p>
 <p>ASCII is an encoding that defines 128 codepoints. A byte corresponds to
 an ASCII codepoint if and only if it is in the inclusive range
 <code>[0, 127]</code>.</p>
-<h1 id="examples-66" class="section-header"><a href="#examples-66">Examples</a></h1>
+<h1 id="examples-67" class="section-header"><a href="#examples-67">Examples</a></h1>
 <p>Basic usage:</p>
 
 <div class="example-wrap"><pre class="rust rust-example-rendered">
@@ -1731,7 +1760,7 @@ an ASCII codepoint if and only if it is in the inclusive range
 </div><h3 id='method.is_utf8' class='method'><code id='is_utf8.v'>fn <a href='#method.is_utf8' class='fnname'>is_utf8</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></h3><div class='docblock'><p>Returns true if and only if the entire byte string is valid UTF-8.</p>
 <p>If you need location information about where a byte string's first
 invalid UTF-8 byte is, then use the <a href="#method.to_str"><code>to_str</code></a> method.</p>
-<h1 id="examples-67" class="section-header"><a href="#examples-67">Examples</a></h1>
+<h1 id="examples-68" class="section-header"><a href="#examples-68">Examples</a></h1>
 <p>Basic usage:</p>
 
 <div class="example-wrap"><pre class="rust rust-example-rendered">
@@ -1751,7 +1780,7 @@ invalid UTF-8 byte is, then use the <a href="#method.to_str"><code>to_str</code>
 byte string is empty, this returns <code>None</code>.</p>
 <p>Note that this is like the generic <code>[u8]::last</code>, except this returns
 the byte by value instead of a reference to the byte.</p>
-<h1 id="examples-68" class="section-header"><a href="#examples-68">Examples</a></h1>
+<h1 id="examples-69" class="section-header"><a href="#examples-69">Examples</a></h1>
 <p>Basic usage:</p>
 
 <div class="example-wrap"><pre class="rust rust-example-rendered">
@@ -1762,7 +1791,7 @@ the byte by value instead of a reference to the byte.</p>
 </div><h3 id='method.find_non_ascii_byte' class='method'><code id='find_non_ascii_byte.v'>fn <a href='#method.find_non_ascii_byte' class='fnname'>find_non_ascii_byte</a>(&amp;self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>&gt;</code></h3><div class='docblock'><p>Returns the index of the first non-ASCII byte in this byte string (if
 any such indices exist). Specifically, it returns the index of the
 first byte with a value greater than or equal to <code>0x80</code>.</p>
-<h1 id="examples-69" class="section-header"><a href="#examples-69">Examples</a></h1>
+<h1 id="examples-70" class="section-header"><a href="#examples-70">Examples</a></h1>
 <p>Basic usage:</p>
 
 <div class="example-wrap"><pre class="rust rust-example-rendered">
@@ -1780,7 +1809,7 @@ of bytes from <code>dest</code> to the end of the byte string.</p>
 <h1 id="panics-1" class="section-header"><a href="#panics-1">Panics</a></h1>
 <p>Panics if either range is out of bounds, or if <code>src</code> is too big to fit
 into <code>dest</code>, or if the end of <code>src</code> is before the start.</p>
-<h1 id="examples-70" class="section-header"><a href="#examples-70">Examples</a></h1>
+<h1 id="examples-71" class="section-header"><a href="#examples-71">Examples</a></h1>
 <p>Copying four bytes within a byte string:</p>
 
 <div class="example-wrap"><pre class="rust rust-example-rendered">
