@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/regex-automata-0.1.8/src/dense.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>dense.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../regex_automata/index.html'><div class='logo-container'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/regex-automata-0.1.9/src/dense.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>dense.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../regex_automata/index.html'><div class='logo-container'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
 <span id="2">   2</span>
 <span id="3">   3</span>
 <span id="4">   4</span>
@@ -2330,82 +2330,6 @@
 <span id="2330">2330</span>
 <span id="2331">2331</span>
 <span id="2332">2332</span>
-<span id="2333">2333</span>
-<span id="2334">2334</span>
-<span id="2335">2335</span>
-<span id="2336">2336</span>
-<span id="2337">2337</span>
-<span id="2338">2338</span>
-<span id="2339">2339</span>
-<span id="2340">2340</span>
-<span id="2341">2341</span>
-<span id="2342">2342</span>
-<span id="2343">2343</span>
-<span id="2344">2344</span>
-<span id="2345">2345</span>
-<span id="2346">2346</span>
-<span id="2347">2347</span>
-<span id="2348">2348</span>
-<span id="2349">2349</span>
-<span id="2350">2350</span>
-<span id="2351">2351</span>
-<span id="2352">2352</span>
-<span id="2353">2353</span>
-<span id="2354">2354</span>
-<span id="2355">2355</span>
-<span id="2356">2356</span>
-<span id="2357">2357</span>
-<span id="2358">2358</span>
-<span id="2359">2359</span>
-<span id="2360">2360</span>
-<span id="2361">2361</span>
-<span id="2362">2362</span>
-<span id="2363">2363</span>
-<span id="2364">2364</span>
-<span id="2365">2365</span>
-<span id="2366">2366</span>
-<span id="2367">2367</span>
-<span id="2368">2368</span>
-<span id="2369">2369</span>
-<span id="2370">2370</span>
-<span id="2371">2371</span>
-<span id="2372">2372</span>
-<span id="2373">2373</span>
-<span id="2374">2374</span>
-<span id="2375">2375</span>
-<span id="2376">2376</span>
-<span id="2377">2377</span>
-<span id="2378">2378</span>
-<span id="2379">2379</span>
-<span id="2380">2380</span>
-<span id="2381">2381</span>
-<span id="2382">2382</span>
-<span id="2383">2383</span>
-<span id="2384">2384</span>
-<span id="2385">2385</span>
-<span id="2386">2386</span>
-<span id="2387">2387</span>
-<span id="2388">2388</span>
-<span id="2389">2389</span>
-<span id="2390">2390</span>
-<span id="2391">2391</span>
-<span id="2392">2392</span>
-<span id="2393">2393</span>
-<span id="2394">2394</span>
-<span id="2395">2395</span>
-<span id="2396">2396</span>
-<span id="2397">2397</span>
-<span id="2398">2398</span>
-<span id="2399">2399</span>
-<span id="2400">2400</span>
-<span id="2401">2401</span>
-<span id="2402">2402</span>
-<span id="2403">2403</span>
-<span id="2404">2404</span>
-<span id="2405">2405</span>
-<span id="2406">2406</span>
-<span id="2407">2407</span>
-<span id="2408">2408</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">fmt</span>;
@@ -2414,9 +2338,9 @@
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">mem</span>;
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">slice</span>;
 
-<span class="kw">use</span> <span class="ident">byteorder</span>::{<span class="ident">ByteOrder</span>, <span class="ident">NativeEndian</span>};
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>
 <span class="kw">use</span> <span class="ident">byteorder</span>::{<span class="ident">BigEndian</span>, <span class="ident">LittleEndian</span>};
+<span class="kw">use</span> <span class="ident">byteorder</span>::{<span class="ident">ByteOrder</span>, <span class="ident">NativeEndian</span>};
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>
 <span class="kw">use</span> <span class="ident">regex_syntax</span>::<span class="ident">ParserBuilder</span>;
 
@@ -2429,13 +2353,13 @@
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>
 <span class="kw">use</span> <span class="ident">minimize</span>::<span class="ident">Minimizer</span>;
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>
-<span class="kw">use</span> <span class="ident">nfa</span>::{<span class="ident">NFA</span>, <span class="ident">NFABuilder</span>};
+<span class="kw">use</span> <span class="ident">nfa</span>::{<span class="self">self</span>, <span class="ident">NFA</span>};
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>
 <span class="kw">use</span> <span class="ident">sparse</span>::<span class="ident">SparseDFA</span>;
-<span class="kw">use</span> <span class="ident">state_id</span>::{<span class="ident">StateID</span>, <span class="ident">dead_id</span>};
+<span class="kw">use</span> <span class="ident">state_id</span>::{<span class="ident">dead_id</span>, <span class="ident">StateID</span>};
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>
 <span class="kw">use</span> <span class="ident">state_id</span>::{
-    <span class="ident">premultiply_overflow_error</span>, <span class="ident">next_state_id</span>, <span class="ident">write_state_id_bytes</span>,
+    <span class="ident">next_state_id</span>, <span class="ident">premultiply_overflow_error</span>, <span class="ident">write_state_id_bytes</span>,
 };
 
 <span class="doccomment">/// The size of the alphabet in a standard DFA.</span>
@@ -3402,7 +3326,7 @@
             <span class="ident">start</span>: <span class="ident">dead_id</span>(),
             <span class="ident">state_count</span>: <span class="number">0</span>,
             <span class="ident">max_match</span>: <span class="ident">S</span>::<span class="ident">from_usize</span>(<span class="number">0</span>),
-            <span class="ident">byte_classes</span>: <span class="ident">byte_classes</span>,
+            <span class="ident">byte_classes</span>,
             <span class="ident">trans</span>: <span class="macro">vec</span><span class="macro">!</span>[],
         };
         <span class="comment">// Every state ID repr must be able to fit at least one state.</span>
@@ -3685,10 +3609,7 @@
         <span class="ident">A</span>::<span class="ident">write_u64</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">buf</span>[<span class="ident">i</span>..], <span class="self">self</span>.<span class="ident">state_count</span> <span class="kw">as</span> <span class="ident">u64</span>);
         <span class="ident">i</span> <span class="op">+</span><span class="op">=</span> <span class="number">8</span>;
         <span class="comment">// max match state</span>
-        <span class="ident">A</span>::<span class="ident">write_u64</span>(
-            <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">buf</span>[<span class="ident">i</span>..],
-            <span class="self">self</span>.<span class="ident">max_match</span>.<span class="ident">to_usize</span>() <span class="kw">as</span> <span class="ident">u64</span>,
-        );
+        <span class="ident">A</span>::<span class="ident">write_u64</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">buf</span>[<span class="ident">i</span>..], <span class="self">self</span>.<span class="ident">max_match</span>.<span class="ident">to_usize</span>() <span class="kw">as</span> <span class="ident">u64</span>);
         <span class="ident">i</span> <span class="op">+</span><span class="op">=</span> <span class="number">8</span>;
         <span class="comment">// byte class map</span>
         <span class="kw">for</span> <span class="ident">b</span> <span class="kw">in</span> (<span class="number">0</span>..<span class="number">256</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">b</span><span class="op">|</span> <span class="ident">b</span> <span class="kw">as</span> <span class="ident">u8</span>) {
@@ -3720,7 +3641,7 @@
         <span class="comment">// skip over label</span>
         <span class="kw">match</span> <span class="ident">buf</span>.<span class="ident">iter</span>().<span class="ident">position</span>(<span class="op">|</span><span class="kw-2">&amp;</span><span class="ident">b</span><span class="op">|</span> <span class="ident">b</span> <span class="op">=</span><span class="op">=</span> <span class="string">b&#39;\x00&#39;</span>) {
             <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;could not find label&quot;</span>),
-            <span class="prelude-val">Some</span>(<span class="ident">i</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">buf</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">buf</span>[<span class="ident">i</span><span class="op">+</span><span class="number">1</span>..],
+            <span class="prelude-val">Some</span>(<span class="ident">i</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">buf</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">buf</span>[<span class="ident">i</span> <span class="op">+</span> <span class="number">1</span>..],
         }
 
         <span class="comment">// check that current endianness is same as endianness of DFA</span>
@@ -3751,7 +3672,8 @@
             <span class="macro">panic</span><span class="macro">!</span>(
                 <span class="string">&quot;state size of DenseDFA ({}) does not match \
                  requested state size ({})&quot;</span>,
-                <span class="ident">state_size</span>, <span class="ident">mem</span>::<span class="ident">size_of</span>::<span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>(),
+                <span class="ident">state_size</span>,
+                <span class="ident">mem</span>::<span class="ident">size_of</span>::<span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>(),
             );
         }
         <span class="ident">buf</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">buf</span>[<span class="number">2</span>..];
@@ -3782,7 +3704,8 @@
             <span class="ident">buf</span>.<span class="ident">len</span>() <span class="op">&lt;</span><span class="op">=</span> <span class="ident">len_bytes</span>,
             <span class="string">&quot;insufficient transition table bytes, \
              expected at least {} but only have {}&quot;</span>,
-            <span class="ident">len_bytes</span>, <span class="ident">buf</span>.<span class="ident">len</span>()
+            <span class="ident">len_bytes</span>,
+            <span class="ident">buf</span>.<span class="ident">len</span>()
         );
         <span class="macro">assert_eq</span><span class="macro">!</span>(
             <span class="number">0</span>,
@@ -3790,9 +3713,9 @@
             <span class="string">&quot;DenseDFA transition table is not properly aligned&quot;</span>
         );
 
-        <span class="comment">// SAFETY: This is the only actual unsafe thing in this entire routine.</span>
-        <span class="comment">// The key things we need to worry about here are alignment and size.</span>
-        <span class="comment">// The two asserts above should cover both conditions.</span>
+        <span class="comment">// SAFETY: This is the only actual not-safe thing in this entire</span>
+        <span class="comment">// routine. The key things we need to worry about here are alignment</span>
+        <span class="comment">// and size. The two asserts above should cover both conditions.</span>
         <span class="kw">let</span> <span class="ident">trans</span> <span class="op">=</span> <span class="ident">slice</span>::<span class="ident">from_raw_parts</span>(<span class="ident">buf</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">S</span>, <span class="ident">len</span>);
         <span class="ident">Repr</span> {
             <span class="ident">premultiplied</span>: <span class="ident">opts</span> <span class="op">&amp;</span> <span class="ident">MASK_PREMULTIPLIED</span> <span class="op">&gt;</span> <span class="number">0</span>,
@@ -3897,12 +3820,11 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">add_empty_state</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span> {
         <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="self">self</span>.<span class="ident">premultiplied</span>, <span class="string">&quot;can&#39;t add state to premultiplied DFA&quot;</span>);
 
-        <span class="kw">let</span> <span class="ident">id</span> <span class="op">=</span>
-            <span class="kw">if</span> <span class="self">self</span>.<span class="ident">state_count</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
-                <span class="ident">S</span>::<span class="ident">from_usize</span>(<span class="number">0</span>)
-            } <span class="kw">else</span> {
-                <span class="ident">next_state_id</span>(<span class="ident">S</span>::<span class="ident">from_usize</span>(<span class="self">self</span>.<span class="ident">state_count</span> <span class="op">-</span> <span class="number">1</span>))<span class="question-mark">?</span>
-            };
+        <span class="kw">let</span> <span class="ident">id</span> <span class="op">=</span> <span class="kw">if</span> <span class="self">self</span>.<span class="ident">state_count</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+            <span class="ident">S</span>::<span class="ident">from_usize</span>(<span class="number">0</span>)
+        } <span class="kw">else</span> {
+            <span class="ident">next_state_id</span>(<span class="ident">S</span>::<span class="ident">from_usize</span>(<span class="self">self</span>.<span class="ident">state_count</span> <span class="op">-</span> <span class="number">1</span>))<span class="question-mark">?</span>
+        };
         <span class="kw">let</span> <span class="ident">alphabet_len</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">alphabet_len</span>();
         <span class="self">self</span>.<span class="ident">trans</span>.<span class="ident">extend</span>(<span class="ident">iter</span>::<span class="ident">repeat</span>(<span class="ident">dead_id</span>::<span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>()).<span class="ident">take</span>(<span class="ident">alphabet_len</span>));
         <span class="comment">// This should never panic, since state_count is a usize. The</span>
@@ -4050,7 +3972,7 @@
         <span class="macro">writeln</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;DenseDFA(&quot;</span>)<span class="question-mark">?</span>;
         <span class="kw">for</span> (<span class="ident">id</span>, <span class="ident">state</span>) <span class="kw">in</span> <span class="self">self</span>.<span class="ident">states</span>() {
             <span class="kw">let</span> <span class="ident">status</span> <span class="op">=</span> <span class="ident">state_status</span>(<span class="self">self</span>, <span class="ident">id</span>);
-            <span class="macro">writeln</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;{}{:04}: {:?}&quot;</span>, <span class="ident">status</span>, <span class="ident">id</span>.<span class="ident">to_usize</span>(), <span class="ident">state</span>)<span class="question-mark">?</span>;
+            <span class="macro">writeln</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;{}{:06}: {:?}&quot;</span>, <span class="ident">status</span>, <span class="ident">id</span>.<span class="ident">to_usize</span>(), <span class="ident">state</span>)<span class="question-mark">?</span>;
         }
         <span class="macro">writeln</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;)&quot;</span>)<span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(())
@@ -4082,12 +4004,11 @@
     <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">S</span>, <span class="ident">State</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">S</span><span class="op">&gt;</span>)<span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">it</span>.<span class="ident">next</span>().<span class="ident">map</span>(<span class="op">|</span>(<span class="ident">id</span>, <span class="ident">chunk</span>)<span class="op">|</span> {
             <span class="kw">let</span> <span class="ident">state</span> <span class="op">=</span> <span class="ident">State</span> { <span class="ident">transitions</span>: <span class="ident">chunk</span> };
-            <span class="kw">let</span> <span class="ident">id</span> <span class="op">=</span>
-                <span class="kw">if</span> <span class="self">self</span>.<span class="ident">dfa</span>.<span class="ident">premultiplied</span> {
-                    <span class="ident">id</span> <span class="op">*</span> <span class="self">self</span>.<span class="ident">dfa</span>.<span class="ident">alphabet_len</span>()
-                } <span class="kw">else</span> {
-                    <span class="ident">id</span>
-                };
+            <span class="kw">let</span> <span class="ident">id</span> <span class="op">=</span> <span class="kw">if</span> <span class="self">self</span>.<span class="ident">dfa</span>.<span class="ident">premultiplied</span> {
+                <span class="ident">id</span> <span class="op">*</span> <span class="self">self</span>.<span class="ident">dfa</span>.<span class="ident">alphabet_len</span>()
+            } <span class="kw">else</span> {
+                <span class="ident">id</span>
+            };
             (<span class="ident">S</span>::<span class="ident">from_usize</span>(<span class="ident">id</span>), <span class="ident">state</span>)
         })
     }
@@ -4137,15 +4058,16 @@
     <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">transitions</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[];
         <span class="kw">for</span> (<span class="ident">start</span>, <span class="ident">end</span>, <span class="ident">next_id</span>) <span class="kw">in</span> <span class="self">self</span>.<span class="ident">sparse_transitions</span>() {
-            <span class="kw">let</span> <span class="ident">line</span> <span class="op">=</span>
-                <span class="kw">if</span> <span class="ident">start</span> <span class="op">=</span><span class="op">=</span> <span class="ident">end</span> {
-                    <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{} =&gt; {}&quot;</span>, <span class="ident">escape</span>(<span class="ident">start</span>), <span class="ident">next_id</span>.<span class="ident">to_usize</span>())
-                } <span class="kw">else</span> {
-                    <span class="macro">format</span><span class="macro">!</span>(
-                        <span class="string">&quot;{}-{} =&gt; {}&quot;</span>,
-                        <span class="ident">escape</span>(<span class="ident">start</span>), <span class="ident">escape</span>(<span class="ident">end</span>), <span class="ident">next_id</span>.<span class="ident">to_usize</span>(),
-                    )
-                };
+            <span class="kw">let</span> <span class="ident">line</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">start</span> <span class="op">=</span><span class="op">=</span> <span class="ident">end</span> {
+                <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{} =&gt; {}&quot;</span>, <span class="ident">escape</span>(<span class="ident">start</span>), <span class="ident">next_id</span>.<span class="ident">to_usize</span>())
+            } <span class="kw">else</span> {
+                <span class="macro">format</span><span class="macro">!</span>(
+                    <span class="string">&quot;{}-{} =&gt; {}&quot;</span>,
+                    <span class="ident">escape</span>(<span class="ident">start</span>),
+                    <span class="ident">escape</span>(<span class="ident">end</span>),
+                    <span class="ident">next_id</span>.<span class="ident">to_usize</span>(),
+                )
+            };
             <span class="ident">transitions</span>.<span class="ident">push</span>(<span class="ident">line</span>);
         }
         <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;{}&quot;</span>, <span class="ident">transitions</span>.<span class="ident">join</span>(<span class="string">&quot;, &quot;</span>))<span class="question-mark">?</span>;
@@ -4286,7 +4208,7 @@
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Debug</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Builder</span> {
     <span class="ident">parser</span>: <span class="ident">ParserBuilder</span>,
-    <span class="ident">nfa</span>: <span class="ident">NFABuilder</span>,
+    <span class="ident">nfa</span>: <span class="ident">nfa</span>::<span class="ident">Builder</span>,
     <span class="ident">anchored</span>: <span class="ident">bool</span>,
     <span class="ident">minimize</span>: <span class="ident">bool</span>,
     <span class="ident">premultiply</span>: <span class="ident">bool</span>,
@@ -4299,9 +4221,13 @@
 <span class="kw">impl</span> <span class="ident">Builder</span> {
     <span class="doccomment">/// Create a new DenseDFA builder with the default configuration.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Builder</span> {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">nfa</span> <span class="op">=</span> <span class="ident">nfa</span>::<span class="ident">Builder</span>::<span class="ident">new</span>();
+        <span class="comment">// This is enabled by default, but we set it here anyway. Since we&#39;re</span>
+        <span class="comment">// building a DFA, shrinking the NFA is always a good idea.</span>
+        <span class="ident">nfa</span>.<span class="ident">shrink</span>(<span class="bool-val">true</span>);
         <span class="ident">Builder</span> {
             <span class="ident">parser</span>: <span class="ident">ParserBuilder</span>::<span class="ident">new</span>(),
-            <span class="ident">nfa</span>: <span class="ident">NFABuilder</span>::<span class="ident">new</span>(),
+            <span class="ident">nfa</span>,
             <span class="ident">anchored</span>: <span class="bool-val">false</span>,
             <span class="ident">minimize</span>: <span class="bool-val">false</span>,
             <span class="ident">premultiply</span>: <span class="bool-val">true</span>,
@@ -4344,22 +4270,27 @@
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">pattern</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">DenseDFA</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>, <span class="ident">S</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">build_from_nfa</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">build_nfa</span>(<span class="ident">pattern</span>)<span class="question-mark">?</span>)
+    }
+
+    <span class="doccomment">/// An internal only (for now) API for building a dense DFA directly from</span>
+    <span class="doccomment">/// an NFA.</span>
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">build_from_nfa</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">StateID</span><span class="op">&gt;</span>(
+        <span class="kw-2">&amp;</span><span class="self">self</span>,
+        <span class="ident">nfa</span>: <span class="kw-2">&amp;</span><span class="ident">NFA</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">DenseDFA</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>, <span class="ident">S</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">longest_match</span> <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="op">!</span><span class="self">self</span>.<span class="ident">anchored</span> {
             <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">unsupported_longest_match</span>());
         }
 
-        <span class="kw">let</span> <span class="ident">nfa</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">build_nfa</span>(<span class="ident">pattern</span>)<span class="question-mark">?</span>;
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">dfa</span> <span class="op">=</span>
-            <span class="kw">if</span> <span class="self">self</span>.<span class="ident">byte_classes</span> {
-                <span class="ident">Determinizer</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="ident">nfa</span>)
-                    .<span class="ident">with_byte_classes</span>()
-                    .<span class="ident">longest_match</span>(<span class="self">self</span>.<span class="ident">longest_match</span>)
-                    .<span class="ident">build</span>()
-            } <span class="kw">else</span> {
-                <span class="ident">Determinizer</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="ident">nfa</span>)
-                    .<span class="ident">longest_match</span>(<span class="self">self</span>.<span class="ident">longest_match</span>)
-                    .<span class="ident">build</span>()
-            }<span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">dfa</span> <span class="op">=</span> <span class="kw">if</span> <span class="self">self</span>.<span class="ident">byte_classes</span> {
+            <span class="ident">Determinizer</span>::<span class="ident">new</span>(<span class="ident">nfa</span>)
+                .<span class="ident">with_byte_classes</span>()
+                .<span class="ident">longest_match</span>(<span class="self">self</span>.<span class="ident">longest_match</span>)
+                .<span class="ident">build</span>()
+        } <span class="kw">else</span> {
+            <span class="ident">Determinizer</span>::<span class="ident">new</span>(<span class="ident">nfa</span>).<span class="ident">longest_match</span>(<span class="self">self</span>.<span class="ident">longest_match</span>).<span class="ident">build</span>()
+        }<span class="question-mark">?</span>;
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">minimize</span> {
             <span class="ident">dfa</span>.<span class="ident">minimize</span>();
         }
@@ -4371,12 +4302,8 @@
 
     <span class="doccomment">/// Builds an NFA from the given pattern.</span>
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">build_nfa</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">pattern</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">NFA</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">hir</span> <span class="op">=</span> <span class="self">self</span>
-            .<span class="ident">parser</span>
-            .<span class="ident">build</span>()
-            .<span class="ident">parse</span>(<span class="ident">pattern</span>)
-            .<span class="ident">map_err</span>(<span class="ident">Error</span>::<span class="ident">syntax</span>)<span class="question-mark">?</span>;
-        <span class="prelude-val">Ok</span>(<span class="self">self</span>.<span class="ident">nfa</span>.<span class="ident">build</span>(<span class="ident">hir</span>)<span class="question-mark">?</span>)
+        <span class="kw">let</span> <span class="ident">hir</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">parser</span>.<span class="ident">build</span>().<span class="ident">parse</span>(<span class="ident">pattern</span>).<span class="ident">map_err</span>(<span class="ident">Error</span>::<span class="ident">syntax</span>)<span class="question-mark">?</span>;
+        <span class="prelude-val">Ok</span>(<span class="self">self</span>.<span class="ident">nfa</span>.<span class="ident">build</span>(<span class="kw-2">&amp;</span><span class="ident">hir</span>)<span class="question-mark">?</span>)
     }
 
     <span class="doccomment">/// Set whether matching must be anchored at the beginning of the input.</span>
@@ -4638,6 +4565,17 @@
         <span class="self">self</span>.<span class="ident">longest_match</span> <span class="op">=</span> <span class="ident">yes</span>;
         <span class="self">self</span>
     }
+
+    <span class="doccomment">/// Apply best effort heuristics to shrink the NFA at the expense of more</span>
+    <span class="doccomment">/// time/memory.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This may be exposed in the future, but for now is exported for use in</span>
+    <span class="doccomment">/// the `regex-automata-debug` tool.</span>
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">shrink</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">yes</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Builder</span> {
+        <span class="self">self</span>.<span class="ident">nfa</span>.<span class="ident">shrink</span>(<span class="ident">yes</span>);
+        <span class="self">self</span>
+    }
 }
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>
@@ -4655,15 +4593,13 @@
     <span class="ident">String</span>::<span class="ident">from_utf8</span>(<span class="ident">ascii</span>::<span class="ident">escape_default</span>(<span class="ident">b</span>).<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span><span class="op">&gt;</span>()).<span class="ident">unwrap</span>()
 }
 
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
-<span class="attribute">#[<span class="ident">allow</span>(<span class="ident">dead_code</span>)]</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">test</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>))]</span>
 <span class="kw">mod</span> <span class="ident">tests</span> {
-    <span class="kw">use</span> <span class="ident">nfa</span>::<span class="ident">NFA</span>;
     <span class="kw">use</span> <span class="kw">super</span>::<span class="kw-2">*</span>;
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">errors_when_converting_to_smaller_dfa</span>() {
-        <span class="kw">let</span> <span class="ident">pattern</span> <span class="op">=</span> <span class="string">r&quot;\w&quot;</span>;
+        <span class="kw">let</span> <span class="ident">pattern</span> <span class="op">=</span> <span class="string">r&quot;\w{10}&quot;</span>;
         <span class="kw">let</span> <span class="ident">dfa</span> <span class="op">=</span> <span class="ident">Builder</span>::<span class="ident">new</span>()
             .<span class="ident">byte_classes</span>(<span class="bool-val">false</span>)
             .<span class="ident">anchored</span>(<span class="bool-val">true</span>)
@@ -4675,7 +4611,7 @@
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">errors_when_determinization_would_overflow</span>() {
-        <span class="kw">let</span> <span class="ident">pattern</span> <span class="op">=</span> <span class="string">r&quot;\w&quot;</span>;
+        <span class="kw">let</span> <span class="ident">pattern</span> <span class="op">=</span> <span class="string">r&quot;\w{10}&quot;</span>;
 
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">builder</span> <span class="op">=</span> <span class="ident">Builder</span>::<span class="ident">new</span>();
         <span class="ident">builder</span>.<span class="ident">byte_classes</span>(<span class="bool-val">false</span>).<span class="ident">anchored</span>(<span class="bool-val">true</span>).<span class="ident">premultiply</span>(<span class="bool-val">false</span>);
@@ -4698,122 +4634,34 @@
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">builder</span>.<span class="ident">build_with_size</span>::<span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>(<span class="ident">pattern</span>).<span class="ident">is_err</span>());
     }
 
-    <span class="kw">fn</span> <span class="ident">print_automata</span>(<span class="ident">pattern</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) {
-        <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;BUILDING AUTOMATA&quot;</span>);
-        <span class="kw">let</span> (<span class="ident">nfa</span>, <span class="ident">dfa</span>, <span class="ident">mdfa</span>) <span class="op">=</span> <span class="ident">build_automata</span>(<span class="ident">pattern</span>);
+    <span class="comment">// let data = ::std::fs::read_to_string(&quot;/usr/share/dict/words&quot;).unwrap();</span>
+    <span class="comment">// let mut words: Vec&lt;&amp;str&gt; = data.lines().collect();</span>
+    <span class="comment">// println!(&quot;{} words&quot;, words.len());</span>
+    <span class="comment">// words.sort_by(|w1, w2| w1.len().cmp(&amp;w2.len()).reverse());</span>
+    <span class="comment">// let pattern = words.join(&quot;|&quot;);</span>
+    <span class="comment">// print_automata_counts(&amp;pattern);</span>
+    <span class="comment">// print_automata(&amp;pattern);</span>
 
-        <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="string">&quot;#&quot;</span>.<span class="ident">repeat</span>(<span class="number">100</span>));
-        <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;PATTERN: {:?}&quot;</span>, <span class="ident">pattern</span>);
-        <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;NFA:&quot;</span>);
-        <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;{:?}&quot;</span>, <span class="ident">nfa</span>);
+    <span class="comment">// print_automata(r&quot;[01]*1[01]{5}&quot;);</span>
+    <span class="comment">// print_automata(r&quot;X(.?){0,8}Y&quot;);</span>
+    <span class="comment">// print_automata_counts(r&quot;\p{alphabetic}&quot;);</span>
+    <span class="comment">// print_automata(r&quot;a*b+|cdefg&quot;);</span>
+    <span class="comment">// print_automata(r&quot;(..)*(...)*&quot;);</span>
 
-        <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="string">&quot;~&quot;</span>.<span class="ident">repeat</span>(<span class="number">79</span>));
+    <span class="comment">// let pattern = r&quot;\p{any}*?\p{Other_Uppercase}&quot;;</span>
+    <span class="comment">// let pattern = r&quot;\p{any}*?\w+&quot;;</span>
+    <span class="comment">// print_automata_counts(pattern);</span>
+    <span class="comment">// print_automata_counts(r&quot;(?-u:\w)&quot;);</span>
 
-        <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;DFA:&quot;</span>);
-        <span class="macro">print</span><span class="macro">!</span>(<span class="string">&quot;{:?}&quot;</span>, <span class="ident">dfa</span>);
-        <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="string">&quot;~&quot;</span>.<span class="ident">repeat</span>(<span class="number">79</span>));
-
-        <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;Minimal DFA:&quot;</span>);
-        <span class="macro">print</span><span class="macro">!</span>(<span class="string">&quot;{:?}&quot;</span>, <span class="ident">mdfa</span>);
-        <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="string">&quot;~&quot;</span>.<span class="ident">repeat</span>(<span class="number">79</span>));
-
-        <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="string">&quot;#&quot;</span>.<span class="ident">repeat</span>(<span class="number">100</span>));
-    }
-
-    <span class="comment">// fn print_automata_counts(pattern: &amp;str) {</span>
-        <span class="comment">// let (nfa, dfa, mdfa) = build_automata(pattern);</span>
-        <span class="comment">// println!(&quot;nfa # states: {:?}&quot;, nfa.len());</span>
-        <span class="comment">// println!(&quot;dfa # states: {:?}&quot;, dfa.len());</span>
-        <span class="comment">// println!(&quot;minimal dfa # states: {:?}&quot;, mdfa.len());</span>
-    <span class="comment">// }</span>
-
-    <span class="kw">fn</span> <span class="ident">build_automata</span>(
-        <span class="ident">pattern</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">NFA</span>, <span class="ident">DenseDFA</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>, <span class="ident">usize</span><span class="op">&gt;</span>, <span class="ident">DenseDFA</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>, <span class="ident">usize</span><span class="op">&gt;</span>) {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">builder</span> <span class="op">=</span> <span class="ident">Builder</span>::<span class="ident">new</span>();
-        <span class="ident">builder</span>.<span class="ident">byte_classes</span>(<span class="bool-val">true</span>).<span class="ident">premultiply</span>(<span class="bool-val">false</span>);
-        <span class="ident">builder</span>.<span class="ident">anchored</span>(<span class="bool-val">true</span>);
-        <span class="ident">builder</span>.<span class="ident">allow_invalid_utf8</span>(<span class="bool-val">false</span>);
-        <span class="kw">let</span> <span class="ident">nfa</span> <span class="op">=</span> <span class="ident">builder</span>.<span class="ident">build_nfa</span>(<span class="ident">pattern</span>).<span class="ident">unwrap</span>();
-        <span class="kw">let</span> <span class="ident">dfa</span> <span class="op">=</span> <span class="ident">builder</span>.<span class="ident">build</span>(<span class="ident">pattern</span>).<span class="ident">unwrap</span>();
-        <span class="kw">let</span> <span class="ident">min</span> <span class="op">=</span> <span class="ident">builder</span>.<span class="ident">minimize</span>(<span class="bool-val">true</span>).<span class="ident">build</span>(<span class="ident">pattern</span>).<span class="ident">unwrap</span>();
-
-        (<span class="ident">nfa</span>, <span class="ident">dfa</span>, <span class="ident">min</span>)
-    }
-
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">scratch</span>() {
-        <span class="comment">// let data = ::std::fs::read_to_string(&quot;/usr/share/dict/words&quot;).unwrap();</span>
-        <span class="comment">// let mut words: Vec&lt;&amp;str&gt; = data.lines().collect();</span>
-        <span class="comment">// println!(&quot;{} words&quot;, words.len());</span>
-        <span class="comment">// words.sort_by(|w1, w2| w1.len().cmp(&amp;w2.len()).reverse());</span>
-        <span class="comment">// let pattern = words.join(&quot;|&quot;);</span>
-        <span class="comment">// print_automata_counts(&amp;pattern);</span>
-        <span class="comment">// print_automata(&amp;pattern);</span>
-
-        <span class="comment">// print_automata(r&quot;[01]*1[01]{5}&quot;);</span>
-        <span class="comment">// print_automata(r&quot;X(.?){0,8}Y&quot;);</span>
-        <span class="comment">// print_automata_counts(r&quot;\p{alphabetic}&quot;);</span>
-        <span class="comment">// print_automata(r&quot;a*b+|cdefg&quot;);</span>
-        <span class="comment">// print_automata(r&quot;(..)*(...)*&quot;);</span>
-
-        <span class="comment">// let pattern = r&quot;\p{any}*?\p{Other_Uppercase}&quot;;</span>
-        <span class="comment">// let pattern = r&quot;\p{any}*?\w+&quot;;</span>
-        <span class="comment">// print_automata_counts(pattern);</span>
-        <span class="comment">// print_automata_counts(r&quot;(?-u:\w)&quot;);</span>
-
-        <span class="comment">// let pattern = r&quot;\p{Greek}&quot;;</span>
-        <span class="comment">// let pattern = r&quot;zZzZzZzZzZ&quot;;</span>
-        <span class="comment">// let pattern = grapheme_pattern();</span>
-        <span class="comment">// let pattern = r&quot;\p{Ideographic}&quot;;</span>
-        <span class="comment">// let pattern = r&quot;\w{10}&quot;; // 51784 --&gt; 41264</span>
-        <span class="comment">// let pattern = r&quot;\w&quot;; // 5182</span>
-        <span class="comment">// let pattern = r&quot;a*&quot;;</span>
-        <span class="comment">// print_automata(pattern);</span>
-        <span class="comment">// let (_, _, dfa) = build_automata(pattern);</span>
-        <span class="kw">let</span> <span class="ident">dfa</span> <span class="op">=</span> <span class="ident">DenseDFA</span>::<span class="ident">new</span>(<span class="string">&quot;foo[0-9]+&quot;</span>).<span class="ident">unwrap</span>();
-        <span class="kw">let</span> <span class="ident">sparse</span> <span class="op">=</span> <span class="ident">dfa</span>.<span class="ident">to_sparse_sized</span>::<span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>().<span class="ident">unwrap</span>();
-        <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;{:?}&quot;</span>, <span class="ident">sparse</span>);
-
-        <span class="macro">println</span><span class="macro">!</span>(
-            <span class="string">&quot;dense mem: {:?}, sparse mem: {:?}&quot;</span>,
-            <span class="ident">dfa</span>.<span class="ident">to_u16</span>().<span class="ident">unwrap</span>().<span class="ident">memory_usage</span>(),
-            <span class="ident">sparse</span>.<span class="ident">memory_usage</span>(),
-        );
-    }
-
-    <span class="kw">fn</span> <span class="ident">grapheme_pattern</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span> {
-        <span class="string">r&quot;(?x)
-            (?:
-                \p{gcb=CR}\p{gcb=LF}
-                |
-                [\p{gcb=Control}\p{gcb=CR}\p{gcb=LF}]
-                |
-                \p{gcb=Prepend}*
-                (?:
-                    (?:
-                        (?:
-                            \p{gcb=L}*
-                            (?:\p{gcb=V}+|\p{gcb=LV}\p{gcb=V}*|\p{gcb=LVT})
-                            \p{gcb=T}*
-                        )
-                        |
-                        \p{gcb=L}+
-                        |
-                        \p{gcb=T}+
-                    )
-                    |
-                    \p{gcb=RI}\p{gcb=RI}
-                    |
-                    \p{Extended_Pictographic}
-                    (?:\p{gcb=Extend}*\p{gcb=ZWJ}\p{Extended_Pictographic})*
-                    |
-                    [^\p{gcb=Control}\p{gcb=CR}\p{gcb=LF}]
-                )
-                [\p{gcb=Extend}\p{gcb=ZWJ}\p{gcb=SpacingMark}]*
-            )
-    &quot;</span>
-    }
+    <span class="comment">// let pattern = r&quot;\p{Greek}&quot;;</span>
+    <span class="comment">// let pattern = r&quot;zZzZzZzZzZ&quot;;</span>
+    <span class="comment">// let pattern = grapheme_pattern();</span>
+    <span class="comment">// let pattern = r&quot;\p{Ideographic}&quot;;</span>
+    <span class="comment">// let pattern = r&quot;\w{10}&quot;; // 51784 --&gt; 41264</span>
+    <span class="comment">// let pattern = r&quot;\w&quot;; // 5182</span>
+    <span class="comment">// let pattern = r&quot;a*&quot;;</span>
+    <span class="comment">// print_automata(pattern);</span>
+    <span class="comment">// let (_, _, dfa) = build_automata(pattern);</span>
 }
 </pre></div>
 </section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../";window.currentCrate = "regex_automata";</script><script src="../../aliases.js"></script><script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script><script defer src="../../search-index.js"></script></body></html>

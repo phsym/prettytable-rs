@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/regex-automata-0.1.8/src/sparse.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>sparse.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../regex_automata/index.html'><div class='logo-container'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/regex-automata-0.1.9/src/sparse.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>sparse.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../regex_automata/index.html'><div class='logo-container'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
 <span id="2">   2</span>
 <span id="3">   3</span>
 <span id="4">   4</span>
@@ -1254,25 +1254,19 @@
 <span id="1254">1254</span>
 <span id="1255">1255</span>
 <span id="1256">1256</span>
-<span id="1257">1257</span>
-<span id="1258">1258</span>
-<span id="1259">1259</span>
-<span id="1260">1260</span>
-<span id="1261">1261</span>
-<span id="1262">1262</span>
 </pre><div class="example-wrap"><pre class="rust ">
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashMap</span>;
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">fmt</span>;
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">iter</span>;
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">marker</span>::<span class="ident">PhantomData</span>;
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">mem</span>::<span class="ident">size_of</span>;
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashMap</span>;
 
-<span class="kw">use</span> <span class="ident">byteorder</span>::{<span class="ident">ByteOrder</span>, <span class="ident">NativeEndian</span>};
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>
 <span class="kw">use</span> <span class="ident">byteorder</span>::{<span class="ident">BigEndian</span>, <span class="ident">LittleEndian</span>};
+<span class="kw">use</span> <span class="ident">byteorder</span>::{<span class="ident">ByteOrder</span>, <span class="ident">NativeEndian</span>};
 
 <span class="kw">use</span> <span class="ident">classes</span>::<span class="ident">ByteClasses</span>;
 <span class="kw">use</span> <span class="ident">dense</span>;
@@ -1280,9 +1274,9 @@
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>
 <span class="kw">use</span> <span class="ident">error</span>::{<span class="ident">Error</span>, <span class="prelude-ty">Result</span>};
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>
-<span class="kw">use</span> <span class="ident">state_id</span>::{<span class="ident">StateID</span>, <span class="ident">dead_id</span>, <span class="ident">usize_to_state_id</span>, <span class="ident">write_state_id_bytes</span>};
+<span class="kw">use</span> <span class="ident">state_id</span>::{<span class="ident">dead_id</span>, <span class="ident">usize_to_state_id</span>, <span class="ident">write_state_id_bytes</span>, <span class="ident">StateID</span>};
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>))]</span>
-<span class="kw">use</span> <span class="ident">state_id</span>::{<span class="ident">StateID</span>, <span class="ident">dead_id</span>};
+<span class="kw">use</span> <span class="ident">state_id</span>::{<span class="ident">dead_id</span>, <span class="ident">StateID</span>};
 
 <span class="doccomment">/// A sparse table-based deterministic finite automaton (DFA).</span>
 <span class="doccomment">///</span>
@@ -1770,9 +1764,7 @@
 <span class="doccomment">/// you&#39;ll want to use this type (or any of the other DFA variant types)</span>
 <span class="doccomment">/// directly, since they implement `next_state` more efficiently.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Debug</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Standard</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>, <span class="ident">S</span>: <span class="ident">StateID</span> <span class="op">=</span> <span class="ident">usize</span><span class="op">&gt;</span>(
-    <span class="ident">Repr</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">S</span><span class="op">&gt;</span>,
-);
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Standard</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>, <span class="ident">S</span>: <span class="ident">StateID</span> <span class="op">=</span> <span class="ident">usize</span><span class="op">&gt;</span>(<span class="ident">Repr</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">S</span><span class="op">&gt;</span>);
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>, <span class="ident">S</span>: <span class="ident">StateID</span><span class="op">&gt;</span> <span class="ident">DFA</span> <span class="kw">for</span> <span class="ident">Standard</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">S</span><span class="op">&gt;</span> {
     <span class="kw">type</span> <span class="ident">ID</span> <span class="op">=</span> <span class="ident">S</span>;
@@ -1833,9 +1825,7 @@
 <span class="doccomment">/// you&#39;ll want to use this type (or any of the other DFA variant types)</span>
 <span class="doccomment">/// directly, since they implement `next_state` more efficiently.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Debug</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ByteClass</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>, <span class="ident">S</span>: <span class="ident">StateID</span> <span class="op">=</span> <span class="ident">usize</span><span class="op">&gt;</span>(
-    <span class="ident">Repr</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">S</span><span class="op">&gt;</span>,
-);
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ByteClass</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>, <span class="ident">S</span>: <span class="ident">StateID</span> <span class="op">=</span> <span class="ident">usize</span><span class="op">&gt;</span>(<span class="ident">Repr</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">S</span><span class="op">&gt;</span>);
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>, <span class="ident">S</span>: <span class="ident">StateID</span><span class="op">&gt;</span> <span class="ident">DFA</span> <span class="kw">for</span> <span class="ident">ByteClass</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">S</span><span class="op">&gt;</span> {
     <span class="kw">type</span> <span class="ident">ID</span> <span class="op">=</span> <span class="ident">S</span>;
@@ -2007,7 +1997,7 @@
             <span class="ident">state_count</span>: <span class="self">self</span>.<span class="ident">state_count</span>,
             <span class="ident">max_match</span>: <span class="ident">map</span>[<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">max_match</span>],
             <span class="ident">byte_classes</span>: <span class="self">self</span>.<span class="ident">byte_classes</span>.<span class="ident">clone</span>(),
-            <span class="ident">trans</span>: <span class="ident">trans</span>,
+            <span class="ident">trans</span>,
         };
         <span class="kw">for</span> (<span class="kw-2">&amp;</span><span class="ident">old_id</span>, <span class="kw-2">&amp;</span><span class="ident">new_id</span>) <span class="kw">in</span> <span class="ident">map</span>.<span class="ident">iter</span>() {
             <span class="kw">let</span> <span class="ident">old_state</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">state</span>(<span class="ident">old_id</span>);
@@ -2095,10 +2085,7 @@
         <span class="ident">A</span>::<span class="ident">write_u64</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">buf</span>[<span class="ident">i</span>..], <span class="self">self</span>.<span class="ident">state_count</span> <span class="kw">as</span> <span class="ident">u64</span>);
         <span class="ident">i</span> <span class="op">+</span><span class="op">=</span> <span class="number">8</span>;
         <span class="comment">// max match state</span>
-        <span class="ident">A</span>::<span class="ident">write_u64</span>(
-            <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">buf</span>[<span class="ident">i</span>..],
-            <span class="self">self</span>.<span class="ident">max_match</span>.<span class="ident">to_usize</span>() <span class="kw">as</span> <span class="ident">u64</span>,
-        );
+        <span class="ident">A</span>::<span class="ident">write_u64</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">buf</span>[<span class="ident">i</span>..], <span class="self">self</span>.<span class="ident">max_match</span>.<span class="ident">to_usize</span>() <span class="kw">as</span> <span class="ident">u64</span>);
         <span class="ident">i</span> <span class="op">+</span><span class="op">=</span> <span class="number">8</span>;
         <span class="comment">// byte class map</span>
         <span class="kw">for</span> <span class="ident">b</span> <span class="kw">in</span> (<span class="number">0</span>..<span class="number">256</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">b</span><span class="op">|</span> <span class="ident">b</span> <span class="kw">as</span> <span class="ident">u8</span>) {
@@ -2129,7 +2116,7 @@
         <span class="comment">// skip over label</span>
         <span class="kw">match</span> <span class="ident">buf</span>.<span class="ident">iter</span>().<span class="ident">position</span>(<span class="op">|</span><span class="kw-2">&amp;</span><span class="ident">b</span><span class="op">|</span> <span class="ident">b</span> <span class="op">=</span><span class="op">=</span> <span class="string">b&#39;\x00&#39;</span>) {
             <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;could not find label&quot;</span>),
-            <span class="prelude-val">Some</span>(<span class="ident">i</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">buf</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">buf</span>[<span class="ident">i</span><span class="op">+</span><span class="number">1</span>..],
+            <span class="prelude-val">Some</span>(<span class="ident">i</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">buf</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">buf</span>[<span class="ident">i</span> <span class="op">+</span> <span class="number">1</span>..],
         }
 
         <span class="comment">// check that current endianness is same as endianness of DFA</span>
@@ -2160,7 +2147,8 @@
             <span class="macro">panic</span><span class="macro">!</span>(
                 <span class="string">&quot;state size of SparseDFA ({}) does not match \
                  requested state size ({})&quot;</span>,
-                <span class="ident">state_size</span>, <span class="ident">size_of</span>::<span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>(),
+                <span class="ident">state_size</span>,
+                <span class="ident">size_of</span>::<span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>(),
             );
         }
         <span class="ident">buf</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">buf</span>[<span class="number">2</span>..];
@@ -2249,7 +2237,7 @@
             <span class="ident">state_count</span>: <span class="ident">dfa</span>.<span class="ident">state_count</span>(),
             <span class="ident">max_match</span>: <span class="ident">remap</span>[<span class="ident">dfa</span>.<span class="ident">state_id_to_index</span>(<span class="ident">dfa</span>.<span class="ident">max_match_state</span>())],
             <span class="ident">byte_classes</span>: <span class="ident">dfa</span>.<span class="ident">byte_classes</span>().<span class="ident">clone</span>(),
-            <span class="ident">trans</span>: <span class="ident">trans</span>,
+            <span class="ident">trans</span>,
         };
         <span class="kw">for</span> (<span class="ident">old_id</span>, <span class="ident">old_state</span>) <span class="kw">in</span> <span class="ident">dfa</span>.<span class="ident">states</span>() {
             <span class="kw">let</span> <span class="ident">new_id</span> <span class="op">=</span> <span class="ident">remap</span>[<span class="ident">dfa</span>.<span class="ident">state_id_to_index</span>(<span class="ident">old_id</span>)];
@@ -2307,7 +2295,7 @@
         <span class="macro">writeln</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;SparseDFA(&quot;</span>)<span class="question-mark">?</span>;
         <span class="kw">for</span> (<span class="ident">id</span>, <span class="ident">state</span>) <span class="kw">in</span> <span class="self">self</span>.<span class="ident">states</span>() {
             <span class="kw">let</span> <span class="ident">status</span> <span class="op">=</span> <span class="ident">state_status</span>(<span class="self">self</span>, <span class="ident">id</span>);
-            <span class="macro">writeln</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;{}{:04}: {:?}&quot;</span>, <span class="ident">status</span>, <span class="ident">id</span>.<span class="ident">to_usize</span>(), <span class="ident">state</span>)<span class="question-mark">?</span>;
+            <span class="macro">writeln</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;{}{:06}: {:?}&quot;</span>, <span class="ident">status</span>, <span class="ident">id</span>.<span class="ident">to_usize</span>(), <span class="ident">state</span>)<span class="question-mark">?</span>;
         }
         <span class="macro">writeln</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;)&quot;</span>)<span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(())
@@ -2374,7 +2362,7 @@
         <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="number">0</span>..<span class="self">self</span>.<span class="ident">ntrans</span> {
             <span class="kw">let</span> (<span class="ident">start</span>, <span class="ident">end</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">range</span>(<span class="ident">i</span>);
             <span class="kw">if</span> <span class="ident">start</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">input</span> <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="ident">input</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">end</span> {
-                <span class="kw">return</span> <span class="self">self</span>.<span class="ident">next_at</span>(<span class="ident">i</span>)
+                <span class="kw">return</span> <span class="self">self</span>.<span class="ident">next_at</span>(<span class="ident">i</span>);
             }
             <span class="comment">// We could bail early with an extra branch: if input &lt; b1, then</span>
             <span class="comment">// we know we&#39;ll never find a matching transition. Interestingly,</span>
@@ -2416,18 +2404,18 @@
 
             <span class="kw">let</span> (<span class="ident">start</span>, <span class="ident">end</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">range</span>(<span class="ident">i</span>);
             <span class="kw">if</span> <span class="ident">start</span> <span class="op">=</span><span class="op">=</span> <span class="ident">end</span> {
-                <span class="ident">transitions</span>.<span class="ident">push</span>(
-                    <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{} =&gt; {}&quot;</span>, <span class="ident">escape</span>(<span class="ident">start</span>), <span class="ident">next</span>.<span class="ident">to_usize</span>()),
-                );
+                <span class="ident">transitions</span>.<span class="ident">push</span>(<span class="macro">format</span><span class="macro">!</span>(
+                    <span class="string">&quot;{} =&gt; {}&quot;</span>,
+                    <span class="ident">escape</span>(<span class="ident">start</span>),
+                    <span class="ident">next</span>.<span class="ident">to_usize</span>()
+                ));
             } <span class="kw">else</span> {
-                <span class="ident">transitions</span>.<span class="ident">push</span>(
-                    <span class="macro">format</span><span class="macro">!</span>(
-                        <span class="string">&quot;{}-{} =&gt; {}&quot;</span>,
-                        <span class="ident">escape</span>(<span class="ident">start</span>),
-                        <span class="ident">escape</span>(<span class="ident">end</span>),
-                        <span class="ident">next</span>.<span class="ident">to_usize</span>(),
-                    ),
-                );
+                <span class="ident">transitions</span>.<span class="ident">push</span>(<span class="macro">format</span><span class="macro">!</span>(
+                    <span class="string">&quot;{}-{} =&gt; {}&quot;</span>,
+                    <span class="ident">escape</span>(<span class="ident">start</span>),
+                    <span class="ident">escape</span>(<span class="ident">end</span>),
+                    <span class="ident">next</span>.<span class="ident">to_usize</span>(),
+                ));
             }
         }
         <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;{}&quot;</span>, <span class="ident">transitions</span>.<span class="ident">join</span>(<span class="string">&quot;, &quot;</span>))
@@ -2500,7 +2488,7 @@
 <span class="doccomment">/// for posterity in case we can find a way to use it.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// In theory, we could use the standard library&#39;s search routine if we could</span>
-<span class="doccomment">/// cast a `&amp;[u8]` to a `&amp;[(u8, u8)]`, but I don&#39;t believe this currently</span>
+<span class="doccomment">/// cast a `&amp;[u8]` to a `&amp;[(u8, u8)]`, but I don&#39;t believe this is currently</span>
 <span class="doccomment">/// guaranteed to be safe and is thus UB (since I don&#39;t think the in-memory</span>
 <span class="doccomment">/// representation of `(u8, u8)` has been nailed down).</span>
 <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>

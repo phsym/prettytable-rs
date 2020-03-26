@@ -9,10 +9,4 @@ implementors["prettytable"] = [{"text":"impl <a class=\"trait\" href=\"https://d
 implementors["ryu"] = [{"text":"impl <a class=\"trait\" href=\"https://doc.rust-lang.org/nightly/core/default/trait.Default.html\" title=\"trait core::default::Default\">Default</a> for <a class=\"struct\" href=\"ryu/struct.Buffer.html\" title=\"struct ryu::Buffer\">Buffer</a>","synthetic":false,"types":["ryu::buffer::Buffer"]}];
 implementors["serde"] = [{"text":"impl <a class=\"trait\" href=\"https://doc.rust-lang.org/nightly/core/default/trait.Default.html\" title=\"trait core::default::Default\">Default</a> for <a class=\"struct\" href=\"serde/de/struct.IgnoredAny.html\" title=\"struct serde::de::IgnoredAny\">IgnoredAny</a>","synthetic":false,"types":["serde::de::ignored_any::IgnoredAny"]}];
 implementors["term"] = [{"text":"impl <a class=\"trait\" href=\"https://doc.rust-lang.org/nightly/core/default/trait.Default.html\" title=\"trait core::default::Default\">Default</a> for <a class=\"enum\" href=\"term/terminfo/parm/enum.Param.html\" title=\"enum term::terminfo::parm::Param\">Param</a>","synthetic":false,"types":["term::terminfo::parm::Param"]},{"text":"impl <a class=\"trait\" href=\"https://doc.rust-lang.org/nightly/core/default/trait.Default.html\" title=\"trait core::default::Default\">Default</a> for <a class=\"struct\" href=\"term/terminfo/parm/struct.Variables.html\" title=\"struct term::terminfo::parm::Variables\">Variables</a>","synthetic":false,"types":["term::terminfo::parm::Variables"]}];
-
-            if (window.register_implementors) {
-                window.register_implementors(implementors);
-            } else {
-                window.pending_implementors = implementors;
-            }
-        })()
+if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()
