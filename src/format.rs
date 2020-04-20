@@ -2,8 +2,6 @@
 
 use std::io::{Write, Error};
 
-use encode_unicode::Utf8Char;
-
 use super::utils::NEWLINE;
 
 /// Alignment for cell's content
@@ -78,19 +76,19 @@ impl LineSeparator {
                                  rborder: bool)
                                  -> Result<usize, Error> {
         if lborder {
-            out.write_all(Utf8Char::from(self.ljunc).as_bytes())?;
+            out.write(self.ljunc.encode_utf8(&mut [0;4]).as_bytes())?;
         }
         let mut iter = col_width.iter().peekable();
         while let Some(width) = iter.next() {
             for _ in 0..width + padding.0 + padding.1 {
-                out.write_all(Utf8Char::from(self.line).as_bytes())?;
+                out.write(self.line.encode_utf8(&mut [0;4]).as_bytes())?;
             }
             if colsep && iter.peek().is_some() {
-                out.write_all(Utf8Char::from(self.junc).as_bytes())?;
+                out.write(self.junc.encode_utf8(&mut [0;4]).as_bytes())?;
             }
         }
         if rborder {
-            out.write_all(Utf8Char::from(self.rjunc).as_bytes())?;
+            out.write(self.rjunc.encode_utf8(&mut [0;4]).as_bytes())?;
         }
         out.write_all(NEWLINE)?;
         Ok(1)
@@ -258,7 +256,7 @@ impl TableFormat {
                                                      pos: ColumnPosition)
                                                      -> Result<(), Error> {
         match self.get_column_separator(pos) {
-            Some(s) => out.write_all(Utf8Char::from(s).as_bytes()),
+            Some(s) => out.write(s.encode_utf8(&mut [0;4]).as_bytes()).map(|_| ()),
             None => Ok(()),
         }
     }
