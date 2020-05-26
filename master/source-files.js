@@ -16,7 +16,7 @@ sourcesIndex["memchr"] = {"name":"","dirs":[{"name":"x86","files":["avx.rs","mod
 sourcesIndex["prettytable"] = {"name":"","files":["cell.rs","csv.rs","format.rs","lib.rs","row.rs","utils.rs"]};
 sourcesIndex["regex_automata"] = {"name":"","files":["classes.rs","dense.rs","dfa.rs","lib.rs","regex.rs","sparse.rs","state_id.rs"]};
 sourcesIndex["ryu"] = {"name":"","dirs":[{"name":"buffer","files":["mod.rs"]},{"name":"pretty","files":["exponent.rs","mantissa.rs","mod.rs"]}],"files":["common.rs","d2s.rs","d2s_full_table.rs","d2s_intrinsics.rs","digit_table.rs","f2s.rs","lib.rs"]};
-sourcesIndex["serde"] = {"name":"","dirs":[{"name":"de","files":["from_primitive.rs","ignored_any.rs","impls.rs","mod.rs","utf8.rs","value.rs"]},{"name":"private","files":["de.rs","macros.rs","mod.rs","ser.rs"]},{"name":"ser","files":["impls.rs","impossible.rs","mod.rs"]}],"files":["export.rs","integer128.rs","lib.rs","macros.rs"]};
+sourcesIndex["serde"] = {"name":"","dirs":[{"name":"de","files":["from_primitive.rs","ignored_any.rs","impls.rs","mod.rs","utf8.rs","value.rs"]},{"name":"private","files":["de.rs","macros.rs","mod.rs","ser.rs"]},{"name":"ser","files":["fmt.rs","impls.rs","impossible.rs","mod.rs"]}],"files":["export.rs","integer128.rs","lib.rs","macros.rs"]};
 sourcesIndex["term"] = {"name":"","dirs":[{"name":"terminfo","dirs":[{"name":"parser","files":["compiled.rs","names.rs"]}],"files":["mod.rs","parm.rs","searcher.rs"]}],"files":["lib.rs"]};
 sourcesIndex["unicode_width"] = {"name":"","files":["lib.rs","tables.rs"]};
 createSourceSidebar();

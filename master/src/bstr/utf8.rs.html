@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/bstr-0.2.12/src/utf8.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>utf8.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../bstr/index.html'><div class='logo-container'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/bstr-0.2.13/src/utf8.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>utf8.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../bstr/index.html'><div class='logo-container'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
 <span id="2">   2</span>
 <span id="3">   3</span>
 <span id="4">   4</span>
@@ -1224,6 +1224,31 @@
 <span id="1224">1224</span>
 <span id="1225">1225</span>
 <span id="1226">1226</span>
+<span id="1227">1227</span>
+<span id="1228">1228</span>
+<span id="1229">1229</span>
+<span id="1230">1230</span>
+<span id="1231">1231</span>
+<span id="1232">1232</span>
+<span id="1233">1233</span>
+<span id="1234">1234</span>
+<span id="1235">1235</span>
+<span id="1236">1236</span>
+<span id="1237">1237</span>
+<span id="1238">1238</span>
+<span id="1239">1239</span>
+<span id="1240">1240</span>
+<span id="1241">1241</span>
+<span id="1242">1242</span>
+<span id="1243">1243</span>
+<span id="1244">1244</span>
+<span id="1245">1245</span>
+<span id="1246">1246</span>
+<span id="1247">1247</span>
+<span id="1248">1248</span>
+<span id="1249">1249</span>
+<span id="1250">1250</span>
+<span id="1251">1251</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">char</span>;
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">cmp</span>;
@@ -1269,8 +1294,10 @@
 <span class="kw">const</span> <span class="ident">ACCEPT</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">12</span>;
 <span class="kw">const</span> <span class="ident">REJECT</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">0</span>;
 
+<span class="doccomment">/// SAFETY: The decode below function relies on the correctness of these</span>
+<span class="doccomment">/// equivalence classes.</span>
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">rustfmt</span>, <span class="ident">rustfmt</span>::<span class="ident">skip</span>)]</span>
-<span class="kw">static</span> <span class="ident">CLASSES</span>: [<span class="ident">u8</span>; <span class="number">256</span>] <span class="op">=</span> [
+<span class="kw">const</span> <span class="ident">CLASSES</span>: [<span class="ident">u8</span>; <span class="number">256</span>] <span class="op">=</span> [
    <span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,  <span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,
    <span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,  <span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,
    <span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,  <span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,
@@ -1281,8 +1308,10 @@
   <span class="number">10</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">3</span>,<span class="number">3</span>, <span class="number">11</span>,<span class="number">6</span>,<span class="number">6</span>,<span class="number">6</span>,<span class="number">5</span>,<span class="number">8</span>,<span class="number">8</span>,<span class="number">8</span>,<span class="number">8</span>,<span class="number">8</span>,<span class="number">8</span>,<span class="number">8</span>,<span class="number">8</span>,<span class="number">8</span>,<span class="number">8</span>,<span class="number">8</span>,
 ];
 
+<span class="doccomment">/// SAFETY: The decode below function relies on the correctness of this state</span>
+<span class="doccomment">/// machine.</span>
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">rustfmt</span>, <span class="ident">rustfmt</span>::<span class="ident">skip</span>)]</span>
-<span class="kw">static</span> <span class="ident">STATES_FORWARD</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> [<span class="ident">u8</span>] <span class="op">=</span> <span class="kw-2">&amp;</span>[
+<span class="kw">const</span> <span class="ident">STATES_FORWARD</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> [<span class="ident">u8</span>] <span class="op">=</span> <span class="kw-2">&amp;</span>[
   <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,
   <span class="number">12</span>, <span class="number">0</span>, <span class="number">24</span>, <span class="number">36</span>, <span class="number">60</span>, <span class="number">96</span>, <span class="number">84</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">48</span>, <span class="number">72</span>,
   <span class="number">0</span>, <span class="number">12</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">12</span>, <span class="number">0</span>, <span class="number">12</span>, <span class="number">0</span>, <span class="number">0</span>,
@@ -1662,7 +1691,7 @@
 <span class="doccomment">/// Returns OK if and only if the given slice is completely valid UTF-8.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// If the slice isn&#39;t valid UTF-8, then an error is returned that explains</span>
-<span class="doccomment">/// the first location at which invalid UTF-89 was detected.</span>
+<span class="doccomment">/// the first location at which invalid UTF-8 was detected.</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">validate</span>(<span class="ident">slice</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Utf8Error</span><span class="op">&gt;</span> {
     <span class="comment">// The fast path for validating UTF-8. It steps through a UTF-8 automaton</span>
     <span class="comment">// and uses a SIMD accelerated ASCII fast path on x86_64. If an error is</span>
@@ -1708,7 +1737,7 @@
         <span class="comment">// code unit sequence. To do this, we simply locate the last leading</span>
         <span class="comment">// byte that occurs before rejected_at.</span>
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">backup</span> <span class="op">=</span> <span class="ident">rejected_at</span>.<span class="ident">saturating_sub</span>(<span class="number">1</span>);
-        <span class="kw">while</span> <span class="ident">backup</span> <span class="op">&gt;</span> <span class="number">0</span> <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="op">!</span><span class="ident">is_leading_utf8_byte</span>(<span class="ident">slice</span>[<span class="ident">backup</span>]) {
+        <span class="kw">while</span> <span class="ident">backup</span> <span class="op">&gt;</span> <span class="number">0</span> <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="op">!</span><span class="ident">is_leading_or_invalid_utf8_byte</span>(<span class="ident">slice</span>[<span class="ident">backup</span>]) {
             <span class="ident">backup</span> <span class="op">-</span><span class="op">=</span> <span class="number">1</span>;
         }
         <span class="kw">let</span> <span class="ident">upto</span> <span class="op">=</span> <span class="ident">cmp</span>::<span class="ident">min</span>(<span class="ident">slice</span>.<span class="ident">len</span>(), <span class="ident">rejected_at</span>.<span class="ident">saturating_add</span>(<span class="number">1</span>));
@@ -1942,7 +1971,7 @@
     }
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">start</span> <span class="op">=</span> <span class="ident">slice</span>.<span class="ident">len</span>() <span class="op">-</span> <span class="number">1</span>;
     <span class="kw">let</span> <span class="ident">limit</span> <span class="op">=</span> <span class="ident">slice</span>.<span class="ident">len</span>().<span class="ident">saturating_sub</span>(<span class="number">4</span>);
-    <span class="kw">while</span> <span class="ident">start</span> <span class="op">&gt;</span> <span class="ident">limit</span> <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="op">!</span><span class="ident">is_leading_utf8_byte</span>(<span class="ident">slice</span>[<span class="ident">start</span>]) {
+    <span class="kw">while</span> <span class="ident">start</span> <span class="op">&gt;</span> <span class="ident">limit</span> <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="op">!</span><span class="ident">is_leading_or_invalid_utf8_byte</span>(<span class="ident">slice</span>[<span class="ident">start</span>]) {
         <span class="ident">start</span> <span class="op">-</span><span class="op">=</span> <span class="number">1</span>;
     }
     <span class="kw">let</span> (<span class="ident">ch</span>, <span class="ident">size</span>) <span class="op">=</span> <span class="ident">decode</span>(<span class="kw-2">&amp;</span><span class="ident">slice</span>[<span class="ident">start</span>..]);
@@ -2010,6 +2039,8 @@
     }
 }
 
+<span class="doccomment">/// SAFETY: The decode function relies on state being equal to ACCEPT only if</span>
+<span class="doccomment">/// cp is a valid Unicode scalar value.</span>
 <span class="attribute">#[<span class="ident">inline</span>]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">decode_step</span>(<span class="ident">state</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">usize</span>, <span class="ident">cp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">u32</span>, <span class="ident">b</span>: <span class="ident">u8</span>) {
     <span class="kw">let</span> <span class="ident">class</span> <span class="op">=</span> <span class="ident">CLASSES</span>[<span class="ident">b</span> <span class="kw">as</span> <span class="ident">usize</span>];
@@ -2021,10 +2052,29 @@
     <span class="kw-2">*</span><span class="ident">state</span> <span class="op">=</span> <span class="ident">STATES_FORWARD</span>[<span class="kw-2">*</span><span class="ident">state</span> <span class="op">+</span> <span class="ident">class</span> <span class="kw">as</span> <span class="ident">usize</span>] <span class="kw">as</span> <span class="ident">usize</span>;
 }
 
-<span class="kw">fn</span> <span class="ident">is_leading_utf8_byte</span>(<span class="ident">b</span>: <span class="ident">u8</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+<span class="doccomment">/// Returns true if and only if the given byte is either a valid leading UTF-8</span>
+<span class="doccomment">/// byte, or is otherwise an invalid byte that can never appear anywhere in a</span>
+<span class="doccomment">/// valid UTF-8 sequence.</span>
+<span class="kw">fn</span> <span class="ident">is_leading_or_invalid_utf8_byte</span>(<span class="ident">b</span>: <span class="ident">u8</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
     <span class="comment">// In the ASCII case, the most significant bit is never set. The leading</span>
     <span class="comment">// byte of a 2/3/4-byte sequence always has the top two most significant</span>
-    <span class="comment">// bigs set.</span>
+    <span class="comment">// bits set. For bytes that can never appear anywhere in valid UTF-8, this</span>
+    <span class="comment">// also returns true, since every such byte has its two most significant</span>
+    <span class="comment">// bits set:</span>
+    <span class="comment">//</span>
+    <span class="comment">//     \xC0 :: 11000000</span>
+    <span class="comment">//     \xC1 :: 11000001</span>
+    <span class="comment">//     \xF5 :: 11110101</span>
+    <span class="comment">//     \xF6 :: 11110110</span>
+    <span class="comment">//     \xF7 :: 11110111</span>
+    <span class="comment">//     \xF8 :: 11111000</span>
+    <span class="comment">//     \xF9 :: 11111001</span>
+    <span class="comment">//     \xFA :: 11111010</span>
+    <span class="comment">//     \xFB :: 11111011</span>
+    <span class="comment">//     \xFC :: 11111100</span>
+    <span class="comment">//     \xFD :: 11111101</span>
+    <span class="comment">//     \xFE :: 11111110</span>
+    <span class="comment">//     \xFF :: 11111111</span>
     (<span class="ident">b</span> <span class="op">&amp;</span> <span class="number">0b1100_0000</span>) <span class="op">!</span><span class="op">=</span> <span class="number">0b1000_0000</span>
 }
 
