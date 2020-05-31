@@ -995,7 +995,7 @@ mod tests {
         println!("____");
         println!("{}", table.to_string().replace("\r\n","\n"));
         assert_eq!(out, table.to_string().replace("\r\n","\n"));
-        assert_eq!(6, table.print(&mut StringWriter::new()).unwrap());
+        assert_eq!(4, table.print(&mut StringWriter::new()).unwrap());
     }
 
     #[test]
