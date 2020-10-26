@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/bstr-0.2.13/src/utf8.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>utf8.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../bstr/index.html'><div class='logo-container'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/bstr-0.2.14/src/utf8.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>utf8.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../bstr/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+                <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
 <span id="2">   2</span>
 <span id="3">   3</span>
 <span id="4">   4</span>
@@ -1249,6 +1250,125 @@
 <span id="1249">1249</span>
 <span id="1250">1250</span>
 <span id="1251">1251</span>
+<span id="1252">1252</span>
+<span id="1253">1253</span>
+<span id="1254">1254</span>
+<span id="1255">1255</span>
+<span id="1256">1256</span>
+<span id="1257">1257</span>
+<span id="1258">1258</span>
+<span id="1259">1259</span>
+<span id="1260">1260</span>
+<span id="1261">1261</span>
+<span id="1262">1262</span>
+<span id="1263">1263</span>
+<span id="1264">1264</span>
+<span id="1265">1265</span>
+<span id="1266">1266</span>
+<span id="1267">1267</span>
+<span id="1268">1268</span>
+<span id="1269">1269</span>
+<span id="1270">1270</span>
+<span id="1271">1271</span>
+<span id="1272">1272</span>
+<span id="1273">1273</span>
+<span id="1274">1274</span>
+<span id="1275">1275</span>
+<span id="1276">1276</span>
+<span id="1277">1277</span>
+<span id="1278">1278</span>
+<span id="1279">1279</span>
+<span id="1280">1280</span>
+<span id="1281">1281</span>
+<span id="1282">1282</span>
+<span id="1283">1283</span>
+<span id="1284">1284</span>
+<span id="1285">1285</span>
+<span id="1286">1286</span>
+<span id="1287">1287</span>
+<span id="1288">1288</span>
+<span id="1289">1289</span>
+<span id="1290">1290</span>
+<span id="1291">1291</span>
+<span id="1292">1292</span>
+<span id="1293">1293</span>
+<span id="1294">1294</span>
+<span id="1295">1295</span>
+<span id="1296">1296</span>
+<span id="1297">1297</span>
+<span id="1298">1298</span>
+<span id="1299">1299</span>
+<span id="1300">1300</span>
+<span id="1301">1301</span>
+<span id="1302">1302</span>
+<span id="1303">1303</span>
+<span id="1304">1304</span>
+<span id="1305">1305</span>
+<span id="1306">1306</span>
+<span id="1307">1307</span>
+<span id="1308">1308</span>
+<span id="1309">1309</span>
+<span id="1310">1310</span>
+<span id="1311">1311</span>
+<span id="1312">1312</span>
+<span id="1313">1313</span>
+<span id="1314">1314</span>
+<span id="1315">1315</span>
+<span id="1316">1316</span>
+<span id="1317">1317</span>
+<span id="1318">1318</span>
+<span id="1319">1319</span>
+<span id="1320">1320</span>
+<span id="1321">1321</span>
+<span id="1322">1322</span>
+<span id="1323">1323</span>
+<span id="1324">1324</span>
+<span id="1325">1325</span>
+<span id="1326">1326</span>
+<span id="1327">1327</span>
+<span id="1328">1328</span>
+<span id="1329">1329</span>
+<span id="1330">1330</span>
+<span id="1331">1331</span>
+<span id="1332">1332</span>
+<span id="1333">1333</span>
+<span id="1334">1334</span>
+<span id="1335">1335</span>
+<span id="1336">1336</span>
+<span id="1337">1337</span>
+<span id="1338">1338</span>
+<span id="1339">1339</span>
+<span id="1340">1340</span>
+<span id="1341">1341</span>
+<span id="1342">1342</span>
+<span id="1343">1343</span>
+<span id="1344">1344</span>
+<span id="1345">1345</span>
+<span id="1346">1346</span>
+<span id="1347">1347</span>
+<span id="1348">1348</span>
+<span id="1349">1349</span>
+<span id="1350">1350</span>
+<span id="1351">1351</span>
+<span id="1352">1352</span>
+<span id="1353">1353</span>
+<span id="1354">1354</span>
+<span id="1355">1355</span>
+<span id="1356">1356</span>
+<span id="1357">1357</span>
+<span id="1358">1358</span>
+<span id="1359">1359</span>
+<span id="1360">1360</span>
+<span id="1361">1361</span>
+<span id="1362">1362</span>
+<span id="1363">1363</span>
+<span id="1364">1364</span>
+<span id="1365">1365</span>
+<span id="1366">1366</span>
+<span id="1367">1367</span>
+<span id="1368">1368</span>
+<span id="1369">1369</span>
+<span id="1370">1370</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">char</span>;
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">cmp</span>;
@@ -1338,7 +1458,7 @@
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Chars</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">bs</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Chars</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">bs</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="ident">Chars</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
         <span class="ident">Chars</span> { <span class="ident">bs</span> }
     }
 
@@ -1362,7 +1482,7 @@
     <span class="doccomment">/// assert_eq!(b&quot;&quot;, chars.as_bytes());</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_bytes</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>] {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_bytes</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>] {
         <span class="self">self</span>.<span class="ident">bs</span>
     }
 }
@@ -1371,9 +1491,9 @@
     <span class="kw">type</span> <span class="ident">Item</span> <span class="op">=</span> <span class="ident">char</span>;
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">char</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">char</span><span class="op">&gt;</span> {
         <span class="kw">let</span> (<span class="ident">ch</span>, <span class="ident">size</span>) <span class="op">=</span> <span class="ident">decode_lossy</span>(<span class="self">self</span>.<span class="ident">bs</span>);
-        <span class="kw">if</span> <span class="ident">size</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+        <span class="kw">if</span> <span class="ident">size</span> <span class="op">==</span> <span class="number">0</span> {
             <span class="kw">return</span> <span class="prelude-val">None</span>;
         }
         <span class="self">self</span>.<span class="ident">bs</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">bs</span>[<span class="ident">size</span>..];
@@ -1383,9 +1503,9 @@
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">DoubleEndedIterator</span> <span class="kw">for</span> <span class="ident">Chars</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">next_back</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">char</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">next_back</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">char</span><span class="op">&gt;</span> {
         <span class="kw">let</span> (<span class="ident">ch</span>, <span class="ident">size</span>) <span class="op">=</span> <span class="ident">decode_last_lossy</span>(<span class="self">self</span>.<span class="ident">bs</span>);
-        <span class="kw">if</span> <span class="ident">size</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+        <span class="kw">if</span> <span class="ident">size</span> <span class="op">==</span> <span class="number">0</span> {
             <span class="kw">return</span> <span class="prelude-val">None</span>;
         }
         <span class="self">self</span>.<span class="ident">bs</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">bs</span>[..<span class="self">self</span>.<span class="ident">bs</span>.<span class="ident">len</span>() <span class="op">-</span> <span class="ident">size</span>];
@@ -1419,7 +1539,7 @@
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">CharIndices</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">bs</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CharIndices</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">bs</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="ident">CharIndices</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
         <span class="ident">CharIndices</span> { <span class="ident">bs</span>: <span class="ident">bs</span>, <span class="ident">forward_index</span>: <span class="number">0</span>, <span class="ident">reverse_index</span>: <span class="ident">bs</span>.<span class="ident">len</span>() }
     }
 
@@ -1443,7 +1563,7 @@
     <span class="doccomment">/// assert_eq!(b&quot;&quot;, it.as_bytes());</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_bytes</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>] {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_bytes</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>] {
         <span class="self">self</span>.<span class="ident">bs</span>
     }
 }
@@ -1452,30 +1572,32 @@
     <span class="kw">type</span> <span class="ident">Item</span> <span class="op">=</span> (<span class="ident">usize</span>, <span class="ident">usize</span>, <span class="ident">char</span>);
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">usize</span>, <span class="ident">usize</span>, <span class="ident">char</span>)<span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">usize</span>, <span class="ident">usize</span>, <span class="ident">char</span>)<span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">index</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">forward_index</span>;
         <span class="kw">let</span> (<span class="ident">ch</span>, <span class="ident">size</span>) <span class="op">=</span> <span class="ident">decode_lossy</span>(<span class="self">self</span>.<span class="ident">bs</span>);
-        <span class="kw">if</span> <span class="ident">size</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+        <span class="kw">if</span> <span class="ident">size</span> <span class="op">==</span> <span class="number">0</span> {
             <span class="kw">return</span> <span class="prelude-val">None</span>;
         }
         <span class="self">self</span>.<span class="ident">bs</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">bs</span>[<span class="ident">size</span>..];
-        <span class="self">self</span>.<span class="ident">forward_index</span> <span class="op">+</span><span class="op">=</span> <span class="ident">size</span>;
+        <span class="self">self</span>.<span class="ident">forward_index</span> <span class="op">+=</span> <span class="ident">size</span>;
         <span class="prelude-val">Some</span>((<span class="ident">index</span>, <span class="ident">index</span> <span class="op">+</span> <span class="ident">size</span>, <span class="ident">ch</span>))
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">DoubleEndedIterator</span> <span class="kw">for</span> <span class="ident">CharIndices</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">next_back</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">usize</span>, <span class="ident">usize</span>, <span class="ident">char</span>)<span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">next_back</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">usize</span>, <span class="ident">usize</span>, <span class="ident">char</span>)<span class="op">&gt;</span> {
         <span class="kw">let</span> (<span class="ident">ch</span>, <span class="ident">size</span>) <span class="op">=</span> <span class="ident">decode_last_lossy</span>(<span class="self">self</span>.<span class="ident">bs</span>);
-        <span class="kw">if</span> <span class="ident">size</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+        <span class="kw">if</span> <span class="ident">size</span> <span class="op">==</span> <span class="number">0</span> {
             <span class="kw">return</span> <span class="prelude-val">None</span>;
         }
         <span class="self">self</span>.<span class="ident">bs</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">bs</span>[..<span class="self">self</span>.<span class="ident">bs</span>.<span class="ident">len</span>() <span class="op">-</span> <span class="ident">size</span>];
-        <span class="self">self</span>.<span class="ident">reverse_index</span> <span class="op">-</span><span class="op">=</span> <span class="ident">size</span>;
+        <span class="self">self</span>.<span class="ident">reverse_index</span> <span class="op">-=</span> <span class="ident">size</span>;
         <span class="prelude-val">Some</span>((<span class="self">self</span>.<span class="ident">reverse_index</span>, <span class="self">self</span>.<span class="ident">reverse_index</span> <span class="op">+</span> <span class="ident">size</span>, <span class="ident">ch</span>))
     }
 }
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> ::<span class="ident">core</span>::<span class="ident">iter</span>::<span class="ident">FusedIterator</span> <span class="kw">for</span> <span class="ident">CharIndices</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {}
 
 <span class="doccomment">/// An iterator over chunks of valid UTF-8 in a byte slice.</span>
 <span class="doccomment">///</span>
@@ -1495,6 +1617,7 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// The `&#39;a` lifetime parameter corresponds to the lifetime of the bytes that</span>
 <span class="doccomment">/// are being iterated over.</span>
+<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">test</span>, <span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">PartialEq</span>))]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Utf8Chunk</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
     <span class="doccomment">/// A valid UTF-8 piece, at the start, end, or between invalid UTF-8 bytes.</span>
     <span class="doccomment">///</span>
@@ -1507,6 +1630,11 @@
     <span class="doccomment">/// Should be replaced by a single unicode replacement character, if not</span>
     <span class="doccomment">/// empty.</span>
     <span class="ident">invalid</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">BStr</span>,
+    <span class="doccomment">/// Indicates whether the invalid sequence could&#39;ve been valid if there</span>
+    <span class="doccomment">/// were more bytes.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Can only be true in the last chunk.</span>
+    <span class="ident">incomplete</span>: <span class="ident">bool</span>,
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Utf8Chunk</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
@@ -1515,7 +1643,7 @@
     <span class="doccomment">/// This may be empty if there are consecutive sequences of invalid UTF-8</span>
     <span class="doccomment">/// bytes.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">valid</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">valid</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span> {
         <span class="self">self</span>.<span class="ident">valid</span>
     }
 
@@ -1533,8 +1661,20 @@
     <span class="doccomment">/// [`ByteSlice::to_str_lossy`](trait.ByteSlice.html#method.to_str_lossy)</span>
     <span class="doccomment">/// method.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">invalid</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>] {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">invalid</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>] {
         <span class="self">self</span>.<span class="ident">invalid</span>.<span class="ident">as_bytes</span>()
+    }
+
+    <span class="doccomment">/// Returns whether the invalid sequence might still become valid if more</span>
+    <span class="doccomment">/// bytes are added.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Returns true if the end of the input was reached unexpectedly,</span>
+    <span class="doccomment">/// without encountering an unexpected byte.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This can only be the case for the last chunk.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">incomplete</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="self">self</span>.<span class="ident">incomplete</span>
     }
 }
 
@@ -1542,12 +1682,12 @@
     <span class="kw">type</span> <span class="ident">Item</span> <span class="op">=</span> <span class="ident">Utf8Chunk</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>;
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Utf8Chunk</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Utf8Chunk</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;&gt;</span> {
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">bytes</span>.<span class="ident">is_empty</span>() {
             <span class="kw">return</span> <span class="prelude-val">None</span>;
         }
         <span class="kw">match</span> <span class="ident">validate</span>(<span class="self">self</span>.<span class="ident">bytes</span>) {
-            <span class="prelude-val">Ok</span>(()) <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="prelude-val">Ok</span>(()) <span class="op">=&gt;</span> {
                 <span class="kw">let</span> <span class="ident">valid</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">bytes</span>;
                 <span class="self">self</span>.<span class="ident">bytes</span> <span class="op">=</span> <span class="kw-2">&amp;</span>[];
                 <span class="prelude-val">Some</span>(<span class="ident">Utf8Chunk</span> {
@@ -1555,23 +1695,31 @@
                     <span class="comment">// by utf8::validate.</span>
                     <span class="ident">valid</span>: <span class="kw">unsafe</span> { <span class="ident">str</span>::<span class="ident">from_utf8_unchecked</span>(<span class="ident">valid</span>) },
                     <span class="ident">invalid</span>: [].<span class="ident">as_bstr</span>(),
+                    <span class="ident">incomplete</span>: <span class="bool-val">false</span>,
                 })
             }
-            <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=&gt;</span> {
                 <span class="kw">let</span> (<span class="ident">valid</span>, <span class="ident">rest</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">bytes</span>.<span class="ident">split_at</span>(<span class="ident">e</span>.<span class="ident">valid_up_to</span>());
                 <span class="comment">// SAFETY: This is safe because of the guarantees provided by</span>
                 <span class="comment">// utf8::validate.</span>
                 <span class="kw">let</span> <span class="ident">valid</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">str</span>::<span class="ident">from_utf8_unchecked</span>(<span class="ident">valid</span>) };
-                <span class="kw">let</span> (<span class="ident">invalid</span>, <span class="ident">rest</span>) <span class="op">=</span>
-                    <span class="ident">rest</span>.<span class="ident">split_at</span>(<span class="ident">e</span>.<span class="ident">error_len</span>().<span class="ident">unwrap_or</span>(<span class="ident">rest</span>.<span class="ident">len</span>()));
+                <span class="kw">let</span> (<span class="ident">invalid_len</span>, <span class="ident">incomplete</span>) <span class="op">=</span> <span class="kw">match</span> <span class="ident">e</span>.<span class="ident">error_len</span>() {
+                    <span class="prelude-val">Some</span>(<span class="ident">n</span>) <span class="op">=&gt;</span> (<span class="ident">n</span>, <span class="bool-val">false</span>),
+                    <span class="prelude-val">None</span> <span class="op">=&gt;</span> (<span class="ident">rest</span>.<span class="ident">len</span>(), <span class="bool-val">true</span>),
+                };
+                <span class="kw">let</span> (<span class="ident">invalid</span>, <span class="ident">rest</span>) <span class="op">=</span> <span class="ident">rest</span>.<span class="ident">split_at</span>(<span class="ident">invalid_len</span>);
                 <span class="self">self</span>.<span class="ident">bytes</span> <span class="op">=</span> <span class="ident">rest</span>;
-                <span class="prelude-val">Some</span>(<span class="ident">Utf8Chunk</span> { <span class="ident">valid</span>, <span class="ident">invalid</span>: <span class="ident">invalid</span>.<span class="ident">as_bstr</span>() })
+                <span class="prelude-val">Some</span>(<span class="ident">Utf8Chunk</span> {
+                    <span class="ident">valid</span>,
+                    <span class="ident">invalid</span>: <span class="ident">invalid</span>.<span class="ident">as_bstr</span>(),
+                    <span class="ident">incomplete</span>,
+                })
             }
         }
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">size_hint</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">usize</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>) {
+    <span class="kw">fn</span> <span class="ident">size_hint</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> (<span class="ident">usize</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>) {
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">bytes</span>.<span class="ident">is_empty</span>() {
             (<span class="number">0</span>, <span class="prelude-val">Some</span>(<span class="number">0</span>))
         } <span class="kw">else</span> {
@@ -1656,7 +1804,7 @@
     <span class="doccomment">/// assert_eq!(string, &quot;foobar&quot;);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">valid_up_to</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">valid_up_to</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
         <span class="self">self</span>.<span class="ident">valid_up_to</span>
     }
 
@@ -1670,20 +1818,20 @@
     <span class="doccomment">/// when processing streams, where a `None` value signals that more input</span>
     <span class="doccomment">/// might be needed.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">error_len</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">error_len</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">error_len</span>
     }
 }
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>
 <span class="kw">impl</span> <span class="ident">error</span>::<span class="ident">Error</span> <span class="kw">for</span> <span class="ident">Utf8Error</span> {
-    <span class="kw">fn</span> <span class="ident">description</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
+    <span class="kw">fn</span> <span class="ident">description</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
         <span class="string">&quot;invalid UTF-8&quot;</span>
     }
 }
 
 <span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">Utf8Error</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
         <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;invalid UTF-8 found at byte offset {}&quot;</span>, <span class="self">self</span>.<span class="ident">valid_up_to</span>)
     }
 }
@@ -1692,12 +1840,12 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// If the slice isn&#39;t valid UTF-8, then an error is returned that explains</span>
 <span class="doccomment">/// the first location at which invalid UTF-8 was detected.</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">validate</span>(<span class="ident">slice</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Utf8Error</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">validate</span>(<span class="ident">slice</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Utf8Error</span><span class="op">&gt;</span> {
     <span class="comment">// The fast path for validating UTF-8. It steps through a UTF-8 automaton</span>
     <span class="comment">// and uses a SIMD accelerated ASCII fast path on x86_64. If an error is</span>
     <span class="comment">// detected, it backs up and runs the slower version of the UTF-8 automaton</span>
     <span class="comment">// to determine correct error information.</span>
-    <span class="kw">fn</span> <span class="ident">fast</span>(<span class="ident">slice</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Utf8Error</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">fast</span>(<span class="ident">slice</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Utf8Error</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">state</span> <span class="op">=</span> <span class="ident">ACCEPT</span>;
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">i</span> <span class="op">=</span> <span class="number">0</span>;
 
@@ -1706,21 +1854,21 @@
 
             <span class="comment">// ASCII fast path. If we see two consecutive ASCII bytes, then try</span>
             <span class="comment">// to validate as much ASCII as possible very quickly.</span>
-            <span class="kw">if</span> <span class="ident">state</span> <span class="op">=</span><span class="op">=</span> <span class="ident">ACCEPT</span>
-                <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="ident">b</span> <span class="op">&lt;</span><span class="op">=</span> <span class="number">0x7F</span>
-                <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="ident">slice</span>.<span class="ident">get</span>(<span class="ident">i</span> <span class="op">+</span> <span class="number">1</span>).<span class="ident">map_or</span>(<span class="bool-val">false</span>, <span class="op">|</span><span class="kw-2">&amp;</span><span class="ident">b</span><span class="op">|</span> <span class="ident">b</span> <span class="op">&lt;</span><span class="op">=</span> <span class="number">0x7F</span>)
+            <span class="kw">if</span> <span class="ident">state</span> <span class="op">==</span> <span class="ident">ACCEPT</span>
+                <span class="op">&amp;&amp;</span> <span class="ident">b</span> <span class="op">&lt;=</span> <span class="number">0x7F</span>
+                <span class="op">&amp;&amp;</span> <span class="ident">slice</span>.<span class="ident">get</span>(<span class="ident">i</span> <span class="op">+</span> <span class="number">1</span>).<span class="ident">map_or</span>(<span class="bool-val">false</span>, <span class="op">|</span><span class="kw-2">&amp;</span><span class="ident">b</span><span class="op">|</span> <span class="ident">b</span> <span class="op">&lt;=</span> <span class="number">0x7F</span>)
             {
-                <span class="ident">i</span> <span class="op">+</span><span class="op">=</span> <span class="ident">ascii</span>::<span class="ident">first_non_ascii_byte</span>(<span class="kw-2">&amp;</span><span class="ident">slice</span>[<span class="ident">i</span>..]);
+                <span class="ident">i</span> <span class="op">+=</span> <span class="ident">ascii</span>::<span class="ident">first_non_ascii_byte</span>(<span class="kw-2">&amp;</span><span class="ident">slice</span>[<span class="ident">i</span>..]);
                 <span class="kw">continue</span>;
             }
 
             <span class="ident">state</span> <span class="op">=</span> <span class="ident">step</span>(<span class="ident">state</span>, <span class="ident">b</span>);
-            <span class="kw">if</span> <span class="ident">state</span> <span class="op">=</span><span class="op">=</span> <span class="ident">REJECT</span> {
+            <span class="kw">if</span> <span class="ident">state</span> <span class="op">==</span> <span class="ident">REJECT</span> {
                 <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">find_valid_up_to</span>(<span class="ident">slice</span>, <span class="ident">i</span>));
             }
-            <span class="ident">i</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
+            <span class="ident">i</span> <span class="op">+=</span> <span class="number">1</span>;
         }
-        <span class="kw">if</span> <span class="ident">state</span> <span class="op">!</span><span class="op">=</span> <span class="ident">ACCEPT</span> {
+        <span class="kw">if</span> <span class="ident">state</span> <span class="op">!=</span> <span class="ident">ACCEPT</span> {
             <span class="prelude-val">Err</span>(<span class="ident">find_valid_up_to</span>(<span class="ident">slice</span>, <span class="ident">slice</span>.<span class="ident">len</span>()))
         } <span class="kw">else</span> {
             <span class="prelude-val">Ok</span>(())
@@ -1731,18 +1879,18 @@
     <span class="comment">// invalid, return an error that correctly reports the position at which</span>
     <span class="comment">// the last complete UTF-8 sequence ends.</span>
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">never</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">find_valid_up_to</span>(<span class="ident">slice</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>], <span class="ident">rejected_at</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Utf8Error</span> {
+    <span class="kw">fn</span> <span class="ident">find_valid_up_to</span>(<span class="ident">slice</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>], <span class="ident">rejected_at</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">Utf8Error</span> {
         <span class="comment">// In order to find the last valid byte, we need to back up an amount</span>
         <span class="comment">// that guarantees every preceding byte is part of a valid UTF-8</span>
         <span class="comment">// code unit sequence. To do this, we simply locate the last leading</span>
         <span class="comment">// byte that occurs before rejected_at.</span>
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">backup</span> <span class="op">=</span> <span class="ident">rejected_at</span>.<span class="ident">saturating_sub</span>(<span class="number">1</span>);
-        <span class="kw">while</span> <span class="ident">backup</span> <span class="op">&gt;</span> <span class="number">0</span> <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="op">!</span><span class="ident">is_leading_or_invalid_utf8_byte</span>(<span class="ident">slice</span>[<span class="ident">backup</span>]) {
-            <span class="ident">backup</span> <span class="op">-</span><span class="op">=</span> <span class="number">1</span>;
+        <span class="kw">while</span> <span class="ident">backup</span> <span class="op">&gt;</span> <span class="number">0</span> <span class="op">&amp;&amp;</span> <span class="op">!</span><span class="ident">is_leading_or_invalid_utf8_byte</span>(<span class="ident">slice</span>[<span class="ident">backup</span>]) {
+            <span class="ident">backup</span> <span class="op">-=</span> <span class="number">1</span>;
         }
         <span class="kw">let</span> <span class="ident">upto</span> <span class="op">=</span> <span class="ident">cmp</span>::<span class="ident">min</span>(<span class="ident">slice</span>.<span class="ident">len</span>(), <span class="ident">rejected_at</span>.<span class="ident">saturating_add</span>(<span class="number">1</span>));
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">err</span> <span class="op">=</span> <span class="ident">slow</span>(<span class="kw-2">&amp;</span><span class="ident">slice</span>[<span class="ident">backup</span>..<span class="ident">upto</span>]).<span class="ident">unwrap_err</span>();
-        <span class="ident">err</span>.<span class="ident">valid_up_to</span> <span class="op">+</span><span class="op">=</span> <span class="ident">backup</span>;
+        <span class="ident">err</span>.<span class="ident">valid_up_to</span> <span class="op">+=</span> <span class="ident">backup</span>;
         <span class="ident">err</span>
     }
 
@@ -1752,20 +1900,20 @@
     <span class="comment">// last valid UTF-8 byte. In particular, tracking this requires checking</span>
     <span class="comment">// for an ACCEPT state on each byte, which degrades throughput pretty</span>
     <span class="comment">// badly.</span>
-    <span class="kw">fn</span> <span class="ident">slow</span>(<span class="ident">slice</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Utf8Error</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">slow</span>(<span class="ident">slice</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Utf8Error</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">state</span> <span class="op">=</span> <span class="ident">ACCEPT</span>;
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">valid_up_to</span> <span class="op">=</span> <span class="number">0</span>;
         <span class="kw">for</span> (<span class="ident">i</span>, <span class="kw-2">&amp;</span><span class="ident">b</span>) <span class="kw">in</span> <span class="ident">slice</span>.<span class="ident">iter</span>().<span class="ident">enumerate</span>() {
             <span class="ident">state</span> <span class="op">=</span> <span class="ident">step</span>(<span class="ident">state</span>, <span class="ident">b</span>);
-            <span class="kw">if</span> <span class="ident">state</span> <span class="op">=</span><span class="op">=</span> <span class="ident">ACCEPT</span> {
+            <span class="kw">if</span> <span class="ident">state</span> <span class="op">==</span> <span class="ident">ACCEPT</span> {
                 <span class="ident">valid_up_to</span> <span class="op">=</span> <span class="ident">i</span> <span class="op">+</span> <span class="number">1</span>;
-            } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">state</span> <span class="op">=</span><span class="op">=</span> <span class="ident">REJECT</span> {
+            } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">state</span> <span class="op">==</span> <span class="ident">REJECT</span> {
                 <span class="comment">// Our error length must always be at least 1.</span>
                 <span class="kw">let</span> <span class="ident">error_len</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">cmp</span>::<span class="ident">max</span>(<span class="number">1</span>, <span class="ident">i</span> <span class="op">-</span> <span class="ident">valid_up_to</span>));
                 <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Utf8Error</span> { <span class="ident">valid_up_to</span>, <span class="ident">error_len</span> });
             }
         }
-        <span class="kw">if</span> <span class="ident">state</span> <span class="op">!</span><span class="op">=</span> <span class="ident">ACCEPT</span> {
+        <span class="kw">if</span> <span class="ident">state</span> <span class="op">!=</span> <span class="ident">ACCEPT</span> {
             <span class="prelude-val">Err</span>(<span class="ident">Utf8Error</span> { <span class="ident">valid_up_to</span>, <span class="ident">error_len</span>: <span class="prelude-val">None</span> })
         } <span class="kw">else</span> {
             <span class="prelude-val">Ok</span>(())
@@ -1773,7 +1921,7 @@
     }
 
     <span class="comment">// Advance to the next state given the current state and current byte.</span>
-    <span class="kw">fn</span> <span class="ident">step</span>(<span class="ident">state</span>: <span class="ident">usize</span>, <span class="ident">b</span>: <span class="ident">u8</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
+    <span class="kw">fn</span> <span class="ident">step</span>(<span class="ident">state</span>: <span class="ident">usize</span>, <span class="ident">b</span>: <span class="ident">u8</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
         <span class="kw">let</span> <span class="ident">class</span> <span class="op">=</span> <span class="ident">CLASSES</span>[<span class="ident">b</span> <span class="kw">as</span> <span class="ident">usize</span>];
         <span class="comment">// SAFETY: This is safe because &#39;class&#39; is always &lt;=11 and &#39;state&#39; is</span>
         <span class="comment">// always &lt;=96. Therefore, the maximal index is 96+11 = 107, where</span>
@@ -1834,25 +1982,25 @@
 <span class="doccomment">/// assert_eq!(vec![&#39;☃&#39;, &#39;\u{FFFD}&#39;, &#39;𝞃&#39;, &#39;\u{FFFD}&#39;, &#39;a&#39;], chars);</span>
 <span class="doccomment">/// ```</span>
 <span class="attribute">#[<span class="ident">inline</span>]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">decode</span><span class="op">&lt;</span><span class="ident">B</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">slice</span>: <span class="ident">B</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">char</span><span class="op">&gt;</span>, <span class="ident">usize</span>) {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">decode</span><span class="op">&lt;</span><span class="ident">B</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;&gt;</span>(<span class="ident">slice</span>: <span class="ident">B</span>) <span class="op">-&gt;</span> (<span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">char</span><span class="op">&gt;</span>, <span class="ident">usize</span>) {
     <span class="kw">let</span> <span class="ident">slice</span> <span class="op">=</span> <span class="ident">slice</span>.<span class="ident">as_ref</span>();
     <span class="kw">match</span> <span class="ident">slice</span>.<span class="ident">get</span>(<span class="number">0</span>) {
-        <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> (<span class="prelude-val">None</span>, <span class="number">0</span>),
-        <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="ident">b</span>) <span class="kw">if</span> <span class="ident">b</span> <span class="op">&lt;</span><span class="op">=</span> <span class="number">0x7F</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> (<span class="prelude-val">Some</span>(<span class="ident">b</span> <span class="kw">as</span> <span class="ident">char</span>), <span class="number">1</span>),
-        <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> {}
+        <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="kw">return</span> (<span class="prelude-val">None</span>, <span class="number">0</span>),
+        <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="ident">b</span>) <span class="kw">if</span> <span class="ident">b</span> <span class="op">&lt;=</span> <span class="number">0x7F</span> <span class="op">=&gt;</span> <span class="kw">return</span> (<span class="prelude-val">Some</span>(<span class="ident">b</span> <span class="kw">as</span> <span class="ident">char</span>), <span class="number">1</span>),
+        <span class="kw">_</span> <span class="op">=&gt;</span> {}
     }
 
     <span class="kw">let</span> (<span class="kw-2">mut</span> <span class="ident">state</span>, <span class="kw-2">mut</span> <span class="ident">cp</span>, <span class="kw-2">mut</span> <span class="ident">i</span>) <span class="op">=</span> (<span class="ident">ACCEPT</span>, <span class="number">0</span>, <span class="number">0</span>);
     <span class="kw">while</span> <span class="ident">i</span> <span class="op">&lt;</span> <span class="ident">slice</span>.<span class="ident">len</span>() {
         <span class="ident">decode_step</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">state</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">cp</span>, <span class="ident">slice</span>[<span class="ident">i</span>]);
-        <span class="ident">i</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
+        <span class="ident">i</span> <span class="op">+=</span> <span class="number">1</span>;
 
-        <span class="kw">if</span> <span class="ident">state</span> <span class="op">=</span><span class="op">=</span> <span class="ident">ACCEPT</span> {
+        <span class="kw">if</span> <span class="ident">state</span> <span class="op">==</span> <span class="ident">ACCEPT</span> {
             <span class="comment">// SAFETY: This is safe because `decode_step` guarantees that</span>
             <span class="comment">// `cp` is a valid Unicode scalar value in an ACCEPT state.</span>
             <span class="kw">let</span> <span class="ident">ch</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">char</span>::<span class="ident">from_u32_unchecked</span>(<span class="ident">cp</span>) };
             <span class="kw">return</span> (<span class="prelude-val">Some</span>(<span class="ident">ch</span>), <span class="ident">i</span>);
-        } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">state</span> <span class="op">=</span><span class="op">=</span> <span class="ident">REJECT</span> {
+        } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">state</span> <span class="op">==</span> <span class="ident">REJECT</span> {
             <span class="comment">// At this point, we always want to advance at least one byte.</span>
             <span class="kw">return</span> (<span class="prelude-val">None</span>, <span class="ident">cmp</span>::<span class="ident">max</span>(<span class="number">1</span>, <span class="ident">i</span>.<span class="ident">saturating_sub</span>(<span class="number">1</span>)));
         }
@@ -1908,10 +2056,10 @@
 <span class="doccomment">/// assert_eq!(vec![&#39;☃&#39;, &#39;\u{FFFD}&#39;, &#39;𝞃&#39;, &#39;\u{FFFD}&#39;, &#39;a&#39;], chars);</span>
 <span class="doccomment">/// ```</span>
 <span class="attribute">#[<span class="ident">inline</span>]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">decode_lossy</span><span class="op">&lt;</span><span class="ident">B</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">slice</span>: <span class="ident">B</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">char</span>, <span class="ident">usize</span>) {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">decode_lossy</span><span class="op">&lt;</span><span class="ident">B</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;&gt;</span>(<span class="ident">slice</span>: <span class="ident">B</span>) <span class="op">-&gt;</span> (<span class="ident">char</span>, <span class="ident">usize</span>) {
     <span class="kw">match</span> <span class="ident">decode</span>(<span class="ident">slice</span>) {
-        (<span class="prelude-val">Some</span>(<span class="ident">ch</span>), <span class="ident">size</span>) <span class="op">=</span><span class="op">&gt;</span> (<span class="ident">ch</span>, <span class="ident">size</span>),
-        (<span class="prelude-val">None</span>, <span class="ident">size</span>) <span class="op">=</span><span class="op">&gt;</span> (<span class="string">&#39;\u{FFFD}&#39;</span>, <span class="ident">size</span>),
+        (<span class="prelude-val">Some</span>(<span class="ident">ch</span>), <span class="ident">size</span>) <span class="op">=&gt;</span> (<span class="ident">ch</span>, <span class="ident">size</span>),
+        (<span class="prelude-val">None</span>, <span class="ident">size</span>) <span class="op">=&gt;</span> (<span class="string">&#39;\u{FFFD}&#39;</span>, <span class="ident">size</span>),
     }
 }
 
@@ -1961,7 +2109,7 @@
 <span class="doccomment">/// assert_eq!(vec![&#39;a&#39;, &#39;\u{FFFD}&#39;, &#39;𝞃&#39;, &#39;\u{FFFD}&#39;, &#39;☃&#39;], chars);</span>
 <span class="doccomment">/// ```</span>
 <span class="attribute">#[<span class="ident">inline</span>]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">decode_last</span><span class="op">&lt;</span><span class="ident">B</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">slice</span>: <span class="ident">B</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">char</span><span class="op">&gt;</span>, <span class="ident">usize</span>) {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">decode_last</span><span class="op">&lt;</span><span class="ident">B</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;&gt;</span>(<span class="ident">slice</span>: <span class="ident">B</span>) <span class="op">-&gt;</span> (<span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">char</span><span class="op">&gt;</span>, <span class="ident">usize</span>) {
     <span class="comment">// TODO: We could implement this by reversing the UTF-8 automaton, but for</span>
     <span class="comment">// now, we do it the slow way by using the forward automaton.</span>
 
@@ -1971,14 +2119,14 @@
     }
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">start</span> <span class="op">=</span> <span class="ident">slice</span>.<span class="ident">len</span>() <span class="op">-</span> <span class="number">1</span>;
     <span class="kw">let</span> <span class="ident">limit</span> <span class="op">=</span> <span class="ident">slice</span>.<span class="ident">len</span>().<span class="ident">saturating_sub</span>(<span class="number">4</span>);
-    <span class="kw">while</span> <span class="ident">start</span> <span class="op">&gt;</span> <span class="ident">limit</span> <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="op">!</span><span class="ident">is_leading_or_invalid_utf8_byte</span>(<span class="ident">slice</span>[<span class="ident">start</span>]) {
-        <span class="ident">start</span> <span class="op">-</span><span class="op">=</span> <span class="number">1</span>;
+    <span class="kw">while</span> <span class="ident">start</span> <span class="op">&gt;</span> <span class="ident">limit</span> <span class="op">&amp;&amp;</span> <span class="op">!</span><span class="ident">is_leading_or_invalid_utf8_byte</span>(<span class="ident">slice</span>[<span class="ident">start</span>]) {
+        <span class="ident">start</span> <span class="op">-=</span> <span class="number">1</span>;
     }
     <span class="kw">let</span> (<span class="ident">ch</span>, <span class="ident">size</span>) <span class="op">=</span> <span class="ident">decode</span>(<span class="kw-2">&amp;</span><span class="ident">slice</span>[<span class="ident">start</span>..]);
     <span class="comment">// If we didn&#39;t consume all of the bytes, then that means there&#39;s at least</span>
     <span class="comment">// one stray byte that never occurs in a valid code unit prefix, so we can</span>
     <span class="comment">// advance by one byte.</span>
-    <span class="kw">if</span> <span class="ident">start</span> <span class="op">+</span> <span class="ident">size</span> <span class="op">!</span><span class="op">=</span> <span class="ident">slice</span>.<span class="ident">len</span>() {
+    <span class="kw">if</span> <span class="ident">start</span> <span class="op">+</span> <span class="ident">size</span> <span class="op">!=</span> <span class="ident">slice</span>.<span class="ident">len</span>() {
         (<span class="prelude-val">None</span>, <span class="number">1</span>)
     } <span class="kw">else</span> {
         (<span class="ident">ch</span>, <span class="ident">size</span>)
@@ -2032,10 +2180,10 @@
 <span class="doccomment">/// assert_eq!(vec![&#39;a&#39;, &#39;\u{FFFD}&#39;, &#39;𝞃&#39;, &#39;\u{FFFD}&#39;, &#39;☃&#39;], chars);</span>
 <span class="doccomment">/// ```</span>
 <span class="attribute">#[<span class="ident">inline</span>]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">decode_last_lossy</span><span class="op">&lt;</span><span class="ident">B</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">slice</span>: <span class="ident">B</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">char</span>, <span class="ident">usize</span>) {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">decode_last_lossy</span><span class="op">&lt;</span><span class="ident">B</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;&gt;</span>(<span class="ident">slice</span>: <span class="ident">B</span>) <span class="op">-&gt;</span> (<span class="ident">char</span>, <span class="ident">usize</span>) {
     <span class="kw">match</span> <span class="ident">decode_last</span>(<span class="ident">slice</span>) {
-        (<span class="prelude-val">Some</span>(<span class="ident">ch</span>), <span class="ident">size</span>) <span class="op">=</span><span class="op">&gt;</span> (<span class="ident">ch</span>, <span class="ident">size</span>),
-        (<span class="prelude-val">None</span>, <span class="ident">size</span>) <span class="op">=</span><span class="op">&gt;</span> (<span class="string">&#39;\u{FFFD}&#39;</span>, <span class="ident">size</span>),
+        (<span class="prelude-val">Some</span>(<span class="ident">ch</span>), <span class="ident">size</span>) <span class="op">=&gt;</span> (<span class="ident">ch</span>, <span class="ident">size</span>),
+        (<span class="prelude-val">None</span>, <span class="ident">size</span>) <span class="op">=&gt;</span> (<span class="string">&#39;\u{FFFD}&#39;</span>, <span class="ident">size</span>),
     }
 }
 
@@ -2044,10 +2192,10 @@
 <span class="attribute">#[<span class="ident">inline</span>]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">decode_step</span>(<span class="ident">state</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">usize</span>, <span class="ident">cp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">u32</span>, <span class="ident">b</span>: <span class="ident">u8</span>) {
     <span class="kw">let</span> <span class="ident">class</span> <span class="op">=</span> <span class="ident">CLASSES</span>[<span class="ident">b</span> <span class="kw">as</span> <span class="ident">usize</span>];
-    <span class="kw">if</span> <span class="kw-2">*</span><span class="ident">state</span> <span class="op">=</span><span class="op">=</span> <span class="ident">ACCEPT</span> {
-        <span class="kw-2">*</span><span class="ident">cp</span> <span class="op">=</span> (<span class="number">0xFF</span> <span class="op">&gt;</span><span class="op">&gt;</span> <span class="ident">class</span>) <span class="op">&amp;</span> (<span class="ident">b</span> <span class="kw">as</span> <span class="ident">u32</span>);
+    <span class="kw">if</span> <span class="kw-2">*</span><span class="ident">state</span> <span class="op">==</span> <span class="ident">ACCEPT</span> {
+        <span class="kw-2">*</span><span class="ident">cp</span> <span class="op">=</span> (<span class="number">0xFF</span> <span class="op">&gt;&gt;</span> <span class="ident">class</span>) <span class="op">&amp;</span> (<span class="ident">b</span> <span class="kw">as</span> <span class="ident">u32</span>);
     } <span class="kw">else</span> {
-        <span class="kw-2">*</span><span class="ident">cp</span> <span class="op">=</span> (<span class="ident">b</span> <span class="kw">as</span> <span class="ident">u32</span> <span class="op">&amp;</span> <span class="number">0b111111</span>) <span class="op">|</span> (<span class="kw-2">*</span><span class="ident">cp</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">6</span>);
+        <span class="kw-2">*</span><span class="ident">cp</span> <span class="op">=</span> (<span class="ident">b</span> <span class="kw">as</span> <span class="ident">u32</span> <span class="op">&amp;</span> <span class="number">0b111111</span>) <span class="op">|</span> (<span class="kw-2">*</span><span class="ident">cp</span> <span class="op">&lt;&lt;</span> <span class="number">6</span>);
     }
     <span class="kw-2">*</span><span class="ident">state</span> <span class="op">=</span> <span class="ident">STATES_FORWARD</span>[<span class="kw-2">*</span><span class="ident">state</span> <span class="op">+</span> <span class="ident">class</span> <span class="kw">as</span> <span class="ident">usize</span>] <span class="kw">as</span> <span class="ident">usize</span>;
 }
@@ -2055,7 +2203,7 @@
 <span class="doccomment">/// Returns true if and only if the given byte is either a valid leading UTF-8</span>
 <span class="doccomment">/// byte, or is otherwise an invalid byte that can never appear anywhere in a</span>
 <span class="doccomment">/// valid UTF-8 sequence.</span>
-<span class="kw">fn</span> <span class="ident">is_leading_or_invalid_utf8_byte</span>(<span class="ident">b</span>: <span class="ident">u8</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+<span class="kw">fn</span> <span class="ident">is_leading_or_invalid_utf8_byte</span>(<span class="ident">b</span>: <span class="ident">u8</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
     <span class="comment">// In the ASCII case, the most significant bit is never set. The leading</span>
     <span class="comment">// byte of a 2/3/4-byte sequence always has the top two most significant</span>
     <span class="comment">// bits set. For bytes that can never appear anywhere in valid UTF-8, this</span>
@@ -2075,7 +2223,7 @@
     <span class="comment">//     \xFD :: 11111101</span>
     <span class="comment">//     \xFE :: 11111110</span>
     <span class="comment">//     \xFF :: 11111111</span>
-    (<span class="ident">b</span> <span class="op">&amp;</span> <span class="number">0b1100_0000</span>) <span class="op">!</span><span class="op">=</span> <span class="number">0b1000_0000</span>
+    (<span class="ident">b</span> <span class="op">&amp;</span> <span class="number">0b1100_0000</span>) <span class="op">!=</span> <span class="number">0b1000_0000</span>
 }
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
@@ -2086,11 +2234,11 @@
     <span class="kw">use</span> <span class="ident">tests</span>::<span class="ident">LOSSY_TESTS</span>;
     <span class="kw">use</span> <span class="ident">utf8</span>::{<span class="self">self</span>, <span class="ident">Utf8Error</span>};
 
-    <span class="kw">fn</span> <span class="ident">utf8e</span>(<span class="ident">valid_up_to</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Utf8Error</span> {
+    <span class="kw">fn</span> <span class="ident">utf8e</span>(<span class="ident">valid_up_to</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">Utf8Error</span> {
         <span class="ident">Utf8Error</span> { <span class="ident">valid_up_to</span>, <span class="ident">error_len</span>: <span class="prelude-val">None</span> }
     }
 
-    <span class="kw">fn</span> <span class="ident">utf8e2</span>(<span class="ident">valid_up_to</span>: <span class="ident">usize</span>, <span class="ident">error_len</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Utf8Error</span> {
+    <span class="kw">fn</span> <span class="ident">utf8e2</span>(<span class="ident">valid_up_to</span>: <span class="ident">usize</span>, <span class="ident">error_len</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">Utf8Error</span> {
         <span class="ident">Utf8Error</span> { <span class="ident">valid_up_to</span>, <span class="ident">error_len</span>: <span class="prelude-val">Some</span>(<span class="ident">error_len</span>) }
     }
 
@@ -2098,8 +2246,8 @@
     <span class="kw">fn</span> <span class="ident">validate_all_codepoints</span>() {
         <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="number">0</span>..(<span class="number">0x10FFFF</span> <span class="op">+</span> <span class="number">1</span>) {
             <span class="kw">let</span> <span class="ident">cp</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">char</span>::<span class="ident">from_u32</span>(<span class="ident">i</span>) {
-                <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">continue</span>,
-                <span class="prelude-val">Some</span>(<span class="ident">cp</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">cp</span>,
+                <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="kw">continue</span>,
+                <span class="prelude-val">Some</span>(<span class="ident">cp</span>) <span class="op">=&gt;</span> <span class="ident">cp</span>,
             };
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buf</span> <span class="op">=</span> [<span class="number">0</span>; <span class="number">4</span>];
             <span class="kw">let</span> <span class="ident">s</span> <span class="op">=</span> <span class="ident">cp</span>.<span class="ident">encode_utf8</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">buf</span>);
@@ -2214,7 +2362,7 @@
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">decode_valid</span>() {
-        <span class="kw">fn</span> <span class="ident">d</span>(<span class="kw-2">mut</span> <span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">char</span><span class="op">&gt;</span> {
+        <span class="kw">fn</span> <span class="ident">d</span>(<span class="kw-2">mut</span> <span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">char</span><span class="op">&gt;</span> {
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">chars</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[];
             <span class="kw">while</span> <span class="op">!</span><span class="ident">s</span>.<span class="ident">is_empty</span>() {
                 <span class="kw">let</span> (<span class="ident">ch</span>, <span class="ident">size</span>) <span class="op">=</span> <span class="ident">utf8</span>::<span class="ident">decode</span>(<span class="ident">s</span>.<span class="ident">as_bytes</span>());
@@ -2323,7 +2471,7 @@
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">decode_last_valid</span>() {
-        <span class="kw">fn</span> <span class="ident">d</span>(<span class="kw-2">mut</span> <span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">char</span><span class="op">&gt;</span> {
+        <span class="kw">fn</span> <span class="ident">d</span>(<span class="kw-2">mut</span> <span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">char</span><span class="op">&gt;</span> {
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">chars</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[];
             <span class="kw">while</span> <span class="op">!</span><span class="ident">s</span>.<span class="ident">is_empty</span>() {
                 <span class="kw">let</span> (<span class="ident">ch</span>, <span class="ident">size</span>) <span class="op">=</span> <span class="ident">utf8</span>::<span class="ident">decode_last</span>(<span class="ident">s</span>.<span class="ident">as_bytes</span>());
@@ -2499,6 +2647,97 @@
                 <span class="ident">i</span>, <span class="ident">input</span>,
             );
         }
+    }
+
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">utf8_chunks</span>() {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">c</span> <span class="op">=</span> <span class="ident">utf8</span>::<span class="ident">Utf8Chunks</span> { <span class="ident">bytes</span>: <span class="string">b&quot;123\xC0&quot;</span> };
+        <span class="macro">assert_eq</span><span class="macro">!</span>(
+            (<span class="ident">c</span>.<span class="ident">next</span>(), <span class="ident">c</span>.<span class="ident">next</span>()),
+            (
+                <span class="prelude-val">Some</span>(<span class="ident">utf8</span>::<span class="ident">Utf8Chunk</span> {
+                    <span class="ident">valid</span>: <span class="string">&quot;123&quot;</span>,
+                    <span class="ident">invalid</span>: <span class="string">b&quot;\xC0&quot;</span>.<span class="ident">as_bstr</span>(),
+                    <span class="ident">incomplete</span>: <span class="bool-val">false</span>,
+                }),
+                <span class="prelude-val">None</span>,
+            )
+        );
+
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">c</span> <span class="op">=</span> <span class="ident">utf8</span>::<span class="ident">Utf8Chunks</span> { <span class="ident">bytes</span>: <span class="string">b&quot;123\xFF\xFF&quot;</span> };
+        <span class="macro">assert_eq</span><span class="macro">!</span>(
+            (<span class="ident">c</span>.<span class="ident">next</span>(), <span class="ident">c</span>.<span class="ident">next</span>(), <span class="ident">c</span>.<span class="ident">next</span>()),
+            (
+                <span class="prelude-val">Some</span>(<span class="ident">utf8</span>::<span class="ident">Utf8Chunk</span> {
+                    <span class="ident">valid</span>: <span class="string">&quot;123&quot;</span>,
+                    <span class="ident">invalid</span>: <span class="string">b&quot;\xFF&quot;</span>.<span class="ident">as_bstr</span>(),
+                    <span class="ident">incomplete</span>: <span class="bool-val">false</span>,
+                }),
+                <span class="prelude-val">Some</span>(<span class="ident">utf8</span>::<span class="ident">Utf8Chunk</span> {
+                    <span class="ident">valid</span>: <span class="string">&quot;&quot;</span>,
+                    <span class="ident">invalid</span>: <span class="string">b&quot;\xFF&quot;</span>.<span class="ident">as_bstr</span>(),
+                    <span class="ident">incomplete</span>: <span class="bool-val">false</span>,
+                }),
+                <span class="prelude-val">None</span>,
+            )
+        );
+
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">c</span> <span class="op">=</span> <span class="ident">utf8</span>::<span class="ident">Utf8Chunks</span> { <span class="ident">bytes</span>: <span class="string">b&quot;123\xD0&quot;</span> };
+        <span class="macro">assert_eq</span><span class="macro">!</span>(
+            (<span class="ident">c</span>.<span class="ident">next</span>(), <span class="ident">c</span>.<span class="ident">next</span>()),
+            (
+                <span class="prelude-val">Some</span>(<span class="ident">utf8</span>::<span class="ident">Utf8Chunk</span> {
+                    <span class="ident">valid</span>: <span class="string">&quot;123&quot;</span>,
+                    <span class="ident">invalid</span>: <span class="string">b&quot;\xD0&quot;</span>.<span class="ident">as_bstr</span>(),
+                    <span class="ident">incomplete</span>: <span class="bool-val">true</span>,
+                }),
+                <span class="prelude-val">None</span>,
+            )
+        );
+
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">c</span> <span class="op">=</span> <span class="ident">utf8</span>::<span class="ident">Utf8Chunks</span> { <span class="ident">bytes</span>: <span class="string">b&quot;123\xD0456&quot;</span> };
+        <span class="macro">assert_eq</span><span class="macro">!</span>(
+            (<span class="ident">c</span>.<span class="ident">next</span>(), <span class="ident">c</span>.<span class="ident">next</span>(), <span class="ident">c</span>.<span class="ident">next</span>()),
+            (
+                <span class="prelude-val">Some</span>(<span class="ident">utf8</span>::<span class="ident">Utf8Chunk</span> {
+                    <span class="ident">valid</span>: <span class="string">&quot;123&quot;</span>,
+                    <span class="ident">invalid</span>: <span class="string">b&quot;\xD0&quot;</span>.<span class="ident">as_bstr</span>(),
+                    <span class="ident">incomplete</span>: <span class="bool-val">false</span>,
+                }),
+                <span class="prelude-val">Some</span>(<span class="ident">utf8</span>::<span class="ident">Utf8Chunk</span> {
+                    <span class="ident">valid</span>: <span class="string">&quot;456&quot;</span>,
+                    <span class="ident">invalid</span>: <span class="string">b&quot;&quot;</span>.<span class="ident">as_bstr</span>(),
+                    <span class="ident">incomplete</span>: <span class="bool-val">false</span>,
+                }),
+                <span class="prelude-val">None</span>,
+            )
+        );
+
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">c</span> <span class="op">=</span> <span class="ident">utf8</span>::<span class="ident">Utf8Chunks</span> { <span class="ident">bytes</span>: <span class="string">b&quot;123\xE2\x98&quot;</span> };
+        <span class="macro">assert_eq</span><span class="macro">!</span>(
+            (<span class="ident">c</span>.<span class="ident">next</span>(), <span class="ident">c</span>.<span class="ident">next</span>()),
+            (
+                <span class="prelude-val">Some</span>(<span class="ident">utf8</span>::<span class="ident">Utf8Chunk</span> {
+                    <span class="ident">valid</span>: <span class="string">&quot;123&quot;</span>,
+                    <span class="ident">invalid</span>: <span class="string">b&quot;\xE2\x98&quot;</span>.<span class="ident">as_bstr</span>(),
+                    <span class="ident">incomplete</span>: <span class="bool-val">true</span>,
+                }),
+                <span class="prelude-val">None</span>,
+            )
+        );
+
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">c</span> <span class="op">=</span> <span class="ident">utf8</span>::<span class="ident">Utf8Chunks</span> { <span class="ident">bytes</span>: <span class="string">b&quot;123\xF4\x8F\xBF&quot;</span> };
+        <span class="macro">assert_eq</span><span class="macro">!</span>(
+            (<span class="ident">c</span>.<span class="ident">next</span>(), <span class="ident">c</span>.<span class="ident">next</span>()),
+            (
+                <span class="prelude-val">Some</span>(<span class="ident">utf8</span>::<span class="ident">Utf8Chunk</span> {
+                    <span class="ident">valid</span>: <span class="string">&quot;123&quot;</span>,
+                    <span class="ident">invalid</span>: <span class="string">b&quot;\xF4\x8F\xBF&quot;</span>.<span class="ident">as_bstr</span>(),
+                    <span class="ident">incomplete</span>: <span class="bool-val">true</span>,
+                }),
+                <span class="prelude-val">None</span>,
+            )
+        );
     }
 }
 </pre></div>
