@@ -479,24 +479,24 @@
 <span class="kw">mod</span> <span class="ident">win</span>;
 
 <span class="doccomment">/// Alias for stdout terminals.</span>
-<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">StdoutTerminal</span> <span class="op">=</span> <span class="kw">dyn</span> <span class="ident">Terminal</span><span class="op">&lt;</span><span class="ident">Output</span> <span class="op">=</span> <span class="ident">Stdout</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Send</span>;
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">StdoutTerminal</span> <span class="op">=</span> <span class="ident">dyn</span> <span class="ident">Terminal</span><span class="op">&lt;</span><span class="ident">Output</span> <span class="op">=</span> <span class="ident">Stdout</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Send</span>;
 <span class="doccomment">/// Alias for stderr terminals.</span>
-<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">StderrTerminal</span> <span class="op">=</span> <span class="kw">dyn</span> <span class="ident">Terminal</span><span class="op">&lt;</span><span class="ident">Output</span> <span class="op">=</span> <span class="ident">Stderr</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Send</span>;
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">StderrTerminal</span> <span class="op">=</span> <span class="ident">dyn</span> <span class="ident">Terminal</span><span class="op">&lt;</span><span class="ident">Output</span> <span class="op">=</span> <span class="ident">Stderr</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Send</span>;
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">windows</span>))]</span>
 <span class="doccomment">/// Return a Terminal wrapping stdout, or None if a terminal couldn&#39;t be</span>
 <span class="doccomment">/// opened.</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">stdout</span>() <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="ident">StdoutTerminal</span><span class="op">&gt;&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">stdout</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="ident">StdoutTerminal</span><span class="op">&gt;</span><span class="op">&gt;</span> {
     <span class="ident">TerminfoTerminal</span>::<span class="ident">new</span>(<span class="ident">io</span>::<span class="ident">stdout</span>()).<span class="ident">map</span>(<span class="op">|</span><span class="ident">t</span><span class="op">|</span> <span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">t</span>) <span class="kw">as</span> <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">StdoutTerminal</span><span class="op">&gt;</span>)
 }
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">windows</span>)]</span>
 <span class="doccomment">/// Return a Terminal wrapping stdout, or None if a terminal couldn&#39;t be</span>
 <span class="doccomment">/// opened.</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">stdout</span>() <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="ident">StdoutTerminal</span><span class="op">&gt;&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">stdout</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="ident">StdoutTerminal</span><span class="op">&gt;</span><span class="op">&gt;</span> {
     <span class="ident">TerminfoTerminal</span>::<span class="ident">new</span>(<span class="ident">io</span>::<span class="ident">stdout</span>())
         .<span class="ident">map</span>(<span class="op">|</span><span class="ident">t</span><span class="op">|</span> <span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">t</span>) <span class="kw">as</span> <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">StdoutTerminal</span><span class="op">&gt;</span>)
-        .<span class="ident">or_else</span>(<span class="op">||</span> {
+        .<span class="ident">or_else</span>(<span class="op">|</span><span class="op">|</span> {
             <span class="ident">WinConsole</span>::<span class="ident">new</span>(<span class="ident">io</span>::<span class="ident">stdout</span>())
                 .<span class="ident">ok</span>()
                 .<span class="ident">map</span>(<span class="op">|</span><span class="ident">t</span><span class="op">|</span> <span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">t</span>) <span class="kw">as</span> <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">StdoutTerminal</span><span class="op">&gt;</span>)
@@ -506,17 +506,17 @@
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">windows</span>))]</span>
 <span class="doccomment">/// Return a Terminal wrapping stderr, or None if a terminal couldn&#39;t be</span>
 <span class="doccomment">/// opened.</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">stderr</span>() <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="ident">StderrTerminal</span><span class="op">&gt;&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">stderr</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="ident">StderrTerminal</span><span class="op">&gt;</span><span class="op">&gt;</span> {
     <span class="ident">TerminfoTerminal</span>::<span class="ident">new</span>(<span class="ident">io</span>::<span class="ident">stderr</span>()).<span class="ident">map</span>(<span class="op">|</span><span class="ident">t</span><span class="op">|</span> <span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">t</span>) <span class="kw">as</span> <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">StderrTerminal</span><span class="op">&gt;</span>)
 }
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">windows</span>)]</span>
 <span class="doccomment">/// Return a Terminal wrapping stderr, or None if a terminal couldn&#39;t be</span>
 <span class="doccomment">/// opened.</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">stderr</span>() <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="ident">StderrTerminal</span><span class="op">&gt;&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">stderr</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="ident">StderrTerminal</span><span class="op">&gt;</span><span class="op">&gt;</span> {
     <span class="ident">TerminfoTerminal</span>::<span class="ident">new</span>(<span class="ident">io</span>::<span class="ident">stderr</span>())
         .<span class="ident">map</span>(<span class="op">|</span><span class="ident">t</span><span class="op">|</span> <span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">t</span>) <span class="kw">as</span> <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">StderrTerminal</span><span class="op">&gt;</span>)
-        .<span class="ident">or_else</span>(<span class="op">||</span> {
+        .<span class="ident">or_else</span>(<span class="op">|</span><span class="op">|</span> {
             <span class="ident">WinConsole</span>::<span class="ident">new</span>(<span class="ident">io</span>::<span class="ident">stderr</span>())
                 .<span class="ident">ok</span>()
                 .<span class="ident">map</span>(<span class="op">|</span><span class="ident">t</span><span class="op">|</span> <span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">t</span>) <span class="kw">as</span> <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">StderrTerminal</span><span class="op">&gt;</span>)
@@ -607,41 +607,41 @@
 
 <span class="comment">// manually implemented because std::io::Error does not implement Eq/PartialEq</span>
 <span class="kw">impl</span> <span class="ident">std</span>::<span class="ident">cmp</span>::<span class="ident">PartialEq</span> <span class="kw">for</span> <span class="ident">Error</span> {
-    <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">Error</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">Error</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">Error</span>::<span class="kw-2">*</span>;
         <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
-            <span class="ident">Io</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="bool-val">false</span>,
-            <span class="ident">TerminfoParsing</span>(<span class="kw-2">ref</span> <span class="ident">inner1</span>) <span class="op">=&gt;</span> <span class="kw">match</span> <span class="kw-2">*</span><span class="ident">other</span> {
-                <span class="ident">TerminfoParsing</span>(<span class="kw-2">ref</span> <span class="ident">inner2</span>) <span class="op">=&gt;</span> <span class="ident">inner1</span> <span class="op">==</span> <span class="ident">inner2</span>,
-                <span class="kw">_</span> <span class="op">=&gt;</span> <span class="bool-val">false</span>,
+            <span class="ident">Io</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="bool-val">false</span>,
+            <span class="ident">TerminfoParsing</span>(<span class="kw-2">ref</span> <span class="ident">inner1</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">match</span> <span class="kw-2">*</span><span class="ident">other</span> {
+                <span class="ident">TerminfoParsing</span>(<span class="kw-2">ref</span> <span class="ident">inner2</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">inner1</span> <span class="op">=</span><span class="op">=</span> <span class="ident">inner2</span>,
+                <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="bool-val">false</span>,
             },
-            <span class="ident">ParameterizedExpansion</span>(<span class="kw-2">ref</span> <span class="ident">inner1</span>) <span class="op">=&gt;</span> <span class="kw">match</span> <span class="kw-2">*</span><span class="ident">other</span> {
-                <span class="ident">ParameterizedExpansion</span>(<span class="kw-2">ref</span> <span class="ident">inner2</span>) <span class="op">=&gt;</span> <span class="ident">inner1</span> <span class="op">==</span> <span class="ident">inner2</span>,
-                <span class="kw">_</span> <span class="op">=&gt;</span> <span class="bool-val">false</span>,
+            <span class="ident">ParameterizedExpansion</span>(<span class="kw-2">ref</span> <span class="ident">inner1</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">match</span> <span class="kw-2">*</span><span class="ident">other</span> {
+                <span class="ident">ParameterizedExpansion</span>(<span class="kw-2">ref</span> <span class="ident">inner2</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">inner1</span> <span class="op">=</span><span class="op">=</span> <span class="ident">inner2</span>,
+                <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="bool-val">false</span>,
             },
-            <span class="ident">NotSupported</span> <span class="op">=&gt;</span> <span class="kw">match</span> <span class="kw-2">*</span><span class="ident">other</span> {
-                <span class="ident">NotSupported</span> <span class="op">=&gt;</span> <span class="bool-val">true</span>,
-                <span class="kw">_</span> <span class="op">=&gt;</span> <span class="bool-val">false</span>,
+            <span class="ident">NotSupported</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">match</span> <span class="kw-2">*</span><span class="ident">other</span> {
+                <span class="ident">NotSupported</span> <span class="op">=</span><span class="op">&gt;</span> <span class="bool-val">true</span>,
+                <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="bool-val">false</span>,
             },
-            <span class="ident">TermUnset</span> <span class="op">=&gt;</span> <span class="kw">match</span> <span class="kw-2">*</span><span class="ident">other</span> {
-                <span class="ident">TermUnset</span> <span class="op">=&gt;</span> <span class="bool-val">true</span>,
-                <span class="kw">_</span> <span class="op">=&gt;</span> <span class="bool-val">false</span>,
+            <span class="ident">TermUnset</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">match</span> <span class="kw-2">*</span><span class="ident">other</span> {
+                <span class="ident">TermUnset</span> <span class="op">=</span><span class="op">&gt;</span> <span class="bool-val">true</span>,
+                <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="bool-val">false</span>,
             },
-            <span class="ident">TerminfoEntryNotFound</span> <span class="op">=&gt;</span> <span class="kw">match</span> <span class="kw-2">*</span><span class="ident">other</span> {
-                <span class="ident">TerminfoEntryNotFound</span> <span class="op">=&gt;</span> <span class="bool-val">true</span>,
-                <span class="kw">_</span> <span class="op">=&gt;</span> <span class="bool-val">false</span>,
+            <span class="ident">TerminfoEntryNotFound</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">match</span> <span class="kw-2">*</span><span class="ident">other</span> {
+                <span class="ident">TerminfoEntryNotFound</span> <span class="op">=</span><span class="op">&gt;</span> <span class="bool-val">true</span>,
+                <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="bool-val">false</span>,
             },
-            <span class="ident">CursorDestinationInvalid</span> <span class="op">=&gt;</span> <span class="kw">match</span> <span class="kw-2">*</span><span class="ident">other</span> {
-                <span class="ident">CursorDestinationInvalid</span> <span class="op">=&gt;</span> <span class="bool-val">true</span>,
-                <span class="kw">_</span> <span class="op">=&gt;</span> <span class="bool-val">false</span>,
+            <span class="ident">CursorDestinationInvalid</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">match</span> <span class="kw-2">*</span><span class="ident">other</span> {
+                <span class="ident">CursorDestinationInvalid</span> <span class="op">=</span><span class="op">&gt;</span> <span class="bool-val">true</span>,
+                <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="bool-val">false</span>,
             },
-            <span class="ident">ColorOutOfRange</span> <span class="op">=&gt;</span> <span class="kw">match</span> <span class="kw-2">*</span><span class="ident">other</span> {
-                <span class="ident">ColorOutOfRange</span> <span class="op">=&gt;</span> <span class="bool-val">true</span>,
-                <span class="kw">_</span> <span class="op">=&gt;</span> <span class="bool-val">false</span>,
+            <span class="ident">ColorOutOfRange</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">match</span> <span class="kw-2">*</span><span class="ident">other</span> {
+                <span class="ident">ColorOutOfRange</span> <span class="op">=</span><span class="op">&gt;</span> <span class="bool-val">true</span>,
+                <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="bool-val">false</span>,
             },
-            <span class="ident">__Nonexhaustive</span> <span class="op">=&gt;</span> <span class="kw">match</span> <span class="kw-2">*</span><span class="ident">other</span> {
-                <span class="ident">__Nonexhaustive</span> <span class="op">=&gt;</span> <span class="bool-val">true</span>,
-                <span class="kw">_</span> <span class="op">=&gt;</span> <span class="bool-val">false</span>,
+            <span class="ident">__Nonexhaustive</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">match</span> <span class="kw-2">*</span><span class="ident">other</span> {
+                <span class="ident">__Nonexhaustive</span> <span class="op">=</span><span class="op">&gt;</span> <span class="bool-val">true</span>,
+                <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="bool-val">false</span>,
             },
         }
     }
@@ -651,7 +651,7 @@
 <span class="kw">pub</span> <span class="kw">type</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">std</span>::<span class="ident">result</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">Error</span><span class="op">&gt;</span>;
 
 <span class="kw">impl</span> <span class="ident">std</span>::<span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">Error</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">std</span>::<span class="ident">fmt</span>::<span class="ident">Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">std</span>::<span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">std</span>::<span class="ident">fmt</span>::<span class="ident">Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">std</span>::<span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
         <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>::<span class="ident">Error</span>;
         <span class="kw">if</span> <span class="kw">let</span> <span class="kw">crate</span>::<span class="ident">Error</span>::<span class="ident">Io</span>(<span class="kw-2">ref</span> <span class="ident">e</span>) <span class="op">=</span> <span class="kw-2">*</span><span class="self">self</span> {
             <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;{}&quot;</span>, <span class="ident">e</span>)
@@ -662,55 +662,55 @@
 }
 
 <span class="kw">impl</span> <span class="ident">std</span>::<span class="ident">error</span>::<span class="ident">Error</span> <span class="kw">for</span> <span class="ident">Error</span> {
-    <span class="kw">fn</span> <span class="ident">description</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
+    <span class="kw">fn</span> <span class="ident">description</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
         <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">Error</span>::<span class="kw-2">*</span>;
         <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
-            <span class="ident">Io</span>(<span class="kw-2">ref</span> <span class="ident">io</span>) <span class="op">=&gt;</span> <span class="ident">io</span>.<span class="ident">description</span>(),
-            <span class="ident">TerminfoParsing</span>(<span class="kw-2">ref</span> <span class="ident">e</span>) <span class="op">=&gt;</span> <span class="ident">e</span>.<span class="ident">description</span>(),
-            <span class="ident">ParameterizedExpansion</span>(<span class="kw-2">ref</span> <span class="ident">e</span>) <span class="op">=&gt;</span> <span class="ident">e</span>.<span class="ident">description</span>(),
-            <span class="ident">NotSupported</span> <span class="op">=&gt;</span> <span class="string">&quot;operation not supported by the terminal&quot;</span>,
-            <span class="ident">TermUnset</span> <span class="op">=&gt;</span> <span class="string">&quot;TERM environment variable unset, unable to detect a terminal&quot;</span>,
-            <span class="ident">TerminfoEntryNotFound</span> <span class="op">=&gt;</span> <span class="string">&quot;could not find a terminfo entry for this terminal&quot;</span>,
-            <span class="ident">CursorDestinationInvalid</span> <span class="op">=&gt;</span> <span class="string">&quot;could not move cursor to requested position&quot;</span>,
-            <span class="ident">ColorOutOfRange</span> <span class="op">=&gt;</span> <span class="string">&quot;color not supported by the terminal&quot;</span>,
-            <span class="ident">__Nonexhaustive</span> <span class="op">=&gt;</span> <span class="string">&quot;placeholder variant that shouldn&#39;t be used&quot;</span>,
+            <span class="ident">Io</span>(<span class="kw-2">ref</span> <span class="ident">io</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">io</span>.<span class="ident">description</span>(),
+            <span class="ident">TerminfoParsing</span>(<span class="kw-2">ref</span> <span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">e</span>.<span class="ident">description</span>(),
+            <span class="ident">ParameterizedExpansion</span>(<span class="kw-2">ref</span> <span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">e</span>.<span class="ident">description</span>(),
+            <span class="ident">NotSupported</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;operation not supported by the terminal&quot;</span>,
+            <span class="ident">TermUnset</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;TERM environment variable unset, unable to detect a terminal&quot;</span>,
+            <span class="ident">TerminfoEntryNotFound</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;could not find a terminfo entry for this terminal&quot;</span>,
+            <span class="ident">CursorDestinationInvalid</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;could not move cursor to requested position&quot;</span>,
+            <span class="ident">ColorOutOfRange</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;color not supported by the terminal&quot;</span>,
+            <span class="ident">__Nonexhaustive</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;placeholder variant that shouldn&#39;t be used&quot;</span>,
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">cause</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw">dyn</span> <span class="ident">std</span>::<span class="ident">error</span>::<span class="ident">Error</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">cause</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">dyn</span> <span class="ident">std</span>::<span class="ident">error</span>::<span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
-            <span class="ident">Error</span>::<span class="ident">Io</span>(<span class="kw-2">ref</span> <span class="ident">io</span>) <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">io</span>),
-            <span class="ident">Error</span>::<span class="ident">TerminfoParsing</span>(<span class="kw-2">ref</span> <span class="ident">e</span>) <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">e</span>),
-            <span class="ident">Error</span>::<span class="ident">ParameterizedExpansion</span>(<span class="kw-2">ref</span> <span class="ident">e</span>) <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">e</span>),
-            <span class="kw">_</span> <span class="op">=&gt;</span> <span class="prelude-val">None</span>,
+            <span class="ident">Error</span>::<span class="ident">Io</span>(<span class="kw-2">ref</span> <span class="ident">io</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">io</span>),
+            <span class="ident">Error</span>::<span class="ident">TerminfoParsing</span>(<span class="kw-2">ref</span> <span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">e</span>),
+            <span class="ident">Error</span>::<span class="ident">ParameterizedExpansion</span>(<span class="kw-2">ref</span> <span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">e</span>),
+            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">None</span>,
         }
     }
 }
 
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">Error</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">io</span>::<span class="ident">Error</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">err</span>: <span class="ident">Error</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="ident">Error</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">err</span>: <span class="ident">Error</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">io</span>::<span class="ident">Error</span> {
         <span class="kw">let</span> <span class="ident">kind</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">err</span> {
-            <span class="ident">Error</span>::<span class="ident">Io</span>(<span class="kw-2">ref</span> <span class="ident">e</span>) <span class="op">=&gt;</span> <span class="ident">e</span>.<span class="ident">kind</span>(),
-            <span class="kw">_</span> <span class="op">=&gt;</span> <span class="ident">io</span>::<span class="ident">ErrorKind</span>::<span class="ident">Other</span>,
+            <span class="ident">Error</span>::<span class="ident">Io</span>(<span class="kw-2">ref</span> <span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">e</span>.<span class="ident">kind</span>(),
+            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">io</span>::<span class="ident">ErrorKind</span>::<span class="ident">Other</span>,
         };
         <span class="ident">io</span>::<span class="ident">Error</span>::<span class="ident">new</span>(<span class="ident">kind</span>, <span class="ident">err</span>)
     }
 }
 
 <span class="kw">impl</span> <span class="ident">std</span>::<span class="ident">convert</span>::<span class="ident">From</span><span class="op">&lt;</span><span class="ident">io</span>::<span class="ident">Error</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Error</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">val</span>: <span class="ident">io</span>::<span class="ident">Error</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">val</span>: <span class="ident">io</span>::<span class="ident">Error</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="ident">Error</span>::<span class="ident">Io</span>(<span class="ident">val</span>)
     }
 }
 
 <span class="kw">impl</span> <span class="ident">std</span>::<span class="ident">convert</span>::<span class="ident">From</span><span class="op">&lt;</span><span class="ident">terminfo</span>::<span class="ident">Error</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Error</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">val</span>: <span class="ident">terminfo</span>::<span class="ident">Error</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">val</span>: <span class="ident">terminfo</span>::<span class="ident">Error</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="ident">Error</span>::<span class="ident">TerminfoParsing</span>(<span class="ident">val</span>)
     }
 }
 
 <span class="kw">impl</span> <span class="ident">std</span>::<span class="ident">convert</span>::<span class="ident">From</span><span class="op">&lt;</span><span class="ident">terminfo</span>::<span class="ident">parm</span>::<span class="ident">Error</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Error</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">val</span>: <span class="ident">terminfo</span>::<span class="ident">parm</span>::<span class="ident">Error</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">val</span>: <span class="ident">terminfo</span>::<span class="ident">parm</span>::<span class="ident">Error</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="ident">Error</span>::<span class="ident">ParameterizedExpansion</span>(<span class="ident">val</span>)
     }
 }
@@ -728,7 +728,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// Returns `Ok(())` if the color change code was sent to the terminal, or `Err(e)` if there</span>
     <span class="doccomment">/// was an error.</span>
-    <span class="kw">fn</span> <span class="ident">fg</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">color</span>: <span class="ident">color</span>::<span class="ident">Color</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">fg</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">color</span>: <span class="ident">color</span>::<span class="ident">Color</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>;
 
     <span class="doccomment">/// Sets the background color to the given color.</span>
     <span class="doccomment">///</span>
@@ -737,15 +737,15 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// Returns `Ok(())` if the color change code was sent to the terminal, or `Err(e)` if there</span>
     <span class="doccomment">/// was an error.</span>
-    <span class="kw">fn</span> <span class="ident">bg</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">color</span>: <span class="ident">color</span>::<span class="ident">Color</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">bg</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">color</span>: <span class="ident">color</span>::<span class="ident">Color</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>;
 
     <span class="doccomment">/// Sets the given terminal attribute, if supported.  Returns `Ok(())` if the attribute is</span>
     <span class="doccomment">/// supported and was sent to the terminal, or `Err(e)` if there was an error or the attribute</span>
     <span class="doccomment">/// wasn&#39;t supported.</span>
-    <span class="kw">fn</span> <span class="ident">attr</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">attr</span>: <span class="ident">Attr</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">attr</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">attr</span>: <span class="ident">Attr</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>;
 
     <span class="doccomment">/// Returns whether the given terminal attribute is supported.</span>
-    <span class="kw">fn</span> <span class="ident">supports_attr</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">attr</span>: <span class="ident">Attr</span>) <span class="op">-&gt;</span> <span class="ident">bool</span>;
+    <span class="kw">fn</span> <span class="ident">supports_attr</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">attr</span>: <span class="ident">Attr</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span>;
 
     <span class="doccomment">/// Resets all terminal attributes and colors to their defaults.</span>
     <span class="doccomment">///</span>
@@ -756,41 +756,41 @@
     <span class="doccomment">/// That means the reset command may get buffered so, if you aren&#39;t planning on doing anything</span>
     <span class="doccomment">/// else that might flush stdout&#39;s buffer (e.g. writing a line of text), you should flush after</span>
     <span class="doccomment">/// calling reset.</span>
-    <span class="kw">fn</span> <span class="ident">reset</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">reset</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>;
 
     <span class="doccomment">/// Returns true if reset is supported.</span>
-    <span class="kw">fn</span> <span class="ident">supports_reset</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span>;
+    <span class="kw">fn</span> <span class="ident">supports_reset</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span>;
 
     <span class="doccomment">/// Returns true if color is fully supported.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// If this function returns `true`, `bg`, `fg`, and `reset` will never</span>
     <span class="doccomment">/// return `Err(Error::NotSupported)`.</span>
-    <span class="kw">fn</span> <span class="ident">supports_color</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span>;
+    <span class="kw">fn</span> <span class="ident">supports_color</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span>;
 
     <span class="doccomment">/// Moves the cursor up one line.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Returns `Ok(())` if the cursor movement code was printed, or `Err(e)` if there was an</span>
     <span class="doccomment">/// error.</span>
-    <span class="kw">fn</span> <span class="ident">cursor_up</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">cursor_up</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>;
 
     <span class="doccomment">/// Deletes the text from the cursor location to the end of the line.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Returns `Ok(())` if the deletion code was printed, or `Err(e)` if there was an error.</span>
-    <span class="kw">fn</span> <span class="ident">delete_line</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">delete_line</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>;
 
     <span class="doccomment">/// Moves the cursor to the left edge of the current line.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Returns `Ok(true)` if the deletion code was printed, or `Err(e)` if there was an error.</span>
-    <span class="kw">fn</span> <span class="ident">carriage_return</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">carriage_return</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>;
 
     <span class="doccomment">/// Gets an immutable reference to the stream inside</span>
-    <span class="kw">fn</span> <span class="ident">get_ref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="self">Self</span>::<span class="ident">Output</span>;
+    <span class="kw">fn</span> <span class="ident">get_ref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="self">Self</span>::<span class="ident">Output</span>;
 
     <span class="doccomment">/// Gets a mutable reference to the stream inside</span>
-    <span class="kw">fn</span> <span class="ident">get_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span>::<span class="ident">Output</span>;
+    <span class="kw">fn</span> <span class="ident">get_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span>::<span class="ident">Output</span>;
 
     <span class="doccomment">/// Returns the contained stream, destroying the `Terminal`</span>
-    <span class="kw">fn</span> <span class="ident">into_inner</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Output</span>
+    <span class="kw">fn</span> <span class="ident">into_inner</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Output</span>
     <span class="kw">where</span>
         <span class="self">Self</span>: <span class="ident">Sized</span>;
 }

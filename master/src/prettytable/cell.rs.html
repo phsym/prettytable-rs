@@ -1,4 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `src/cell.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>cell.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../prettytable/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `src/cell.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>cell.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+<link rel="alternate icon" type="image/png" href="../../favicon-16x16.png">
+<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../prettytable/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
                 <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
@@ -562,7 +564,7 @@
 <span class="kw">impl</span> <span class="ident">Cell</span> {
     <span class="doccomment">/// Create a new `Cell` initialized with content from `string`.</span>
     <span class="doccomment">/// Text alignment in cell is configurable with the `align` argument</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new_align</span>(<span class="ident">string</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">align</span>: <span class="ident">Alignment</span>) <span class="op">-&gt;</span> <span class="ident">Cell</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new_align</span>(<span class="ident">string</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">align</span>: <span class="ident">Alignment</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Cell</span> {
         <span class="kw">let</span> <span class="ident">content</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">string</span>.<span class="ident">lines</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">x</span><span class="op">|</span> <span class="ident">x</span>.<span class="ident">to_string</span>()).<span class="ident">collect</span>();
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">width</span> <span class="op">=</span> <span class="number">0</span>;
         <span class="kw">for</span> <span class="ident">cont</span> <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="ident">content</span> {
@@ -582,7 +584,7 @@
 
     <span class="doccomment">/// Create a new `Cell` initialized with content from `string`.</span>
     <span class="doccomment">/// By default, content is align to `LEFT`</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">string</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="ident">Cell</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">string</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Cell</span> {
         <span class="ident">Cell</span>::<span class="ident">new_align</span>(<span class="ident">string</span>, <span class="ident">Alignment</span>::<span class="ident">LEFT</span>)
     }
 
@@ -597,13 +599,13 @@
     }
 
     <span class="doccomment">/// Add a style attribute to the cell. Can be chained</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_style</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">attr</span>: <span class="ident">Attr</span>) <span class="op">-&gt;</span> <span class="ident">Cell</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_style</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">attr</span>: <span class="ident">Attr</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Cell</span> {
         <span class="self">self</span>.<span class="ident">style</span>(<span class="ident">attr</span>);
         <span class="self">self</span>
     }
 
     <span class="doccomment">/// Add horizontal spanning to the cell</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_hspan</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">hspan</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">Cell</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_hspan</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">hspan</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Cell</span> {
         <span class="self">self</span>.<span class="ident">set_hspan</span>(<span class="ident">hspan</span>);
         <span class="self">self</span>
     }
@@ -651,31 +653,31 @@
     <span class="doccomment">/// * **R** : Bright Red</span>
     <span class="doccomment">/// * **B** : Bright Blue</span>
     <span class="doccomment">/// * ... and so on ...</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">style_spec</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">spec</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="ident">Cell</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">style_spec</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">spec</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Cell</span> {
         <span class="self">self</span>.<span class="ident">reset_style</span>();
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">foreground</span> <span class="op">=</span> <span class="bool-val">false</span>;
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">background</span> <span class="op">=</span> <span class="bool-val">false</span>;
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">it</span> <span class="op">=</span> <span class="ident">spec</span>.<span class="ident">chars</span>().<span class="ident">peekable</span>();
         <span class="kw">while</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">c</span>) <span class="op">=</span> <span class="ident">it</span>.<span class="ident">next</span>() {
-            <span class="kw">if</span> <span class="ident">foreground</span> <span class="op">||</span> <span class="ident">background</span> {
+            <span class="kw">if</span> <span class="ident">foreground</span> <span class="op">|</span><span class="op">|</span> <span class="ident">background</span> {
                 <span class="kw">let</span> <span class="ident">color</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">c</span> {
-                    <span class="string">&#39;r&#39;</span> <span class="op">=&gt;</span> <span class="ident">color</span>::<span class="ident">RED</span>,
-                    <span class="string">&#39;R&#39;</span> <span class="op">=&gt;</span> <span class="ident">color</span>::<span class="ident">BRIGHT_RED</span>,
-                    <span class="string">&#39;b&#39;</span> <span class="op">=&gt;</span> <span class="ident">color</span>::<span class="ident">BLUE</span>,
-                    <span class="string">&#39;B&#39;</span> <span class="op">=&gt;</span> <span class="ident">color</span>::<span class="ident">BRIGHT_BLUE</span>,
-                    <span class="string">&#39;g&#39;</span> <span class="op">=&gt;</span> <span class="ident">color</span>::<span class="ident">GREEN</span>,
-                    <span class="string">&#39;G&#39;</span> <span class="op">=&gt;</span> <span class="ident">color</span>::<span class="ident">BRIGHT_GREEN</span>,
-                    <span class="string">&#39;y&#39;</span> <span class="op">=&gt;</span> <span class="ident">color</span>::<span class="ident">YELLOW</span>,
-                    <span class="string">&#39;Y&#39;</span> <span class="op">=&gt;</span> <span class="ident">color</span>::<span class="ident">BRIGHT_YELLOW</span>,
-                    <span class="string">&#39;c&#39;</span> <span class="op">=&gt;</span> <span class="ident">color</span>::<span class="ident">CYAN</span>,
-                    <span class="string">&#39;C&#39;</span> <span class="op">=&gt;</span> <span class="ident">color</span>::<span class="ident">BRIGHT_CYAN</span>,
-                    <span class="string">&#39;m&#39;</span> <span class="op">=&gt;</span> <span class="ident">color</span>::<span class="ident">MAGENTA</span>,
-                    <span class="string">&#39;M&#39;</span> <span class="op">=&gt;</span> <span class="ident">color</span>::<span class="ident">BRIGHT_MAGENTA</span>,
-                    <span class="string">&#39;w&#39;</span> <span class="op">=&gt;</span> <span class="ident">color</span>::<span class="ident">WHITE</span>,
-                    <span class="string">&#39;W&#39;</span> <span class="op">=&gt;</span> <span class="ident">color</span>::<span class="ident">BRIGHT_WHITE</span>,
-                    <span class="string">&#39;d&#39;</span> <span class="op">=&gt;</span> <span class="ident">color</span>::<span class="ident">BLACK</span>,
-                    <span class="string">&#39;D&#39;</span> <span class="op">=&gt;</span> <span class="ident">color</span>::<span class="ident">BRIGHT_BLACK</span>,
-                    <span class="kw">_</span> <span class="op">=&gt;</span> {
+                    <span class="string">&#39;r&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">color</span>::<span class="ident">RED</span>,
+                    <span class="string">&#39;R&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">color</span>::<span class="ident">BRIGHT_RED</span>,
+                    <span class="string">&#39;b&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">color</span>::<span class="ident">BLUE</span>,
+                    <span class="string">&#39;B&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">color</span>::<span class="ident">BRIGHT_BLUE</span>,
+                    <span class="string">&#39;g&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">color</span>::<span class="ident">GREEN</span>,
+                    <span class="string">&#39;G&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">color</span>::<span class="ident">BRIGHT_GREEN</span>,
+                    <span class="string">&#39;y&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">color</span>::<span class="ident">YELLOW</span>,
+                    <span class="string">&#39;Y&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">color</span>::<span class="ident">BRIGHT_YELLOW</span>,
+                    <span class="string">&#39;c&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">color</span>::<span class="ident">CYAN</span>,
+                    <span class="string">&#39;C&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">color</span>::<span class="ident">BRIGHT_CYAN</span>,
+                    <span class="string">&#39;m&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">color</span>::<span class="ident">MAGENTA</span>,
+                    <span class="string">&#39;M&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">color</span>::<span class="ident">BRIGHT_MAGENTA</span>,
+                    <span class="string">&#39;w&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">color</span>::<span class="ident">WHITE</span>,
+                    <span class="string">&#39;W&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">color</span>::<span class="ident">BRIGHT_WHITE</span>,
+                    <span class="string">&#39;d&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">color</span>::<span class="ident">BLACK</span>,
+                    <span class="string">&#39;D&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">color</span>::<span class="ident">BRIGHT_BLACK</span>,
+                    <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> {
                         <span class="comment">// Silently ignore unknown tags</span>
                         <span class="ident">foreground</span> <span class="op">=</span> <span class="bool-val">false</span>;
                         <span class="ident">background</span> <span class="op">=</span> <span class="bool-val">false</span>;
@@ -691,15 +693,15 @@
                 <span class="ident">background</span> <span class="op">=</span> <span class="bool-val">false</span>;
             } <span class="kw">else</span> {
                 <span class="kw">match</span> <span class="ident">c</span> {
-                    <span class="string">&#39;F&#39;</span> <span class="op">=&gt;</span> <span class="ident">foreground</span> <span class="op">=</span> <span class="bool-val">true</span>,
-                    <span class="string">&#39;B&#39;</span> <span class="op">=&gt;</span> <span class="ident">background</span> <span class="op">=</span> <span class="bool-val">true</span>,
-                    <span class="string">&#39;b&#39;</span> <span class="op">=&gt;</span> <span class="self">self</span>.<span class="ident">style</span>(<span class="ident">Attr</span>::<span class="ident">Bold</span>),
-                    <span class="string">&#39;i&#39;</span> <span class="op">=&gt;</span> <span class="self">self</span>.<span class="ident">style</span>(<span class="ident">Attr</span>::<span class="ident">Italic</span>(<span class="bool-val">true</span>)),
-                    <span class="string">&#39;u&#39;</span> <span class="op">=&gt;</span> <span class="self">self</span>.<span class="ident">style</span>(<span class="ident">Attr</span>::<span class="ident">Underline</span>(<span class="bool-val">true</span>)),
-                    <span class="string">&#39;c&#39;</span> <span class="op">=&gt;</span> <span class="self">self</span>.<span class="ident">align</span>(<span class="ident">Alignment</span>::<span class="ident">CENTER</span>),
-                    <span class="string">&#39;l&#39;</span> <span class="op">=&gt;</span> <span class="self">self</span>.<span class="ident">align</span>(<span class="ident">Alignment</span>::<span class="ident">LEFT</span>),
-                    <span class="string">&#39;r&#39;</span> <span class="op">=&gt;</span> <span class="self">self</span>.<span class="ident">align</span>(<span class="ident">Alignment</span>::<span class="ident">RIGHT</span>),
-                    <span class="string">&#39;H&#39;</span> <span class="op">=&gt;</span> {
+                    <span class="string">&#39;F&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">foreground</span> <span class="op">=</span> <span class="bool-val">true</span>,
+                    <span class="string">&#39;B&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">background</span> <span class="op">=</span> <span class="bool-val">true</span>,
+                    <span class="string">&#39;b&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">style</span>(<span class="ident">Attr</span>::<span class="ident">Bold</span>),
+                    <span class="string">&#39;i&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">style</span>(<span class="ident">Attr</span>::<span class="ident">Italic</span>(<span class="bool-val">true</span>)),
+                    <span class="string">&#39;u&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">style</span>(<span class="ident">Attr</span>::<span class="ident">Underline</span>(<span class="bool-val">true</span>)),
+                    <span class="string">&#39;c&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">align</span>(<span class="ident">Alignment</span>::<span class="ident">CENTER</span>),
+                    <span class="string">&#39;l&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">align</span>(<span class="ident">Alignment</span>::<span class="ident">LEFT</span>),
+                    <span class="string">&#39;r&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">align</span>(<span class="ident">Alignment</span>::<span class="ident">RIGHT</span>),
+                    <span class="string">&#39;H&#39;</span> <span class="op">=</span><span class="op">&gt;</span> {
                         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">span_s</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">new</span>();
                         <span class="kw">while</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="string">&#39;0&#39;</span>..<span class="op">=</span><span class="string">&#39;9&#39;</span>) <span class="op">=</span> <span class="ident">it</span>.<span class="ident">peek</span>() {
                             <span class="ident">span_s</span>.<span class="ident">push</span>(<span class="ident">it</span>.<span class="ident">next</span>().<span class="ident">unwrap</span>());
@@ -707,7 +709,7 @@
                         <span class="kw">let</span> <span class="ident">span</span> <span class="op">=</span> <span class="ident">usize</span>::<span class="ident">from_str</span>(<span class="kw-2">&amp;</span><span class="ident">span_s</span>).<span class="ident">unwrap</span>();
                         <span class="self">self</span>.<span class="ident">set_hspan</span>(<span class="ident">span</span>);
                     }
-                    <span class="kw">_</span> <span class="op">=&gt;</span> { <span class="comment">/* Silently ignore unknown tags */</span> }
+                    <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> { <span class="comment">/* Silently ignore unknown tags */</span> }
                 }
             }
         }
@@ -716,28 +718,28 @@
 
     <span class="doccomment">/// Return the height of the cell</span>
     <span class="comment">// #[deprecated(since=&quot;0.8.0&quot;, note=&quot;Will become private in future release. See [issue #87](https://github.com/phsym/prettytable-rs/issues/87)&quot;)]</span>
-    <span class="kw">pub</span> (<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">get_height</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+    <span class="kw">pub</span> (<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">get_height</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
         <span class="self">self</span>.<span class="ident">content</span>.<span class="ident">len</span>()
     }
 
     <span class="doccomment">/// Return the width of the cell</span>
     <span class="comment">// #[deprecated(since=&quot;0.8.0&quot;, note=&quot;Will become private in future release. See [issue #87](https://github.com/phsym/prettytable-rs/issues/87)&quot;)]</span>
-    <span class="kw">pub</span> (<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">get_width</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+    <span class="kw">pub</span> (<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">get_width</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
         <span class="self">self</span>.<span class="ident">width</span>
     }
 
     <span class="doccomment">/// Set horizontal span for this cell (must be &gt; 0)</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_hspan</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">hspan</span>: <span class="ident">usize</span>) {
-        <span class="self">self</span>.<span class="ident">hspan</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">hspan</span> <span class="op">==</span> <span class="number">0</span> {<span class="number">1</span>} <span class="kw">else</span> {<span class="ident">hspan</span>};
+        <span class="self">self</span>.<span class="ident">hspan</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">hspan</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {<span class="number">1</span>} <span class="kw">else</span> {<span class="ident">hspan</span>};
     }
 
     <span class="doccomment">/// Get horizontal span of this cell (&gt; 0)</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_hspan</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_hspan</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
         <span class="self">self</span>.<span class="ident">hspan</span>
     }
 
     <span class="doccomment">/// Return a copy of the full string contained in the cell</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_content</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">String</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_content</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">String</span> {
         <span class="self">self</span>.<span class="ident">content</span>.<span class="ident">join</span>(<span class="string">&quot;\n&quot;</span>)
     }
 
@@ -752,7 +754,7 @@
         <span class="ident">idx</span>: <span class="ident">usize</span>,
         <span class="ident">col_width</span>: <span class="ident">usize</span>,
         <span class="ident">skip_right_fill</span>: <span class="ident">bool</span>,
-    ) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">c</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">content</span>.<span class="ident">get</span>(<span class="ident">idx</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">s</span><span class="op">|</span> <span class="ident">s</span>.<span class="ident">as_ref</span>()).<span class="ident">unwrap_or</span>(<span class="string">&quot;&quot;</span>);
         <span class="ident">print_align</span>(<span class="ident">out</span>, <span class="self">self</span>.<span class="ident">align</span>, <span class="ident">c</span>, <span class="string">&#39; &#39;</span>, <span class="ident">col_width</span>, <span class="ident">skip_right_fill</span>)
     }
@@ -765,47 +767,47 @@
         <span class="ident">idx</span>: <span class="ident">usize</span>,
         <span class="ident">col_width</span>: <span class="ident">usize</span>,
         <span class="ident">skip_right_fill</span>: <span class="ident">bool</span>,
-    ) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="kw">for</span> <span class="ident">a</span> <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">style</span> {
             <span class="kw">match</span> <span class="ident">out</span>.<span class="ident">attr</span>(<span class="kw-2">*</span><span class="ident">a</span>) {
-                <span class="prelude-val">Ok</span>(..) <span class="op">|</span> <span class="prelude-val">Err</span>(::<span class="ident">term</span>::<span class="ident">Error</span>::<span class="ident">NotSupported</span>) <span class="op">|</span> <span class="prelude-val">Err</span>(::<span class="ident">term</span>::<span class="ident">Error</span>::<span class="ident">ColorOutOfRange</span>) <span class="op">=&gt;</span> {
+                <span class="prelude-val">Ok</span>(..) <span class="op">|</span> <span class="prelude-val">Err</span>(::<span class="ident">term</span>::<span class="ident">Error</span>::<span class="ident">NotSupported</span>) <span class="op">|</span> <span class="prelude-val">Err</span>(::<span class="ident">term</span>::<span class="ident">Error</span>::<span class="ident">ColorOutOfRange</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 } <span class="comment">// Ignore unsupported attributes</span>
-                <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">term_error_to_io_error</span>(<span class="ident">e</span>)),
+                <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">term_error_to_io_error</span>(<span class="ident">e</span>)),
             };
         }
         <span class="self">self</span>.<span class="ident">print</span>(<span class="ident">out</span>, <span class="ident">idx</span>, <span class="ident">col_width</span>, <span class="ident">skip_right_fill</span>)<span class="question-mark">?</span>;
         <span class="kw">match</span> <span class="ident">out</span>.<span class="ident">reset</span>() {
-            <span class="prelude-val">Ok</span>(..) <span class="op">|</span> <span class="prelude-val">Err</span>(::<span class="ident">term</span>::<span class="ident">Error</span>::<span class="ident">NotSupported</span>) <span class="op">|</span> <span class="prelude-val">Err</span>(::<span class="ident">term</span>::<span class="ident">Error</span>::<span class="ident">ColorOutOfRange</span>) <span class="op">=&gt;</span> {
+            <span class="prelude-val">Ok</span>(..) <span class="op">|</span> <span class="prelude-val">Err</span>(::<span class="ident">term</span>::<span class="ident">Error</span>::<span class="ident">NotSupported</span>) <span class="op">|</span> <span class="prelude-val">Err</span>(::<span class="ident">term</span>::<span class="ident">Error</span>::<span class="ident">ColorOutOfRange</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="prelude-val">Ok</span>(())
             }
-            <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">term_error_to_io_error</span>(<span class="ident">e</span>)),
+            <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">term_error_to_io_error</span>(<span class="ident">e</span>)),
         }
     }
 
     <span class="doccomment">/// Print the cell in HTML format to `out`.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">print_html</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Write</span> <span class="op">+</span> <span class="question-mark">?</span><span class="ident">Sized</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">out</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">print_html</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Write</span> <span class="op">+</span> <span class="question-mark">?</span><span class="ident">Sized</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">out</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="doccomment">/// Convert the color to a hex value useful in CSS</span>
-        <span class="kw">fn</span> <span class="ident">color2hex</span>(<span class="ident">color</span>: <span class="ident">color</span>::<span class="ident">Color</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span> {
+        <span class="kw">fn</span> <span class="ident">color2hex</span>(<span class="ident">color</span>: <span class="ident">color</span>::<span class="ident">Color</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span> {
             <span class="kw">match</span> <span class="ident">color</span> {
-                <span class="ident">color</span>::<span class="ident">BLACK</span> <span class="op">=&gt;</span> <span class="string">&quot;#000000&quot;</span>,
-                <span class="ident">color</span>::<span class="ident">RED</span> <span class="op">=&gt;</span> <span class="string">&quot;#aa0000&quot;</span>,
-                <span class="ident">color</span>::<span class="ident">GREEN</span> <span class="op">=&gt;</span> <span class="string">&quot;#00aa00&quot;</span>,
-                <span class="ident">color</span>::<span class="ident">YELLOW</span> <span class="op">=&gt;</span> <span class="string">&quot;#aa5500&quot;</span>,
-                <span class="ident">color</span>::<span class="ident">BLUE</span> <span class="op">=&gt;</span> <span class="string">&quot;#0000aa&quot;</span>,
-                <span class="ident">color</span>::<span class="ident">MAGENTA</span> <span class="op">=&gt;</span> <span class="string">&quot;#aa00aa&quot;</span>,
-                <span class="ident">color</span>::<span class="ident">CYAN</span> <span class="op">=&gt;</span> <span class="string">&quot;#00aaaa&quot;</span>,
-                <span class="ident">color</span>::<span class="ident">WHITE</span> <span class="op">=&gt;</span> <span class="string">&quot;#aaaaaa&quot;</span>,
-                <span class="ident">color</span>::<span class="ident">BRIGHT_BLACK</span> <span class="op">=&gt;</span> <span class="string">&quot;#555555&quot;</span>,
-                <span class="ident">color</span>::<span class="ident">BRIGHT_RED</span> <span class="op">=&gt;</span> <span class="string">&quot;#ff5555&quot;</span>,
-                <span class="ident">color</span>::<span class="ident">BRIGHT_GREEN</span> <span class="op">=&gt;</span> <span class="string">&quot;#55ff55&quot;</span>,
-                <span class="ident">color</span>::<span class="ident">BRIGHT_YELLOW</span> <span class="op">=&gt;</span> <span class="string">&quot;#ffff55&quot;</span>,
-                <span class="ident">color</span>::<span class="ident">BRIGHT_BLUE</span> <span class="op">=&gt;</span> <span class="string">&quot;#5555ff&quot;</span>,
-                <span class="ident">color</span>::<span class="ident">BRIGHT_MAGENTA</span> <span class="op">=&gt;</span> <span class="string">&quot;#ff55ff&quot;</span>,
-                <span class="ident">color</span>::<span class="ident">BRIGHT_CYAN</span> <span class="op">=&gt;</span> <span class="string">&quot;#55ffff&quot;</span>,
-                <span class="ident">color</span>::<span class="ident">BRIGHT_WHITE</span> <span class="op">=&gt;</span> <span class="string">&quot;#ffffff&quot;</span>,
+                <span class="ident">color</span>::<span class="ident">BLACK</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;#000000&quot;</span>,
+                <span class="ident">color</span>::<span class="ident">RED</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;#aa0000&quot;</span>,
+                <span class="ident">color</span>::<span class="ident">GREEN</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;#00aa00&quot;</span>,
+                <span class="ident">color</span>::<span class="ident">YELLOW</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;#aa5500&quot;</span>,
+                <span class="ident">color</span>::<span class="ident">BLUE</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;#0000aa&quot;</span>,
+                <span class="ident">color</span>::<span class="ident">MAGENTA</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;#aa00aa&quot;</span>,
+                <span class="ident">color</span>::<span class="ident">CYAN</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;#00aaaa&quot;</span>,
+                <span class="ident">color</span>::<span class="ident">WHITE</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;#aaaaaa&quot;</span>,
+                <span class="ident">color</span>::<span class="ident">BRIGHT_BLACK</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;#555555&quot;</span>,
+                <span class="ident">color</span>::<span class="ident">BRIGHT_RED</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;#ff5555&quot;</span>,
+                <span class="ident">color</span>::<span class="ident">BRIGHT_GREEN</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;#55ff55&quot;</span>,
+                <span class="ident">color</span>::<span class="ident">BRIGHT_YELLOW</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;#ffff55&quot;</span>,
+                <span class="ident">color</span>::<span class="ident">BRIGHT_BLUE</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;#5555ff&quot;</span>,
+                <span class="ident">color</span>::<span class="ident">BRIGHT_MAGENTA</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;#ff55ff&quot;</span>,
+                <span class="ident">color</span>::<span class="ident">BRIGHT_CYAN</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;#55ffff&quot;</span>,
+                <span class="ident">color</span>::<span class="ident">BRIGHT_WHITE</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;#ffffff&quot;</span>,
 
                 <span class="comment">// Unknown colors, fallback to blakc</span>
-                <span class="kw">_</span> <span class="op">=&gt;</span> <span class="string">&quot;#000000&quot;</span>,
+                <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;#000000&quot;</span>,
             }
         };
 
@@ -819,27 +821,27 @@
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">styles</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">new</span>();
         <span class="kw">for</span> <span class="ident">style</span> <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">style</span> {
             <span class="kw">match</span> <span class="ident">style</span> {
-                <span class="ident">Attr</span>::<span class="ident">Bold</span> <span class="op">=&gt;</span> <span class="ident">styles</span> <span class="op">+=</span> <span class="string">&quot;font-weight: bold;&quot;</span>,
-                <span class="ident">Attr</span>::<span class="ident">Italic</span>(<span class="bool-val">true</span>) <span class="op">=&gt;</span> <span class="ident">styles</span> <span class="op">+=</span> <span class="string">&quot;font-style: italic;&quot;</span>,
-                <span class="ident">Attr</span>::<span class="ident">Underline</span>(<span class="bool-val">true</span>) <span class="op">=&gt;</span> <span class="ident">styles</span> <span class="op">+=</span> <span class="string">&quot;text-decoration: underline;&quot;</span>,
-                <span class="ident">Attr</span>::<span class="ident">ForegroundColor</span>(<span class="ident">c</span>) <span class="op">=&gt;</span> {
-                    <span class="ident">styles</span> <span class="op">+=</span> <span class="string">&quot;color: &quot;</span>;
-                    <span class="ident">styles</span> <span class="op">+=</span> <span class="ident">color2hex</span>(<span class="kw-2">*</span><span class="ident">c</span>);
-                    <span class="ident">styles</span> <span class="op">+=</span> <span class="string">&quot;;&quot;</span>;
+                <span class="ident">Attr</span>::<span class="ident">Bold</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">styles</span> <span class="op">+</span><span class="op">=</span> <span class="string">&quot;font-weight: bold;&quot;</span>,
+                <span class="ident">Attr</span>::<span class="ident">Italic</span>(<span class="bool-val">true</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">styles</span> <span class="op">+</span><span class="op">=</span> <span class="string">&quot;font-style: italic;&quot;</span>,
+                <span class="ident">Attr</span>::<span class="ident">Underline</span>(<span class="bool-val">true</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">styles</span> <span class="op">+</span><span class="op">=</span> <span class="string">&quot;text-decoration: underline;&quot;</span>,
+                <span class="ident">Attr</span>::<span class="ident">ForegroundColor</span>(<span class="ident">c</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                    <span class="ident">styles</span> <span class="op">+</span><span class="op">=</span> <span class="string">&quot;color: &quot;</span>;
+                    <span class="ident">styles</span> <span class="op">+</span><span class="op">=</span> <span class="ident">color2hex</span>(<span class="kw-2">*</span><span class="ident">c</span>);
+                    <span class="ident">styles</span> <span class="op">+</span><span class="op">=</span> <span class="string">&quot;;&quot;</span>;
                 }
-                <span class="ident">Attr</span>::<span class="ident">BackgroundColor</span>(<span class="ident">c</span>) <span class="op">=&gt;</span> {
-                    <span class="ident">styles</span> <span class="op">+=</span> <span class="string">&quot;background-color: &quot;</span>;
-                    <span class="ident">styles</span> <span class="op">+=</span> <span class="ident">color2hex</span>(<span class="kw-2">*</span><span class="ident">c</span>);
-                    <span class="ident">styles</span> <span class="op">+=</span> <span class="string">&quot;;&quot;</span>;
+                <span class="ident">Attr</span>::<span class="ident">BackgroundColor</span>(<span class="ident">c</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                    <span class="ident">styles</span> <span class="op">+</span><span class="op">=</span> <span class="string">&quot;background-color: &quot;</span>;
+                    <span class="ident">styles</span> <span class="op">+</span><span class="op">=</span> <span class="ident">color2hex</span>(<span class="kw-2">*</span><span class="ident">c</span>);
+                    <span class="ident">styles</span> <span class="op">+</span><span class="op">=</span> <span class="string">&quot;;&quot;</span>;
                 }
-                <span class="kw">_</span> <span class="op">=&gt;</span> {}
+                <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> {}
             }
         }
         <span class="comment">// Process alignment</span>
         <span class="kw">match</span> <span class="self">self</span>.<span class="ident">align</span> {
-            <span class="ident">Alignment</span>::<span class="ident">LEFT</span> <span class="op">=&gt;</span> <span class="ident">styles</span> <span class="op">+=</span> <span class="string">&quot;text-align: left;&quot;</span>,
-            <span class="ident">Alignment</span>::<span class="ident">CENTER</span> <span class="op">=&gt;</span> <span class="ident">styles</span> <span class="op">+=</span> <span class="string">&quot;text-align: center;&quot;</span>,
-            <span class="ident">Alignment</span>::<span class="ident">RIGHT</span> <span class="op">=&gt;</span> <span class="ident">styles</span> <span class="op">+=</span> <span class="string">&quot;text-align: right;&quot;</span>,
+            <span class="ident">Alignment</span>::<span class="ident">LEFT</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">styles</span> <span class="op">+</span><span class="op">=</span> <span class="string">&quot;text-align: left;&quot;</span>,
+            <span class="ident">Alignment</span>::<span class="ident">CENTER</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">styles</span> <span class="op">+</span><span class="op">=</span> <span class="string">&quot;text-align: center;&quot;</span>,
+            <span class="ident">Alignment</span>::<span class="ident">RIGHT</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">styles</span> <span class="op">+</span><span class="op">=</span> <span class="string">&quot;text-align: right;&quot;</span>,
         }
 
         <span class="kw">let</span> <span class="ident">content</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">content</span>.<span class="ident">join</span>(<span class="string">&quot;&lt;br /&gt;&quot;</span>);
@@ -856,28 +858,28 @@
     }
 }
 
-<span class="kw">fn</span> <span class="ident">term_error_to_io_error</span>(<span class="ident">te</span>: ::<span class="ident">term</span>::<span class="ident">Error</span>) <span class="op">-&gt;</span> <span class="ident">Error</span> {
+<span class="kw">fn</span> <span class="ident">term_error_to_io_error</span>(<span class="ident">te</span>: ::<span class="ident">term</span>::<span class="ident">Error</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Error</span> {
     <span class="kw">match</span> <span class="ident">te</span> {
-        ::<span class="ident">term</span>::<span class="ident">Error</span>::<span class="ident">Io</span>(<span class="ident">why</span>) <span class="op">=&gt;</span> <span class="ident">why</span>,
-        <span class="kw">_</span> <span class="op">=&gt;</span> <span class="ident">Error</span>::<span class="ident">new</span>(::<span class="ident">std</span>::<span class="ident">io</span>::<span class="ident">ErrorKind</span>::<span class="ident">Other</span>, <span class="ident">te</span>),
+        ::<span class="ident">term</span>::<span class="ident">Error</span>::<span class="ident">Io</span>(<span class="ident">why</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">why</span>,
+        <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Error</span>::<span class="ident">new</span>(::<span class="ident">std</span>::<span class="ident">io</span>::<span class="ident">ErrorKind</span>::<span class="ident">Other</span>, <span class="ident">te</span>),
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>: <span class="ident">ToString</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">T</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Cell</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="ident">T</span>) <span class="op">-&gt;</span> <span class="ident">Cell</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Cell</span> {
         <span class="ident">Cell</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="ident">f</span>.<span class="ident">to_string</span>())
     }
 }
 
 <span class="kw">impl</span> <span class="ident">ToString</span> <span class="kw">for</span> <span class="ident">Cell</span> {
-    <span class="kw">fn</span> <span class="ident">to_string</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">String</span> {
+    <span class="kw">fn</span> <span class="ident">to_string</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">String</span> {
         <span class="self">self</span>.<span class="ident">get_content</span>()
     }
 }
 
 <span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">Cell</span> {
     <span class="doccomment">/// Return a cell initialized with a single empty `String`, with LEFT alignment</span>
-    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-&gt;</span> <span class="ident">Cell</span> {
+    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Cell</span> {
         <span class="ident">Cell</span> {
             <span class="ident">content</span>: <span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;&quot;</span>.<span class="ident">to_string</span>(); <span class="number">1</span>],
             <span class="ident">width</span>: <span class="number">0</span>,
@@ -917,14 +919,14 @@
 <span class="doccomment">/// ```</span>
 <span class="attribute">#[<span class="ident">macro_export</span>]</span>
 <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">cell</span> {
-    () <span class="op">=&gt;</span> {
+    () <span class="op">=</span><span class="op">&gt;</span> {
         <span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">Cell</span>::<span class="ident">default</span>()
     };
-    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">value</span>:<span class="ident">expr</span>) <span class="op">=&gt;</span> {
+    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">value</span>:<span class="ident">expr</span>) <span class="op">=</span><span class="op">&gt;</span> {
         <span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">Cell</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">value</span>.<span class="ident">to_string</span>())
     };
-    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">style</span>:<span class="ident">ident</span> <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">value</span>:<span class="ident">expr</span>) <span class="op">=&gt;</span> {
-        <span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">cell</span><span class="op">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">value</span>).<span class="ident">style_spec</span>(<span class="macro">stringify</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">style</span>))
+    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">style</span>:<span class="ident">ident</span> <span class="op">-</span><span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">value</span>:<span class="ident">expr</span>) <span class="op">=</span><span class="op">&gt;</span> {
+        <span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro">cell</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">value</span>).<span class="ident">style_spec</span>(<span class="macro">stringify</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">style</span>))
     };
 }
 

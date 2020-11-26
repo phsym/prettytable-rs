@@ -1,4 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/csv-1.1.3/src/reader.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>reader.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../csv/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/csv-1.1.4/src/reader.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>reader.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+<link rel="alternate icon" type="image/png" href="../../favicon-16x16.png">
+<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../csv/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
                 <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
 <span id="2">   2</span>
 <span id="3">   3</span>
@@ -2597,6 +2599,41 @@
 <span id="2596">2596</span>
 <span id="2597">2597</span>
 <span id="2598">2598</span>
+<span id="2599">2599</span>
+<span id="2600">2600</span>
+<span id="2601">2601</span>
+<span id="2602">2602</span>
+<span id="2603">2603</span>
+<span id="2604">2604</span>
+<span id="2605">2605</span>
+<span id="2606">2606</span>
+<span id="2607">2607</span>
+<span id="2608">2608</span>
+<span id="2609">2609</span>
+<span id="2610">2610</span>
+<span id="2611">2611</span>
+<span id="2612">2612</span>
+<span id="2613">2613</span>
+<span id="2614">2614</span>
+<span id="2615">2615</span>
+<span id="2616">2616</span>
+<span id="2617">2617</span>
+<span id="2618">2618</span>
+<span id="2619">2619</span>
+<span id="2620">2620</span>
+<span id="2621">2621</span>
+<span id="2622">2622</span>
+<span id="2623">2623</span>
+<span id="2624">2624</span>
+<span id="2625">2625</span>
+<span id="2626">2626</span>
+<span id="2627">2627</span>
+<span id="2628">2628</span>
+<span id="2629">2629</span>
+<span id="2630">2630</span>
+<span id="2631">2631</span>
+<span id="2632">2632</span>
+<span id="2633">2633</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fs</span>::<span class="ident">File</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>::{<span class="self">self</span>, <span class="ident">BufRead</span>, <span class="ident">Seek</span>};
@@ -2632,9 +2669,9 @@
 }
 
 <span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">ReaderBuilder</span> {
-    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-&gt;</span> <span class="ident">ReaderBuilder</span> {
+    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ReaderBuilder</span> {
         <span class="ident">ReaderBuilder</span> {
-            <span class="ident">capacity</span>: <span class="number">8</span> <span class="op">*</span> (<span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">10</span>),
+            <span class="ident">capacity</span>: <span class="number">8</span> <span class="op">*</span> (<span class="number">1</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">10</span>),
             <span class="ident">flexible</span>: <span class="bool-val">false</span>,
             <span class="ident">has_headers</span>: <span class="bool-val">true</span>,
             <span class="ident">trim</span>: <span class="ident">Trim</span>::<span class="ident">default</span>(),
@@ -2674,7 +2711,7 @@
     <span class="doccomment">///     Ok(())</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-&gt;</span> <span class="ident">ReaderBuilder</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ReaderBuilder</span> {
         <span class="ident">ReaderBuilder</span>::<span class="ident">default</span>()
     }
 
@@ -2700,7 +2737,7 @@
     <span class="doccomment">///     Ok(())</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_path</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">Path</span><span class="op">&gt;&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">path</span>: <span class="ident">P</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">File</span><span class="op">&gt;&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_path</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">Path</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">path</span>: <span class="ident">P</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">File</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="prelude-val">Ok</span>(<span class="ident">Reader</span>::<span class="ident">new</span>(<span class="self">self</span>, <span class="ident">File</span>::<span class="ident">open</span>(<span class="ident">path</span>)<span class="question-mark">?</span>))
     }
 
@@ -2730,7 +2767,7 @@
     <span class="doccomment">///     Ok(())</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_reader</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">io</span>::<span class="ident">Read</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">rdr</span>: <span class="ident">R</span>) <span class="op">-&gt;</span> <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_reader</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">io</span>::<span class="ident">Read</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">rdr</span>: <span class="ident">R</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> {
         <span class="ident">Reader</span>::<span class="ident">new</span>(<span class="self">self</span>, <span class="ident">rdr</span>)
     }
 
@@ -2763,7 +2800,7 @@
     <span class="doccomment">///     }</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">delimiter</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">delimiter</span>: <span class="ident">u8</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ReaderBuilder</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">delimiter</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">delimiter</span>: <span class="ident">u8</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ReaderBuilder</span> {
         <span class="self">self</span>.<span class="ident">builder</span>.<span class="ident">delimiter</span>(<span class="ident">delimiter</span>);
         <span class="self">self</span>
     }
@@ -2818,7 +2855,7 @@
     <span class="doccomment">///     Ok(())</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">has_headers</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">yes</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ReaderBuilder</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">has_headers</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">yes</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ReaderBuilder</span> {
         <span class="self">self</span>.<span class="ident">has_headers</span> <span class="op">=</span> <span class="ident">yes</span>;
         <span class="self">self</span>
     }
@@ -2900,7 +2937,7 @@
     <span class="doccomment">///     }</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">flexible</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">yes</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ReaderBuilder</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">flexible</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">yes</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ReaderBuilder</span> {
         <span class="self">self</span>.<span class="ident">flexible</span> <span class="op">=</span> <span class="ident">yes</span>;
         <span class="self">self</span>
     }
@@ -2951,7 +2988,7 @@
     <span class="doccomment">///     Ok(())</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">trim</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">trim</span>: <span class="ident">Trim</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ReaderBuilder</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">trim</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">trim</span>: <span class="ident">Trim</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ReaderBuilder</span> {
         <span class="self">self</span>.<span class="ident">trim</span> <span class="op">=</span> <span class="ident">trim</span>;
         <span class="self">self</span>
     }
@@ -2984,7 +3021,7 @@
     <span class="doccomment">///     }</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">terminator</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">term</span>: <span class="ident">Terminator</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ReaderBuilder</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">terminator</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">term</span>: <span class="ident">Terminator</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ReaderBuilder</span> {
         <span class="self">self</span>.<span class="ident">builder</span>.<span class="ident">terminator</span>(<span class="ident">term</span>.<span class="ident">to_core</span>());
         <span class="self">self</span>
     }
@@ -3018,7 +3055,7 @@
     <span class="doccomment">///     }</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">quote</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">quote</span>: <span class="ident">u8</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ReaderBuilder</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">quote</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">quote</span>: <span class="ident">u8</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ReaderBuilder</span> {
         <span class="self">self</span>.<span class="ident">builder</span>.<span class="ident">quote</span>(<span class="ident">quote</span>);
         <span class="self">self</span>
     }
@@ -3057,7 +3094,7 @@
     <span class="doccomment">///     }</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">escape</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">escape</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ReaderBuilder</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">escape</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">escape</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ReaderBuilder</span> {
         <span class="self">self</span>.<span class="ident">builder</span>.<span class="ident">escape</span>(<span class="ident">escape</span>);
         <span class="self">self</span>
     }
@@ -3094,7 +3131,7 @@
     <span class="doccomment">///     }</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">double_quote</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">yes</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ReaderBuilder</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">double_quote</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">yes</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ReaderBuilder</span> {
         <span class="self">self</span>.<span class="ident">builder</span>.<span class="ident">double_quote</span>(<span class="ident">yes</span>);
         <span class="self">self</span>
     }
@@ -3131,7 +3168,7 @@
     <span class="doccomment">///     }</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">quoting</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">yes</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ReaderBuilder</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">quoting</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">yes</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ReaderBuilder</span> {
         <span class="self">self</span>.<span class="ident">builder</span>.<span class="ident">quoting</span>(<span class="ident">yes</span>);
         <span class="self">self</span>
     }
@@ -3169,7 +3206,7 @@
     <span class="doccomment">///     }</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">comment</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">comment</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ReaderBuilder</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">comment</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">comment</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ReaderBuilder</span> {
         <span class="self">self</span>.<span class="ident">builder</span>.<span class="ident">comment</span>(<span class="ident">comment</span>);
         <span class="self">self</span>
     }
@@ -3203,14 +3240,14 @@
     <span class="doccomment">///     }</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">ascii</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ReaderBuilder</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">ascii</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ReaderBuilder</span> {
         <span class="self">self</span>.<span class="ident">builder</span>.<span class="ident">ascii</span>();
         <span class="self">self</span>
     }
 
     <span class="doccomment">/// Set the capacity (in bytes) of the buffer used in the CSV reader.</span>
     <span class="doccomment">/// This defaults to a reasonable setting.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">buffer_capacity</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">capacity</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ReaderBuilder</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">buffer_capacity</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">capacity</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ReaderBuilder</span> {
         <span class="self">self</span>.<span class="ident">capacity</span> <span class="op">=</span> <span class="ident">capacity</span>;
         <span class="self">self</span>
     }
@@ -3220,7 +3257,7 @@
     <span class="doccomment">/// This is intended to be a debug option. The NFA is always slower than</span>
     <span class="doccomment">/// the DFA.</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">nfa</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">yes</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ReaderBuilder</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">nfa</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">yes</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ReaderBuilder</span> {
         <span class="self">self</span>.<span class="ident">builder</span>.<span class="ident">nfa</span>(<span class="ident">yes</span>);
         <span class="self">self</span>
     }
@@ -3286,6 +3323,10 @@
 <span class="doccomment">///   [`ReaderBuilder`](struct.ReaderBuilder.html).</span>
 <span class="doccomment">/// * When reading CSV data from a resource (like a file), it is possible for</span>
 <span class="doccomment">///   reading from the underlying resource to fail. This will return an error.</span>
+<span class="doccomment">///   For subsequent calls to the `Reader` after encountering a such error</span>
+<span class="doccomment">///   (unless `seek` is used), it will behave as if end of file had been</span>
+<span class="doccomment">///   reached, in order to avoid running into infinite loops when still</span>
+<span class="doccomment">///   attempting to read the next record when one has errored.</span>
 <span class="doccomment">/// * When reading CSV data into `String` or `&amp;str` fields (e.g., via a</span>
 <span class="doccomment">///   [`StringRecord`](struct.StringRecord.html)), UTF-8 is strictly</span>
 <span class="doccomment">///   enforced. If CSV data is invalid UTF-8, then an error is returned. If</span>
@@ -3341,7 +3382,34 @@
     <span class="doccomment">/// Whether the reader has been seeked or not.</span>
     <span class="ident">seeked</span>: <span class="ident">bool</span>,
     <span class="doccomment">/// Whether EOF of the underlying reader has been reached or not.</span>
-    <span class="ident">eof</span>: <span class="ident">bool</span>,
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// IO errors on the underlying reader will be considered as an EOF for</span>
+    <span class="doccomment">/// subsequent read attempts, as it would be incorrect to keep on trying</span>
+    <span class="doccomment">/// to read when the underlying reader has broken.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// For clarity, having the best `Debug` impl and in case they need to be</span>
+    <span class="doccomment">/// treated differently at some point, we store whether the `EOF` is</span>
+    <span class="doccomment">/// considered because an actual EOF happened, or because we encoundered</span>
+    <span class="doccomment">/// an IO error.</span>
+    <span class="doccomment">/// This has no additional runtime cost.</span>
+    <span class="ident">eof</span>: <span class="ident">ReaderEofState</span>,
+}
+
+<span class="doccomment">/// Whether EOF of the underlying reader has been reached or not.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// IO errors on the underlying reader will be considered as an EOF for</span>
+<span class="doccomment">/// subsequent read attempts, as it would be incorrect to keep on trying</span>
+<span class="doccomment">/// to read when the underlying reader has broken.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// For clarity, having the best `Debug` impl and in case they need to be</span>
+<span class="doccomment">/// treated differently at some point, we store whether the `EOF` is</span>
+<span class="doccomment">/// considered because an actual EOF happened, or because we encoundered</span>
+<span class="doccomment">/// an IO error</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
+<span class="kw">enum</span> <span class="ident">ReaderEofState</span> {
+    <span class="ident">NotEof</span>,
+    <span class="ident">Eof</span>,
+    <span class="ident">IOError</span>,
 }
 
 <span class="doccomment">/// Headers encapsulates any data associated with the headers of CSV data.</span>
@@ -3355,7 +3423,7 @@
     <span class="ident">string_record</span>: <span class="ident">result</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">StringRecord</span>, <span class="ident">Utf8Error</span><span class="op">&gt;</span>,
 }
 
-<span class="kw">impl</span> <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">File</span><span class="op">&gt;&gt;</span> {
+<span class="kw">impl</span> <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">File</span><span class="op">&gt;</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Create a new CSV parser with a default configuration for the given</span>
     <span class="doccomment">/// file path.</span>
     <span class="doccomment">///</span>
@@ -3377,7 +3445,7 @@
     <span class="doccomment">///     Ok(())</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_path</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">Path</span><span class="op">&gt;&gt;</span>(<span class="ident">path</span>: <span class="ident">P</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">File</span><span class="op">&gt;&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_path</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">Path</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">path</span>: <span class="ident">P</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">File</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="ident">ReaderBuilder</span>::<span class="ident">new</span>().<span class="ident">from_path</span>(<span class="ident">path</span>)
     }
 }
@@ -3385,7 +3453,7 @@
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">io</span>::<span class="ident">Read</span><span class="op">&gt;</span> <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Create a new CSV reader given a builder and a source of underlying</span>
     <span class="doccomment">/// bytes.</span>
-    <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">builder</span>: <span class="kw-2">&amp;</span><span class="ident">ReaderBuilder</span>, <span class="ident">rdr</span>: <span class="ident">R</span>) <span class="op">-&gt;</span> <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">builder</span>: <span class="kw-2">&amp;</span><span class="ident">ReaderBuilder</span>, <span class="ident">rdr</span>: <span class="ident">R</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> {
         <span class="ident">Reader</span> {
             <span class="ident">core</span>: <span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">builder</span>.<span class="ident">builder</span>.<span class="ident">build</span>()),
             <span class="ident">rdr</span>: <span class="ident">io</span>::<span class="ident">BufReader</span>::<span class="ident">with_capacity</span>(<span class="ident">builder</span>.<span class="ident">capacity</span>, <span class="ident">rdr</span>),
@@ -3398,7 +3466,7 @@
                 <span class="ident">cur_pos</span>: <span class="ident">Position</span>::<span class="ident">new</span>(),
                 <span class="ident">first</span>: <span class="bool-val">false</span>,
                 <span class="ident">seeked</span>: <span class="bool-val">false</span>,
-                <span class="ident">eof</span>: <span class="bool-val">false</span>,
+                <span class="ident">eof</span>: <span class="ident">ReaderEofState</span>::<span class="ident">NotEof</span>,
             },
         }
     }
@@ -3429,7 +3497,7 @@
     <span class="doccomment">///     Ok(())</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_reader</span>(<span class="ident">rdr</span>: <span class="ident">R</span>) <span class="op">-&gt;</span> <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_reader</span>(<span class="ident">rdr</span>: <span class="ident">R</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> {
         <span class="ident">ReaderBuilder</span>::<span class="ident">new</span>().<span class="ident">from_reader</span>(<span class="ident">rdr</span>)
     }
 
@@ -3617,7 +3685,7 @@
     <span class="doccomment">///     }</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">deserialize</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">DeserializeRecordsIter</span><span class="op">&lt;</span><span class="ident">R</span>, <span class="ident">D</span><span class="op">&gt;</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">deserialize</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">DeserializeRecordsIter</span><span class="op">&lt;</span><span class="ident">R</span>, <span class="ident">D</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">D</span>: <span class="ident">DeserializeOwned</span>,
     {
@@ -3680,7 +3748,7 @@
     <span class="doccomment">///     }</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">into_deserialize</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">DeserializeRecordsIntoIter</span><span class="op">&lt;</span><span class="ident">R</span>, <span class="ident">D</span><span class="op">&gt;</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">into_deserialize</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">DeserializeRecordsIntoIter</span><span class="op">&lt;</span><span class="ident">R</span>, <span class="ident">D</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">D</span>: <span class="ident">DeserializeOwned</span>,
     {
@@ -3720,7 +3788,7 @@
     <span class="doccomment">///     }</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">records</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">StringRecordsIter</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">records</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">StringRecordsIter</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> {
         <span class="ident">StringRecordsIter</span>::<span class="ident">new</span>(<span class="self">self</span>)
     }
 
@@ -3760,7 +3828,7 @@
     <span class="doccomment">///     }</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">into_records</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">StringRecordsIntoIter</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">into_records</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">StringRecordsIntoIter</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> {
         <span class="ident">StringRecordsIntoIter</span>::<span class="ident">new</span>(<span class="self">self</span>)
     }
 
@@ -3797,7 +3865,7 @@
     <span class="doccomment">///     }</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">byte_records</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">ByteRecordsIter</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">byte_records</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ByteRecordsIter</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> {
         <span class="ident">ByteRecordsIter</span>::<span class="ident">new</span>(<span class="self">self</span>)
     }
 
@@ -3837,7 +3905,7 @@
     <span class="doccomment">///     }</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">into_byte_records</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">ByteRecordsIntoIter</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">into_byte_records</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ByteRecordsIntoIter</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> {
         <span class="ident">ByteRecordsIntoIter</span>::<span class="ident">new</span>(<span class="self">self</span>)
     }
 
@@ -3895,7 +3963,7 @@
     <span class="doccomment">///     Ok(())</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">headers</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">StringRecord</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">headers</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">StringRecord</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">state</span>.<span class="ident">headers</span>.<span class="ident">is_none</span>() {
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">record</span> <span class="op">=</span> <span class="ident">ByteRecord</span>::<span class="ident">new</span>();
             <span class="self">self</span>.<span class="ident">read_byte_record_impl</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">record</span>)<span class="question-mark">?</span>;
@@ -3903,8 +3971,8 @@
         }
         <span class="kw">let</span> <span class="ident">headers</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">state</span>.<span class="ident">headers</span>.<span class="ident">as_ref</span>().<span class="ident">unwrap</span>();
         <span class="kw">match</span> <span class="ident">headers</span>.<span class="ident">string_record</span> {
-            <span class="prelude-val">Ok</span>(<span class="kw-2">ref</span> <span class="ident">record</span>) <span class="op">=&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">record</span>),
-            <span class="prelude-val">Err</span>(<span class="kw-2">ref</span> <span class="ident">err</span>) <span class="op">=&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">new</span>(<span class="ident">ErrorKind</span>::<span class="ident">Utf8</span> {
+            <span class="prelude-val">Ok</span>(<span class="kw-2">ref</span> <span class="ident">record</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">record</span>),
+            <span class="prelude-val">Err</span>(<span class="kw-2">ref</span> <span class="ident">err</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">new</span>(<span class="ident">ErrorKind</span>::<span class="ident">Utf8</span> {
                 <span class="ident">pos</span>: <span class="ident">headers</span>.<span class="ident">byte_record</span>.<span class="ident">position</span>().<span class="ident">map</span>(<span class="ident">Clone</span>::<span class="ident">clone</span>),
                 <span class="ident">err</span>: <span class="ident">err</span>.<span class="ident">clone</span>(),
             })),
@@ -3964,7 +4032,7 @@
     <span class="doccomment">///     Ok(())</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">byte_headers</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">ByteRecord</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">byte_headers</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">ByteRecord</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">state</span>.<span class="ident">headers</span>.<span class="ident">is_none</span>() {
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">record</span> <span class="op">=</span> <span class="ident">ByteRecord</span>::<span class="ident">new</span>();
             <span class="self">self</span>.<span class="ident">read_byte_record_impl</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">record</span>)<span class="question-mark">?</span>;
@@ -4042,14 +4110,14 @@
         <span class="comment">// If we have string headers, then get byte headers. But if we have</span>
         <span class="comment">// byte headers, then get the string headers (or a UTF-8 error).</span>
         <span class="kw">let</span> (<span class="kw-2">mut</span> <span class="ident">str_headers</span>, <span class="kw-2">mut</span> <span class="ident">byte_headers</span>) <span class="op">=</span> <span class="kw">match</span> <span class="ident">headers</span> {
-            <span class="prelude-val">Ok</span>(<span class="ident">string</span>) <span class="op">=&gt;</span> {
+            <span class="prelude-val">Ok</span>(<span class="ident">string</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="kw">let</span> <span class="ident">bytes</span> <span class="op">=</span> <span class="ident">string</span>.<span class="ident">clone</span>().<span class="ident">into_byte_record</span>();
                 (<span class="prelude-val">Ok</span>(<span class="ident">string</span>), <span class="ident">bytes</span>)
             }
-            <span class="prelude-val">Err</span>(<span class="ident">bytes</span>) <span class="op">=&gt;</span> {
+            <span class="prelude-val">Err</span>(<span class="ident">bytes</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="kw">match</span> <span class="ident">StringRecord</span>::<span class="ident">from_byte_record</span>(<span class="ident">bytes</span>.<span class="ident">clone</span>()) {
-                    <span class="prelude-val">Ok</span>(<span class="ident">str_headers</span>) <span class="op">=&gt;</span> (<span class="prelude-val">Ok</span>(<span class="ident">str_headers</span>), <span class="ident">bytes</span>),
-                    <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=&gt;</span> (<span class="prelude-val">Err</span>(<span class="ident">err</span>.<span class="ident">utf8_error</span>().<span class="ident">clone</span>()), <span class="ident">bytes</span>),
+                    <span class="prelude-val">Ok</span>(<span class="ident">str_headers</span>) <span class="op">=</span><span class="op">&gt;</span> (<span class="prelude-val">Ok</span>(<span class="ident">str_headers</span>), <span class="ident">bytes</span>),
+                    <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=</span><span class="op">&gt;</span> (<span class="prelude-val">Err</span>(<span class="ident">err</span>.<span class="ident">utf8_error</span>().<span class="ident">clone</span>()), <span class="ident">bytes</span>),
                 }
             }
         };
@@ -4102,7 +4170,7 @@
     <span class="doccomment">///     }</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">read_record</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">record</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">StringRecord</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">read_record</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">record</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">StringRecord</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">record</span>.<span class="ident">read</span>(<span class="self">self</span>);
         <span class="comment">// We need to trim again because trimming string records includes</span>
         <span class="comment">// Unicode whitespace. (ByteRecord trimming only includes ASCII</span>
@@ -4153,7 +4221,7 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">read_byte_record</span>(
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
         <span class="ident">record</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ByteRecord</span>,
-    ) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span> {
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="op">!</span><span class="self">self</span>.<span class="ident">state</span>.<span class="ident">seeked</span> <span class="op">&amp;&amp;</span> <span class="op">!</span><span class="self">self</span>.<span class="ident">state</span>.<span class="ident">has_headers</span> <span class="op">&amp;&amp;</span> <span class="op">!</span><span class="self">self</span>.<span class="ident">state</span>.<span class="ident">first</span> {
             <span class="comment">// If the caller indicated &quot;no headers&quot; and we haven&#39;t yielded the</span>
             <span class="comment">// first record yet, then we should yield our header row if we have</span>
@@ -4193,18 +4261,22 @@
     <span class="kw">fn</span> <span class="ident">read_byte_record_impl</span>(
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
         <span class="ident">record</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ByteRecord</span>,
-    ) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span> {
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span> {
         <span class="kw">use</span> <span class="ident">csv_core</span>::<span class="ident">ReadRecordResult</span>::<span class="kw-2">*</span>;
 
         <span class="ident">record</span>.<span class="ident">clear</span>();
         <span class="ident">record</span>.<span class="ident">set_position</span>(<span class="prelude-val">Some</span>(<span class="self">self</span>.<span class="ident">state</span>.<span class="ident">cur_pos</span>.<span class="ident">clone</span>()));
-        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">state</span>.<span class="ident">eof</span> {
+        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">state</span>.<span class="ident">eof</span> <span class="op">!</span><span class="op">=</span> <span class="ident">ReaderEofState</span>::<span class="ident">NotEof</span> {
             <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="bool-val">false</span>);
         }
         <span class="kw">let</span> (<span class="kw-2">mut</span> <span class="ident">outlen</span>, <span class="kw-2">mut</span> <span class="ident">endlen</span>) <span class="op">=</span> (<span class="number">0</span>, <span class="number">0</span>);
         <span class="kw">loop</span> {
             <span class="kw">let</span> (<span class="ident">res</span>, <span class="ident">nin</span>, <span class="ident">nout</span>, <span class="ident">nend</span>) <span class="op">=</span> {
-                <span class="kw">let</span> <span class="ident">input</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">rdr</span>.<span class="ident">fill_buf</span>()<span class="question-mark">?</span>;
+                <span class="kw">let</span> <span class="ident">input_res</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">rdr</span>.<span class="ident">fill_buf</span>();
+                <span class="kw">if</span> <span class="ident">input_res</span>.<span class="ident">is_err</span>() {
+                    <span class="self">self</span>.<span class="ident">state</span>.<span class="ident">eof</span> <span class="op">=</span> <span class="ident">ReaderEofState</span>::<span class="ident">IOError</span>;
+                }
+                <span class="kw">let</span> <span class="ident">input</span> <span class="op">=</span> <span class="ident">input_res</span><span class="question-mark">?</span>;
                 <span class="kw">let</span> (<span class="ident">fields</span>, <span class="ident">ends</span>) <span class="op">=</span> <span class="ident">record</span>.<span class="ident">as_parts</span>();
                 <span class="self">self</span>.<span class="ident">core</span>.<span class="ident">read_record</span>(
                     <span class="ident">input</span>,
@@ -4218,25 +4290,25 @@
                 .<span class="ident">cur_pos</span>
                 .<span class="ident">set_byte</span>(<span class="ident">byte</span> <span class="op">+</span> <span class="ident">nin</span> <span class="kw">as</span> <span class="ident">u64</span>)
                 .<span class="ident">set_line</span>(<span class="self">self</span>.<span class="ident">core</span>.<span class="ident">line</span>());
-            <span class="ident">outlen</span> <span class="op">+=</span> <span class="ident">nout</span>;
-            <span class="ident">endlen</span> <span class="op">+=</span> <span class="ident">nend</span>;
+            <span class="ident">outlen</span> <span class="op">+</span><span class="op">=</span> <span class="ident">nout</span>;
+            <span class="ident">endlen</span> <span class="op">+</span><span class="op">=</span> <span class="ident">nend</span>;
             <span class="kw">match</span> <span class="ident">res</span> {
-                <span class="ident">InputEmpty</span> <span class="op">=&gt;</span> <span class="kw">continue</span>,
-                <span class="ident">OutputFull</span> <span class="op">=&gt;</span> {
+                <span class="ident">InputEmpty</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">continue</span>,
+                <span class="ident">OutputFull</span> <span class="op">=</span><span class="op">&gt;</span> {
                     <span class="ident">record</span>.<span class="ident">expand_fields</span>();
                     <span class="kw">continue</span>;
                 }
-                <span class="ident">OutputEndsFull</span> <span class="op">=&gt;</span> {
+                <span class="ident">OutputEndsFull</span> <span class="op">=</span><span class="op">&gt;</span> {
                     <span class="ident">record</span>.<span class="ident">expand_ends</span>();
                     <span class="kw">continue</span>;
                 }
-                <span class="ident">Record</span> <span class="op">=&gt;</span> {
+                <span class="ident">Record</span> <span class="op">=</span><span class="op">&gt;</span> {
                     <span class="ident">record</span>.<span class="ident">set_len</span>(<span class="ident">endlen</span>);
                     <span class="self">self</span>.<span class="ident">state</span>.<span class="ident">add_record</span>(<span class="ident">record</span>)<span class="question-mark">?</span>;
                     <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="bool-val">true</span>);
                 }
-                <span class="ident">End</span> <span class="op">=&gt;</span> {
-                    <span class="self">self</span>.<span class="ident">state</span>.<span class="ident">eof</span> <span class="op">=</span> <span class="bool-val">true</span>;
+                <span class="ident">End</span> <span class="op">=</span><span class="op">&gt;</span> {
+                    <span class="self">self</span>.<span class="ident">state</span>.<span class="ident">eof</span> <span class="op">=</span> <span class="ident">ReaderEofState</span>::<span class="ident">Eof</span>;
                     <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="bool-val">false</span>);
                 }
             }
@@ -4283,7 +4355,7 @@
     <span class="doccomment">///     Ok(())</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">position</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Position</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">position</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Position</span> {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">state</span>.<span class="ident">cur_pos</span>
     }
 
@@ -4315,23 +4387,23 @@
     <span class="doccomment">///     Ok(())</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_done</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
-        <span class="self">self</span>.<span class="ident">state</span>.<span class="ident">eof</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_done</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+        <span class="self">self</span>.<span class="ident">state</span>.<span class="ident">eof</span> <span class="op">!</span><span class="op">=</span> <span class="ident">ReaderEofState</span>::<span class="ident">NotEof</span>
     }
 
     <span class="doccomment">/// Returns true if and only if this reader has been configured to</span>
     <span class="doccomment">/// interpret the first record as a header record.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">has_headers</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">has_headers</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="self">self</span>.<span class="ident">state</span>.<span class="ident">has_headers</span>
     }
 
     <span class="doccomment">/// Returns a reference to the underlying reader.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_ref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">R</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_ref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">R</span> {
         <span class="self">self</span>.<span class="ident">rdr</span>.<span class="ident">get_ref</span>()
     }
 
     <span class="doccomment">/// Returns a mutable reference to the underlying reader.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">R</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">R</span> {
         <span class="self">self</span>.<span class="ident">rdr</span>.<span class="ident">get_mut</span>()
     }
 
@@ -4339,7 +4411,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// Note that any leftover data inside this reader&#39;s internal buffer is</span>
     <span class="doccomment">/// lost.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">into_inner</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">R</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">into_inner</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">R</span> {
         <span class="self">self</span>.<span class="ident">rdr</span>.<span class="ident">into_inner</span>()
     }
 }
@@ -4407,17 +4479,17 @@
     <span class="doccomment">///     }</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">seek</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">pos</span>: <span class="ident">Position</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">seek</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">pos</span>: <span class="ident">Position</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">byte_headers</span>()<span class="question-mark">?</span>;
         <span class="self">self</span>.<span class="ident">state</span>.<span class="ident">seeked</span> <span class="op">=</span> <span class="bool-val">true</span>;
-        <span class="kw">if</span> <span class="ident">pos</span>.<span class="ident">byte</span>() <span class="op">==</span> <span class="self">self</span>.<span class="ident">state</span>.<span class="ident">cur_pos</span>.<span class="ident">byte</span>() {
+        <span class="kw">if</span> <span class="ident">pos</span>.<span class="ident">byte</span>() <span class="op">=</span><span class="op">=</span> <span class="self">self</span>.<span class="ident">state</span>.<span class="ident">cur_pos</span>.<span class="ident">byte</span>() {
             <span class="kw">return</span> <span class="prelude-val">Ok</span>(());
         }
         <span class="self">self</span>.<span class="ident">rdr</span>.<span class="ident">seek</span>(<span class="ident">io</span>::<span class="ident">SeekFrom</span>::<span class="ident">Start</span>(<span class="ident">pos</span>.<span class="ident">byte</span>()))<span class="question-mark">?</span>;
         <span class="self">self</span>.<span class="ident">core</span>.<span class="ident">reset</span>();
         <span class="self">self</span>.<span class="ident">core</span>.<span class="ident">set_line</span>(<span class="ident">pos</span>.<span class="ident">line</span>());
         <span class="self">self</span>.<span class="ident">state</span>.<span class="ident">cur_pos</span> <span class="op">=</span> <span class="ident">pos</span>;
-        <span class="self">self</span>.<span class="ident">state</span>.<span class="ident">eof</span> <span class="op">=</span> <span class="bool-val">false</span>;
+        <span class="self">self</span>.<span class="ident">state</span>.<span class="ident">eof</span> <span class="op">=</span> <span class="ident">ReaderEofState</span>::<span class="ident">NotEof</span>;
         <span class="prelude-val">Ok</span>(())
     }
 
@@ -4438,28 +4510,28 @@
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
         <span class="ident">seek_from</span>: <span class="ident">io</span>::<span class="ident">SeekFrom</span>,
         <span class="ident">pos</span>: <span class="ident">Position</span>,
-    ) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">byte_headers</span>()<span class="question-mark">?</span>;
         <span class="self">self</span>.<span class="ident">state</span>.<span class="ident">seeked</span> <span class="op">=</span> <span class="bool-val">true</span>;
         <span class="self">self</span>.<span class="ident">rdr</span>.<span class="ident">seek</span>(<span class="ident">seek_from</span>)<span class="question-mark">?</span>;
         <span class="self">self</span>.<span class="ident">core</span>.<span class="ident">reset</span>();
         <span class="self">self</span>.<span class="ident">core</span>.<span class="ident">set_line</span>(<span class="ident">pos</span>.<span class="ident">line</span>());
         <span class="self">self</span>.<span class="ident">state</span>.<span class="ident">cur_pos</span> <span class="op">=</span> <span class="ident">pos</span>;
-        <span class="self">self</span>.<span class="ident">state</span>.<span class="ident">eof</span> <span class="op">=</span> <span class="bool-val">false</span>;
+        <span class="self">self</span>.<span class="ident">state</span>.<span class="ident">eof</span> <span class="op">=</span> <span class="ident">ReaderEofState</span>::<span class="ident">NotEof</span>;
         <span class="prelude-val">Ok</span>(())
     }
 }
 
 <span class="kw">impl</span> <span class="ident">ReaderState</span> {
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">add_record</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">record</span>: <span class="kw-2">&amp;</span><span class="ident">ByteRecord</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">add_record</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">record</span>: <span class="kw-2">&amp;</span><span class="ident">ByteRecord</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">i</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">cur_pos</span>.<span class="ident">record</span>();
         <span class="self">self</span>.<span class="ident">cur_pos</span>.<span class="ident">set_record</span>(<span class="ident">i</span>.<span class="ident">checked_add</span>(<span class="number">1</span>).<span class="ident">unwrap</span>());
         <span class="kw">if</span> <span class="op">!</span><span class="self">self</span>.<span class="ident">flexible</span> {
             <span class="kw">match</span> <span class="self">self</span>.<span class="ident">first_field_count</span> {
-                <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="self">self</span>.<span class="ident">first_field_count</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">record</span>.<span class="ident">len</span>() <span class="kw">as</span> <span class="ident">u64</span>),
-                <span class="prelude-val">Some</span>(<span class="ident">expected</span>) <span class="op">=&gt;</span> {
-                    <span class="kw">if</span> <span class="ident">record</span>.<span class="ident">len</span>() <span class="kw">as</span> <span class="ident">u64</span> <span class="op">!=</span> <span class="ident">expected</span> {
+                <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">first_field_count</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">record</span>.<span class="ident">len</span>() <span class="kw">as</span> <span class="ident">u64</span>),
+                <span class="prelude-val">Some</span>(<span class="ident">expected</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                    <span class="kw">if</span> <span class="ident">record</span>.<span class="ident">len</span>() <span class="kw">as</span> <span class="ident">u64</span> <span class="op">!</span><span class="op">=</span> <span class="ident">expected</span> {
                         <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">new</span>(<span class="ident">ErrorKind</span>::<span class="ident">UnequalLengths</span> {
                             <span class="ident">pos</span>: <span class="ident">record</span>.<span class="ident">position</span>().<span class="ident">map</span>(<span class="ident">Clone</span>::<span class="ident">clone</span>),
                             <span class="ident">expected_len</span>: <span class="ident">expected</span>,
@@ -4485,7 +4557,7 @@
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">io</span>::<span class="ident">Read</span>, <span class="ident">D</span>: <span class="ident">DeserializeOwned</span><span class="op">&gt;</span> <span class="ident">DeserializeRecordsIntoIter</span><span class="op">&lt;</span><span class="ident">R</span>, <span class="ident">D</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">new</span>(<span class="kw-2">mut</span> <span class="ident">rdr</span>: <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">DeserializeRecordsIntoIter</span><span class="op">&lt;</span><span class="ident">R</span>, <span class="ident">D</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">new</span>(<span class="kw-2">mut</span> <span class="ident">rdr</span>: <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">DeserializeRecordsIntoIter</span><span class="op">&lt;</span><span class="ident">R</span>, <span class="ident">D</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">headers</span> <span class="op">=</span> <span class="kw">if</span> <span class="op">!</span><span class="ident">rdr</span>.<span class="ident">state</span>.<span class="ident">has_headers</span> {
             <span class="prelude-val">None</span>
         } <span class="kw">else</span> {
@@ -4500,17 +4572,17 @@
     }
 
     <span class="doccomment">/// Return a reference to the underlying CSV reader.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">reader</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">reader</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">rdr</span>
     }
 
     <span class="doccomment">/// Return a mutable reference to the underlying CSV reader.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">reader_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">reader_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> {
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">rdr</span>
     }
 
     <span class="doccomment">/// Drop this iterator and return the underlying CSV reader.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">into_reader</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">into_reader</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">rdr</span>
     }
 }
@@ -4520,11 +4592,11 @@
 {
     <span class="kw">type</span> <span class="ident">Item</span> <span class="op">=</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>;
 
-    <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="self">self</span>.<span class="ident">rdr</span>.<span class="ident">read_record</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">rec</span>) {
-            <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="prelude-val">Err</span>(<span class="ident">err</span>)),
-            <span class="prelude-val">Ok</span>(<span class="bool-val">false</span>) <span class="op">=&gt;</span> <span class="prelude-val">None</span>,
-            <span class="prelude-val">Ok</span>(<span class="bool-val">true</span>) <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="self">self</span>.<span class="ident">rec</span>.<span class="ident">deserialize</span>(<span class="self">self</span>.<span class="ident">headers</span>.<span class="ident">as_ref</span>())),
+            <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Some</span>(<span class="prelude-val">Err</span>(<span class="ident">err</span>)),
+            <span class="prelude-val">Ok</span>(<span class="bool-val">false</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">None</span>,
+            <span class="prelude-val">Ok</span>(<span class="bool-val">true</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Some</span>(<span class="self">self</span>.<span class="ident">rec</span>.<span class="ident">deserialize</span>(<span class="self">self</span>.<span class="ident">headers</span>.<span class="ident">as_ref</span>())),
         }
     }
 }
@@ -4543,7 +4615,7 @@
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;r</span>, <span class="ident">R</span>: <span class="ident">io</span>::<span class="ident">Read</span>, <span class="ident">D</span>: <span class="ident">DeserializeOwned</span><span class="op">&gt;</span> <span class="ident">DeserializeRecordsIter</span><span class="op">&lt;</span><span class="lifetime">&#39;r</span>, <span class="ident">R</span>, <span class="ident">D</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">rdr</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;r</span> <span class="kw-2">mut</span> <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">DeserializeRecordsIter</span><span class="op">&lt;</span><span class="lifetime">&#39;r</span>, <span class="ident">R</span>, <span class="ident">D</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">rdr</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;r</span> <span class="kw-2">mut</span> <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">DeserializeRecordsIter</span><span class="op">&lt;</span><span class="lifetime">&#39;r</span>, <span class="ident">R</span>, <span class="ident">D</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">headers</span> <span class="op">=</span> <span class="kw">if</span> <span class="op">!</span><span class="ident">rdr</span>.<span class="ident">state</span>.<span class="ident">has_headers</span> {
             <span class="prelude-val">None</span>
         } <span class="kw">else</span> {
@@ -4558,12 +4630,12 @@
     }
 
     <span class="doccomment">/// Return a reference to the underlying CSV reader.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">reader</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">reader</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">rdr</span>
     }
 
     <span class="doccomment">/// Return a mutable reference to the underlying CSV reader.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">reader_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">reader_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> {
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">rdr</span>
     }
 }
@@ -4573,11 +4645,11 @@
 {
     <span class="kw">type</span> <span class="ident">Item</span> <span class="op">=</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>;
 
-    <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="self">self</span>.<span class="ident">rdr</span>.<span class="ident">read_record</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">rec</span>) {
-            <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="prelude-val">Err</span>(<span class="ident">err</span>)),
-            <span class="prelude-val">Ok</span>(<span class="bool-val">false</span>) <span class="op">=&gt;</span> <span class="prelude-val">None</span>,
-            <span class="prelude-val">Ok</span>(<span class="bool-val">true</span>) <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="self">self</span>.<span class="ident">rec</span>.<span class="ident">deserialize</span>(<span class="self">self</span>.<span class="ident">headers</span>.<span class="ident">as_ref</span>())),
+            <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Some</span>(<span class="prelude-val">Err</span>(<span class="ident">err</span>)),
+            <span class="prelude-val">Ok</span>(<span class="bool-val">false</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">None</span>,
+            <span class="prelude-val">Ok</span>(<span class="bool-val">true</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Some</span>(<span class="self">self</span>.<span class="ident">rec</span>.<span class="ident">deserialize</span>(<span class="self">self</span>.<span class="ident">headers</span>.<span class="ident">as_ref</span>())),
         }
     }
 }
@@ -4589,22 +4661,22 @@
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">io</span>::<span class="ident">Read</span><span class="op">&gt;</span> <span class="ident">StringRecordsIntoIter</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">rdr</span>: <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">StringRecordsIntoIter</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">rdr</span>: <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">StringRecordsIntoIter</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> {
         <span class="ident">StringRecordsIntoIter</span> { <span class="ident">rdr</span>: <span class="ident">rdr</span>, <span class="ident">rec</span>: <span class="ident">StringRecord</span>::<span class="ident">new</span>() }
     }
 
     <span class="doccomment">/// Return a reference to the underlying CSV reader.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">reader</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">reader</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">rdr</span>
     }
 
     <span class="doccomment">/// Return a mutable reference to the underlying CSV reader.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">reader_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">reader_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> {
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">rdr</span>
     }
 
     <span class="doccomment">/// Drop this iterator and return the underlying CSV reader.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">into_reader</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">into_reader</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">rdr</span>
     }
 }
@@ -4612,11 +4684,11 @@
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">io</span>::<span class="ident">Read</span><span class="op">&gt;</span> <span class="ident">Iterator</span> <span class="kw">for</span> <span class="ident">StringRecordsIntoIter</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> {
     <span class="kw">type</span> <span class="ident">Item</span> <span class="op">=</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">StringRecord</span><span class="op">&gt;</span>;
 
-    <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">StringRecord</span><span class="op">&gt;&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">StringRecord</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="self">self</span>.<span class="ident">rdr</span>.<span class="ident">read_record</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">rec</span>) {
-            <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="prelude-val">Err</span>(<span class="ident">err</span>)),
-            <span class="prelude-val">Ok</span>(<span class="bool-val">true</span>) <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="prelude-val">Ok</span>(<span class="self">self</span>.<span class="ident">rec</span>.<span class="ident">clone</span>())),
-            <span class="prelude-val">Ok</span>(<span class="bool-val">false</span>) <span class="op">=&gt;</span> <span class="prelude-val">None</span>,
+            <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Some</span>(<span class="prelude-val">Err</span>(<span class="ident">err</span>)),
+            <span class="prelude-val">Ok</span>(<span class="bool-val">true</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Some</span>(<span class="prelude-val">Ok</span>(<span class="self">self</span>.<span class="ident">rec</span>.<span class="ident">clone</span>())),
+            <span class="prelude-val">Ok</span>(<span class="bool-val">false</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">None</span>,
         }
     }
 }
@@ -4631,17 +4703,17 @@
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;r</span>, <span class="ident">R</span>: <span class="ident">io</span>::<span class="ident">Read</span><span class="op">&gt;</span> <span class="ident">StringRecordsIter</span><span class="op">&lt;</span><span class="lifetime">&#39;r</span>, <span class="ident">R</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">rdr</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;r</span> <span class="kw-2">mut</span> <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">StringRecordsIter</span><span class="op">&lt;</span><span class="lifetime">&#39;r</span>, <span class="ident">R</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">rdr</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;r</span> <span class="kw-2">mut</span> <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">StringRecordsIter</span><span class="op">&lt;</span><span class="lifetime">&#39;r</span>, <span class="ident">R</span><span class="op">&gt;</span> {
         <span class="ident">StringRecordsIter</span> { <span class="ident">rdr</span>: <span class="ident">rdr</span>, <span class="ident">rec</span>: <span class="ident">StringRecord</span>::<span class="ident">new</span>() }
     }
 
     <span class="doccomment">/// Return a reference to the underlying CSV reader.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">reader</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">reader</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">rdr</span>
     }
 
     <span class="doccomment">/// Return a mutable reference to the underlying CSV reader.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">reader_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">reader_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> {
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">rdr</span>
     }
 }
@@ -4649,11 +4721,11 @@
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;r</span>, <span class="ident">R</span>: <span class="ident">io</span>::<span class="ident">Read</span><span class="op">&gt;</span> <span class="ident">Iterator</span> <span class="kw">for</span> <span class="ident">StringRecordsIter</span><span class="op">&lt;</span><span class="lifetime">&#39;r</span>, <span class="ident">R</span><span class="op">&gt;</span> {
     <span class="kw">type</span> <span class="ident">Item</span> <span class="op">=</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">StringRecord</span><span class="op">&gt;</span>;
 
-    <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">StringRecord</span><span class="op">&gt;&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">StringRecord</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="self">self</span>.<span class="ident">rdr</span>.<span class="ident">read_record</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">rec</span>) {
-            <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="prelude-val">Err</span>(<span class="ident">err</span>)),
-            <span class="prelude-val">Ok</span>(<span class="bool-val">true</span>) <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="prelude-val">Ok</span>(<span class="self">self</span>.<span class="ident">rec</span>.<span class="ident">clone</span>())),
-            <span class="prelude-val">Ok</span>(<span class="bool-val">false</span>) <span class="op">=&gt;</span> <span class="prelude-val">None</span>,
+            <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Some</span>(<span class="prelude-val">Err</span>(<span class="ident">err</span>)),
+            <span class="prelude-val">Ok</span>(<span class="bool-val">true</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Some</span>(<span class="prelude-val">Ok</span>(<span class="self">self</span>.<span class="ident">rec</span>.<span class="ident">clone</span>())),
+            <span class="prelude-val">Ok</span>(<span class="bool-val">false</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">None</span>,
         }
     }
 }
@@ -4665,22 +4737,22 @@
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">io</span>::<span class="ident">Read</span><span class="op">&gt;</span> <span class="ident">ByteRecordsIntoIter</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">rdr</span>: <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">ByteRecordsIntoIter</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">rdr</span>: <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ByteRecordsIntoIter</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> {
         <span class="ident">ByteRecordsIntoIter</span> { <span class="ident">rdr</span>: <span class="ident">rdr</span>, <span class="ident">rec</span>: <span class="ident">ByteRecord</span>::<span class="ident">new</span>() }
     }
 
     <span class="doccomment">/// Return a reference to the underlying CSV reader.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">reader</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">reader</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">rdr</span>
     }
 
     <span class="doccomment">/// Return a mutable reference to the underlying CSV reader.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">reader_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">reader_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> {
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">rdr</span>
     }
 
     <span class="doccomment">/// Drop this iterator and return the underlying CSV reader.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">into_reader</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">into_reader</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">rdr</span>
     }
 }
@@ -4688,11 +4760,11 @@
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">io</span>::<span class="ident">Read</span><span class="op">&gt;</span> <span class="ident">Iterator</span> <span class="kw">for</span> <span class="ident">ByteRecordsIntoIter</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> {
     <span class="kw">type</span> <span class="ident">Item</span> <span class="op">=</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">ByteRecord</span><span class="op">&gt;</span>;
 
-    <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">ByteRecord</span><span class="op">&gt;&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">ByteRecord</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="self">self</span>.<span class="ident">rdr</span>.<span class="ident">read_byte_record</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">rec</span>) {
-            <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="prelude-val">Err</span>(<span class="ident">err</span>)),
-            <span class="prelude-val">Ok</span>(<span class="bool-val">true</span>) <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="prelude-val">Ok</span>(<span class="self">self</span>.<span class="ident">rec</span>.<span class="ident">clone</span>())),
-            <span class="prelude-val">Ok</span>(<span class="bool-val">false</span>) <span class="op">=&gt;</span> <span class="prelude-val">None</span>,
+            <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Some</span>(<span class="prelude-val">Err</span>(<span class="ident">err</span>)),
+            <span class="prelude-val">Ok</span>(<span class="bool-val">true</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Some</span>(<span class="prelude-val">Ok</span>(<span class="self">self</span>.<span class="ident">rec</span>.<span class="ident">clone</span>())),
+            <span class="prelude-val">Ok</span>(<span class="bool-val">false</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">None</span>,
         }
     }
 }
@@ -4707,17 +4779,17 @@
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;r</span>, <span class="ident">R</span>: <span class="ident">io</span>::<span class="ident">Read</span><span class="op">&gt;</span> <span class="ident">ByteRecordsIter</span><span class="op">&lt;</span><span class="lifetime">&#39;r</span>, <span class="ident">R</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">rdr</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;r</span> <span class="kw-2">mut</span> <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">ByteRecordsIter</span><span class="op">&lt;</span><span class="lifetime">&#39;r</span>, <span class="ident">R</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">rdr</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;r</span> <span class="kw-2">mut</span> <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ByteRecordsIter</span><span class="op">&lt;</span><span class="lifetime">&#39;r</span>, <span class="ident">R</span><span class="op">&gt;</span> {
         <span class="ident">ByteRecordsIter</span> { <span class="ident">rdr</span>: <span class="ident">rdr</span>, <span class="ident">rec</span>: <span class="ident">ByteRecord</span>::<span class="ident">new</span>() }
     }
 
     <span class="doccomment">/// Return a reference to the underlying CSV reader.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">reader</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">reader</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">rdr</span>
     }
 
     <span class="doccomment">/// Return a mutable reference to the underlying CSV reader.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">reader_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">reader_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> {
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">rdr</span>
     }
 }
@@ -4725,11 +4797,11 @@
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;r</span>, <span class="ident">R</span>: <span class="ident">io</span>::<span class="ident">Read</span><span class="op">&gt;</span> <span class="ident">Iterator</span> <span class="kw">for</span> <span class="ident">ByteRecordsIter</span><span class="op">&lt;</span><span class="lifetime">&#39;r</span>, <span class="ident">R</span><span class="op">&gt;</span> {
     <span class="kw">type</span> <span class="ident">Item</span> <span class="op">=</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">ByteRecord</span><span class="op">&gt;</span>;
 
-    <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">ByteRecord</span><span class="op">&gt;&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">ByteRecord</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="self">self</span>.<span class="ident">rdr</span>.<span class="ident">read_byte_record</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">rec</span>) {
-            <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="prelude-val">Err</span>(<span class="ident">err</span>)),
-            <span class="prelude-val">Ok</span>(<span class="bool-val">true</span>) <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="prelude-val">Ok</span>(<span class="self">self</span>.<span class="ident">rec</span>.<span class="ident">clone</span>())),
-            <span class="prelude-val">Ok</span>(<span class="bool-val">false</span>) <span class="op">=&gt;</span> <span class="prelude-val">None</span>,
+            <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Some</span>(<span class="prelude-val">Err</span>(<span class="ident">err</span>)),
+            <span class="prelude-val">Ok</span>(<span class="bool-val">true</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Some</span>(<span class="prelude-val">Ok</span>(<span class="self">self</span>.<span class="ident">rec</span>.<span class="ident">clone</span>())),
+            <span class="prelude-val">Ok</span>(<span class="bool-val">false</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">None</span>,
         }
     }
 }
@@ -4744,14 +4816,14 @@
 
     <span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">Position</span>, <span class="ident">ReaderBuilder</span>, <span class="ident">Trim</span>};
 
-    <span class="kw">fn</span> <span class="ident">b</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] {
+    <span class="kw">fn</span> <span class="ident">b</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] {
         <span class="ident">s</span>.<span class="ident">as_bytes</span>()
     }
-    <span class="kw">fn</span> <span class="ident">s</span>(<span class="ident">b</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
+    <span class="kw">fn</span> <span class="ident">s</span>(<span class="ident">b</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
         ::<span class="ident">std</span>::<span class="ident">str</span>::<span class="ident">from_utf8</span>(<span class="ident">b</span>).<span class="ident">unwrap</span>()
     }
 
-    <span class="kw">fn</span> <span class="ident">newpos</span>(<span class="ident">byte</span>: <span class="ident">u64</span>, <span class="ident">line</span>: <span class="ident">u64</span>, <span class="ident">record</span>: <span class="ident">u64</span>) <span class="op">-&gt;</span> <span class="ident">Position</span> {
+    <span class="kw">fn</span> <span class="ident">newpos</span>(<span class="ident">byte</span>: <span class="ident">u64</span>, <span class="ident">line</span>: <span class="ident">u64</span>, <span class="ident">record</span>: <span class="ident">u64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Position</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">p</span> <span class="op">=</span> <span class="ident">Position</span>::<span class="ident">new</span>();
         <span class="ident">p</span>.<span class="ident">set_byte</span>(<span class="ident">byte</span>).<span class="ident">set_line</span>(<span class="ident">line</span>).<span class="ident">set_record</span>(<span class="ident">record</span>);
         <span class="ident">p</span>
@@ -4846,12 +4918,12 @@
             <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="string">b&quot;baz&quot;</span>, <span class="kw-2">&amp;</span><span class="ident">headers</span>[<span class="number">2</span>]);
         }
         <span class="kw">match</span> <span class="kw-2">*</span><span class="ident">rdr</span>.<span class="ident">headers</span>().<span class="ident">unwrap_err</span>().<span class="ident">kind</span>() {
-            <span class="ident">ErrorKind</span>::<span class="ident">Utf8</span> { <span class="ident">pos</span>: <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">pos</span>), <span class="kw-2">ref</span> <span class="ident">err</span> } <span class="op">=&gt;</span> {
+            <span class="ident">ErrorKind</span>::<span class="ident">Utf8</span> { <span class="ident">pos</span>: <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">pos</span>), <span class="kw-2">ref</span> <span class="ident">err</span> } <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">pos</span>, <span class="kw-2">&amp;</span><span class="ident">newpos</span>(<span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>));
                 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">err</span>.<span class="ident">field</span>(), <span class="number">1</span>);
                 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">err</span>.<span class="ident">valid_up_to</span>(), <span class="number">3</span>);
             }
-            <span class="kw-2">ref</span> <span class="ident">err</span> <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;match failed, got {:?}&quot;</span>, <span class="ident">err</span>),
+            <span class="kw-2">ref</span> <span class="ident">err</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;match failed, got {:?}&quot;</span>, <span class="ident">err</span>),
         }
     }
 
@@ -4888,17 +4960,17 @@
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="string">&quot;foo&quot;</span>, <span class="ident">s</span>(<span class="kw-2">&amp;</span><span class="ident">rec</span>[<span class="number">0</span>]));
 
         <span class="kw">match</span> <span class="ident">rdr</span>.<span class="ident">read_byte_record</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">rec</span>) {
-            <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=&gt;</span> <span class="kw">match</span> <span class="kw-2">*</span><span class="ident">err</span>.<span class="ident">kind</span>() {
+            <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">match</span> <span class="kw-2">*</span><span class="ident">err</span>.<span class="ident">kind</span>() {
                 <span class="ident">ErrorKind</span>::<span class="ident">UnequalLengths</span> {
                     <span class="ident">expected_len</span>: <span class="number">1</span>,
                     <span class="kw-2">ref</span> <span class="ident">pos</span>,
                     <span class="ident">len</span>: <span class="number">2</span>,
-                } <span class="op">=&gt;</span> {
+                } <span class="op">=</span><span class="op">&gt;</span> {
                     <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">pos</span>, <span class="kw-2">&amp;</span><span class="prelude-val">Some</span>(<span class="ident">newpos</span>(<span class="number">4</span>, <span class="number">2</span>, <span class="number">1</span>)));
                 }
-                <span class="kw-2">ref</span> <span class="ident">wrong</span> <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;match failed, got {:?}&quot;</span>, <span class="ident">wrong</span>),
+                <span class="kw-2">ref</span> <span class="ident">wrong</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;match failed, got {:?}&quot;</span>, <span class="ident">wrong</span>),
             },
-            <span class="ident">wrong</span> <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;match failed, got {:?}&quot;</span>, <span class="ident">wrong</span>),
+            <span class="ident">wrong</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;match failed, got {:?}&quot;</span>, <span class="ident">wrong</span>),
         }
     }
 
@@ -4937,17 +5009,17 @@
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="string">&quot;foo&quot;</span>, <span class="ident">s</span>(<span class="kw-2">&amp;</span><span class="ident">rec</span>[<span class="number">0</span>]));
 
         <span class="kw">match</span> <span class="ident">rdr</span>.<span class="ident">read_byte_record</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">rec</span>) {
-            <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=&gt;</span> <span class="kw">match</span> <span class="ident">err</span>.<span class="ident">kind</span>() {
+            <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">match</span> <span class="ident">err</span>.<span class="ident">kind</span>() {
                 <span class="kw-2">&amp;</span><span class="ident">ErrorKind</span>::<span class="ident">UnequalLengths</span> {
                     <span class="ident">expected_len</span>: <span class="number">1</span>,
                     <span class="kw-2">ref</span> <span class="ident">pos</span>,
                     <span class="ident">len</span>: <span class="number">2</span>,
-                } <span class="op">=&gt;</span> {
+                } <span class="op">=</span><span class="op">&gt;</span> {
                     <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">pos</span>, <span class="kw-2">&amp;</span><span class="prelude-val">Some</span>(<span class="ident">newpos</span>(<span class="number">4</span>, <span class="number">2</span>, <span class="number">1</span>)));
                 }
-                <span class="ident">wrong</span> <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;match failed, got {:?}&quot;</span>, <span class="ident">wrong</span>),
+                <span class="ident">wrong</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;match failed, got {:?}&quot;</span>, <span class="ident">wrong</span>),
             },
-            <span class="ident">wrong</span> <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;match failed, got {:?}&quot;</span>, <span class="ident">wrong</span>),
+            <span class="ident">wrong</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;match failed, got {:?}&quot;</span>, <span class="ident">wrong</span>),
         }
 
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">rdr</span>.<span class="ident">read_byte_record</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">rec</span>).<span class="ident">unwrap</span>());
@@ -5015,12 +5087,12 @@
             <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="string">b&quot;baz&quot;</span>, <span class="kw-2">&amp;</span><span class="ident">headers</span>[<span class="number">2</span>]);
         }
         <span class="kw">match</span> <span class="kw-2">*</span><span class="ident">rdr</span>.<span class="ident">headers</span>().<span class="ident">unwrap_err</span>().<span class="ident">kind</span>() {
-            <span class="ident">ErrorKind</span>::<span class="ident">Utf8</span> { <span class="ident">pos</span>: <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">pos</span>), <span class="kw-2">ref</span> <span class="ident">err</span> } <span class="op">=&gt;</span> {
+            <span class="ident">ErrorKind</span>::<span class="ident">Utf8</span> { <span class="ident">pos</span>: <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">pos</span>), <span class="kw-2">ref</span> <span class="ident">err</span> } <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">pos</span>, <span class="kw-2">&amp;</span><span class="ident">newpos</span>(<span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>));
                 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">err</span>.<span class="ident">field</span>(), <span class="number">1</span>);
                 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">err</span>.<span class="ident">valid_up_to</span>(), <span class="number">1</span>);
             }
-            <span class="kw-2">ref</span> <span class="ident">err</span> <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;match failed, got {:?}&quot;</span>, <span class="ident">err</span>),
+            <span class="kw-2">ref</span> <span class="ident">err</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;match failed, got {:?}&quot;</span>, <span class="ident">err</span>),
         }
     }
 
