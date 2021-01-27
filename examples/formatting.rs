@@ -54,7 +54,7 @@ fn main() {
                          .borders('|')
                          .separators(&[format::LinePosition::Top,
                                        format::LinePosition::Bottom],
-                                     format::LineSeparator::new('-', '+', '+', '+'))
+                                     format::LineSeparator::new('-', '+'))
                          .padding(1, 1)
                          .build());
     table.printstd();
@@ -69,17 +69,7 @@ fn main() {
     // │ Value three │ Value four │
     // └─────────────┴────────────┘
     println!("With unicode:");
-    table.set_format(format::FormatBuilder::new()
-                         .column_separator('│')
-                         .borders('│')
-                         .separators(&[format::LinePosition::Top],
-                                     format::LineSeparator::new('─', '┬', '┌', '┐'))
-                         .separators(&[format::LinePosition::Intern],
-                                     format::LineSeparator::new('─', '┼', '├', '┤'))
-                         .separators(&[format::LinePosition::Bottom],
-                                     format::LineSeparator::new('─', '┴', '└', '┘'))
-                         .padding(1, 1)
-                         .build());
+    table.set_format(*format::consts::FORMAT_BOX_CHARS);
     table.printstd();
 
     // Customized format with unicode and different padding

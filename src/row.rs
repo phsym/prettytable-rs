@@ -86,6 +86,25 @@ impl Row {
         0
     }
 
+    /// Get whether cells are spanned for all internal column separators
+    pub (crate) fn get_all_column_spanning(&self) -> Vec<bool> {
+        let column_count = self.column_count();
+        let mut column_spanning = vec![false; column_count - 1];
+        let mut i = 0;
+        let mut iter = self.cells.iter().peekable();
+        while let Some(c) = iter.next() {
+            for _ in 0..c.get_hspan() - 1 {
+                column_spanning[i] = true;
+                i += 1;
+            }
+            if iter.peek().is_some() {
+                column_spanning[i] = false;
+                i += 1;
+            }
+        }
+        column_spanning
+    }
+
     /// Get the cell at index `idx`
     pub fn get_cell(&self, idx: usize) -> Option<&Cell> {
         self.cells.get(idx)
