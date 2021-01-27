@@ -529,7 +529,7 @@ pub mod consts {
         /// ```text
         /// ┌────┬────┬────┐
         /// │ t1 │ t2 │ t3 │
-        /// ├────┼────┼────┤
+        /// ╞════╪════╪════╡
         /// │ 1  │ 1  │ 1  │
         /// ├────┼────┼────┤
         /// │ 2  │ 2  │ 2  │
@@ -548,6 +548,11 @@ pub mod consts {
                                                             '┼',
                                                             '├',
                                                             '┤'))
+                             .separators(&[LinePosition::Title],
+                                         LineSeparator::new('═',
+                                                            '╪',
+                                                            '╞',
+                                                            '╡'))
                              .separators(&[LinePosition::Bottom],
                                          LineSeparator::new('─',
                                                             '┴',
