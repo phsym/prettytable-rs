@@ -1,6 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/libc-0.2.81/src/unix/linux_like/linux/mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../../../ayu.css" disabled ><script src="../../../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../../../../favicon.svg">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/libc-0.2.82/src/unix/linux_like/linux/mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs - source</title><link rel="stylesheet" type="text/css" href="../../../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../../../ayu.css" disabled ><script id="default-settings"></script><script src="../../../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../../../../favicon.svg">
 <link rel="alternate icon" type="image/png" href="../../../../../favicon-16x16.png">
-<link rel="alternate icon" type="image/png" href="../../../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../../../libc/index.html'><div class='logo-container rust-logo'><img src='../../../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+<link rel="alternate icon" type="image/png" href="../../../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../../../libc/index.html'><div class='logo-container rust-logo'><img src='../../../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><script src="../../../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
                 <a id="settings-menu" href="../../../../../settings.html"><img src="../../../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
 <span id="2">   2</span>
 <span id="3">   3</span>
@@ -3503,6 +3503,104 @@
 <span id="3500">3500</span>
 <span id="3501">3501</span>
 <span id="3502">3502</span>
+<span id="3503">3503</span>
+<span id="3504">3504</span>
+<span id="3505">3505</span>
+<span id="3506">3506</span>
+<span id="3507">3507</span>
+<span id="3508">3508</span>
+<span id="3509">3509</span>
+<span id="3510">3510</span>
+<span id="3511">3511</span>
+<span id="3512">3512</span>
+<span id="3513">3513</span>
+<span id="3514">3514</span>
+<span id="3515">3515</span>
+<span id="3516">3516</span>
+<span id="3517">3517</span>
+<span id="3518">3518</span>
+<span id="3519">3519</span>
+<span id="3520">3520</span>
+<span id="3521">3521</span>
+<span id="3522">3522</span>
+<span id="3523">3523</span>
+<span id="3524">3524</span>
+<span id="3525">3525</span>
+<span id="3526">3526</span>
+<span id="3527">3527</span>
+<span id="3528">3528</span>
+<span id="3529">3529</span>
+<span id="3530">3530</span>
+<span id="3531">3531</span>
+<span id="3532">3532</span>
+<span id="3533">3533</span>
+<span id="3534">3534</span>
+<span id="3535">3535</span>
+<span id="3536">3536</span>
+<span id="3537">3537</span>
+<span id="3538">3538</span>
+<span id="3539">3539</span>
+<span id="3540">3540</span>
+<span id="3541">3541</span>
+<span id="3542">3542</span>
+<span id="3543">3543</span>
+<span id="3544">3544</span>
+<span id="3545">3545</span>
+<span id="3546">3546</span>
+<span id="3547">3547</span>
+<span id="3548">3548</span>
+<span id="3549">3549</span>
+<span id="3550">3550</span>
+<span id="3551">3551</span>
+<span id="3552">3552</span>
+<span id="3553">3553</span>
+<span id="3554">3554</span>
+<span id="3555">3555</span>
+<span id="3556">3556</span>
+<span id="3557">3557</span>
+<span id="3558">3558</span>
+<span id="3559">3559</span>
+<span id="3560">3560</span>
+<span id="3561">3561</span>
+<span id="3562">3562</span>
+<span id="3563">3563</span>
+<span id="3564">3564</span>
+<span id="3565">3565</span>
+<span id="3566">3566</span>
+<span id="3567">3567</span>
+<span id="3568">3568</span>
+<span id="3569">3569</span>
+<span id="3570">3570</span>
+<span id="3571">3571</span>
+<span id="3572">3572</span>
+<span id="3573">3573</span>
+<span id="3574">3574</span>
+<span id="3575">3575</span>
+<span id="3576">3576</span>
+<span id="3577">3577</span>
+<span id="3578">3578</span>
+<span id="3579">3579</span>
+<span id="3580">3580</span>
+<span id="3581">3581</span>
+<span id="3582">3582</span>
+<span id="3583">3583</span>
+<span id="3584">3584</span>
+<span id="3585">3585</span>
+<span id="3586">3586</span>
+<span id="3587">3587</span>
+<span id="3588">3588</span>
+<span id="3589">3589</span>
+<span id="3590">3590</span>
+<span id="3591">3591</span>
+<span id="3592">3592</span>
+<span id="3593">3593</span>
+<span id="3594">3594</span>
+<span id="3595">3595</span>
+<span id="3596">3596</span>
+<span id="3597">3597</span>
+<span id="3598">3598</span>
+<span id="3599">3599</span>
+<span id="3600">3600</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Linux-specific definitions for linux-like values</span>
 
@@ -3541,6 +3639,10 @@
 
 <span class="kw">pub</span> <span class="kw">type</span> <span class="ident">Elf32_Section</span> <span class="op">=</span> <span class="ident">u16</span>;
 <span class="kw">pub</span> <span class="kw">type</span> <span class="ident">Elf64_Section</span> <span class="op">=</span> <span class="ident">u16</span>;
+
+<span class="comment">// linux/can.h</span>
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">canid_t</span> <span class="op">=</span> <span class="ident">u32</span>;
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">can_err_mask_t</span> <span class="op">=</span> <span class="ident">u32</span>;
 
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;extra_traits&quot;</span>, <span class="ident">derive</span>(<span class="ident">Debug</span>))]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">fpos64_t</span> {} <span class="comment">// FIXME: fill this out with a struct</span>
@@ -4010,6 +4112,23 @@
         <span class="kw">pub</span> <span class="ident">ee_info</span>: <span class="ident">u32</span>,
         <span class="kw">pub</span> <span class="ident">ee_data</span>: <span class="ident">u32</span>,
     }
+
+    <span class="comment">// linux/can.h</span>
+    <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">__c_anonymous_sockaddr_can_tp</span> {
+        <span class="kw">pub</span> <span class="ident">rx_id</span>: <span class="ident">canid_t</span>,
+        <span class="kw">pub</span> <span class="ident">tx_id</span>: <span class="ident">canid_t</span>,
+    }
+
+    <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">__c_anonymous_sockaddr_can_j1939</span> {
+        <span class="kw">pub</span> <span class="ident">name</span>: <span class="ident">u64</span>,
+        <span class="kw">pub</span> <span class="ident">pgn</span>: <span class="ident">u32</span>,
+        <span class="kw">pub</span> <span class="ident">addr</span>: <span class="ident">u8</span>,
+    }
+
+    <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">can_filter</span> {
+        <span class="kw">pub</span> <span class="ident">can_id</span>: <span class="ident">canid_t</span>,
+        <span class="kw">pub</span> <span class="ident">can_mask</span>: <span class="ident">canid_t</span>,
+    }
 }
 
 <span class="macro">s_no_extra_traits</span><span class="macro">!</span> {
@@ -4080,6 +4199,26 @@
         <span class="kw">pub</span> <span class="ident">mq_curmsgs</span>: ::<span class="ident">c_long</span>,
         <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">all</span>(<span class="ident">target_arch</span> <span class="op">=</span> <span class="string">&quot;x86_64&quot;</span>, <span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;32&quot;</span>)))]</span>
         <span class="ident">pad</span>: [::<span class="ident">c_long</span>; <span class="number">4</span>],
+    }
+}
+
+<span class="macro">cfg_if</span><span class="macro">!</span> {
+    <span class="kw">if</span> <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">libc_union</span>)]</span> {
+        <span class="macro">s_no_extra_traits</span><span class="macro">!</span> {
+            <span class="comment">// linux/can.h</span>
+            <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">missing_debug_implementations</span>)]</span>
+            <span class="kw">pub</span> <span class="ident">union</span> <span class="ident">__c_anonymous_sockaddr_can_can_addr</span> {
+                <span class="kw">pub</span> <span class="ident">tp</span>: <span class="ident">__c_anonymous_sockaddr_can_tp</span>,
+                <span class="kw">pub</span> <span class="ident">j1939</span>: <span class="ident">__c_anonymous_sockaddr_can_j1939</span>,
+            }
+
+            <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">missing_debug_implementations</span>)]</span>
+            <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">sockaddr_can</span> {
+                <span class="kw">pub</span> <span class="ident">can_family</span>: ::<span class="ident">sa_family_t</span>,
+                <span class="kw">pub</span> <span class="ident">can_ifindex</span>: ::<span class="ident">c_int</span>,
+                <span class="kw">pub</span> <span class="ident">can_addr</span>: <span class="ident">__c_anonymous_sockaddr_can_can_addr</span>,
+            }
+        }
     }
 }
 
@@ -4697,6 +4836,23 @@
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IFLA_LINK_NETNSID</span>: ::<span class="ident">c_ushort</span> <span class="op">=</span> <span class="number">37</span>;
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IFLA_PHYS_PORT_NAME</span>: ::<span class="ident">c_ushort</span> <span class="op">=</span> <span class="number">38</span>;
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IFLA_PROTO_DOWN</span>: ::<span class="ident">c_ushort</span> <span class="op">=</span> <span class="number">39</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IFLA_GSO_MAX_SEGS</span>: ::<span class="ident">c_ushort</span> <span class="op">=</span> <span class="number">40</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IFLA_GSO_MAX_SIZE</span>: ::<span class="ident">c_ushort</span> <span class="op">=</span> <span class="number">41</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IFLA_PAD</span>: ::<span class="ident">c_ushort</span> <span class="op">=</span> <span class="number">42</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IFLA_XDP</span>: ::<span class="ident">c_ushort</span> <span class="op">=</span> <span class="number">43</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IFLA_EVENT</span>: ::<span class="ident">c_ushort</span> <span class="op">=</span> <span class="number">44</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IFLA_NEW_NETNSID</span>: ::<span class="ident">c_ushort</span> <span class="op">=</span> <span class="number">45</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IFLA_IF_NETNSID</span>: ::<span class="ident">c_ushort</span> <span class="op">=</span> <span class="number">46</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IFLA_TARGET_NETNSID</span>: ::<span class="ident">c_ushort</span> <span class="op">=</span> <span class="ident">IFLA_IF_NETNSID</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IFLA_CARRIER_UP_COUNT</span>: ::<span class="ident">c_ushort</span> <span class="op">=</span> <span class="number">47</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IFLA_CARRIER_DOWN_COUNT</span>: ::<span class="ident">c_ushort</span> <span class="op">=</span> <span class="number">48</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IFLA_NEW_IFINDEX</span>: ::<span class="ident">c_ushort</span> <span class="op">=</span> <span class="number">49</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IFLA_MIN_MTU</span>: ::<span class="ident">c_ushort</span> <span class="op">=</span> <span class="number">50</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IFLA_MAX_MTU</span>: ::<span class="ident">c_ushort</span> <span class="op">=</span> <span class="number">51</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IFLA_PROP_LIST</span>: ::<span class="ident">c_ushort</span> <span class="op">=</span> <span class="number">52</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IFLA_ALT_IFNAME</span>: ::<span class="ident">c_ushort</span> <span class="op">=</span> <span class="number">53</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IFLA_PERM_ADDRESS</span>: ::<span class="ident">c_ushort</span> <span class="op">=</span> <span class="number">54</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IFLA_PROTO_DOWN_REASON</span>: ::<span class="ident">c_ushort</span> <span class="op">=</span> <span class="number">55</span>;
 
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IFLA_INFO_UNSPEC</span>: ::<span class="ident">c_ushort</span> <span class="op">=</span> <span class="number">0</span>;
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IFLA_INFO_KIND</span>: ::<span class="ident">c_ushort</span> <span class="op">=</span> <span class="number">1</span>;
@@ -6072,6 +6228,46 @@ pub const NFQA_VLAN_TCI: ::c_int = 2;
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">EDOM</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">33</span>;
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">ERANGE</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">34</span>;
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">EWOULDBLOCK</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="ident">EAGAIN</span>;
+
+<span class="comment">// linux/can.h</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">CAN_EFF_FLAG</span>: <span class="ident">canid_t</span> <span class="op">=</span> <span class="number">0x80000000</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">CAN_RTR_FLAG</span>: <span class="ident">canid_t</span> <span class="op">=</span> <span class="number">0x40000000</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">CAN_ERR_FLAG</span>: <span class="ident">canid_t</span> <span class="op">=</span> <span class="number">0x20000000</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">CAN_SFF_MASK</span>: <span class="ident">canid_t</span> <span class="op">=</span> <span class="number">0x000007FF</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">CAN_EFF_MASK</span>: <span class="ident">canid_t</span> <span class="op">=</span> <span class="number">0x1FFFFFFF</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">CAN_ERR_MASK</span>: <span class="ident">canid_t</span> <span class="op">=</span> <span class="number">0x1FFFFFFF</span>;
+
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">CAN_SFF_ID_BITS</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">11</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">CAN_EFF_ID_BITS</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">29</span>;
+
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">CAN_MAX_DLC</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">8</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">CAN_MAX_DLEN</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">8</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">CANFD_MAX_DLC</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">15</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">CANFD_MAX_DLEN</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">64</span>;
+
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">CANFD_BRS</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x01</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">CANFD_ESI</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x02</span>;
+
+<span class="macro">cfg_if</span><span class="macro">!</span> {
+    <span class="kw">if</span> <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">libc_align</span>)]</span> {
+        <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">CAN_MTU</span>: <span class="ident">usize</span> <span class="op">=</span> ::<span class="ident">mem</span>::<span class="ident">size_of</span>::<span class="op">&lt;</span><span class="ident">can_frame</span><span class="op">&gt;</span>();
+        <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">CANFD_MTU</span>: <span class="ident">usize</span> <span class="op">=</span> ::<span class="ident">mem</span>::<span class="ident">size_of</span>::<span class="op">&lt;</span><span class="ident">canfd_frame</span><span class="op">&gt;</span>();
+    }
+}
+
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">CAN_RAW</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">1</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">CAN_BCM</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">2</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">CAN_TP16</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">3</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">CAN_TP20</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">4</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">CAN_MCNET</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">5</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">CAN_ISOTP</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">6</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">CAN_J1939</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">7</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">CAN_NPROTO</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">8</span>;
+
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SOL_CAN_BASE</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">100</span>;
+
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">CAN_INV_FILTER</span>: <span class="ident">canid_t</span> <span class="op">=</span> <span class="number">0x20000000</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">CAN_RAW_FILTER_MAX</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">512</span>;
 
 <span class="macro">f</span><span class="macro">!</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">NLA_ALIGN</span>(<span class="ident">len</span>: ::<span class="ident">c_int</span>) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">c_int</span> {
