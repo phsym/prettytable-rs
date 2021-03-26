@@ -1,3 +1,3 @@
 (function() {var implementors = {};
-implementors["bstr"] = [{"text":"impl Serialize for BStr","synthetic":false,"types":[]},{"text":"impl Serialize for BString","synthetic":false,"types":[]}];
+implementors["bstr"] = [{"text":"impl <a class=\"trait\" href=\"serde/ser/trait.Serialize.html\" title=\"trait serde::ser::Serialize\">Serialize</a> for <a class=\"struct\" href=\"bstr/struct.BStr.html\" title=\"struct bstr::BStr\">BStr</a>","synthetic":false,"types":["bstr::bstr::BStr"]},{"text":"impl <a class=\"trait\" href=\"serde/ser/trait.Serialize.html\" title=\"trait serde::ser::Serialize\">Serialize</a> for <a class=\"struct\" href=\"bstr/struct.BString.html\" title=\"struct bstr::BString\">BString</a>","synthetic":false,"types":["bstr::bstring::BString"]}];
 if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

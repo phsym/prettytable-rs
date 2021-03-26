@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/libc-0.2.86/src/unix/linux_like/linux/gnu/mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs - source</title><link rel="stylesheet" type="text/css" href="../../../../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../../../../ayu.css" disabled ><script id="default-settings"></script><script src="../../../../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../../../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../../../../../favicon.svg">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/libc-0.2.91/src/unix/linux_like/linux/gnu/mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs - source</title><link rel="stylesheet" type="text/css" href="../../../../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../../../../ayu.css" disabled ><script id="default-settings"></script><script src="../../../../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../../../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../../../../../favicon.svg">
 <link rel="alternate icon" type="image/png" href="../../../../../../favicon-16x16.png">
 <link rel="alternate icon" type="image/png" href="../../../../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../../../../libc/index.html'><div class='logo-container rust-logo'><img src='../../../../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../../../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><script src="../../../../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
                 <a id="settings-menu" href="../../../../../../settings.html"><img src="../../../../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
@@ -1543,6 +1543,70 @@
 <span id="1540">1540</span>
 <span id="1541">1541</span>
 <span id="1542">1542</span>
+<span id="1543">1543</span>
+<span id="1544">1544</span>
+<span id="1545">1545</span>
+<span id="1546">1546</span>
+<span id="1547">1547</span>
+<span id="1548">1548</span>
+<span id="1549">1549</span>
+<span id="1550">1550</span>
+<span id="1551">1551</span>
+<span id="1552">1552</span>
+<span id="1553">1553</span>
+<span id="1554">1554</span>
+<span id="1555">1555</span>
+<span id="1556">1556</span>
+<span id="1557">1557</span>
+<span id="1558">1558</span>
+<span id="1559">1559</span>
+<span id="1560">1560</span>
+<span id="1561">1561</span>
+<span id="1562">1562</span>
+<span id="1563">1563</span>
+<span id="1564">1564</span>
+<span id="1565">1565</span>
+<span id="1566">1566</span>
+<span id="1567">1567</span>
+<span id="1568">1568</span>
+<span id="1569">1569</span>
+<span id="1570">1570</span>
+<span id="1571">1571</span>
+<span id="1572">1572</span>
+<span id="1573">1573</span>
+<span id="1574">1574</span>
+<span id="1575">1575</span>
+<span id="1576">1576</span>
+<span id="1577">1577</span>
+<span id="1578">1578</span>
+<span id="1579">1579</span>
+<span id="1580">1580</span>
+<span id="1581">1581</span>
+<span id="1582">1582</span>
+<span id="1583">1583</span>
+<span id="1584">1584</span>
+<span id="1585">1585</span>
+<span id="1586">1586</span>
+<span id="1587">1587</span>
+<span id="1588">1588</span>
+<span id="1589">1589</span>
+<span id="1590">1590</span>
+<span id="1591">1591</span>
+<span id="1592">1592</span>
+<span id="1593">1593</span>
+<span id="1594">1594</span>
+<span id="1595">1595</span>
+<span id="1596">1596</span>
+<span id="1597">1597</span>
+<span id="1598">1598</span>
+<span id="1599">1599</span>
+<span id="1600">1600</span>
+<span id="1601">1601</span>
+<span id="1602">1602</span>
+<span id="1603">1603</span>
+<span id="1604">1604</span>
+<span id="1605">1605</span>
+<span id="1606">1606</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">pub</span> <span class="kw">type</span> <span class="ident">pthread_t</span> <span class="op">=</span> <span class="ident">c_ulong</span>;
 <span class="kw">pub</span> <span class="kw">type</span> <span class="ident">__priority_which_t</span> <span class="op">=</span> ::<span class="ident">c_uint</span>;
@@ -1559,7 +1623,7 @@
         <span class="kw">pub</span> <span class="ident">stx_uid</span>: <span class="ident">u32</span>,
         <span class="kw">pub</span> <span class="ident">stx_gid</span>: <span class="ident">u32</span>,
         <span class="kw">pub</span> <span class="ident">stx_mode</span>: <span class="ident">u16</span>,
-        <span class="kw">pub</span> <span class="ident">__statx_pad1</span>: [<span class="ident">u16</span>; <span class="number">1</span>],
+        <span class="ident">__statx_pad1</span>: [<span class="ident">u16</span>; <span class="number">1</span>],
         <span class="kw">pub</span> <span class="ident">stx_ino</span>: <span class="ident">u64</span>,
         <span class="kw">pub</span> <span class="ident">stx_size</span>: <span class="ident">u64</span>,
         <span class="kw">pub</span> <span class="ident">stx_blocks</span>: <span class="ident">u64</span>,
@@ -1572,7 +1636,9 @@
         <span class="kw">pub</span> <span class="ident">stx_rdev_minor</span>: <span class="ident">u32</span>,
         <span class="kw">pub</span> <span class="ident">stx_dev_major</span>: <span class="ident">u32</span>,
         <span class="kw">pub</span> <span class="ident">stx_dev_minor</span>: <span class="ident">u32</span>,
-        <span class="kw">pub</span> <span class="ident">__statx_pad2</span>: [<span class="ident">u64</span>; <span class="number">14</span>],
+        <span class="kw">pub</span> <span class="ident">stx_mnt_id</span>: <span class="ident">u64</span>,
+        <span class="ident">__statx_pad2</span>: <span class="ident">u64</span>,
+        <span class="ident">__statx_pad3</span>: [<span class="ident">u64</span>; <span class="number">12</span>],
     }
 
     <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">statx_timestamp</span> {
@@ -1830,6 +1896,19 @@
         <span class="ident">__translate</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> ::<span class="ident">c_char</span>,
         <span class="ident">__re_nsub</span>: ::<span class="ident">size_t</span>,
         <span class="ident">__bitfield</span>: <span class="ident">u8</span>,
+    }
+
+    <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Elf64_Chdr</span> {
+        <span class="kw">pub</span> <span class="ident">ch_type</span>: ::<span class="ident">Elf64_Word</span>,
+        <span class="kw">pub</span> <span class="ident">ch_reserved</span>: ::<span class="ident">Elf64_Word</span>,
+        <span class="kw">pub</span> <span class="ident">ch_size</span>: ::<span class="ident">Elf64_Xword</span>,
+        <span class="kw">pub</span> <span class="ident">ch_addralign</span>: ::<span class="ident">Elf64_Xword</span>,
+    }
+
+    <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Elf32_Chdr</span> {
+        <span class="kw">pub</span> <span class="ident">ch_type</span>: ::<span class="ident">Elf32_Word</span>,
+        <span class="kw">pub</span> <span class="ident">ch_size</span>: ::<span class="ident">Elf32_Word</span>,
+        <span class="kw">pub</span> <span class="ident">ch_addralign</span>: ::<span class="ident">Elf32_Word</span>,
     }
 }
 
@@ -2164,6 +2243,22 @@
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">TCP_TIMESTAMP</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">24</span>;
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">TCP_FASTOPEN_CONNECT</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">30</span>;
 
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">FAN_MARK_INODE</span>: ::<span class="ident">c_uint</span> <span class="op">=</span> <span class="number">0x0000_0000</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">FAN_MARK_MOUNT</span>: ::<span class="ident">c_uint</span> <span class="op">=</span> <span class="number">0x0000_0010</span>;
+<span class="comment">// NOTE: FAN_MARK_FILESYSTEM requires Linux Kernel &gt;= 4.20.0</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">FAN_MARK_FILESYSTEM</span>: ::<span class="ident">c_uint</span> <span class="op">=</span> <span class="number">0x0000_0100</span>;
+
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">AF_IB</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">27</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">AF_MPLS</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">28</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">AF_NFC</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">39</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">AF_VSOCK</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">40</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">AF_XDP</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">44</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">PF_IB</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="ident">AF_IB</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">PF_MPLS</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="ident">AF_MPLS</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">PF_NFC</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="ident">AF_NFC</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">PF_VSOCK</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="ident">AF_VSOCK</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">PF_XDP</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="ident">AF_XDP</span>;
+
 <span class="comment">/* DCCP socket options */</span>
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">DCCP_SOCKOPT_PACKET_SIZE</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">1</span>;
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">DCCP_SOCKOPT_SERVICE</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">2</span>;
@@ -2190,6 +2285,7 @@
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">BUFSIZ</span>: ::<span class="ident">c_uint</span> <span class="op">=</span> <span class="number">8192</span>;
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">TMP_MAX</span>: ::<span class="ident">c_uint</span> <span class="op">=</span> <span class="number">238328</span>;
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">FOPEN_MAX</span>: ::<span class="ident">c_uint</span> <span class="op">=</span> <span class="number">16</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">FILENAME_MAX</span>: ::<span class="ident">c_uint</span> <span class="op">=</span> <span class="number">4096</span>;
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">POSIX_MADV_DONTNEED</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">4</span>;
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">_SC_EQUIV_CLASS_MAX</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">41</span>;
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">_SC_CHARCLASS_NAME_MAX</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">45</span>;
@@ -2314,6 +2410,9 @@
         <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">QNX6_SUPER_MAGIC</span>: ::<span class="ident">c_long</span> <span class="op">=</span> <span class="number">0x68191122</span>;
         <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RDTGROUP_SUPER_MAGIC</span>: ::<span class="ident">c_long</span> <span class="op">=</span> <span class="number">0x7655821</span>;
         <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">REISERFS_SUPER_MAGIC</span>: ::<span class="ident">c_long</span> <span class="op">=</span> <span class="number">0x52654973</span>;
+        <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SECURITYFS_MAGIC</span>: ::<span class="ident">c_long</span> <span class="op">=</span> <span class="number">0x73636673</span>;
+        <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SELINUX_MAGIC</span>: ::<span class="ident">c_long</span> <span class="op">=</span> <span class="number">0xf97cff8c</span>;
+        <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SMACK_MAGIC</span>: ::<span class="ident">c_long</span> <span class="op">=</span> <span class="number">0x43415d53</span>;
         <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SMB_SUPER_MAGIC</span>: ::<span class="ident">c_long</span> <span class="op">=</span> <span class="number">0x0000517b</span>;
         <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SYSFS_MAGIC</span>: ::<span class="ident">c_long</span> <span class="op">=</span> <span class="number">0x62656572</span>;
         <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">TMPFS_MAGIC</span>: ::<span class="ident">c_long</span> <span class="op">=</span> <span class="number">0x01021994</span>;
@@ -2365,6 +2464,9 @@
         <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">QNX6_SUPER_MAGIC</span>: ::<span class="ident">c_uint</span> <span class="op">=</span> <span class="number">0x68191122</span>;
         <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RDTGROUP_SUPER_MAGIC</span>: ::<span class="ident">c_uint</span> <span class="op">=</span> <span class="number">0x7655821</span>;
         <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">REISERFS_SUPER_MAGIC</span>: ::<span class="ident">c_uint</span> <span class="op">=</span> <span class="number">0x52654973</span>;
+        <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SECURITYFS_MAGIC</span>: ::<span class="ident">c_uint</span> <span class="op">=</span> <span class="number">0x73636673</span>;
+        <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SELINUX_MAGIC</span>: ::<span class="ident">c_uint</span> <span class="op">=</span> <span class="number">0xf97cff8c</span>;
+        <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SMACK_MAGIC</span>: ::<span class="ident">c_uint</span> <span class="op">=</span> <span class="number">0x43415d53</span>;
         <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SMB_SUPER_MAGIC</span>: ::<span class="ident">c_uint</span> <span class="op">=</span> <span class="number">0x0000517b</span>;
         <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SYSFS_MAGIC</span>: ::<span class="ident">c_uint</span> <span class="op">=</span> <span class="number">0x62656572</span>;
         <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">TMPFS_MAGIC</span>: ::<span class="ident">c_uint</span> <span class="op">=</span> <span class="number">0x01021994</span>;
@@ -2401,10 +2503,14 @@
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">PTRACE_LISTEN</span>: ::<span class="ident">c_uint</span> <span class="op">=</span> <span class="number">0x4208</span>;
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">PTRACE_PEEKSIGINFO</span>: ::<span class="ident">c_uint</span> <span class="op">=</span> <span class="number">0x4209</span>;
 
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">EPOLLWAKEUP</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x20000000</span>;
+<span class="comment">// linux/fs.h</span>
 
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SEEK_DATA</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">3</span>;
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SEEK_HOLE</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">4</span>;
+<span class="comment">// Flags for preadv2/pwritev2</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RWF_HIPRI</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x00000001</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RWF_DSYNC</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x00000002</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RWF_SYNC</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x00000004</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RWF_NOWAIT</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x00000008</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RWF_APPEND</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x00000010</span>;
 
 <span class="comment">// linux/rtnetlink.h</span>
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">TCA_PAD</span>: ::<span class="ident">c_ushort</span> <span class="op">=</span> <span class="number">9</span>;
@@ -2717,6 +2823,7 @@
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">STATX_BLOCKS</span>: ::<span class="ident">c_uint</span> <span class="op">=</span> <span class="number">0x0400</span>;
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">STATX_BASIC_STATS</span>: ::<span class="ident">c_uint</span> <span class="op">=</span> <span class="number">0x07ff</span>;
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">STATX_BTIME</span>: ::<span class="ident">c_uint</span> <span class="op">=</span> <span class="number">0x0800</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">STATX_MNT_ID</span>: ::<span class="ident">c_uint</span> <span class="op">=</span> <span class="number">0x1000</span>;
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">STATX_ALL</span>: ::<span class="ident">c_uint</span> <span class="op">=</span> <span class="number">0x0fff</span>;
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">STATX__RESERVED</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x80000000</span>;
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">STATX_ATTR_COMPRESSED</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x0004</span>;
@@ -2966,6 +3073,27 @@
         <span class="ident">dirfd</span>: ::<span class="ident">c_int</span>,
         <span class="ident">path</span>: <span class="kw-2">*</span><span class="kw">const</span> ::<span class="ident">c_char</span>,
     ) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">preadv2</span>(
+        <span class="ident">fd</span>: ::<span class="ident">c_int</span>,
+        <span class="ident">iov</span>: <span class="kw-2">*</span><span class="kw">const</span> ::<span class="ident">iovec</span>,
+        <span class="ident">iovcnt</span>: ::<span class="ident">c_int</span>,
+        <span class="ident">offset</span>: ::<span class="ident">off_t</span>,
+        <span class="ident">flags</span>: ::<span class="ident">c_int</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">ssize_t</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">pwritev2</span>(
+        <span class="ident">fd</span>: ::<span class="ident">c_int</span>,
+        <span class="ident">iov</span>: <span class="kw-2">*</span><span class="kw">const</span> ::<span class="ident">iovec</span>,
+        <span class="ident">iovcnt</span>: ::<span class="ident">c_int</span>,
+        <span class="ident">offset</span>: ::<span class="ident">off_t</span>,
+        <span class="ident">flags</span>: ::<span class="ident">c_int</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">ssize_t</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">renameat2</span>(
+        <span class="ident">olddirfd</span>: ::<span class="ident">c_int</span>,
+        <span class="ident">oldpath</span>: <span class="kw-2">*</span><span class="kw">const</span> ::<span class="ident">c_char</span>,
+        <span class="ident">newdirfd</span>: ::<span class="ident">c_int</span>,
+        <span class="ident">newpath</span>: <span class="kw-2">*</span><span class="kw">const</span> ::<span class="ident">c_char</span>,
+        <span class="ident">flags</span>: ::<span class="ident">c_uint</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">c_int</span>;
 }
 
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
@@ -3087,4 +3215,5 @@
     }
 }
 </pre></div>
-</section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../../../../../";window.currentCrate = "libc";</script><script src="../../../../../../main.js"></script><script src="../../../../../../source-script.js"></script><script src="../../../../../../source-files.js"></script><script defer src="../../../../../../search-index.js"></script></body></html>
+</section><section id="search" class="content hidden"></section><section class="footer"></section><div id="rustdoc-vars" data-root-path="../../../../../../" data-current-crate="libc"></div>
+    <script src="../../../../../../main.js"></script><script src="../../../../../../source-script.js"></script><script src="../../../../../../source-files.js"></script><script defer src="../../../../../../search-index.js"></script></body></html>
