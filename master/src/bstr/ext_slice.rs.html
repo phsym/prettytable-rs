@@ -1,7 +1,7 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/bstr-0.2.15/src/ext_slice.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>ext_slice.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings"></script><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/bstr-0.2.16/src/ext_slice.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>ext_slice.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings"></script><script src="../../storage.js"></script><script src="../../crates.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
 <link rel="alternate icon" type="image/png" href="../../favicon-16x16.png">
-<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../bstr/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
-                <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
+<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../bstr/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
+                <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" height="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
 <span id="2">   2</span>
 <span id="3">   3</span>
 <span id="4">   4</span>
@@ -3656,46 +3656,6 @@
 <span id="3653">3653</span>
 <span id="3654">3654</span>
 <span id="3655">3655</span>
-<span id="3656">3656</span>
-<span id="3657">3657</span>
-<span id="3658">3658</span>
-<span id="3659">3659</span>
-<span id="3660">3660</span>
-<span id="3661">3661</span>
-<span id="3662">3662</span>
-<span id="3663">3663</span>
-<span id="3664">3664</span>
-<span id="3665">3665</span>
-<span id="3666">3666</span>
-<span id="3667">3667</span>
-<span id="3668">3668</span>
-<span id="3669">3669</span>
-<span id="3670">3670</span>
-<span id="3671">3671</span>
-<span id="3672">3672</span>
-<span id="3673">3673</span>
-<span id="3674">3674</span>
-<span id="3675">3675</span>
-<span id="3676">3676</span>
-<span id="3677">3677</span>
-<span id="3678">3678</span>
-<span id="3679">3679</span>
-<span id="3680">3680</span>
-<span id="3681">3681</span>
-<span id="3682">3682</span>
-<span id="3683">3683</span>
-<span id="3684">3684</span>
-<span id="3685">3685</span>
-<span id="3686">3686</span>
-<span id="3687">3687</span>
-<span id="3688">3688</span>
-<span id="3689">3689</span>
-<span id="3690">3690</span>
-<span id="3691">3691</span>
-<span id="3692">3692</span>
-<span id="3693">3693</span>
-<span id="3694">3694</span>
-<span id="3695">3695</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">borrow</span>::<span class="ident">Cow</span>;
@@ -3704,22 +3664,21 @@
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">path</span>::<span class="ident">Path</span>;
 
-<span class="kw">use</span> <span class="ident">core</span>::{<span class="ident">cmp</span>, <span class="ident">iter</span>, <span class="ident">ops</span>, <span class="ident">ptr</span>, <span class="ident">slice</span>, <span class="ident">str</span>};
-<span class="kw">use</span> <span class="ident">memchr</span>::{<span class="ident">memchr</span>, <span class="ident">memrchr</span>};
+<span class="kw">use</span> <span class="ident">core</span>::{<span class="ident">iter</span>, <span class="ident">ops</span>, <span class="ident">ptr</span>, <span class="ident">slice</span>, <span class="ident">str</span>};
+<span class="kw">use</span> <span class="ident">memchr</span>::{<span class="ident">memchr</span>, <span class="ident">memmem</span>, <span class="ident">memrchr</span>};
 
-<span class="kw">use</span> <span class="ident">ascii</span>;
-<span class="kw">use</span> <span class="ident">bstr</span>::<span class="ident">BStr</span>;
-<span class="kw">use</span> <span class="ident">byteset</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">ascii</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">bstr</span>::<span class="ident">BStr</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">byteset</span>;
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>
-<span class="kw">use</span> <span class="ident">ext_vec</span>::<span class="ident">ByteVec</span>;
-<span class="kw">use</span> <span class="ident">search</span>::{<span class="ident">PrefilterState</span>, <span class="ident">TwoWay</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">ext_vec</span>::<span class="ident">ByteVec</span>;
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;unicode&quot;</span>)]</span>
-<span class="kw">use</span> <span class="ident">unicode</span>::{
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">unicode</span>::{
     <span class="ident">whitespace_len_fwd</span>, <span class="ident">whitespace_len_rev</span>, <span class="ident">GraphemeIndices</span>, <span class="ident">Graphemes</span>,
     <span class="ident">SentenceIndices</span>, <span class="ident">Sentences</span>, <span class="ident">WordIndices</span>, <span class="ident">Words</span>, <span class="ident">WordsWithBreakIndices</span>,
     <span class="ident">WordsWithBreaks</span>,
 };
-<span class="kw">use</span> <span class="ident">utf8</span>::{<span class="self">self</span>, <span class="ident">CharIndices</span>, <span class="ident">Chars</span>, <span class="ident">Utf8Chunks</span>, <span class="ident">Utf8Error</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">utf8</span>::{<span class="self">self</span>, <span class="ident">CharIndices</span>, <span class="ident">Chars</span>, <span class="ident">Utf8Chunks</span>, <span class="ident">Utf8Error</span>};
 
 <span class="doccomment">/// A short-hand constructor for building a `&amp;[u8]`.</span>
 <span class="doccomment">///</span>
@@ -4043,7 +4002,7 @@
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">to_str_lossy</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Cow</span><span class="op">&lt;</span><span class="ident">str</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">to_str_lossy</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span>, <span class="ident">str</span><span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="ident">utf8</span>::<span class="ident">validate</span>(<span class="self">self</span>.<span class="ident">as_bytes</span>()) {
             <span class="prelude-val">Ok</span>(()) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="comment">// SAFETY: This is safe because of the guarantees provided by</span>
@@ -4187,10 +4146,10 @@
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">to_os_str_lossy</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Cow</span><span class="op">&lt;</span><span class="ident">OsStr</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">to_os_str_lossy</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span>, <span class="ident">OsStr</span><span class="op">&gt;</span> {
         <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">unix</span>)]</span>
         <span class="attribute">#[<span class="ident">inline</span>]</span>
-        <span class="kw">fn</span> <span class="ident">imp</span>(<span class="ident">bytes</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Cow</span><span class="op">&lt;</span><span class="ident">OsStr</span><span class="op">&gt;</span> {
+        <span class="kw">fn</span> <span class="ident">imp</span>(<span class="ident">bytes</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span>, <span class="ident">OsStr</span><span class="op">&gt;</span> {
             <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">unix</span>::<span class="ident">ffi</span>::<span class="ident">OsStrExt</span>;
 
             <span class="ident">Cow</span>::<span class="ident">Borrowed</span>(<span class="ident">OsStr</span>::<span class="ident">from_bytes</span>(<span class="ident">bytes</span>))
@@ -4258,7 +4217,7 @@
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">to_path_lossy</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Cow</span><span class="op">&lt;</span><span class="ident">Path</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">to_path_lossy</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span>, <span class="ident">Path</span><span class="op">&gt;</span> {
         <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">path</span>::<span class="ident">PathBuf</span>;
 
         <span class="kw">match</span> <span class="self">self</span>.<span class="ident">to_os_str_lossy</span>() {
@@ -4766,7 +4725,7 @@
     <span class="doccomment">/// assert_eq!(0, B(&quot;  \n\t\u{2003}\n  \t&quot;).fields().count());</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">fields</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Fields</span> {
+    <span class="kw">fn</span> <span class="ident">fields</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Fields</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span> {
         <span class="ident">Fields</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">as_bytes</span>())
     }
 
@@ -4798,7 +4757,7 @@
     <span class="doccomment">/// assert_eq!(0, b&quot;1911354563&quot;.fields_with(|c| c.is_numeric()).count());</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">fields_with</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">FnMut</span>(<span class="ident">char</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">FieldsWith</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">fields_with</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">FnMut</span>(<span class="ident">char</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">FieldsWith</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span>, <span class="ident">F</span><span class="op">&gt;</span> {
         <span class="ident">FieldsWith</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">as_bytes</span>(), <span class="ident">f</span>)
     }
 
@@ -5318,7 +5277,7 @@
     <span class="doccomment">/// assert_eq!(bytes, bs);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">bytes</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Bytes</span> {
+    <span class="kw">fn</span> <span class="ident">bytes</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Bytes</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span> {
         <span class="ident">Bytes</span> { <span class="ident">it</span>: <span class="self">self</span>.<span class="ident">as_bytes</span>().<span class="ident">iter</span>() }
     }
 
@@ -5348,7 +5307,7 @@
     <span class="doccomment">/// assert_eq!(vec![&#39;a&#39;, &#39;\u{FFFD}&#39;, &#39;𝞃&#39;, &#39;\u{FFFD}&#39;, &#39;☃&#39;], chars);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">chars</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Chars</span> {
+    <span class="kw">fn</span> <span class="ident">chars</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Chars</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span> {
         <span class="ident">Chars</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">as_bytes</span>())
     }
 
@@ -5403,7 +5362,7 @@
     <span class="doccomment">/// ]);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">char_indices</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CharIndices</span> {
+    <span class="kw">fn</span> <span class="ident">char_indices</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CharIndices</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span> {
         <span class="ident">CharIndices</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">as_bytes</span>())
     }
 
@@ -5440,7 +5399,7 @@
     <span class="doccomment">/// assert_eq!(invalid_chunks, vec![b&quot;\xFD&quot;, b&quot;\xFE&quot;, b&quot;\xFF&quot;]);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">utf8_chunks</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Utf8Chunks</span> {
+    <span class="kw">fn</span> <span class="ident">utf8_chunks</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Utf8Chunks</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span> {
         <span class="ident">Utf8Chunks</span> { <span class="ident">bytes</span>: <span class="self">self</span>.<span class="ident">as_bytes</span>() }
     }
 
@@ -5472,7 +5431,7 @@
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;unicode&quot;</span>)]</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">graphemes</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Graphemes</span> {
+    <span class="kw">fn</span> <span class="ident">graphemes</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Graphemes</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span> {
         <span class="ident">Graphemes</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">as_bytes</span>())
     }
 
@@ -5516,7 +5475,7 @@
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;unicode&quot;</span>)]</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">grapheme_indices</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">GraphemeIndices</span> {
+    <span class="kw">fn</span> <span class="ident">grapheme_indices</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">GraphemeIndices</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span> {
         <span class="ident">GraphemeIndices</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">as_bytes</span>())
     }
 
@@ -5552,7 +5511,7 @@
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;unicode&quot;</span>)]</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">words</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Words</span> {
+    <span class="kw">fn</span> <span class="ident">words</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Words</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span> {
         <span class="ident">Words</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">as_bytes</span>())
     }
 
@@ -5590,7 +5549,7 @@
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;unicode&quot;</span>)]</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">word_indices</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">WordIndices</span> {
+    <span class="kw">fn</span> <span class="ident">word_indices</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">WordIndices</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span> {
         <span class="ident">WordIndices</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">as_bytes</span>())
     }
 
@@ -5620,7 +5579,7 @@
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;unicode&quot;</span>)]</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">words_with_breaks</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">WordsWithBreaks</span> {
+    <span class="kw">fn</span> <span class="ident">words_with_breaks</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">WordsWithBreaks</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span> {
         <span class="ident">WordsWithBreaks</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">as_bytes</span>())
     }
 
@@ -5657,7 +5616,7 @@
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;unicode&quot;</span>)]</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">words_with_break_indices</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">WordsWithBreakIndices</span> {
+    <span class="kw">fn</span> <span class="ident">words_with_break_indices</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">WordsWithBreakIndices</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span> {
         <span class="ident">WordsWithBreakIndices</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">as_bytes</span>())
     }
 
@@ -5689,7 +5648,7 @@
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;unicode&quot;</span>)]</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">sentences</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Sentences</span> {
+    <span class="kw">fn</span> <span class="ident">sentences</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Sentences</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span> {
         <span class="ident">Sentences</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">as_bytes</span>())
     }
 
@@ -5723,7 +5682,7 @@
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;unicode&quot;</span>)]</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">sentence_indices</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">SentenceIndices</span> {
+    <span class="kw">fn</span> <span class="ident">sentence_indices</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">SentenceIndices</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span> {
         <span class="ident">SentenceIndices</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">as_bytes</span>())
     }
 
@@ -5754,7 +5713,7 @@
     <span class="doccomment">/// ]);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">lines</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Lines</span> {
+    <span class="kw">fn</span> <span class="ident">lines</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Lines</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span> {
         <span class="ident">Lines</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">as_bytes</span>())
     }
 
@@ -5798,7 +5757,7 @@
     <span class="doccomment">/// ]);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">lines_with_terminator</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">LinesWithTerminator</span> {
+    <span class="kw">fn</span> <span class="ident">lines_with_terminator</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">LinesWithTerminator</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span> {
         <span class="ident">LinesWithTerminator</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">as_bytes</span>())
     }
 
@@ -6488,7 +6447,7 @@
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;unicode&quot;</span>)]</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">reverse_graphemes</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
-        <span class="kw">use</span> <span class="ident">unicode</span>::<span class="ident">decode_grapheme</span>;
+        <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">unicode</span>::<span class="ident">decode_grapheme</span>;
 
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">i</span> <span class="op">=</span> <span class="number">0</span>;
         <span class="kw">loop</span> {
@@ -6685,15 +6644,13 @@
 <span class="doccomment">/// version which permits building a `Finder` that is not connected to the</span>
 <span class="doccomment">/// lifetime of its needle.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Debug</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Finder</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="ident">searcher</span>: <span class="ident">TwoWay</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>,
-}
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Finder</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="ident">memmem</span>::<span class="ident">Finder</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>);
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Finder</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Create a new finder for the given needle.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span><span class="op">&lt;</span><span class="ident">B</span>: <span class="question-mark">?</span><span class="ident">Sized</span> <span class="op">+</span> <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">needle</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">B</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Finder</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-        <span class="ident">Finder</span> { <span class="ident">searcher</span>: <span class="ident">TwoWay</span>::<span class="ident">forward</span>(<span class="ident">needle</span>.<span class="ident">as_ref</span>()) }
+        <span class="ident">Finder</span>(<span class="ident">memmem</span>::<span class="ident">Finder</span>::<span class="ident">new</span>(<span class="ident">needle</span>.<span class="ident">as_ref</span>()))
     }
 
     <span class="doccomment">/// Convert this finder into its owned variant, such that it no longer</span>
@@ -6706,7 +6663,7 @@
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">into_owned</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Finder</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span> {
-        <span class="ident">Finder</span> { <span class="ident">searcher</span>: <span class="self">self</span>.<span class="ident">searcher</span>.<span class="ident">into_owned</span>() }
+        <span class="ident">Finder</span>(<span class="self">self</span>.<span class="number">0</span>.<span class="ident">into_owned</span>())
     }
 
     <span class="doccomment">/// Returns the needle that this finder searches for.</span>
@@ -6717,7 +6674,7 @@
     <span class="doccomment">/// needle returned must necessarily be the shorter of the two.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">needle</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] {
-        <span class="self">self</span>.<span class="ident">searcher</span>.<span class="ident">needle</span>()
+        <span class="self">self</span>.<span class="number">0</span>.<span class="ident">needle</span>()
     }
 
     <span class="doccomment">/// Returns the index of the first occurrence of this needle in the given</span>
@@ -6749,7 +6706,7 @@
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">find</span><span class="op">&lt;</span><span class="ident">B</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">haystack</span>: <span class="ident">B</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">searcher</span>.<span class="ident">find</span>(<span class="ident">haystack</span>.<span class="ident">as_ref</span>())
+        <span class="self">self</span>.<span class="number">0</span>.<span class="ident">find</span>(<span class="ident">haystack</span>.<span class="ident">as_ref</span>())
     }
 }
 
@@ -6770,15 +6727,13 @@
 <span class="doccomment">/// version which permits building a `FinderReverse` that is not connected to</span>
 <span class="doccomment">/// the lifetime of its needle.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Debug</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">FinderReverse</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="ident">searcher</span>: <span class="ident">TwoWay</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>,
-}
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">FinderReverse</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="ident">memmem</span>::<span class="ident">FinderRev</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>);
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">FinderReverse</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Create a new reverse finder for the given needle.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span><span class="op">&lt;</span><span class="ident">B</span>: <span class="question-mark">?</span><span class="ident">Sized</span> <span class="op">+</span> <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">needle</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">B</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">FinderReverse</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-        <span class="ident">FinderReverse</span> { <span class="ident">searcher</span>: <span class="ident">TwoWay</span>::<span class="ident">reverse</span>(<span class="ident">needle</span>.<span class="ident">as_ref</span>()) }
+        <span class="ident">FinderReverse</span>(<span class="ident">memmem</span>::<span class="ident">FinderRev</span>::<span class="ident">new</span>(<span class="ident">needle</span>.<span class="ident">as_ref</span>()))
     }
 
     <span class="doccomment">/// Convert this finder into its owned variant, such that it no longer</span>
@@ -6791,7 +6746,7 @@
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">into_owned</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">FinderReverse</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span> {
-        <span class="ident">FinderReverse</span> { <span class="ident">searcher</span>: <span class="self">self</span>.<span class="ident">searcher</span>.<span class="ident">into_owned</span>() }
+        <span class="ident">FinderReverse</span>(<span class="self">self</span>.<span class="number">0</span>.<span class="ident">into_owned</span>())
     }
 
     <span class="doccomment">/// Returns the needle that this finder searches for.</span>
@@ -6802,7 +6757,7 @@
     <span class="doccomment">/// the needle returned must necessarily be the shorter of the two.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">needle</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] {
-        <span class="self">self</span>.<span class="ident">searcher</span>.<span class="ident">needle</span>()
+        <span class="self">self</span>.<span class="number">0</span>.<span class="ident">needle</span>()
     }
 
     <span class="doccomment">/// Returns the index of the last occurrence of this needle in the given</span>
@@ -6834,7 +6789,7 @@
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">rfind</span><span class="op">&lt;</span><span class="ident">B</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">haystack</span>: <span class="ident">B</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">searcher</span>.<span class="ident">rfind</span>(<span class="ident">haystack</span>.<span class="ident">as_ref</span>())
+        <span class="self">self</span>.<span class="number">0</span>.<span class="ident">rfind</span>(<span class="ident">haystack</span>.<span class="ident">as_ref</span>())
     }
 }
 
@@ -6846,17 +6801,14 @@
 <span class="doccomment">/// byte string being looked for.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Find</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="ident">it</span>: <span class="ident">memmem</span>::<span class="ident">FindIter</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;a</span><span class="op">&gt;</span>,
     <span class="ident">haystack</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>],
-    <span class="ident">prestate</span>: <span class="ident">PrefilterState</span>,
-    <span class="ident">searcher</span>: <span class="ident">TwoWay</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>,
-    <span class="ident">pos</span>: <span class="ident">usize</span>,
+    <span class="ident">needle</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>],
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Find</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
     <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">haystack</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>], <span class="ident">needle</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Find</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">searcher</span> <span class="op">=</span> <span class="ident">TwoWay</span>::<span class="ident">forward</span>(<span class="ident">needle</span>);
-        <span class="kw">let</span> <span class="ident">prestate</span> <span class="op">=</span> <span class="ident">searcher</span>.<span class="ident">prefilter_state</span>();
-        <span class="ident">Find</span> { <span class="ident">haystack</span>, <span class="ident">prestate</span>, <span class="ident">searcher</span>, <span class="ident">pos</span>: <span class="number">0</span> }
+        <span class="ident">Find</span> { <span class="ident">it</span>: <span class="ident">memmem</span>::<span class="ident">find_iter</span>(<span class="ident">haystack</span>, <span class="ident">needle</span>), <span class="ident">haystack</span>, <span class="ident">needle</span> }
     }
 }
 
@@ -6865,20 +6817,7 @@
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
-        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">pos</span> <span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">haystack</span>.<span class="ident">len</span>() {
-            <span class="kw">return</span> <span class="prelude-val">None</span>;
-        }
-        <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="self">self</span>
-            .<span class="ident">searcher</span>
-            .<span class="ident">find_with</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">prestate</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">haystack</span>[<span class="self">self</span>.<span class="ident">pos</span>..]);
-        <span class="kw">match</span> <span class="ident">result</span> {
-            <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">None</span>,
-            <span class="prelude-val">Some</span>(<span class="ident">i</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="kw">let</span> <span class="ident">pos</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span> <span class="ident">i</span>;
-                <span class="self">self</span>.<span class="ident">pos</span> <span class="op">=</span> <span class="ident">pos</span> <span class="op">+</span> <span class="ident">cmp</span>::<span class="ident">max</span>(<span class="number">1</span>, <span class="self">self</span>.<span class="ident">searcher</span>.<span class="ident">needle</span>().<span class="ident">len</span>());
-                <span class="prelude-val">Some</span>(<span class="ident">pos</span>)
-            }
-        }
+        <span class="self">self</span>.<span class="ident">it</span>.<span class="ident">next</span>()
     }
 }
 
@@ -6890,20 +6829,18 @@
 <span class="doccomment">/// byte string being looked for.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">FindReverse</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="ident">it</span>: <span class="ident">memmem</span>::<span class="ident">FindRevIter</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;a</span><span class="op">&gt;</span>,
     <span class="ident">haystack</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>],
-    <span class="ident">prestate</span>: <span class="ident">PrefilterState</span>,
-    <span class="ident">searcher</span>: <span class="ident">TwoWay</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// When searching with an empty needle, this gets set to `None` after</span>
-    <span class="doccomment">/// we&#39;ve yielded the last element at `0`.</span>
-    <span class="ident">pos</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>,
+    <span class="ident">needle</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>],
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">FindReverse</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
     <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">haystack</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>], <span class="ident">needle</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">FindReverse</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">searcher</span> <span class="op">=</span> <span class="ident">TwoWay</span>::<span class="ident">reverse</span>(<span class="ident">needle</span>);
-        <span class="kw">let</span> <span class="ident">prestate</span> <span class="op">=</span> <span class="ident">searcher</span>.<span class="ident">prefilter_state</span>();
-        <span class="kw">let</span> <span class="ident">pos</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">haystack</span>.<span class="ident">len</span>());
-        <span class="ident">FindReverse</span> { <span class="ident">haystack</span>, <span class="ident">prestate</span>, <span class="ident">searcher</span>, <span class="ident">pos</span> }
+        <span class="ident">FindReverse</span> {
+            <span class="ident">it</span>: <span class="ident">memmem</span>::<span class="ident">rfind_iter</span>(<span class="ident">haystack</span>, <span class="ident">needle</span>),
+            <span class="ident">haystack</span>,
+            <span class="ident">needle</span>,
+        }
     }
 
     <span class="kw">fn</span> <span class="ident">haystack</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>] {
@@ -6911,7 +6848,7 @@
     }
 
     <span class="kw">fn</span> <span class="ident">needle</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] {
-        <span class="self">self</span>.<span class="ident">searcher</span>.<span class="ident">needle</span>()
+        <span class="self">self</span>.<span class="ident">needle</span>
     }
 }
 
@@ -6920,24 +6857,7 @@
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">pos</span> <span class="op">=</span> <span class="kw">match</span> <span class="self">self</span>.<span class="ident">pos</span> {
-            <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">None</span>,
-            <span class="prelude-val">Some</span>(<span class="ident">pos</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">pos</span>,
-        };
-        <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="self">self</span>
-            .<span class="ident">searcher</span>
-            .<span class="ident">rfind_with</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">prestate</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">haystack</span>[..<span class="ident">pos</span>]);
-        <span class="kw">match</span> <span class="ident">result</span> {
-            <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">None</span>,
-            <span class="prelude-val">Some</span>(<span class="ident">i</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="kw">if</span> <span class="ident">pos</span> <span class="op">=</span><span class="op">=</span> <span class="ident">i</span> {
-                    <span class="self">self</span>.<span class="ident">pos</span> <span class="op">=</span> <span class="ident">pos</span>.<span class="ident">checked_sub</span>(<span class="number">1</span>);
-                } <span class="kw">else</span> {
-                    <span class="self">self</span>.<span class="ident">pos</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">i</span>);
-                }
-                <span class="prelude-val">Some</span>(<span class="ident">i</span>)
-            }
-        }
+        <span class="self">self</span>.<span class="ident">it</span>.<span class="ident">next</span>()
     }
 }
 
@@ -7097,7 +7017,7 @@
         <span class="kw">match</span> <span class="self">self</span>.<span class="ident">finder</span>.<span class="ident">next</span>() {
             <span class="prelude-val">Some</span>(<span class="ident">start</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="kw">let</span> <span class="ident">next</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">haystack</span>[<span class="self">self</span>.<span class="ident">last</span>..<span class="ident">start</span>];
-                <span class="self">self</span>.<span class="ident">last</span> <span class="op">=</span> <span class="ident">start</span> <span class="op">+</span> <span class="self">self</span>.<span class="ident">finder</span>.<span class="ident">searcher</span>.<span class="ident">needle</span>().<span class="ident">len</span>();
+                <span class="self">self</span>.<span class="ident">last</span> <span class="op">=</span> <span class="ident">start</span> <span class="op">+</span> <span class="self">self</span>.<span class="ident">finder</span>.<span class="ident">needle</span>.<span class="ident">len</span>();
                 <span class="prelude-val">Some</span>(<span class="ident">next</span>)
             }
             <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> {
@@ -7332,8 +7252,8 @@
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">mod</span> <span class="ident">tests</span> {
-    <span class="kw">use</span> <span class="ident">ext_slice</span>::{<span class="ident">ByteSlice</span>, <span class="ident">B</span>};
-    <span class="kw">use</span> <span class="ident">tests</span>::<span class="ident">LOSSY_TESTS</span>;
+    <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">ext_slice</span>::{<span class="ident">ByteSlice</span>, <span class="ident">B</span>};
+    <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">tests</span>::<span class="ident">LOSSY_TESTS</span>;
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">to_str_lossy</span>() {
@@ -7393,5 +7313,5 @@
     }
 }
 </pre></div>
-</section><section id="search" class="content hidden"></section><section class="footer"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="bstr"></div>
-    <script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script><script defer src="../../search-index.js"></script></body></html>
+</section><section id="search" class="content hidden"></section><section class="footer"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="bstr" data-search-js="../../search-index.js"></div>
+    <script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script></body></html>

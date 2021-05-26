@@ -1,9 +1,9 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="API documentation for the Rust `bstr` crate."><meta name="keywords" content="rust, rustlang, rust-lang, bstr"><title>bstr - Rust</title><link rel="stylesheet" type="text/css" href="../normalize.css"><link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../ayu.css" disabled ><script id="default-settings"></script><script src="../storage.js"></script><noscript><link rel="stylesheet" href="../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="An experimental byte string library."><meta name="keywords" content="rust, rustlang, rust-lang, bstr"><title>bstr - Rust</title><link rel="stylesheet" type="text/css" href="../normalize.css"><link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../ayu.css" disabled ><script id="default-settings"></script><script src="../storage.js"></script><script src="../crates.js"></script><noscript><link rel="stylesheet" href="../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../favicon.svg">
 <link rel="alternate icon" type="image/png" href="../favicon-16x16.png">
-<link rel="alternate icon" type="image/png" href="../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../down-arrow.svg");}</style></head><body class="rustdoc mod"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../bstr/index.html'><div class='logo-container rust-logo'><img src='../rust-logo.png' alt='logo'></div></a><p class="location">Crate bstr</p><div class="block version"><p>Version 0.2.15</p></div><div class="sidebar-elems"><a id="all-types" href="all.html"><p>See all bstr's items</p></a><div class="block items"><ul><li><a href="#modules">Modules</a></li><li><a href="#structs">Structs</a></li><li><a href="#traits">Traits</a></li><li><a href="#functions">Functions</a></li></ul></div><p class="location"></p><div id="sidebar-vars" data-name="bstr" data-ty="mod" data-relpath="../"></div></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><script src="../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
-                <a id="settings-menu" href="../settings.html"><img src="../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class="fqn"><span class="in-band">Crate <a class="mod" href="">bstr</a></span><span class="out-of-band"><span id="render-detail"><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span><a class="srclink" href="../src/bstr/lib.rs.html#1-456" title="goto source code">[src]</a></span></h1><div class="docblock"><p>An experimental byte string library.</p>
+<link rel="alternate icon" type="image/png" href="../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../down-arrow.svg");}</style></head><body class="rustdoc mod"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../bstr/index.html'><div class='logo-container rust-logo'><img src='../rust-logo.png' alt='logo'></div></a><p class="location">Crate bstr</p><div class="block version"><p>Version 0.2.16</p></div><div class="sidebar-elems"><a id="all-types" href="all.html"><p>See all bstr's items</p></a><div class="block items"><ul><li><a href="#modules">Modules</a></li><li><a href="#structs">Structs</a></li><li><a href="#traits">Traits</a></li><li><a href="#functions">Functions</a></li></ul></div><p class="location"></p><div id="sidebar-vars" data-name="bstr" data-ty="mod" data-relpath="../"></div></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><script src="../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
+                <a id="settings-menu" href="../settings.html"><img src="../wheel.svg" width="18" height="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class="fqn"><span class="in-band">Crate <a class="mod" href="">bstr</a></span><span class="out-of-band"><span id="render-detail"><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span><a class="srclink" href="../src/bstr/lib.rs.html#1-436" title="goto source code">[src]</a></span></h1><div class="docblock"><p>An experimental byte string library.</p>
 <p>Byte strings are just like standard Unicode strings with one very important
-difference: byte strings are only <em>conventionally</em> UTF-8 while Rust's standard
+difference: byte strings are only <em>conventionally</em> UTF-8 while Rust’s standard
 Unicode strings are <em>guaranteed</em> to be valid UTF-8. The primary motivation for
 byte strings is for handling arbitrary bytes that are mostly UTF-8.</p>
 <h1 id="overview" class="section-header"><a href="#overview">Overview</a></h1>
@@ -43,7 +43,7 @@ of occurrences of a subtring:</p>
     <span class="ident">matches</span>.<span class="ident">push</span>(<span class="ident">start</span>);
 }
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">matches</span>, [<span class="number">0</span>, <span class="number">8</span>, <span class="number">12</span>, <span class="number">21</span>]);</pre></div>
-<p>Here's another example showing how to do a search and replace (and also showing
+<p>Here’s another example showing how to do a search and replace (and also showing
 use of the <code>B</code> function):</p>
 
 <div class="example-wrap"><pre class="rust rust-example-rendered">
@@ -52,7 +52,7 @@ use of the <code>B</code> function):</p>
 <span class="kw">let</span> <span class="ident">old</span> <span class="op">=</span> <span class="ident">B</span>(<span class="string">&quot;foo ☃☃☃ foo foo quux foo&quot;</span>);
 <span class="kw">let</span> <span class="ident">new</span> <span class="op">=</span> <span class="ident">old</span>.<span class="ident">replace</span>(<span class="string">&quot;foo&quot;</span>, <span class="string">&quot;hello&quot;</span>);
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">new</span>, <span class="ident">B</span>(<span class="string">&quot;hello ☃☃☃ hello hello quux hello&quot;</span>));</pre></div>
-<p>And here's an example that shows case conversion, even in the presence of
+<p>And here’s an example that shows case conversion, even in the presence of
 invalid UTF-8:</p>
 
 <div class="example-wrap"><pre class="rust rust-example-rendered">
@@ -84,9 +84,9 @@ method converts any <code>&amp;[u8]</code> to a <code>&amp;BStr</code>.</p>
 <h1 id="when-should-i-use-byte-strings" class="section-header"><a href="#when-should-i-use-byte-strings">When should I use byte strings?</a></h1>
 <p>This library is somewhat of an experiment that reflects my hypothesis that
 UTF-8 by convention is a better trade off in some circumstances than guaranteed
-UTF-8. It's possible, perhaps even likely, that this is a niche concern for
+UTF-8. It’s possible, perhaps even likely, that this is a niche concern for
 folks working closely with core text primitives.</p>
-<p>The first time this idea hit me was in the implementation of Rust's regex
+<p>The first time this idea hit me was in the implementation of Rust’s regex
 engine. In particular, very little of the internal implementation cares at all
 about searching valid UTF-8 encoded strings. Indeed, internally, the
 implementation converts <code>&amp;str</code> from the API to <code>&amp;[u8]</code> fairly quickly and
@@ -95,17 +95,17 @@ finite state machine itself rather than any specific string type. This makes it
 possible to not only run regexes on <code>&amp;str</code> values, but also on <code>&amp;[u8]</code> values.</p>
 <p>Why would you ever want to run a regex on a <code>&amp;[u8]</code> though? Well, <code>&amp;[u8]</code> is
 the fundamental way at which one reads data from all sorts of streams, via the
-standard library's <a href="https://doc.rust-lang.org/std/io/trait.Read.html"><code>Read</code></a>
+standard library’s <a href="https://doc.rust-lang.org/std/io/trait.Read.html"><code>Read</code></a>
 trait. In particular, there is no platform independent way to determine whether
-what you're reading from is some binary file or a human readable text file.
-Therefore, if you're writing a program to search files, you probably need to
-deal with <code>&amp;[u8]</code> directly unless you're okay with first converting it to a
-<code>&amp;str</code> and dropping any bytes that aren't valid UTF-8. (Or otherwise determine
-the encoding---which is often impractical---and perform a transcoding step.)
+what you’re reading from is some binary file or a human readable text file.
+Therefore, if you’re writing a program to search files, you probably need to
+deal with <code>&amp;[u8]</code> directly unless you’re okay with first converting it to a
+<code>&amp;str</code> and dropping any bytes that aren’t valid UTF-8. (Or otherwise determine
+the encoding—which is often impractical—and perform a transcoding step.)
 Often, the simplest and most robust way to approach this is to simply treat the
 contents of a file as if it were mostly valid UTF-8 and pass through invalid
 UTF-8 untouched. This may not be the most correct approach though!</p>
-<p>One case in particular exacerbates these issues, and that's memory mapping
+<p>One case in particular exacerbates these issues, and that’s memory mapping
 a file. When you memory map a file, that file may be gigabytes big, but all
 you get is a <code>&amp;[u8]</code>. Converting that to a <code>&amp;str</code> all in one go is generally
 not a good idea because of the costs associated with doing so, and also
@@ -116,10 +116,10 @@ do or impractical. For example, many regex engines only accept one contiguous
 sequence of bytes at a time with no way to perform incremental matching.</p>
 <p>In summary, the conventional UTF-8 byte strings provided by this library is an
 experiment. They are definitely useful in some limited circumstances, but how
-useful they are more broadly isn't clear yet.</p>
+useful they are more broadly isn’t clear yet.</p>
 <h1 id="bstr-in-public-apis" class="section-header"><a href="#bstr-in-public-apis"><code>bstr</code> in public APIs</a></h1>
 <p>Since this library is still experimental, you should not use it in the public
-API of your crates until it hits <code>1.0</code> (unless you're OK with with tracking
+API of your crates until it hits <code>1.0</code> (unless you’re OK with with tracking
 breaking releases of <code>bstr</code>).</p>
 <p>In general, it should be possible to avoid putting anything in this crate into
 your public APIs. Namely, you should never need to use the <code>ByteSlice</code> or
@@ -131,7 +131,7 @@ be converted to/from <code>[u8]</code>/<code>Vec&lt;u8&gt;</code> as needed.</p>
 <h1 id="differences-with-standard-strings" class="section-header"><a href="#differences-with-standard-strings">Differences with standard strings</a></h1>
 <p>The primary difference between <code>[u8]</code> and <code>str</code> is that the former is
 conventionally UTF-8 while the latter is guaranteed to be UTF-8. The phrase
-&quot;conventionally UTF-8&quot; means that a <code>[u8]</code> may contain bytes that do not form
+“conventionally UTF-8” means that a <code>[u8]</code> may contain bytes that do not form
 a valid UTF-8 sequence, but operations defined on the type in this crate are
 generally most useful on valid UTF-8 sequences. For example, iterating over
 Unicode codepoints or grapheme clusters is an operation that is only defined
@@ -166,7 +166,7 @@ case folding, may be provided in the future.</li>
 UTF-8 code unit sequence boundary. Conversely, no such checking is performed
 in this crate, as is consistent with treating byte strings as a sequence of
 bytes. This means callers are responsible for maintaining a UTF-8 invariant
-if that's important.</li>
+if that’s important.</li>
 <li>Some routines provided by this crate, such as <code>starts_with_str</code>, have a
 <code>_str</code> suffix to differentiate them from similar routines already defined
 on the <code>[u8]</code> type. The difference is that <code>starts_with</code> requires its
@@ -200,9 +200,9 @@ replacement codepoint whenever it comes across bytes that are not valid UTF-8:</
 <p>There are a few ways in which invalid bytes can be substituted with a Unicode
 replacement codepoint. One way, not used by this crate, is to replace every
 individual invalid byte with a single replacement codepoint. In contrast, the
-approach this crate uses is called the &quot;substitution of maximal subparts,&quot; as
+approach this crate uses is called the “substitution of maximal subparts,” as
 specified by the Unicode Standard (Chapter 3, Section 9). (This approach is
-also used by <a href="https://www.w3.org/TR/encoding/">W3C's Encoding Standard</a>.) In
+also used by <a href="https://www.w3.org/TR/encoding/">W3C’s Encoding Standard</a>.) In
 this strategy, a replacement codepoint is inserted whenever a byte is found
 that cannot possibly lead to a valid UTF-8 code unit sequence. If there were
 previous bytes that represented a <em>prefix</em> of a well-formed UTF-8 code unit
@@ -219,7 +219,7 @@ replacement codepoint. For example:</p>
 <span class="comment">// which demonstrates the &quot;substitution of maximal subparts&quot; strategy.</span>
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="string">&#39;a&#39;</span>, <span class="string">&#39;\u{FFFD}&#39;</span>, <span class="string">&#39;z&#39;</span>], <span class="ident">chars</span>);</pre></div>
 <p>If you do need to access the raw bytes for some reason in an iterator like
-<code>Chars</code>, then you should use the iterator's &quot;indices&quot; variant, which gives
+<code>Chars</code>, then you should use the iterator’s “indices” variant, which gives
 the byte offsets containing the invalid UTF-8 bytes that were substituted with
 the replacement codepoint. For example:</p>
 
@@ -238,7 +238,7 @@ the replacement codepoint. For example:</p>
 <span class="kw">let</span> <span class="ident">chars</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span> <span class="op">=</span> <span class="ident">bs</span>.<span class="ident">char_indices</span>().<span class="ident">map</span>(<span class="op">|</span>(<span class="ident">s</span>, <span class="ident">e</span>, <span class="kw">_</span>)<span class="op">|</span> <span class="kw-2">&amp;</span><span class="ident">bs</span>[<span class="ident">s</span>..<span class="ident">e</span>]).<span class="ident">collect</span>();
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="ident">B</span>(<span class="string">&quot;a&quot;</span>), <span class="ident">B</span>(<span class="string">b&quot;\xE2\x98&quot;</span>), <span class="ident">B</span>(<span class="string">&quot;z&quot;</span>)], <span class="ident">chars</span>);</pre></div>
 <h1 id="file-paths-and-os-strings" class="section-header"><a href="#file-paths-and-os-strings">File paths and OS strings</a></h1>
-<p>One of the premiere features of Rust's standard library is how it handles file
+<p>One of the premiere features of Rust’s standard library is how it handles file
 paths. In particular, it makes it very hard to write incorrect code while
 simultaneously providing a correct cross platform abstraction for manipulating
 file paths. The key challenge that one faces with file paths across platforms
@@ -247,23 +247,23 @@ is derived from the following observations:</p>
 <li>On most Unix-like systems, file paths are an arbitrary sequence of bytes.</li>
 <li>On Windows, file paths are an arbitrary sequence of 16-bit integers.</li>
 </ul>
-<p>(In both cases, certain sequences aren't allowed. For example a <code>NUL</code> byte is
+<p>(In both cases, certain sequences aren’t allowed. For example a <code>NUL</code> byte is
 not allowed in either case. But we can ignore this for the purposes of this
 section.)</p>
 <p>Byte strings, like the ones provided in this crate, line up really well with
 file paths on Unix like systems, which are themselves just arbitrary sequences
-of bytes. It turns out that if you treat them as &quot;mostly UTF-8,&quot; then things
-work out pretty well. On the contrary, byte strings <em>don't</em> really work
-that well on Windows because it's not possible to correctly roundtrip file
+of bytes. It turns out that if you treat them as “mostly UTF-8,” then things
+work out pretty well. On the contrary, byte strings <em>don’t</em> really work
+that well on Windows because it’s not possible to correctly roundtrip file
 paths between 16-bit integers and something that looks like UTF-8 <em>without</em>
 explicitly defining an encoding to do this for you, which is anathema to byte
 strings, which are just bytes.</p>
-<p>Rust's standard library elegantly solves this problem by specifying an
-internal encoding for file paths that's only used on Windows called
+<p>Rust’s standard library elegantly solves this problem by specifying an
+internal encoding for file paths that’s only used on Windows called
 <a href="https://simonsapin.github.io/wtf-8/">WTF-8</a>. Its key properties are that they
 permit losslessly roundtripping file paths on Windows by extending UTF-8 to
 support an encoding of surrogate codepoints, while simultaneously supporting
-zero-cost conversion from Rust's Unicode strings to file paths. (Since UTF-8 is
+zero-cost conversion from Rust’s Unicode strings to file paths. (Since UTF-8 is
 a proper subset of WTF-8.)</p>
 <p>The fundamental point at which the above strategy fails is when you want to
 treat file paths as things that look like strings in a zero cost way. In most
@@ -275,13 +275,13 @@ they can do:</p>
 <ol>
 <li>One could re-implement WTF-8 and re-encode file paths on Windows to WTF-8
 by accessing their underlying 16-bit integer representation. Unfortunately,
-this isn't zero cost (it introduces a second WTF-8 decoding step) and it's
+this isn’t zero cost (it introduces a second WTF-8 decoding step) and it’s
 not clear this is a good thing to do, since WTF-8 should ideally remain an
 internal implementation detail.</li>
 <li>One could instead declare that they will not handle paths on Windows that
 are not valid UTF-16, and return an error when one is encountered.</li>
 <li>Like (2), but instead of returning an error, lossily decode the file path
-on Windows that isn't valid UTF-16 into UTF-16 by replacing invalid bytes
+on Windows that isn’t valid UTF-16 into UTF-16 by replacing invalid bytes
 with the Unicode replacement codepoint.</li>
 </ol>
 <p>While this library may provide facilities for (1) in the future, currently,
@@ -314,13 +314,13 @@ a UTF-8 check and either return an error or lossily decode the file path
 into valid UTF-8, depending on which function you use. This means that you
 cannot roundtrip all file paths on Windows correctly using these conversion
 routines. However, this may be an acceptable downside since such file paths
-are exceptionally rare. Moreover, roundtripping isn't always necessary, for
-example, if all you're doing is filtering based on file paths.</p>
+are exceptionally rare. Moreover, roundtripping isn’t always necessary, for
+example, if all you’re doing is filtering based on file paths.</p>
 <p>The reason why using byte strings for this is potentially superior than the
-standard library's approach is that a lot of Rust code is already lossily
-converting file paths to Rust's Unicode strings, which are required to be valid
+standard library’s approach is that a lot of Rust code is already lossily
+converting file paths to Rust’s Unicode strings, which are required to be valid
 UTF-8, and thus contain latent bugs on Unix where paths with invalid UTF-8 are
-not terribly uncommon. If you instead use byte strings, then you're guaranteed
+not terribly uncommon. If you instead use byte strings, then you’re guaranteed
 to write correct code for Unix, at the cost of getting a corner case wrong on
 Windows.</p>
 </div><h2 id="modules" class="section-header"><a href="#modules">Modules</a></h2>
@@ -375,5 +375,5 @@ index positions.</p>
 </td></tr><tr class="module-item"><td><a class="fn" href="fn.decode_utf8.html" title="bstr::decode_utf8 fn">decode_utf8</a></td><td class="docblock-short"><p>UTF-8 decode a single Unicode scalar value from the beginning of a slice.</p>
 </td></tr><tr class="module-item"><td><a class="fn" href="fn.join.html" title="bstr::join fn">join</a></td><td class="docblock-short"><p>Join the elements given by the iterator with the given separator into a
 single <code>Vec&lt;u8&gt;</code>.</p>
-</td></tr></table></section><section id="search" class="content hidden"></section><section class="footer"></section><div id="rustdoc-vars" data-root-path="../" data-current-crate="bstr"></div>
-    <script src="../main.js"></script><script defer src="../search-index.js"></script></body></html>
+</td></tr></table></section><section id="search" class="content hidden"></section><section class="footer"></section><div id="rustdoc-vars" data-root-path="../" data-current-crate="bstr" data-search-js="../search-index.js"></div>
+    <script src="../main.js"></script></body></html>
