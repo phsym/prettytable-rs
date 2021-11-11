@@ -19,7 +19,7 @@ path = ".."
 members = ["."]
 
 [[bin]]
-name = "render_single_cell"
-path = "fuzz_targets/render_single_cell.rs"
+name = "render"
+path = "fuzz_targets/render.rs"
 test = false
 doc = false
