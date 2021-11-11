@@ -91,8 +91,6 @@ pub fn display_width(text: &str) -> usize {
         /// We just ended the escape by seeing an m
         AfterEscape,
     }
-    dbg!(text);
-
 
     let width = UnicodeWidthStr::width(text);
     let mut state = State::Normal;
@@ -121,7 +119,7 @@ pub fn display_width(text: &str) -> usize {
         }
     }
 
-    dbg!(width, hidden);
+    assert!(width >= hidden, "internal error: width {} less than hidden {} on string {:?}", width, hidden, text);
 
     width - hidden
 }
