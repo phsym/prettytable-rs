@@ -7,19 +7,18 @@ homepage = "https://github.com/phsym/prettytable-rs"
 repository = "https://github.com/phsym/prettytable-rs"
 documentation = "https://docs.rs/crate/prettytable-rs/"
 readme = "README.md"
-authors = [ "Pierre-Henri Symoneaux" ]
+authors = ["Pierre-Henri Symoneaux"]
 keywords = ["tab", "table", "format", "pretty", "print"]
 categories = ["command-line-interface"]
 license = "BSD-3-Clause"
 edition = "2018"
-exclude = [
-    "prettytable-evcxr.png"
-]
+exclude = ["prettytable-evcxr.png"]
 
 [badges]
-appveyor = { repository = "phsym/prettytable-rs", branch = "master", service = "github" }
-travis-ci = { repository = "phsym/prettytable-rs", branch = "master" }
-codecov = { repository = "phsym/prettytable-rs", branch = "master", service = "github" }
+maintenance = { status="deprecated" }
+appveyor = { repository="phsym/prettytable-rs", branch="master", service="github" }
+travis-ci = { repository="phsym/prettytable-rs", branch="master" }
+codecov = { repository="phsym/prettytable-rs", branch="master", service="github" }
 
 [features]
 default = ["win_crlf", "csv"]
@@ -40,4 +39,4 @@ term = "0.6"
 lazy_static = "1"
 atty = "0.2"
 encode_unicode = "0.3"
-csv = { version = "1", optional = true }
+csv = { version="1", optional=true }
