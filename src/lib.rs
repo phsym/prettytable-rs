@@ -388,6 +388,40 @@ impl Table {
     pub fn print_html<T: Write + ?Sized>(&self, out: &mut T) -> Result<(), Error> {
         self.as_ref().print_html(out)
     }
+
+	/// Construct the table from the `TableElem` elements vector.
+	/// 
+	/// A struct may implements the `TableElem` trait using the derive proc-macro 
+	/// from `prettytable-rs-derive` crate
+	pub fn from_vec<T: TableElem>(v: &Vec<T>) -> Self {
+		// Create the table
+		let mut table = Self::new();
+
+		// Set the table titles with the name of the struct fields
+		table.set_titles(Row::new(
+			T::get_field_name()
+				.iter()
+				.map(|f| Cell::new(f))
+				.collect(),
+		));
+
+		v.into_iter().for_each(|r| {
+			table.add_row(Row::new(
+				r.get_field().iter().map(|elem| Cell::new(elem)).collect(),
+			));
+		});
+
+		table
+	}
+}
+
+/// A table may be costructed from a vector of elements that implements the 
+/// `TableElem` trait 
+pub trait TableElem {
+	/// Returns a vector containing the name of the struct fields
+	fn get_field_name() -> Vec<&'static str>;
+	/// Returns a vector that contains the contents of the struct's fields
+	fn get_field(&self) -> Vec<String>;
 }
 
 impl Index<usize> for Table {
@@ -1061,4 +1095,42 @@ mod tests {
         assert!(table.print_html(&mut writer).is_ok());
         assert_eq!(writer.as_string().replace("\r\n", "\n"), out);
     }
+
+	#[test]
+	fn from_vec() {
+		struct Test {
+			t1: String,
+			t2: String,
+			t3: String,
+		};
+
+		impl crate::TableElem for Test {
+			fn get_field_name() -> Vec<&'static str> {
+				vec!["t1", "t2", "t3"]
+			}
+
+			fn get_field(&self) -> Vec<String> {
+				vec![self.t1.to_string(), self.t2.to_string(), self.t3.to_string()]
+			}
+		}
+		
+		let v = vec![
+			Test {t1: "a".to_string(), t2: "bc".to_string(), t3: "def".to_string()}, 
+			Test {t1: "def".to_string(), t2: "bc".to_string(), t3: "a".to_string()},
+		];
+
+		let table = Table::from_vec(&v);
+        let out = "\
++-----+----+-----+
+| t1  | t2 | t3  |
++=====+====+=====+
+| a   | bc | def |
++-----+----+-----+
+| def | bc | a   |
++-----+----+-----+
+";
+
+        assert_eq!(table.to_string().replace("\r\n", "\n"), out);
+        assert_eq!(7, table.print(&mut StringWriter::new()).unwrap());
+	}
 }
