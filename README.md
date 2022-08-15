@@ -5,6 +5,12 @@
 [![Crates.io](https://img.shields.io/crates/v/prettytable-rs.svg)](https://crates.io/crates/prettytable-rs)
 [![Doc.rs](https://docs.rs/prettytable-rs/badge.svg)](https://docs.rs/crate/prettytable-rs/)
 [![Doc.rs](https://img.shields.io/badge/docs-master-blue.svg)](http://phsym.github.io/prettytable-rs/master)
+
+> This crate has been abandonned without notice for quite a while due to some personnal reasons. My apologies for that.
+I'll try to do my best to continue to maintain it, at least for security updates. If I can't the find time to do it, I'll have no other option than
+deprecating it, or find new contributors to handover the maintenance to. Feel free to raise your hand if you're interrested.
+In the meantime, please expect a low update rate, and again please accept my apologies.
+
 # prettytable-rs
 
 A formatted and aligned table printer library for [Rust](https://www.rust-lang.org).
