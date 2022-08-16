@@ -27,6 +27,8 @@ pub mod csv;
 #[cfg(feature = "evcxr")]
 pub mod evcxr;
 
+pub mod tree;
+
 pub use row::Row;
 pub use cell::Cell;
 use format::{TableFormat, LinePosition, consts};
