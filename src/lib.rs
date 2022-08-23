@@ -277,6 +277,11 @@ impl Table {
         *self.titles = Some(titles);
     }
 
+    /// Get the optional title line
+    pub fn titles(&self) -> Option<&Row> {
+        self.titles.as_ref().into()
+    }
+
     /// Unset the title line
     pub fn unset_titles(&mut self) {
         *self.titles = None;
