@@ -59,7 +59,7 @@ pub struct Table {
 /// # }
 /// ```
 ///
-#[derive(Clone, Debug, Hash, PartialEq, Eq)]
+#[derive(Copy, Clone, Debug, Hash, PartialEq, Eq)]
 pub struct TableSlice<'a> {
     format: &'a TableFormat,
     titles: &'a Option<Row>,
@@ -220,6 +220,7 @@ impl<'a> TableSlice<'a> {
         out.flush()?;
         Ok(())
     }
+
 }
 
 impl<'a> IntoIterator for &'a TableSlice<'a> {
@@ -259,7 +260,7 @@ impl Table {
     // #[deprecated(since="0.8.0", note="Will become private in future release. See [issue #87](https://github.com/phsym/prettytable-rs/issues/87)")]
     #[cfg(test)] // Only used for testing for now
     pub (crate) fn get_column_num(&self) -> usize {
-        self.as_ref().get_column_num()
+        self.as_slice().get_column_num()
     }
 
     /// Get the number of rows
@@ -353,13 +354,13 @@ impl Table {
     /// Print the table to `out` and returns the number
     /// of lines printed, or an error
     pub fn print<T: Write + ?Sized>(&self, out: &mut T) -> Result<usize, Error> {
-        self.as_ref().print(out)
+        self.as_slice().print(out)
     }
 
     /// Print the table to terminal `out`, applying styles when needed and returns the number
     /// of lines printed, or an error
     pub fn print_term<T: Terminal + ?Sized>(&self, out: &mut T) -> Result<usize, Error> {
-        self.as_ref().print_term(out)
+        self.as_slice().print_term(out)
     }
 
     /// Print the table to standard output. Colors won't be displayed unless
@@ -371,7 +372,7 @@ impl Table {
     /// # Returns
     /// A `Result` holding the number of lines printed, or an `io::Error` if any failure happens
     pub fn print_tty(&self, force_colorize: bool) -> Result<usize, Error> {
-        self.as_ref().print_tty(force_colorize)
+        self.as_slice().print_tty(force_colorize)
     }
 
     /// Print the table to standard output. Colors won't be displayed unless
@@ -381,12 +382,23 @@ impl Table {
     /// Any failure to print is ignored. For better control, use `print_tty()`.
     /// Calling `printstd()` is equivalent to calling `print_tty(false)` and ignoring the result.
     pub fn printstd(&self) {
-        self.as_ref().printstd()
+        self.as_slice().printstd()
     }
 
     /// Print table in HTML format to `out`.
     pub fn print_html<T: Write + ?Sized>(&self, out: &mut T) -> Result<(), Error> {
-        self.as_ref().print_html(out)
+        self.as_slice().print_html(out)
+    }
+
+}
+
+trait AsTableSlice {
+    fn as_slice(&self) -> TableSlice<'_> ;
+}
+
+impl AsTableSlice for Table {
+    fn as_slice(&self) -> TableSlice<'_> {
+        TableSlice { format: &self.format, titles: &self.titles, rows: &self.rows }
     }
 }
 
@@ -412,7 +424,7 @@ impl IndexMut<usize> for Table {
 
 impl fmt::Display for Table {
     fn fmt(&self, fmt: &mut fmt::Formatter) -> Result<(), fmt::Error> {
-        self.as_ref().fmt(fmt)
+        self.as_slice().fmt(fmt)
     }
 }
 
@@ -456,7 +468,7 @@ impl<'a> IntoIterator for &'a Table {
     type Item = &'a Row;
     type IntoIter = Iter<'a, Row>;
     fn into_iter(self) -> Self::IntoIter {
-        self.as_ref().row_iter()
+        self.row_iter()
     }
 }
 
@@ -502,20 +514,15 @@ impl<'a> Iterator for ColumnIterMut<'a> {
     }
 }
 
-impl<'a> AsRef<TableSlice<'a>> for TableSlice<'a> {
-    fn as_ref(&self) -> &TableSlice<'a> {
-        self
+impl <'a> AsTableSlice for TableSlice<'a> {
+    fn as_slice(&self) -> TableSlice<'_> {
+        *self
     }
 }
 
-impl<'a> AsRef<TableSlice<'a>> for Table {
+impl<'a> AsRef<TableSlice<'a>> for TableSlice<'a> {
     fn as_ref(&self) -> &TableSlice<'a> {
-        unsafe {
-            // All this is a bit hacky. Let's try to find something else
-            let s = &mut *((self as *const Table) as *mut Table);
-            s.rows.shrink_to_fit();
-            &*(self as *const Table as *const TableSlice<'a>)
-        }
+        self
     }
 }
 
@@ -528,17 +535,14 @@ pub trait Slice<'a, E> {
 }
 
 impl<'a, T, E> Slice<'a, E> for T
-    where T: AsRef<TableSlice<'a>>,
+    where T: AsTableSlice,
           [Row]: Index<E, Output = [Row]>
 {
     type Output = TableSlice<'a>;
     fn slice(&'a self, arg: E) -> Self::Output {
-        let sl = self.as_ref();
-        TableSlice {
-            format: sl.format,
-            titles: sl.titles,
-            rows: sl.rows.index(arg),
-        }
+         let mut sl  = self.as_slice();
+         sl.rows = sl.rows.index(arg);
+         sl
     }
 }
 
@@ -600,7 +604,7 @@ macro_rules! ptable {
 
 #[cfg(test)]
 mod tests {
-    use crate::{Table, Slice, Row, Cell, format};
+    use crate::{Table, Slice, Row, Cell, format, AsTableSlice};
     use format::consts::{FORMAT_DEFAULT, FORMAT_NO_LINESEP, FORMAT_NO_COLSEP, FORMAT_CLEAN, FORMAT_BOX_CHARS};
     use crate::utils::StringWriter;
 
@@ -661,21 +665,21 @@ mod tests {
     fn table_size() {
         let mut table = Table::new();
         assert!(table.is_empty());
-        assert!(table.as_ref().is_empty());
+        assert!(table.as_slice().is_empty());
         assert_eq!(table.len(), 0);
-        assert_eq!(table.as_ref().len(), 0);
+        assert_eq!(table.as_slice().len(), 0);
         assert_eq!(table.get_column_num(), 0);
-        assert_eq!(table.as_ref().get_column_num(), 0);
+        assert_eq!(table.as_slice().get_column_num(), 0);
         table.add_empty_row();
         assert!(!table.is_empty());
-        assert!(!table.as_ref().is_empty());
+        assert!(!table.as_slice().is_empty());
         assert_eq!(table.len(), 1);
-        assert_eq!(table.as_ref().len(), 1);
+        assert_eq!(table.as_slice().len(), 1);
         assert_eq!(table.get_column_num(), 0);
-        assert_eq!(table.as_ref().get_column_num(), 0);
+        assert_eq!(table.as_slice().get_column_num(), 0);
         table[0].add_cell(Cell::default());
         assert_eq!(table.get_column_num(), 1);
-        assert_eq!(table.as_ref().get_column_num(), 1);
+        assert_eq!(table.as_slice().get_column_num(), 1);
     }
 
     #[test]
