@@ -402,6 +402,12 @@ impl AsTableSlice for Table {
     }
 }
 
+impl <T> AsTableSlice for T where T: AsRef<Table> {
+    fn as_slice(&self) -> TableSlice<'_> {
+        self.as_ref().as_slice()
+    }
+}
+
 impl Index<usize> for Table {
     type Output = Row;
     fn index(&self, idx: usize) -> &Self::Output {
@@ -525,6 +531,7 @@ impl<'a> AsRef<TableSlice<'a>> for TableSlice<'a> {
         self
     }
 }
+
 
 /// Trait implemented by types which can be sliced
 pub trait Slice<'a, E> {
