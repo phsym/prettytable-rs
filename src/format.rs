@@ -355,6 +355,9 @@ pub mod consts {
     use super::{FormatBuilder, LinePosition, LineSeparator, TableFormat};
 
     lazy_static! {
+
+        /// A line separator made of `-` and `|`
+        static ref MINUS_PIPE_SEP: LineSeparator = LineSeparator::new('-', '|', '|', '|');
         /// A line separator made of `-` and `+`
         static ref MINUS_PLUS_SEP: LineSeparator = LineSeparator::new('-', '+', '+', '+');
         /// A line separator made of `=` and `+`
@@ -557,5 +560,21 @@ pub mod consts {
                                                             '┘'))
                              .padding(1, 1)
                              .build();
+
+        /// A markdown table
+        ///
+        /// # Example
+        /// ```text
+        /// | Title 1     | Title 2    |
+        /// |-------------|------------|
+        /// | Value 1     | Value 2    |
+        /// | Value three | Value four |
+        /// ```
+        pub static ref FORMAT_MARKDOWN: TableFormat = FormatBuilder::new()
+                                                                    .padding(1, 1)
+                                                                    .borders('|')
+                                                                    .separator(LinePosition::Title, *MINUS_PIPE_SEP)
+                                                                    .column_separator('|')
+                                                                    .build();
     }
 }
