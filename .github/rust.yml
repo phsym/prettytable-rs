@@ -1,0 +1,83 @@
+name: Rust
+
+on:
+  push:
+    branches: [ '**' ]
+  pull_request:
+    branches: [ '**' ]
+
+env:
+  CARGO_TERM_COLOR: always
+  RUSTFLAGS: '-D warnings'
+
+jobs:
+  test:
+    strategy:
+      matrix:
+        include:
+          # 32-bit Linux
+          - target: i686-unknown-linux-gnu
+            deps: sudo apt update && sudo apt install gcc-multilib
+            os: ubuntu-latest
+          # 64-bit Linux
+          - target: x86_64-unknown-linux-gnu
+            os: ubuntu-latest
+          # Windows
+          - target: x86_64-pc-windows-msvc
+            os: windows-latest
+          # MacOS
+          - target: x86_64-apple-darwin
+            os: macos-latest
+
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: dtolnay/rust-toolchain@stable
+      - run: rustup target add ${{ matrix.target }}
+      - run: ${{ matrix.deps }}
+      - run: cargo test --target ${{ matrix.target }} --no-default-features
+      - run: cargo test --target ${{ matrix.target }}
+      - run: cargo test --target ${{ matrix.target }} --all-featuresth
+
+  nightly:
+    name: Test nightly compiler
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: dtolnay/rust-toolchain@nightly
+    - run: cargo test
+
+  clippy:
+    name: Clippy Happy
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: dtolnay/rust-toolchain@nightly
+      with:
+        components: clippy
+    - run: cargo clippy
+
+  rustfmt:
+    name: Check formatting
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: dtolnay/rust-toolchain@stable
+      with:
+        components: rustfmt
+    - run: cargo fmt --all -- --check
+
+  msrv:
+    name: Current MSRV is 1.56.1
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    # First run `cargo +nightly -Z minimal-versions check` in order to get a
+    # Cargo.lock with the oldest possible deps
+    - uses: dtolnay/rust-toolchain@nightly
+    - run: cargo -Z minimal-versions check
+    # Now check that `cargo build` works with respect to the oldest possible
+    # deps and the stated MSRV
+    - uses: dtolnay/rust-toolchain@1.56.1
+    - run: cargo build
+
