@@ -6,11 +6,6 @@
 [![Doc.rs](https://docs.rs/prettytable-rs/badge.svg)](https://docs.rs/crate/prettytable-rs/)
 [![Doc.rs](https://img.shields.io/badge/docs-master-blue.svg)](http://phsym.github.io/prettytable-rs/master)
 
-> This crate has been abandonned without notice for quite a while due to some personnal reasons. My apologies for that.
-I'll try to do my best to continue to maintain it, at least for security updates. If I can't the find time to do it, I'll have no other option than
-deprecating it, or find new contributors to handover the maintenance to. Feel free to raise your hand if you're interrested.
-In the meantime, please expect a low update rate, and again please accept my apologies.
-
 # prettytable-rs
 
 A formatted and aligned table printer library for [Rust](https://www.rust-lang.org).
@@ -45,7 +40,7 @@ Include the library as a dependency to your project by adding the following line
 prettytable-rs = "^0.9"
 ```
 
-The library requires at least `rust v1.32.0`.
+The library requires at least `rust v1.41`.
 
 ## Basic usage
 

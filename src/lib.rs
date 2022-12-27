@@ -193,7 +193,8 @@ impl<'a> TableSlice<'a> {
     /// # Returns
     /// A `Result` holding the number of lines printed, or an `io::Error` if any failure happens
     pub fn print_tty(&self, force_colorize: bool) -> Result<usize, Error> {
-        match (stdout(), atty::is(atty::Stream::Stdout) || force_colorize) {
+        use is_terminal::IsTerminal;
+        match (stdout(), io::stdout().is_terminal() || force_colorize) {
             (Some(mut o), true) => self.print_term(&mut *o),
             _ => self.print(&mut io::stdout()),
         }
