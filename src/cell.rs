@@ -4,8 +4,8 @@ use super::format::Alignment;
 use super::utils::{display_width, print_align, HtmlEscape};
 use super::{color, Attr, Terminal};
 use std::io::{Error, Write};
-use std::string::ToString;
 use std::str::FromStr;
+use std::string::ToString;
 
 /// Represent a table cell containing a string.
 ///
@@ -177,19 +177,19 @@ impl Cell {
 
     /// Return the height of the cell
     // #[deprecated(since="0.8.0", note="Will become private in future release. See [issue #87](https://github.com/phsym/prettytable-rs/issues/87)")]
-    pub (crate) fn get_height(&self) -> usize {
+    pub(crate) fn get_height(&self) -> usize {
         self.content.len()
     }
 
     /// Return the width of the cell
     // #[deprecated(since="0.8.0", note="Will become private in future release. See [issue #87](https://github.com/phsym/prettytable-rs/issues/87)")]
-    pub (crate) fn get_width(&self) -> usize {
+    pub(crate) fn get_width(&self) -> usize {
         self.width
     }
 
     /// Set horizontal span for this cell (must be > 0)
     pub fn set_hspan(&mut self, hspan: usize) {
-        self.hspan = if hspan == 0 {1} else {hspan};
+        self.hspan = if hspan == 0 { 1 } else { hspan };
     }
 
     /// Get horizontal span of this cell (> 0)
@@ -207,7 +207,7 @@ impl Cell {
     /// fill the cells with blanks so it fits in the table.
     /// If `ìdx` is higher than this cell's height, it will print empty content
     // #[deprecated(since="0.8.0", note="Will become private in future release. See [issue #87](https://github.com/phsym/prettytable-rs/issues/87)")]
-    pub (crate) fn print<T: Write + ?Sized>(
+    pub(crate) fn print<T: Write + ?Sized>(
         &self,
         out: &mut T,
         idx: usize,
@@ -220,7 +220,7 @@ impl Cell {
 
     /// Apply style then call `print` to print the cell into a terminal
     // #[deprecated(since="0.8.0", note="Will become private in future release. See [issue #87](https://github.com/phsym/prettytable-rs/issues/87)")]
-    pub (crate) fn print_term<T: Terminal + ?Sized>(
+    pub(crate) fn print_term<T: Terminal + ?Sized>(
         &self,
         out: &mut T,
         idx: usize,
@@ -393,8 +393,8 @@ macro_rules! cell {
 mod tests {
     use super::Cell;
     use crate::format::Alignment;
-    use term::{color, Attr};
     use crate::utils::StringWriter;
+    use term::{color, Attr};
 
     #[test]
     fn get_content() {
@@ -438,7 +438,10 @@ mod tests {
 
         let mut out = StringWriter::new();
         let _ = ascii_cell.print_html(&mut out);
-        assert_eq!(out.as_string(), r#"<td style="text-align: left;">hello</td>"#);
+        assert_eq!(
+            out.as_string(),
+            r#"<td style="text-align: left;">hello</td>"#
+        );
     }
 
     #[test]
@@ -447,7 +450,10 @@ mod tests {
 
         let mut out = StringWriter::new();
         let _ = ascii_cell.print_html(&mut out);
-        assert_eq!(out.as_string(), r#"<td style="text-align: left;">&lt;abc&quot;&gt;&amp;&#39;</td>"#);
+        assert_eq!(
+            out.as_string(),
+            r#"<td style="text-align: left;">&lt;abc&quot;&gt;&amp;&#39;</td>"#
+        );
     }
 
     #[test]
@@ -482,18 +488,16 @@ mod tests {
         assert!(cell.style.contains(&Attr::Italic(true)));
         assert!(cell.style.contains(&Attr::Bold));
         assert!(cell.style.contains(&Attr::ForegroundColor(color::RED)));
-        assert!(
-            cell.style
-                .contains(&Attr::BackgroundColor(color::BRIGHT_BLUE))
-        );
+        assert!(cell
+            .style
+            .contains(&Attr::BackgroundColor(color::BRIGHT_BLUE)));
         assert_eq!(cell.align, Alignment::CENTER);
 
         cell = cell.style_spec("FDBwr");
         assert_eq!(cell.style.len(), 2);
-        assert!(
-            cell.style
-                .contains(&Attr::ForegroundColor(color::BRIGHT_BLACK))
-        );
+        assert!(cell
+            .style
+            .contains(&Attr::ForegroundColor(color::BRIGHT_BLACK)));
         assert!(cell.style.contains(&Attr::BackgroundColor(color::WHITE)));
         assert_eq!(cell.align, Alignment::RIGHT);
 

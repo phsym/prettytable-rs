@@ -1,4 +1,4 @@
-use prettytable::{format, table, row};
+use prettytable::{format, row, table};
 
 fn main() {
     let mut table = table!(["Value 1", "Value 2"], ["Value three", "Value four"]);
@@ -49,14 +49,17 @@ fn main() {
     // | Value three | Value four |
     // +-------------+------------+
     println!("Custom :");
-    table.set_format(format::FormatBuilder::new()
-                         .column_separator('|')
-                         .borders('|')
-                         .separators(&[format::LinePosition::Top,
-                                       format::LinePosition::Bottom],
-                                     format::LineSeparator::new('-', '+', '+', '+'))
-                         .padding(1, 1)
-                         .build());
+    table.set_format(
+        format::FormatBuilder::new()
+            .column_separator('|')
+            .borders('|')
+            .separators(
+                &[format::LinePosition::Top, format::LinePosition::Bottom],
+                format::LineSeparator::new('-', '+', '+', '+'),
+            )
+            .padding(1, 1)
+            .build(),
+    );
     table.printstd();
 
     // Customized format with unicode
@@ -69,17 +72,25 @@ fn main() {
     // │ Value three │ Value four │
     // └─────────────┴────────────┘
     println!("With unicode:");
-    table.set_format(format::FormatBuilder::new()
-                         .column_separator('│')
-                         .borders('│')
-                         .separators(&[format::LinePosition::Top],
-                                     format::LineSeparator::new('─', '┬', '┌', '┐'))
-                         .separators(&[format::LinePosition::Intern],
-                                     format::LineSeparator::new('─', '┼', '├', '┤'))
-                         .separators(&[format::LinePosition::Bottom],
-                                     format::LineSeparator::new('─', '┴', '└', '┘'))
-                         .padding(1, 1)
-                         .build());
+    table.set_format(
+        format::FormatBuilder::new()
+            .column_separator('│')
+            .borders('│')
+            .separators(
+                &[format::LinePosition::Top],
+                format::LineSeparator::new('─', '┬', '┌', '┐'),
+            )
+            .separators(
+                &[format::LinePosition::Intern],
+                format::LineSeparator::new('─', '┼', '├', '┤'),
+            )
+            .separators(
+                &[format::LinePosition::Bottom],
+                format::LineSeparator::new('─', '┴', '└', '┘'),
+            )
+            .padding(1, 1)
+            .build(),
+    );
     table.printstd();
 
     // Customized format with unicode and different padding
