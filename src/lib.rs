@@ -70,7 +70,10 @@ impl<'a> TableSlice<'a> {
     /// Compute and return the number of column
     // #[deprecated(since="0.8.0", note="Will become private in future release. See [issue #87](https://github.com/phsym/prettytable-rs/issues/87)")]
     fn get_column_num(&self) -> usize {
-        let mut cnum = 0;
+        let mut cnum = match *self.titles {
+            Some(ref t) => t.column_count(),
+            None => 0,
+        };
         for r in self.rows {
             let l = r.column_count();
             if l > cnum {
@@ -984,6 +987,26 @@ mod tests {
         println!("{}", table.to_string().replace("\r\n","\n"));
         assert_eq!(out, table.to_string().replace("\r\n","\n"));
         assert_eq!(6, table.print(&mut StringWriter::new()).unwrap());
+    }
+
+    #[test]
+    fn test_empty_table_with_title() {
+        let mut table = Table::new();
+        table.set_format(*format::consts::FORMAT_NO_LINESEP_WITH_TITLE);
+
+        table.set_titles(Row::new(vec![Cell::new("Title 1"), Cell::new("Title 2")]));
+
+        let out = "\
++---------+---------+
+| Title 1 | Title 2 |
++---------+---------+
++---------+---------+
+";
+        println!("{}", out);
+        println!("____");
+        println!("{}", table.to_string().replace("\r\n","\n"));
+        assert_eq!(out, table.to_string().replace("\r\n","\n"));
+        assert_eq!(4, table.print(&mut StringWriter::new()).unwrap());
     }
 
     #[test]
