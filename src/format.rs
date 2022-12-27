@@ -1,6 +1,6 @@
 //! Define table formatting utilities
 
-use std::io::{Write, Error};
+use std::io::{Error, Write};
 
 use encode_unicode::Utf8Char;
 
@@ -69,14 +69,15 @@ impl LineSeparator {
 
     /// Print a full line separator to `out`. `col_width` is a slice containing the width of each column.
     /// Returns the number of printed lines
-    fn print<T: Write + ?Sized>(&self,
-                                 out: &mut T,
-                                 col_width: &[usize],
-                                 padding: (usize, usize),
-                                 colsep: bool,
-                                 lborder: bool,
-                                 rborder: bool)
-                                 -> Result<usize, Error> {
+    fn print<T: Write + ?Sized>(
+        &self,
+        out: &mut T,
+        col_width: &[usize],
+        padding: (usize, usize),
+        colsep: bool,
+        lborder: bool,
+        rborder: bool,
+    ) -> Result<usize, Error> {
         if lborder {
             out.write_all(Utf8Char::from(self.ljunc).as_bytes())?;
         }
@@ -180,11 +181,11 @@ impl TableFormat {
     /// Set a line separator
     pub fn separator(&mut self, what: LinePosition, separator: LineSeparator) {
         *match what {
-             LinePosition::Top => &mut self.top_sep,
-             LinePosition::Bottom => &mut self.bottom_sep,
-             LinePosition::Title => &mut self.tsep,
-             LinePosition::Intern => &mut self.lsep,
-         } = Some(separator);
+            LinePosition::Top => &mut self.top_sep,
+            LinePosition::Bottom => &mut self.bottom_sep,
+            LinePosition::Title => &mut self.tsep,
+            LinePosition::Intern => &mut self.lsep,
+        } = Some(separator);
     }
 
     /// Set format for multiple kind of line separator
@@ -199,12 +200,10 @@ impl TableFormat {
             LinePosition::Intern => &self.lsep,
             LinePosition::Top => &self.top_sep,
             LinePosition::Bottom => &self.bottom_sep,
-            LinePosition::Title => {
-                match &self.tsep {
-                    s @ &Some(_) => s,
-                    &None => &self.lsep,
-                }
-            }
+            LinePosition::Title => match &self.tsep {
+                s @ &Some(_) => s,
+                &None => &self.lsep,
+            },
         }
     }
 
@@ -221,21 +220,24 @@ impl TableFormat {
     /// Print a full line separator to `out`. `col_width` is a slice containing the width of each column.
     /// Returns the number of printed lines
     // #[deprecated(since="0.8.0", note="Will become private in future release. See [issue #87](https://github.com/phsym/prettytable-rs/issues/87)")]
-    pub (crate) fn print_line_separator<T: Write + ?Sized>(&self,
-                                                   out: &mut T,
-                                                   col_width: &[usize],
-                                                   pos: LinePosition)
-                                                   -> Result<usize, Error> {
+    pub(crate) fn print_line_separator<T: Write + ?Sized>(
+        &self,
+        out: &mut T,
+        col_width: &[usize],
+        pos: LinePosition,
+    ) -> Result<usize, Error> {
         match *self.get_sep_for_line(pos) {
             Some(ref l) => {
                 //TODO: Wrap this into dedicated function one day
                 out.write_all(&vec![b' '; self.get_indent()])?;
-                l.print(out,
-                         col_width,
-                         self.get_padding(),
-                         self.csep.is_some(),
-                         self.lborder.is_some(),
-                         self.rborder.is_some())
+                l.print(
+                    out,
+                    col_width,
+                    self.get_padding(),
+                    self.csep.is_some(),
+                    self.lborder.is_some(),
+                    self.rborder.is_some(),
+                )
             }
             None => Ok(0),
         }
@@ -253,10 +255,11 @@ impl TableFormat {
 
     /// Print a column separator or a table border
     // #[deprecated(since="0.8.0", note="Will become private in future release. See [issue #87](https://github.com/phsym/prettytable-rs/issues/87)")]
-    pub (crate) fn print_column_separator<T: Write + ?Sized>(&self,
-                                                     out: &mut T,
-                                                     pos: ColumnPosition)
-                                                     -> Result<(), Error> {
+    pub(crate) fn print_column_separator<T: Write + ?Sized>(
+        &self,
+        out: &mut T,
+        pos: ColumnPosition,
+    ) -> Result<(), Error> {
         match self.get_column_separator(pos) {
             Some(s) => out.write_all(Utf8Char::from(s).as_bytes()),
             None => Ok(()),
@@ -278,7 +281,9 @@ pub struct FormatBuilder {
 impl FormatBuilder {
     /// Creates a new builder
     pub fn new() -> FormatBuilder {
-        FormatBuilder { format: Box::new(TableFormat::new()) }
+        FormatBuilder {
+            format: Box::new(TableFormat::new()),
+        }
     }
 
     /// Set left and right padding
@@ -343,14 +348,16 @@ impl Into<TableFormat> for FormatBuilder {
 
 impl From<TableFormat> for FormatBuilder {
     fn from(fmt: TableFormat) -> Self {
-        FormatBuilder { format: Box::new(fmt) }
+        FormatBuilder {
+            format: Box::new(fmt),
+        }
     }
 }
 
 /// Predifined formats. Those constants are lazily evaluated when
 /// the corresponding struct is dereferenced
 pub mod consts {
-    use super::{TableFormat, LineSeparator, FormatBuilder, LinePosition};
+    use super::{FormatBuilder, LinePosition, LineSeparator, TableFormat};
 
     lazy_static! {
         /// A line separator made of `-` and `+`
@@ -524,7 +531,7 @@ pub mod consts {
                                                                     .build();
 
         /// A table with borders and delimiters made with box characters
-        /// 
+        ///
         /// # Example
         /// ```text
         /// ┌────┬────┬────┐

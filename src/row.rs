@@ -1,5 +1,5 @@
 //! This module contains definition of table rows stuff
-use std::io::{Write, Error};
+use std::io::{Error, Write};
 use std::iter::FromIterator;
 use std::slice::{Iter, IterMut};
 // use std::vec::IntoIter;
@@ -7,9 +7,9 @@ use std::ops::{Index, IndexMut};
 
 use super::Terminal;
 
+use super::format::{ColumnPosition, TableFormat};
 use super::utils::NEWLINE;
 use super::Cell;
-use super::format::{TableFormat, ColumnPosition};
 
 /// Represent a table row made of cells
 #[derive(Clone, Debug, Hash, PartialEq, Eq)]
@@ -32,7 +32,7 @@ impl Row {
     /// It takes into account horizontal spanning of cells. For
     /// example, a cell with an hspan of 3 will add 3 column to the grid
     // #[deprecated(since="0.8.0", note="Will become private in future release. See [issue #87](https://github.com/phsym/prettytable-rs/issues/87)")]
-    pub (crate) fn column_count(&self) -> usize {
+    pub(crate) fn column_count(&self) -> usize {
         self.cells.iter().map(|c| c.get_hspan()).sum()
     }
 
@@ -63,7 +63,7 @@ impl Row {
     /// Get the minimum width required by the cell in the column `column`.
     /// Return 0 if the cell does not exist in this row
     // #[deprecated(since="0.8.0", note="Will become private in future release. See [issue #87](https://github.com/phsym/prettytable-rs/issues/87)")]
-    pub (crate) fn get_column_width(&self, column: usize, format: &TableFormat) -> usize {
+    pub(crate) fn get_column_width(&self, column: usize, format: &TableFormat) -> usize {
         let mut i = 0;
         for c in &self.cells {
             if i + c.get_hspan() > column {
@@ -71,8 +71,11 @@ impl Row {
                     return c.get_width();
                 }
                 let (lp, rp) = format.get_padding();
-                let sep = format.get_column_separator(ColumnPosition::Intern).map(|_| 1).unwrap_or_default();
-                let rem = lp + rp +sep;
+                let sep = format
+                    .get_column_separator(ColumnPosition::Intern)
+                    .map(|_| 1)
+                    .unwrap_or_default();
+                let rem = lp + rp + sep;
                 let mut w = c.get_width();
                 if w > rem {
                     w -= rem;
@@ -138,13 +141,15 @@ impl Row {
     }
 
     /// Internal only
-    fn __print<T: Write + ?Sized, F>(&self,
-                                     out: &mut T,
-                                     format: &TableFormat,
-                                     col_width: &[usize],
-                                     f: F)
-                                     -> Result<usize, Error>
-        where F: Fn(&Cell, &mut T, usize, usize, bool) -> Result<(), Error>
+    fn __print<T: Write + ?Sized, F>(
+        &self,
+        out: &mut T,
+        format: &TableFormat,
+        col_width: &[usize],
+        f: F,
+    ) -> Result<usize, Error>
+    where
+        F: Fn(&Cell, &mut T, usize, usize, bool) -> Result<(), Error>,
     {
         let height = self.get_height();
         for i in 0..height {
@@ -154,29 +159,34 @@ impl Row {
             let (lp, rp) = format.get_padding();
             let mut j = 0;
             let mut hspan = 0; // The additional offset caused by cell's horizontal spanning
-            while j+hspan < col_width.len() {
+            while j + hspan < col_width.len() {
                 out.write_all(&vec![b' '; lp])?; // Left padding
-                // skip_r_fill skip filling the end of the last cell if there's no character
-                // delimiting the end of the table
-                let skip_r_fill = (j == col_width.len() - 1) &&
-                                  format.get_column_separator(ColumnPosition::Right).is_none();
+                                                 // skip_r_fill skip filling the end of the last cell if there's no character
+                                                 // delimiting the end of the table
+                let skip_r_fill = (j == col_width.len() - 1)
+                    && format.get_column_separator(ColumnPosition::Right).is_none();
                 match self.get_cell(j) {
                     Some(c) => {
                         // In case of horizontal spanning, width is the sum of all spanned columns' width
-                        let mut w = col_width[j+hspan..j+hspan+c.get_hspan()].iter().sum();
-                        let real_span = c.get_hspan()-1;
-                        w += real_span * (lp + rp) + real_span * format.get_column_separator(ColumnPosition::Intern).map(|_| 1).unwrap_or_default();
+                        let mut w = col_width[j + hspan..j + hspan + c.get_hspan()].iter().sum();
+                        let real_span = c.get_hspan() - 1;
+                        w += real_span * (lp + rp)
+                            + real_span
+                                * format
+                                    .get_column_separator(ColumnPosition::Intern)
+                                    .map(|_| 1)
+                                    .unwrap_or_default();
                         // Print cell content
                         f(c, out, i, w, skip_r_fill)?;
                         hspan += real_span; // Add span to offset
-                    },
-                    None => f(&Cell::default(), out, i, col_width[j+hspan], skip_r_fill)?,
+                    }
+                    None => f(&Cell::default(), out, i, col_width[j + hspan], skip_r_fill)?,
                 };
                 out.write_all(&vec![b' '; rp])?; // Right padding
-                if j+hspan < col_width.len() - 1 {
+                if j + hspan < col_width.len() - 1 {
                     format.print_column_separator(out, ColumnPosition::Intern)?;
                 }
-                j+=1;
+                j += 1;
             }
             format.print_column_separator(out, ColumnPosition::Right)?;
             out.write_all(NEWLINE)?;
@@ -187,22 +197,24 @@ impl Row {
     /// Print the row to `out`, with `separator` as column separator, and `col_width`
     /// specifying the width of each columns. Returns the number of printed lines
     // #[deprecated(since="0.8.0", note="Will become private in future release. See [issue #87](https://github.com/phsym/prettytable-rs/issues/87)")]
-    pub (crate) fn print<T: Write + ?Sized>(&self,
-                                    out: &mut T,
-                                    format: &TableFormat,
-                                    col_width: &[usize])
-                                    -> Result<usize, Error> {
+    pub(crate) fn print<T: Write + ?Sized>(
+        &self,
+        out: &mut T,
+        format: &TableFormat,
+        col_width: &[usize],
+    ) -> Result<usize, Error> {
         self.__print(out, format, col_width, Cell::print)
     }
 
     /// Print the row to terminal `out`, with `separator` as column separator, and `col_width`
     /// specifying the width of each columns. Apply style when needed. returns the number of printed lines
     // #[deprecated(since="0.8.0", note="Will become private in future release. See [issue #87](https://github.com/phsym/prettytable-rs/issues/87)")]
-    pub (crate) fn print_term<T: Terminal + ?Sized>(&self,
-                                            out: &mut T,
-                                            format: &TableFormat,
-                                            col_width: &[usize])
-                                            -> Result<usize, Error> {
+    pub(crate) fn print_term<T: Terminal + ?Sized>(
+        &self,
+        out: &mut T,
+        format: &TableFormat,
+        col_width: &[usize],
+    ) -> Result<usize, Error> {
         self.__print(out, format, col_width, Cell::print_term)
     }
 
@@ -243,15 +255,17 @@ impl IndexMut<usize> for Row {
 
 impl<A: ToString> FromIterator<A> for Row {
     fn from_iter<T>(iterator: T) -> Row
-        where T: IntoIterator<Item = A>
+    where
+        T: IntoIterator<Item = A>,
     {
         Self::new(iterator.into_iter().map(|ref e| Cell::from(e)).collect())
     }
 }
 
 impl<T, A> From<T> for Row
-    where A: ToString,
-          T: IntoIterator<Item = A>
+where
+    A: ToString,
+    T: IntoIterator<Item = A>,
 {
     fn from(it: T) -> Row {
         Self::from_iter(it)
@@ -282,9 +296,10 @@ impl<'a> IntoIterator for &'a mut Row {
     }
 }
 
-impl <S: ToString> Extend<S> for Row {
-    fn extend<T: IntoIterator<Item=S>>(&mut self, iter: T) {
-        self.cells.extend(iter.into_iter().map(|s| Cell::new(&s.to_string())));
+impl<S: ToString> Extend<S> for Row {
+    fn extend<T: IntoIterator<Item = S>>(&mut self, iter: T) {
+        self.cells
+            .extend(iter.into_iter().map(|s| Cell::new(&s.to_string())));
     }
 }
 

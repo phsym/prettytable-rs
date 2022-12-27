@@ -1,4 +1,4 @@
-use prettytable::{Table, table, cell};
+use prettytable::{cell, table, Table};
 
 use std::io;
 use std::io::Write;

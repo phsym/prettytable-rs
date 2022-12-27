@@ -16,15 +16,19 @@
 fn main() {
     use prettytable::Table;
 
-    let table = Table::from_csv_string("ABC,DEFG,HIJKLMN\n\
+    let table = Table::from_csv_string(
+        "ABC,DEFG,HIJKLMN\n\
                                         foobar,bar,foo\n\
-                                        foobar2,bar2,foo2")
-            .unwrap();
+                                        foobar2,bar2,foo2",
+    )
+    .unwrap();
     table.printstd();
 
     println!("");
-    println!("{}",
-        String::from_utf8(table.to_csv(Vec::new()).unwrap().into_inner().unwrap()).unwrap());
+    println!(
+        "{}",
+        String::from_utf8(table.to_csv(Vec::new()).unwrap().into_inner().unwrap()).unwrap()
+    );
 }
 
 #[cfg(not(feature = "csv"))]

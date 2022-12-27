@@ -1,9 +1,9 @@
-use prettytable::Table;
-use prettytable::Row;
-use prettytable::Cell;
 use prettytable::format::*;
-use prettytable::{Attr, color};
-use prettytable::{table, row, ptable}; // Import macros
+use prettytable::Cell;
+use prettytable::Row;
+use prettytable::Table;
+use prettytable::{color, Attr};
+use prettytable::{ptable, row, table}; // Import macros
 
 // trace_macros!(true);
 
@@ -17,12 +17,14 @@ fn main() {
     // Add style to a full row
     table.add_row(row![FY => "styled", "bar", "foo"]);
     table.add_row(Row::new(vec![
-            Cell::new("foobar2"),
-            // Create a cell with a red foreground color
-            Cell::new_align("bar2", Alignment::CENTER).with_style(Attr::ForegroundColor(color::RED)).with_hspan(2),
-            // Create a cell with red foreground color, yellow background color, with bold characters
-            Cell::new("foo2").style_spec("FrByb")])
-        );
+        Cell::new("foobar2"),
+        // Create a cell with a red foreground color
+        Cell::new_align("bar2", Alignment::CENTER)
+            .with_style(Attr::ForegroundColor(color::RED))
+            .with_hspan(2),
+        // Create a cell with red foreground color, yellow background color, with bold characters
+        Cell::new("foo2").style_spec("FrByb"),
+    ]));
     for cell in table.column_iter_mut(2) {
         cell.align(Alignment::RIGHT);
     }

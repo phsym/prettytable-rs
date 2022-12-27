@@ -1,7 +1,14 @@
-use prettytable::{Slice, table, row};
+use prettytable::{row, table, Slice};
 
 fn main() {
-    let mut table = table![[0, 0, 0], [1, 1, 1], [2, 2, 2], [3, 3, 3], [4, 4, 4], [5, 5, 5]];
+    let mut table = table![
+        [0, 0, 0],
+        [1, 1, 1],
+        [2, 2, 2],
+        [3, 3, 3],
+        [4, 4, 4],
+        [5, 5, 5]
+    ];
     table.set_titles(row!["t1", "t2", "t3"]);
 
     let slice = table.slice(..);
