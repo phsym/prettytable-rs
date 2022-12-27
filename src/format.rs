@@ -50,20 +50,40 @@ pub struct LineSeparator {
     /// Internal junction separator
     junc: char,
     /// Left junction separator
-    ljunc: char,
+    ljunc: Option<char>,
     /// Right junction separator
-    rjunc: char,
+    rjunc: Option<char>,
+    /// Top junction separator
+    tjunc: Option<char>,
+    /// Bottom junction separator
+    bjunc: Option<char>,
 }
 
 impl LineSeparator {
     /// Create a new line separator instance where `line` is the character used to separate 2 lines
     /// and `junc` is the one used for junctions between columns and lines
-    pub fn new(line: char, junc: char, ljunc: char, rjunc: char) -> LineSeparator {
+    pub fn new(line: char, junc: char) -> LineSeparator {
         LineSeparator {
             line,
             junc,
-            ljunc,
-            rjunc,
+            ljunc: None,
+            rjunc: None,
+            tjunc: None,
+            bjunc: None,
+        }
+    }
+
+    /// Create a new line separator instance where `line` is the character used to separate 2 lines
+    /// and `junc` is the one used for junctions between columns and lines and `ljunc`, `rjunc`,
+    /// `tjunc`, `bjunc` for left, right, top, bottom junctions respectively
+    pub fn new_box(line: char, junc: char, ljunc: char, rjunc: char, tjunc: char, bjunc: char) -> LineSeparator {
+        LineSeparator {
+            line,
+            junc,
+            ljunc: Some(ljunc),
+            rjunc: Some(rjunc),
+            tjunc: Some(tjunc),
+            bjunc: Some(bjunc),
         }
     }
 
@@ -72,25 +92,37 @@ impl LineSeparator {
     fn print<T: Write + ?Sized>(&self,
                                  out: &mut T,
                                  col_width: &[usize],
+                                 current_spanning: &[bool],
+                                 next_spanning: &[bool],
                                  padding: (usize, usize),
                                  colsep: bool,
                                  lborder: bool,
                                  rborder: bool)
                                  -> Result<usize, Error> {
         if lborder {
-            out.write_all(Utf8Char::from(self.ljunc).as_bytes())?;
+            let ljunc = self.ljunc.unwrap_or(self.junc);
+            out.write_all(Utf8Char::from(ljunc).as_bytes())?;
         }
+        let mut i = 0;
         let mut iter = col_width.iter().peekable();
         while let Some(width) = iter.next() {
             for _ in 0..width + padding.0 + padding.1 {
                 out.write_all(Utf8Char::from(self.line).as_bytes())?;
             }
             if colsep && iter.peek().is_some() {
-                out.write_all(Utf8Char::from(self.junc).as_bytes())?;
+                let junc = match (current_spanning[i], next_spanning[i]) {
+                    (false, false) => self.junc,
+                    (false, true) => self.bjunc.unwrap_or(self.junc),
+                    (true, false) => self.tjunc.unwrap_or(self.junc),
+                    (true, true) => self.line,
+                };
+                out.write_all(Utf8Char::from(junc).as_bytes())?;
             }
+            i += 1;
         }
         if rborder {
-            out.write_all(Utf8Char::from(self.rjunc).as_bytes())?;
+            let rjunc = self.rjunc.unwrap_or(self.junc);
+            out.write_all(Utf8Char::from(rjunc).as_bytes())?;
         }
         out.write_all(NEWLINE)?;
         Ok(1)
@@ -99,7 +131,7 @@ impl LineSeparator {
 
 impl Default for LineSeparator {
     fn default() -> Self {
-        LineSeparator::new('-', '+', '+', '+')
+        LineSeparator::new('-', '+')
     }
 }
 
@@ -224,6 +256,8 @@ impl TableFormat {
     pub (crate) fn print_line_separator<T: Write + ?Sized>(&self,
                                                    out: &mut T,
                                                    col_width: &[usize],
+                                                   current_spanning: &[bool],
+                                                   next_spanning: &[bool],
                                                    pos: LinePosition)
                                                    -> Result<usize, Error> {
         match *self.get_sep_for_line(pos) {
@@ -232,6 +266,8 @@ impl TableFormat {
                 out.write_all(&vec![b' '; self.get_indent()])?;
                 l.print(out,
                          col_width,
+                         current_spanning,
+                         next_spanning,
                          self.get_padding(),
                          self.csep.is_some(),
                          self.lborder.is_some(),
@@ -354,9 +390,9 @@ pub mod consts {
 
     lazy_static! {
         /// A line separator made of `-` and `+`
-        static ref MINUS_PLUS_SEP: LineSeparator = LineSeparator::new('-', '+', '+', '+');
+        static ref MINUS_PLUS_SEP: LineSeparator = LineSeparator::new('-', '+');
         /// A line separator made of `=` and `+`
-        static ref EQU_PLUS_SEP: LineSeparator = LineSeparator::new('=', '+', '+', '+');
+        static ref EQU_PLUS_SEP: LineSeparator = LineSeparator::new('=', '+');
 
         /// Default table format
         ///
@@ -539,20 +575,26 @@ pub mod consts {
                              .column_separator('│')
                              .borders('│')
                              .separators(&[LinePosition::Top],
-                                         LineSeparator::new('─',
-                                                            '┬',
-                                                            '┌',
-                                                            '┐'))
+                                         LineSeparator::new_box('─',
+                                                                '┬',
+                                                                '┌',
+                                                                '┐',
+                                                                '┬',
+                                                                '─'))
                              .separators(&[LinePosition::Intern],
-                                         LineSeparator::new('─',
-                                                            '┼',
-                                                            '├',
-                                                            '┤'))
+                                         LineSeparator::new_box('─',
+                                                                '┼',
+                                                                '├',
+                                                                '┤',
+                                                                '┬',
+                                                                '┴'))
                              .separators(&[LinePosition::Bottom],
-                                         LineSeparator::new('─',
-                                                            '┴',
-                                                            '└',
-                                                            '┘'))
+                                         LineSeparator::new_box('─',
+                                                                '┴',
+                                                                '└',
+                                                                '┘',
+                                                                '─',
+                                                                '┴'))
                              .padding(1, 1)
                              .build();
     }

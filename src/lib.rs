@@ -140,27 +140,52 @@ impl<'a> TableSlice<'a> {
     fn __print<T: Write + ?Sized, F>(&self, out: &mut T, f: F) -> Result<usize, Error>
         where F: Fn(&Row, &mut T, &TableFormat, &[usize]) -> Result<usize, Error>
     {
+        let colnum = self.get_column_num();
+        let all_spanning = vec![true; colnum - 1];
+        let title_ref = (*self.titles).as_ref();
+        let top_spanning = title_ref.or(self.rows.first()).map_or_else(
+            || all_spanning.clone(),
+            |r| r.get_all_column_spanning());
+        let title_spanning = title_ref.map_or_else(
+            || all_spanning.clone(),
+            |r| r.get_all_column_spanning());
+        let first_spanning = self.rows.first().map_or_else(
+            || all_spanning.clone(),
+            |r| r.get_all_column_spanning());
+        let last_spanning = self.rows.last().map_or_else(
+            || all_spanning.clone(),
+            |r| r.get_all_column_spanning());
         let mut height = 0;
         // Compute columns width
         let col_width = self.get_all_column_width();
         height += self.format
-            .print_line_separator(out, &col_width, LinePosition::Top)?;
-        if let Some(ref t) = *self.titles {
-            height += f(t, out, self.format, &col_width)?;
+            .print_line_separator(out, &col_width,
+                                  &all_spanning, &top_spanning,
+                                  LinePosition::Top)?;
+        if let Some(ref title) = *self.titles {
+            height += f(title, out, self.format, &col_width)?;
             height += self.format
-                .print_line_separator(out, &col_width, LinePosition::Title)?;
+                .print_line_separator(out, &col_width,
+                                      &title_spanning, &first_spanning,
+                                      LinePosition::Title)?;
         }
         // Print rows
         let mut iter = self.rows.iter().peekable();
-        while let Some(r) = iter.next() {
-            height += f(r, out, self.format, &col_width)?;
-            if iter.peek().is_some() {
+        while let Some(current) = iter.next() {
+            height += f(current, out, self.format, &col_width)?;
+            if let Some(next) = iter.peek() {
+                let current_spanning = current.get_all_column_spanning();
+                let next_spanning = next.get_all_column_spanning();
                 height += self.format
-                    .print_line_separator(out, &col_width, LinePosition::Intern)?;
+                    .print_line_separator(out, &col_width,
+                                          &current_spanning, &next_spanning,
+                                          LinePosition::Intern)?;
             }
         }
         height += self.format
-            .print_line_separator(out, &col_width, LinePosition::Bottom)?;
+            .print_line_separator(out, &col_width,
+                                  &last_spanning, &all_spanning,
+                                  LinePosition::Bottom)?;
         out.flush()?;
         Ok(height)
     }
@@ -941,7 +966,7 @@ mod tests {
             .borders('|')
             .separators(&[format::LinePosition::Top,
                         format::LinePosition::Bottom],
-                        format::LineSeparator::new('-', '+', '+', '+'))
+                        format::LineSeparator::new('-', '+'))
             .padding(1, 1)
             .build();
         table.set_format(format);
@@ -1016,13 +1041,36 @@ mod tests {
         table.add_row(Row::new(vec![Cell::new("a"), Cell::new("bc"), Cell::new("def")]));
         table.add_row(Row::new(vec![Cell::new("def").style_spec("H02c"), Cell::new("a")]));
         let out = "\
-+----+----+-----+
++----+----------+
 | t1 | t2       |
 +====+====+=====+
 | a  | bc | def |
 +----+----+-----+
 |   def   | a   |
-+----+----+-----+
++---------+-----+
+";
+        println!("{}", out);
+        println!("____");
+        println!("{}", table.to_string().replace("\r\n","\n"));
+        assert_eq!(out, table.to_string().replace("\r\n","\n"));
+        assert_eq!(7, table.print(&mut StringWriter::new()).unwrap());
+    }
+
+    #[test]
+    fn test_horizontal_span_with_unicode() {
+        let mut table = Table::new();
+        table.set_format(*FORMAT_BOX_CHARS);
+        table.add_row(Row::new(vec![Cell::new("TL"), Cell::new("TR").style_spec("H2c")]));
+        table.add_row(Row::new(vec![Cell::new("L"), Cell::new("C"), Cell::new("R")]));
+        table.add_row(Row::new(vec![Cell::new("BL").style_spec("H2c"), Cell::new("BR")]));
+        let out = "\
+┌────┬────────┐
+│ TL │   TR   │
+├────┼───┬────┤
+│ L  │ C │ R  │
+├────┴───┼────┤
+│   BL   │ BR │
+└────────┴────┘
 ";
         println!("{}", out);
         println!("____");
