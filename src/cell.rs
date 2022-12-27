@@ -21,10 +21,10 @@ pub struct Cell {
 }
 
 impl Cell {
-    /// Create a new `Cell` initialized with content from `string`.
+    /// Create a new `Cell` initialized with content from `string` which implemented `ToString`.
     /// Text alignment in cell is configurable with the `align` argument
-    pub fn new_align(string: &str, align: Alignment) -> Cell {
-        let content: Vec<String> = string.lines().map(|x| x.to_string()).collect();
+    pub fn new_align<T: ToString + ?Sized>(string: &T, align: Alignment) -> Cell {
+        let content: Vec<String> = string.to_string().lines().map(|x| x.to_string()).collect();
         let mut width = 0;
         for cont in &content {
             let l = display_width(&cont[..]);
@@ -41,9 +41,9 @@ impl Cell {
         }
     }
 
-    /// Create a new `Cell` initialized with content from `string`.
+    /// Create a new `Cell` initialized with content from `string` which implemented `ToString`.
     /// By default, content is align to `LEFT`
-    pub fn new(string: &str) -> Cell {
+    pub fn new<T: ToString + ?Sized>(string: &T) -> Cell {
         Cell::new_align(string, Alignment::LEFT)
     }
 
