@@ -35,7 +35,7 @@ pub use row::Row;
 use utils::StringWriter;
 
 /// An owned printable table
-#[derive(Clone, Debug, Hash, PartialEq, Eq)]
+#[derive(Default, Clone, Debug, Hash, PartialEq, Eq)]
 pub struct Table {
     format: Box<TableFormat>,
     titles: Box<Option<Row>>,
@@ -121,6 +121,7 @@ impl<'a> TableSlice<'a> {
     fn get_all_column_width(&self) -> Vec<usize> {
         let colnum = self.get_column_num();
         let mut col_width = vec![0usize; colnum];
+        #[allow(clippy::needless_range_loop)]
         for i in 0..colnum {
             // TODO: calling "get_column_width()" in a loop is inefficient
             col_width[i] = self.get_column_width(i);
@@ -401,7 +402,9 @@ impl Table {
     }
 }
 
-trait AsTableSlice {
+/// Trait implemented by types which can be sliced
+pub trait AsTableSlice {
+    /// Get a slice from self
     fn as_slice(&self) -> TableSlice<'_>;
 }
 
@@ -586,9 +589,9 @@ where
 /// # fn main() {
 /// // Create a table initialized with some rows :
 /// let tab = table!(["Element1", "Element2", "Element3"],
-/// 				 [1, 2, 3],
-/// 				 ["A", "B", "C"]
-/// 				 );
+///                  [1, 2, 3],
+///                  ["A", "B", "C"]
+///                 );
 /// # drop(tab);
 /// # }
 /// ```
@@ -599,9 +602,9 @@ where
 /// # #[macro_use] extern crate prettytable;
 /// # fn main() {
 /// let tab = table!([FrByl->"Element1", Fgc->"Element2", "Element3"],
-/// 				 [FrBy => 1, 2, 3],
-/// 				 ["A", "B", "C"]
-/// 				 );
+///                  [FrBy => 1, 2, 3],
+///                  ["A", "B", "C"]
+///                 );
 /// # drop(tab);
 /// # }
 /// ```
