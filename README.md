@@ -5,12 +5,12 @@
 [![Crates.io](https://img.shields.io/crates/v/prettytable-rs.svg)](https://crates.io/crates/prettytable-rs)
 [![Doc.rs](https://docs.rs/prettytable-rs/badge.svg)](https://docs.rs/crate/prettytable-rs/)
 [![Doc.rs](https://img.shields.io/badge/docs-master-blue.svg)](http://phsym.github.io/prettytable-rs/master)
-[![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=phsym/prettytable-rs)](https://dependabot.com)
+
 # prettytable-rs
 
 A formatted and aligned table printer library for [Rust](https://www.rust-lang.org).
 
-*Copyright &copy; 2019 Pierre-Henri Symoneaux*
+*Copyright &copy; 2022 Pierre-Henri Symoneaux*
 
 > THIS SOFTWARE IS DISTRIBUTED WITHOUT ANY WARRANTY <br>
 > Check LICENSE.txt file for more information. <br>
@@ -37,10 +37,10 @@ Include the library as a dependency to your project by adding the following line
 
 ```toml
 [dependencies]
-prettytable-rs = "^0.8"
+prettytable-rs = "^0.9"
 ```
 
-The library requires at least `rust v1.32.0`.
+The library requires at least `rust v1.41`.
 
 ## Basic usage
 

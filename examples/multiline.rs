@@ -18,11 +18,15 @@ use prettytable::table;
     +-------------------------+------------------------------+
 */
 fn main() {
-    let table1 = table!(["ABC", "DEFG", "HIJKLMN"],
-                        ["foobar", "bar", "foo"],
-                        ["foobar2", "bar2", "foo2"]);
-    let table2 = table!(["Title 1", "Title 2"],
-                        ["This is\na multiline\ncell", "foo"],
-                        ["Yo dawg ;) You can even\nprint tables\ninto tables", table1]);
+    let table1 = table!(
+        ["ABC", "DEFG", "HIJKLMN"],
+        ["foobar", "bar", "foo"],
+        ["foobar2", "bar2", "foo2"]
+    );
+    let table2 = table!(
+        ["Title 1", "Title 2"],
+        ["This is\na multiline\ncell", "foo"],
+        ["Yo dawg ;) You can even\nprint tables\ninto tables", table1]
+    );
     table2.printstd();
 }

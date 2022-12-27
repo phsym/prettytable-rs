@@ -3,13 +3,13 @@ use std::fmt;
 use std::io::{Error, ErrorKind, Write};
 use std::str;
 
-use unicode_width::UnicodeWidthStr;
+use unicode_width::{UnicodeWidthChar, UnicodeWidthStr};
 
 use super::format::Alignment;
 
-#[cfg(any(not(windows), not(feature="win_crlf")))]
+#[cfg(any(not(windows), not(feature = "win_crlf")))]
 pub static NEWLINE: &[u8] = b"\n";
-#[cfg(all(windows, feature="win_crlf"))]
+#[cfg(all(windows, feature = "win_crlf"))]
 pub static NEWLINE: &[u8] = b"\r\n";
 
 /// Internal utility for writing data into a string
@@ -20,7 +20,9 @@ pub struct StringWriter {
 impl StringWriter {
     /// Create a new `StringWriter`
     pub fn new() -> StringWriter {
-        StringWriter { string: String::new() }
+        StringWriter {
+            string: String::new(),
+        }
     }
 
     /// Return a reference to the internally written `String`
@@ -34,8 +36,10 @@ impl Write for StringWriter {
         let string = match str::from_utf8(data) {
             Ok(s) => s,
             Err(e) => {
-                return Err(Error::new(ErrorKind::Other,
-                                      format!("Cannot decode utf8 string : {}", e)))
+                return Err(Error::new(
+                    ErrorKind::Other,
+                    format!("Cannot decode utf8 string : {}", e),
+                ))
             }
         };
         self.string.push_str(string);
@@ -51,13 +55,14 @@ impl Write for StringWriter {
 /// Align/fill a string and print it to `out`
 /// If `skip_right_fill` is set to `true`, then no space will be added after the string
 /// to complete alignment
-pub fn print_align<T: Write + ?Sized>(out: &mut T,
-                                      align: Alignment,
-                                      text: &str,
-                                      fill: char,
-                                      size: usize,
-                                      skip_right_fill: bool)
-                                      -> Result<(), Error> {
+pub fn print_align<T: Write + ?Sized>(
+    out: &mut T,
+    align: Alignment,
+    text: &str,
+    fill: char,
+    size: usize,
+    skip_right_fill: bool,
+) -> Result<(), Error> {
     let text_len = display_width(text);
     let mut nfill = if text_len < size { size - text_len } else { 0 };
     let n = match align {
@@ -79,29 +84,52 @@ pub fn print_align<T: Write + ?Sized>(out: &mut T,
 /// Return the display width of a unicode string.
 /// This functions takes ANSI-escaped color codes into account.
 pub fn display_width(text: &str) -> usize {
+    #[derive(PartialEq, Eq, Clone, Copy)]
+    enum State {
+        /// We are not inside any terminal escape.
+        Normal,
+        /// We have just seen a \u{1b}
+        EscapeChar,
+        /// We have just seen a [
+        OpenBracket,
+        /// We just ended the escape by seeing an m
+        AfterEscape,
+    }
+
     let width = UnicodeWidthStr::width(text);
-    let mut state = 0;
+    let mut state = State::Normal;
     let mut hidden = 0;
 
     for c in text.chars() {
         state = match (state, c) {
-            (0, '\u{1b}') => 1,
-            (1, '[') => 2,
-            (1, _) => 0,
-            (2, 'm') => 3,
+            (State::Normal, '\u{1b}') => State::EscapeChar,
+            (State::EscapeChar, '[') => State::OpenBracket,
+            (State::EscapeChar, _) => State::Normal,
+            (State::OpenBracket, 'm') => State::AfterEscape,
             _ => state,
         };
 
         // We don't count escape characters as hidden as
         // UnicodeWidthStr::width already considers them.
-        if state > 1 {
-            hidden += 1;
+        if matches!(state, State::OpenBracket | State::AfterEscape) {
+            // but if we see an escape char *inside* the ANSI escape, we should ignore it.
+            if UnicodeWidthChar::width(c).unwrap_or(0) > 0 {
+                hidden += 1;
+            }
         }
 
-        if state == 3 {
-            state = 0;
+        if state == State::AfterEscape {
+            state = State::Normal;
         }
     }
+
+    assert!(
+        width >= hidden,
+        "internal error: width {} less than hidden {} on string {:?}",
+        width,
+        hidden,
+        text
+    );
 
     width - hidden
 }
@@ -120,14 +148,14 @@ impl<'a> fmt::Display for HtmlEscape<'a> {
         for (i, ch) in s.bytes().enumerate() {
             match ch as char {
                 '<' | '>' | '&' | '\'' | '"' => {
-                    fmt.write_str(&pile_o_bits[last.. i])?;
+                    fmt.write_str(&pile_o_bits[last..i])?;
                     let s = match ch as char {
                         '>' => "&gt;",
                         '<' => "&lt;",
                         '&' => "&amp;",
                         '\'' => "&#39;",
                         '"' => "&quot;",
-                        _ => unreachable!()
+                        _ => unreachable!(),
                     };
                     fmt.write_str(s)?;
                     last = i + 1;
