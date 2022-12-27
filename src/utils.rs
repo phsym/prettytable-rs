@@ -3,7 +3,7 @@ use std::fmt;
 use std::io::{Error, ErrorKind, Write};
 use std::str;
 
-use unicode_width::UnicodeWidthStr;
+use unicode_width::{UnicodeWidthStr, UnicodeWidthChar};
 
 use super::format::Alignment;
 
@@ -76,32 +76,50 @@ pub fn print_align<T: Write + ?Sized>(out: &mut T,
     Ok(())
 }
 
+
 /// Return the display width of a unicode string.
 /// This functions takes ANSI-escaped color codes into account.
 pub fn display_width(text: &str) -> usize {
+    #[derive(PartialEq, Eq, Clone, Copy)]
+    enum State {
+        /// We are not inside any terminal escape.
+        Normal,
+        /// We have just seen a \u{1b}
+        EscapeChar,
+        /// We have just seen a [
+        OpenBracket,
+        /// We just ended the escape by seeing an m
+        AfterEscape,
+    }
+
     let width = UnicodeWidthStr::width(text);
-    let mut state = 0;
+    let mut state = State::Normal;
     let mut hidden = 0;
 
     for c in text.chars() {
         state = match (state, c) {
-            (0, '\u{1b}') => 1,
-            (1, '[') => 2,
-            (1, _) => 0,
-            (2, 'm') => 3,
+            (State::Normal, '\u{1b}') => State::EscapeChar,
+            (State::EscapeChar, '[') => State::OpenBracket,
+            (State::EscapeChar, _) => State::Normal,
+            (State::OpenBracket, 'm') => State::AfterEscape,
             _ => state,
         };
 
         // We don't count escape characters as hidden as
         // UnicodeWidthStr::width already considers them.
-        if state > 1 {
-            hidden += 1;
+        if matches!(state, State::OpenBracket | State::AfterEscape) {
+            // but if we see an escape char *inside* the ANSI escape, we should ignore it.
+            if UnicodeWidthChar::width(c).unwrap_or(0) > 0 {
+                hidden += 1;
+            }
         }
 
-        if state == 3 {
-            state = 0;
+        if state == State::AfterEscape {
+            state = State::Normal;
         }
     }
+
+    assert!(width >= hidden, "internal error: width {} less than hidden {} on string {:?}", width, hidden, text);
 
     width - hidden
 }

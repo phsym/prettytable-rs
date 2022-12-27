@@ -1072,4 +1072,19 @@ mod tests {
         assert!(table.print_html(&mut writer).is_ok());
         assert_eq!(writer.as_string().replace("\r\n", "\n"), out);
     }
+
+    #[test]
+    fn test_panic() {
+        let mut table = Table::new();
+
+        table.add_row(Row::new(vec![Cell::new("\u{1b}[\u{1b}\u{0}\u{0}")]));
+
+        let out = "+--+
+| \u{1b}[\u{1b}\u{0}\u{0} |
++--+
+";
+
+        assert_eq!(table.to_string().replace("\r\n", "\n"), out);
+        assert_eq!(3, table.print(&mut StringWriter::new()).unwrap());
+    }
 }
