@@ -46,7 +46,8 @@ Any changes to the MSRV will be done with a minor version bump.
 
 ## SemVer Policy
 
-* All on-by-default features of this library are covered by SemVer
+* Pre-1.0.0 breaking changes will follow a minor version bump
+* Post-1.0.0 All default features of this library are covered by SemVer
 * MSRV is considered exempt from SemVer as noted above
 
 ## Basic usage
