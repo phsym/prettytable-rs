@@ -37,10 +37,18 @@ Include the library as a dependency to your project by adding the following line
 
 ```toml
 [dependencies]
-prettytable-rs = "^0.9"
+prettytable-rs = "^0.10"
 ```
 
-The library requires at least `rust v1.41`.
+The library requires at least `rust v1.56`.
+
+Any changes to the MSRV will be done with a minor version bump.
+
+## SemVer Policy
+
+* Pre-1.0.0 breaking changes will follow a minor version bump
+* Post-1.0.0 All default features of this library are covered by SemVer
+* MSRV is considered exempt from SemVer as noted above
 
 ## Basic usage
 

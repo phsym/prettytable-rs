@@ -274,6 +274,7 @@ impl Default for TableFormat {
 }
 
 /// A builder to create a `TableFormat`
+#[derive(Default)]
 pub struct FormatBuilder {
     format: Box<TableFormat>,
 }
@@ -336,12 +337,6 @@ impl FormatBuilder {
 
     /// Return the generated `TableFormat`
     pub fn build(&self) -> TableFormat {
-        *self.format
-    }
-}
-
-impl Into<TableFormat> for FormatBuilder {
-    fn into(self) -> TableFormat {
         *self.format
     }
 }

@@ -33,9 +33,9 @@ impl Cell {
             }
         }
         Cell {
-            content: content,
-            width: width,
-            align: align,
+            content,
+            width,
+            align,
             style: Vec::new(),
             hspan: 1,
         }
@@ -268,7 +268,7 @@ impl Cell {
                 // Unknown colors, fallback to blakc
                 _ => "#000000",
             }
-        };
+        }
 
         let colspan = if self.hspan > 1 {
             format!(" colspan=\"{}\"", self.hspan)

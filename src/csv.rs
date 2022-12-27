@@ -59,7 +59,7 @@ impl super::Table {
                     super::Row::new(
                         row.unwrap()
                             .into_iter()
-                            .map(|cell| super::Cell::new(&cell))
+                            .map(super::Cell::new)
                             .collect(),
                     )
                 })
