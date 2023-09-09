@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Switch from `is-terminal` to `std::io::IsTerminal`.
 - Minimal Supported Rust Version bumped to 1.70
+- `Table::print_term` will now only print colors if the output is a terminal.
 
 # 0.10.0 (2022-12-27)
 ## Fixed

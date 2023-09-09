@@ -10,13 +10,13 @@
 extern crate lazy_static;
 
 use std::fmt;
-use std::io::{self, Error, Write};
+use std::io::{self, Error, Write, IsTerminal};
 use std::iter::{FromIterator, IntoIterator};
 use std::ops::{Index, IndexMut};
 use std::slice::{Iter, IterMut};
 
 pub use term::{color, Attr};
-pub(crate) use term::{stdout, Terminal};
+pub(crate) use term::Terminal;
 
 mod cell;
 pub mod format;
@@ -180,9 +180,16 @@ impl<'a> TableSlice<'a> {
     }
 
     /// Print the table to terminal `out`, applying styles when needed and returns the number of
-    /// line printed, or an error
-    pub fn print_term<T: Terminal + ?Sized>(&self, out: &mut T) -> Result<usize, Error> {
-        self.__print(out, Row::print_term)
+    /// line printed, or an error.  Colors won't be displayed unless `out` is a terminal.
+    pub fn print_term<T>(&self, out: &mut T) -> Result<usize, Error>
+        where T: Write + IsTerminal + ?Sized
+    {
+        if out.is_terminal() {
+            let mut term = term::TerminfoTerminal::new(out).unwrap();
+            self.__print(&mut term, Row::print_term)
+        } else {
+            self.__print(out, Row::print)
+        }
     }
 
     /// Print the table to standard output. Colors won't be displayed unless
@@ -194,10 +201,11 @@ impl<'a> TableSlice<'a> {
     /// # Returns
     /// A `Result` holding the number of lines printed, or an `io::Error` if any failure happens
     pub fn print_tty(&self, force_colorize: bool) -> Result<usize, Error> {
-        use std::io::IsTerminal;
-        match (stdout(), io::stdout().is_terminal() || force_colorize) {
-            (Some(mut o), true) => self.print_term(&mut *o),
-            _ => self.print(&mut io::stdout()),
+        let mut out = io::stdout();
+        if out.is_terminal() || force_colorize {
+            self.print_term(&mut out)
+        } else {
+            self.print(&mut out)
         }
     }
 
@@ -370,7 +378,9 @@ impl Table {
 
     /// Print the table to terminal `out`, applying styles when needed and returns the number
     /// of lines printed, or an error
-    pub fn print_term<T: Terminal + ?Sized>(&self, out: &mut T) -> Result<usize, Error> {
+    pub fn print_term<T>(&self, out: &mut T) -> Result<usize, Error>
+        where T: IsTerminal + Write + ?Sized
+    {
         self.as_slice().print_term(out)
     }
 
