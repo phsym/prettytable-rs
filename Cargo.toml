@@ -12,6 +12,7 @@ keywords = ["tab", "table", "format", "pretty", "print"]
 categories = ["command-line-interface"]
 license = "BSD-3-Clause"
 edition = "2018"
+rust-version = "1.70"
 exclude = [
     "prettytable-evcxr.png"
 ]
@@ -39,6 +40,5 @@ name = "prettytable"
 unicode-width = "0.1"
 term = "0.7"
 lazy_static = "1.4"
-is-terminal = "0.4"
 encode_unicode = "1.0"
 csv = { version = "1.1", optional = true }
