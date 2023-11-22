@@ -12,6 +12,7 @@ keywords = ["tab", "table", "format", "pretty", "print"]
 categories = ["command-line-interface"]
 license = "BSD-3-Clause"
 edition = "2018"
+rust-version = "1.56.1"
 exclude = [
     "prettytable-evcxr.png"
 ]
@@ -23,9 +24,14 @@ codecov = { repository = "phsym/prettytable-rs", branch = "master", service = "g
 maintenance = { status = "passively-maintained" }
 
 [features]
-default = ["win_crlf", "csv"]
+# TODO: use `dep:` syntax here and below once MSRV is at least `1.60`
+default = ["win_crlf", "csv", "legacy-is-terminal"]
 evcxr = []
 win_crlf = []
+# This feature is inentionally opt-out (enabled by default) not to break older clients,
+# although it may become no-op with a MSRV bummp (which is considered a minor change) and removed with a major update
+# TODO: make this feature no-op once MSRV is at least `1.70`
+legacy-is-terminal = ["is-terminal"]
 
 [[bin]]
 name = "main"
@@ -39,6 +45,6 @@ name = "prettytable"
 unicode-width = "0.1"
 term = "0.7"
 lazy_static = "1.4"
-is-terminal = "0.4"
+is-terminal = { version = "0.4", optional = true }
 encode_unicode = "1.0"
 csv = { version = "1.1", optional = true }
