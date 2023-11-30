@@ -194,9 +194,9 @@ impl<'a> TableSlice<'a> {
     /// # Returns
     /// A `Result` holding the number of lines printed, or an `io::Error` if any failure happens
     pub fn print_tty(&self, force_colorize: bool) -> Result<usize, Error> {
-        #[cfg(not(feature = "legacy-is-terminal"))]
+        #[cfg(prettytable_is_terminal_implementation = "std")]
         use std::io::IsTerminal;
-        #[cfg(feature = "legacy-is-terminal")]
+        #[cfg(not(prettytable_is_terminal_implementation = "std"))]
         use is_terminal::IsTerminal;
 
         match (stdout(), io::stdout().is_terminal() || force_colorize) {
