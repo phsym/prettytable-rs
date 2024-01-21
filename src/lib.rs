@@ -1251,7 +1251,7 @@ mod tests {
         ]));
         let out = "\
 <table>\
-<th><td style=\"text-align: left;\">t1</td><td style=\"text-align: left;\">t2</td><td style=\"text-align: left;\">t3</td></th>\
+<tr><th style=\"text-align: left;\">t1</th><th style=\"text-align: left;\">t2</th><th style=\"text-align: left;\">t3</th></tr>\
 <tr><td style=\"text-align: left;\">a</td><td style=\"text-align: left;\">bc</td><td style=\"text-align: left;\">def</td></tr>\
 <tr><td style=\"text-align: left;\">def</td><td style=\"text-align: left;\">bc</td><td style=\"text-align: left;\">a</td></tr>\
 </table>";
@@ -1297,7 +1297,7 @@ mod tests {
         ));
         let out = "\
 <table>\
-<th><td colspan=\"3\" style=\"text-align: left;\">span horizontal</td></th>\
+<tr><th colspan=\"3\" style=\"text-align: left;\">span horizontal</th></tr>\
 <tr><td style=\"font-weight: bold;text-align: left;\">bold</td><td style=\"font-style: italic;text-align: left;\">italic</td><td style=\"text-decoration: underline;text-align: left;\">underline</td></tr>\
 <tr><td style=\"text-align: left;\">left</td><td style=\"text-align: center;\">center</td><td style=\"text-align: right;\">right</td></tr>\
 <tr><td style=\"color: #aa0000;text-align: left;\">red</td><td style=\"color: #000000;text-align: left;\">black</td><td style=\"color: #aa5500;text-align: left;\">yellow</td></tr>\
