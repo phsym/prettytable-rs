@@ -29,7 +29,7 @@ pub mod csv;
 #[cfg(feature = "evcxr")]
 pub mod evcxr;
 
-pub use cell::Cell;
+pub use cell::{Cell, CellType};
 use format::{consts, LinePosition, TableFormat};
 pub use row::Row;
 use utils::StringWriter;
@@ -218,9 +218,9 @@ impl<'a> TableSlice<'a> {
         out.write_all(b"<table>")?;
         // Print titles / table header
         if let Some(ref t) = *self.titles {
-            out.write_all(b"<th>")?;
+            out.write_all(b"<tr>")?;
             t.print_html(out, column_num)?;
-            out.write_all(b"</th>")?;
+            out.write_all(b"</tr>")?;
         }
         // Print rows
         for r in self.rows {
@@ -285,7 +285,8 @@ impl Table {
     }
 
     /// Set the optional title lines
-    pub fn set_titles(&mut self, titles: Row) {
+    pub fn set_titles(&mut self, mut titles: Row) {
+        titles.set_cell_type(CellType::Head);
         *self.titles = Some(titles);
     }
 

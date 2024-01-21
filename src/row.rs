@@ -9,7 +9,7 @@ use super::Terminal;
 
 use super::format::{ColumnPosition, TableFormat};
 use super::utils::NEWLINE;
-use super::Cell;
+use super::{Cell, CellType};
 
 /// Represent a table row made of cells
 #[derive(Clone, Debug, Hash, PartialEq, Eq)]
@@ -140,6 +140,13 @@ impl Row {
         self.cells.iter_mut()
     }
 
+    /// Set cell type for all cells in this row
+    pub fn set_cell_type(&mut self, cell_type: CellType) {
+        for c in self.iter_mut() {
+            c.set_cell_type(cell_type.clone());
+        }
+    }
+
     /// Internal only
     fn __print<T: Write + ?Sized, F>(
         &self,
@@ -221,6 +228,7 @@ impl Row {
     /// Print the row in HTML format to `out`.
     ///
     /// If the row is has fewer columns than `col_num`, the row is padded with empty cells.
+    /// Parameter `title` tells, if the row is a title-row
     pub fn print_html<T: Write + ?Sized>(&self, out: &mut T, col_num: usize) -> Result<(), Error> {
         let mut printed_columns = 0;
         for cell in self.iter() {
