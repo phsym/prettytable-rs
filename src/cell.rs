@@ -7,6 +7,13 @@ use std::io::{Error, Write};
 use std::str::FromStr;
 use std::string::ToString;
 
+
+#[derive(Clone, Copy, Debug, Hash, PartialEq, Eq)]
+pub enum CellType {
+    Head,
+    Data
+}
+
 /// Represent a table cell containing a string.
 ///
 /// Once created, a cell's content cannot be modified.
@@ -18,6 +25,7 @@ pub struct Cell {
     align: Alignment,
     style: Vec<Attr>,
     hspan: usize,
+    cell_type: CellType
 }
 
 impl Cell {
@@ -38,6 +46,7 @@ impl Cell {
             align,
             style: Vec::new(),
             hspan: 1,
+            cell_type: CellType::Data
         }
     }
 
@@ -66,6 +75,12 @@ impl Cell {
     /// Add horizontal spanning to the cell
     pub fn with_hspan(mut self, hspan: usize) -> Cell {
         self.set_hspan(hspan);
+        self
+    }
+
+    /// Set cell type (head or data)
+    pub fn with_cell_type(mut self, cell_type: CellType) -> Cell {
+        self.set_cell_type(cell_type);
         self
     }
 
@@ -197,6 +212,16 @@ impl Cell {
         self.hspan
     }
 
+    /// Set type for this cell (head or data)
+    pub fn set_cell_type(&mut self, cell_type: CellType) {
+        self.cell_type = cell_type;
+    }
+
+    /// Get type of this cell (head or data)
+    pub fn get_cell_type(&self) -> CellType {
+        self.cell_type.clone()
+    }
+
     /// Return a copy of the full string contained in the cell
     pub fn get_content(&self) -> String {
         self.content.join("\n")
@@ -306,10 +331,14 @@ impl Cell {
         let content = self.content.join("<br />");
         out.write_all(
             format!(
-                "<td{1} style=\"{2}\">{0}</td>",
+                "<{3}{1} style=\"{2}\">{0}</{3}>",
                 HtmlEscape(&content),
                 colspan,
-                styles
+                styles,
+                match self.cell_type {
+                    CellType::Head => "th",
+                    CellType::Data => "td",
+                }
             )
             .as_bytes(),
         )?;
@@ -345,6 +374,7 @@ impl Default for Cell {
             align: Alignment::LEFT,
             style: Vec::new(),
             hspan: 1,
+            cell_type: CellType::Data
         }
     }
 }
