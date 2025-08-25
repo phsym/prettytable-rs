@@ -36,7 +36,7 @@ path = "src/main.rs"
 name = "prettytable"
 
 [dependencies]
-unicode-width = "0.1"
+unicode-width = "0.2"
 term = "0.7"
 lazy_static = "1.4"
 is-terminal = "0.4"

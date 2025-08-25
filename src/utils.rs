@@ -109,8 +109,12 @@ pub fn display_width(text: &str) -> usize {
             _ => state,
         };
 
-        // We don't count escape characters as hidden as
-        // UnicodeWidthStr::width already considers them.
+        // We should count escape characters as hidden because
+        // UnicodeWidthStr::width treats escape characters as 1 column wide.
+        // However UnicodeWidthChar::width treats escape characters as `None`.
+        if state == State::EscapeChar {
+            hidden += 1;
+        }
         if matches!(state, State::OpenBracket | State::AfterEscape) {
             // but if we see an escape char *inside* the ANSI escape, we should ignore it.
             if UnicodeWidthChar::width(c).unwrap_or(0) > 0 {
