@@ -1314,9 +1314,9 @@ mod tests {
 
         table.add_row(Row::new(vec![Cell::new("\u{1b}[\u{1b}\u{0}\u{0}")]));
 
-        let out = "+--+
+        let out = "+-----+
 | \u{1b}[\u{1b}\u{0}\u{0} |
-+--+
++-----+
 ";
 
         assert_eq!(table.to_string().replace("\r\n", "\n"), out);
