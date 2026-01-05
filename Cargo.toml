@@ -29,15 +29,14 @@ win_crlf = []
 
 [[bin]]
 name = "main"
-edition = "2018"
 path = "src/main.rs"
 
 [lib]
 name = "prettytable"
 
 [dependencies]
-unicode-width = "0.1"
-term = "0.7"
+unicode-width = "0.2"
+term = "1"
 lazy_static = "1.4"
 is-terminal = "0.4"
 encode_unicode = "1.0"

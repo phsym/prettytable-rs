@@ -1,12 +1,20 @@
 environment:
   matrix:
     - TARGET: i686-pc-windows-gnu
+      ABI: gnu
+      ARCH: i686
     - TARGET: i686-pc-windows-msvc
+      ABI: msvc
+      ARCH: i686
     - TARGET: x86_64-pc-windows-gnu
+      ABI: gnu
+      ARCH: x86_64
     - TARGET: x86_64-pc-windows-msvc
+      ABI: msvc
+      ARCH: x86_64
 
 install:
-  - ps: Start-FileDownload "https://static.rust-lang.org/rustup/dist/x86_64-pc-windows-msvc/rustup-init.exe"
+  - ps: Start-FileDownload "https://static.rust-lang.org/rustup/dist/%ARCH%-pc-windows-%ABI%/rustup-init.exe"
   - rustup-init.exe -y --default-host %TARGET% --default-toolchain stable
   - set PATH=%PATH%;C:\Users\appveyor\.cargo\bin
   - rustc -V

@@ -16,7 +16,7 @@ use std::ops::{Index, IndexMut};
 use std::slice::{Iter, IterMut};
 
 pub use term::{color, Attr};
-pub(crate) use term::{stdout, Terminal};
+pub(crate) use term::{stderr, stdout, Terminal};
 
 mod cell;
 pub mod format;
@@ -201,6 +201,22 @@ impl<'a> TableSlice<'a> {
         }
     }
 
+    /// Print the table to standard error output. Colors won't be displayed unless
+    /// stderr is a tty terminal, or `force_colorize` is set to `true`.
+    /// In ANSI terminals, colors are displayed using ANSI escape characters. When for example the
+    /// output is redirected to a file, or piped to another program, the output is considered
+    /// as not beeing tty, and ANSI escape characters won't be displayed unless `force colorize`
+    /// is set to `true`.
+    /// # Returns
+    /// A `Result` holding the number of lines printed, or an `io::Error` if any failure happens
+    pub fn print_tty_err(&self, force_colorize: bool) -> Result<usize, Error> {
+        use is_terminal::IsTerminal;
+        match (stderr(), io::stderr().is_terminal() || force_colorize) {
+            (Some(mut o), true) => self.print_term(&mut *o),
+            _ => self.print(&mut io::stderr()),
+        }
+    }
+
     /// Print the table to standard output. Colors won't be displayed unless
     /// stdout is a tty terminal. This means that if stdout is redirected to a file, or piped
     /// to another program, no color will be displayed.
@@ -209,6 +225,16 @@ impl<'a> TableSlice<'a> {
     /// Calling `printstd()` is equivalent to calling `print_tty(false)` and ignoring the result.
     pub fn printstd(&self) {
         let _ = self.print_tty(false); // Ignore result
+    }
+
+    /// Print the table to standard error output. Colors won't be displayed unless
+    /// stderr is a tty terminal. This means that if stderr is redirected to a file, or piped
+    /// to another program, no color will be displayed.
+    /// To force colors rendering, use `print_tty()` method.
+    /// Any failure to print is ignored. For better control, use `print_tty_err()`.
+    /// Calling `printstderr()` is equivalent to calling `print_tty_err(false)` and ignoring the result.
+    pub fn printstderr(&self) {
+        let _ = self.print_tty_err(false); // Ignore result
     }
 
     /// Print table in HTML format to `out`.
@@ -1314,9 +1340,9 @@ mod tests {
 
         table.add_row(Row::new(vec![Cell::new("\u{1b}[\u{1b}\u{0}\u{0}")]));
 
-        let out = "+--+
+        let out = "+------+
 | \u{1b}[\u{1b}\u{0}\u{0} |
-+--+
++------+
 ";
 
         assert_eq!(table.to_string().replace("\r\n", "\n"), out);
